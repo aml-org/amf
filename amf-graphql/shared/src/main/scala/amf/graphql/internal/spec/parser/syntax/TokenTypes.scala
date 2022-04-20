@@ -32,4 +32,5 @@ object TokenTypes {
   val ENUM_VALUE = "enumValue"
   val TYPE_ = "type_"
   val LIST_TYPE = "listType"
+  val SCALAR_TYPE_DEFINITION = "scalarTypeDefinition"
 }

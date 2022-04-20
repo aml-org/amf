@@ -218,6 +218,11 @@
             ]
           }
         ],
+        "http://a.ml/vocabularies/shapes#inputOnly": [
+          {
+            "@value": true
+          }
+        ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "InputType"
@@ -698,12 +703,23 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/shape/Interface/queryCustomScalar/request/parameter/input_/unresolved",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql/scalar/Pepe/link--2038257609",
                         "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql/scalar/Pepe"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "Pepe"
+                          }
                         ]
                       }
                     ]
@@ -860,6 +876,31 @@
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql/scalar/Pepe",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#format": [
+          {
+            "@value": "Pepe"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Pepe"
           }
         ]
       }
