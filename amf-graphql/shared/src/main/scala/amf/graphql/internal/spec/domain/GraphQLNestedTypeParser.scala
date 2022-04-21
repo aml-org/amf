@@ -5,9 +5,9 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, UnresolvedShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
-import org.mulesoft.lexer.SourceLocation
 
-class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext) extends GraphQLCommonTypeParser {
+class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(parentId: String): NodeShape = {
@@ -19,15 +19,15 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     if (isInterface) {
       obj.withIsAbstract(true)
     }
-
     obj
   }
 
   def collectFields(): Unit = collectFieldsFromPath(objTypeNode, Seq(FIELDS_DEFINITION, FIELD_DEFINITION))
 
   def collectInheritance(): Unit = {
-    val ifaces = collect(objTypeNode, Seq(IMPLEMENTS_INTERFACES, NAMED_TYPE, NAME)).map { case ifaceName: Node =>
-      parseInheritance(ifaceName.children.head.asInstanceOf[Terminal])
+    val ifaces = collect(objTypeNode, Seq(IMPLEMENTS_INTERFACES, NAMED_TYPE, NAME)).map {
+      case ifaceName: Node =>
+        parseInheritance(ifaceName.children.head.asInstanceOf[Terminal])
     }
     if (ifaces.nonEmpty) {
       obj.withInherits(ifaces)
@@ -45,10 +45,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
       case _ =>
         val shape = UnresolvedShape(typeName, toAnnotations(t))
         shape.withContext(ctx)
-        shape.unresolved(
-          typeName,
-          Nil,
-          Some(new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)))
+        shape.unresolved(typeName, Nil, Some(elementSourceLocation(t)))
         shape
     }
   }
