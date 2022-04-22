@@ -6,18 +6,12 @@ import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.{
-  GraphQLCustomScalarParser,
-  GraphQLInputTypeParser,
-  GraphQLNestedEnumParser,
-  GraphQLNestedTypeParser,
-  GraphQLNestedUnionParser,
-  GraphQLRootTypeParser
-}
+import amf.graphql.internal.spec.domain._
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
@@ -88,6 +82,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     ctx.declarations += scalar
   }
 
+  private def parseDirectiveDeclaration(directiveDef: Node): Unit = {
+    val directive: CustomDomainProperty = GraphQLDirectiveDeclarationParser(directiveDef).parse(doc.id)
+    ctx.declarations += directive
+  }
+
   private def processTypes(node: Node): Unit = {
     this.collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, SCHEMA_DEFINITION)).toList match {
       case head :: Nil => parseSchemaNode(head)
@@ -140,6 +139,13 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       case customScalarTypeDef: Node =>
         parseCustomScalarTypeDef(customScalarTypeDef)
     }
+
+    // let's parse directive declarations
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, DIRECTIVE_DEFINITION)) foreach {
+      case directiveDef: Node =>
+        parseDirectiveDeclaration(directiveDef)
+    }
   }
 
   private def parseSchemaNode(schemaNode: ASTElement): Unit = {
@@ -168,7 +174,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
                   case "query"        => QUERY_TYPE = targetType
                   case "mutation"     => MUTATION_TYPE = targetType
                   case "subscription" => SUBSCRIPTION_TYPE = targetType
-                  case v              => astError(webapi.id, s"Unknown root-level operation type ${v}", toAnnotations(t))
+                  case v              => astError(webapi.id, s"Unknown root-level operation type $v", toAnnotations(t))
                 }
               case _ =>
                 astError(webapi.id,
@@ -194,5 +200,4 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       webapi.withEndPoints(oldEndpoints ++ Seq(ep))
     }
   }
-
 }
