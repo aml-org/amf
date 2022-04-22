@@ -200,6 +200,37 @@
             "@value": "Date"
           }
         ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#example",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/shapes#ScalarShape"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#example/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": []
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "example"
+          }
+        ]
       }
     ]
   }
