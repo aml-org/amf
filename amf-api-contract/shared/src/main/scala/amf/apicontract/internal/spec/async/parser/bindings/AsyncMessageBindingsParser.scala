@@ -23,7 +23,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
   override type Bindings = MessageBindings
   override protected val bindingsField: Field = MessageBindingsModel.Bindings
 
-  override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
+  override protected def createParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser =
     AsyncMessageBindingsParser(entryLike)
 
   override protected def createBindings(): MessageBindings = MessageBindings()

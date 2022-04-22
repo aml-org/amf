@@ -31,7 +31,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
     }
   }
 
-  protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser
+  protected def createParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser
 
   def buildAndPopulate(): Bindings = {
     val map: YMap          = entryLike.asMap
@@ -61,9 +61,10 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
 
   protected def remote(fullRef: String, entryLike: YMapEntryLike)(
       implicit ctx: AsyncWebApiContext): Bindings = {
-    ctx.obtainRemoteYNode(fullRef) match {
-      case Some(bindingsNode) =>
-        val external = createParser(YMapEntryLike(bindingsNode)).parse()
+    ctx.navigateToRemoteYNode(fullRef) match {
+      case Some(result) =>
+        val bindingsNode = result.remoteNode
+        val external     = createParser(YMapEntryLike(bindingsNode))(result.context).parse()
         nameAndAdopt(external.link(AmfScalar(fullRef), entryLike.annotations, Annotations.synthesized()),
                      entryLike.key) // check if this link should be trimmed to just the label
       case None =>

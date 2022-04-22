@@ -155,4 +155,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("ref-schema/ref-version-schema.json", None, Oas30Profile)
   }
 
+  test("Valid ref to endpoint with another ref") {
+    validate("double-references/valid-ref-to-endpoint-with-ref.yaml", None, Oas30Profile)
+  }
+
+  test("Valid ref to header with another ref") {
+    validate("double-references/valid-ref-to-header-with-ref.yaml", None, Oas30Profile)
+  }
+
 }

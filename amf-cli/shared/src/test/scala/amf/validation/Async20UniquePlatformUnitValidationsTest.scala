@@ -345,4 +345,36 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     )
   }
 
+  test("Valid ref to message with another ref") {
+    validate(
+      "double-references/valid-ref-to-message-with-ref.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
+  test("Valid ref to operation with another ref") {
+    validate(
+      "double-references/valid-ref-to-operation-with-ref.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
+  test("Valid ref to parameter with another ref") {
+    validate(
+      "double-references/valid-ref-to-parameter-with-ref.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
+  test("Valid ref to bindings with another ref") {
+    validate(
+      "double-references/valid-ref-to-bindings-with-ref.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
 }

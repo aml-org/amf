@@ -27,7 +27,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
 
   override protected def createBindings(): ChannelBindings = ChannelBindings()
 
-  override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
+  override protected def createParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser =
     AsyncChannelBindingsParser(entryLike)
 
   def handleRef(fullRef: String): ChannelBindings = {
