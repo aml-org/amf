@@ -22,7 +22,7 @@ trait AbstractResponseModel extends DomainElementModel with KeyField with NameFi
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Response",
+    "AbstractResponse",
     "Response information for an operation"
   )
 }

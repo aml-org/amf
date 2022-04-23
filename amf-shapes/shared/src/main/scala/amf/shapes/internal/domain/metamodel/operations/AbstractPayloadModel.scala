@@ -33,7 +33,7 @@ trait AbstractPayloadModel
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Payload",
+    "AbstractPayload",
     "Encoded payload using certain media-type"
   )
 }

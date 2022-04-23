@@ -22,7 +22,7 @@ object ShapeRequestModel extends AbstractRequestModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Request",
+    "ShapeRequest",
     "Request information for an operation"
   )
   override val key: Field = Name

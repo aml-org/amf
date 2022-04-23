@@ -17,7 +17,7 @@ object ShapePayloadModel extends AbstractPayloadModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Payload",
+    "ShapePayload",
     "Encoded payload using certain media-type"
   )
 

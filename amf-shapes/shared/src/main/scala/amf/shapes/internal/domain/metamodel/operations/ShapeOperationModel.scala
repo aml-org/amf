@@ -37,7 +37,7 @@ object ShapeOperationModel extends AbstractOperationModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Operation",
+    "ShapeOperation",
     "Action that can be executed over the data of a particular shape"
   )
 

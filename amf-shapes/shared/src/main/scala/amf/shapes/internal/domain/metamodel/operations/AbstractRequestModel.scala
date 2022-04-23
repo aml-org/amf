@@ -24,7 +24,7 @@ trait AbstractRequestModel extends DomainElementModel with KeyField with NameFie
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Request",
+    "AbstractRequest",
     "Request information for an operation"
   )
   override val key: Field = Name

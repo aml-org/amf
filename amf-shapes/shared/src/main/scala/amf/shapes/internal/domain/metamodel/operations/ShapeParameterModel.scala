@@ -36,7 +36,7 @@ object ShapeParameterModel extends AbstractParameterModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Parameter",
+    "ShapeParameter",
     "Piece of data required or returned by an Operation"
   )
 

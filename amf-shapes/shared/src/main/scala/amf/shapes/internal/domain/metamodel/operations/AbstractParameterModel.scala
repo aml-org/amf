@@ -47,7 +47,7 @@ trait AbstractParameterModel
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Parameter",
+    "AbstractParameter",
     "Piece of data required or returned by an Operation"
   )
 }
