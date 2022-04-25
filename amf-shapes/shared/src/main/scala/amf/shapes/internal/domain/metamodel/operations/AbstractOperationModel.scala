@@ -42,7 +42,7 @@ trait AbstractOperationModel
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Operation",
+    "AbstractOperation",
     "Action that can be executed over the data of a particular shape"
   )
 }

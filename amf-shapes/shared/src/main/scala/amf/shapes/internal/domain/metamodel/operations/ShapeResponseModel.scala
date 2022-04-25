@@ -20,7 +20,7 @@ object ShapeResponseModel extends AbstractResponseModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Response",
+    "ShapeResponse",
     "Response information for an operation"
   )
 
