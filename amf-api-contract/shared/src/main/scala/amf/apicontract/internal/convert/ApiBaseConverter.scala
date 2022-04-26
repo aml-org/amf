@@ -428,7 +428,7 @@ trait MessageConverter extends PlatformSecrets {
       case req: Request  => RequestMatcher.asClient(req)
       case res: Response => ResponseMatcher.asClient(res)
       case base: Message => new domain.Message(base)
-      case _ => // noinspection ScalaStyle
+      case _ => // ignore
         null
     }
     override def asInternal(from: domain.Message): Message = from._internal
@@ -518,7 +518,7 @@ trait SettingsConverter extends PlatformSecrets {
       case http: HttpSettings            => HttpSettingsMatcher.asClient(http)
       case openId: OpenIdConnectSettings => OpenIdConnectSettingsMatcher.asClient(openId)
       case base: Settings                => new domain.security.Settings(base)
-      case _ => // noinspection ScalaStyle
+      case _ => // ignore
         null
     }
 
@@ -557,8 +557,7 @@ trait AMFLibraryResultConverter {
 }
 
 trait AMFDocumentResultConverter {
-  implicit object AMFDocumentResultMatcher
-      extends BidirectionalMatcher[AMFDocumentResult, platform.AMFDocumentResult] {
+  implicit object AMFDocumentResultMatcher extends BidirectionalMatcher[AMFDocumentResult, platform.AMFDocumentResult] {
     override def asClient(from: AMFDocumentResult): platform.AMFDocumentResult   = new platform.AMFDocumentResult(from)
     override def asInternal(from: platform.AMFDocumentResult): AMFDocumentResult = from._internal
   }
