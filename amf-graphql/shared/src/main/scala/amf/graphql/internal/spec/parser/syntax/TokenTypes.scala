@@ -15,6 +15,7 @@ object TokenTypes {
   val INTERFACE_TYPE_DEFINITION      = "interfaceTypeDefinition"
   val TYPE                           = "type"
   val NAME                           = "name"
+  val KEYWORD                        = "keyword"
   val NAME_TERMINAL                  = "NAME"
   val ROOT_OPERATION_TYPE_DEFINITION = "rootOperationTypeDefinition"
   val OPERATION_TYPE                 = "operationType"

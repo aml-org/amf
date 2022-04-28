@@ -40,4 +40,8 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     cycle("swapi/api.graphql", "swapi/dumped.graphql", GraphQLHint, GraphQLHint)
   }
 
+  test("Can parse API with keywords as names") {
+    cycle("keyword-names/api.graphql", "keyword-names/api.jsonld", GraphQLHint, AmfJsonHint)
+  }
+
 }
