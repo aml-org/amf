@@ -18,6 +18,7 @@ trait GraphQLFunSuiteCycleTests extends FunSuiteCycleTests {
     )
   }
 
+  override def renderOptions(): RenderOptions = super.renderOptions().withPrettyPrint
 }
 
 class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
