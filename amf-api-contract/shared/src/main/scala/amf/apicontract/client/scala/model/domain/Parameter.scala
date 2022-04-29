@@ -11,28 +11,27 @@ import amf.shapes.client.scala.model.domain.ExemplifiedDomainElement
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import org.yaml.model.YPart
 
-/**
-  * Parameter internal model.
+/** Parameter internal model.
   */
 class Parameter(override val fields: Fields, override val annotations: Annotations)
-  extends AbstractParameter(fields, annotations)
+    extends AbstractParameter(fields, annotations)
     with Linkable
     with SchemaContainer
     with ExemplifiedDomainElement {
 
-  override def parameterName: StrField    = fields.field(ParameterName)
-  override def required: BoolField        = fields.field(Required)
-  def deprecated: BoolField      = fields.field(Deprecated)
-  def allowEmptyValue: BoolField = fields.field(AllowEmptyValue)
-  def style: StrField            = fields.field(Style)
-  def explode: BoolField         = fields.field(Explode)
-  def allowReserved: BoolField   = fields.field(AllowReserved)
-  override def binding: StrField          = fields.field(Binding)
-  def payloads: Seq[Payload]     = fields.field(Payloads)
+  override def parameterName: StrField = fields.field(ParameterName)
+  override def required: BoolField     = fields.field(Required)
+  def deprecated: BoolField            = fields.field(Deprecated)
+  def allowEmptyValue: BoolField       = fields.field(AllowEmptyValue)
+  def style: StrField                  = fields.field(Style)
+  def explode: BoolField               = fields.field(Explode)
+  def allowReserved: BoolField         = fields.field(AllowReserved)
+  override def binding: StrField       = fields.field(Binding)
+  def payloads: Seq[Payload]           = fields.field(Payloads)
 
   override def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
     set(ParameterName, name, annots)
-  override def withRequired(required: Boolean): this.type               = set(Required, required)
+  override def withRequired(required: Boolean): this.type      = set(Required, required)
   def withDeprecated(deprecated: Boolean): this.type           = set(Deprecated, deprecated)
   def withAllowEmptyValue(allowEmptyValue: Boolean): this.type = set(AllowEmptyValue, allowEmptyValue)
   def withStyle(style: String): this.type                      = set(Style, style)
@@ -72,14 +71,13 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     val parameter: Parameter = Parameter(Annotations(annotations))
     val cloned               = parameter.withName(name.value()).adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case s: Shape => s.cloneShape(None)
-          case o        => o
-        }
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case s: Shape => s.cloneShape(None)
+        case o        => o
+      }
 
-        cloned.set(f, clonedValue, Annotations() ++= v.annotations)
+      cloned.set(f, clonedValue, Annotations() ++= v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

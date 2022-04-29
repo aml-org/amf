@@ -7,8 +7,7 @@ import amf.core.internal.render.emitters.Emitter
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-/**
-  * Created by pedro.colunga on 8/23/17.
+/** Created by pedro.colunga on 8/23/17.
   */
 class SpecOrderingTest extends AnyFunSuite with Matchers {
 

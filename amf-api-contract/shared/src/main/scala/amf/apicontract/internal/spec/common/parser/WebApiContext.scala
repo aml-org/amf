@@ -38,13 +38,14 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class ExtensionsContext(val loc: String,
-                                 refs: Seq[ParsedReference],
-                                 val options: ParsingOptions,
-                                 wrapped: ParserContext,
-                                 val declarationsOption: Option[WebApiDeclarations] = None,
-                                 val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
-    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.config)
+abstract class ExtensionsContext(
+    val loc: String,
+    refs: Seq[ParsedReference],
+    val options: ParsingOptions,
+    wrapped: ParserContext,
+    val declarationsOption: Option[WebApiDeclarations] = None,
+    val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty
+) extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.config)
     with DataNodeParserContext {
 
   private def getExtensionsMap: Map[String, Dialect] = wrapped.config.registryContext.getRegistry match {
@@ -53,10 +54,13 @@ abstract class ExtensionsContext(val loc: String,
   }
 
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
-    new WebApiDeclarations(None,
-                           errorHandler = eh,
-                           futureDeclarations = futureDeclarations,
-                           extensions = getExtensionsMap))
+    new WebApiDeclarations(
+      None,
+      errorHandler = eh,
+      futureDeclarations = futureDeclarations,
+      extensions = getExtensionsMap
+    )
+  )
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
     declarations.findAnnotation(key, scope)
@@ -66,13 +70,14 @@ abstract class ExtensionsContext(val loc: String,
   override def fragments: Map[String, FragmentRef] = declarations.fragments
 }
 
-abstract class WebApiContext(loc: String,
-                             refs: Seq[ParsedReference],
-                             options: ParsingOptions,
-                             wrapped: ParserContext,
-                             declarationsOption: Option[WebApiDeclarations] = None,
-                             nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
-    extends ExtensionsContext(loc, refs, options, wrapped, declarationsOption, nodeRefIds)
+abstract class WebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    options: ParsingOptions,
+    wrapped: ParserContext,
+    declarationsOption: Option[WebApiDeclarations] = None,
+    nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty
+) extends ExtensionsContext(loc, refs, options, wrapped, declarationsOption, nodeRefIds)
     with DeclarationContext
     with SpecAwareContext
     with PlatformSecrets
@@ -92,7 +97,8 @@ abstract class WebApiContext(loc: String,
   val spec: Spec
 
   val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder(
-    DeclaredAnnotationSchemaValidatorBuilder)
+    DeclaredAnnotationSchemaValidatorBuilder
+  )
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -113,9 +119,10 @@ abstract class WebApiContext(loc: String,
     localJSONSchemaContext = Some(value)
     val index = indexCache.getOrElse(
       location, {
-        val result = AstIndexBuilder.buildAst(value,
-                                              AliasCounter(options.getMaxYamlReferences),
-                                              computeJsonSchemaVersion(value))(WebApiShapeParserContextAdapter(this))
+        val result =
+          AstIndexBuilder.buildAst(value, AliasCounter(options.getMaxYamlReferences), computeJsonSchemaVersion(value))(
+            WebApiShapeParserContextAdapter(this)
+          )
         indexCache.put(location, result)
         result
       }
@@ -138,23 +145,22 @@ abstract class WebApiContext(loc: String,
     globalSpace.update(normalizedJsonPointer(url), shape)
 
   // TODO this should not have OasWebApiContext as a dependency
-  def parseRemoteOasParameter(fileUrl: String, parentId: String)(
-      implicit ctx: OasWebApiContext): Option[OasParameter] = {
+  def parseRemoteOasParameter(fileUrl: String, parentId: String)(implicit
+      ctx: OasWebApiContext
+  ): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
       AstFinder.findAst(fragment, referenceUrl)(WebApiShapeParserContextAdapter(ctx)).map { node =>
         ctx.factory
-          .parameterParser(YMapEntryLike(node)(new SYamlAMFParserErrorHandler(ctx.eh)),
-                           parentId,
-                           None,
-                           new IdCounter())
+          .parameterParser(YMapEntryLike(node)(new SYamlAMFParserErrorHandler(ctx.eh)), parentId, None, new IdCounter())
           .parse
       }
     }
   }
 
-  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(
-      implicit ctx: WebApiContext): Option[YNode] = {
+  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(implicit
+      ctx: WebApiContext
+  ): Option[YNode] = {
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
   }
 
@@ -219,10 +225,12 @@ abstract class WebApiContext(loc: String,
   protected def nextValidation(node: AmfObject, shape: String, ast: YMap): Unit =
     throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $spec", ast)
 
-  protected def throwClosedShapeError(node: AmfObject,
-                                      message: String,
-                                      entry: YPart,
-                                      isWarning: Boolean = false): Unit =
+  protected def throwClosedShapeError(
+      node: AmfObject,
+      message: String,
+      entry: YPart,
+      isWarning: Boolean = false
+  ): Unit =
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry.location)
     else eh.violation(ClosedShapeSpecification, node, message, entry.location)
 
@@ -233,20 +241,18 @@ abstract class WebApiContext(loc: String,
       val facadeBuilder = if (fqn.isQualified) {
         val maybeDeclarations: Option[WebApiDeclarations] =
           declarations.libraries.get(fqn.qualification).collectFirst({ case w: WebApiDeclarations => w })
-        maybeDeclarations.flatMap(
-          d =>
-            (d.extensions
-              .get(fqn.name))
-              .map(SemanticExtensionsFacade(fqn.name, _, annotationSchemaValidatorBuilder.build(d.annotations))))
+        maybeDeclarations.flatMap(d =>
+          (d.extensions
+            .get(fqn.name))
+            .map(SemanticExtensionsFacade(fqn.name, _, annotationSchemaValidatorBuilder.build(d.annotations)))
+        )
       } else
         declarations.extensions
           .get(name)
-          .map(d =>
-            SemanticExtensionsFacade(name, d, annotationSchemaValidatorBuilder.build(declarations.annotations)))
+          .map(d => SemanticExtensionsFacade(name, d, annotationSchemaValidatorBuilder.build(declarations.annotations)))
       facadeBuilder.getOrElse(
-        SemanticExtensionsFacade(name,
-                                 wrapped.config,
-                                 annotationSchemaValidatorBuilder.build(declarations.annotations)))
+        SemanticExtensionsFacade(name, wrapped.config, annotationSchemaValidatorBuilder.build(declarations.annotations))
+      )
     }
   }
 }

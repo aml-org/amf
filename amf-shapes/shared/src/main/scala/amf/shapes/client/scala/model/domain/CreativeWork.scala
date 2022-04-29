@@ -9,8 +9,7 @@ import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel._
 import org.yaml.model.YNode
 
-/**
-  * Creative work internal model
+/** Creative work internal model
   */
 class CreativeWork private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DomainElement

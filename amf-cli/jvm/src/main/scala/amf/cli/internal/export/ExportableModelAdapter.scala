@@ -5,8 +5,8 @@ object ExportableModelAdapter {
   def adapt(models: List[Model]): List[ExportableModel] = models.map(adapt).sortBy(m => m.name)
 
   private def adapt(model: Model): ExportableModel = {
-    val fields = model.attributes.map {
-      case (name, attribute) => adapt(name, attribute)
+    val fields = model.attributes.map { case (name, attribute) =>
+      adapt(name, attribute)
     }
     ExportableModel(formatModelName(model.name), fields, model.obj.doc.description, types(model))
   }
@@ -16,19 +16,23 @@ object ExportableModelAdapter {
   private def adapt(name: String, attribute: Attribute): ExportableField = {
     attribute match {
       case att: TraversableAttribute =>
-        ExportableField(name,
-                        formatModelName(att.name),
-                        isArray = false,
-                        linkToValue = true,
-                        doc = att.docDescription,
-                        att.namespace)
+        ExportableField(
+          name,
+          formatModelName(att.name),
+          isArray = false,
+          linkToValue = true,
+          doc = att.docDescription,
+          att.namespace
+        )
       case att: ArrayAttribute if att.isTraversable =>
-        ExportableField(name,
-                        formatModelName(att.toString),
-                        isArray = true,
-                        linkToValue = true,
-                        att.docDescription,
-                        att.namespace)
+        ExportableField(
+          name,
+          formatModelName(att.toString),
+          isArray = true,
+          linkToValue = true,
+          att.docDescription,
+          att.namespace
+        )
       case att: ArrayAttribute if !att.isTraversable =>
         ExportableField(name, att.toString, isArray = true, linkToValue = false, att.docDescription, att.namespace)
       case att: AttributeType =>
@@ -40,9 +44,11 @@ object ExportableModelAdapter {
 }
 
 case class ExportableModel(name: String, fields: List[ExportableField], doc: String, types: List[String])
-case class ExportableField(name: String,
-                           value: String,
-                           isArray: Boolean,
-                           linkToValue: Boolean,
-                           doc: String,
-                           namespace: String)
+case class ExportableField(
+    name: String,
+    value: String,
+    isArray: Boolean,
+    linkToValue: Boolean,
+    doc: String,
+    namespace: String
+)

@@ -6,8 +6,7 @@ import amf.shapes.internal.domain.metamodel.SchemaDependenciesModel
 import amf.shapes.internal.domain.metamodel.SchemaDependenciesModel.SchemaTarget
 import org.yaml.model.YMapEntry
 
-/**
-  * Schema Dependency
+/** Schema Dependency
   */
 case class SchemaDependencies private[amf] (fields: Fields, annotations: Annotations) extends Dependencies {
 

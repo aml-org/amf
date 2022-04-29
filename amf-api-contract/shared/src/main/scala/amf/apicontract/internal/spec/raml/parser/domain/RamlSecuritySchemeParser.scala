@@ -29,9 +29,9 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: RamlWebApiContext)
-    extends SecuritySchemeParser(part, adopt) {
+case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+    ctx: RamlWebApiContext
+) extends SecuritySchemeParser(part, adopt) {
   override def parse(): SecurityScheme = {
     val node           = getNode
     val (key, partKey) = getName
@@ -89,11 +89,13 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
     }
   }
 
-  def parseReferenced(name: String,
-                      partKey: Option[YNode],
-                      parsedUrl: String,
-                      annotations: Annotations,
-                      adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
+  def parseReferenced(
+      name: String,
+      partKey: Option[YNode],
+      parsedUrl: String,
+      annotations: Annotations,
+      adopt: SecurityScheme => SecurityScheme
+  ): SecurityScheme = {
 
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(part)(parsedUrl, SearchScope.All)
@@ -120,11 +122,17 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               "headers",
               entry => {
                 val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "header") // todo replace in separation
+                  RamlParametersParser(
+                    entry.value.as[YMap],
+                    (p: Parameter) => Unit,
+                    binding = "header"
+                  ) // todo replace in separation
                     .parse()
-                scheme.setWithoutId(SecuritySchemeModel.Headers,
-                                    AmfArray(parameters, Annotations(entry.value)),
-                                    Annotations(entry))
+                scheme.setWithoutId(
+                  SecuritySchemeModel.Headers,
+                  AmfArray(parameters, Annotations(entry.value)),
+                  Annotations(entry)
+                )
               }
             )
 
@@ -141,11 +149,17 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               "queryParameters",
               entry => {
                 val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "query") // todo replace in separation
+                  RamlParametersParser(
+                    entry.value.as[YMap],
+                    (p: Parameter) => Unit,
+                    binding = "query"
+                  ) // todo replace in separation
                     .parse()
-                scheme.setWithoutId(SecuritySchemeModel.QueryParameters,
-                                    AmfArray(parameters, Annotations(entry.value)),
-                                    Annotations(entry))
+                scheme.setWithoutId(
+                  SecuritySchemeModel.QueryParameters,
+                  AmfArray(parameters, Annotations(entry.value)),
+                  Annotations(entry)
+                )
               }
             )
 
@@ -175,18 +189,22 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                         .parse() // todo replace in separation
                     })
                 }
-                scheme.setWithoutId(SecuritySchemeModel.Responses,
-                                    AmfArray(responses, Annotations(entry.value)),
-                                    Annotations(entry))
+                scheme.setWithoutId(
+                  SecuritySchemeModel.Responses,
+                  AmfArray(responses, Annotations(entry.value)),
+                  Annotations(entry)
+                )
               }
             )
             AnnotationParser(scheme, value)(WebApiShapeParserContextAdapter(ctx)).parse()
           case YType.Null =>
           case _ =>
-            ctx.eh.violation(InvalidSecuritySchemeDescribedByType,
-                             scheme,
-                             s"Invalid 'describedBy' type, map expected",
-                             entry.value.location)
+            ctx.eh.violation(
+              InvalidSecuritySchemeDescribedByType,
+              scheme,
+              s"Invalid 'describedBy' type, map expected",
+              entry.value.location
+            )
         }
       }
     )

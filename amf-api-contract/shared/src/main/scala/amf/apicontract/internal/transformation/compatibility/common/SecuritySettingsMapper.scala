@@ -53,9 +53,11 @@ abstract class SecuritySettingsMapper() extends TransformationStep {
     d.withDeclares(filteredDeclarations)
   }
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

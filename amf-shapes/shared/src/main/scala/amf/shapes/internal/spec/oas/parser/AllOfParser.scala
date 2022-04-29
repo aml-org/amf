@@ -9,8 +9,9 @@ import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YNode}
 
-case class AllOfParser(array: Seq[YNode], adopt: Shape => Unit, version: SchemaVersion)(
-    implicit ctx: ShapeParserContext) {
+case class AllOfParser(array: Seq[YNode], adopt: Shape => Unit, version: SchemaVersion)(implicit
+    ctx: ShapeParserContext
+) {
   def parse(): Seq[Shape] =
     array
       .flatMap(n => {

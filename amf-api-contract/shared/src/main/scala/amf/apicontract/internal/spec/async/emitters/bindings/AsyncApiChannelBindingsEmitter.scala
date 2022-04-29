@@ -27,9 +27,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     emitterFor(binding).foreach(emitter => emitter.emit(b))
@@ -44,9 +44,9 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
   override def position(): Position = pos(binding.annotations)
 }
 
-class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       YNode("ws"),
@@ -56,13 +56,9 @@ class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering
 
         fs.entry(WebSocketsChannelBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(WebSocketsChannelBindingModel.Query)
-          .foreach(
-            f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq())
-          )
+          .foreach(f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
         fs.entry(WebSocketsChannelBindingModel.Headers)
-          .foreach(
-            f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq())
-          )
+          .foreach(f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

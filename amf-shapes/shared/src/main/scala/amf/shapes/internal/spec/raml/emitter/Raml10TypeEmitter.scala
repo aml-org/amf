@@ -27,11 +27,13 @@ import amf.shapes.internal.spec.raml.parser.ExternalLinkQuery.queryResidenceUnit
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
-case class Raml10TypeEmitter(shape: Shape,
-                             ordering: SpecOrdering,
-                             ignored: Seq[Field] = Nil,
-                             references: Seq[BaseUnit],
-                             forceEntry: Boolean = false)(implicit spec: RamlShapeEmitterContext) {
+case class Raml10TypeEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit],
+    forceEntry: Boolean = false
+)(implicit spec: RamlShapeEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case shape: AnyShape if shape.annotations.contains(classOf[ExternalSchemaWrapper]) =>

@@ -20,16 +20,19 @@ import amf.shapes.internal.domain.resolution.ExampleTracking
 
 /** Apply root and operation mime types to payloads.
   *
-  * Request payloads will have as default mime type the 'accepts' field.
-  * Response payloads will have as default mime type the 'contentType' field.
+  * Request payloads will have as default mime type the 'accepts' field. Response payloads will have as default mime
+  * type the 'contentType' field.
   */
-class MediaTypeResolutionStage(profile: ProfileName,
-                               isValidation: Boolean = false,
-                               val keepEditingInfo: Boolean = false)
-    extends TransformationStep() {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+class MediaTypeResolutionStage(
+    profile: ProfileName,
+    isValidation: Boolean = false,
+    val keepEditingInfo: Boolean = false
+) extends TransformationStep() {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])
@@ -70,7 +73,8 @@ class MediaTypeResolutionStage(profile: ProfileName,
   private def resolveOperationsMediaTypes(
       api: Api,
       rootAccepts: Option[Seq[String]],
-      rootContentType: Option[Seq[String]])(implicit errorHandler: AMFErrorHandler): Unit = {
+      rootContentType: Option[Seq[String]]
+  )(implicit errorHandler: AMFErrorHandler): Unit = {
 
     api.endPoints.foreach { endPoint =>
       endPoint.operations.foreach { operation =>
@@ -99,8 +103,9 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  private def resolveRequestMediaTypes(operation: Operation, accepts: Option[Seq[String]])(
-      implicit errorHandler: AMFErrorHandler): Unit = {
+  private def resolveRequestMediaTypes(operation: Operation, accepts: Option[Seq[String]])(implicit
+      errorHandler: AMFErrorHandler
+  ): Unit = {
     Option(operation.request).foreach { request =>
       // Use accepts field.
       accepts match {
@@ -113,8 +118,10 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  private def resolveSecuritySchemesMediaTypes(securitySchemes: Seq[SecurityScheme],
-                                              contentType: Option[Seq[String]]): Unit = {
+  private def resolveSecuritySchemesMediaTypes(
+      securitySchemes: Seq[SecurityScheme],
+      contentType: Option[Seq[String]]
+  ): Unit = {
     securitySchemes.foreach(scheme => {
       scheme.responses.foreach { response =>
         contentType match {
@@ -157,8 +164,9 @@ class MediaTypeResolutionStage(profile: ProfileName,
         }
       }
 
-      /** Remove old tracking from new payloads with the same examples.
-        * Done here because of multiple media type propagation. */
+      /** Remove old tracking from new payloads with the same examples. Done here because of multiple media type
+        * propagation.
+        */
       result.foreach(newPayload => removeTracked(newPayload, payload.id))
     }
 

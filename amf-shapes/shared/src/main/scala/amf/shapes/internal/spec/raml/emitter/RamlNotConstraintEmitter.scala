@@ -10,9 +10,9 @@ import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain.AnyShape
 
-case class RamlNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
 
   val emitter: Raml10TypePartEmitter =
     Raml10TypePartEmitter(shape.not.asInstanceOf[AnyShape], ordering, None, Nil, references)

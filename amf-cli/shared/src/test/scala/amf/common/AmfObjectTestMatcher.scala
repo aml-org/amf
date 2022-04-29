@@ -4,9 +4,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.Field
 import org.scalatest._
 
-/**
-  *
-  */
+/** */
 trait AmfObjectTestMatcher extends Assertions {
 
   /** [[AmfObject]] matcher ignoring all [[Annotation]]s */
@@ -22,11 +20,10 @@ trait AmfObjectTestMatcher extends Assertions {
         fail(s"Expected ${expected.fields} but ${actual.fields} fields have different sizes")
       }
 
-      expected.fields.foreach({
-        case (field, _) =>
-          val a: Any = actual.fields.raw(field).orNull
-          val e: Any = expected.fields.raw(field).orNull
-          assertRaw(field, a, e)
+      expected.fields.foreach({ case (field, _) =>
+        val a: Any = actual.fields.raw(field).orNull
+        val e: Any = expected.fields.raw(field).orNull
+        assertRaw(field, a, e)
       })
     }
 
@@ -46,8 +43,8 @@ trait AmfObjectTestMatcher extends Assertions {
 
           values
             .zip(other)
-            .foreach({
-              case (exp, act) => assertRaw(field, act, exp)
+            .foreach({ case (exp, act) =>
+              assertRaw(field, act, exp)
             })
       }
     }

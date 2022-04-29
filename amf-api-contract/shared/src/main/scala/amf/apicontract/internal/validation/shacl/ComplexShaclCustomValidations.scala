@@ -40,7 +40,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlSerialization",
           name = "raml-shapes.xmlSerialization",
-          node = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1_raml-shapes.xmlSerialization_node"),
+          node = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1_raml-shapes.xmlSerialization_node")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
@@ -52,7 +52,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlWrapped",
           name = "raml-shapes.xmlWrapped",
-          in = Set("false"),
+          in = Set("false")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
@@ -64,7 +64,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlWrapped",
           name = "raml-shapes.xmlWrapped",
-          maxCount = Some("0"),
+          maxCount = Some("0")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
@@ -96,7 +96,7 @@ object ComplexShaclCustomValidations {
           name = "rdf.type",
           value = Some("http://a.ml/vocabularies/shapes#ScalarShape")
         )
-      ),
+      )
     ),
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1",
@@ -123,7 +123,7 @@ object ComplexShaclCustomValidations {
           ramlPropertyId = "raml-shapes.xmlSerialization",
           name = "raml-shapes.xmlSerialization",
           node =
-            Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node"),
+            Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
@@ -137,10 +137,10 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlAttribute",
           name = "raml-shapes.xmlAttribute",
-          maxCount = Some("0"),
+          maxCount = Some("0")
         )
       ),
-      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute"),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
     ),
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node",
@@ -151,7 +151,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlAttribute",
           name = "raml-shapes.xmlAttribute",
-          in = Set("false"),
+          in = Set("false")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
@@ -199,7 +199,7 @@ object ComplexShaclCustomValidations {
           ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
           name = "raml-shapes.schema",
           node =
-            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node"),
+            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -227,7 +227,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/apiContract#binding",
           name = "apiContract.binding",
-          in = Set("formData"),
+          in = Set("formData")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -242,7 +242,7 @@ object ComplexShaclCustomValidations {
           ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
           name = "raml-shapes.schema",
           node =
-            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node"),
+            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -269,8 +269,10 @@ object ComplexShaclCustomValidations {
       ramlMessage = Some("Path parameters must have the required property set to true"),
       oasMessage = Some("Path parameters must have the required property set to true"),
       targetClass = Set("http://a.ml/vocabularies/apiContract#Parameter"),
-      unionConstraints = List("http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
-                              "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
+      unionConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
+        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"
+      ),
       replacesFunctionConstraint = Some("pathParameterRequiredProperty")
     ),
     ValidationSpecification(
@@ -290,7 +292,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/apiContract#required",
           name = "apiContract.required",
-          in = Set("true"),
+          in = Set("true")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
@@ -304,7 +306,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "apiContract:binding",
           name = "apiContract:binding",
-          in = Set("path"),
+          in = Set("path")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
@@ -325,12 +327,12 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/document#externalValue",
           name = "doc.externalValue",
-          minCount = Some("1"),
+          minCount = Some("1")
         ),
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/document#structuredValue",
           name = "doc.structuredValue",
-          minCount = Some("1"),
+          minCount = Some("1")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields")
@@ -343,13 +345,16 @@ object ComplexShaclCustomValidations {
       ramlMessage = Some("Maximum must be greater than or equal to minimum"),
       oasMessage = Some("Maximum must be greater than or equal to minimum"),
       targetClass = Set("http://a.ml/vocabularies/shapes#ScalarShape"),
-      propertyConstraints = ArrayBuffer(PropertyConstraint(
-        ramlPropertyId = "http://www.w3.org/ns/shacl#minInclusive",
-        name = "shacl.minInclusive",
-        lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxInclusive")
-      )),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minInclusive",
+          name = "shacl.minInclusive",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxInclusive")
+        )
+      ),
       replacesFunctionConstraint = Some("minimumMaximumValidation")
-    ))
+    )
+  )
   val minMaxItemsValidation = List(
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#min-max-items",
@@ -358,11 +363,15 @@ object ComplexShaclCustomValidations {
       oasMessage = Some("MaxItems must be greater than or equal to minItems"),
       targetClass = Set("http://a.ml/vocabularies/shapes#ArrayShape"),
       propertyConstraints = ArrayBuffer(
-        PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
-                           name = "shacl.minCount",
-                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
+          name = "shacl.minCount",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount")
+        )
+      ),
       replacesFunctionConstraint = Some("minMaxItemsValidation")
-    ))
+    )
+  )
   val minMaxLengthValidation = List(
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#min-max-length",
@@ -371,11 +380,15 @@ object ComplexShaclCustomValidations {
       oasMessage = Some("MaxLength must be greater than or equal to minLength"),
       targetClass = Set("http://a.ml/vocabularies/shapes#Shape"),
       propertyConstraints = ArrayBuffer(
-        PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
-                           name = "shacl.minLength",
-                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
+          name = "shacl.minLength",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength")
+        )
+      ),
       replacesFunctionConstraint = Some("minMaxLengthValidation")
-    ))
+    )
+  )
   val minMaxPropertiesValidation = List(
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#min-max-properties",
@@ -383,13 +396,16 @@ object ComplexShaclCustomValidations {
       ramlMessage = Some("MaxProperties must be greater than or equal to minProperties"),
       oasMessage = Some("MaxProperties must be greater than or equal to minProperties"),
       targetClass = Set("http://www.w3.org/ns/shacl#NodeShape"),
-      propertyConstraints = ArrayBuffer(PropertyConstraint(
-        ramlPropertyId = "http://a.ml/vocabularies/shapes#minProperties",
-        name = "shapes.minProperties",
-        lessThanOrEqualsToProperty = Some("http://a.ml/vocabularies/shapes#maxProperties")
-      )),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/shapes#minProperties",
+          name = "shapes.minProperties",
+          lessThanOrEqualsToProperty = Some("http://a.ml/vocabularies/shapes#maxProperties")
+        )
+      ),
       replacesFunctionConstraint = Some("minMaxPropertiesValidation")
-    ))
+    )
+  )
 
   val defintions: Map[String, Seq[ValidationSpecification]] = Map(
     "xmlWrappedScalar"               -> xmlWrappedScalar,

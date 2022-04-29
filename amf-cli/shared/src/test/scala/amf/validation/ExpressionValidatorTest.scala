@@ -1,6 +1,10 @@
 package amf.validation
 
-import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, ExpressionValidator, Oas3ExpressionValidator}
+import amf.apicontract.internal.validation.runtimeexpression.{
+  AsyncExpressionValidator,
+  ExpressionValidator,
+  Oas3ExpressionValidator
+}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -29,18 +33,17 @@ class ExpressionValidatorTest extends AnyFunSuite with Matchers {
     ExpressionTest("$url", expected = false),
     ExpressionTest("$url.extension", expected = false),
     ExpressionTest("$statusCode", expected = false),
-    ExpressionTest("$response.header.Server", expected = false),
+    ExpressionTest("$response.header.Server", expected = false)
   )
 
   validateExpressions(oas3Expressions, Oas3ExpressionValidator, "OAS 3.0")
   validateExpressions(asyncExpressions, AsyncExpressionValidator, "Async 2.0")
 
   def validateExpressions(tests: Seq[ExpressionTest], validator: ExpressionValidator, specLabel: String): Unit = {
-    tests.foreach {
-      case ExpressionTest(text, expected) =>
-        test(s"$specLabel - '$text' validation should be $expected") {
-          validator.validate(text) should be(expected)
-        }
+    tests.foreach { case ExpressionTest(text, expected) =>
+      test(s"$specLabel - '$text' validation should be $expected") {
+        validator.validate(text) should be(expected)
+      }
     }
   }
 

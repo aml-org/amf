@@ -17,12 +17,14 @@ import org.yaml.model.{YMap, YMapEntry, YPart, YType}
 /*
   TODO: Refactor. Right now this implements refs for RAML and OAS json schemas as well proper json schemas. It should be modular. This refactor should be made alongside the OasTypeParser refactor.
  */
-class OasRefParser(map: YMap,
-                   name: String,
-                   nameAnnotations: Annotations,
-                   ast: YPart,
-                   adopt: Shape => Unit,
-                   version: SchemaVersion)(implicit val ctx: ShapeParserContext) {
+class OasRefParser(
+    map: YMap,
+    name: String,
+    nameAnnotations: Annotations,
+    ast: YPart,
+    adopt: Shape => Unit,
+    version: SchemaVersion
+)(implicit val ctx: ShapeParserContext) {
 
   private val REF_KEY = "$ref"
 
@@ -48,9 +50,8 @@ class OasRefParser(map: YMap,
         adopt(link)
         Some(link)
       case _ =>
-        /**
-          *  Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
-          *  now we work with canonical JSON schema pointers, not local refs
+        /** Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions
+          * (#/components in OAS 3) node now we work with canonical JSON schema pointers, not local refs
           */
         val referencedShape = ctx.findLocalJSONPath(rawRef) match {
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
@@ -85,10 +86,12 @@ class OasRefParser(map: YMap,
     }
   }
 
-  private def handleNotFoundJsonSchema(raw: String,
-                                       entry: YMapEntry,
-                                       rawOrResolvedRef: String,
-                                       declarationNameOrResolvedRef: String) = {
+  private def handleNotFoundJsonSchema(
+      raw: String,
+      entry: YMapEntry,
+      rawOrResolvedRef: String,
+      declarationNameOrResolvedRef: String
+  ) = {
     val tmpShape: UnresolvedShape =
       createAndRegisterUnresolvedShape(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
     ctx.registerJsonSchema(rawOrResolvedRef, tmpShape)
@@ -126,7 +129,8 @@ class OasRefParser(map: YMap,
       rawOrResolvedRef,
       None,
       Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
-      shouldLink = false).withName(declarationNameOrResolvedRef, Annotations()).withSupportsRecursion(true)
+      shouldLink = false
+    ).withName(declarationNameOrResolvedRef, Annotations()).withSupportsRecursion(true)
     tmpShape.unresolved(declarationNameOrResolvedRef, Nil, Some(entry.location))(ctx)
     tmpShape.withContext(ctx)
     adopt(tmpShape)
@@ -199,17 +203,20 @@ class OasRefParser(map: YMap,
     Some(copied)
   }
 
-  private def promoteParsedShape(ref: String,
-                                 text: String,
-                                 fullRef: String,
-                                 jsonSchemaShape: AnyShape): Option[AnyShape] = {
+  private def promoteParsedShape(
+      ref: String,
+      text: String,
+      fullRef: String,
+      jsonSchemaShape: AnyShape
+  ): Option[AnyShape] = {
     val promotedShape = ctx.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
     Some(
       promotedShape
         .link(AmfScalar(text), Annotations(ast) += ExternalFragmentRef(ref), Annotations.synthesized())
         .asInstanceOf[AnyShape]
         .withName(name, nameAnnotations)
-        .withSupportsRecursion(true))
+        .withSupportsRecursion(true)
+    )
   }
 
   private def parseRemoteSchema(ref: String, fullUrl: String): Option[AnyShape] = {

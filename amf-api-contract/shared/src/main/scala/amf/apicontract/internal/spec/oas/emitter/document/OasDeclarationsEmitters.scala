@@ -30,8 +30,8 @@ import org.yaml.model.YDocument.EntryBuilder
 import scala.collection.mutable.ListBuffer
 
 case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends PlatformSecrets {
+    implicit spec: OasSpecEmitterContext
+) extends PlatformSecrets {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -41,16 +41,19 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
 
     val result = ListBuffer[EntryEmitter]()
     result ++= OasDeclaredShapesEmitter(declarations.shapes.values.toSeq, ordering, references)(
-      OasLikeShapeEmitterContextAdapter(spec))
+      OasLikeShapeEmitterContextAdapter(spec)
+    )
 
     if (declarations.annotations.nonEmpty)
       result += OasAnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
 
     if (declarations.resourceTypes.nonEmpty)
-      result += AbstractDeclarationsEmitter("resourceTypes".asOasExtension,
-                                            declarations.resourceTypes.values.toSeq,
-                                            ordering,
-                                            Nil)
+      result += AbstractDeclarationsEmitter(
+        "resourceTypes".asOasExtension,
+        declarations.resourceTypes.values.toSeq,
+        ordering,
+        Nil
+      )
 
     if (declarations.traits.nonEmpty)
       result += AbstractDeclarationsEmitter("traits".asOasExtension, declarations.traits.values.toSeq, ordering, Nil)
@@ -80,18 +83,22 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     if (declarations.callbacks.nonEmpty) {
       val callbacks   = declarations.callbacks.values.flatten.toSeq
       val annotations = callbacks.headOption.map(_.annotations).getOrElse(Annotations())
-      result += EntryPartEmitter("callbacks",
-                                 OasCallbacksEmitter(callbacks, ordering, references, annotations),
-                                 position = pos(annotations))
+      result += EntryPartEmitter(
+        "callbacks",
+        OasCallbacksEmitter(callbacks, ordering, references, annotations),
+        position = pos(annotations)
+      )
     }
     result
   }
 }
 
-case class OasDeclaredParametersEmitter(oasParameters: Seq[OasParameter],
-                                        ordering: SpecOrdering,
-                                        references: Seq[BaseUnit],
-                                        key: String = "parameters")(implicit spec: OasSpecEmitterContext)
+case class OasDeclaredParametersEmitter(
+    oasParameters: Seq[OasParameter],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    key: String = "parameters"
+)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -105,8 +112,8 @@ case class OasDeclaredParametersEmitter(oasParameters: Seq[OasParameter],
 }
 
 case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+    implicit spec: OasSpecEmitterContext
+) extends EntryEmitter {
 
   override def position(): Position = pos(oasParameter.domainElement.annotations)
 
@@ -149,20 +156,22 @@ case class OasNamedRefEmitter(key: String, url: String, pos: Position = ZERO)(im
   override def position(): Position = pos
 }
 
-case class OasAnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+case class OasAnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry("annotationTypes".asOasExtension,
-            _.obj(traverse(ordering.sorted(properties.map(OasNamedPropertyTypeEmitter(_, ordering))), _)))
+    b.entry(
+      "annotationTypes".asOasExtension,
+      _.obj(traverse(ordering.sorted(properties.map(OasNamedPropertyTypeEmitter(_, ordering))), _))
+    )
   }
 
   override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       annotationType.name
@@ -190,18 +199,25 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
   override def position(): Position = pos(annotationType.annotations)
 }
 
-case class OasDeclaredResponsesEmitter(key: String,
-                                       responses: Seq[Response],
-                                       ordering: SpecOrdering,
-                                       references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+case class OasDeclaredResponsesEmitter(
+    key: String,
+    responses: Seq[Response],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
       _.obj(
-        traverse(ordering.sorted(
-                   responses.map(OasResponseEmitter(_, ordering, references: Seq[BaseUnit], isDeclaration = true))),
-                 _)))
+        traverse(
+          ordering.sorted(
+            responses.map(OasResponseEmitter(_, ordering, references: Seq[BaseUnit], isDeclaration = true))
+          ),
+          _
+        )
+      )
+    )
   }
 
   override def position(): Position = responses.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)

@@ -18,12 +18,14 @@ class ProductionValidationTest extends RamlResolutionTest {
   }
 
   multiGoldenTest("Recursive union raml to amf", "recursive-union.raml.%s") { config =>
-    cycle("recursive-union.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "recursive-union.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Recursive union raml to raml") {

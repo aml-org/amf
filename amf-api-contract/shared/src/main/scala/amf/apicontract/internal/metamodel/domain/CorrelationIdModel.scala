@@ -14,14 +14,16 @@ object CorrelationIdModel
     with DescriptionField
     with LinkableElementModel {
 
-  val Location = Field(Str,
-                       Core + "location",
-                       ModelDoc(ModelVocabularies.Core, "location", "Structural location of a piece of information"))
+  val Location = Field(
+    Str,
+    Core + "location",
+    ModelDoc(ModelVocabularies.Core, "location", "Structural location of a piece of information")
+  )
 
   override val `type`: List[ValueType] = Core + "CorrelationId" :: DomainElementModel.`type`
 
-  override val fields
-    : List[Field] = Name :: Description :: Location :: LinkableElementModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] =
+    Name :: Description :: Location :: LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = CorrelationId()
 

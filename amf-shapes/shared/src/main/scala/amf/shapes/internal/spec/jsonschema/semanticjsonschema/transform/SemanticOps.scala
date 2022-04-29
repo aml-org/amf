@@ -11,15 +11,15 @@ object SemanticOps {
 
   def findPrefix(iri: String, prefix: Map[String, String]): Option[String] = {
     prefix
-      .find {
-        case (_, value) => iri.startsWith(value)
+      .find { case (_, value) =>
+        iri.startsWith(value)
       }
       .map(_._1)
   }
 
   def expandIri(iri: String, prefixes: Map[String, String], default: Option[String]): String = {
     if (isCompactIri(iri)) {
-      val Array(prefix, postfix @ _ *) = iri.split(":")
+      val Array(prefix, postfix @ _*) = iri.split(":")
       if (prefix.isEmpty && default.nonEmpty) s"${default.get}$postfix"
       else
         prefixes

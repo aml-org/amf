@@ -20,7 +20,11 @@ class GrpcReferenceHandler() extends ReferenceHandler with GrpcASTParserHelper {
   def collectImports(antlr: AntlrParsedDocument, doc: String): CompilerReferenceCollector = {
     val root = antlr.ast.root()
     collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach { case stmt: Node =>
-      collector.+=(stmt.children.head.asInstanceOf[Terminal].value.replaceAll("\"", ""), LibraryReference, new SourceLocation(stmt.file, 0, 0, stmt.start.line, stmt.start.column, stmt.end.line, stmt.end.column))
+      collector.+=(
+        stmt.children.head.asInstanceOf[Terminal].value.replaceAll("\"", ""),
+        LibraryReference,
+        new SourceLocation(stmt.file, 0, 0, stmt.start.line, stmt.start.column, stmt.end.line, stmt.end.column)
+      )
     }
     collector
   }

@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class CharSetExtendedTest extends AsyncFunSuite with PlatformSecrets with Matchers {
 
-  val basePath                                             = "file://amf-cli/shared/src/test/resources/parser-results/charset/"
+  val basePath = "file://amf-cli/shared/src/test/resources/parser-results/charset/"
   implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   test("test parse UTF-8 with BOM") {
@@ -33,7 +33,7 @@ class CharSetExtendedTest extends AsyncFunSuite with PlatformSecrets with Matche
 
   object BomResourceLoader extends ResourceLoader {
 
-    private val BOM = 0xFEFF.toChar
+    private val BOM = 0xfeff.toChar
 
     override def fetch(resource: String): Future[Content] =
       platform.fs

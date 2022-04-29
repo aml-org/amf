@@ -10,9 +10,7 @@ import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendSchemasPrefix
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 
-/**
-  *
-  */
+/** */
 trait TagToReferenceEmitter extends PartEmitter {
   val link: DomainElement
 
@@ -69,8 +67,9 @@ case class OasShapeReferenceEmitter(link: DomainElement)(implicit val shapeSpec:
 
 object ReferenceEmitterHelper {
 
-  def emitLinkOr(l: DomainElement with Linkable, b: PartBuilder, refs: Seq[BaseUnit] = Nil)(fallback: => Unit)(
-      implicit spec: ShapeEmitterContext): Unit = {
+  def emitLinkOr(l: DomainElement with Linkable, b: PartBuilder, refs: Seq[BaseUnit] = Nil)(
+      fallback: => Unit
+  )(implicit spec: ShapeEmitterContext): Unit = {
     if (l.isLink)
       spec.tagToReferenceEmitter(l, refs).emit(b)
     else

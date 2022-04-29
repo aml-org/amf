@@ -10,25 +10,31 @@ trait ParametersFieldModel {
   val Headers = Field(
     Array(ParameterModel),
     ApiContract + "header",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "header",
-             "Parameter passed as a header to an operation for communication models")
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "header",
+      "Parameter passed as a header to an operation for communication models"
+    )
   )
 
   val QueryParameters = Field(
     Array(ParameterModel),
     ApiContract + "parameter",
-    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Parameters associated to the communication model"))
+    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Parameters associated to the communication model")
+  )
 
   val QueryString = Field(
     ShapeModel,
     ApiContract + "queryString",
-    ModelDoc(ModelVocabularies.ApiContract, "queryString", "Query string for the communication model"))
+    ModelDoc(ModelVocabularies.ApiContract, "queryString", "Query string for the communication model")
+  )
 
   val UriParameters =
-    Field(Array(ParameterModel),
-          ApiContract + "uriParameter",
-          ModelDoc(ModelVocabularies.ApiContract, "uri parameter", ""))
+    Field(
+      Array(ParameterModel),
+      ApiContract + "uriParameter",
+      ModelDoc(ModelVocabularies.ApiContract, "uri parameter", "")
+    )
 
 }
 

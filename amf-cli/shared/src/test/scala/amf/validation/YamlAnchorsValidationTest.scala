@@ -46,7 +46,7 @@ class YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with Payload
   }
 
   test("parsing and resolution violation - raml resolution with examples") {
-    val api    = """#%RAML 1.0
+    val api = """#%RAML 1.0
                           |title: my API
                           |/person:
                           |  get:
@@ -75,7 +75,7 @@ class YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with Payload
   }
 
   test("parsing and resolution violation - oas with examples") {
-    val api    = """swagger: '2.0'
+    val api = """swagger: '2.0'
                           |info:
                           |  version: 1.0.0
                           |  title: test

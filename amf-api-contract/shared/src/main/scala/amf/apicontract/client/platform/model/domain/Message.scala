@@ -9,8 +9,7 @@ import amf.shapes.client.platform.model.domain.{CreativeWork, Example, NodeShape
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Message model class.
+/** Message model class.
   */
 @JSExportAll
 class Message(override private[amf] val _internal: InternalMessage)

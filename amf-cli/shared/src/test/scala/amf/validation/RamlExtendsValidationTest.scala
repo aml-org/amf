@@ -15,8 +15,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Resource type with closed shape from parameter") {
-    validate("/resource_types/invalid/resource-type-closed-parametrized-shape.raml",
-             Some("resource-type-closed-parametrized-shape.report"))
+    validate(
+      "/resource_types/invalid/resource-type-closed-parametrized-shape.raml",
+      Some("resource-type-closed-parametrized-shape.report")
+    )
   }
 
   test("Trait with closed shape") {
@@ -42,13 +44,17 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Missing parameter in resource type key") {
-    validate("/resource_types/invalid/resource-type-missing-parameter-in-key.raml",
-             Some("resource-type-missing-parameter-in-key.report"))
+    validate(
+      "/resource_types/invalid/resource-type-missing-parameter-in-key.raml",
+      Some("resource-type-missing-parameter-in-key.report")
+    )
   }
 
   test("Missing parameter in resource type value") {
-    validate("/resource_types/invalid/resource-type-missing-parameter-in-value.raml",
-             Some("resource-type-missing-parameter-in-value.report"))
+    validate(
+      "/resource_types/invalid/resource-type-missing-parameter-in-value.raml",
+      Some("resource-type-missing-parameter-in-value.report")
+    )
   }
 
   // Optional methods
@@ -84,8 +90,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Special parameter cases (null, string with spaces, etc.)
 
   test("Advanced parameter cases in resource types") {
-    validate("/resource_types/resource-type-advanced-parameter-cases.raml",
-             Some("resource-type-advanced-parameter-cases.report"))
+    validate(
+      "/resource_types/resource-type-advanced-parameter-cases.raml",
+      Some("resource-type-advanced-parameter-cases.report")
+    )
   }
 
   test("Advanced parameter cases in traits") {
@@ -95,8 +103,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Complex cases
 
   test("Nested case with closed shape validations") {
-    validate("/extends/complex-cases/complexCasesWithClosedShapeValidations.raml",
-             Some("complex-case-with-closed-shape-validations.report"))
+    validate(
+      "/extends/complex-cases/complexCasesWithClosedShapeValidations.raml",
+      Some("complex-case-with-closed-shape-validations.report")
+    )
   }
 
   ignore("Non applied extends declarations with closed shape validations") {
@@ -119,28 +129,38 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Merge payloads
 
   test("Single media type defined unequally in request") {
-    validate("/extends/merging-payloads/media-type-single-request/unequallyDefined.raml",
-             Some("unequallyDefinedPayloads.report"))
+    validate(
+      "/extends/merging-payloads/media-type-single-request/unequallyDefined.raml",
+      Some("unequallyDefinedPayloads.report")
+    )
   }
 
   test("Single media type defined unequally in response") {
-    validate("/extends/merging-payloads/media-type-single-response/unequallyDefined.raml",
-             Some("unequallyDefinedPayloadsResponse.report"))
+    validate(
+      "/extends/merging-payloads/media-type-single-response/unequallyDefined.raml",
+      Some("unequallyDefinedPayloadsResponse.report")
+    )
   }
 
   test("Multiple media types defined unequally") {
-    validate("/extends/merging-payloads/media-type-multiple/unequallyDefinedMultiple.raml",
-             Some("unequallyDefinedMultiplePayloads.report"))
+    validate(
+      "/extends/merging-payloads/media-type-multiple/unequallyDefinedMultiple.raml",
+      Some("unequallyDefinedMultiplePayloads.report")
+    )
   }
 
   test("Merge payloads in nested extends") {
-    validate("/extends/merging-payloads/multiple-merges/multipleMerges.raml",
-             Some("payloadMergingMultipleMerges.report"))
+    validate(
+      "/extends/merging-payloads/multiple-merges/multipleMerges.raml",
+      Some("payloadMergingMultipleMerges.report")
+    )
   }
 
   test("Merging extends with no payload") {
-    validate("/extends/merging-payloads/merging-extends-with-no-payload.raml",
-             Some("merging-extends-with-no-payload.report"))
+    validate(
+      "/extends/merging-payloads/merging-extends-with-no-payload.raml",
+      Some("merging-extends-with-no-payload.report")
+    )
   }
 
   test("Merge extends with empty payload") {
@@ -164,8 +184,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Inexistent references from parameters in optional operations") {
-    validate("/extends/references/resource-types/parametrized-optional-inexistent.raml",
-             Some("references/resource-types/parametrized-optional-inexsistent.report"))
+    validate(
+      "/extends/references/resource-types/parametrized-optional-inexistent.raml",
+      Some("references/resource-types/parametrized-optional-inexsistent.report")
+    )
   }
 
   test("Inexistent reference in trait") {
@@ -196,8 +218,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Nested traits and inexistent trait") {
-    validate("/extends/references/nestedTraitsWithInexistentTrait.raml",
-             Some("references/nestedTraitsWithInexistentTrait.report"))
+    validate(
+      "/extends/references/nestedTraitsWithInexistentTrait.raml",
+      Some("references/nestedTraitsWithInexistentTrait.report")
+    )
   }
 
   test("Nested resource types and inexistent resource type") {
@@ -240,9 +264,11 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Merging optional nodes in traits") {
-    validate("/extends/optional-raml08-nodes/traits.raml",
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/extends/optional-raml08-nodes/traits.raml",
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Uri parameter in resource type") {
@@ -254,15 +280,19 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   test("Uri parameter in multi-level endpoints") {
-    validate("/extends/uri-parameters/multi-level-endpoints.raml",
-             Some("uri-parameters-in-multilevel-rt-with-multilevel-endpoints.report"))
+    validate(
+      "/extends/uri-parameters/multi-level-endpoints.raml",
+      Some("uri-parameters-in-multilevel-rt-with-multilevel-endpoints.report")
+    )
   }
 
   // Merging security schemes
   test("Merging security schemes in RAML 0.8") {
-    validate("extends/raml08-with-security-schemes-in-trait.raml",
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "extends/raml08-with-security-schemes-in-trait.raml",
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Merging security schemes in RAML 1.0") {
@@ -279,18 +309,24 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
   // Payload merging
 
   test("Single media type defined equally in request") {
-    validate("/extends/merging-payloads/media-type-single-request/equallyDefined.raml",
-             Some("equallyDefinedPayloads.report"))
+    validate(
+      "/extends/merging-payloads/media-type-single-request/equallyDefined.raml",
+      Some("equallyDefinedPayloads.report")
+    )
   }
 
   test("Single media type defined equally in response") {
-    validate("/extends/merging-payloads/media-type-single-response/equallyDefined.raml",
-             Some("equallyDefinedPayloadsResponse.report"))
+    validate(
+      "/extends/merging-payloads/media-type-single-response/equallyDefined.raml",
+      Some("equallyDefinedPayloadsResponse.report")
+    )
   }
 
   test("Multiple media types defined equally") {
-    validate("/extends/merging-payloads/media-type-multiple/equallyDefinedMultiple.raml",
-             Some("equallyDefinedMultiplePayloads.report"))
+    validate(
+      "/extends/merging-payloads/media-type-multiple/equallyDefinedMultiple.raml",
+      Some("equallyDefinedMultiplePayloads.report")
+    )
   }
 
   // References
@@ -310,8 +346,10 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
   // Examples validation
 
   test("Optional method as parameter value") {
-    validate("/resource_types/optionalMethodAsParameterValue.raml",
-             Some("resource-types/optionalMethodAsParameterValue.report"))
+    validate(
+      "/resource_types/optionalMethodAsParameterValue.raml",
+      Some("resource-types/optionalMethodAsParameterValue.report")
+    )
   }
 
   test("Examples validations in resource types") {
@@ -319,7 +357,9 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
   }
 
   test("Parametrized includes in examples tag") {
-    validate("/resource_types/parametrized-includes-of-examples/api.raml",
-             Some("resource-types/parametrizedIncludesOfExamples.report"))
+    validate(
+      "/resource_types/parametrized-includes-of-examples/api.raml",
+      Some("resource-types/parametrizedIncludesOfExamples.report")
+    )
   }
 }

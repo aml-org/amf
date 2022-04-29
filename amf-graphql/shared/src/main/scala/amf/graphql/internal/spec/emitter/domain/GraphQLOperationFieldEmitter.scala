@@ -9,15 +9,16 @@ import amf.graphql.plugins.parse.GraphQLParsePlugin.unpackNilUnion
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 
-case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLEmitterContext, b: StringDocBuilder) extends GraphQLEmitter {
+case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLEmitterContext, b: StringDocBuilder)
+    extends GraphQLEmitter {
 
   def emit(): Unit = {
     val name = operation.name.value()
     val arguments = operation.request.queryParameters.map { arg =>
       GraphQLArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
-    val isMultiLine = arguments.exists(_.documentation.nonEmpty)
-    val range = operation.responses.head.payload.schema
+    val isMultiLine  = arguments.exists(_.documentation.nonEmpty)
+    val range        = operation.responses.head.payload.schema
     val returnedType = typeTarget(range)
 
     b.fixed { f =>
@@ -26,7 +27,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
           f.fixed { f =>
             documentationEmitter(desc, f, Some(pos(operation.annotations)))
           }
-        case _          => // ignore
+        case _ => // ignore
       }
       if (isMultiLine) {
         f.+=(s"$name(", pos(operation.annotations))
@@ -37,7 +38,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
                 documentationEmitter(doc, f)
               }
 
-              if (i < arguments.length-1) {
+              if (i < arguments.length - 1) {
                 f.+=(s"$data,")
               } else {
                 f.+=(data)

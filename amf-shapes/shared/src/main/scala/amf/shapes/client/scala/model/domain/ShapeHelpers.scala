@@ -30,10 +30,12 @@ trait ShapeHelpers { this: Shape =>
     case _ =>
   }
 
-  def cloneShape(recursionErrorHandler: Option[AMFErrorHandler],
-                 withRecursionBase: Option[String] = None,
-                 traversal: ShapeTraversalRegistry = ShapeTraversalRegistry(),
-                 cloneExamples: Boolean = false): this.type = {
+  def cloneShape(
+      recursionErrorHandler: Option[AMFErrorHandler],
+      withRecursionBase: Option[String] = None,
+      traversal: ShapeTraversalRegistry = ShapeTraversalRegistry(),
+      cloneExamples: Boolean = false
+  ): this.type = {
     if (traversal.isInCurrentPath(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
     } else if (this.isLink) this
@@ -61,10 +63,12 @@ trait ShapeHelpers { this: Shape =>
     }
   }
 
-  protected def buildFixPoint(id: Option[String],
-                              name: String,
-                              link: Linkable,
-                              recursionErrorHandler: Option[AMFErrorHandler]): RecursiveShape = {
+  protected def buildFixPoint(
+      id: Option[String],
+      name: String,
+      link: Linkable,
+      recursionErrorHandler: Option[AMFErrorHandler]
+  ): RecursiveShape = {
     if (recursionErrorHandler.isDefined && link.supportsRecursion.option().isEmpty) {
       recursionErrorHandler.get.violation(
         RecursiveShapeSpecification,

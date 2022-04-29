@@ -31,8 +31,9 @@ class PayloadValidationPlugin(val profile: ProfileName)
 
   override def applies(element: ValidationInfo): Boolean = super.applies(element)
 
-  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[AMFValidationReport] = {
     val collectors  = Seq(PayloadsInApiCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector)
     val validations = effectiveOrException(options.config, profile)
 
@@ -48,7 +49,8 @@ class PayloadValidationPlugin(val profile: ProfileName)
 
   private def buildValidationWithCustomLevelForProfile(
       result: AMFValidationResult,
-      validations: EffectiveValidations): Option[AMFValidationResult] = {
+      validations: EffectiveValidations
+  ): Option[AMFValidationResult] = {
     Some(result.copy(severityLevel = findLevel(result.validationId, validations)))
   }
 }

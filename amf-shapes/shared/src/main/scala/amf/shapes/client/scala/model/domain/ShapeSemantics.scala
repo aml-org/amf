@@ -62,9 +62,7 @@ object DefaultVocabulary {
     new DefaultVocabulary(Fields(), annotations)
 }
 
-class CuriePrefix(override val fields: Fields, val annotations: Annotations)
-    extends DomainElement
-    with WithContextIri {
+class CuriePrefix(override val fields: Fields, val annotations: Annotations) extends DomainElement with WithContextIri {
 
   def withAlias(alias: String): this.type = set(CuriePrefixModel.Alias, AmfScalar(alias, Annotations()))
   def alias: StrField                     = fields.field(CuriePrefixModel.Alias)
@@ -221,7 +219,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
       merged.withBase(base)
     }
 
-    //vocab
+    // vocab
     toMerge.vocab.foreach { vocab =>
       merged.withVocab(vocab)
     }

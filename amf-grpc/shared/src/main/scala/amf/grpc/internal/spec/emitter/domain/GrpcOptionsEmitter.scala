@@ -37,7 +37,7 @@ case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringD
       case node: ScalarNode =>
         node.dataType.option().getOrElse(DataType.String) match {
           case DataType.String => builder += (prefix + " \"" + node.value.value() + "\"" + eol, pos(node.annotations))
-          case _ => builder += (s"$prefix ${node.value.value()}$eol", pos(node.annotations))
+          case _               => builder += (s"$prefix ${node.value.value()}$eol", pos(node.annotations))
         }
       case node: ObjectNode =>
         builder.fixed { f =>

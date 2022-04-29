@@ -12,9 +12,11 @@ import amf.shapes.internal.spec.{RamlTypeDefMatcher, TypeName}
 import scala.collection.mutable
 
 class EscapeTypeNames() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty

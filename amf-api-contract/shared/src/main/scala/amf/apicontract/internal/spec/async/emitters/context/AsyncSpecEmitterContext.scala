@@ -37,23 +37,27 @@ abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmit
     (types, references, ordering) =>
       AsyncDeclaredTypesEmitters.obtainEmitter(types, references, ordering, spec.renderConfig)
 
-  def recursiveShapeEmitter(shape: RecursiveShape,
-                            ordering: SpecOrdering,
-                            schemaPath: Seq[(String, String)]): EntryEmitter =
+  def recursiveShapeEmitter(
+      shape: RecursiveShape,
+      ordering: SpecOrdering,
+      schemaPath: Seq[(String, String)]
+  ): EntryEmitter =
     OasRecursiveShapeEmitter(shape, ordering, schemaPath)
 
-  def typeEmitters(shape: Shape,
-                   ordering: SpecOrdering,
-                   ignored: Seq[Field] = Nil,
-                   references: Seq[BaseUnit],
-                   pointer: Seq[String] = Nil,
-                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter] =
+  def typeEmitters(
+      shape: Shape,
+      ordering: SpecOrdering,
+      ignored: Seq[Field] = Nil,
+      references: Seq[BaseUnit],
+      pointer: Seq[String] = Nil,
+      schemaPath: Seq[(String, String)] = Nil
+  ): Seq[Emitter] =
     OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
 }
 
 case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
     extends AsyncSpecEmitterFactory()(spec) {
-  //TODO ASYNC complete this
+  // TODO ASYNC complete this
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter = ???
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter = ???
@@ -61,7 +65,7 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter = ???
 
   override def parametrizedSecurityEmitter
-    : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter = ???
+      : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter = ???
 
   override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
     OasSecurityRequirementEmitter.apply
@@ -71,10 +75,11 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
   override def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
 }
 
-abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
-                                       refEmitter: RefEmitter = AsyncRefEmitter,
-                                       config: RenderConfiguration)
-    extends OasLikeSpecEmitterContext(eh, refEmitter, config) {
+abstract class AsyncSpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = AsyncRefEmitter,
+    config: RenderConfiguration
+) extends OasLikeSpecEmitterContext(eh, refEmitter, config) {
 
   def schemasDeclarationsPath: String
 
@@ -84,11 +89,12 @@ abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
   override val factory: AsyncSpecEmitterFactory
 }
 
-class Async20SpecEmitterContext(eh: AMFErrorHandler,
-                                refEmitter: RefEmitter = AsyncRefEmitter,
-                                config: RenderConfiguration,
-                                val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)
-    extends AsyncSpecEmitterContext(eh, refEmitter, config) {
+class Async20SpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = AsyncRefEmitter,
+    config: RenderConfiguration,
+    val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion
+) extends AsyncSpecEmitterContext(eh, refEmitter, config) {
 
   override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 

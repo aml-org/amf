@@ -28,22 +28,26 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class ExtendsHelper(profile: ProfileName,
-                         keepEditingInfo: Boolean,
-                         errorHandler: AMFErrorHandler,
-                         config: AMFGraphConfiguration,
-                         context: Option[RamlWebApiContext] = None) {
+case class ExtendsHelper(
+    profile: ProfileName,
+    keepEditingInfo: Boolean,
+    errorHandler: AMFErrorHandler,
+    config: AMFGraphConfiguration,
+    context: Option[RamlWebApiContext] = None
+) {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
     case Raml08Profile => new CustomRaml08WebApiContext(config)
     case _             => new CustomRaml10WebApiContext(config)
   }
 
-  def asOperation[T <: BaseUnit](node: DataNode,
-                                 unit: T,
-                                 name: String,
-                                 trAnnotations: Annotations,
-                                 extensionId: String,
-                                 configuration: AMFGraphConfiguration): Operation = {
+  def asOperation[T <: BaseUnit](
+      node: DataNode,
+      unit: T,
+      name: String,
+      trAnnotations: Annotations,
+      extensionId: String,
+      configuration: AMFGraphConfiguration
+  ): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
@@ -53,17 +57,18 @@ case class ExtendsHelper(profile: ProfileName,
     entryAsOperation(unit, name, extensionId, entry, configuration, referencesCollector)
   }
 
-  def parseOperation[T <: BaseUnit](unit: T,
-                                    name: String,
-                                    extensionId: String,
-                                    entry: YMapEntry,
-                                    referencesCollector: mutable.Map[String, DomainElement] =
-                                      mutable.Map[String, DomainElement]()): Operation = {
+  def parseOperation[T <: BaseUnit](
+      unit: T,
+      name: String,
+      extensionId: String,
+      entry: YMapEntry,
+      referencesCollector: mutable.Map[String, DomainElement] = mutable.Map[String, DomainElement]()
+  ): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     extractContextDeclarationsFrom(unit, entry.value.sourceName)(ctx)
-    referencesCollector.foreach {
-      case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
+    referencesCollector.foreach { case (alias, ref) =>
+      ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
     val operation: Operation = {
@@ -85,24 +90,27 @@ case class ExtendsHelper(profile: ProfileName,
     operation
   }
 
-  def entryAsOperation[T <: BaseUnit](unit: T,
-                                      name: String,
-                                      extensionId: String,
-                                      entry: YMapEntry,
-                                      configuration: AMFGraphConfiguration,
-                                      referencesCollector: mutable.Map[String, DomainElement] =
-                                        mutable.Map[String, DomainElement]()): Operation = {
+  def entryAsOperation[T <: BaseUnit](
+      unit: T,
+      name: String,
+      extensionId: String,
+      entry: YMapEntry,
+      configuration: AMFGraphConfiguration,
+      referencesCollector: mutable.Map[String, DomainElement] = mutable.Map[String, DomainElement]()
+  ): Operation = {
 
     val operation = parseOperation(unit, name, extensionId, entry, referencesCollector)
     new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(operation, errorHandler, configuration)
   }
 
-  def asEndpoint[T <: BaseUnit](unit: T,
-                                node: DataNode,
-                                rtAnnotations: Annotations,
-                                name: String,
-                                extensionId: String,
-                                configuration: AMFGraphConfiguration): EndPoint = {
+  def asEndpoint[T <: BaseUnit](
+      unit: T,
+      node: DataNode,
+      rtAnnotations: Annotations,
+      name: String,
+      extensionId: String,
+      configuration: AMFGraphConfiguration
+  ): EndPoint = {
 
     val ctx = context.getOrElse(custom(profile))
 
@@ -117,7 +125,8 @@ case class ExtendsHelper(profile: ProfileName,
       node: DataNode,
       rtAnnotations: Annotations,
       name: String,
-      referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
+      referencesCollector: mutable.Map[String, DomainElement]
+  )(implicit ctx: WebApiContext) = {
     val refIds: mutable.Map[YNode, String] = mutable.Map.empty
     val document = YDocument(
       {
@@ -152,20 +161,21 @@ case class ExtendsHelper(profile: ProfileName,
     else SpecOrdering.Default
   }
 
-  def entryAsEndpoint[T <: BaseUnit](unit: T,
-                                     node: DataNode,
-                                     name: String,
-                                     extensionId: String,
-                                     entry: YMapEntry,
-                                     configuration: AMFGraphConfiguration,
-                                     referencesCollector: mutable.Map[String, DomainElement] =
-                                       mutable.Map[String, DomainElement]()): EndPoint = {
+  def entryAsEndpoint[T <: BaseUnit](
+      unit: T,
+      node: DataNode,
+      name: String,
+      extensionId: String,
+      entry: YMapEntry,
+      configuration: AMFGraphConfiguration,
+      referencesCollector: mutable.Map[String, DomainElement] = mutable.Map[String, DomainElement]()
+  ): EndPoint = {
     val ctx       = context.getOrElse(custom(profile))
     val collector = ListBuffer[EndPoint]()
 
     extractContextDeclarationsFrom(unit, entry.sourceName)(ctx)
-    referencesCollector.foreach {
-      case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
+    referencesCollector.foreach { case (alias, ref) =>
+      ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
     ctx.adapt(name) { ctxForResourceType =>
@@ -214,8 +224,10 @@ case class ExtendsHelper(profile: ProfileName,
       .map(_.location)
       .contains(sourceName)
 
-  private def extractFilteredDeclarations(unit: BaseUnit,
-                                          filterCondition: DomainElement => Boolean): Seq[DomainElement] = {
+  private def extractFilteredDeclarations(
+      unit: BaseUnit,
+      filterCondition: DomainElement => Boolean
+  ): Seq[DomainElement] = {
     unit match {
       case d: DeclaresModel => d.declares.filter(filterCondition)
       case _                => Nil
@@ -223,20 +235,22 @@ case class ExtendsHelper(profile: ProfileName,
   }
 
   /** Extract declarations with root and local names from the root API base unit and the base unit declaring the
-    *  RT/Trait, identified by its source name.
-    * @param root root API base unit
-    * @param sourceName source name of the base unit declaring the RT/Trait
-    * @param ctx context to populate with declarations
+    * RT/Trait, identified by its source name.
+    * @param root
+    *   root API base unit
+    * @param sourceName
+    *   source name of the base unit declaring the RT/Trait
+    * @param ctx
+    *   context to populate with declarations
     */
   private def extractContextDeclarationsFrom(root: BaseUnit, sourceName: String)(ctx: RamlWebApiContext): Unit = {
     val declaringUnit     = getDeclaringUnit(root.references.toList, sourceName).getOrElse(root)
     val libraries         = extractFilteredDeclarations(declaringUnit, _.isInstanceOf[Module]).map((_, declaringUnit))
     val otherDeclarations = extractFilteredDeclarations(root, !_.isInstanceOf[Module]).map((_, root))
 
-    libraries ++ otherDeclarations foreach {
-      case (declaration, unit) =>
-        ctx.declarations += declaration
-        extractDeclarationToContextWithLocalAndRootName(declaration, unit)(ctx)
+    libraries ++ otherDeclarations foreach { case (declaration, unit) =>
+      ctx.declarations += declaration
+      extractDeclarationToContextWithLocalAndRootName(declaration, unit)(ctx)
     }
 
     // gives priority to references of fragments or modules over those in root file, this order can be adjusted
@@ -273,27 +287,27 @@ case class ExtendsHelper(profile: ProfileName,
   }
 
   private def extractDeclarationToContextWithLocalAndRootName(declaration: DomainElement, local: BaseUnit)(
-      ctx: RamlWebApiContext): Unit = {
+      ctx: RamlWebApiContext
+  ): Unit = {
     declaration.annotations.find(classOf[ResolvedNamedEntity]) match {
       case Some(resolvedNamedEntity) =>
-        resolvedNamedEntity.vals.foreach {
-          case (_, localDeclarations) =>
-            ctx.declarations += declaration
-            declaration match {
-              // we recover the local alias we removed when resolving
-              case element: NamedDomainElement =>
-                for {
-                  location         <- local.location()
-                  localDeclaration <- localDeclarations.find(e => e.location().contains(location))
-                  localName        <- localDeclaration.name.option()
-                  realName         <- element.name.option()
-                } yield {
-                  element.withName(localName)
-                  ctx.declarations += declaration
-                  element.withName(realName) // This is useless?
-                }
-              case _ =>
-            }
+        resolvedNamedEntity.vals.foreach { case (_, localDeclarations) =>
+          ctx.declarations += declaration
+          declaration match {
+            // we recover the local alias we removed when resolving
+            case element: NamedDomainElement =>
+              for {
+                location         <- local.location()
+                localDeclaration <- localDeclarations.find(e => e.location().contains(location))
+                localName        <- localDeclaration.name.option()
+                realName         <- element.name.option()
+              } yield {
+                element.withName(localName)
+                ctx.declarations += declaration
+                element.withName(realName) // This is useless?
+              }
+            case _ =>
+          }
         }
       case _ => ctx.declarations += declaration
     }

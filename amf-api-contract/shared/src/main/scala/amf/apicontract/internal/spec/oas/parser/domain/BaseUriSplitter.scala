@@ -1,8 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
-/**
-  *
-  */
+/** */
 class BaseUriSplitter(val protocol: String, val domain: String, val path: String) {
 
   def url(): String =

@@ -7,39 +7,52 @@ import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 
 object AMFRawValidations {
 
-  /**
-    * @param uri                 URI of the validation, null to auto-generate
-    * @param message             Optional message for the validation, propagates to all spec-specific messages if they're all empty
-    * @param owlClass            Optional OWL class target of the validation
-    * @param owlProperty         Optional OWL property target of the validation
-    * @param target              Default is "sh(path)"
-    * @param constraint          URI of the constraint component
-    * @param value               Value for the constraint component. Default is "0"
-    * @param ramlErrorMessage    (optional) specify the validation message thrown in raml
-    * @param openApiErrorMessage (optional) specify the validation message thrown in Oas
-    * @param severity            The severity of the validation: VIOLATION | WARNING | INFO. Default is VIOLATION
+  /** @param uri
+    *   URI of the validation, null to auto-generate
+    * @param message
+    *   Optional message for the validation, propagates to all spec-specific messages if they're all empty
+    * @param owlClass
+    *   Optional OWL class target of the validation
+    * @param owlProperty
+    *   Optional OWL property target of the validation
+    * @param target
+    *   Default is "sh(path)"
+    * @param constraint
+    *   URI of the constraint component
+    * @param value
+    *   Value for the constraint component. Default is "0"
+    * @param ramlErrorMessage
+    *   (optional) specify the validation message thrown in raml
+    * @param openApiErrorMessage
+    *   (optional) specify the validation message thrown in Oas
+    * @param severity
+    *   The severity of the validation: VIOLATION | WARNING | INFO. Default is VIOLATION
     */
-  class AMFValidation(val uri: Option[String],
-                      val message: Option[String],
-                      val owlClass: String,
-                      val owlProperty: String,
-                      val target: String,
-                      val constraint: String,
-                      val value: String,
-                      val ramlErrorMessage: String,
-                      val openApiErrorMessage: String,
-                      val severity: String)
+  class AMFValidation(
+      val uri: Option[String],
+      val message: Option[String],
+      val owlClass: String,
+      val owlProperty: String,
+      val target: String,
+      val constraint: String,
+      val value: String,
+      val ramlErrorMessage: String,
+      val openApiErrorMessage: String,
+      val severity: String
+  )
   object AMFValidation {
-    def fromStrings(uri: String = "",
-                    message: String = "",
-                    owlClass: String,
-                    owlProperty: String,
-                    target: String = "sh:path",
-                    constraint: String,
-                    value: String = "0",
-                    ramlErrorMessage: String = "",
-                    openApiErrorMessage: String = "",
-                    severity: String = SeverityLevels.VIOLATION): AMFValidation = {
+    def fromStrings(
+        uri: String = "",
+        message: String = "",
+        owlClass: String,
+        owlProperty: String,
+        target: String = "sh:path",
+        constraint: String,
+        value: String = "0",
+        ramlErrorMessage: String = "",
+        openApiErrorMessage: String = "",
+        severity: String = SeverityLevels.VIOLATION
+    ): AMFValidation = {
 
       def iri(s: String) = Namespace.defaultAliases.uri(s).iri()
       val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
@@ -58,16 +71,18 @@ object AMFRawValidations {
       )
     }
 
-    def apply(uri: Option[ValueType] = None,
-              message: String = "",
-              owlClass: ValueType,
-              owlProperty: ValueType,
-              target: ValueType = sh("path"),
-              constraint: ValueType,
-              value: String = "0",
-              ramlErrorMessage: String = "",
-              openApiErrorMessage: String = "",
-              severity: String = SeverityLevels.VIOLATION): AMFValidation = {
+    def apply(
+        uri: Option[ValueType] = None,
+        message: String = "",
+        owlClass: ValueType,
+        owlProperty: ValueType,
+        target: ValueType = sh("path"),
+        constraint: ValueType,
+        value: String = "0",
+        ramlErrorMessage: String = "",
+        openApiErrorMessage: String = "",
+        severity: String = SeverityLevels.VIOLATION
+    ): AMFValidation = {
 
       val sameMessage = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
@@ -125,7 +140,7 @@ object AMFRawValidations {
     constraint = minCount,
     value = "1",
     ramlErrorMessage = "RAML Type information is mandatory for parameters",
-    openApiErrorMessage = "Schema/type information required for Parameter objects",
+    openApiErrorMessage = "Schema/type information required for Parameter objects"
   )
 
   // applying base api validations with specific WebAPI and AsyncAPI keys due to backwards compatibility
@@ -482,7 +497,7 @@ object AMFRawValidations {
         owlClass = shape("ArrayShape"),
         owlProperty = sh("qualifiedMinCount"),
         constraint = dataType,
-        value = integer,
+        value = integer
       ),
       AMFValidation(
         message = "maxContains for an array type must be an integer",
@@ -674,7 +689,7 @@ object AMFRawValidations {
         message = "Pattern is not valid",
         owlClass = shape("ScalarShape"),
         owlProperty = sh("pattern"),
-        constraint = shape("patternValidation"),
+        constraint = shape("patternValidation")
       ),
       AMFValidation(
         owlClass = sh("NodeShape"),
@@ -971,7 +986,7 @@ object AMFRawValidations {
         message = "MaxProperties must be greater than or equal to minProperties",
         owlClass = sh("NodeShape"),
         owlProperty = shape("minProperties"),
-        constraint = shape("minMaxPropertiesValidation"),
+        constraint = shape("minMaxPropertiesValidation")
       )
     )
 
@@ -1412,7 +1427,7 @@ object AMFRawValidations {
         message = "Discriminator must be in the objects required properties",
         constraint = shape("discriminatorInRequiredProperties"),
         owlClass = sh("NodeShape"),
-        owlProperty = shape("discriminator"),
+        owlProperty = shape("discriminator")
       ),
       AMFValidation(
         message = "Security scheme type should be one of the supported ones",
@@ -1523,7 +1538,7 @@ object AMFRawValidations {
         owlClass = apiContract("Tag"),
         owlProperty = core("name"),
         constraint = sh("minLength"),
-        value = "1",
+        value = "1"
       )
     )
 
@@ -1556,7 +1571,7 @@ object AMFRawValidations {
         constraint = sh("pattern"),
         value =
           """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
-        openApiErrorMessage = "Field 'email' must be in the format of an email address",
+        openApiErrorMessage = "Field 'email' must be in the format of an email address"
       )
   }
 
@@ -1578,8 +1593,7 @@ object AMFRawValidations {
       case Async20Profile => Async20Validations
       case AmfProfile     => AmfValidations
       case _ =>
-        () =>
-          Seq.empty
+        () => Seq.empty
     }
   }
 }

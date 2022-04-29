@@ -6,8 +6,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-abstract class DataArrangeShape(override private[amf] val _internal: DataArrangementShape)
-    extends AnyShape(_internal) {
+abstract class DataArrangeShape(override private[amf] val _internal: DataArrangementShape) extends AnyShape(_internal) {
 
   def minItems: IntField     = _internal.minItems
   def maxItems: IntField     = _internal.maxItems

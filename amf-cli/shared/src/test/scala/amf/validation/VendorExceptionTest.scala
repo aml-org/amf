@@ -18,29 +18,34 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Empty RAML master API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
-      parse(basePath + "/empty-raml.raml",
-            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
+      parse(basePath + "/empty-raml.raml", OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
     }
   }
 
   test("Empty OAS json master API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
-      parse(basePath + "/empty-oas.json",
-            RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler))
+      parse(
+        basePath + "/empty-oas.json",
+        RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
+      )
     }
   }
 
   test("Empty OAS yaml master API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
-      parse(basePath + "/empty-oas.yaml",
-            RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler))
+      parse(
+        basePath + "/empty-oas.yaml",
+        RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
+      )
     }
   }
 
   test("Parse RAML with oas config to test domain exception") {
     recoverToSucceededIf[UnsupportedDomainForDocumentException] {
-      parse(basePath + "/empty-usage-uses.raml",
-            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
+      parse(
+        basePath + "/empty-usage-uses.raml",
+        OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler)
+      )
     }
   }
   def parse(url: String, config: AMFGraphConfiguration): Future[BaseUnit] = {

@@ -30,11 +30,12 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig, configuration: AMLConfiguration): Future[AMLConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures                     = config.dialects.map(dialect => configuration.baseUnitClient().parseDialect(dialect))
+    val dialectFutures = config.dialects.map(dialect => configuration.baseUnitClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
-      results.foldLeft(configuration) {
-        case (conf, result) => conf.withDialect(result.dialect)
-      })
+      results.foldLeft(configuration) { case (conf, result) =>
+        conf.withDialect(result.dialect)
+      }
+    )
   }
 
   protected def parseInput(config: ParserConfig, configuration: AMFGraphConfiguration): Future[(BaseUnit, Spec)] = {
@@ -50,10 +51,12 @@ trait CommandHelper {
     else parseResult.map(result => (result.baseUnit, result.sourceSpec))
   }
 
-  protected def resolve(config: ParserConfig,
-                        unit: BaseUnit,
-                        specId: Spec,
-                        configuration: AMFGraphConfiguration): Future[BaseUnit] = {
+  protected def resolve(
+      config: ParserConfig,
+      unit: BaseUnit,
+      specId: Spec,
+      configuration: AMFGraphConfiguration
+  ): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val configClient                       = configuration.baseUnitClient()
     if (config.resolve && config.validate) {
@@ -76,9 +79,11 @@ trait CommandHelper {
     }
   }
 
-  protected def generateOutput(config: ParserConfig,
-                               unit: BaseUnit,
-                               configuration: AMFGraphConfiguration): Future[Unit] = {
+  protected def generateOutput(
+      config: ParserConfig,
+      unit: BaseUnit,
+      configuration: AMFGraphConfiguration
+  ): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     var generateOptions                    = RenderOptions()
     if (config.withSourceMaps) {
@@ -109,7 +114,7 @@ trait CommandHelper {
   def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None => "*/*"
+      case None                     => "*/*"
     }
   }
 

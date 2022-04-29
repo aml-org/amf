@@ -43,7 +43,8 @@ case class TagEmitter(tag: Tag, ordering: SpecOrdering)(implicit spec: SpecEmitt
       fs.entry(TagModel.Documentation)
         .map(_ =>
           result +=
-            OasEntryCreativeWorkEmitter("externalDocs", tag.documentation, ordering))
+            OasEntryCreativeWorkEmitter("externalDocs", tag.documentation, ordering)
+        )
 
       result ++= AnnotationsEmitter(tag, ordering).emitters
 

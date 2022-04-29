@@ -6,7 +6,8 @@ import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Nullable
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
   val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
 
   def parse(adopt: ShapeOperation => Unit): Unit = {
@@ -19,9 +20,8 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
   private def parseArguments(): Unit = {
     val request = operation.withRequest()
-    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach {
-      case argument: Node =>
-        parseArgument(argument, request)
+    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
+      parseArgument(argument, request)
     }
   }
 
@@ -49,7 +49,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
   private def parseRange(): Unit = {
     val response = operation.withResponse("default")
-    val payload = ShapePayload().withName("default")
+    val payload  = ShapePayload().withName("default")
     payload.adopted(response.id).withSchema(parseType(ast, operation.id))
     response.withPayload(payload)
   }

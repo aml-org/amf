@@ -18,14 +18,19 @@ trait AnyShapeModel
   val XMLSerialization = Field(
     XMLSerializerModel,
     Shapes + "xmlSerialization",
-    ModelDoc(ModelVocabularies.Shapes, "XmlSerialization", "Information about how to serialize"))
+    ModelDoc(ModelVocabularies.Shapes, "XmlSerialization", "Information about how to serialize")
+  )
 
   val Comment =
-    Field(Str,
-          Core + "comment",
-          ModelDoc(ModelVocabularies.Core,
-                   "comment",
-                   "A comment on an item. The comment's content is expressed via the text"))
+    Field(
+      Str,
+      Core + "comment",
+      ModelDoc(
+        ModelVocabularies.Core,
+        "comment",
+        "A comment on an item. The comment's content is expressed via the text"
+      )
+    )
 
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`

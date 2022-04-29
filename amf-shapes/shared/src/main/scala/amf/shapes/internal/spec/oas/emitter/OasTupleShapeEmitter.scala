@@ -13,12 +13,14 @@ import amf.shapes.internal.spec.common.emitter.annotations.FacetsEmitter
 
 import scala.collection.mutable.ListBuffer
 
-case class OasTupleShapeEmitter(shape: TupleShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil,
-                                isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
+case class OasTupleShapeEmitter(
+    shape: TupleShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil,
+    isHeader: Boolean = false
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
@@ -36,28 +38,33 @@ case class OasTupleShapeEmitter(shape: TupleShape,
       case Some(f) => result += ValueEmitter("additionalItems", f.negated)
       case None =>
         fs.entry(TupleShapeModel.AdditionalItemsSchema)
-          .map(
-            f =>
-              result += OasEntryShapeEmitter("additionalItems",
-                                             f.element.asInstanceOf[Shape],
-                                             ordering,
-                                             references,
-                                             pointer,
-                                             schemaPath))
+          .map(f =>
+            result += OasEntryShapeEmitter(
+              "additionalItems",
+              f.element.asInstanceOf[Shape],
+              ordering,
+              references,
+              pointer,
+              schemaPath
+            )
+          )
     }
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
-        result += OasTupleItemsShapeEmitter(shape,
-                                            ordering,
-                                            references,
-                                            Some(ValueEmitter("collectionFormat", f)),
-                                            pointer,
-                                            schemaPath)
+        result += OasTupleItemsShapeEmitter(
+          shape,
+          ordering,
+          references,
+          Some(ValueEmitter("collectionFormat", f)),
+          pointer,
+          schemaPath
+        )
       case Some(f) =>
         result += OasTupleItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter(
           "collectionFormat",
-          f)
+          f
+        )
       case None =>
         result += OasTupleItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
     }

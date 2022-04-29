@@ -25,16 +25,22 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
       "schemas.raml",
       RAML10,
       Seq(
-        FixtureResult(SeverityLevels.WARNING,
-                      "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"))
+        FixtureResult(
+          SeverityLevels.WARNING,
+          "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"
+        )
+      )
     ),
     Fixture(
       "deprecated schema 10 warning",
       "schema.raml",
       RAML10,
       Seq(
-        FixtureResult(SeverityLevels.WARNING,
-                      "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
+        FixtureResult(
+          SeverityLevels.WARNING,
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+        )
+      )
     ),
     Fixture("schemas in 08 non warning", "schemas08.raml", RAML08, Nil),
     Fixture("schema in 08 non warning", "schema08.raml", RAML08, Nil)
@@ -60,12 +66,12 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
         assert(
           !unifiedReport.results
             .zip(f.results)
-            .map({
-              case (result, fResult) =>
-                assert(result.message.equals(fResult.message))
-                assert(result.severityLevel.equals(fResult.level))
+            .map({ case (result, fResult) =>
+              assert(result.message.equals(fResult.message))
+              assert(result.severityLevel.equals(fResult.level))
             })
-            .exists(_ != succeed))
+            .exists(_ != succeed)
+        )
       }
     }
 

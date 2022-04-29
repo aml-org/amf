@@ -1,10 +1,25 @@
 package amf.cli.client
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{
+  AMFConfiguration,
+  APIConfiguration,
+  AsyncAPIConfiguration,
+  OASConfiguration,
+  RAMLConfiguration,
+  WebAPIConfiguration
+}
 import amf.cli.internal.commands._
 import amf.core.client.common.remote.Content
-import amf.core.client.common.validation.{AmfProfile, AmlProfile, GrpcProfile, Oas20Profile, Oas30Profile, Raml08Profile, Raml10Profile}
+import amf.core.client.common.validation.{
+  AmfProfile,
+  AmlProfile,
+  GrpcProfile,
+  Oas20Profile,
+  Oas30Profile,
+  Raml08Profile,
+  Raml10Profile
+}
 import amf.core.client.platform.resource.FileResourceLoader
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
@@ -20,8 +35,7 @@ import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 
-/**
-  * Main entry point for the application
+/** Main entry point for the application
   */
 object Main extends PlatformSecrets {
 
@@ -54,7 +68,8 @@ object Main extends PlatformSecrets {
     if (cfg.trace) {
       System.err.println("Tracing enabled")
       amfConfig = config.withEventListener(
-        TimedEventListener(() => Instant.now().toEpochMilli, event => reportBuilder.add(event)))
+        TimedEventListener(() => Instant.now().toEpochMilli, event => reportBuilder.add(event))
+      )
     }
   }
 

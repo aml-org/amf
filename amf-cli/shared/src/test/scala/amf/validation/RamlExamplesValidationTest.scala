@@ -79,17 +79,21 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Param in raml 0.8 api") {
-    validate("08/pattern.raml",
-             Some("pattern-08.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/pattern.raml",
+      Some("pattern-08.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml",
-             Some("validation_error1.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/validation_error1.raml",
+      Some("validation_error1.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Test validate pattern with invalid example") {
@@ -102,10 +106,12 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
   test("Raml 0.8 Query Parameter Negative test case") {
-    validate("/08/date-query-parameter.raml",
-             Some("date-query-parameter.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/08/date-query-parameter.raml",
+      Some("date-query-parameter.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Invalid example validation over union shapes") {
@@ -160,30 +166,40 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("lock-unlock example test (raml dates)") {
-    validate("/examples/raml-dates/lockUnlockStats.raml",
-             Some("raml-dates-lockunlock.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/examples/raml-dates/lockUnlockStats.raml",
+      Some("raml-dates-lockunlock.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Pattern properties key") {
-    validate("/examples/pattern-properties/pattern_properties.raml",
-             Some("pattern-properties/pattern_properties.report"))
+    validate(
+      "/examples/pattern-properties/pattern_properties.raml",
+      Some("pattern-properties/pattern_properties.report")
+    )
   }
 
   test("Pattern properties key 2 (all additional properties)") {
-    validate("/examples/pattern-properties/pattern_properties2.raml",
-             Some("pattern-properties/pattern_properties2.report"))
+    validate(
+      "/examples/pattern-properties/pattern_properties2.raml",
+      Some("pattern-properties/pattern_properties2.report")
+    )
   }
 
   test("Pattern properties key 3 (precedence)") {
-    validate("/examples/pattern-properties/pattern_properties3.raml",
-             Some("pattern-properties/pattern_properties3.report"))
+    validate(
+      "/examples/pattern-properties/pattern_properties3.raml",
+      Some("pattern-properties/pattern_properties3.report")
+    )
   }
 
   test("Pattern properties key 4 (additionalProperties: false clash)") {
-    validate("/examples/pattern-properties/pattern_properties4.raml",
-             Some("pattern-properties/pattern_properties4.report"))
+    validate(
+      "/examples/pattern-properties/pattern_properties4.raml",
+      Some("pattern-properties/pattern_properties4.report")
+    )
   }
 
   test("Check binary file included for string shape example") {
@@ -325,10 +341,12 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Validate included xml examples") {
-    validate("/api-with-xml-examples/api.raml",
-             Some("api-with-xml-examples.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/api-with-xml-examples/api.raml",
+      Some("api-with-xml-examples.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   override val hint: Hint = Raml10YamlHint

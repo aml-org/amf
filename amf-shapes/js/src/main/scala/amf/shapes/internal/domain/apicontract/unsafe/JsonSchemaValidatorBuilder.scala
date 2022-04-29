@@ -9,9 +9,11 @@ import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator
 
 object JsonSchemaValidatorBuilder {
 
-  def payloadValidator(shape: Shape,
-                       mediaType: String,
-                       validationMode: ValidationMode,
-                       configuration: ShapeValidationConfiguration): BaseJsonSchemaPayloadValidator =
+  def payloadValidator(
+      shape: Shape,
+      mediaType: String,
+      validationMode: ValidationMode,
+      configuration: ShapeValidationConfiguration
+  ): BaseJsonSchemaPayloadValidator =
     new JsShapePayloadValidator(shape, mediaType, validationMode, configuration)
 }

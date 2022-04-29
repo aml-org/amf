@@ -6,8 +6,7 @@ import amf.apicontract.client.scala.model.domain.bindings.{ServerBindings => Int
 import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Server channel model class.
+/** Server channel model class.
   */
 @JSExportAll
 case class ServerBindings(override private[amf] val _internal: InternalServerBindings)

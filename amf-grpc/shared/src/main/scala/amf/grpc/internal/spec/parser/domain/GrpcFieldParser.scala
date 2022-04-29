@@ -9,7 +9,7 @@ import org.mulesoft.antlrast.ast.Node
 case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyShape: PropertyShape = PropertyShape(toAnnotations(ast))
 
-  def parse(adopt:PropertyShape => Unit): PropertyShape = {
+  def parse(adopt: PropertyShape => Unit): PropertyShape = {
     parseFieldName()
     adopt(propertyShape)
     parseFieldNumber()

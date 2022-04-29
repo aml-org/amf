@@ -13,9 +13,9 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
-case class Raml08InheritedJsonSchemaEmitter(shape: Shape, ordering: SpecOrdering)(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter
+case class Raml08InheritedJsonSchemaEmitter(shape: Shape, ordering: SpecOrdering)(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter
     with ExamplesEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val father =

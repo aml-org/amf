@@ -26,20 +26,23 @@ import org.json.JSONException
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
-class JvmShapePayloadValidator(private val shape: Shape,
-                               private val mediaType: String,
-                               protected val validationMode: ValidationMode,
-                               private val configuration: ShapeValidationConfiguration)
-    extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+class JvmShapePayloadValidator(
+    private val shape: Shape,
+    private val mediaType: String,
+    protected val validationMode: ValidationMode,
+    private val configuration: ShapeValidationConfiguration
+) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
   }
 
-  override protected def callValidator(schema: LoadedSchema,
-                                       payload: LoadedObj,
-                                       fragment: Option[PayloadFragment],
-                                       validationProcessor: ValidationProcessor): validationProcessor.Return = {
+  override protected def callValidator(
+      schema: LoadedSchema,
+      payload: LoadedObj,
+      fragment: Option[PayloadFragment],
+      validationProcessor: ValidationProcessor
+  ): validationProcessor.Return = {
     val validator = validationProcessor match {
       case BooleanValidationProcessor => Validator.builder().failEarly().build()
       case _                          => Validator.builder().build()
@@ -59,7 +62,8 @@ class JvmShapePayloadValidator(private val shape: Shape,
   override protected def loadSchema(
       jsonSchema: CharSequence,
       element: DomainElement,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+      validationProcessor: ValidationProcessor
+  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
     loadJsonSchema(jsonSchema.toString.replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
@@ -139,10 +143,11 @@ class JvmShapePayloadValidator(private val shape: Shape,
     JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName,
-                                        shape: Shape,
-                                        override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
-    extends ReportValidationProcessor {
+case class JvmReportValidationProcessor(
+    override val profileName: ProfileName,
+    shape: Shape,
+    override protected var intermediateResults: Seq[AMFValidationResult] = Seq()
+) extends ReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
@@ -159,9 +164,12 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
         Seq(
-          invalidJsonValidation(s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
-                                element,
-                                e))
+          invalidJsonValidation(
+            s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
+            element,
+            e
+          )
+        )
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))
@@ -202,8 +210,10 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
   private def formattedDatatype(scalarShape: ScalarShape): String =
     scalarShape.dataType.value().split("#").last.capitalize
 
-  private def iterateValidations(validationException: ValidationException,
-                                 element: Option[DomainElement]): Seq[AMFValidationResult] = {
+  private def iterateValidations(
+      validationException: ValidationException,
+      element: Option[DomainElement]
+  ): Seq[AMFValidationResult] = {
 
     var exceptionsStack: List[ValidationException] = List(validationException)
 

@@ -10,9 +10,11 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVo
 
 trait AbstractResponseModel extends DomainElementModel with KeyField with NameFieldSchema {
 
-  val Payload: Field = Field(AbstractPayloadModel,
-                             Core + "payload",
-                             ModelDoc(ModelVocabularies.Core, "payload", "Payload for a Request/Response"))
+  val Payload: Field = Field(
+    AbstractPayloadModel,
+    Core + "payload",
+    ModelDoc(ModelVocabularies.Core, "payload", "Payload for a Request/Response")
+  )
 
   override val key: Field = Name
 

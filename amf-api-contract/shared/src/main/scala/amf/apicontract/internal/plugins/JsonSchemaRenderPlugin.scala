@@ -27,9 +27,11 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
   override def mediaTypes: Seq[String] = Seq(`application/json`)
 
-  override def unparseAsYDocument(unit: BaseUnit,
-                                  renderConfig: RenderConfiguration,
-                                  errorHandler: AMFErrorHandler): Option[YDocument] = unit match {
+  override def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = unit match {
     case d: DeclaresModel =>
       // The root element of the JSON Schema must be identified with the annotation [[JSONSchemaRoot]]
       val root = d.declares.find(d => d.annotations.contains(classOf[JSONSchemaRoot]) && d.isInstanceOf[AnyShape])
@@ -37,7 +39,8 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
         case Some(r: AnyShape) =>
           Some(
             JsonSchemaEmitter(r, d.declares, renderConfig = renderConfig, errorHandler = errorHandler)
-              .emitDocument())
+              .emitDocument()
+          )
         case _ => None
       }
     case _ => None

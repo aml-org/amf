@@ -21,9 +21,11 @@ object Oas30RenderPlugin extends OasRenderPlugin {
 
   override def priority: PluginPriority = NormalPriority
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] =
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas30ModuleEmitter(module)(specContext(renderConfig, errorHandler)).emitModule())
       case document: Document =>

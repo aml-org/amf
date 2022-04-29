@@ -17,16 +17,15 @@ import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false)(
-    implicit eh: AMFErrorHandler) {
+/** */
+case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false)(implicit
+    eh: AMFErrorHandler
+) {
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
-    val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect {
-      case a: ParametrizedResourceType => a
+    val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect { case a: ParametrizedResourceType =>
+      a
     }
     if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(extension("type"), resourceTypes, ordering)
 
@@ -51,8 +50,8 @@ case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
 }
 
 case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)(
-    implicit eh: AMFErrorHandler)
-    extends EntryEmitter {
+    implicit eh: AMFErrorHandler
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
@@ -64,9 +63,9 @@ case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedRe
     resourceTypes.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
 }
 
-case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)(
-    implicit eh: AMFErrorHandler)
-    extends PartEmitter {
+case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)(implicit
+    eh: AMFErrorHandler
+) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (declaration.variables.nonEmpty) {
       b.obj {

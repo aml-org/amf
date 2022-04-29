@@ -16,11 +16,13 @@ import amf.shapes.internal.spec.oas.emitter.OasTypePartEmitter
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-case class AsyncSchemaEmitter(key: String,
-                              shape: Shape,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit],
-                              mediaType: Option[String] = None)(implicit spec: OasLikeSpecEmitterContext)
+case class AsyncSchemaEmitter(
+    key: String,
+    shape: Shape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    mediaType: Option[String] = None
+)(implicit spec: OasLikeSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)

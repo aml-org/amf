@@ -110,8 +110,9 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
       .baseUnitClient()
       .parseContent(AMLConfiguration.predefined().baseUnitClient().render(dialect))
 
-  private def emit(result: AMFSemanticSchemaResult, target: Hint)(
-      implicit executionContext: ExecutionContext): String = {
+  private def emit(result: AMFSemanticSchemaResult, target: Hint)(implicit
+      executionContext: ExecutionContext
+  ): String = {
     val options =
       RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
     val AMFSemanticSchemaResult(dialect, vocab, _) = result

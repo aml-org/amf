@@ -17,9 +17,7 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
-/**
-  *
-  */
+/** */
 trait SingleValueArrayEmitter extends EntryEmitter {
 
   type Element <: AmfElement
@@ -51,9 +49,9 @@ trait SingleValueArrayEmitter extends EntryEmitter {
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends SingleValueArrayEmitter {
+case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends SingleValueArrayEmitter {
 
   override type Element = ParametrizedSecurityScheme
 
@@ -64,8 +62,7 @@ case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, order
     f.array.values.collect { case p: ParametrizedSecurityScheme => p }
 }
 
-abstract class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,
-                                                 ordering: SpecOrdering)
+abstract class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
     extends PartEmitter {}
 
 case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
@@ -99,8 +96,10 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
   override def position(): Position = pos(parametrizedScheme.annotations)
 }
 
-case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,
-                                                 ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class RamlParametrizedSecuritySchemeEmitter(
+    parametrizedScheme: ParametrizedSecurityScheme,
+    ordering: SpecOrdering
+)(implicit spec: SpecEmitterContext)
     extends ParametrizedSecuritySchemeEmitter(parametrizedScheme, ordering) {
   override def emit(b: PartBuilder): Unit = {
 
@@ -109,8 +108,11 @@ case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrize
     fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
       case Some(f) =>
         b.obj(
-          _.entry(parametrizedScheme.name.value(),
-                  _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
+          _.entry(
+            parametrizedScheme.name.value(),
+            _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))
+          )
+        )
       case None if parametrizedScheme.annotations.contains(classOf[NullSecurity]) =>
         b += YNode(YScalar.Null, YType.Null)
       case None =>

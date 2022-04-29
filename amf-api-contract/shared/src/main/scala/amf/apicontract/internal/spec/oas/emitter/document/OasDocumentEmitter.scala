@@ -45,10 +45,12 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class EndPointEmitter(endpoint: EndPoint,
-                           pathName: Option[String] = None,
-                           ordering: SpecOrdering,
-                           references: Seq[BaseUnit])(implicit val specCtx: OasSpecEmitterContext)
+case class EndPointEmitter(
+    endpoint: EndPoint,
+    pathName: Option[String] = None,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit val specCtx: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields
@@ -56,7 +58,8 @@ case class EndPointEmitter(endpoint: EndPoint,
       endpoint.annotations,
       b.complexEntry(
         ScalarEmitter(
-          pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).map(_.scalar).getOrElse(AmfScalar(""))))
+          pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).map(_.scalar).getOrElse(AmfScalar("")))
+        )
           .emit(_),
         EndPointPartEmitter(endpoint, ordering, references).emit(_)
       )
@@ -66,9 +69,9 @@ case class EndPointEmitter(endpoint: EndPoint,
   override def position(): Position = pos(endpoint.annotations)
 }
 
-case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit val specCtx: OasSpecEmitterContext)
-    extends PartEmitter {
+case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    val specCtx: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
 
@@ -104,11 +107,13 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
       }
 
       if (parameters.nonEmpty)
-        result ++= OasParametersEmitter("parameters",
-                                        parameters.query ++ parameters.path ++ parameters.header ++ parameters.cookie,
-                                        ordering,
-                                        parameters.body,
-                                        references)
+        result ++= OasParametersEmitter(
+          "parameters",
+          parameters.query ++ parameters.path ++ parameters.header ++ parameters.cookie,
+          ordering,
+          parameters.body,
+          references
+        )
           .oasEndpointEmitters()
 
       fs.entry(EndPointModel.Operations)
@@ -124,10 +129,12 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
 
   }
 
-  private def operations(f: FieldEntry,
-                         ordering: SpecOrdering,
-                         endpointPayloadEmitted: Boolean,
-                         references: Seq[BaseUnit]): Seq[EntryEmitter] =
+  private def operations(
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      endpointPayloadEmitted: Boolean,
+      references: Seq[BaseUnit]
+  ): Seq[EntryEmitter] =
     f.array.values
       .map(e => new OperationEmitter(e.asInstanceOf[Operation], ordering, endpointPayloadEmitted, references))
 
@@ -135,13 +142,13 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
 }
 
 object EndPointEmitter {
-  def apply(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit specCtx: OasSpecEmitterContext): EndPointEmitter =
+  def apply(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+      specCtx: OasSpecEmitterContext
+  ): EndPointEmitter =
     new EndPointEmitter(endpoint, None, ordering, references)(specCtx)
 }
 
-/**
-  * OpenAPI Spec Emitter.
+/** OpenAPI Spec Emitter.
   */
 abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasSpecEmitterContext)
     extends OasSpecEmitter {
@@ -151,12 +158,14 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
     case _ =>
-      specCtx.eh.violation(TransformationValidation,
-                           document.id,
-                           None,
-                           "BaseUnit doesn't encode a WebApi.",
-                           document.position(),
-                           document.location())
+      specCtx.eh.violation(
+        TransformationValidation,
+        document.id,
+        None,
+        "BaseUnit doesn't encode a WebApi.",
+        document.position(),
+        document.location()
+      )
       WebApi()
   }
 
@@ -191,7 +200,10 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
     YDocument {
       _.obj { b =>
         versionEntry(b)
-        traverse(ordering.sorted(api), b) // api explicitly needs to be emitted before declares to populate compact emission queue
+        traverse(
+          ordering.sorted(api),
+          b
+        ) // api explicitly needs to be emitted before declares to populate compact emission queue
         traverse(ordering.sorted(extension ++ usage ++ declares :+ references), b)
       }
     }
@@ -237,7 +249,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
 
       fs.entry(WebApiModel.EndPoints)
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
-          result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations))
+          result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations)
+        )
 
       fs.entry(WebApiModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
@@ -248,12 +261,13 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
     }
   }
 
-  case class EndpointsEmitter(key: String,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit],
-                              orphanAnnotations: Seq[DomainExtension])
-      extends EntryEmitter {
+  case class EndpointsEmitter(
+      key: String,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit],
+      orphanAnnotations: Seq[DomainExtension]
+  ) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val emitters = endpoints(f, ordering, references) ++ pathsElementAnnotations()
       sourceOr(
@@ -278,9 +292,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
   }
 }
 
-case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit specCtx: OasSpecEmitterContext)
-    extends EntryEmitter {
+case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    specCtx: OasSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     if (request.isLink) {
@@ -296,9 +310,9 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
 }
 
-case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit specCtx: OasSpecEmitterContext)
-    extends PartEmitter {
+case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    specCtx: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
 
@@ -330,9 +344,11 @@ case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, 
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
 }
 
-case class Oas3RequestBodyDeclarationsEmitter(requests: Seq[Request],
-                                              ordering: SpecOrdering,
-                                              references: Seq[BaseUnit])(implicit specCtx: OasSpecEmitterContext)
+case class Oas3RequestBodyDeclarationsEmitter(
+    requests: Seq[Request],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit specCtx: OasSpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -354,18 +370,22 @@ case class Oas3RequestBodyDeclarationsEmitter(requests: Seq[Request],
 }
 
 object OasDocumentEmitter {
-  def endpointEmitter(endpoint: EndPoint,
-                      ordering: SpecOrdering,
-                      references: Seq[BaseUnit],
-                      specCtx: OasSpecEmitterContext) = {
+  def endpointEmitter(
+      endpoint: EndPoint,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit],
+      specCtx: OasSpecEmitterContext
+  ) = {
     EndPointEmitter(endpoint, ordering, references)(specCtx)
   }
 
-  def endpointEmitterWithPath(endpoint: EndPoint,
-                              path: String,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit],
-                              specCtx: OasSpecEmitterContext) = {
+  def endpointEmitterWithPath(
+      endpoint: EndPoint,
+      path: String,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit],
+      specCtx: OasSpecEmitterContext
+  ) = {
     endpoint.withPath(path)
     EndPointEmitter(endpoint, Some(path), ordering, references)(specCtx)
   }

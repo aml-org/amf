@@ -17,7 +17,8 @@ private[expression] class RamlExpressionASTBuilder(
     override val tokens: Seq[Token],
     declarationFinder: DeclarationFinder,
     override val annotations: Annotations = Annotations(),
-    unresolvedRegister: UnresolvedRegister)(implicit val errorHandler: AMFErrorHandler)
+    unresolvedRegister: UnresolvedRegister
+)(implicit val errorHandler: AMFErrorHandler)
     extends AbstractParser
     with AnnotationHelper {
 
@@ -121,7 +122,9 @@ private[expression] class RamlExpressionASTBuilder(
           ScalarShape(Annotations(SingleExpression())).set(
             ScalarShapeModel.DataType,
             AmfScalar(DataType(token.value), Annotations(SingleExpression())),
-            Annotations.inferred()))
+            Annotations.inferred()
+          )
+        )
       case _ => None
     }
     shape.foreach(x => x.annotations ++= annotations)

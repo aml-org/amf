@@ -9,9 +9,7 @@ import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.shapes.client.scala.model.domain.Example
 
-/**
-  *
-  */
+/** */
 trait ExampleModel
     extends DomainElementModel
     with LinkableElementModel
@@ -22,42 +20,63 @@ trait ExampleModel
   val DisplayName = Field(
     Str,
     Core + "displayName",
-    ModelDoc(ModelVocabularies.Core,
-             "displayName",
-             "Human readable name for the term",
-             Seq((Namespace.Core + "name").iri()))
+    ModelDoc(
+      ModelVocabularies.Core,
+      "displayName",
+      "Human readable name for the term",
+      Seq((Namespace.Core + "name").iri())
+    )
   )
   val Summary = Field(
     Str,
     ApiContract + "guiSummary",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "guiSummary",
-             "Human readable description of the example",
-             Seq((Namespace.ApiContract + "description").iri()))
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "guiSummary",
+      "Human readable description of the example",
+      Seq((Namespace.ApiContract + "description").iri())
+    )
   )
   val Description =
     Field(Str, Core + "description", ModelDoc(ModelVocabularies.Core, "description", ""))
   val ExternalValue = Field(
     Str,
     Document + "externalValue",
-    ModelDoc(ModelVocabularies.AmlDoc, "externalValue", "Raw text containing an unparsable example"))
+    ModelDoc(ModelVocabularies.AmlDoc, "externalValue", "Raw text containing an unparsable example")
+  )
   val StructuredValue = Field(
     DataNodeModel,
     Document + "structuredValue",
-    ModelDoc(ModelVocabularies.AmlDoc, "structuredValue", "Data structure containing the value of the example"))
-  val Strict = Field(Bool,
-                     Document + "strict",
-                     ModelDoc(ModelVocabularies.AmlDoc,
-                              "strict",
-                              "Indicates if this example should be validated against an associated schema"))
-  val MediaType = Field(Str,
-                        Core + "mediaType",
-                        ModelDoc(ModelVocabularies.Core, "mediaType", "Media type associated to the example"))
+    ModelDoc(ModelVocabularies.AmlDoc, "structuredValue", "Data structure containing the value of the example")
+  )
+  val Strict = Field(
+    Bool,
+    Document + "strict",
+    ModelDoc(
+      ModelVocabularies.AmlDoc,
+      "strict",
+      "Indicates if this example should be validated against an associated schema"
+    )
+  )
+  val MediaType = Field(
+    Str,
+    Core + "mediaType",
+    ModelDoc(ModelVocabularies.Core, "mediaType", "Media type associated to the example")
+  )
 
   override val key: Field = Name
 
   override val fields: List[Field] =
-    List(Name, DisplayName, Summary, Description, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields ++ LinkableElementModel.fields ++ ExternalSourceElementModel.fields
+    List(
+      Name,
+      DisplayName,
+      Summary,
+      Description,
+      ExternalValue,
+      Strict,
+      MediaType,
+      StructuredValue
+    ) ++ DomainElementModel.fields ++ LinkableElementModel.fields ++ ExternalSourceElementModel.fields
 
   override val `type`: List[ValueType] = ApiContract + "Example" :: DomainElementModel.`type`
 

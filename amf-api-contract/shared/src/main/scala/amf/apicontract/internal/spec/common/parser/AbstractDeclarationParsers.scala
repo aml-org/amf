@@ -18,15 +18,15 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.datanode.AbstractVariables
 import org.yaml.model._
 
-/**
-  *
-  */
-case class AbstractDeclarationsParser(key: String,
-                                      producer: YMapEntry => AbstractDeclaration,
-                                      map: YMap,
-                                      customProperties: String,
-                                      model: DomainElementModel,
-                                      declarationKeyCollector: DeclarationKeyCollector)(implicit ctx: WebApiContext) {
+/** */
+case class AbstractDeclarationsParser(
+    key: String,
+    producer: YMapEntry => AbstractDeclaration,
+    map: YMap,
+    customProperties: String,
+    model: DomainElementModel,
+    declarationKeyCollector: DeclarationKeyCollector
+)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -37,17 +37,19 @@ case class AbstractDeclarationsParser(key: String,
             e.value
               .as[YMap]
               .entries
-              .map(
-                entry =>
-                  ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
-                    .parse()
-                    .add(DeclaredElement()))
+              .map(entry =>
+                ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
+                  .parse()
+                  .add(DeclaredElement())
+              )
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidAbstractDeclarationType,
-                             customProperties,
-                             s"Invalid type $t for '$key' node.",
-                             e.value.location)
+            ctx.eh.violation(
+              InvalidAbstractDeclarationType,
+              customProperties,
+              s"Invalid type $t for '$key' node.",
+              e.value.location
+            )
         }
       }
     )
@@ -56,23 +58,27 @@ case class AbstractDeclarationsParser(key: String,
 
 object AbstractDeclarationParser {
 
-  def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(
-      implicit ctx: WebApiContext): AbstractDeclarationParser =
+  def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(implicit
+      ctx: WebApiContext
+  ): AbstractDeclarationParser =
     new AbstractDeclarationParser(declaration, parent, YMapEntryLike(entry))
 }
 
-case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, map: YMapEntryLike)(
-    implicit ctx: WebApiContext) {
+case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, map: YMapEntryLike)(implicit
+    ctx: WebApiContext
+) {
 
   def parse(): AbstractDeclaration = {
 
     val entryValue: YNode = map.value
 
     if (entryValue.tagType == YType.Null)
-      ctx.eh.warning(NullAbstractDeclaration,
-                     parent,
-                     "Generating abstract declaration (resource type / trait)  with null value",
-                     entryValue.location)
+      ctx.eh.warning(
+        NullAbstractDeclaration,
+        parent,
+        "Generating abstract declaration (resource type / trait)  with null value",
+        entryValue.location
+      )
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations)
@@ -83,10 +89,13 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
           case YType.Map =>
             value
               .as[YMap]
-              .key("usage", { entry =>
-                val usage = ScalarNode(entry.value)
-                declaration.setWithoutId(AbstractDeclarationModel.Description, usage.string(), Annotations(entry))
-              })
+              .key(
+                "usage",
+                { entry =>
+                  val usage = ScalarNode(entry.value)
+                  declaration.setWithoutId(AbstractDeclarationModel.Description, usage.string(), Annotations(entry))
+                }
+              )
             val fields = value.as[YMap].entries.filter(_.key.as[YScalar].text != "usage")
             YMap(fields, fields.headOption.map(_.sourceName).getOrElse(""))
           case _ =>
@@ -96,12 +105,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
           DataNodeParser(filteredNode, variables)(WebApiShapeParserContextAdapter(ctx)).parse()
         declaration.setWithoutId(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
 
-        variables.ifNonEmpty(
-          p =>
-            declaration
-              .setWithoutId(AbstractDeclarationModel.Variables,
-                            AmfArray(p, Annotations(value.value)),
-                            Annotations(value)))
+        variables.ifNonEmpty(p =>
+          declaration
+            .setWithoutId(AbstractDeclarationModel.Variables, AmfArray(p, Annotations(value.value)), Annotations(value))
+        )
 
         declaration
     }
@@ -114,10 +121,12 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
     }
   }
 
-  def parseReferenced(declared: AbstractDeclaration,
-                      parsedUrl: String,
-                      ast: YPart,
-                      elementAnn: Annotations): AbstractDeclaration = {
+  def parseReferenced(
+      declared: AbstractDeclaration,
+      parsedUrl: String,
+      ast: YPart,
+      elementAnn: Annotations
+  ): AbstractDeclaration = {
     val d: AbstractDeclaration = declared match {
       case _: Trait        => ctx.declarations.findTraitOrError(ast)(parsedUrl, SearchScope.Fragments)
       case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)

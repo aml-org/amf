@@ -15,11 +15,12 @@ object FormatValidator {
     if (typeDef.isNumber)
       typeDef match {
         case TypeDef.IntType if !List("int", "int8", "int16", "int32", "int64", "long").contains(format) => false
-        case FloatType if format.equals("double")                                                        => false // should no be possible
-        case LongType if List("double", "float").contains(format)                                        => false // should not be possible either
-        case _ if !VALID_NUMBER_FORMATS.contains(format)                                                 => false
-        case _                                                                                           => true
-      } else !VALID_NUMBER_FORMATS.contains(format)
+        case FloatType if format.equals("double")                 => false // should no be possible
+        case LongType if List("double", "float").contains(format) => false // should not be possible either
+        case _ if !VALID_NUMBER_FORMATS.contains(format)          => false
+        case _                                                    => true
+      }
+    else !VALID_NUMBER_FORMATS.contains(format)
   }
 
   val VALID_NUMBER_FORMATS = List("int", "int8", "int16", "int32", "int64", "long", "float", "double")
@@ -34,10 +35,12 @@ case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: ShapeP
         val format = n.value.as[YScalar].text
 
         if (!FormatValidator.isValid(format, typeDef))
-          ctx.eh.warning(InvalidShapeFormat,
-                         shape,
-                         s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
-                         n.location)
+          ctx.eh.warning(
+            InvalidShapeFormat,
+            shape,
+            s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
+            n.location
+          )
 
         (ScalarShapeModel.Format in shape).allowingAnnotations(n)
         fromFormat(format)

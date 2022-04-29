@@ -43,14 +43,14 @@ trait DirectoryTest extends FunSuiteCycleTests {
   private def validDir(files: List[SyncFile]): Boolean = {
     val fileNames = files.map(_.name)
     files.nonEmpty && fileNames.contains(inputFileName) && (fileNames.contains(outputFileName) || fileNames.contains(
-      outputFileName concat ignorableExtension) || fileNames.contains(outputFileName + s".${platform.name}"))
+      outputFileName concat ignorableExtension
+    ) || fileNames.contains(outputFileName + s".${platform.name}"))
   }
 
   private def runTest(d: String): Future[Assertion] = {
-    runDirectory(d).flatMap {
-      case (t, usePlatform) =>
-        val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
-        writeTemporaryFile(finalOutputFileName)(t).flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
+    runDirectory(d).flatMap { case (t, usePlatform) =>
+      val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
+      writeTemporaryFile(finalOutputFileName)(t).flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
     }
   }
 

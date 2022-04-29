@@ -14,15 +14,14 @@ trait GraphQLFunSuiteCycleTests extends FunSuiteCycleTests {
       amfConfig.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e))
+      renderedConfig.withErrorHandlerProvider(() => e)
+    )
   }
 
 }
 
-
 class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
-
 
   test("Can parse a simple GraphQL API") {
     cycle("simple/api.graphql", "simple/api.jsonld", GraphQLHint, AmfJsonHint)

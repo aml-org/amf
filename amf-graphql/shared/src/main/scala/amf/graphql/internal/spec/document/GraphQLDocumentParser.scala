@@ -34,7 +34,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       case node: Node =>
         processTypes(node)
       case _ => // nil
-
     }
     ctx.declarations.futureDeclarations.resolve()
     doc
@@ -95,35 +94,43 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
 
     // no schema node, let's look for the default top-level types (query, subscription, mutation)
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)) foreach {
-      case objTypeDef: Node =>
-        searchName(objTypeDef) match {
-          case Some(query) if query == QUERY_TYPE => parseTopLevelType(objTypeDef, RootTypes.Query)
-          case Some(subscription) if subscription == SUBSCRIPTION_TYPE =>
-            parseTopLevelType(objTypeDef, RootTypes.Subscription)
-          case Some(mutation) if mutation == MUTATION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Mutation)
-          case _                                           => parseNestedType(objTypeDef)
-        }
+      .collect(
+        node,
+        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)
+      ) foreach { case objTypeDef: Node =>
+      searchName(objTypeDef) match {
+        case Some(query) if query == QUERY_TYPE => parseTopLevelType(objTypeDef, RootTypes.Query)
+        case Some(subscription) if subscription == SUBSCRIPTION_TYPE =>
+          parseTopLevelType(objTypeDef, RootTypes.Subscription)
+        case Some(mutation) if mutation == MUTATION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Mutation)
+        case _                                           => parseNestedType(objTypeDef)
+      }
     }
 
     // let's parse input types
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INPUT_OBJECT_TYPE_DEFINITION)) foreach {
-      case objTypeDef: Node =>
-        parseInputType(objTypeDef)
+      .collect(
+        node,
+        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INPUT_OBJECT_TYPE_DEFINITION)
+      ) foreach { case objTypeDef: Node =>
+      parseInputType(objTypeDef)
     }
     // let's parse interfaces
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INTERFACE_TYPE_DEFINITION)) foreach {
-      case objTypeDef: Node =>
-        parseInterfaceType(objTypeDef)
+      .collect(
+        node,
+        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INTERFACE_TYPE_DEFINITION)
+      ) foreach { case objTypeDef: Node =>
+      parseInterfaceType(objTypeDef)
     }
 
     // let's parse unions
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, UNION_TYPE_DEFINITION)) foreach {
-      case unionTypeDef: Node =>
-        parseUnionType(unionTypeDef)
+      .collect(
+        node,
+        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, UNION_TYPE_DEFINITION)
+      ) foreach { case unionTypeDef: Node =>
+      parseUnionType(unionTypeDef)
     }
 
     // let's parse enums
@@ -135,9 +142,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
 
     // let's parse custom scalars
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, SCALAR_TYPE_DEFINITION)) foreach {
-      case customScalarTypeDef: Node =>
-        parseCustomScalarTypeDef(customScalarTypeDef)
+      .collect(
+        node,
+        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, SCALAR_TYPE_DEFINITION)
+      ) foreach { case customScalarTypeDef: Node =>
+      parseCustomScalarTypeDef(customScalarTypeDef)
     }
 
     // let's parse directive declarations
@@ -156,36 +165,41 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     }
 
     // let's setup the names of the top level types
-    collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach {
-      case typeDef: Node =>
-        val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
-          case Some(t: Terminal) => t.value
-          case _ =>
-            astError(webapi.id,
-                     "Cannot find operation type for top-level schema root operation named type",
-                     toAnnotations(typeDef))
-            ""
-        }
-        find(typeDef, OPERATION_TYPE).headOption match {
-          case Some(n: Node) =>
-            n.children.headOption match {
-              case Some(t: Terminal) =>
-                t.value match {
-                  case "query"        => QUERY_TYPE = targetType
-                  case "mutation"     => MUTATION_TYPE = targetType
-                  case "subscription" => SUBSCRIPTION_TYPE = targetType
-                  case v              => astError(webapi.id, s"Unknown root-level operation type $v", toAnnotations(t))
-                }
-              case _ =>
-                astError(webapi.id,
-                         "Cannot find operation type for top-level schema root operation type definition",
-                         toAnnotations(n))
-            }
-          case _ =>
-            astError(webapi.id,
-                     "Cannot find operation type for top-level schema root operation type definition",
-                     toAnnotations(typeDef))
-        }
+    collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach { case typeDef: Node =>
+      val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
+        case Some(t: Terminal) => t.value
+        case _ =>
+          astError(
+            webapi.id,
+            "Cannot find operation type for top-level schema root operation named type",
+            toAnnotations(typeDef)
+          )
+          ""
+      }
+      find(typeDef, OPERATION_TYPE).headOption match {
+        case Some(n: Node) =>
+          n.children.headOption match {
+            case Some(t: Terminal) =>
+              t.value match {
+                case "query"        => QUERY_TYPE = targetType
+                case "mutation"     => MUTATION_TYPE = targetType
+                case "subscription" => SUBSCRIPTION_TYPE = targetType
+                case v              => astError(webapi.id, s"Unknown root-level operation type $v", toAnnotations(t))
+              }
+            case _ =>
+              astError(
+                webapi.id,
+                "Cannot find operation type for top-level schema root operation type definition",
+                toAnnotations(n)
+              )
+          }
+        case _ =>
+          astError(
+            webapi.id,
+            "Cannot find operation type for top-level schema root operation type definition",
+            toAnnotations(typeDef)
+          )
+      }
     }
 
     if (Set(QUERY_TYPE, MUTATION_TYPE, SUBSCRIPTION_TYPE).size != 3) {

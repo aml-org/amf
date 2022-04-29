@@ -43,7 +43,8 @@ trait ReportValidationProcessor extends ValidationProcessor {
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e
-          ))
+          )
+        )
       case e: InvalidJsonObject =>
         Seq(
           AMFValidationResult(
@@ -55,7 +56,8 @@ trait ReportValidationProcessor extends ValidationProcessor {
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e
-          ))
+          )
+        )
       case other =>
         Seq(
           AMFValidationResult(
@@ -67,7 +69,8 @@ trait ReportValidationProcessor extends ValidationProcessor {
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = other
-          ))
+          )
+        )
     }
   }
 }

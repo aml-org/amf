@@ -41,24 +41,27 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
   val messageBuilder: MessageDocumentHandler               = MessageDocumentHandler()
   val dataNodeBuilder: DataNodeDocumentHandler             = DataNodeDocumentHandler()
 
-  class Fixture(val testName: String,
-                basePath: String,
-                dirName: String,
-                val handler: DocumentHandler,
-                targetName: String,
-                patchName: String,
-                goldenName: String) {
+  class Fixture(
+      val testName: String,
+      basePath: String,
+      dirName: String,
+      val handler: DocumentHandler,
+      targetName: String,
+      patchName: String,
+      goldenName: String
+  ) {
 
     def golden: String = s"$basePath/$dirName/$goldenName"
     def target: String = s"$basePath/$dirName/$targetName"
     def patch: String  = s"$basePath/$dirName/$patchName"
   }
 
-  case class JsonLdGoldenFixture(override val testName: String,
-                                 dirName: String,
-                                 override val handler: DocumentHandler,
-                                 goldenName: String = "golden.%s")
-      extends Fixture(testName, basePath, dirName, handler, "target.yaml", "patch.yaml", goldenName) {}
+  case class JsonLdGoldenFixture(
+      override val testName: String,
+      dirName: String,
+      override val handler: DocumentHandler,
+      goldenName: String = "golden.%s"
+  ) extends Fixture(testName, basePath, dirName, handler, "target.yaml", "patch.yaml", goldenName) {}
 
   case class YamlGoldenFixture(override val testName: String, dirName: String, override val handler: DocumentHandler)
       extends Fixture(testName, basePath, dirName, handler, "target.yaml", "patch.yaml", "golden.yaml")
@@ -87,9 +90,11 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     JsonLdGoldenFixture("Operation with documentation", "operation-documentation", operationBuilder),
     JsonLdGoldenFixture("Operation with same binding", "operation-same-binding", operationBuilder),
     JsonLdGoldenFixture("Operation with different bindings", "operation-different-binding", operationBuilder),
-    JsonLdGoldenFixture("Operation with bindings with nested schemas",
-                        "operation-binding-nested-schema",
-                        operationBuilder),
+    JsonLdGoldenFixture(
+      "Operation with bindings with nested schemas",
+      "operation-binding-nested-schema",
+      operationBuilder
+    ),
     JsonLdGoldenFixture("Simple message", "message-simple", messageBuilder),
     JsonLdGoldenFixture("Message with different examples", "message-different-examples", messageBuilder),
     JsonLdGoldenFixture("Message with same examples", "message-same-example-names", messageBuilder),
@@ -138,9 +143,11 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     }
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext("loc",
-                               Seq(),
-                               ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)))
+      new Async20WebApiContext(
+        "loc",
+        Seq(),
+        ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty))
+      )
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
       new AMFRenderer(document, AmfJsonHint, renderOptions).renderToString
@@ -231,9 +238,12 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     }
 
     override def getMerger: JsonMergePatch =
-      JsonMergePatch({
-        case scalar: ScalarNode => scalar.value.value() == "null"
-        case _                  => false
-      }, AsyncKeyCriteria())
+      JsonMergePatch(
+        {
+          case scalar: ScalarNode => scalar.value.value() == "null"
+          case _                  => false
+        },
+        AsyncKeyCriteria()
+      )
   }
 }

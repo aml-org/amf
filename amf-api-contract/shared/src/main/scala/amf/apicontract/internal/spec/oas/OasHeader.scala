@@ -5,9 +5,7 @@ import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMap
 
-/**
-  *
-  */
+/** */
 class OasHeader(val key: String, val value: String) {
   def tuple: (String, String) = (key, value)
 }

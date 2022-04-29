@@ -14,8 +14,9 @@ import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}
 
 object RamlScalarEmitter {
-  def apply(key: String, f: FieldEntry, mediaType: Option[YType] = None)(
-      implicit spec: ShapeEmitterContext): EntryEmitter = {
+  def apply(key: String, f: FieldEntry, mediaType: Option[YType] = None)(implicit
+      spec: ShapeEmitterContext
+  ): EntryEmitter = {
     val extensions = f.element.annotations.collect({ case e: DomainExtensionAnnotation => e })
     if (extensions.nonEmpty && spec.spec == Raml10) {
       RamlScalarValueEmitter(key, f, extensions.map(_.extension), mediaType)
@@ -25,10 +26,12 @@ object RamlScalarEmitter {
   }
 }
 
-private case class RamlScalarValueEmitter(key: String,
-                                          f: FieldEntry,
-                                          extensions: Seq[DomainExtension],
-                                          mediaType: Option[YType] = None)(implicit spec: ShapeEmitterContext)
+private case class RamlScalarValueEmitter(
+    key: String,
+    f: FieldEntry,
+    extensions: Seq[DomainExtension],
+    mediaType: Option[YType] = None
+)(implicit spec: ShapeEmitterContext)
     extends BaseValueEmitter {
 
   override def emit(b: EntryBuilder): Unit = sourceOr(f.value, annotatedScalar(b))

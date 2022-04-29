@@ -11,8 +11,7 @@ import amf.shapes.client.platform.model.domain.CreativeWork
 
 import scala.scalajs.js.annotation.JSExportAll
 
-/**
-  * Api model class.
+/** Api model class.
   */
 @JSExportAll
 abstract class Api[A](override private[amf] val _internal: InternalApi)
@@ -36,35 +35,29 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
   def tags: ClientList[Tag]                     = _internal.tags.asClient
 
-  /**
-    * Adds one CreativeWork to the documentations property of this WebApi and returns it for population.
-    * Path property of the CreativeWork is required.
+  /** Adds one CreativeWork to the documentations property of this WebApi and returns it for population. Path property
+    * of the CreativeWork is required.
     */
   def withDocumentationTitle(title: String): CreativeWork = _internal.withDocumentationTitle(title)
 
-  /**
-    * Adds one CreativeWork to the documentations property of this WebApi and returns it for population.
-    * Path property of the CreativeWork is required.
+  /** Adds one CreativeWork to the documentations property of this WebApi and returns it for population. Path property
+    * of the CreativeWork is required.
     */
   def withDocumentationUrl(url: String): CreativeWork = _internal.withDocumentationUrl(url)
 
-  /**
-    * Adds one EndPoint to the endPoints property of this WebApi and returns it for population.
-    * Path property of the endPoint is required.
+  /** Adds one EndPoint to the endPoints property of this WebApi and returns it for population. Path property of the
+    * endPoint is required.
     */
   def withEndPoint(path: String): EndPoint = _internal.withEndPoint(path)
 
-  /**
-    * Adds one Server to the servers property of this WebApi and returns it for population.
-    * url property of the server is required.
+  /** Adds one Server to the servers property of this WebApi and returns it for population. url property of the server
+    * is required.
     */
   def withServer(url: String): Server = _internal.withServer(url)
 
-  /**
-    * Adds one Server to the servers property of this WebApi and returns it for population.
-    * url property of the server is required.
-    * This method marks this Server as default. When generating this Server in RAML or OAS2, it will generate a
-    * 'baseUri', 'host' or 'basePath', instead of a 'servers' annotation.
+  /** Adds one Server to the servers property of this WebApi and returns it for population. url property of the server
+    * is required. This method marks this Server as default. When generating this Server in RAML or OAS2, it will
+    * generate a 'baseUri', 'host' or 'basePath', instead of a 'servers' annotation.
     */
   def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
 

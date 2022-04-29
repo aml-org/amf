@@ -14,8 +14,7 @@ import amf.core.client.platform.model.document.Fragment
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Fragment model class
+/** Fragment model class
   */
 @JSExportAll
 case class DocumentationItem(override private[amf] val _internal: InternalDocumentationItemFragment)
@@ -32,8 +31,7 @@ case class DataType(override private[amf] val _internal: InternalDataTypeFragmen
 }
 
 @JSExportAll
-case class NamedExample(override private[amf] val _internal: InternalNamedExampleFragment)
-    extends Fragment(_internal) {
+case class NamedExample(override private[amf] val _internal: InternalNamedExampleFragment) extends Fragment(_internal) {
   @JSExportTopLevel("NamedExample")
   def this() = this(InternalNamedExampleFragment())
 }

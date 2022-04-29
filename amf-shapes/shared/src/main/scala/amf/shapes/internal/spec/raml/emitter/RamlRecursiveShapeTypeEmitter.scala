@@ -10,8 +10,8 @@ import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlRecursiveShapeTypeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+    implicit spec: ShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     RamlRecursiveShapeEmitter(shape, ordering, references).emitters().foreach(_.emit(b))
   }

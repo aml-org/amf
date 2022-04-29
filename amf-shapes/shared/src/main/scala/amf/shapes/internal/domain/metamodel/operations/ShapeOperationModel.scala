@@ -14,17 +14,20 @@ object ShapeOperationModel extends AbstractOperationModel {
   override val Method: Field = Field(
     Str,
     Shapes + "method",
-    ModelDoc(ModelVocabularies.Shapes, "method", "Type of operation. It follows HTTP semantics"))
+    ModelDoc(ModelVocabularies.Shapes, "method", "Type of operation. It follows HTTP semantics")
+  )
 
   override val Request: Field = Field(
     Array(ShapeRequestModel),
     Shapes + "expects",
-    ModelDoc(ModelVocabularies.Shapes, "expects", "Request information required by the operation"))
+    ModelDoc(ModelVocabularies.Shapes, "expects", "Request information required by the operation")
+  )
 
   override val Responses: Field = Field(
     Array(ShapeResponseModel),
     Shapes + "returns",
-    ModelDoc(ModelVocabularies.Shapes, "returns", "Response data returned by the operation"))
+    ModelDoc(ModelVocabularies.Shapes, "returns", "Response data returned by the operation")
+  )
 
   override val `type`: List[ValueType] = Shapes + "Operation" :: Core + "Operation" :: DomainElementModel.`type`
 
@@ -32,7 +35,7 @@ object ShapeOperationModel extends AbstractOperationModel {
     Name,
     Description,
     Request,
-    Responses,
+    Responses
   ) ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

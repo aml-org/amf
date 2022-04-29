@@ -13,9 +13,11 @@ import amf.core.internal.metamodel.Field
 
 class SecurityResolutionStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         resolveSecurity(doc.encodes.asInstanceOf[Api])
@@ -47,7 +49,9 @@ class SecurityResolutionStage() extends TransformationStep() {
     result
   }
 
-  private def overrideWith(base: Option[Seq[SecurityRequirement]],
-                           overrider: Option[Seq[SecurityRequirement]]): Option[Seq[SecurityRequirement]] =
+  private def overrideWith(
+      base: Option[Seq[SecurityRequirement]],
+      overrider: Option[Seq[SecurityRequirement]]
+  ): Option[Seq[SecurityRequirement]] =
     overrider.orElse(base).filter(_.nonEmpty)
 }

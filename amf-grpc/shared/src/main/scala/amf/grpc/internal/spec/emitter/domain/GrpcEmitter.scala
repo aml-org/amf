@@ -20,10 +20,10 @@ trait GrpcEmitter {
     range match {
       case m: NodeShape if Option(m.additionalPropertiesKeySchema).isDefined => mapRange(m)
       case a: ArrayShape if a.items.isInstanceOf[ScalarShape] => scalarRange(a.items.asInstanceOf[ScalarShape])
-      case a: ArrayShape if a.items.isInstanceOf[NodeShape] => objectRange(a.items.asInstanceOf[NodeShape])
-      case s: ScalarShape => scalarRange(s)
-      case o: NodeShape => objectRange(o)
-      case s => "UnknownMessage"
+      case a: ArrayShape if a.items.isInstanceOf[NodeShape]   => objectRange(a.items.asInstanceOf[NodeShape])
+      case s: ScalarShape                                     => scalarRange(s)
+      case o: NodeShape                                       => objectRange(o)
+      case s                                                  => "UnknownMessage"
     }
   }
 
@@ -32,22 +32,22 @@ trait GrpcEmitter {
       s.linkLabel.option().orElse(s.displayName.option()).orElse(s.name.option()).getOrElse("UnknownEnum")
     } else {
       s.dataType.value() match {
-        case DataType.Double if s.format.option().isEmpty => "double"
-        case DataType.Float if s.format.option().isEmpty => "float"
-        case DataType.Integer if s.format.option().contains("uint32") => "uint32"
-        case DataType.Long if s.format.option().contains("uint64") => "uint64"
-        case DataType.Integer if s.format.option().contains("sint32") => "sint32"
-        case DataType.Long if s.format.option().contains("sint64") => "sint64"
-        case DataType.Integer if s.format.option().contains("fixed32") => "fixed32"
-        case DataType.Long if s.format.option().contains("fixed64") => "fixed64"
+        case DataType.Double if s.format.option().isEmpty               => "double"
+        case DataType.Float if s.format.option().isEmpty                => "float"
+        case DataType.Integer if s.format.option().contains("uint32")   => "uint32"
+        case DataType.Long if s.format.option().contains("uint64")      => "uint64"
+        case DataType.Integer if s.format.option().contains("sint32")   => "sint32"
+        case DataType.Long if s.format.option().contains("sint64")      => "sint64"
+        case DataType.Integer if s.format.option().contains("fixed32")  => "fixed32"
+        case DataType.Long if s.format.option().contains("fixed64")     => "fixed64"
         case DataType.Integer if s.format.option().contains("sfixed32") => "sfixed32"
-        case DataType.Long if s.format.option().contains("sfixed64") => "sfixed64"
-        case DataType.Integer => "int32"
-        case DataType.Long => "int64"
-        case DataType.Boolean => "bool"
-        case DataType.String => "string"
-        case DataType.Byte => "bytes"
-        case _ => "string"
+        case DataType.Long if s.format.option().contains("sfixed64")    => "sfixed64"
+        case DataType.Integer                                           => "int32"
+        case DataType.Long                                              => "int64"
+        case DataType.Boolean                                           => "bool"
+        case DataType.String                                            => "string"
+        case DataType.Byte                                              => "bytes"
+        case _                                                          => "string"
       }
     }
   }
@@ -57,7 +57,7 @@ trait GrpcEmitter {
   }
 
   def mapRange(m: NodeShape): String = {
-    val key = fieldRange(m.additionalPropertiesKeySchema)
+    val key   = fieldRange(m.additionalPropertiesKeySchema)
     val value = fieldRange(m.additionalPropertiesSchema)
     s"map<$key,$value>"
   }

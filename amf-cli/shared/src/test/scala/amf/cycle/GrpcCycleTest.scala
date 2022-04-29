@@ -16,7 +16,8 @@ class GrpcCycleTest extends FunSuiteCycleTests {
       amfConfig.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e))
+      renderedConfig.withErrorHandlerProvider(() => e)
+    )
   }
 
   test("Can cycle through a simple gRPC API") {

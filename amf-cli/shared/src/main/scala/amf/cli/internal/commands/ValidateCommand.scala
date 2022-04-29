@@ -49,7 +49,11 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
         case dialectInstance: DialectInstance =>
           @silent("deprecated") // Silent can only be used in assignment expressions
           val definedBy =
-            dialectInstance.processingData.definedBy().option().orElse(dialectInstance.processingData.definedBy().option()).orNull
+            dialectInstance.processingData
+              .definedBy()
+              .option()
+              .orElse(dialectInstance.processingData.definedBy().option())
+              .orNull
           findDialect(configuration, definedBy) match {
             case Some(dialect) =>
               (ProfileName(dialect.nameAndVersion()), configuration)
@@ -60,9 +64,8 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
           (config.profile, configuration)
       }
     }
-    customProfileLoaded flatMap {
-      case (profileName, conf) =>
-        conf.baseUnitClient().validate(model)
+    customProfileLoaded flatMap { case (profileName, conf) =>
+      conf.baseUnitClient().validate(model)
     }
   }
 

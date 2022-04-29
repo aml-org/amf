@@ -46,8 +46,8 @@ object ShapeFacetsCollector extends ValidationCandidateCollector {
   protected def findShapeWithFacets(element: AmfElement): Option[(Shape, Seq[Shape#FacetsMap])] = {
     element match {
       case e: DomainElement if e.graph.types().exists(typesWithShapes.contains) =>
-        collectCustomFacetsFromShape(e).filter {
-          case (_: Shape, facetDefinitions: Seq[Shape#FacetsMap]) => facetDefinitions.exists(_.nonEmpty)
+        collectCustomFacetsFromShape(e).filter { case (_: Shape, facetDefinitions: Seq[Shape#FacetsMap]) =>
+          facetDefinitions.exists(_.nonEmpty)
         }
       case _ => None
     }

@@ -26,10 +26,12 @@ case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWe
     RamlJsonSchemaExpression(key, value, adopt, parseExample)
 }
 
-case class RamlXmlSchemaExpression(key: YNode,
-                                   override val value: YNode,
-                                   override val adopt: Shape => Unit,
-                                   parseExample: Boolean = false)(implicit val ctx: RamlWebApiContext)
+case class RamlXmlSchemaExpression(
+    key: YNode,
+    override val value: YNode,
+    override val adopt: Shape => Unit,
+    parseExample: Boolean = false
+)(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
 
   override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
@@ -84,9 +86,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
     val shape = SchemaShape(shapeAst)
-      .setWithoutId(ExternalSourceElementModel.Raw,
-                    AmfScalar(scalar.text, Annotations(scalar)),
-                    Annotations.inferred())
+      .setWithoutId(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
       .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
@@ -113,9 +113,11 @@ case class RamlXmlSchemaExpression(key: YNode,
   private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {
     val shape = SchemaShape(shapeAst)
     shape
-      .set(ExternalSourceElementModel.Raw,
-           AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
-           Annotations.inferred())
+      .set(
+        ExternalSourceElementModel.Raw,
+        AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
+        Annotations.inferred()
+      )
       .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String], Annotations(key))
     adopt(shape)
@@ -123,10 +125,12 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def throwInvalidXmlSchemaFormat(shape: SchemaShape) = {
-    ctx.eh.violation(InvalidXmlSchemaType,
-                     shape,
-                     "Cannot parse XML Schema expression out of a non string value",
-                     value.location)
+    ctx.eh.violation(
+      InvalidXmlSchemaType,
+      shape,
+      "Cannot parse XML Schema expression out of a non string value",
+      value.location
+    )
   }
 
   private def emptySchemaShape = {

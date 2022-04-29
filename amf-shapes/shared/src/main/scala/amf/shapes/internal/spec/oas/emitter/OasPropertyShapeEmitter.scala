@@ -12,12 +12,14 @@ import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}
 
-case class OasPropertyShapeEmitter(property: PropertyShape,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit],
-                                   propertiesKey: String = "properties",
-                                   pointer: Seq[String] = Nil,
-                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasPropertyShapeEmitter(
+    property: PropertyShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    propertiesKey: String = "properties",
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasTypePartCollector(property.range, ordering, Nil, references)
     with EntryEmitter {
 

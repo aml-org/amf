@@ -9,8 +9,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * suite that verifies that ids are defined correctly
+/** suite that verifies that ids are defined correctly
   */
 class ParsedModelIdConformityTest extends AsyncFunSuite {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -19,9 +18,8 @@ class ParsedModelIdConformityTest extends AsyncFunSuite {
     UniqueDeclaresIds -> "file://amf-cli/shared/src/test/resources/validations/oas3/declarations-same-name.json"
   )
 
-  tests.foreach {
-    case (idAssertion, path) =>
-      test(s"Id conformity - ${idAssertion.label} in $path") { validateParsedModel(path, idAssertion.assertion) }
+  tests.foreach { case (idAssertion, path) =>
+    test(s"Id conformity - ${idAssertion.label} in $path") { validateParsedModel(path, idAssertion.assertion) }
   }
 
   private def validateParsedModel(path: String, assertion: Document => Assertion): Future[Assertion] = {

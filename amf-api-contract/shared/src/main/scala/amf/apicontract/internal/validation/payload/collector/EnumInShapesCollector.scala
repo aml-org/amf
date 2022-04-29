@@ -21,7 +21,9 @@ object EnumInShapesCollector extends ValidationCandidateCollector {
   private def shapeEnumCandidates(shape: Shape): Seq[ValidationCandidate] = {
     val enums       = shape.values
     val shallowCopy = shape.copyShape()
-    shallowCopy.fields.removeField(ShapeModel.Values) // remove enum values from shape as is in not necessary when validating each enum value.
+    shallowCopy.fields.removeField(
+      ShapeModel.Values
+    ) // remove enum values from shape as is in not necessary when validating each enum value.
     enums.map(v => ValidationCandidate(shallowCopy, PayloadFragment(v, defaultMediaTypeFor(v))))
   }
 

@@ -16,9 +16,11 @@ case class Draft6ExamplesEmitter(examples: Seq[Example], ordering: SpecOrdering)
     with EntryEmitter {
 
   private def entryEmitter: EntryEmitter =
-    EntryPartEmitter("examples",
-                     ExamplesArrayPartEmitter(examples, ordering),
-                     position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO))
+    EntryPartEmitter(
+      "examples",
+      ExamplesArrayPartEmitter(examples, ordering),
+      position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO)
+    )
 
   override def emit(b: YDocument.EntryBuilder): Unit = entryEmitter.emit(b)
 

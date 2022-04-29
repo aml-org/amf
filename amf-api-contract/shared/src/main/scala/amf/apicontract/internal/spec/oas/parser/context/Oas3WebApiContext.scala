@@ -7,12 +7,13 @@ import amf.core.internal.remote.{Oas30, Spec}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.common.{OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 
-class Oas3WebApiContext(loc: String,
-                        refs: Seq[ParsedReference],
-                        private val wrapped: ParserContext,
-                        private val ds: Option[OasWebApiDeclarations] = None,
-                        options: ParsingOptions = ParsingOptions())
-    extends OasWebApiContext(loc, refs, options, wrapped, ds) {
+class Oas3WebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    private val wrapped: ParserContext,
+    private val ds: Option[OasWebApiDeclarations] = None,
+    options: ParsingOptions = ParsingOptions()
+) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val spec: Spec                  = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax

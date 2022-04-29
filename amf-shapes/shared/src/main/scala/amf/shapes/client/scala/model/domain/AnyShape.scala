@@ -41,9 +41,9 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   protected[amf] def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
 
-  /** Aux method to know when the shape is instance only of any shape
-    * and it's because was parsed from
-    * an empty (or only with example) payload, an not an explicit type def */
+  /** Aux method to know when the shape is instance only of any shape and it's because was parsed from an empty (or only
+    * with example) payload, an not an explicit type def
+    */
   def isNotExplicit: Boolean =
     meta.`type`.equals(AnyShapeModel.`type`) &&
       annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty

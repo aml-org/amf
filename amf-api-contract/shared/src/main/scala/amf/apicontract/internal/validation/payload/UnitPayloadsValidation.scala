@@ -28,8 +28,9 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
       .map(_.payload.encodes) ++ candidates.map(_.shape).distinct.flatMap(_.values)
   }
 
-  def validate(config: ValidationConfiguration)(
-      implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
+  def validate(
+      config: ValidationConfiguration
+  )(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
     val nextConfig = config.amfConfig.withPlugin(ErrorFallbackValidationPlugin(SeverityLevels.WARNING))
     CandidateValidator.validateAll(candidates, config.copy(nextConfig)).map(groupResults)
   }
@@ -43,10 +44,10 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
 
     val payloadResults = index.aggregate(indexedResults)
     val schemaResults = indexedResults
-      .filter {
-        case (_, validations) =>
-          validations.exists(v =>
-            v.validationId == SchemaException.id || v.validationId == ShapePayloadValidations.UntranslatableDraft2019Fields.id)
+      .filter { case (_, validations) =>
+        validations.exists(v =>
+          v.validationId == SchemaException.id || v.validationId == ShapePayloadValidations.UntranslatableDraft2019Fields.id
+        )
       }
       .flatMap(_._2)
     payloadResults ++ schemaResults
@@ -74,7 +75,8 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
             d.position(),
             d.location(),
             null
-          ))
+          )
+        )
       case _ => None // not results for the dataNode, ignore
     }
   }
@@ -103,7 +105,7 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
           severity,
           sortedResults.head.targetNode,
           Option(d.id),
-          sortedResults.head.validationId, //?
+          sortedResults.head.validationId, // ?
           d.position(),
           d.location(),
           null

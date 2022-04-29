@@ -16,9 +16,11 @@ class RamlInterSpecRefsReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Raml 0.8 refs Raml 1.0 datatype fragment") {
-    validate("raml08-raml1-datatype/api.raml",
-             Some("raml08-raml1-datatype.report"),
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "raml08-raml1-datatype/api.raml",
+      Some("raml08-raml1-datatype.report"),
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   override val hint: Hint = Raml10YamlHint

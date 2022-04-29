@@ -19,10 +19,12 @@ object RamlExpressionParser {
     val position    = Position(node.location.lineFrom, node.location.columnFrom)
     val tokens      = new RamlExpressionLexer(expression, position).lex()
     val builder =
-      new RamlExpressionASTBuilder(tokens,
-                                   ContextDeclarationFinder(ctx),
-                                   annotations,
-                                   ContextRegister(ctx, Some(node)))(ctx.eh)
+      new RamlExpressionASTBuilder(
+        tokens,
+        ContextDeclarationFinder(ctx),
+        annotations,
+        ContextRegister(ctx, Some(node))
+      )(ctx.eh)
     val result = builder
       .build()
       .map(addAnnotations(_, part, expression))
@@ -39,12 +41,11 @@ object RamlExpressionParser {
     result
   }
 
-
   private def addAnnotations(shape: Shape, part: YPart, expression: String): Shape = {
-    shape.annotations.reject(
-      a =>
-        a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceAST] || a
-          .isInstanceOf[amf.core.internal.annotations.SourceLocation])
+    shape.annotations.reject(a =>
+      a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceAST] || a
+        .isInstanceOf[amf.core.internal.annotations.SourceLocation]
+    )
     shape.annotations ++= Annotations(part)
     shape.annotations += ParsedFromTypeExpression(expression)
     shape

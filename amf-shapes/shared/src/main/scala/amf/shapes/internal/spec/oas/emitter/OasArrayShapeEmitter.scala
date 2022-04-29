@@ -16,12 +16,14 @@ import amf.shapes.internal.spec.jsonschema.emitter.{UnevaluatedEmitter, Untransl
 
 import scala.collection.mutable.ListBuffer
 
-case class OasArrayShapeEmitter(shape: ArrayShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil,
-                                isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
+case class OasArrayShapeEmitter(
+    shape: ArrayShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil,
+    isHeader: Boolean = false
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
@@ -40,29 +42,36 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
-        result += OasItemsShapeEmitter(shape,
-                                       ordering,
-                                       references,
-                                       Some(ValueEmitter("collectionFormat", f)),
-                                       pointer,
-                                       schemaPath)
+        result += OasItemsShapeEmitter(
+          shape,
+          ordering,
+          references,
+          Some(ValueEmitter("collectionFormat", f)),
+          pointer,
+          schemaPath
+        )
       case Some(f) =>
         result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter(
           "collectionFormat",
-          f)
+          f
+        )
       case None =>
         result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
     }
 
-    UntranslatableDraft2019FieldsPresentGuard(shape,
-                                              Seq(UnevaluatedItemsSchema, UnevaluatedItems),
-                                              Seq("unevaluatedItems")).evaluateOrRun { () =>
+    UntranslatableDraft2019FieldsPresentGuard(
+      shape,
+      Seq(UnevaluatedItemsSchema, UnevaluatedItems),
+      Seq("unevaluatedItems")
+    ).evaluateOrRun { () =>
       result += new UnevaluatedEmitter(shape, unevaluatedItemsInfo, ordering, references, pointer, schemaPath)
     }
 
-    UntranslatableDraft2019FieldsPresentGuard(shape,
-                                              Seq(ArrayShapeModel.MinContains, ArrayShapeModel.MaxContains),
-                                              Seq("minContains", "maxContains")).evaluateOrRun { () =>
+    UntranslatableDraft2019FieldsPresentGuard(
+      shape,
+      Seq(ArrayShapeModel.MinContains, ArrayShapeModel.MaxContains),
+      Seq("minContains", "maxContains")
+    ).evaluateOrRun { () =>
       fs.entry(ArrayShapeModel.MinContains).map(f => result += ValueEmitter("minContains", f))
       fs.entry(ArrayShapeModel.MaxContains).map(f => result += ValueEmitter("maxContains", f))
     }

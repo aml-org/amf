@@ -19,7 +19,12 @@ import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with Matchers with AmfObjectTestMatcher {
+trait WebApiMakerTest
+    extends AsyncFunSuite
+    with CompilerTestBuilder
+    with ListAssertions
+    with Matchers
+    with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -160,7 +165,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withRequired(false)
               .withBinding("path")
               .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-          )),
+          )
+        ),
       EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
@@ -173,44 +179,61 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withRequired(false)
               .withBinding("path")
               .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-          ))
-        .withOperations(List(
-          Operation()
-            .withMethod("get")
-            .withName("Some title")
-            .withRequest(Request()
-              .withQueryParameters(List(
-                Parameter()
-                  .withName("param1")
-                  .withParameterName("param1")
-                  .withDescription("Some descr")
-                  .withRequired(true)
-                  .withBinding("query")
-                  .withSchema(ScalarShape()
-                    .withName("schema")
-                    .withDescription("Some descr")
-                    .withDataType("http://www.w3.org/2001/XMLSchema#string")),
-                Parameter()
-                  .withName("param2")
-                  .withParameterName("param2")
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  .withRequired(false)
-                  .withBinding("query")
-              ))),
-          Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withRequest(Request()
-              .withHeaders(List(
-                Parameter()
-                  .withName("Header-One")
-                  .withParameterName("Header-One")
-                  .withRequired(false)
-                  .withBinding("header")
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-              )))
-        ))
+          )
+        )
+        .withOperations(
+          List(
+            Operation()
+              .withMethod("get")
+              .withName("Some title")
+              .withRequest(
+                Request()
+                  .withQueryParameters(
+                    List(
+                      Parameter()
+                        .withName("param1")
+                        .withParameterName("param1")
+                        .withDescription("Some descr")
+                        .withRequired(true)
+                        .withBinding("query")
+                        .withSchema(
+                          ScalarShape()
+                            .withName("schema")
+                            .withDescription("Some descr")
+                            .withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        ),
+                      Parameter()
+                        .withName("param2")
+                        .withParameterName("param2")
+                        .withSchema(
+                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                        .withRequired(false)
+                        .withBinding("query")
+                    )
+                  )
+              ),
+            Operation()
+              .withMethod("post")
+              .withName("Some title")
+              .withDescription("Some description")
+              .withRequest(
+                Request()
+                  .withHeaders(
+                    List(
+                      Parameter()
+                        .withName("Header-One")
+                        .withParameterName("Header-One")
+                        .withRequired(false)
+                        .withBinding("header")
+                        .withSchema(
+                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                    )
+                  )
+              )
+          )
+        )
     )
     val api = WebApi()
       .withName("API")
@@ -226,10 +249,14 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             .withRequired(true)
             .withDescription("One base uri param")
             .withBinding("path")
-            .withSchema(ScalarShape()
-              .withName("schema")
-              .withDescription("One base uri param")
-              .withDataType("http://www.w3.org/2001/XMLSchema#string"))))
+            .withSchema(
+              ScalarShape()
+                .withName("schema")
+                .withDescription("One base uri param")
+                .withDataType("http://www.w3.org/2001/XMLSchema#string")
+            )
+        )
+      )
 
     assertFixture(api, "operation-request.raml", Raml10YamlHint)
   }
@@ -244,61 +271,84 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withName("One display name")
         .withDescription("and this description!")
         .withPayloads(
-          List(Payload()
-            .withName("paramName")
-            .withMediaType(`application/json`)
-            .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
-        .withOperations(List(
-          Operation()
-            .withMethod("get")
-            .withName("Some title")
-            .withOperationId("Some title")
-            .withRequest(
-              Request()
-                .withQueryParameters(
-                  List(
-                    Parameter()
-                      .withName("param1")
-                      .withParameterName("param1")
-                      .withDescription("Some descr")
-                      .withRequired(true)
-                      .withBinding("query")
-                      .withSchema(ScalarShape()
-                        .withName("schema")
+          List(
+            Payload()
+              .withName("paramName")
+              .withMediaType(`application/json`)
+              .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
+          )
+        )
+        .withOperations(
+          List(
+            Operation()
+              .withMethod("get")
+              .withName("Some title")
+              .withOperationId("Some title")
+              .withRequest(
+                Request()
+                  .withQueryParameters(
+                    List(
+                      Parameter()
+                        .withName("param1")
+                        .withParameterName("param1")
                         .withDescription("Some descr")
-                        .withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  ))
-                .withHeaders(List(Parameter()
-                  .withName("param2?")
-                  .withParameterName("param2?")
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  .withRequired(false)
-                  .withBinding("header")))
-                .withPayloads(List(Payload()
-                  .withName("otherParamName")
-                  .withSchema(
-                    ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  .withMediaType(`application/xml`)))
-            ),
-          Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withOperationId("Some title")
-            .withDescription("Some description")
-            .withRequest(
-              Request()
-                .withHeaders(
-                  List(
-                    Parameter()
-                      .withName("Header-One")
-                      .withParameterName("Header-One")
-                      .withRequired(false)
-                      .withBinding("header")
-                      .withSchema(
-                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  ))
-            )
-        ))
+                        .withRequired(true)
+                        .withBinding("query")
+                        .withSchema(
+                          ScalarShape()
+                            .withName("schema")
+                            .withDescription("Some descr")
+                            .withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                    )
+                  )
+                  .withHeaders(
+                    List(
+                      Parameter()
+                        .withName("param2?")
+                        .withParameterName("param2?")
+                        .withSchema(
+                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                        .withRequired(false)
+                        .withBinding("header")
+                    )
+                  )
+                  .withPayloads(
+                    List(
+                      Payload()
+                        .withName("otherParamName")
+                        .withSchema(
+                          ScalarShape()
+                            .withName("otherParamName")
+                            .withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                        .withMediaType(`application/xml`)
+                    )
+                  )
+              ),
+            Operation()
+              .withMethod("post")
+              .withName("Some title")
+              .withOperationId("Some title")
+              .withDescription("Some description")
+              .withRequest(
+                Request()
+                  .withHeaders(
+                    List(
+                      Parameter()
+                        .withName("Header-One")
+                        .withParameterName("Header-One")
+                        .withRequired(false)
+                        .withBinding("header")
+                        .withSchema(
+                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                        )
+                    )
+                  )
+              )
+          )
+        )
     )
     val api = WebApi()
       .withName("API")
@@ -322,41 +372,56 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             Operation()
               .withMethod("get")
               .withName("Some title")
-              .withRequest(Request()
-                .withPayloads(List(Payload()
-                  .withMediaType(`application/json`)
-                  .withSchema(ScalarShape().withName("schema")))))
-              .withResponses(List(
-                Response()
-                  .withDescription("200 descr")
-                  .withStatusCode("200")
-                  .withName("200")
-                  .withHeaders(
+              .withRequest(
+                Request()
+                  .withPayloads(
                     List(
-                      Parameter()
-                        .withName("Time-Ago")
-                        .withParameterName("Time-Ago")
-                        .withBinding("header")
-                        .withSchema(
-                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
-                        .withRequired(true)
-                    )),
-                Response()
-                  .withName("404")
-                  .withStatusCode("404")
-                  .withDescription("Not found!")
-                  .withPayloads(List(
-                    Payload()
-                      .withMediaType(`application/json`)
-                      .withSchema(
-                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")),
-                    Payload()
-                      .withMediaType(`application/xml`)
-                      .withSchema(
-                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  ))
-              ))
-          ))
+                      Payload()
+                        .withMediaType(`application/json`)
+                        .withSchema(ScalarShape().withName("schema"))
+                    )
+                  )
+              )
+              .withResponses(
+                List(
+                  Response()
+                    .withDescription("200 descr")
+                    .withStatusCode("200")
+                    .withName("200")
+                    .withHeaders(
+                      List(
+                        Parameter()
+                          .withName("Time-Ago")
+                          .withParameterName("Time-Ago")
+                          .withBinding("header")
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+                          )
+                          .withRequired(true)
+                      )
+                    ),
+                  Response()
+                    .withName("404")
+                    .withStatusCode("404")
+                    .withDescription("Not found!")
+                    .withPayloads(
+                      List(
+                        Payload()
+                          .withMediaType(`application/json`)
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                          ),
+                        Payload()
+                          .withMediaType(`application/xml`)
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                          )
+                      )
+                    )
+                )
+              )
+          )
+        )
     )
 
     val api = WebApi()
@@ -385,40 +450,55 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withOperationId("Some title")
               .withRequest(
                 Request()
-                  .withPayloads(List(Payload()
-                    .withMediaType(`application/json`)
-                    .withSchema(
-                      ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer")))))
-              .withResponses(List(
-                Response()
-                  .withDescription("200 descr")
-                  .withStatusCode("200")
-                  .withName("200")
-                  .withHeaders(
+                  .withPayloads(
                     List(
-                      Parameter()
-                        .withName("Time-Ago")
-                        .withBinding("header")
+                      Payload()
+                        .withMediaType(`application/json`)
                         .withSchema(
-                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
-                        .withRequired(true)
-                    )),
-                Response()
-                  .withName("404")
-                  .withStatusCode("404")
-                  .withDescription("Not found!")
-                  .withPayloads(List(
-                    Payload()
-                      .withMediaType(`application/json`)
-                      .withSchema(
-                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")),
-                    Payload()
-                      .withMediaType(`application/xml`)
-                      .withSchema(
-                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  ))
-              ))
-          ))
+                          ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+                        )
+                    )
+                  )
+              )
+              .withResponses(
+                List(
+                  Response()
+                    .withDescription("200 descr")
+                    .withStatusCode("200")
+                    .withName("200")
+                    .withHeaders(
+                      List(
+                        Parameter()
+                          .withName("Time-Ago")
+                          .withBinding("header")
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+                          )
+                          .withRequired(true)
+                      )
+                    ),
+                  Response()
+                    .withName("404")
+                    .withStatusCode("404")
+                    .withDescription("Not found!")
+                    .withPayloads(
+                      List(
+                        Payload()
+                          .withMediaType(`application/json`)
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                          ),
+                        Payload()
+                          .withMediaType(`application/xml`)
+                          .withSchema(
+                            ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")
+                          )
+                      )
+                    )
+                )
+              )
+          )
+        )
     )
 
     val api = WebApi()
@@ -537,9 +617,9 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withMinCount(0)
       .withScalarSchema("postal")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    //shape of param1
+    // shape of param1
 
-    //shape of param2
+    // shape of param2
     request
       .withQueryParameter("param2")
       .withParameterName("param2")
@@ -548,7 +628,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
-    //param3 typeless
+    // param3 typeless
     request
       .withQueryParameter("param3")
       .withParameterName("param3")
@@ -557,8 +637,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withSchema(AnyShape())
       .withDescription("typeless")
 
-    //headers
-    //header type string
+    // headers
+    // header type string
     request
       .withHeader("Header-One")
       .withParameterName("Header-One")
@@ -567,7 +647,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
-    //header with object type
+    // header with object type
     val header2Type =
       request
         .withHeader("header-two")
@@ -577,12 +657,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withScalarSchema("schema")
         .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
-    //body operation payload
+    // body operation payload
     request
       .withPayload(Some("application/raml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    //payload of body operation with object
+    // payload of body operation with object
     request
       .withPayload(Some(`application/json`))
       .withObjectSchema("schema")
@@ -593,14 +673,15 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           .withWrapped(false)
           .withName("Xml-name")
           .withNamespace("xsd")
-          .withPrefix("pref"))
+          .withPrefix("pref")
+      )
       .withProperty("howmuch")
       .withPath("http://a.ml/vocabularies/data#howmuch")
       .withMinCount(0)
       .withScalarSchema("howmuch")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    //responses
+    // responses
 
     val default = operation
       .withResponse("default")
@@ -678,9 +759,14 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPath("/aPath")
     val endpoints = List(endPoint)
 
-    endPoint.withOperations(List(Operation().withName("Some title")
-      .withDescription("Some description")
-      .withSchemes(List("http", "https"))))
+    endPoint.withOperations(
+      List(
+        Operation()
+          .withName("Some title")
+          .withDescription("Some description")
+          .withSchemes(List("http", "https"))
+      )
+    )
 
     val api = WebApi()
       .withName("API")
@@ -697,7 +783,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val endPoint = EndPoint()
       .withPath("/aPath")
 
-    endPoint.withOperation("get")
+    endPoint
+      .withOperation("get")
       .withResponses(List(Response()))
 
     val endpoints = List(endPoint)
@@ -712,20 +799,27 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     noException should be thrownBy RAMLConfiguration.RAML10().baseUnitClient().render(doc)
   }
 
-
   test("Parameter with no name") {
     val endPoint = EndPoint()
       .withPath("/aPath")
     val endpoints = List(endPoint)
 
-    endPoint.withOperations(List(Operation()
-      .withResponses(List(
-        Response()
-          .withStatusCode("200")
-          .withHeaders(
+    endPoint.withOperations(
+      List(
+        Operation()
+          .withResponses(
             List(
-              Parameter()
-            ))))))
+              Response()
+                .withStatusCode("200")
+                .withHeaders(
+                  List(
+                    Parameter()
+                  )
+                )
+            )
+          )
+      )
+    )
 
     val api = WebApi()
       .withName("API")
@@ -744,9 +838,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPath("/aPath")
     val endpoints = List(endPoint)
 
-    endPoint.withOperations(List(Operation()
-      .withRequest(Request().withPayloads(Seq(Payload().withSchema(
-        ArrayShape()))))))
+    endPoint.withOperations(
+      List(
+        Operation()
+          .withRequest(Request().withPayloads(Seq(Payload().withSchema(ArrayShape()))))
+      )
+    )
 
     val api = WebApi()
       .withName("API")
@@ -766,10 +863,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       fail(s"Expected $expected but $actual found for field $field")
     }
 
-  private def assertFixture(expected: WebApi,
-                            file: String,
-                            hint: Hint,
-                            overridedPath: Option[String] = None): Future[Assertion] = {
+  private def assertFixture(
+      expected: WebApi,
+      file: String,
+      hint: Hint,
+      overridedPath: Option[String] = None
+  ): Future[Assertion] = {
     val amfConfig = WebAPIConfiguration.WebAPI()
     build(overridedPath.getOrElse(basePath) + file, hint, amfConfig, None)
       .map { unit =>
@@ -801,7 +900,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val request = operation
       .withRequest()
 
-    //shape of param1
+    // shape of param1
     val param1Shape = request
       .withQueryParameter("param1")
       .withParameterName("param1")
@@ -842,9 +941,9 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPath("http://a.ml/vocabularies/data#postal")
       .withScalarSchema("postal")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    //shape of param1
+    // shape of param1
 
-    //shape of param2
+    // shape of param2
     request
       .withQueryParameter("param2")
       .withParameterName("param2")
@@ -853,7 +952,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
-    //param3 typeless , default type its string?
+    // param3 typeless , default type its string?
     request
       .withQueryParameter("param3")
       .withParameterName("param3")
@@ -864,8 +963,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
       .withDescription("typeless")
 
-    //headers
-    //header type string
+    // headers
+    // header type string
     request
       .withHeader("Header-One")
       .withParameterName("Header-One")
@@ -879,9 +978,10 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           .withWrapped(false)
           .withName("Xml-name")
           .withNamespace("xsd")
-          .withPrefix("pref"))
+          .withPrefix("pref")
+      )
 
-    //header with object type
+    // header with object type
     val header2Type =
       request
         .withHeader("header-two")
@@ -897,12 +997,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    //body operation payload
+    // body operation payload
     request
       .withPayload(Some("application/raml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    //payload of body operation with object
+    // payload of body operation with object
     request
       .withPayload(Some(`application/json`))
       .withObjectSchema("schema")
@@ -913,7 +1013,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("howmuch")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    //responses
+    // responses
 
     val default = operation
       .withResponse("200")
@@ -994,7 +1094,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val request = operation
       .withRequest()
 
-    //shape of param1
+    // shape of param1
     val param1Shape = request
       .withQueryParameter("param1")
       .withDescription("Some descr")
@@ -1054,7 +1154,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPropertySource(number.id)
       .withPropertyTarget(Seq(street.id))
 
-    //body operation payload
+    // body operation payload
     val bodySchema = request
       .withPayload(Some(`application/yaml`))
       .withObjectSchema("schema")
@@ -1093,7 +1193,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withMinCount(1)
       .withScalarSchema("postal")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    //payload of body operation with object
+    // payload of body operation with object
 
     bodySchema
       .withDependency()
@@ -1108,7 +1208,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPropertySource(creditNumber.id)
       .withPropertyTarget(Seq(creditStreet.id))
 
-    //responses
+    // responses
 
     val default = operation
       .withResponse("200")
@@ -1149,7 +1249,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val request = operation
       .withRequest()
 
-    //shape of param1
+    // shape of param1
     val param1Shape = request
       .withPayload()
       .withObjectSchema("schema")
@@ -1205,7 +1305,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPropertySource(number.id)
       .withPropertyTarget(Seq(street.id))
 
-    //body operation payload
+    // body operation payload
     val bodySchema = request
       .withPayload(Some(`application/yaml`))
       .withObjectSchema("schema")
@@ -1244,7 +1344,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withMinCount(0)
       .withScalarSchema("postal")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    //payload of body operation with object
+    // payload of body operation with object
 
     bodySchema
       .withDependency()
@@ -1259,7 +1359,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPropertySource(creditNumber.id)
       .withPropertyTarget(Seq(creditStreet.id))
 
-    //responses
+    // responses
 
     api
   }

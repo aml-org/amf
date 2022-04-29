@@ -26,7 +26,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("webapi/no_title.raml", Some("webapi-no-title.report"))
   }
 
-  //this is from resolution its ok here o i should add another test apart.
+  // this is from resolution its ok here o i should add another test apart.
 
   test("Property overwriting") {
     validate("types/property_overwriting.raml", Some("property_overwriting.report"))
@@ -118,15 +118,19 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Test variable not implemented in resource type use") {
-    validate("/resource_types/variable-not-implemented-resourcetype.raml",
-             Some("variable-not-implemented-resourcetype.report"))
+    validate(
+      "/resource_types/variable-not-implemented-resourcetype.raml",
+      Some("variable-not-implemented-resourcetype.report")
+    )
   }
 
   test("Invalid security scheme RAML 0.8") {
-    validate("08/invalid-security.raml",
-             Some("08/invalid-security.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/invalid-security.raml",
+      Some("08/invalid-security.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Invalid security scheme RAML 1.0") {
@@ -138,10 +142,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("security scheme authorizationGrant RAML 0.8") {
-    validate("/security-schemes/raml08AuthorizationGrant.raml",
-             Some("invalid-auth-grant-08.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/security-schemes/raml08AuthorizationGrant.raml",
+      Some("invalid-auth-grant-08.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
 
   }
 
@@ -170,17 +176,21 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Test null value in json when expecting scalar value") {
-    validate("/null-value-json.raml",
-             Some("null-value-json.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/null-value-json.raml",
+      Some("null-value-json.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Error when overriding file schema") {
-    validate("file-schema-override/api.raml",
-             Some("file-override-schema.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "file-schema-override/api.raml",
+      Some("file-override-schema.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Security schemes with empty type") {
@@ -192,10 +202,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Parse and validate invalid responses") {
-    validate("invalid-status-code-string/api.raml",
-             Some("invalid-status-code-string-raml.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "invalid-status-code-string/api.raml",
+      Some("invalid-status-code-string-raml.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Invalid array definition in enum") {
@@ -203,10 +215,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid Raml with json schema that refs path with spaces") {
-    validate("raml-json-ref-with-spaces/api.raml",
-             Some("raml-json-ref-with-spaces.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "raml-json-ref-with-spaces/api.raml",
+      Some("raml-json-ref-with-spaces.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Invalid json schema type") {
@@ -238,10 +252,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid annotations in 08") {
-    validate("invalid-annotations-08/invalid-annotations-08.raml",
-             Some("invalid-annotations-08.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "invalid-annotations-08/invalid-annotations-08.raml",
+      Some("invalid-annotations-08.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Library closed shape") {
@@ -309,8 +325,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Resource types and traits using annotations with allowed target") {
-    validate("annotations/allowed-targets/resource-types-and-traits.raml",
-             Some("allowed-target-resource-types-traits.report"))
+    validate(
+      "annotations/allowed-targets/resource-types-and-traits.raml",
+      Some("allowed-target-resource-types-traits.report")
+    )
   }
 
   test("Annotations with allowed target in extension and overlay") {
@@ -318,15 +336,16 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml",
-             Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {
-    validate("08/invalid-payload.raml",
-             Some("invalid-payload-08.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/invalid-payload.raml",
+      Some("invalid-payload-08.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("JSON Schema false recursion") {
@@ -455,9 +474,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Optional responses in traits with RAML 1.0") {
-    validate("optional-responses/optional-responses-10.raml",
-             Some("optional-responses-10.report"),
-             profile = Raml10Profile)
+    validate(
+      "optional-responses/optional-responses-10.raml",
+      Some("optional-responses-10.report"),
+      profile = Raml10Profile
+    )
   }
 
   test("Optional responses in traits with RAML 0.8") {
@@ -499,15 +520,19 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   // OAuth 2.0
   test("OAuth 2.0 security settings - authorization code") {
-    validate("security-schemes/oauth-2/authorization-code.raml",
-             Some("missing-authorization-code-fields.report"),
-             Raml10Profile)
+    validate(
+      "security-schemes/oauth-2/authorization-code.raml",
+      Some("missing-authorization-code-fields.report"),
+      Raml10Profile
+    )
   }
 
   test("OAuth 2.0 security settings - client credentials grant") {
-    validate("security-schemes/oauth-2/client-credentials.raml",
-             Some("missing-client-credential-fields.report"),
-             Raml10Profile)
+    validate(
+      "security-schemes/oauth-2/client-credentials.raml",
+      Some("missing-client-credential-fields.report"),
+      Raml10Profile
+    )
   }
 
   test("OAuth 2.0 security settings - implicit grant") {
@@ -519,9 +544,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("OAuth 2.0 security settings - mulitple grants") {
-    validate("security-schemes/oauth-2/multiple-grants.raml",
-             Some("missing-fields-multiple-grants.report"),
-             Raml10Profile)
+    validate(
+      "security-schemes/oauth-2/multiple-grants.raml",
+      Some("missing-fields-multiple-grants.report"),
+      Raml10Profile
+    )
   }
 
   test("OAuth 2.0 security settings - custom setting defined in securedBy facet") {
@@ -529,9 +556,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Included JSON with duplicate keys") {
-    validate("raml/included-json-with-duplicate-keys/api.raml",
-             Some("raml/included-json-with-duplicate-keys.report"),
-             Raml10Profile)
+    validate(
+      "raml/included-json-with-duplicate-keys/api.raml",
+      Some("raml/included-json-with-duplicate-keys.report"),
+      Raml10Profile
+    )
   }
 
   test("Documentation - title and description MUST be a non-empty string") {
@@ -543,29 +572,37 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("RAML10 'version' as baseUriParameter is restricted if API version is Defined") {
-    validate("raml/invalid-baseUriParameter-version.raml",
-             Some("raml/invalid-baseUriParameter-version.report"),
-             Raml10Profile)
+    validate(
+      "raml/invalid-baseUriParameter-version.raml",
+      Some("raml/invalid-baseUriParameter-version.report"),
+      Raml10Profile
+    )
   }
 
   test("RAML08 'version' as baseUriParameter is restricted if API version is Defined") {
-    validate("08/invalid-baseUriParameter-version.raml",
-             Some("08/invalid-baseUriParameter-version.report"),
-             Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/invalid-baseUriParameter-version.raml",
+      Some("08/invalid-baseUriParameter-version.report"),
+      Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("RAML10 API must have 'version' if its present as variable in baseUri") {
-    validate("raml/invalid-baseUri-version-variable.raml",
-             Some("raml/invalid-baseUri-version-variable.report"),
-             Raml10Profile)
+    validate(
+      "raml/invalid-baseUri-version-variable.raml",
+      Some("raml/invalid-baseUri-version-variable.report"),
+      Raml10Profile
+    )
   }
 
   test("RAML08 API must have 'version' if its present as variable in baseUri") {
-    validate("08/invalid-baseUri-version-variable.raml",
-             Some("08/invalid-baseUri-version-variable.report"),
-             Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "08/invalid-baseUri-version-variable.raml",
+      Some("08/invalid-baseUri-version-variable.report"),
+      Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Raml10 version baseUri variable valid definition") {
@@ -577,28 +614,32 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid json example as violation") {
-    validate("raml/included-example-invalid-json/api.raml",
-             Some("included-example-invalid-json.report"),
-             Raml08Profile)
+    validate("raml/included-example-invalid-json/api.raml", Some("included-example-invalid-json.report"), Raml08Profile)
   }
 
   test("Invalid json draft 7 with required boolean") {
-    validate("raml/included-json-wrong-draft-key/api.raml",
-             Some("included-json-wrong-draft-key.report"),
-             Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "raml/included-json-wrong-draft-key/api.raml",
+      Some("included-json-wrong-draft-key.report"),
+      Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Draft 2019 unsupported facets for validation throw warning") {
-    validate("raml/draft-2019/draft-2019-unsupported-facets-warning.raml",
-             Some("draft-2019-unsupported-facets-warning.report"))
+    validate(
+      "raml/draft-2019/draft-2019-unsupported-facets-warning.raml",
+      Some("draft-2019-unsupported-facets-warning.report")
+    )
   }
 
   test("valid example defined nested within external fragment") {
-    validate("raml/nested-example-external-fragment/api.raml",
-             None,
-             Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "raml/nested-example-external-fragment/api.raml",
+      None,
+      Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("RAML Library annotations") {
@@ -614,9 +655,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("overlay defining parameter with explicit required field") {
-    validate("raml/overlay-inferred-values/invalid-overlay.raml",
-             Some("explicit-required-field-overlay.report"),
-             Raml10Profile)
+    validate(
+      "raml/overlay-inferred-values/invalid-overlay.raml",
+      Some("explicit-required-field-overlay.report"),
+      Raml10Profile
+    )
   }
 
   test("RAML union type with nil when applying extension") {

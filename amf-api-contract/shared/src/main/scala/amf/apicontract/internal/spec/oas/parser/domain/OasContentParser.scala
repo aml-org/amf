@@ -86,9 +86,8 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
       "encoding",
       entry => {
         val encodings = OasEncodingParser(entry.value.as[YMap], payload.withEncoding).parse()
-        payload.fields.setWithoutId(PayloadModel.Encoding,
-                                    AmfArray(encodings, Annotations(entry.value)),
-                                    Annotations(entry))
+        payload.fields
+          .setWithoutId(PayloadModel.Encoding, AmfArray(encodings, Annotations(entry.value)), Annotations(entry))
       }
     )
 

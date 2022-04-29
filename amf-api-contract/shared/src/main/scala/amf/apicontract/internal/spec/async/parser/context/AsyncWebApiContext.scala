@@ -10,13 +10,14 @@ import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVer
 
 import scala.collection.mutable
 
-abstract class AsyncWebApiContext(loc: String,
-                                  refs: Seq[ParsedReference],
-                                  options: ParsingOptions,
-                                  private val wrapped: ParserContext,
-                                  private val ds: Option[AsyncWebApiDeclarations] = None,
-                                  private val operationIds: mutable.Set[String] = mutable.HashSet())
-    extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
+abstract class AsyncWebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    options: ParsingOptions,
+    private val wrapped: ParserContext,
+    private val ds: Option[AsyncWebApiDeclarations] = None,
+    private val operationIds: mutable.Set[String] = mutable.HashSet()
+) extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
 
   override val factory: AsyncSpecVersionFactory
 
@@ -33,14 +34,15 @@ abstract class AsyncWebApiContext(loc: String,
     ds.getOrElse(
       new AsyncWebApiDeclarations(
         refs
-          .flatMap(
-            r =>
-              if (r.isExternalFragment)
-                r.unit.asInstanceOf[ExternalFragment].encodes.parsed.map(node => r.origin.url -> node)
-              else None)
+          .flatMap(r =>
+            if (r.isExternalFragment)
+              r.unit.asInstanceOf[ExternalFragment].encodes.parsed.map(node => r.origin.url -> node)
+            else None
+          )
           .toMap,
         None,
         errorHandler = eh,
         futureDeclarations = futureDeclarations
-      ))
+      )
+    )
 }

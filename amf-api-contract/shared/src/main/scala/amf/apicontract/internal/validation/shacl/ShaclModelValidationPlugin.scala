@@ -22,13 +22,15 @@ case class ShaclModelValidationPlugin(profile: ProfileName)
 
   override def priority: PluginPriority = HighPriority
 
-  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[AMFValidationReport] = {
     Future(validateWithShacl(unit, options: ValidationOptions))
   }
 
-  private def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): AMFValidationReport = {
+  private def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): AMFValidationReport = {
 
     val validator = new CustomShaclValidator(functions, profile.messageStyle)
     val validations =

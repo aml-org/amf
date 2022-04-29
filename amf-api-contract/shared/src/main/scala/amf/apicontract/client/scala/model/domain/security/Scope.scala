@@ -19,8 +19,8 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
   def cloneScope(): Scope = {
     val cloned = Scope(annotations)
 
-    this.fields.foreach {
-      case (f, v) => cloned.set(f, v.value, v.annotations)
+    this.fields.foreach { case (f, v) =>
+      cloned.set(f, v.value, v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

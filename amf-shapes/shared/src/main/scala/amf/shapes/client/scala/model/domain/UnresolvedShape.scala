@@ -9,16 +9,16 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.ShapeExtensionParser
 import org.yaml.model.{YNode, YPart}
 
-/**
-  * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
+/** Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */
-case class UnresolvedShape private[amf] (override val fields: Fields,
-                                         override val annotations: Annotations,
-                                         override val reference: String,
-                                         fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
-                                         updateFatherLink: Option[String => Unit] = None,
-                                         override val shouldLink: Boolean = true)
-    extends AnyShape(fields, annotations)
+case class UnresolvedShape private[amf] (
+    override val fields: Fields,
+    override val annotations: Annotations,
+    override val reference: String,
+    fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
+    updateFatherLink: Option[String => Unit] = None,
+    override val shouldLink: Boolean = true
+) extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
   override def linkCopy(): AnyShape = this
@@ -64,9 +64,11 @@ case class UnresolvedShape private[amf] (override val fields: Fields,
 object UnresolvedShape {
   def apply(reference: String): UnresolvedShape = apply(reference, Annotations(), None)
 
-  def apply(reference: String,
-            ast: YPart,
-            extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
+  def apply(
+      reference: String,
+      ast: YPart,
+      extensionParser: Option[Option[String] => ShapeExtensionParser]
+  ): UnresolvedShape =
     apply(reference, Annotations(ast), extensionParser)
 
   def apply(reference: String, ast: YPart): UnresolvedShape = apply(reference, Annotations(ast), None)
@@ -74,9 +76,11 @@ object UnresolvedShape {
   def apply(reference: String, ast: Option[YPart]): UnresolvedShape =
     apply(reference, Annotations(ast.getOrElse(YNode.Null)), None)
 
-  def apply(reference: String,
-            annotations: Annotations,
-            extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
+  def apply(
+      reference: String,
+      annotations: Annotations,
+      extensionParser: Option[Option[String] => ShapeExtensionParser]
+  ): UnresolvedShape =
     UnresolvedShape(Fields(), annotations, reference, extensionParser)
 
   def apply(reference: String, annotations: Annotations): UnresolvedShape =

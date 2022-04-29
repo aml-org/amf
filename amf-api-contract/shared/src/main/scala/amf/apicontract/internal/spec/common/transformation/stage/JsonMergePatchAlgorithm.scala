@@ -7,10 +7,12 @@ import amf.core.internal.metamodel.domain.{DataNodeModel, ShapeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.shapes.client.scala.model.domain.Key
 
-case class JsonMergePatch(isNull: AmfElement => Boolean,
-                          keyCriteria: KeyCriteria,
-                          ignoredFields: Set[Field] = Set(),
-                          customMerges: Set[CustomMerge] = Set()) {
+case class JsonMergePatch(
+    isNull: AmfElement => Boolean,
+    keyCriteria: KeyCriteria,
+    ignoredFields: Set[Field] = Set(),
+    customMerges: Set[CustomMerge] = Set()
+) {
 
   def merge[T <: AmfElement](target: T, patch: T): AmfElement = {
     customMerges.foreach(_.apply(target, patch))
@@ -50,15 +52,14 @@ case class JsonMergePatch(isNull: AmfElement => Boolean,
     patch.fields
       .fields()
       .filter(entry => !ignoredFields.contains(entry.field))
-      .foreach {
-        case FieldEntry(field, fieldValue) =>
-          val element = fieldValue.value
-          if (isNull(element)) target.fields.removeField(field)
-          else if (skipRecursiveMerge(field)) target.set(field, fieldValue.value)
-          else {
-            val nextValue = merge(target.fields.get(field), element)
-            target.set(field, nextValue)
-          }
+      .foreach { case FieldEntry(field, fieldValue) =>
+        val element = fieldValue.value
+        if (isNull(element)) target.fields.removeField(field)
+        else if (skipRecursiveMerge(field)) target.set(field, fieldValue.value)
+        else {
+          val nextValue = merge(target.fields.get(field), element)
+          target.set(field, nextValue)
+        }
       }
     target
   }

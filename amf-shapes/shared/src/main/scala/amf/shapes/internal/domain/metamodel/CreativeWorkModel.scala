@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.CreativeWork
 
-/**
-  * Creative work metamodel
+/** Creative work metamodel
   */
 object CreativeWorkModel extends DomainElementModel with LinkableElementModel with DescriptionField {
 

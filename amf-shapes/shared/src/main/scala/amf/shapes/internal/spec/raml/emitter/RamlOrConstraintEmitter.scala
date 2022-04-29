@@ -10,9 +10,9 @@ import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils._
 
-case class RamlOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
 
   val emitters: Seq[Raml10TypePartEmitter] = shape.or.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)

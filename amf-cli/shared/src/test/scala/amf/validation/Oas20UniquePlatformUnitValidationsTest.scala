@@ -15,9 +15,7 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Oas path uri is invalid") {
-    validate("invalid-endpoint-path-still-parses.json",
-             Some("invalid-endpoint-path-still-parses.report"),
-             Oas20Profile)
+    validate("invalid-endpoint-path-still-parses.json", Some("invalid-endpoint-path-still-parses.report"), Oas20Profile)
   }
 
   test("parameter of type array must have items property") {
@@ -37,9 +35,11 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("missing authorizationUrl in Oauth2 flow") {
-    validate("security/missing-authorizationUrl-oauth2.json",
-             Some("missing-authorizationUrl-oauth2.report"),
-             Oas20Profile)
+    validate(
+      "security/missing-authorizationUrl-oauth2.json",
+      Some("missing-authorizationUrl-oauth2.report"),
+      Oas20Profile
+    )
   }
 
   test("invalid Oauth2 flow fields") {

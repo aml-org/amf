@@ -10,25 +10,28 @@ import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasAnyOfShapeEmitter(shape: UnionShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasAnyOfShapeEmitter(
+    shape: UnionShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       spec.anyOfKey,
       _.list { b =>
-        val emitters = shape.anyOf.zipWithIndex map {
-          case (s: Shape, i: Int) =>
-            OasTypePartEmitter(s,
-                               ordering,
-                               ignored = Nil,
-                               references,
-                               pointer = pointer ++ Seq("anyOf", s"$i"),
-                               schemaPath)
+        val emitters = shape.anyOf.zipWithIndex map { case (s: Shape, i: Int) =>
+          OasTypePartEmitter(
+            s,
+            ordering,
+            ignored = Nil,
+            references,
+            pointer = pointer ++ Seq("anyOf", s"$i"),
+            schemaPath
+          )
         }
         traverse(ordering.sorted(emitters), b)
       }

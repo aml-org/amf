@@ -21,9 +21,11 @@ class CleanIdenticalExamples() extends TransformationStep {
     shape.setArrayWithoutId(AnyShapeModel.Examples, uniqueExamples.toSeq)
   }
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case shape: AnyShape => cleanExamples(shape)

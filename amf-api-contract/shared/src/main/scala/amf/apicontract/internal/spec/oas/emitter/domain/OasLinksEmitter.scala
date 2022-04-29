@@ -20,21 +20,25 @@ import org.yaml.model.YType
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class OasLinksEmitter(links: Seq[TemplatedLink],
-                           ordering: SpecOrdering,
-                           references: Seq[BaseUnit],
-                           annotations: Annotations)(implicit spec: OasSpecEmitterContext)
+case class OasLinksEmitter(
+    links: Seq[TemplatedLink],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    annotations: Annotations
+)(implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       annotations,
       b.obj { b =>
-        val emitters = links.map(
-          link =>
-            EntryPartEmitter(link.name.value(),
-                             OasLinkPartEmitter(link, ordering, references),
-                             YType.Str,
-                             pos(link.annotations)))
+        val emitters = links.map(link =>
+          EntryPartEmitter(
+            link.name.value(),
+            OasLinkPartEmitter(link, ordering, references),
+            YType.Str,
+            pos(link.annotations)
+          )
+        )
         traverse(ordering.sorted(emitters), b)
       }
     )
@@ -43,9 +47,9 @@ case class OasLinksEmitter(links: Seq[TemplatedLink],
   override def position(): Position = pos(annotations)
 }
 
-case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -74,9 +78,11 @@ case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, refer
 
     fs.entry(TemplatedLinkModel.Server)
       .map { _ =>
-        result += EntryPartEmitter("server",
-                                   OasServerEmitter(link.server, ordering),
-                                   position = pos(link.server.annotations))
+        result += EntryPartEmitter(
+          "server",
+          OasServerEmitter(link.server, ordering),
+          position = pos(link.server.annotations)
+        )
       }
 
     fs.entry(TemplatedLinkModel.RequestBody).map(f => result += ValueEmitter("requestBody", f))
@@ -87,8 +93,8 @@ case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, refer
 }
 
 case class Oas3LinkDeclarationEmitter(links: Seq[TemplatedLink], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+    implicit spec: OasSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "links",
@@ -103,17 +109,21 @@ case class Oas3LinkDeclarationEmitter(links: Seq[TemplatedLink], ordering: SpecO
   override def position(): Position = links.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-case class Oas3LinkParametersEmitter(mapping: Seq[IriTemplateMapping],
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+case class Oas3LinkParametersEmitter(
+    mapping: Seq[IriTemplateMapping],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
 
     val entryEmitters = mapping.map { mapping =>
-      MapEntryEmitter(mapping.templateVariable.value(),
-                      mapping.linkExpression.value(),
-                      position = pos(mapping.annotations))
+      MapEntryEmitter(
+        mapping.templateVariable.value(),
+        mapping.linkExpression.value(),
+        position = pos(mapping.annotations)
+      )
     }
     b.entry("parameters", _.obj(traverse(ordering.sorted(entryEmitters), _)))
   }

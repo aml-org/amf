@@ -11,15 +11,17 @@ import amf.core.internal.remote.Spec
 
 // This suite tests configuration setups from each individual platform
 trait PlatformConfigurationTest extends ConfigurationSetupTest {
-  protected val all: Set[Spec] = Set(Spec.RAML08,
-                                     Spec.RAML10,
-                                     Spec.OAS20,
-                                     Spec.OAS30,
-                                     Spec.ASYNC20,
-                                     Spec.PAYLOAD,
-                                     Spec.JSONSCHEMA,
-                                     Spec.AMF,
-                                     Spec.GRPC)
+  protected val all: Set[Spec] = Set(
+    Spec.RAML08,
+    Spec.RAML10,
+    Spec.OAS20,
+    Spec.OAS30,
+    Spec.ASYNC20,
+    Spec.PAYLOAD,
+    Spec.JSONSCHEMA,
+    Spec.AMF,
+    Spec.GRPC
+  )
   protected val acceptedWebApiSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10, Spec.OAS20, Spec.OAS30)
   protected val acceptedApiSpecs: Set[Spec]    = acceptedWebApiSpecs + Spec.ASYNC20
   protected val acceptedOasSpecs: Set[Spec]    = Set(Spec.OAS20, Spec.OAS30)

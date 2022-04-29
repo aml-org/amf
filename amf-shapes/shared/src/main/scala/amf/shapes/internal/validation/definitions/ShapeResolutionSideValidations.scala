@@ -28,6 +28,6 @@ object ShapeResolutionSideValidations extends Validations {
 
   override val validations: List[ValidationSpecification] = List(
     InvalidTypeInheritanceErrorSpecification,
-    InvalidTypeInheritanceWarningSpecification,
+    InvalidTypeInheritanceWarningSpecification
   )
 }

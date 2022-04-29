@@ -17,10 +17,10 @@ class SourceInformationTest extends AsyncFunSuite with Matchers {
     parseAndEditing(api).map { unit =>
       val operation   = unit.findByType(OperationModel.`type`.head.iri()).head
       val operationId = operation.id
-      val correctLocation = unit.sourceInformation.additionalLocations.exists(
-        locInfo =>
-          locInfo.locationValue.value().contains("lib-trait-location/lib.raml") &&
-            locInfo.elements.exists(_.value() == operationId))
+      val correctLocation = unit.sourceInformation.additionalLocations.exists(locInfo =>
+        locInfo.locationValue.value().contains("lib-trait-location/lib.raml") &&
+          locInfo.elements.exists(_.value() == operationId)
+      )
       assert(correctLocation)
     }
   }

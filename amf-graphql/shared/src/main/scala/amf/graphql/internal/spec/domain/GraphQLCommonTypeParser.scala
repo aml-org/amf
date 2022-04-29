@@ -11,7 +11,9 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
 
   val obj: NodeShape
 
-  protected def collectFieldsFromPath(objTypeNode: Node, fieldsAstPath: Seq[String])(implicit ctx: GraphQLWebApiContext): Unit = {
+  protected def collectFieldsFromPath(objTypeNode: Node, fieldsAstPath: Seq[String])(implicit
+      ctx: GraphQLWebApiContext
+  ): Unit = {
     collect(objTypeNode, fieldsAstPath).foreach {
       case fieldNode: Node =>
         GraphQLFieldParser(fieldNode).parse {

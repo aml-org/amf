@@ -65,9 +65,11 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def ramlContextType: RamlWebApiContextType
   def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape
   def parseRemoteJSONPath(ref: String): Option[AnyShape]
-  def findDocumentations(key: String,
-                         scope: SearchScope.Scope,
-                         error: Option[String => Unit] = None): Option[CreativeWork]
+  def findDocumentations(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit] = None
+  ): Option[CreativeWork]
 
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
   def addNodeRefIds(ids: mutable.Map[YNode, String])
@@ -90,10 +92,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
 
 trait RamlExternalSchemaExpressionFactory {
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
-  def createJson(key: YNode,
-                 value: YNode,
-                 adopt: Shape => Unit,
-                 parseExample: Boolean = false): RamlExternalTypesParser
+  def createJson(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
 }
 
 object RamlWebApiContextType extends Enumeration {

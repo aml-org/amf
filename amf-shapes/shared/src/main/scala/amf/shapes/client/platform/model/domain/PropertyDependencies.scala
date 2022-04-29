@@ -8,8 +8,7 @@ import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
-/**
-  * Property dependencies model class
+/** Property dependencies model class
   */
 @JSExportAll
 case class PropertyDependencies(override private[amf] val _internal: InternalPropertyDependencies)

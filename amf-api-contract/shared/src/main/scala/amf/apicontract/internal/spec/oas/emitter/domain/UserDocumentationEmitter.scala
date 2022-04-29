@@ -31,8 +31,7 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
   }
 }
 
-case class CreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
+case class CreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {

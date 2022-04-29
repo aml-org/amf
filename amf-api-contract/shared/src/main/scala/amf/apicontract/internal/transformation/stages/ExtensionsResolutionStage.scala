@@ -30,16 +30,16 @@ import amf.shapes.internal.domain.metamodel.common.{DocumentationField, Examples
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
+/** */
 // todo: refactor to support error handler in all resolution stages
 class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     val resolvedModel = model match {
       case overlay: Overlay =>
@@ -77,17 +77,20 @@ trait DomainElementArrayMergeStrategy {
 
 abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
     val profile: ProfileName,
-    val keepEditingInfo: Boolean)(implicit val errorHandler: AMFErrorHandler)
+    val keepEditingInfo: Boolean
+)(implicit val errorHandler: AMFErrorHandler)
     extends InnerAdoption {
 
   val restrictions: MergingRestrictions
 
   private val domainElementArrayMergeStrategy = new DomainElementArrayMergeStrategy {
-    override def merge(target: DomainElement,
-                       field: Field,
-                       o: AmfArray,
-                       extensionId: String,
-                       extensionLocation: Option[String]): Unit =
+    override def merge(
+        target: DomainElement,
+        field: Field,
+        o: AmfArray,
+        extensionId: String,
+        extensionLocation: Option[String]
+    ): Unit =
       setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
   }
 
@@ -105,10 +108,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     document
   }
 
-  def mergeReferences(document: Document,
-                      extension: ExtensionLike[Api],
-                      extensionId: String,
-                      extensionLocation: Option[String]): Unit = {
+  def mergeReferences(
+      document: Document,
+      extension: ExtensionLike[Api],
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit = {
     val existing = document.references.map(_.id) ++ Seq(document.id, extension.id)
 
     val extensionReferences = extension.references.collect {
@@ -151,7 +156,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint) match {
       case (document: Document) :: extensions =>
         // Don't remove Extends field from the model when traits and resource types are resolved.
-        val extendsStage   = new ExtendsResolutionStage(profile, keepEditingInfo, fromOverlay = true) // this false is required to merge overlays with traits/resource types
+        val extendsStage =
+          new ExtendsResolutionStage(
+            profile,
+            keepEditingInfo,
+            fromOverlay = true
+          ) // this false is required to merge overlays with traits/resource types
         val referenceStage = new ReferenceResolutionStage(keepEditingInfo)
 
         // All includes are resolved and applied for both Master Tree and Extension Tree.
@@ -169,18 +179,22 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
-            mergeDeclarations(document,
-                              extension.asInstanceOf[ExtensionLike[Api]],
-                              iriMerger,
-                              extension.id,
-                              ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+            mergeDeclarations(
+              document,
+              extension.asInstanceOf[ExtensionLike[Api]],
+              iriMerger,
+              extension.id,
+              ExtendsHelper.findUnitLocationOfElement(extension.id, model)
+            )
 
             mergeAliases(document, extension)
 
-            mergeReferences(document,
-                            extension.asInstanceOf[ExtensionLike[Api]],
-                            extension.id,
-                            ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+            mergeReferences(
+              document,
+              extension.asInstanceOf[ExtensionLike[Api]],
+              extension.id,
+              ExtendsHelper.findUnitLocationOfElement(extension.id, model)
+            )
         }
 
         // Then, with all the declarations and references applied.
@@ -217,12 +231,14 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       element.set(field, value.asInstanceOf[AmfScalar].toString.replaceFirst(extension, master))
   }
 
-  /** Merge annotation types, types, security schemes, resource types,  */
-  def mergeDeclarations(master: Document,
-                        extension: ExtensionLike[Api],
-                        iriMerger: IriMerger,
-                        extensionId: String,
-                        extensionLocation: Option[String]): Unit = {
+  /** Merge annotation types, types, security schemes, resource types, */
+  def mergeDeclarations(
+      master: Document,
+      extension: ExtensionLike[Api],
+      iriMerger: IriMerger,
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit = {
     val declarations = WebApiDeclarations(master.declares, errorHandler, EmptyFutureDeclarations())
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
@@ -235,7 +251,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             domainElementArrayMergeStrategy,
             extensionId,
             extensionLocation,
-            new InferredOverlayTypeExampleTransform()).merge(equivalent, declaration, mergingTracker)
+            new InferredOverlayTypeExampleTransform()
+          ).merge(equivalent, declaration, mergingTracker)
         case None =>
           val extendedDeclaration =
             adoptInner(master.id + "#/declarations", declaration, mergingTracker).asInstanceOf[DomainElement]
@@ -251,26 +268,27 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     master.withDeclares(declarables)
   }
 
-  def setDomainElementArrayValue(target: DomainElement,
-                                 field: Field,
-                                 other: AmfArray,
-                                 extensionId: String,
-                                 extensionLocation: Option[String]): Unit
+  def setDomainElementArrayValue(
+      target: DomainElement,
+      field: Field,
+      other: AmfArray,
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit
 
   def adoptIris(iriMerger: IriMerger, target: DomainElement, tracker: IdTracker): Unit = {
     if (tracker.notTracking(target.id)) {
       tracker.track(target.id)
-      target.fields.foreach {
-        case (field, value) =>
-          field.`type` match {
-            case Type.Iri => iriMerger.merge(target, field, value.value)
-            case Type.ArrayLike(_: DomainElementModel) =>
-              value.value.asInstanceOf[AmfArray].values.collect { case d: DomainElement => d }.foreach {
-                adoptIris(iriMerger, _, tracker)
-              }
-            case _: DomainElementModel => adoptIris(iriMerger, value.value.asInstanceOf[DomainElement], tracker)
-            case _                     =>
-          }
+      target.fields.foreach { case (field, value) =>
+        field.`type` match {
+          case Type.Iri => iriMerger.merge(target, field, value.value)
+          case Type.ArrayLike(_: DomainElementModel) =>
+            value.value.asInstanceOf[AmfArray].values.collect { case d: DomainElement => d }.foreach {
+              adoptIris(iriMerger, _, tracker)
+            }
+          case _: DomainElementModel => adoptIris(iriMerger, value.value.asInstanceOf[DomainElement], tracker)
+          case _                     =>
+        }
       }
     }
   }
@@ -303,16 +321,18 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 }
 
 class ExtensionResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: AMFErrorHandler)
-    extends ExtensionLikeResolutionStage[Extension](profile, keepEditingInfo) {
+    override implicit val errorHandler: AMFErrorHandler
+) extends ExtensionLikeResolutionStage[Extension](profile, keepEditingInfo) {
   override def resolve(model: BaseUnit, entryPoint: Extension, configuration: AMFGraphConfiguration): BaseUnit =
     resolveOverlay(model, entryPoint, configuration)
 
-  override def setDomainElementArrayValue(target: DomainElement,
-                                          field: Field,
-                                          other: AmfArray,
-                                          extensionId: String,
-                                          extensionLocation: Option[String]): Unit = {
+  override def setDomainElementArrayValue(
+      target: DomainElement,
+      field: Field,
+      other: AmfArray,
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit = {
     val targetValues = target.fields.get(field).asInstanceOf[AmfArray].values
     val mergedValues = (targetValues ++ other.values).distinct
     target.set(field, AmfArray(mergedValues))
@@ -322,16 +342,18 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
 }
 
 class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: AMFErrorHandler)
-    extends ExtensionLikeResolutionStage[Overlay](profile, keepEditingInfo) {
+    override implicit val errorHandler: AMFErrorHandler
+) extends ExtensionLikeResolutionStage[Overlay](profile, keepEditingInfo) {
   override def resolve(model: BaseUnit, entryPoint: Overlay, configuration: AMFGraphConfiguration): BaseUnit =
     resolveOverlay(model, entryPoint, configuration)
 
-  override def setDomainElementArrayValue(target: DomainElement,
-                                          field: Field,
-                                          other: AmfArray,
-                                          extensionId: String,
-                                          extensionLocation: Option[String]): Unit = {
+  override def setDomainElementArrayValue(
+      target: DomainElement,
+      field: Field,
+      other: AmfArray,
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit = {
     val seq: Seq[AmfElement] = other.values.map { value =>
       value
     }

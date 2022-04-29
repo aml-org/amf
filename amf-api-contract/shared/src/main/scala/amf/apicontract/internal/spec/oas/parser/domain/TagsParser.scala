@@ -13,9 +13,7 @@ import org.yaml.model.{YMap, YNode, YScalar, YSequence}
 
 import scala.collection.mutable
 
-/**
-  *
-  */
+/** */
 object TagsParser {
   def apply(map: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext): TagsParser =
     new TagsParser(map, adopt)(toOas(ctx))
@@ -29,9 +27,12 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
     map.key("name", TagModel.Name in tag)
     adopt(tag)
     map.key("description", TagModel.Description in tag)
-    map.key("externalDocs",
-            TagModel.Documentation in tag using (OasLikeCreativeWorkParser.parse(_, tag.id)(
-              WebApiShapeParserContextAdapter(ctx))))
+    map.key(
+      "externalDocs",
+      TagModel.Documentation in tag using (OasLikeCreativeWorkParser.parse(_, tag.id)(
+        WebApiShapeParserContextAdapter(ctx)
+      ))
+    )
 
     AnnotationParser(tag, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
@@ -51,7 +52,12 @@ case class StringTagsParser(seq: YSequence, parent: AmfObject)(implicit ctx: Web
           val tag = Tag(Annotations(scalar)).withName(scalar.text)
           tags += tag
         case _ =>
-          ctx.eh.violation(ParserSideValidations.InvalidTagType, parent, s"Tag value must be of type string", node.location)
+          ctx.eh.violation(
+            ParserSideValidations.InvalidTagType,
+            parent,
+            s"Tag value must be of type string",
+            node.location
+          )
       }
     }
     tags

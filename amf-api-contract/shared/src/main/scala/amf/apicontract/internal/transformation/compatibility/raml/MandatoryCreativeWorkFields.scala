@@ -7,9 +7,11 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.CreativeWork
 
 class MandatoryCreativeWorkFields() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case work: CreativeWork => fillMandatoryFields(work)

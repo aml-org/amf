@@ -4,8 +4,7 @@ import amf.aml.client.scala.model.domain.NodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.shapes.client.scala.model.domain.NodeShape
 
-class NodeShapeTransformer(shape: NodeShape, override val ctx: ShapeTransformationContext)(
-    implicit eh: AMFErrorHandler)
+class NodeShapeTransformer(shape: NodeShape, override val ctx: ShapeTransformationContext)(implicit eh: AMFErrorHandler)
     extends AnyShapeTransformer(shape, ctx)
     with ShapeTransformer {
 

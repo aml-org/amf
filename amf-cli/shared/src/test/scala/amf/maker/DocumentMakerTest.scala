@@ -15,8 +15,7 @@ import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
 
-/**
-  * Test class for documents
+/** Test class for documents
   */
 class DocumentMakerTest extends WebApiMakerTest {
 

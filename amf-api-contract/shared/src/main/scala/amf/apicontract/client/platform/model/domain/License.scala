@@ -7,13 +7,10 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * License model class.
+/** License model class.
   */
 @JSExportAll
-case class License(override private[amf] val _internal: InternalLicense)
-    extends DomainElement
-    with NamedDomainElement {
+case class License(override private[amf] val _internal: InternalLicense) extends DomainElement with NamedDomainElement {
 
   @JSExportTopLevel("License")
   def this() = this(InternalLicense())

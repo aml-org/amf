@@ -7,8 +7,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Scope model class.
+/** Scope model class.
   */
 @JSExportAll
 case class OAuth2Flow(override private[amf] val _internal: InternalOAuth2Flow) extends DomainElement {

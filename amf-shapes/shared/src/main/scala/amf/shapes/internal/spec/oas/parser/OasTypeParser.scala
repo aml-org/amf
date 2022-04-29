@@ -14,8 +14,7 @@ import amf.shapes.internal.spec.oas.parser
 import amf.shapes.internal.spec.oas.parser.TypeDetector.LinkCriteria
 import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YPart, YScalar, YType}
 
-/**
-  * OpenAPI Type Parser.
+/** OpenAPI Type Parser.
   */
 /*
  * TODO: Refactor. We should have a proper JsonSchema parser and an OAS that overrides certain parts of it.
@@ -32,12 +31,14 @@ object OasTypeParser {
       getSchemaVersion(ctx)
     )
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: ShapeParserContext): OasTypeParser =
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(implicit
+      ctx: ShapeParserContext
+  ): OasTypeParser =
     new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value, adopt, version)
 
-  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: ShapeParserContext): OasTypeParser =
+  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(implicit
+      ctx: ShapeParserContext
+  ): OasTypeParser =
     new OasTypeParser(node, name, node.value, adopt, version)
 
   def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
@@ -59,12 +60,14 @@ object OasTypeParser {
   }
 }
 
-case class OasTypeParser(entryOrNode: YMapEntryLike,
-                         name: String,
-                         node: YNode,
-                         adopt: Shape => Unit,
-                         version: SchemaVersion,
-                         isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext)
+case class OasTypeParser(
+    entryOrNode: YMapEntryLike,
+    name: String,
+    node: YNode,
+    adopt: Shape => Unit,
+    version: SchemaVersion,
+    isDeclaration: Boolean = false
+)(implicit val ctx: ShapeParserContext)
     extends QuickFieldParserOps {
 
   def parse(): Option[AnyShape] = {
@@ -83,12 +86,14 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
   private def isBooleanSchema(node: YNode) = node.tagType == YType.Bool
 }
 
-case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
-                               name: String,
-                               map: YMap,
-                               adopt: Shape => Unit,
-                               version: SchemaVersion,
-                               isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext) {
+case class Draft2019TypeParser(
+    entryOrNode: YMapEntryLike,
+    name: String,
+    map: YMap,
+    adopt: Shape => Unit,
+    version: SchemaVersion,
+    isDeclaration: Boolean = false
+)(implicit val ctx: ShapeParserContext) {
 
   private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
@@ -107,7 +112,10 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
 
   private def isSingleEntryMap(map: YMap) = map.entries.size == 1
 
-  private def mergeLinkWithShapeAllOf(reffedShape: Option[AnyShape], restOfShape: Option[AnyShape]): Option[AnyShape] = {
+  private def mergeLinkWithShapeAllOf(
+      reffedShape: Option[AnyShape],
+      restOfShape: Option[AnyShape]
+  ): Option[AnyShape] = {
     (reffedShape, restOfShape) match {
       case (Some(reffed), Some(rest)) => Some(mergeLinkWithShapeAllOf(reffed, rest))
       case (_, Some(rest))            => Some(rest)
@@ -131,12 +139,14 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
   }
 }
 
-case class Draft4TypeParser(entryOrNode: YMapEntryLike,
-                            name: String,
-                            map: YMap,
-                            adopt: Shape => Unit,
-                            version: SchemaVersion,
-                            isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext) {
+case class Draft4TypeParser(
+    entryOrNode: YMapEntryLike,
+    name: String,
+    map: YMap,
+    adopt: Shape => Unit,
+    version: SchemaVersion,
+    isDeclaration: Boolean = false
+)(implicit val ctx: ShapeParserContext) {
 
   private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())

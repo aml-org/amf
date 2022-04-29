@@ -17,11 +17,13 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
 import org.yaml.model.YMap
 import amf.core.internal.utils._
 
-case class ShapeExtensionParser(shape: Shape,
-                                map: YMap,
-                                ctx: ShapeParserContext,
-                                typeInfo: TypeInfo,
-                                overrideSyntax: Option[String] = None) {
+case class ShapeExtensionParser(
+    shape: Shape,
+    map: YMap,
+    ctx: ShapeParserContext,
+    typeInfo: TypeInfo,
+    overrideSyntax: Option[String] = None
+) {
   def parse(): Unit = {
     val inheritedDefinitions =
       shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatMap(_.values).distinct
@@ -31,10 +33,12 @@ case class ShapeExtensionParser(shape: Shape,
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
-          ctx.eh.violation(UnableToParseShapeExtensions,
-                           shape,
-                           s"Cannot parse shape extension for spec ${ctx.spec}",
-                           map.location)
+          ctx.eh.violation(
+            UnableToParseShapeExtensions,
+            shape,
+            s"Cannot parse shape extension for spec ${ctx.spec}",
+            map.location
+          )
           shapeExtensionDefinition.name.value()
       }
       map.key(extensionKey) match {
@@ -47,10 +51,12 @@ case class ShapeExtensionParser(shape: Shape,
           shape.add(ShapeModel.CustomShapeProperties, extension)
         case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
-            ctx.eh.violation(MissingRequiredUserDefinedFacet,
-                             shape,
-                             s"Missing required facet '$extensionKey'",
-                             map.location)
+            ctx.eh.violation(
+              MissingRequiredUserDefinedFacet,
+              shape,
+              s"Missing required facet '$extensionKey'",
+              map.location
+            )
           }
         case _ =>
       }
@@ -79,20 +85,24 @@ case class ShapeExtensionParser(shape: Shape,
         val inheritedCustomFacets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatten.map(_._1)
         definedCustomFacets.toSet
           .intersect(builtInFacets)
-          .foreach(
-            name =>
-              ctx.eh.violation(UserDefinedFacetMatchesBuiltInFacets,
-                               shape,
-                               s"Custom defined facet '$name' matches built-in type facets",
-                               map.location))
+          .foreach(name =>
+            ctx.eh.violation(
+              UserDefinedFacetMatchesBuiltInFacets,
+              shape,
+              s"Custom defined facet '$name' matches built-in type facets",
+              map.location
+            )
+          )
         definedCustomFacets
           .intersect(inheritedCustomFacets)
-          .foreach(
-            name =>
-              ctx.eh.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
-                               shape,
-                               s"Custom defined facet '$name' matches custom facet from inherited type",
-                               map.location))
+          .foreach(name =>
+            ctx.eh.violation(
+              UserDefinedFacetMatchesAncestorsTypeFacets,
+              shape,
+              s"Custom defined facet '$name' matches custom facet from inherited type",
+              map.location
+            )
+          )
       })
   }
 

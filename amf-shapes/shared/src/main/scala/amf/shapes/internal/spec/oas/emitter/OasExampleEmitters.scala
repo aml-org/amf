@@ -11,11 +11,13 @@ import scala.collection.mutable.ListBuffer
 
 object OasExampleEmitters {
 
-  def apply(isHeader: Boolean,
-            exampleOption: Option[Example],
-            ordering: SpecOrdering,
-            extensions: Seq[Example],
-            references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext): OasExampleEmitters = {
+  def apply(
+      isHeader: Boolean,
+      exampleOption: Option[Example],
+      ordering: SpecOrdering,
+      extensions: Seq[Example],
+      references: Seq[BaseUnit]
+  )(implicit spec: ShapeEmitterContext): OasExampleEmitters = {
     val label = if (isHeader) "example".asOasExtension else "example"
     new OasExampleEmitters(label, exampleOption, ordering, extensions, references)
   }
@@ -25,11 +27,13 @@ trait OasLikeExampleEmitters {
   def emitters(): ListBuffer[EntryEmitter]
 }
 
-class OasExampleEmitters(label: String,
-                         exampleOption: Option[Example],
-                         ordering: SpecOrdering,
-                         extensions: Seq[Example],
-                         references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext)
+class OasExampleEmitters(
+    label: String,
+    exampleOption: Option[Example],
+    ordering: SpecOrdering,
+    extensions: Seq[Example],
+    references: Seq[BaseUnit]
+)(implicit spec: ShapeEmitterContext)
     extends OasLikeExampleEmitters {
 
   def emitters(): ListBuffer[EntryEmitter] = {

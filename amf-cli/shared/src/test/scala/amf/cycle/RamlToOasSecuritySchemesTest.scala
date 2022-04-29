@@ -136,10 +136,7 @@ class RamlToOasSecuritySchemesTest extends FunSuiteCycleTests {
   }
 
   test("OAS 2.0 specific securiy schemes in securedBy are omitted in RAML in Operation") {
-    cycle("cycles/securedBy-operation.oas2.json",
-          "cycles/securedBy-operation.oas2.raml",
-          Oas20JsonHint,
-          Raml10YamlHint)
+    cycle("cycles/securedBy-operation.oas2.json", "cycles/securedBy-operation.oas2.raml", Oas20JsonHint, Raml10YamlHint)
   }
 
   test("OAS 3.0 specific securiy schemes in securedBy are omitted in RAML in WebAPI") {
@@ -151,9 +148,6 @@ class RamlToOasSecuritySchemesTest extends FunSuiteCycleTests {
   }
 
   test("OAS 3.0 specific securiy schemes in securedBy are omitted in RAML in Operation") {
-    cycle("cycles/securedBy-operation.oas3.json",
-          "cycles/securedBy-operation.oas3.raml",
-          Oas30JsonHint,
-          Raml10YamlHint)
+    cycle("cycles/securedBy-operation.oas3.json", "cycles/securedBy-operation.oas3.raml", Oas30JsonHint, Raml10YamlHint)
   }
 }

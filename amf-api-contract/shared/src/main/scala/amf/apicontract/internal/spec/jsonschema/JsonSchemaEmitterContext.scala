@@ -14,10 +14,11 @@ import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition, Sche
 
 import scala.util.matching.Regex
 
-class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
-                               override val renderConfig: RenderConfiguration,
-                               override val schemaVersion: SchemaVersion)
-    extends Oas2SpecEmitterContext(eh = eh, config = renderConfig) {
+class JsonSchemaEmitterContext(
+    override val eh: AMFErrorHandler,
+    override val renderConfig: RenderConfiguration,
+    override val schemaVersion: SchemaVersion
+) extends Oas2SpecEmitterContext(eh = eh, config = renderConfig) {
 
   override val anyOfKey: String = "anyOf"
   override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
@@ -32,10 +33,11 @@ object JsonSchemaEmitterContext {
     new JsonSchemaEmitterContext(eh, config, OAS20SchemaVersion(SchemaPosition.Schema))
 }
 
-final case class InlinedJsonSchemaEmitterContext(override val eh: AMFErrorHandler,
-                                                 override val renderConfig: RenderConfiguration,
-                                                 override val schemaVersion: SchemaVersion)
-    extends JsonSchemaEmitterContext(eh, renderConfig, schemaVersion) {
+final case class InlinedJsonSchemaEmitterContext(
+    override val eh: AMFErrorHandler,
+    override val renderConfig: RenderConfiguration,
+    override val schemaVersion: SchemaVersion
+) extends JsonSchemaEmitterContext(eh, renderConfig, schemaVersion) {
   override val factory: OasSpecEmitterFactory = InlinedJsonSchemaEmitterFactory()(this)
 }
 

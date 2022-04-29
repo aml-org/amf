@@ -3,7 +3,11 @@ package amf.apicontract.internal.validation.shacl
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
-import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
+import amf.apicontract.internal.metamodel.domain.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  SecuritySchemeModel
+}
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.core.client.scala.model.domain._
@@ -14,7 +18,11 @@ import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
 import amf.validation.internal.shacl.custom.CustomShaclValidator
-import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, CustomShaclFunctions, ValidationInfo}
+import amf.validation.internal.shacl.custom.CustomShaclValidator.{
+  CustomShaclFunction,
+  CustomShaclFunctions,
+  ValidationInfo
+}
 
 import java.util.regex.Pattern
 
@@ -45,7 +53,8 @@ object CustomShaclFunctions {
                 if (optBindingValue.isEmpty || optBindingValue.get != "formData")
                   validate(None)
               case _ => None
-          })
+            }
+          )
       }
     },
     new CustomShaclFunction {
@@ -334,7 +343,9 @@ object CustomShaclFunctions {
             .flatMap(_.name.option())
             .groupBy(identity)
             .filter(_._2.size > 1)
-            .keys.toSeq.sorted
+            .keys
+            .toSeq
+            .sorted
           if (duplicatedNames.nonEmpty) {
             val message = s"Duplicated property names: ${duplicatedNames.mkString(", ")}"
             val info    = ValidationInfo(NodeShapeModel.Properties, Some(message))
@@ -342,7 +353,7 @@ object CustomShaclFunctions {
           }
         }
       }
-    },
+    }
   )
 
   val functions: CustomShaclFunctions = listOfFunctions.map(f => f.name -> f).toMap
@@ -359,7 +370,8 @@ object CustomShaclFunctions {
     element match {
       case element: NodeShape =>
         element.properties.exists(p => p.patternName.option().isEmpty) || element.fields.exists(
-          NodeShapeModel.Properties)
+          NodeShapeModel.Properties
+        )
       case _ => false
     }
   }

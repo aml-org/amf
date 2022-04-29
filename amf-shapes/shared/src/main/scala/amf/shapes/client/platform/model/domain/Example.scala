@@ -9,8 +9,7 @@ import amf.shapes.internal.convert.ShapeClientConverters.ClientOption
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
-/**
-  * Example model class
+/** Example model class
   */
 @JSExportAll
 case class Example(override private[amf] val _internal: InternalExample)

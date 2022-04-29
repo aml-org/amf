@@ -136,9 +136,11 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     case _                            => throw new Exception("Parser - Can only be used from OAS!")
   }
 
-  override def findDocumentations(key: String,
-                                  scope: SearchScope.Scope,
-                                  error: Option[String => Unit]): Option[CreativeWork] =
+  override def findDocumentations(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit]
+  ): Option[CreativeWork] =
     ctx.declarations.findDocumentations(key, scope, error)
 
   override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
@@ -159,24 +161,28 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def raml10createContextFromRaml: ShapeParserContext = ctx match {
     case ramlCtx: RamlWebApiContext =>
-      val context = new Raml10WebApiContext(ramlCtx.rootContextDocument,
-                                            ramlCtx.refs,
-                                            ramlCtx,
-                                            Some(ramlCtx.declarations),
-                                            ramlCtx.contextType,
-                                            ramlCtx.options)
+      val context = new Raml10WebApiContext(
+        ramlCtx.rootContextDocument,
+        ramlCtx.refs,
+        ramlCtx,
+        Some(ramlCtx.declarations),
+        ramlCtx.contextType,
+        ramlCtx.options
+      )
       WebApiShapeParserContextAdapter(context)
     case _ => throw new Exception("Parser - Can be called only from RAML!")
   }
 
   override def raml08createContextFromRaml: ShapeParserContext = ctx match {
     case ramlCtx: RamlWebApiContext =>
-      val nextCtx = new Raml08WebApiContext(ramlCtx.rootContextDocument,
-                                            ramlCtx.refs,
-                                            ramlCtx,
-                                            Some(ramlCtx.declarations),
-                                            contextType = ramlCtx.contextType,
-                                            options = ramlCtx.options)
+      val nextCtx = new Raml08WebApiContext(
+        ramlCtx.rootContextDocument,
+        ramlCtx.refs,
+        ramlCtx,
+        Some(ramlCtx.declarations),
+        contextType = ramlCtx.contextType,
+        options = ramlCtx.options
+      )
       WebApiShapeParserContextAdapter(nextCtx)
     case _ => throw new Exception("Parser - Can be called only from RAML!")
   }
@@ -198,21 +204,25 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     case _                                => None
   }
 
-  override def makeJsonSchemaContextForParsing(url: String,
-                                               document: Root,
-                                               options: ParsingOptions): ShapeParserContext = {
+  override def makeJsonSchemaContextForParsing(
+      url: String,
+      document: Root,
+      options: ParsingOptions
+  ): ShapeParserContext = {
     val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), ctx.config)
     cleanNested.globalSpace = ctx.globalSpace
 
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
     val inheritedDeclarations = getInheritedDeclarations
 
-    val schemaContext = new JsonSchemaWebApiContext(url,
-                                                    document.references,
-                                                    cleanNested,
-                                                    inheritedDeclarations,
-                                                    options,
-                                                    ctx.defaultSchemaVersion)
+    val schemaContext = new JsonSchemaWebApiContext(
+      url,
+      document.references,
+      cleanNested,
+      inheritedDeclarations,
+      options,
+      ctx.defaultSchemaVersion
+    )
     schemaContext.indexCache = ctx.indexCache
     WebApiShapeParserContextAdapter(schemaContext)
   }

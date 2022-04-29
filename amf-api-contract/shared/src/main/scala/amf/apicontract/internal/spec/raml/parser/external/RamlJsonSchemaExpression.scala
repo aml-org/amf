@@ -33,10 +33,12 @@ import org.yaml.parser.JsonParser
 
 import scala.collection.mutable
 
-case class RamlJsonSchemaExpression(key: YNode,
-                                    override val value: YNode,
-                                    override val adopt: Shape => Unit,
-                                    parseExample: Boolean = false)(implicit val ctx: RamlWebApiContext)
+case class RamlJsonSchemaExpression(
+    key: YNode,
+    override val value: YNode,
+    override val adopt: Shape => Unit,
+    parseExample: Boolean = false
+)(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser
     with PlatformSecrets {
 
@@ -127,7 +129,8 @@ case class RamlJsonSchemaExpression(key: YNode,
           .foreach(e =>
             shape.callAfterAdoption { () =>
               shape.withReference(e.encoded.id + localPath.getOrElse(""))
-          })
+            }
+          )
         if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
           shape.id = null // <-- suspicious
           adopt(shape)
@@ -142,10 +145,12 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
   }
 
-  private def parseOasLib(origin: ValueAndOrigin,
-                          basePath: String,
-                          localPath: Option[String],
-                          normalizedLocalPath: Option[String]) = {
+  private def parseOasLib(
+      origin: ValueAndOrigin,
+      basePath: String,
+      localPath: Option[String],
+      normalizedLocalPath: Option[String]
+  ) = {
     RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, basePath).parse()
     val shape = ctx.declarations.findInExternalsLibs(basePath, normalizedLocalPath.get) match {
       case Some(s) =>
@@ -153,10 +158,12 @@ case class RamlJsonSchemaExpression(key: YNode,
       case _ =>
         val empty = AnyShape()
         adopt(empty)
-        ctx.eh.violation(JsonSchemaFragmentNotFound,
-                         empty,
-                         s"could not find json schema fragment ${localPath.get} in file $basePath",
-                         origin.valueAST.location)
+        ctx.eh.violation(
+          JsonSchemaFragmentNotFound,
+          empty,
+          s"could not find json schema fragment ${localPath.get} in file $basePath",
+          origin.valueAST.location
+        )
         empty
 
     }
@@ -165,7 +172,8 @@ case class RamlJsonSchemaExpression(key: YNode,
       .foreach(e =>
         shape.callAfterAdoption { () =>
           shape.withReference(e.encoded.id + localPath.get)
-      })
+        }
+      )
 
     shape.annotations += ExternalFragmentRef(localPath.get)
     shape
@@ -188,7 +196,9 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       // todo: this should be migrated to JsonSchemaParser
-      val url               = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
+      val url =
+        path.normalizeUrl + (if (!path.endsWith("/")) "/"
+                             else "") // alwarys add / to avoid ask if there is any one before add #
       val schemaEntry       = JsonParserFactory.fromCharsWithSource(text, valueAST.sourceName)(ctx.eh).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
@@ -196,8 +206,8 @@ case class RamlJsonSchemaExpression(key: YNode,
 
       document
         .Oas2DocumentParser(
-          Root(SyamlParsedDocument(schemaEntry), url, `application/json`, Nil, InferredLinkReference, text))(
-          jsonSchemaContext)
+          Root(SyamlParsedDocument(schemaEntry), url, `application/json`, Nil, InferredLinkReference, text)
+        )(jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/", None)(jsonSchemaContext)
       val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq
       val shapesMap      = mutable.Map[String, AnyShape]()
@@ -214,12 +224,14 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
   }
 
-  private def parseJsonShape(text: String,
-                             key: YNode,
-                             valueAST: YNode,
-                             adopt: Shape => Unit,
-                             value: YNode,
-                             extLocation: Option[String]): AnyShape = {
+  private def parseJsonShape(
+      text: String,
+      key: YNode,
+      valueAST: YNode,
+      adopt: Shape => Unit,
+      value: YNode,
+      extLocation: Option[String]
+  ): AnyShape = {
 
     val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(WebApiShapeParserContextAdapter(ctx)).getOrElse {
       jsonParser(extLocation, text, valueAST).document().node
@@ -229,10 +241,12 @@ case class RamlJsonSchemaExpression(key: YNode,
     val fullRef           = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
 
     val tmpShape: UnresolvedShape =
-      JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape),
-                                                   schemaEntry,
-                                                   WebApiShapeParserContextAdapter(jsonSchemaContext),
-                                                   fullRef)
+      JsonSchemaParsingHelper.createTemporaryShape(
+        shape => adopt(shape),
+        schemaEntry,
+        WebApiShapeParserContextAdapter(jsonSchemaContext),
+        fullRef
+      )
 
     val s = actualParsing(adopt, value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
     cleanGlobalSpace()
@@ -245,9 +259,11 @@ case class RamlJsonSchemaExpression(key: YNode,
     url
       .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
       .getOrElse(
-        JsonParserFactory.fromCharsWithSource(text,
-                                              valueAST.value.sourceName,
-                                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
+        JsonParserFactory.fromCharsWithSource(
+          text,
+          valueAST.value.sourceName,
+          Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
+        )(ctx.eh)
       )
   }
 
@@ -257,8 +273,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     toSchemaContext(ctx, valueAST)
   }
 
-  /**
-    * Clean from globalSpace the local references
+  /** Clean from globalSpace the local references
     */
   private def cleanGlobalSpace(): Unit = {
     ctx.globalSpace.foreach { e =>
@@ -274,14 +289,17 @@ case class RamlJsonSchemaExpression(key: YNode,
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
   }
 
-  private def actualParsing(adopt: Shape => Unit,
-                            value: YNode,
-                            schemaEntry: YMapEntry,
-                            jsonSchemaContext: OasWebApiContext,
-                            fullRef: String,
-                            tmpShape: UnresolvedShape) = {
+  private def actualParsing(
+      adopt: Shape => Unit,
+      value: YNode,
+      schemaEntry: YMapEntry,
+      jsonSchemaContext: OasWebApiContext,
+      fullRef: String,
+      tmpShape: UnresolvedShape
+  ) = {
     OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(
-      (WebApiShapeParserContextAdapter(jsonSchemaContext)))
+      (WebApiShapeParserContextAdapter(jsonSchemaContext))
+    )
       .parse() match {
       case Some(sh) =>
         ctx.futureDeclarations.resolveRef(fullRef, sh)
@@ -308,9 +326,12 @@ case class RamlJsonSchemaExpression(key: YNode,
               toJsonSchema(
                 ref.unit.location().get,
                 ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
-                ctx)
+                ctx
+              )
             case _
-                if Option(ast.value.sourceName).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
+                if Option(
+                  ast.value.sourceName
+                ).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
               toJsonSchema(ast.value.sourceName, ctx.refs, ctx)
             case _ => toJsonSchema(ctx)
           }

@@ -15,10 +15,10 @@ import amf.shapes.internal.spec.common.emitter.annotations.OasAnnotationEmitter.
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-/**
-  *
-  */
-case class AnnotationsEmitter(element: CustomizableElement, ordering: SpecOrdering)(implicit spec: ShapeEmitterContext) {
+/** */
+case class AnnotationsEmitter(element: CustomizableElement, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) {
   def emitters: Seq[EntryEmitter] =
     element.customDomainProperties
       .filter(!isOrphanOasExtension(_))
@@ -33,9 +33,9 @@ object AnnotationEmitter {
   type ComputeName = DomainExtension => String
 }
 
-class AstAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering, computeName: ComputeName)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+class AstAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering, computeName: ComputeName)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     Option(domainExtension.extension).foreach(emitAst(b, _))
   }
@@ -50,10 +50,12 @@ class AstAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrder
   override def position(): Position = pos(domainExtension.annotations)
 }
 
-case class AnnotationEmitter(element: CustomizableElement,
-                             domainExtension: DomainExtension,
-                             ordering: SpecOrdering,
-                             computeName: ComputeName)(implicit spec: ShapeEmitterContext)
+case class AnnotationEmitter(
+    element: CustomizableElement,
+    domainExtension: DomainExtension,
+    ordering: SpecOrdering,
+    computeName: ComputeName
+)(implicit spec: ShapeEmitterContext)
     extends AstAnnotationEmitter(domainExtension, ordering, computeName) {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -72,9 +74,9 @@ case class AnnotationEmitter(element: CustomizableElement,
   override def position(): Position = pos(domainExtension.annotations)
 }
 
-case class RamlScalarAnnotationEmitter(extension: DomainExtension, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlScalarAnnotationEmitter(extension: DomainExtension, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   private val name = RamlAnnotationEmitter.computeName(extension)
 
@@ -84,7 +86,7 @@ case class RamlScalarAnnotationEmitter(extension: DomainExtension, ordering: Spe
       b =>
         Option(extension.extension).foreach { ast =>
           DataNodeEmitter(ast, ordering)(spec.eh).emit(b)
-      }
+        }
     )
   }
 
@@ -94,8 +96,9 @@ case class RamlScalarAnnotationEmitter(extension: DomainExtension, ordering: Spe
 object OasAstAnnotationEmitter {
   private val computeName: ComputeName = ext => s"x-${ext.name.value()}"
 
-  def apply(domainExtension: DomainExtension, ordering: SpecOrdering)(
-      implicit spec: ShapeEmitterContext): AstAnnotationEmitter = {
+  def apply(domainExtension: DomainExtension, ordering: SpecOrdering)(implicit
+      spec: ShapeEmitterContext
+  ): AstAnnotationEmitter = {
     new AstAnnotationEmitter(domainExtension, ordering, computeName)
   }
 }
@@ -104,8 +107,9 @@ object OasAnnotationEmitter {
 
   private val computeName: ComputeName = ext => s"x-${ext.name.value()}"
 
-  def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(
-      implicit spec: ShapeEmitterContext) = {
+  def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(implicit
+      spec: ShapeEmitterContext
+  ) = {
     AnnotationEmitter(element, domainExtension, ordering, computeName)
   }
 }
@@ -114,8 +118,9 @@ object RamlAnnotationEmitter {
 
   val computeName: ComputeName = ext => s"(${ext.name.value()})"
 
-  def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(
-      implicit spec: ShapeEmitterContext) = {
+  def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(implicit
+      spec: ShapeEmitterContext
+  ) = {
     AnnotationEmitter(element, domainExtension, ordering, computeName)
   }
 }

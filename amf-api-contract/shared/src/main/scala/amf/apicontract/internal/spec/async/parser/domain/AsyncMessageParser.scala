@@ -28,19 +28,22 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 object AsyncMessageParser {
 
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-      implicit ctx: AsyncWebApiContext): AsyncMessageParser = {
+      implicit ctx: AsyncWebApiContext
+  ): AsyncMessageParser = {
     val populator = if (isTrait) AsyncMessageTraitPopulator() else AsyncConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
     new AsyncMessageParser(entryLike, parent, messageType, populator, finder, isTrait)(ctx)
   }
 }
 
-class AsyncMessageParser(entryLike: YMapEntryLike,
-                         parent: String,
-                         messageType: Option[MessageType],
-                         populator: AsyncMessagePopulator,
-                         finder: Finder[Message],
-                         isTrait: Boolean)(implicit val ctx: AsyncWebApiContext)
+class AsyncMessageParser(
+    entryLike: YMapEntryLike,
+    parent: String,
+    messageType: Option[MessageType],
+    populator: AsyncMessagePopulator,
+    finder: Finder[Message],
+    isTrait: Boolean
+)(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
   def parse(): Message = {
@@ -80,13 +83,16 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
     ctx.navigateToRemoteYNode(fullRef) match {
       case Some(result) =>
         val messageNode = result.remoteNode
-        val external    = AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType, isTrait)(result.context).parse()
+        val external =
+          AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType, isTrait)(result.context).parse()
         nameAndAdopt(generateLink(fullRef, external, entryLike), entryLike.key)
       case None =>
-        ctx.eh.violation(CoreValidations.UnresolvedReference,
-                         "",
-                         s"Cannot find link reference $fullRef",
-                         Annotations(entryLike.asMap))
+        ctx.eh.violation(
+          CoreValidations.UnresolvedReference,
+          "",
+          s"Cannot find link reference $fullRef",
+          Annotations(entryLike.asMap)
+        )
         val errorMessage = new ErrorMessage(fullRef, entryLike.asMap, isTrait)
         nameAndAdopt(errorMessage.link(fullRef, errorMessage.annotations), entryLike.key)
     }
@@ -103,8 +109,9 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
 
 }
 
-case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: MessageType)(
-    implicit val ctx: AsyncWebApiContext) {
+case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: MessageType)(implicit
+    val ctx: AsyncWebApiContext
+) {
   def parse(): List[Message] = {
     map.key("oneOf") match {
       case Some(entry) =>
@@ -112,9 +119,8 @@ case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: Me
           .as[YSequence]
           .nodes
           .zipWithIndex
-          .map {
-            case (node, index) =>
-              AsyncMessageParser(YMapEntryLike(node), s"$parent/$index", Some(messageType)).parse()
+          .map { case (node, index) =>
+            AsyncMessageParser(YMapEntryLike(node), s"$parent/$index", Some(messageType)).parse()
           }
           .toList
       case None => List(AsyncMessageParser(YMapEntryLike(map), parent, Some(messageType)).parse())
@@ -130,9 +136,12 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     map.key("summary", MessageModel.Summary in message)
     map.key("description", MessageModel.Description in message)
 
-    map.key("externalDocs",
-            MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id)(
-              WebApiShapeParserContextAdapter(ctx))))
+    map.key(
+      "externalDocs",
+      MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id)(
+        WebApiShapeParserContextAdapter(ctx)
+      ))
+    )
     map.key(
       "tags",
       entry => {
@@ -146,11 +155,17 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       ex.annotations += TrackedElement.fromInstance(message)
     }
     if (examples.payload.nonEmpty)
-      message.setWithoutId(MessageModel.Examples, AmfArray(examples.payload, Annotations.virtual()), Annotations.inferred())
+      message.setWithoutId(
+        MessageModel.Examples,
+        AmfArray(examples.payload, Annotations.virtual()),
+        Annotations.inferred()
+      )
     if (examples.headers.nonEmpty)
-      message.setWithoutId(MessageModel.HeaderExamples,
-                  AmfArray(examples.headers, Annotations.virtual()),
-                  Annotations.inferred())
+      message.setWithoutId(
+        MessageModel.HeaderExamples,
+        AmfArray(examples.headers, Annotations.virtual()),
+        Annotations.inferred()
+      )
 
     map.key(
       "headers",
@@ -163,16 +178,20 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
             case _ =>
               message.setWithoutId(MessageModel.HeaderSchema, NodeShape(entry.value), Annotations(entry))
 
-              ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
-                               message,
-                               ParserSideValidations.HeaderMustBeObject.message,
-                               entry.value.location)
+              ctx.eh.violation(
+                ParserSideValidations.HeaderMustBeObject,
+                message,
+                ParserSideValidations.HeaderMustBeObject.message,
+                entry.value.location
+              )
           }
       }
     )
 
-    map.key("correlationId",
-            MessageModel.CorrelationId in message using (AsyncCorrelationIdParser(_, message.id).parse()))
+    map.key(
+      "correlationId",
+      MessageModel.CorrelationId in message using (AsyncCorrelationIdParser(_, message.id).parse())
+    )
 
     map.key("bindings").foreach { entry =>
       val bindings: MessageBindings = AsyncMessageBindingsParser(YMapEntryLike(entry.value)).parse()
@@ -198,9 +217,11 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)
     parseSchema(map, payload)
 
-    message.setWithoutId(MessageModel.Payloads,
-                AmfArray(Seq(payload), Annotations(VirtualElement())),
-                Annotations(VirtualElement()))
+    message.setWithoutId(
+      MessageModel.Payloads,
+      AmfArray(Seq(payload), Annotations(VirtualElement())),
+      Annotations(VirtualElement())
+    )
   }
 
   private def shouldParsePayloadModel(map: YMap) = {
@@ -222,16 +243,15 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       .map { examplesEntry =>
         val seq     = examplesEntry.value.as[YSequence]
         val counter = new IdCounter()
-        val examplePairs = seq.nodes.zipWithIndex.map {
-          case (node, index) =>
-            val map = node.as[YMap]
-            ctx.closedShape(parent, map, "message examples")
-            val List(headerExample, payloadExample) = List("headers", "payload").map { key =>
-              map.key(key).map { n =>
-                parseExample(n, counter.genId("default-example")).add(ExampleIndex(index))
-              }
+        val examplePairs = seq.nodes.zipWithIndex.map { case (node, index) =>
+          val map = node.as[YMap]
+          ctx.closedShape(parent, map, "message examples")
+          val List(headerExample, payloadExample) = List("headers", "payload").map { key =>
+            map.key(key).map { n =>
+              parseExample(n, counter.genId("default-example")).add(ExampleIndex(index))
             }
-            (headerExample, payloadExample)
+          }
+          (headerExample, payloadExample)
         }
         val (headers, examples) = examplePairs.unzip
         MessageExamples(headers.flatten, examples.flatten)

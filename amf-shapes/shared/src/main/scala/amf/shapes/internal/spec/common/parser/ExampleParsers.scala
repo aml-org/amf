@@ -30,20 +30,25 @@ import org.yaml.parser.JsonParser
 
 import scala.collection.mutable.ListBuffer
 
-case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDomainElement)(
-    implicit ctx: ShapeParserContext) {
+case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDomainElement)(implicit
+    ctx: ShapeParserContext
+) {
   def parse(): Unit = {
     (map.key("example"), map.key("examples")) match {
       case (Some(exampleEntry), None) =>
         val examples = List(parseExample(exampleEntry.value))
-        exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
-                                              AmfArray(examples, Annotations(exampleEntry)),
-                                              Annotations(exampleEntry))
+        exemplifiedDomainElement.setWithoutId(
+          ExamplesField.Examples,
+          AmfArray(examples, Annotations(exampleEntry)),
+          Annotations(exampleEntry)
+        )
       case (None, Some(examplesEntry)) =>
         val examples = Oas3NamedExamplesParser(examplesEntry, exemplifiedDomainElement.id).parse()
-        exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
-                                              AmfArray(examples, Annotations(examplesEntry.value)),
-                                              Annotations(examplesEntry))
+        exemplifiedDomainElement.setWithoutId(
+          ExamplesField.Examples,
+          AmfArray(examples, Annotations(examplesEntry.value)),
+          Annotations(examplesEntry)
+        )
       case (Some(_), Some(_)) =>
         ctx.eh.violation(
           ExclusivePropertiesSpecification,
@@ -70,11 +75,13 @@ case class Oas3NamedExamplesParser(entry: YMapEntry, parentId: String)(implicit 
   }
 }
 
-case class RamlExamplesParser(map: YMap,
-                              singleExampleKey: String,
-                              multipleExamplesKey: String,
-                              exemplified: ExemplifiedDomainElement,
-                              options: ExampleOptions)(implicit ctx: ShapeParserContext) {
+case class RamlExamplesParser(
+    map: YMap,
+    singleExampleKey: String,
+    multipleExamplesKey: String,
+    exemplified: ExemplifiedDomainElement,
+    options: ExampleOptions
+)(implicit ctx: ShapeParserContext) {
   def parse(): Unit = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined) {
       ctx.eh.violation(
@@ -99,10 +106,12 @@ case class RamlExamplesParser(map: YMap,
   }
 }
 
-case class RamlMultipleExampleParser(key: String,
-                                     map: YMap,
-                                     producer: Option[String] => Example,
-                                     options: ExampleOptions)(implicit ctx: ShapeParserContext) {
+case class RamlMultipleExampleParser(
+    key: String,
+    map: YMap,
+    producer: Option[String] => Example,
+    options: ExampleOptions
+)(implicit ctx: ShapeParserContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
@@ -136,7 +145,8 @@ case class RamlMultipleExampleParser(key: String,
 }
 
 case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => Example, options: ExampleOptions)(
-    implicit ctx: ShapeParserContext) {
+    implicit ctx: ShapeParserContext
+) {
   def parse(): Example = {
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
@@ -152,25 +162,29 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
   }
 }
 
-case class RamlSingleExampleParser(key: String,
-                                   map: YMap,
-                                   producer: Option[String] => Example,
-                                   options: ExampleOptions)(implicit ctx: ShapeParserContext) {
+case class RamlSingleExampleParser(
+    key: String,
+    map: YMap,
+    producer: Option[String] => Example,
+    options: ExampleOptions
+)(implicit ctx: ShapeParserContext) {
   def parse(): Option[Example] = {
     val newProducer = () => producer(None)
     map.key(key).flatMap { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
           ctx
-            .findNamedExample(s,
-                              Some(
-                                errMsg =>
-                                  ctx.eh.violation(
-                                    InvalidFragmentType,
-                                    "",
-                                    errMsg,
-                                    entry.value.location
-                                )))
+            .findNamedExample(
+              s,
+              Some(errMsg =>
+                ctx.eh.violation(
+                  InvalidFragmentType,
+                  "",
+                  errMsg,
+                  entry.value.location
+                )
+              )
+            )
             .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
@@ -180,16 +194,17 @@ case class RamlSingleExampleParser(key: String,
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
                 ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
-                  .parse())
+                  .parse()
+              )
           }
       }
     }
   }
 }
 
-case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
-    implicit ctx: ShapeParserContext)
-    extends QuickFieldParserOps {
+case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(implicit
+    ctx: ShapeParserContext
+) extends QuickFieldParserOps {
   def parse(): Example = {
     val example = producer().add(Annotations(entry))
 
@@ -220,9 +235,9 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
   }
 }
 
-case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: ExampleOptions)(
-    implicit ctx: ShapeParserContext)
-    extends QuickFieldParserOps {
+case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: ExampleOptions)(implicit
+    ctx: ShapeParserContext
+) extends QuickFieldParserOps {
   def parse(): Example = {
     val map = entry.value.as[YMap]
 
@@ -252,13 +267,16 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .parse()
               .add(ExternalReferenceUrl(fullRef))
           case None =>
-            ctx.eh.violation(CoreValidations.UnresolvedReference,
-                             "",
-                             s"Cannot find example reference $fullRef",
-                             map.location)
+            ctx.eh.violation(
+              CoreValidations.UnresolvedReference,
+              "",
+              s"Cannot find example reference $fullRef",
+              map.location
+            )
             val errorExample =
               setName(
-                error.ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))
+                error.ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized())
+              )
 
             errorExample
         }
@@ -266,9 +284,9 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
   }
 }
 
-case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleOptions)(
-    implicit ctx: ShapeParserContext)
-    extends QuickFieldParserOps {
+case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleOptions)(implicit
+    ctx: ShapeParserContext
+) extends QuickFieldParserOps {
   def parse(): Example = {
     map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
@@ -289,11 +307,13 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
   }
 }
 
-case class NodeDataNodeParser(node: YNode,
-                              parentId: String,
-                              quiet: Boolean,
-                              fromExternal: Boolean = false,
-                              isScalar: Boolean = false)(implicit ctx: ShapeParserContext) {
+case class NodeDataNodeParser(
+    node: YNode,
+    parentId: String,
+    quiet: Boolean,
+    fromExternal: Boolean = false,
+    isScalar: Boolean = false
+)(implicit ctx: ShapeParserContext) {
   def parse(): DataNodeParserResult = {
     val errorHandler             = if (quiet) WarningOnlyHandler(ctx.eh) else ctx.eh
     var jsonText: Option[String] = None
@@ -315,7 +335,7 @@ case class NodeDataNodeParser(node: YNode,
       case wh: WarningOnlyHandler if wh.hasRegister && jsonText.isDefined =>
         parseDataNode(exampleNode, jsonText.map(ParsedJSONExample(_)).toSeq)
       case wh: WarningOnlyHandler if wh.hasRegister => DataNodeParserResult(exampleNode, None)
-      case _                                        => parseDataNode(exampleNode, jsonText.map(ParsedJSONExample(_)).toSeq)
+      case _ => parseDataNode(exampleNode, jsonText.map(ParsedJSONExample(_)).toSeq)
 
     }
   }
@@ -324,9 +344,11 @@ case class NodeDataNodeParser(node: YNode,
     if (fromExternal)
       JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
     else
-      JsonParserFactory.fromCharsWithSource(scalar.text,
-                                            scalar.sourceName,
-                                            Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
+      JsonParserFactory.fromCharsWithSource(
+        scalar.text,
+        scalar.sourceName,
+        Position(node.range.lineFrom, node.range.columnFrom)
+      )(errorHandler)
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>

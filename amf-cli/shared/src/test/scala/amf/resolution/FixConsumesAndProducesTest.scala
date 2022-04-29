@@ -37,7 +37,6 @@ class FixConsumesAndProducesTest extends AsyncFunSuite with Matchers {
     }
   }
 
-
   test("accepts should include only mediaTypes defined at operation level if both levels defined") {
     val api = basePath + "req-with-mediatype-at-both-levels.raml"
     assertOperationSatisfy(api) { op =>

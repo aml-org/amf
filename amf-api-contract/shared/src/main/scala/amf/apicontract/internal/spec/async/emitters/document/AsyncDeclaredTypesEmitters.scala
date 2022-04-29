@@ -14,7 +14,8 @@ import amf.shapes.internal.spec.common.emitter.OasDeclaredTypesEmitters
 object AsyncDeclaredTypesEmitters {
 
   def obtainEmitter(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering, config: RenderConfiguration)(
-      implicit spec: OasLikeSpecEmitterContext): EntryEmitter = {
+      implicit spec: OasLikeSpecEmitterContext
+  ): EntryEmitter = {
     val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = JSONSchemaDraft7SchemaVersion, config = config)
     OasDeclaredTypesEmitters(types, references, ordering)(OasLikeShapeEmitterContextAdapter(newCtx))
   }

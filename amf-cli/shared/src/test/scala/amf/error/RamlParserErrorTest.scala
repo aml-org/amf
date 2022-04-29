@@ -42,31 +42,36 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       erroneousTypeShape => {
         erroneousTypeShape.severityLevel should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType"
+        )
         erroneousTypeShape.validationId should be(MissingRequiredUserDefinedFacet.id)
       },
       erroneousTypeShape => {
         erroneousTypeShape.severityLevel should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType"
+        )
         erroneousTypeShape.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect1 => {
         incorrect1.severityLevel should be("Violation")
         incorrect1.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect1")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect1"
+        )
         incorrect1.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect2 => {
         incorrect2.severityLevel should be("Violation")
         incorrect2.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect2")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect2"
+        )
         incorrect2.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect3 => {
         incorrect3.severityLevel should be("Violation")
         incorrect3.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect3")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect3"
+        )
         incorrect3.validationId should be(ClosedShapeSpecification.id)
       }
     )
@@ -159,7 +164,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       exclusive1Warning => {
         exclusive1Warning.severityLevel should be("Warning")
         exclusive1Warning.message should startWith(
-          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+        )
         exclusive1Warning.position.map(_.range) should be(Some(Range((8, 4), (8, 10))))
       },
       exclusive2 => {
@@ -170,7 +176,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       exclusive2Warning => {
         exclusive2Warning.severityLevel should be("Warning")
         exclusive2Warning.message should startWith(
-          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+        )
         exclusive2Warning.position.map(_.range) should be(Some(Range((17, 12), (17, 18))))
 
       }
@@ -187,7 +194,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       warning => {
         warning.severityLevel should be("Warning")
         warning.message should startWith(
-          "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead")
+          "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"
+        )
       }
     )
   }
@@ -378,9 +386,11 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
         error => {
           error.severityLevel should be("Violation")
           error.message should startWith(
-            "Cyclic found following references file://amf-cli/shared/src/test/resources/parser-results/raml/error/cycle-references/api.raml ->")
+            "Cyclic found following references file://amf-cli/shared/src/test/resources/parser-results/raml/error/cycle-references/api.raml ->"
+          )
           error.message should endWith(
-            "-> file://amf-cli/shared/src/test/resources/parser-results/raml/error/cycle-references/yaKassa.raml")
+            "-> file://amf-cli/shared/src/test/resources/parser-results/raml/error/cycle-references/yaKassa.raml"
+          )
         },
         unresolve1 => {
           unresolve1.severityLevel should be("Violation")
@@ -456,12 +466,14 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       doubleWarning => {
         doubleWarning.severityLevel should be("Warning")
         doubleWarning.message should startWith(
-          "Format double is not valid for type http://www.w3.org/2001/XMLSchema#integer")
+          "Format double is not valid for type http://www.w3.org/2001/XMLSchema#integer"
+        )
       },
       floatWarning => {
         floatWarning.severityLevel should be("Warning")
         floatWarning.message should startWith(
-          "Format float is not valid for type http://www.w3.org/2001/XMLSchema#integer")
+          "Format float is not valid for type http://www.w3.org/2001/XMLSchema#integer"
+        )
       }
     )
   }
@@ -495,7 +507,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
         unresolved.severityLevel should be("Violation")
         unresolved.message should be("Unresolved reference 'fragment.raml'")
         unresolved.location should be(
-          Some("file://amf-cli/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml"))
+          Some("file://amf-cli/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml")
+        )
       }
     )
   }
@@ -549,7 +562,8 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
       formatWarning => {
         formatWarning.severityLevel should be("Warning")
         formatWarning.message should endWith(
-          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
+          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number"
+        )
       }
     )
   }

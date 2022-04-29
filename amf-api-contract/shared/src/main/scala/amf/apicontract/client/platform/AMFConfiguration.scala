@@ -27,10 +27,10 @@ import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidat
 import amf.core.internal.remote.Spec
 import amf.shapes.client.platform.BaseShapesConfiguration
 
-/**
-  * The AMFConfiguration lets you customize all AMF-specific configurations.
-  * Its immutable and created through builders. An instance is needed to use AMF.
-  * @see [[AMFBaseUnitClient]]
+/** The AMFConfiguration lets you customize all AMF-specific configurations. Its immutable and created through builders.
+  * An instance is needed to use AMF.
+  * @see
+  *   [[AMFBaseUnitClient]]
   */
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
@@ -45,95 +45,107 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   /** Contains methods to get information about the current state of the configuration */
   def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
-  /**
-    * Set [[ParsingOptions]]
-    * @param parsingOptions [[ParsingOptions]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[ParsingOptions]] added
+  /** Set [[ParsingOptions]]
+    * @param parsingOptions
+    *   [[ParsingOptions]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ParsingOptions]] added
     */
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     _internal.withParsingOptions(parsingOptions)
 
-  /**
-    * Add a [[ResourceLoader]]
-    * @param rl [[ResourceLoader]] to add to configuration object
-    * @return [[AMFConfiguration]] with the [[ResourceLoader]] added
+  /** Add a [[ResourceLoader]]
+    * @param rl
+    *   [[ResourceLoader]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with the [[ResourceLoader]] added
     */
   override def withResourceLoader(rl: ResourceLoader): AMFConfiguration =
     _internal.withResourceLoader(ResourceLoaderMatcher.asInternal(rl))
 
-  /**
-    * Set the configuration [[ResourceLoader]]s
-    * @param rl a list of [[ResourceLoader]] to set to the configuration object
-    * @return [[AMFConfiguration]] with [[ResourceLoader]]s set
+  /** Set the configuration [[ResourceLoader]]s
+    * @param rl
+    *   a list of [[ResourceLoader]] to set to the configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ResourceLoader]]s set
     */
   override def withResourceLoaders(rl: ClientList[ResourceLoader]): AMFConfiguration =
     _internal.withResourceLoaders(rl.asInternal.toList)
 
-  /**
-    * Set [[UnitCache]]
-    * @param cache [[UnitCache]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[UnitCache]] added
+  /** Set [[UnitCache]]
+    * @param cache
+    *   [[UnitCache]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[UnitCache]] added
     */
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
     _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
-  /**
-    * Add a [[TransformationPipeline]]
-    * @param pipeline [[TransformationPipeline]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[TransformationPipeline]] added
+  /** Add a [[TransformationPipeline]]
+    * @param pipeline
+    *   [[TransformationPipeline]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[TransformationPipeline]] added
     */
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     _internal.withTransformationPipeline(pipeline)
 
-  /**
-    * Set [[RenderOptions]]
-    * @param renderOptions [[RenderOptions]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[RenderOptions]] added
+  /** Set [[RenderOptions]]
+    * @param renderOptions
+    *   [[RenderOptions]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[RenderOptions]] added
     */
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
     _internal.withRenderOptions(renderOptions)
 
-  /**
-    * Set [[ErrorHandlerProvider]]
-    * @param provider [[ErrorHandlerProvider]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[ErrorHandlerProvider]] set
+  /** Set [[ErrorHandlerProvider]]
+    * @param provider
+    *   [[ErrorHandlerProvider]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ErrorHandlerProvider]] set
     */
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
     _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
-  /**
-    * Add an [[AMFEventListener]]
-    * @param listener [[AMFEventListener]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[AMFEventListener]] added
+  /** Add an [[AMFEventListener]]
+    * @param listener
+    *   [[AMFEventListener]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[AMFEventListener]] added
     */
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
-  /**
-    * Set [[BaseExecutionEnvironment]]
-    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[BaseExecutionEnvironment]] set
+  /** Set [[BaseExecutionEnvironment]]
+    * @param executionEnv
+    *   [[BaseExecutionEnvironment]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[BaseExecutionEnvironment]] set
     */
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
-  /**
-    * Register a Dialect
-    * @param dialect [[Dialect]] to register
-    * @return [[AMFConfiguration]] with [[Dialect]] registered
+  /** Register a Dialect
+    * @param dialect
+    *   [[Dialect]] to register
+    * @return
+    *   [[AMFConfiguration]] with [[Dialect]] registered
     */
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
-  /**
-    * Register a Dialect
-    * @param url URL of the Dialect to register
-    * @return A CompletableFuture of [[AMFConfiguration]]
+  /** Register a Dialect
+    * @param url
+    *   URL of the Dialect to register
+    * @return
+    *   A CompletableFuture of [[AMFConfiguration]]
     */
   def withDialect(url: String): ClientFuture[AMFConfiguration] = _internal.withDialect(url).asClient
 
-  /**
-    * Register a [[Dialect]] linked from a [[DialectInstance]]
-    * @param url of the [[DialectInstance]]
-    * @return A CompletableFuture of [[AMFConfiguration]]
+  /** Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url
+    *   of the [[DialectInstance]]
+    * @return
+    *   A CompletableFuture of [[AMFConfiguration]]
     */
   def forInstance(url: String): ClientFuture[AMFConfiguration] = _internal.forInstance(url).asClient
 
@@ -141,8 +153,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }
 
-/**
-  * common configuration with all configurations needed for RAML like:
+/** common configuration with all configurations needed for RAML like:
   *   - Validation rules
   *   - Parse and emit plugins
   *   - Transformation Pipelines
@@ -156,8 +167,7 @@ object RAMLConfiguration {
   def fromSpec(spec: Spec): AMFConfiguration = InternalRAMLConfiguration.fromSpec(spec)
 }
 
-/**
-  * common configuration with all configurations needed for OAS like:
+/** common configuration with all configurations needed for OAS like:
   *   - Validation rules
   *   - Parse and emit plugins
   *   - Transformation Pipelines
@@ -179,8 +189,7 @@ object WebAPIConfiguration {
   def fromSpec(spec: Spec): AMFConfiguration = InternalWebAPIConfiguration.fromSpec(spec)
 }
 
-/**
-  * common configuration with all configurations needed for AsyncApi like:
+/** common configuration with all configurations needed for AsyncApi like:
   *   - Validation rules
   *   - Parse and emit plugins
   *   - Transformation Pipelines

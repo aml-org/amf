@@ -23,8 +23,6 @@ class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest wit
   }
 
   test("Validate example defined in message trait") {
-    validate("applied-message-trait-invalid-example.yaml",
-             Some("invalid-example-applied-trait.report"),
-             Async20Profile)
+    validate("applied-message-trait-invalid-example.yaml", Some("invalid-example-applied-trait.report"), Async20Profile)
   }
 }

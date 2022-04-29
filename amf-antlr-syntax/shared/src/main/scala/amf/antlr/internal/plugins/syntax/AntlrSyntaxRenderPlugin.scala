@@ -19,8 +19,7 @@ object AntlrSyntaxRenderPlugin extends AMFSyntaxRenderPlugin {
     }
   }
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq ++ Syntax.graphQLMimes.toSeq
 

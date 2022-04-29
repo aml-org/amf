@@ -17,18 +17,18 @@ trait TypeEmitterFactory {
   def emitterFor(shape: Shape): OasTypeEmitter
 }
 
-abstract class AbstractDependenciesEmitter(nodeShape: NodeShape,
-                                           ordering: SpecOrdering,
-                                           typeFactory: TypeEmitterFactory)
-    extends EntryEmitter {
+abstract class AbstractDependenciesEmitter(
+    nodeShape: NodeShape,
+    ordering: SpecOrdering,
+    typeFactory: TypeEmitterFactory
+) extends EntryEmitter {
 
   protected def schemaDependenciesEmitters: Seq[DependencyEmitter] = {
     nodeShape.fields
       .entry(NodeShapeModel.SchemaDependencies)
       .map { entry =>
         val dependencies = entry.arrayValues[SchemaDependencies]
-        dependencies.map(dep =>
-          DependencyEmitter(dep, ordering, SchemaDependenciesEmitter(dep, ordering, typeFactory)))
+        dependencies.map(dep => DependencyEmitter(dep, ordering, SchemaDependenciesEmitter(dep, ordering, typeFactory)))
       }
       .getOrElse(Seq())
   }
@@ -60,24 +60,31 @@ case class Draft2019DependenciesEmitter(nodeShape: NodeShape, ordering: SpecOrde
     val schemaDependencies   = schemaDependenciesEmitters
 
     if (propertyDependencies.nonEmpty) {
-      b.entry("dependentRequired", _.obj { b =>
-        traverse(ordering.sorted(propertyDependencies), b)
-      })
+      b.entry(
+        "dependentRequired",
+        _.obj { b =>
+          traverse(ordering.sorted(propertyDependencies), b)
+        }
+      )
     }
 
     if (schemaDependencies.nonEmpty) {
-      b.entry("dependentSchemas", _.obj { b =>
-        traverse(ordering.sorted(schemaDependencies), b)
-      })
+      b.entry(
+        "dependentSchemas",
+        _.obj { b =>
+          traverse(ordering.sorted(schemaDependencies), b)
+        }
+      )
     }
   }
 }
 
-case class Draft4DependenciesEmitter(nodeShape: NodeShape,
-                                     ordering: SpecOrdering,
-                                     isRamlExtension: Boolean,
-                                     typeFactory: TypeEmitterFactory)
-    extends AbstractDependenciesEmitter(nodeShape, ordering, typeFactory) {
+case class Draft4DependenciesEmitter(
+    nodeShape: NodeShape,
+    ordering: SpecOrdering,
+    isRamlExtension: Boolean,
+    typeFactory: TypeEmitterFactory
+) extends AbstractDependenciesEmitter(nodeShape, ordering, typeFactory) {
   override def emit(b: EntryBuilder): Unit = {
 
     val key = if (isRamlExtension) "dependencies".asRamlAnnotation else "dependencies"

@@ -18,7 +18,9 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   def parse(adopt: DomainExtension => Unit): DomainExtension = {
     parseName(adopt)
     parseExtension(dataNode => dataNode.adopted(extension.id))
-    extension.withDefinedBy(CustomDomainProperty(toAnnotations(ast)).withId(Namespace.Data.+(extension.name.value()).iri()))
+    extension.withDefinedBy(
+      CustomDomainProperty(toAnnotations(ast)).withId(Namespace.Data.+(extension.name.value()).iri())
+    )
     extension
   }
 
@@ -35,7 +37,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
       case Some(constant: Node) =>
         val data = parseConstant(constant, adopt)
         extension.withExtension(data)
-      case _              =>
+      case _ =>
         astError(extension.id, "Missing mandatory protobuf3 option constant value", toAnnotations(ast))
     }
   }
@@ -43,7 +45,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   def parseConstant(constAst: Node, adopt: DataNode => Unit): DataNode = {
     if (constAst.children.head.name == FULL_IDENTIFIER) {
       val identValue = normalize(constAst.source)
-      val s = ScalarNode(toAnnotations(constAst)).withValue(identValue)
+      val s          = ScalarNode(toAnnotations(constAst)).withValue(identValue)
       identValue match {
         case "true"  => s.withDataType(DataType.Boolean)
         case "false" => s.withDataType(DataType.Boolean)
@@ -61,11 +63,11 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
       val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.Float)
       adopt(s)
       s
-    } else if  (constAst.children.head.name == BOOL_LITERAL) {
+    } else if (constAst.children.head.name == BOOL_LITERAL) {
       val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.Boolean)
       adopt(s)
       s
-    } else if  (constAst.children.head.name == STRING_LITERAL) {
+    } else if (constAst.children.head.name == STRING_LITERAL) {
       val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.String)
       adopt(s)
       s
@@ -82,7 +84,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   def parseBlockLiteral(constAst: Node, adopt: DataNode => Unit): ObjectNode = {
     val obj = ObjectNode(toAnnotations(constAst))
     adopt(obj)
-    blockPairs(constAst.children, data =>  data.adopted(obj.id)).foreach { case (key, value) =>
+    blockPairs(constAst.children, data => data.adopted(obj.id)).foreach { case (key, value) =>
       obj.addProperty(key.urlEncoded, value)
     }
     obj
@@ -90,7 +92,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
 
   def blockPairs(nodes: Seq[ASTElement], adopt: DataNode => Unit): Seq[(String, DataNode)] = {
     val acc: mutable.Buffer[(String, DataNode)] = mutable.Buffer()
-    var nextKey: Option[String] = None
+    var nextKey: Option[String]                 = None
     nodes.foreach {
       case n: Node =>
         n.name match {
@@ -100,7 +102,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
             val nextValue = parseConstant(n, adopt)
             acc.append((nextKey.get, nextValue))
         }
-      case _        => // ignore
+      case _ => // ignore
     }
     acc
   }

@@ -25,9 +25,9 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    implicit val ctx: OasLikeWebApiContext)
-    extends SpecParserOps {
+abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(implicit
+    val ctx: OasLikeWebApiContext
+) extends SpecParserOps {
 
   protected def entryKey: AmfScalar = ScalarNode(entry.key).string()
 
@@ -53,9 +53,12 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 
     map.key("description", OperationModel.Description in operation)
     map.key("summary", OperationModel.Summary in operation)
-    map.key("externalDocs",
-            OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
-              WebApiShapeParserContextAdapter(ctx))))
+    map.key(
+      "externalDocs",
+      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
+        WebApiShapeParserContextAdapter(ctx)
+      ))
+    )
 
     AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
     AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parse()
@@ -70,8 +73,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 }
 
 abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasLikeOperationParser(entry, adopt) {
+    override implicit val ctx: OasWebApiContext
+) extends OasLikeOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -114,29 +117,32 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
           .as[YMap]
           .entries
           .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
-          .foreach {
-            entry =>
-              val node = ScalarNode(entry.key)
-              responses += OasResponseParser(
-                entry.value.as[YMap], {
-                  r =>
-                    r.setWithoutId(ResponseModel.Name, node.text(), Annotations(entry.key))
-                      .setWithoutId(ResponseModel.StatusCode, node.text(), Annotations.inferred())
-                    if (!r.annotations.contains(classOf[SourceAST]))
-                      r.annotations ++= Annotations(entry)
-                    // Validation for OAS 3
-                    if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
-                      ctx.eh.violation(InvalidStatusCode,
-                                       r,
-                                       "Status code for a Response object must be a string",
-                                       entry.key.location)
-                }
-              ).parse()
+          .foreach { entry =>
+            val node = ScalarNode(entry.key)
+            responses += OasResponseParser(
+              entry.value.as[YMap],
+              { r =>
+                r.setWithoutId(ResponseModel.Name, node.text(), Annotations(entry.key))
+                  .setWithoutId(ResponseModel.StatusCode, node.text(), Annotations.inferred())
+                if (!r.annotations.contains(classOf[SourceAST]))
+                  r.annotations ++= Annotations(entry)
+                // Validation for OAS 3
+                if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
+                  ctx.eh.violation(
+                    InvalidStatusCode,
+                    r,
+                    "Status code for a Response object must be a string",
+                    entry.key.location
+                  )
+              }
+            ).parse()
           }
 
-        operation.setWithoutId(OperationModel.Responses,
-                               AmfArray(responses, Annotations(entry.value)),
-                               Annotations(entry))
+        operation.setWithoutId(
+          OperationModel.Responses,
+          AmfArray(responses, Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
 
@@ -150,22 +156,25 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
       .as[Seq[YNode]]
       .flatMap(s => OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => Unit, idCounter).parse())
     val extension = operation.security
-    operation.setWithoutId(WebApiModel.Security,
-                           AmfArray(requirements ++ extension, Annotations(entry.value)),
-                           Annotations(entry))
+    operation.setWithoutId(
+      WebApiModel.Security,
+      AmfArray(requirements ++ extension, Annotations(entry.value)),
+      Annotations(entry)
+    )
   }
 }
 
 case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, adopt) {
+    override implicit val ctx: OasWebApiContext
+) extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
     Oas20RequestParser(map, (r: Request) => Unit)
       .parse()
       .map(r =>
-        operation.setWithoutId(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
+        operation.setWithoutId(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map))
+      )
 
     map.key("schemes", OperationModel.Schemes in operation)
     map.key("consumes", OperationModel.Accepts in operation)
@@ -176,8 +185,8 @@ case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)
 }
 
 case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, adopt) {
+    override implicit val ctx: OasWebApiContext
+) extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -187,8 +196,7 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
       entry => {
         operation.fields.setWithoutId(
           OperationModel.Request,
-          AmfArray(Seq(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse()),
-                   Annotations.virtual()),
+          AmfArray(Seq(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse()), Annotations.virtual()),
           Annotations.inferred()
         )
       }
@@ -209,9 +217,8 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
             Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name), name, callbackEntry)
               .parse()
           }
-        operation.fields.setWithoutId(OperationModel.Callbacks,
-                                      AmfArray(callbacks, Annotations(entry.value)),
-                                      Annotations(entry))
+        operation.fields
+          .setWithoutId(OperationModel.Callbacks, AmfArray(callbacks, Annotations(entry.value)), Annotations(entry))
       }
     )
 

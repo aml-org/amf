@@ -22,9 +22,9 @@ import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
-abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: OasLikeWebApiContext)
-    extends SecuritySchemeParser(part, adopt) {
+abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+    ctx: OasLikeWebApiContext
+) extends SecuritySchemeParser(part, adopt) {
 
   override def parse(): SecurityScheme = {
     val node = getNode
@@ -117,10 +117,12 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           case Some(schemeNode) =>
             ctx.factory.securitySchemeParser(schemeNode, adopt).parse().add(ExternalReferenceUrl(parsedUrl))
           case None =>
-            ctx.eh.violation(CoreValidations.UnresolvedReference,
-                             "",
-                             s"Cannot find security scheme reference $parsedUrl",
-                             Annotations(node))
+            ctx.eh.violation(
+              CoreValidations.UnresolvedReference,
+              "",
+              s"Cannot find security scheme reference $parsedUrl",
+              Annotations(node)
+            )
             adopt(ErrorSecurityScheme(parsedUrl, node))
         }
       }

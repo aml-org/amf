@@ -8,8 +8,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * SecurityScheme model class.
+/** SecurityScheme model class.
   */
 @JSExportAll
 case class SecurityScheme(override private[amf] val _internal: InternalSecurityScheme)

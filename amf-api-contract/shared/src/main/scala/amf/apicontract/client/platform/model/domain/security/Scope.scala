@@ -6,8 +6,7 @@ import amf.apicontract.client.scala.model.domain.security.{Scope => InternalScop
 import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Scope model class.
+/** Scope model class.
   */
 @JSExportAll
 case class Scope(override private[amf] val _internal: InternalScope) extends DomainElement {

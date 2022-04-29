@@ -12,8 +12,9 @@ import java.net.URI
 import scala.collection.mutable
 
 object AstIndexBuilder {
-  def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(
-      implicit ctx: ShapeParserContext): AstIndex = {
+  def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit
+      ctx: ShapeParserContext
+  ): AstIndex = {
     val locationUri             = getBaseUri(ctx)
     val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
     val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
@@ -46,9 +47,11 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
     ref.AstIndex(acc, resolvers)
   }
 
-  private def index(entryLike: YMapEntryLike,
-                    scopes: Seq[ResolutionScope],
-                    acc: mutable.Map[String, YMapEntryLike]): Unit =
+  private def index(
+      entryLike: YMapEntryLike,
+      scopes: Seq[ResolutionScope],
+      acc: mutable.Map[String, YMapEntryLike]
+  ): Unit =
     refThresholdExceededOr(entryLike.value) {
       entryLike.value.tagType match {
         case YType.Map =>
@@ -67,10 +70,9 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
   }
 
   private def index(seq: YSequence, scopes: Seq[ResolutionScope], acc: mutable.Map[String, YMapEntryLike]): Unit =
-    seq.nodes.zipWithIndex.foreach {
-      case (node, i) =>
-        scopes.foreach(_.resolve(i.toString, YMapEntryLike(node), acc))
-        index(YMapEntryLike(node), updateScopes(fakeEntryForScopeUpdate(i, node), scopes), acc)
+    seq.nodes.zipWithIndex.foreach { case (node, i) =>
+      scopes.foreach(_.resolve(i.toString, YMapEntryLike(node), acc))
+      index(YMapEntryLike(node), updateScopes(fakeEntryForScopeUpdate(i, node), scopes), acc)
     }
 
   private def index(map: YMap, scopes: Seq[ResolutionScope], acc: mutable.Map[String, YMapEntryLike]): Unit = {

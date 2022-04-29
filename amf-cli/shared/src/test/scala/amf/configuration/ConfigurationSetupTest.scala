@@ -30,15 +30,17 @@ trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
   protected val oasConfig: AMFConfiguration     = OASConfig()
   protected val async20Config: AMFConfiguration = Async20Config()
 
-  protected val configs: List[AMFConfiguration] = List(apiConfig,
-                                                       webApiConfig,
-                                                       ramlConfig,
-                                                       raml10Config,
-                                                       raml08Config,
-                                                       oas20Config,
-                                                       oas30Config,
-                                                       oasConfig,
-                                                       async20Config)
+  protected val configs: List[AMFConfiguration] = List(
+    apiConfig,
+    webApiConfig,
+    ramlConfig,
+    raml10Config,
+    raml08Config,
+    oas20Config,
+    oas30Config,
+    oasConfig,
+    async20Config
+  )
   protected val vendors: List[Spec] = List(ASYNC20, RAML10, RAML08, OAS20, OAS30)
   protected val configNames = Map(
     apiConfig     -> "API",

@@ -25,15 +25,18 @@ trait JsonSchemaSerializer extends PlatformSecrets {
     val originalId = element.id
     fixNameIfNeeded(element)
     val renderConfig = DefaultRenderConfiguration(config)
-    val yamlDoc = JsonSchemaEmitter(element,
-                                    Seq(element),
-                                    renderConfig = renderConfig,
-                                    errorHandler = config.errorHandlerProvider.errorHandler())
+    val yamlDoc = JsonSchemaEmitter(
+      element,
+      Seq(element),
+      renderConfig = renderConfig,
+      errorHandler = config.errorHandlerProvider.errorHandler()
+    )
       .emitDocument()
     val jsonSchema = JsonRender.render(yamlDoc)
     element.withId(originalId)
     element.annotations.reject(a =>
-      a.isInstanceOf[ParsedJSONSchema] || a.isInstanceOf[GeneratedJSONSchema] || a.isInstanceOf[JSONSchemaRoot])
+      a.isInstanceOf[ParsedJSONSchema] || a.isInstanceOf[GeneratedJSONSchema] || a.isInstanceOf[JSONSchemaRoot]
+    )
     element.annotations += GeneratedJSONSchema(jsonSchema)
     jsonSchema
   }
