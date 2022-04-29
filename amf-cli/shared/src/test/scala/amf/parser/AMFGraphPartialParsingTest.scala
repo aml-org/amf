@@ -45,10 +45,14 @@ class AMFGraphPartialParsingTest extends AsyncFunSuite with Matchers {
   }
 
   test("test read non existing id") {
-    parse("api.source.jsonld", "amf://id#50", (obj: AmfObject) => {
-      val dom = obj.asInstanceOf[DomainElement]
-      dom.id should be("amf://error-domain-element")
-    })
+    parse(
+      "api.source.jsonld",
+      "amf://id#50",
+      (obj: AmfObject) => {
+        val dom = obj.asInstanceOf[DomainElement]
+        dom.id should be("amf://error-domain-element")
+      }
+    )
   }
 
   test("test read declared recursive shape from api") {

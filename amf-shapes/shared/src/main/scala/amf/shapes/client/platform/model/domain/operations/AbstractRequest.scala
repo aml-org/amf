@@ -9,10 +9,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-trait AbstractRequest
-    extends DomainElement
-    with NamedDomainElement
-    with PlatformSecrets {
+trait AbstractRequest extends DomainElement with NamedDomainElement with PlatformSecrets {
 
   override private[amf] val _internal: InternalAbstractRequest
   type ParameterType <: AbstractParameter

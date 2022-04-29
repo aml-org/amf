@@ -22,9 +22,7 @@ import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument
 
-/**
-  *
-  */
+/** */
 case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterContext) {
   protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
   def emitModule(): YDocument = {
@@ -61,7 +59,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
-      case _                                     => throw new UnsupportedOperationException(s"Unsupported fragment type: $fragment")
+      case _ => throw new UnsupportedOperationException(s"Unsupported fragment type: $fragment")
     }
 
     val usage = fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
@@ -98,12 +96,14 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       Option(dataType.encodes) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
-          spec.eh.violation(TransformationValidation,
-                            other.id,
-                            None,
-                            "Cannot emit non WebApi Shape",
-                            other.position(),
-                            other.location())
+          spec.eh.violation(
+            TransformationValidation,
+            other.id,
+            None,
+            "Cannot emit non WebApi Shape",
+            other.position(),
+            other.location()
+          )
           Nil
         case _ => Nil // ignore
       }
@@ -131,9 +131,9 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       Raml10SecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
   }
 
-  case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)(
-      implicit eh: AMFErrorHandler)
-      extends RamlFragmentTypeEmitter {
+  case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)(implicit
+      eh: AMFErrorHandler
+  ) extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
 

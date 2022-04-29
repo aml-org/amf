@@ -89,8 +89,8 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`
-      : List[ValueType] = List(ApiContract + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] =
+      List(ApiContract + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
 

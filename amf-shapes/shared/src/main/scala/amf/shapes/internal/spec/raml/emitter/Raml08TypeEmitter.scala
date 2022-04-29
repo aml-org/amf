@@ -34,7 +34,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         val shapeType = if (other != null) other.getClass.getSimpleName else "null"
         Seq(
           common.emitter
-            .CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec $shapeType`"))
+            .CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec $shapeType`")
+        )
     }
   }
 
@@ -51,7 +52,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         val itemsType = if (other != null) other.getClass.getSimpleName else "null"
         Seq(
           common.emitter
-            .CommentEmitter(other, s"Cannot emit array shape with items $itemsType in raml 08"))
+            .CommentEmitter(other, s"Cannot emit array shape with items $itemsType in raml 08")
+        )
     }
   }
 

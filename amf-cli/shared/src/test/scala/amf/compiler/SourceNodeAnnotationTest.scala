@@ -37,30 +37,33 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   }
 
   test("test full raml with type xml tag") {
-    build("file://amf-cli/shared/src/test/resources/org/raml/api/v10/xmlbodyinlinewithfacet/input.raml",
-          Raml10YamlHint) map { checkAnnotation }
+    build(
+      "file://amf-cli/shared/src/test/resources/org/raml/api/v10/xmlbodyinlinewithfacet/input.raml",
+      Raml10YamlHint
+    ) map { checkAnnotation }
   }
 
   private def checkAnnotation(obj: AmfObject): Assertion = {
-    obj.fields.foreach {
-      case (field, v) =>
-        v.value match {
-          case amfObject: AmfObject =>
-            if (amfObject.annotations.contains(classOf[SourceAST]))
-              assert(amfObject.annotations.contains(classOf[SourceNode]))
-            checkAnnotation(amfObject)
-          case array: AmfArray if array.values.nonEmpty && array.values.head.isInstanceOf[AmfObject] =>
-            array.values.asInstanceOf[Seq[AmfObject]].foreach { checkAnnotation }
-          case _ =>
-        }
+    obj.fields.foreach { case (field, v) =>
+      v.value match {
+        case amfObject: AmfObject =>
+          if (amfObject.annotations.contains(classOf[SourceAST]))
+            assert(amfObject.annotations.contains(classOf[SourceNode]))
+          checkAnnotation(amfObject)
+        case array: AmfArray if array.values.nonEmpty && array.values.head.isInstanceOf[AmfObject] =>
+          array.values.asInstanceOf[Seq[AmfObject]].foreach { checkAnnotation }
+        case _ =>
+      }
     }
     succeed
   }
 
   test("test node and entry annotation in oas parameters") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Parameter => (p.id, p.annotations) }) match {
@@ -80,37 +83,47 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas path items") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val endpoint = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head
-      assertRangeElement(endpoint.id,
-                         endpoint.annotations,
-                         PositionRange((12, 2), (25, 19)),
-                         Some(PositionRange((12, 12), (25, 19))))
+      assertRangeElement(
+        endpoint.id,
+        endpoint.annotations,
+        PositionRange((12, 2), (25, 19)),
+        Some(PositionRange((12, 12), (25, 19)))
+      )
       succeed
     }
   }
 
   test("test node and entry annotation in oas operations") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       val op  = api.endPoints.head.operations.head
-      assertRangeElement(op.id,
-                         op.annotations,
-                         PositionRange((20, 4), (25, 19)),
-                         Some(PositionRange((20, 8), (25, 19))))
+      assertRangeElement(
+        op.id,
+        op.annotations,
+        PositionRange((20, 4), (25, 19)),
+        Some(PositionRange((20, 8), (25, 19)))
+      )
       succeed
     }
   }
 
   test("test node and entry annotation in oas responses") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Response => (p.id, p.annotations) }) match {
@@ -133,10 +146,12 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
         case r: Response if r.linkTarget.isDefined => (r.id, r.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id,
-                             annotations,
-                             PositionRange((20, 16), (20, 37)),
-                             Some(PositionRange((20, 16), (20, 37))))
+          assertRangeElement(
+            id,
+            annotations,
+            PositionRange((20, 16), (20, 37)),
+            Some(PositionRange((20, 16), (20, 37)))
+          )
         case None => fail("Any response with target found")
       }
       succeed
@@ -145,8 +160,10 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas definitions and schemes") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-schemes.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-schemes.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Shape => (p.id, p.annotations) }) match {
@@ -169,30 +186,30 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas xml shape property") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-xmlSerializer.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-xmlSerializer.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
-      document.declares.collectFirst({
-        case s: NodeShape =>
-          val serialization = s.properties.head.range.asInstanceOf[AnyShape].xmlSerialization
-          (serialization.id, serialization.annotations)
+      document.declares.collectFirst({ case s: NodeShape =>
+        val serialization = s.properties.head.range.asInstanceOf[AnyShape].xmlSerialization
+        (serialization.id, serialization.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id,
-                             annotations,
-                             PositionRange((12, 0), (13, 21)),
-                             Some(PositionRange((10, 12), (13, 21))))
+          assertRangeElement(id, annotations, PositionRange((12, 0), (13, 21)), Some(PositionRange((10, 12), (13, 21))))
         case None => fail("Any response declared found")
       }
       succeed
     }
   }
 
-  private def assertRangeElement(id: String,
-                                 annotations: Annotations,
-                                 sourceRange: PositionRange,
-                                 nodeRange: Option[PositionRange] = None): Assertion = {
+  private def assertRangeElement(
+      id: String,
+      annotations: Annotations,
+      sourceRange: PositionRange,
+      nodeRange: Option[PositionRange] = None
+  ): Assertion = {
     annotations.foreach {
       case ast: SourceAST =>
         assertRange(id, ast.ast.range, sourceRange)

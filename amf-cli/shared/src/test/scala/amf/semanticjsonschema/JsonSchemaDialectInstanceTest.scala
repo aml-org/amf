@@ -38,10 +38,14 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("if-then-else-with-extended-schema")
   instanceValidation("if-then-without-else", Some("if-then-without-else-match"))
   instanceValidation("if-then-without-else", Some("if-then-without-else-no-match"))
-  instanceValidation("if-then-without-else-with-extended-schema",
-                     Some("if-then-without-else-with-extended-schema-match"))
-  instanceValidation("if-then-without-else-with-extended-schema",
-                     Some("if-then-without-else-with-extended-schema-no-match"))
+  instanceValidation(
+    "if-then-without-else-with-extended-schema",
+    Some("if-then-without-else-with-extended-schema-match")
+  )
+  instanceValidation(
+    "if-then-without-else-with-extended-schema",
+    Some("if-then-without-else-with-extended-schema-no-match")
+  )
   instanceValidation("empty-object")
   // The JSON-LD emission of a big number is different in JS and JVM, that is why we will run this only for JVM
   if (platform.name == "jvm") {
@@ -76,14 +80,14 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
           .predefined()
           .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withDialect(dialectCycled.baseUnit.asInstanceOf[Dialect]))
+          .withDialect(dialectCycled.baseUnit.asInstanceOf[Dialect])
+      )
       instance <- config.baseUnitClient().parseDialectInstance(instanceFinalPath)
       report   <- config.baseUnitClient().validate(instance.dialectInstance.cloneUnit())
-      jsonld <- Future.successful(
-        config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/ld+json`))
-      tmpLD     <- writeTemporaryFile(jsonLdFinalPath)(jsonld)
-      diffLD    <- assertDifferences(tmpLD, jsonLdFinalPath)
-      cycled    <- Future.successful(config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/json`))
+      jsonld <- Future.successful(config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/ld+json`))
+      tmpLD  <- writeTemporaryFile(jsonLdFinalPath)(jsonld)
+      diffLD <- assertDifferences(tmpLD, jsonLdFinalPath)
+      cycled <- Future.successful(config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/json`))
       tmpCycle  <- writeTemporaryFile(instanceCycleFinalPath)(cycled)
       diffCycle <- assertDifferences(tmpCycle, instanceCycleFinalPath)
     } yield {

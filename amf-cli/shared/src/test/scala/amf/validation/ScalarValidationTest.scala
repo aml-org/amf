@@ -36,9 +36,11 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
     ExpectedConforms("1.07E7", List(String, Number), List(Integer))
   )
 
-  case class ExpectedConforms(value: Any,
-                              typesThatShouldConform: List[String],
-                              platformDiscrepancies: List[String] = List())
+  case class ExpectedConforms(
+      value: Any,
+      typesThatShouldConform: List[String],
+      platformDiscrepancies: List[String] = List()
+  )
 
   val shapes = Map(
     String       -> ScalarShape().withDataType(String),
@@ -58,15 +60,18 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
       val conformMessage = if (conforms) "to conform in json and yaml" else "not to conform in json and yaml"
       if (platformDifferences.contains(scalarType))
         ignore(
-          s"Validate ${surroundWithSimpleQuotes(toValidate.toString)} as ${formatDataType(scalarType)} is ignored due to platform differences") {
+          s"Validate ${surroundWithSimpleQuotes(toValidate.toString)} as ${formatDataType(scalarType)} is ignored due to platform differences"
+        ) {
           succeed
-        } else
+        }
+      else
         test(
-          s"Validate ${surroundWithSimpleQuotes(toValidate.toString)} as ${formatDataType(scalarType)} ${conformMessage}") {
+          s"Validate ${surroundWithSimpleQuotes(toValidate.toString)} as ${formatDataType(scalarType)} ${conformMessage}"
+        ) {
           val shape                   = shapes(scalarType)
           val jsonPayloadValidation   = validateWithJsonPayload(scalarType, toValidate, shape)
           val yamlParameterValidation = validateWithYamlParameter(toValidate, shape)
-          val actual                  = Result(jsonValidation = jsonPayloadValidation, yamlValidation = yamlParameterValidation)
+          val actual = Result(jsonValidation = jsonPayloadValidation, yamlValidation = yamlParameterValidation)
           actual shouldEqual Result(jsonValidation = conforms, yamlValidation = conforms)
         }
     }

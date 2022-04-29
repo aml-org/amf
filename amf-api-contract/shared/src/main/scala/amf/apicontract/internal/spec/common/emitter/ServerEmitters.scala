@@ -29,8 +29,9 @@ import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
 
-case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext) {
+case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -65,10 +66,9 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     if (servers.nonEmpty) result += ServersEmitters("servers".asRamlAnnotation, servers, ordering)
 }
 
-abstract class OasServersEmitter(elem: DomainElement,
-                                 f: FieldEntry,
-                                 ordering: SpecOrdering,
-                                 references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
+abstract class OasServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext
+) {
   def emitters(): Seq[EntryEmitter]
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -76,10 +76,12 @@ abstract class OasServersEmitter(elem: DomainElement,
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
 }
 
-abstract class Oas3ServersEmitter(elem: DomainElement,
-                                  f: FieldEntry,
-                                  ordering: SpecOrdering,
-                                  references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+abstract class Oas3ServersEmitter(
+    elem: DomainElement,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(elem, f, ordering, references) {
 
   override protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit = {
@@ -91,9 +93,9 @@ abstract class Oas3ServersEmitter(elem: DomainElement,
   }
 }
 
-case class Oas3WebApiServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends OasServersEmitter(api, f, ordering, references) {
+case class Oas3WebApiServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends OasServersEmitter(api, f, ordering, references) {
 
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -104,10 +106,12 @@ case class Oas3WebApiServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrder
   }
 }
 
-case class Oas3EndPointServersEmitter(endpoint: EndPoint,
-                                      f: FieldEntry,
-                                      ordering: SpecOrdering,
-                                      references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+case class Oas3EndPointServersEmitter(
+    endpoint: EndPoint,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(endpoint, f, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -116,10 +120,12 @@ case class Oas3EndPointServersEmitter(endpoint: EndPoint,
   }
 }
 
-case class Oas3OperationServersEmitter(operation: Operation,
-                                       f: FieldEntry,
-                                       ordering: SpecOrdering,
-                                       references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+case class Oas3OperationServersEmitter(
+    operation: Operation,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends Oas3ServersEmitter(operation, f, ordering, references) {
 
   def emitters(): Seq[EntryEmitter] = {
@@ -129,9 +135,9 @@ case class Oas3OperationServersEmitter(operation: Operation,
   }
 }
 
-case class Oas2ServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends OasServersEmitter(api, f, ordering, references) {
+case class Oas2ServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends OasServersEmitter(api, f, ordering, references) {
 
   def emitters(): Seq[EntryEmitter] = {
     val servers = Servers(f)
@@ -152,31 +158,37 @@ case class Oas2ServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, r
       val uri = BaseUriSplitter(f.scalar.toString)
 
       if (uri.domain.nonEmpty)
-        result += MapEntryEmitter("host",
-                                  uri.domain,
-                                  position = pos(f.value.annotations, classOf[HostLexicalInformation]))
+        result += MapEntryEmitter(
+          "host",
+          uri.domain,
+          position = pos(f.value.annotations, classOf[HostLexicalInformation])
+        )
       if (uri.path.nonEmpty)
-        result += MapEntryEmitter("basePath",
-                                  uri.path,
-                                  position = pos(f.value.annotations, classOf[BasePathLexicalInformation]))
+        result += MapEntryEmitter(
+          "basePath",
+          uri.path,
+          position = pos(f.value.annotations, classOf[BasePathLexicalInformation])
+        )
       if (uri.protocol.nonEmpty && !api.fields.exists(BaseApiModel.Schemes))
-        result += spec.arrayEmitter("schemes",
-                                    FieldEntry(BaseApiModel.Schemes,
-                                               Value(AmfArray(Seq(AmfScalar(uri.protocol))), f.value.annotations)),
-                                    ordering)
+        result += spec.arrayEmitter(
+          "schemes",
+          FieldEntry(BaseApiModel.Schemes, Value(AmfArray(Seq(AmfScalar(uri.protocol))), f.value.annotations)),
+          ordering
+        )
     }
 
     fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("serverDescription".asOasExtension, f))
 
     fs.entry(ServerModel.Variables)
       .map(f =>
-        result += RamlParametersEmitter("baseUriParameters".asOasExtension, f, ordering, references)(toRaml(spec)))
+        result += RamlParametersEmitter("baseUriParameters".asOasExtension, f, ordering, references)(toRaml(spec))
+      )
   }
 }
 
-private case class ServersEmitters(key: String, servers: Seq[Server], ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+private case class ServersEmitters(key: String, servers: Seq[Server], ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
@@ -236,9 +248,9 @@ case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 }
 
 /** This emitter reduces the parameter to the fields that the oas3 variables support. */
-private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -260,9 +272,11 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
 
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>
-        result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                   position = pos(f.value.annotations))
+        result += EntryPartEmitter(
+          "default",
+          DataNodeEmitter(shape.default, ordering)(spec.eh),
+          position = pos(f.value.annotations)
+        )
       case None => result += MapEntryEmitter("default", "")
     }
 
@@ -288,15 +302,16 @@ private object Servers {
 
   def isVariable(parameter: Parameter): Boolean = parameter.schema match {
     case s: ScalarShape =>
-      val variableFields = Seq(ShapeModel.Name,
-                               ShapeModel.Default,
-                               ShapeModel.DefaultValueString,
-                               ShapeModel.Values,
-                               ScalarShapeModel.DataType,
-                               ShapeModel.Description)
-      s.fields.foreach {
-        case (field, _) =>
-          if (!variableFields.contains(field)) return false
+      val variableFields = Seq(
+        ShapeModel.Name,
+        ShapeModel.Default,
+        ShapeModel.DefaultValueString,
+        ShapeModel.Values,
+        ScalarShapeModel.DataType,
+        ShapeModel.Description
+      )
+      s.fields.foreach { case (field, _) =>
+        if (!variableFields.contains(field)) return false
       }
       true
     case _ => false

@@ -13,12 +13,14 @@ import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ExampleModel}
 object PayloadsInApiCollector extends ValidationCandidateCollector {
 
   private val anyShapeRestrictions =
-    Seq(AnyShapeModel.Values,
-        AnyShapeModel.Inherits,
-        AnyShapeModel.Or,
-        AnyShapeModel.And,
-        AnyShapeModel.Xone,
-        AnyShapeModel.Not)
+    Seq(
+      AnyShapeModel.Values,
+      AnyShapeModel.Inherits,
+      AnyShapeModel.Or,
+      AnyShapeModel.And,
+      AnyShapeModel.Xone,
+      AnyShapeModel.Not
+    )
 
   override def collect(element: AmfElement): Seq[ValidationCandidate] = {
     element match {
@@ -67,23 +69,28 @@ object PayloadsInApiCollector extends ValidationCandidateCollector {
 
   private abstract class CollectedElement(val id: String, val raw: String, val a: Annotations)
 
-  private case class DataNodeCollectedElement(dataNode: DataNode,
-                                              override val id: String,
-                                              override val raw: String,
-                                              override val a: Annotations)
-      extends CollectedElement(id, raw, a)
+  private case class DataNodeCollectedElement(
+      dataNode: DataNode,
+      override val id: String,
+      override val raw: String,
+      override val a: Annotations
+  ) extends CollectedElement(id, raw, a)
 
-  private case class StringCollectedElement(override val id: String,
-                                            override val raw: String,
-                                            override val a: Annotations)
-      extends CollectedElement(id, raw, a)
+  private case class StringCollectedElement(
+      override val id: String,
+      override val raw: String,
+      override val a: Annotations
+  ) extends CollectedElement(id, raw, a)
 
   private def buildFragment(shape: Shape, collectedElement: CollectedElement) = {
     val fragment = collectedElement match {
       case dn: DataNodeCollectedElement => // the example has been parsed, so i can use native validation like json or any default
         PayloadFragment(dn.dataNode, `text/vnd.yaml`)
       case s: StringCollectedElement =>
-        PayloadFragment(ScalarNode(s.raw, None, s.a), s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])) // todo: review with antonio
+        PayloadFragment(
+          ScalarNode(s.raw, None, s.a),
+          s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])
+        ) // todo: review with antonio
     }
     fragment.encodes.withId(collectedElement.id)
     fragment

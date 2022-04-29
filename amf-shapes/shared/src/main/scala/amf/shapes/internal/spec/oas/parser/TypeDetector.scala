@@ -9,8 +9,9 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.Inv
 import org.yaml.model.{IllegalTypeHandler, YMap, YScalar, YType}
 
 object TypeDetector {
-  def detect(map: YMap, version: SchemaVersion)(
-      implicit errorHandler: AMFErrorHandler with IllegalTypeHandler): Option[TypeDef] = {
+  def detect(map: YMap, version: SchemaVersion)(implicit
+      errorHandler: AMFErrorHandler with IllegalTypeHandler
+  ): Option[TypeDef] = {
 
     val detectionCriteria = ExplicitTypeCriteria()
       .chain(ObjectCriteria)

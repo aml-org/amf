@@ -20,42 +20,45 @@ class OasSpecEmitter {
       if (modules.nonEmpty) {
         var modulesEmitted = Map[String, Module]()
         val idCounter      = new IdCounter()
-        val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
-          case (alias, refInfo) =>
-            modules.find(_.id == refInfo.id) match {
-              case Some(module) =>
-                modulesEmitted += (module.id -> module)
-                Some(
-                  ReferenceEmitter(module,
-                                   Some(Aliases(Set(alias -> refInfo))),
-                                   ordering,
-                                   () => idCounter.genId("uses")))
-              case _ => None
-            }
+        val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, refInfo) =>
+          modules.find(_.id == refInfo.id) match {
+            case Some(module) =>
+              modulesEmitted += (module.id -> module)
+              Some(
+                ReferenceEmitter(module, Some(Aliases(Set(alias -> refInfo))), ordering, () => idCounter.genId("uses"))
+              )
+            case _ => None
+          }
         }.toSeq
         val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
           Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
         }
         val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect { case Some(e) => e }
-        b.entry("uses".asOasExtension, _.obj { b =>
-          traverse(ordering.sorted(finalEmitters), b)
-        })
+        b.entry(
+          "uses".asOasExtension,
+          _.obj { b =>
+            traverse(ordering.sorted(finalEmitters), b)
+          }
+        )
       }
     }
 
     override def position(): Position = ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit,
-                              aliases: Option[Aliases],
-                              ordering: SpecOrdering,
-                              aliasGenerator: () => String)
-      extends EntryEmitter {
+  case class ReferenceEmitter(
+      reference: BaseUnit,
+      aliases: Option[Aliases],
+      ordering: SpecOrdering,
+      aliasGenerator: () => String
+  ) extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
       val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
       val effectiveAlias = aliasesMap
-        .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) => (a, refInfo.relativeUrl) } getOrElse {
+        .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) =>
+        (a, refInfo.relativeUrl)
+      } getOrElse {
         (aliasGenerator(), name)
       }
       MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)

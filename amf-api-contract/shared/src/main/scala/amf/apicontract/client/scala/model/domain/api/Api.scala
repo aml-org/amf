@@ -22,8 +22,7 @@ import amf.shapes.client.scala.model.domain.DocumentedElement
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 import org.yaml.model.{YMap, YNode}
 
-/**
-  * Web Api internal model
+/** Web Api internal model
   */
 abstract class Api(fields: Fields, annotations: Annotations)
     extends NamedDomainElement

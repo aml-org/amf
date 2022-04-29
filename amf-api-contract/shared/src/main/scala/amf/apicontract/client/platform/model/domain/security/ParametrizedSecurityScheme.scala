@@ -9,8 +9,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * ParametrizedSecurityScheme model class.
+/** ParametrizedSecurityScheme model class.
   */
 @JSExportAll
 case class ParametrizedSecurityScheme(override private[amf] val _internal: InternalParametrizedSecurityScheme)

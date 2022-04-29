@@ -39,51 +39,61 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
 
   test("Render flattened scalar semantic extensions to JSON-LD in a RAML 1.0 spec") {
     getConfig("scalar-dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      cycle("api-scalar.raml",
-            golden = "instance-scalar.raml.jsonld",
-            Raml10YamlHint,
-            AmfJsonHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.raml",
+        golden = "instance-scalar.raml.jsonld",
+        Raml10YamlHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Render flattened scalar semantic extensions to JSON-LD in a OAS 2.0 spec") {
     getConfig("scalar-dialect.yaml", OASConfiguration.OAS20()).flatMap { config =>
-      cycle("api-scalar.oas20.yaml",
-            golden = "instance-scalar.oas20.jsonld",
-            Oas20YamlHint,
-            AmfJsonHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.oas20.yaml",
+        golden = "instance-scalar.oas20.jsonld",
+        Oas20YamlHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Render flattened scalar semantic extensions to JSON-LD in a OAS 3.0 spec") {
     getConfig("scalar-dialect.yaml", OASConfiguration.OAS30()).flatMap { config =>
-      cycle("api-scalar.oas30.yaml",
-            golden = "instance-scalar.oas30.jsonld",
-            Oas30YamlHint,
-            AmfJsonHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.oas30.yaml",
+        golden = "instance-scalar.oas30.jsonld",
+        Oas30YamlHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Render flattened scalar semantic extensions to JSON-LD in a ASYNC 2.0 spec") {
     getConfig("scalar-dialect.yaml", AsyncAPIConfiguration.Async20()).flatMap { config =>
-      cycle("api-scalar.async.yaml",
-            golden = "instance-scalar.async.jsonld",
-            Async20YamlHint,
-            AmfJsonHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.async.yaml",
+        golden = "instance-scalar.async.jsonld",
+        Async20YamlHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Render flattened nested object semantic extensions to JSON-LD in a RAML 1.0 spec") {
     getConfig("nested-object-dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      cycle("api-nested-object.raml",
-            golden = "instance-nested-object.raml.jsonld",
-            Raml10YamlHint,
-            AmfJsonHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-nested-object.raml",
+        golden = "instance-nested-object.raml.jsonld",
+        Raml10YamlHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
@@ -92,8 +102,10 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
     APIConfiguration.fromSpec(unit.sourceSpec.get).baseUnitClient().transform(unit).baseUnit
   }
 
-  private def getConfig(dialect: String,
-                        baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
+  private def getConfig(
+      dialect: String,
+      baseConfig: AMFConfiguration = APIConfiguration.API()
+  ): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)

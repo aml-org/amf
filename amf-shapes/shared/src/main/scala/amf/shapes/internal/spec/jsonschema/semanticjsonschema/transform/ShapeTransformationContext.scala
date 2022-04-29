@@ -8,12 +8,14 @@ import amf.shapes.client.scala.model.domain.{CuriePrefix, SemanticContext}
 
 import scala.collection.mutable
 
-class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement] = mutable.Map(),
-                                 val externals: mutable.Map[String, String] = mutable.Map(),
-                                 val idCounter: IdCounter = new IdCounter,
-                                 val shapeDeclarationNames: mutable.Set[String] = mutable.Set(),
-                                 val semantics: SemanticContext = SemanticContext(),
-                                 val termsToExtract: mutable.Set[CandidateProperty] = mutable.Set()) {
+class ShapeTransformationContext(
+    val shapeMap: mutable.Map[String, DomainElement] = mutable.Map(),
+    val externals: mutable.Map[String, String] = mutable.Map(),
+    val idCounter: IdCounter = new IdCounter,
+    val shapeDeclarationNames: mutable.Set[String] = mutable.Set(),
+    val semantics: SemanticContext = SemanticContext(),
+    val termsToExtract: mutable.Set[CandidateProperty] = mutable.Set()
+) {
 
   // when we create it, we update the externals
   updateExternals()
@@ -35,12 +37,14 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
   }
 
   def updateSemanticContext(newSemantics: SemanticContext): ShapeTransformationContext = {
-    new ShapeTransformationContext(shapeMap,
-                                   externals,
-                                   idCounter,
-                                   shapeDeclarationNames,
-                                   semantics.merge(newSemantics).normalize(),
-                                   termsToExtract)
+    new ShapeTransformationContext(
+      shapeMap,
+      externals,
+      idCounter,
+      shapeDeclarationNames,
+      semantics.merge(newSemantics).normalize(),
+      termsToExtract
+    )
   }
 
   private def updateExternals(): Unit = {

@@ -15,8 +15,8 @@ class Oas30SecuritySettingsMapper() extends SecuritySettingsMapper {
     val flow = oauth2.flows.head
     grants
       .map(g => (g, flowDeepCopy(flow)))
-      .map({
-        case (grantName, flow) => flow.withFlow(grantName)
+      .map({ case (grantName, flow) =>
+        flow.withFlow(grantName)
       })
   }
 

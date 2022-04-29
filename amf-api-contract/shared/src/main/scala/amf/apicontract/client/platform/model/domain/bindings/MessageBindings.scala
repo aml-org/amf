@@ -6,8 +6,7 @@ import amf.apicontract.client.scala.model.domain.bindings.{MessageBindings => In
 import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Message channel model class.
+/** Message channel model class.
   */
 @JSExportAll
 case class MessageBindings(override private[amf] val _internal: InternalMessageBindings)

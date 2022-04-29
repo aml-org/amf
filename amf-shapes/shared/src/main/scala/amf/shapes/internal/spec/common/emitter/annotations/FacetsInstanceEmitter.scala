@@ -17,9 +17,9 @@ case class FacetsEmitter(element: Shape, ordering: SpecOrdering)(implicit spec: 
   }
 }
 
-abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
   val name: String
 
   override def emit(b: EntryBuilder): Unit = {
@@ -32,16 +32,16 @@ abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
   override def position(): Position = pos(shapeExtension.annotations)
 }
 
-case class OasFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends FacetsInstanceEmitter(shapeExtension, ordering) {
+case class OasFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends FacetsInstanceEmitter(shapeExtension, ordering) {
 
   override val name: String = s"facet-${shapeExtension.definedBy.name.value()}".asOasExtension
 }
 
-case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends FacetsInstanceEmitter(shapeExtension, ordering) {
+case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends FacetsInstanceEmitter(shapeExtension, ordering) {
 
   override val name: String = shapeExtension.definedBy.name.value()
 }

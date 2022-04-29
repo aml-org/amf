@@ -12,17 +12,18 @@ import amf.shapes.internal.spec.raml.emitter.RamlUnionEmitterHelper
 
 import scala.collection.mutable
 
-/**
-  * Transforms unions 'anyOf: [A, B]' into type expressions 'A | B' so we generate valid RAML for the old parser
+/** Transforms unions 'anyOf: [A, B]' into type expressions 'A | B' so we generate valid RAML for the old parser
   * @param errorHandler
   */
 class UnionsAsTypeExpressions() extends TransformationStep {
 
   val counter = new IdCounter()
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

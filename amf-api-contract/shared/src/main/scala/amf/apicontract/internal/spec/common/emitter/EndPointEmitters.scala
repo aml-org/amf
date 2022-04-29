@@ -23,13 +23,13 @@ import org.yaml.model.YDocument.EntryBuilder
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class Raml10EndPointEmitter(endpoint: EndPoint,
-                                 ordering: SpecOrdering,
-                                 children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                 references: Seq[BaseUnit] = Seq())(implicit spec: RamlSpecEmitterContext)
+/** */
+case class Raml10EndPointEmitter(
+    endpoint: EndPoint,
+    ordering: SpecOrdering,
+    children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
+    references: Seq[BaseUnit] = Seq()
+)(implicit spec: RamlSpecEmitterContext)
     extends RamlEndPointEmitter(ordering, children, references) {
 
   override protected def keyParameter: String = "uriParameters"
@@ -47,13 +47,16 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
           val (path, other) = f.array.values.asInstanceOf[Seq[Parameter]].partition(p => p.isPath)
 
           result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
-            toOas(spec)).ramlEndpointEmitters()
+            toOas(spec)
+          ).ramlEndpointEmitters()
 
           val explicitParams = getExplicitParams(path)
           if (explicitParams.nonEmpty) {
             // TODO just emit other params in other way
-            val entry = FieldEntry(EndPointModel.Parameters,
-                                   Value(AmfArray(path, f.value.value.annotations), f.value.annotations))
+            val entry = FieldEntry(
+              EndPointModel.Parameters,
+              Value(AmfArray(path, f.value.value.annotations), f.value.annotations)
+            )
 
             result += RamlParametersEmitter(keyParameter, entry, ordering, references)
           }
@@ -64,10 +67,12 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
   }
 }
 
-case class Raml08EndPointEmitter(endpoint: EndPoint,
-                                 ordering: SpecOrdering,
-                                 children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                 references: Seq[BaseUnit] = Seq())(implicit ctx: RamlSpecEmitterContext)
+case class Raml08EndPointEmitter(
+    endpoint: EndPoint,
+    ordering: SpecOrdering,
+    children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
+    references: Seq[BaseUnit] = Seq()
+)(implicit ctx: RamlSpecEmitterContext)
     extends RamlEndPointEmitter(ordering, children, references) {
 
   // TODO should we differentiate between uri and baseUri parameters at endpoint lvl?
@@ -81,25 +86,28 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
         if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
           var uriParameters: Seq[Parameter]  = Nil
           var pathParameters: Seq[Parameter] = Nil
-          f.array.values.foreach {
-            case p: Parameter =>
-              if (variables.contains(p.name.value()) || variables.contains(p.parameterName.value()))
-                pathParameters ++= Seq(p)
-              else
-                uriParameters ++= Seq(p)
+          f.array.values.foreach { case p: Parameter =>
+            if (variables.contains(p.name.value()) || variables.contains(p.parameterName.value()))
+              pathParameters ++= Seq(p)
+            else
+              uriParameters ++= Seq(p)
           }
 
-          result += RamlParametersEmitter("uriParameters",
-                                          FieldEntry(EndPointModel.Parameters,
-                                                     Value(AmfArray(getExplicitParams(pathParameters)),
-                                                           f.value.annotations)),
-                                          ordering,
-                                          references)
-          result += RamlParametersEmitter("baseUriParameters",
-                                          FieldEntry(EndPointModel.Parameters,
-                                                     Value(AmfArray(uriParameters), f.value.annotations)),
-                                          ordering,
-                                          references)
+          result += RamlParametersEmitter(
+            "uriParameters",
+            FieldEntry(
+              EndPointModel.Parameters,
+              Value(AmfArray(getExplicitParams(pathParameters)), f.value.annotations)
+            ),
+            ordering,
+            references
+          )
+          result += RamlParametersEmitter(
+            "baseUriParameters",
+            FieldEntry(EndPointModel.Parameters, Value(AmfArray(uriParameters), f.value.annotations)),
+            ordering,
+            references
+          )
         }
       }
 
@@ -107,9 +115,11 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
   }
 }
 
-abstract class RamlEndPointEmitter(ordering: SpecOrdering,
-                                   children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                   references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext)
+abstract class RamlEndPointEmitter(
+    ordering: SpecOrdering,
+    children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
+    references: Seq[BaseUnit] = Seq()
+)(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter
     with PartEmitter {
 

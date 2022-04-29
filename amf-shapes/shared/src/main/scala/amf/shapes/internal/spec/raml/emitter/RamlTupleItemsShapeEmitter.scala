@@ -11,16 +11,14 @@ import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain.TupleShape
 
-case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "tuple".asRamlAnnotation,
-      _.list(
-        b => tuple.items.foreach(RamlTupleItemEmitter(_, ordering, references).emit(b))
-      )
+      _.list(b => tuple.items.foreach(RamlTupleItemEmitter(_, ordering, references).emit(b)))
     )
   }
 

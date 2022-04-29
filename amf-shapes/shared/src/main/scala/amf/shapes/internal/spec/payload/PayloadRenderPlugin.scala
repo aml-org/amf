@@ -22,9 +22,11 @@ object PayloadRenderPlugin extends SYAMLBasedRenderPlugin {
 
   override def priority: PluginPriority = LowPriority
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] = {
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = {
     unit match {
       case p: PayloadFragment => Some(PayloadEmitter(p.encodes)(errorHandler).emitDocument())
       case _                  => None

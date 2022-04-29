@@ -8,14 +8,15 @@ import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSch
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
-/**
-  * Tag meta model
+/** Tag meta model
   */
 object TagModel extends DomainElementModel with NameFieldSchema with DescriptionField {
 
-  val Documentation = Field(CreativeWorkModel,
-                            Core + "documentation",
-                            ModelDoc(ModelVocabularies.Core, "documentation", "Documentation about the tag"))
+  val Documentation = Field(
+    CreativeWorkModel,
+    Core + "documentation",
+    ModelDoc(ModelVocabularies.Core, "documentation", "Documentation about the tag")
+  )
 
   override val `type`: List[ValueType] = ApiContract + "Tag" :: DomainElementModel.`type`
 

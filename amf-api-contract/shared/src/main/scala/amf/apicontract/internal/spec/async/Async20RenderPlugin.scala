@@ -35,9 +35,11 @@ object Async20RenderPlugin extends ApiRenderPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] = {
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = {
     unit match {
       case document: Document =>
         Some(new AsyncApi20DocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())

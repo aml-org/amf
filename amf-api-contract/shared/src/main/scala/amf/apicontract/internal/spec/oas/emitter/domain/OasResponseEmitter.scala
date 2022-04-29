@@ -29,10 +29,12 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
-case class OasResponseEmitter(response: Response,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit],
-                              isDeclaration: Boolean = false)(implicit spec: OasSpecEmitterContext)
+case class OasResponseEmitter(
+    response: Response,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    isDeclaration: Boolean = false
+)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = response.fields
@@ -55,9 +57,9 @@ case class OasResponseEmitter(response: Response,
 
 }
 
-case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
@@ -71,7 +73,9 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
           val result = mutable.ListBuffer[EntryEmitter]()
 
           fs.entry(ResponseModel.Description)
-            .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
+            .orElse(
+              Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))
+            ) // this is mandatory in OAS 2.0
             .map(f => result += ValueEmitter("description", f))
           fs.entry(RequestModel.Headers)
             .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
@@ -81,8 +85,10 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
             response.fields.fields().find(_.field == ResponseModel.Payloads) foreach { f: FieldEntry =>
               val payloads: Seq[Payload] = f.arrayValues
               val annotations            = f.value.annotations
-              result += EntryPartEmitter("content",
-                                         OasContentPayloadsEmitter(payloads, ordering, references, annotations))
+              result += EntryPartEmitter(
+                "content",
+                OasContentPayloadsEmitter(payloads, ordering, references, annotations)
+              )
             }
 
             response.fields.fields().find(_.field == ResponseModel.Links) foreach { f: FieldEntry =>

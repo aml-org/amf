@@ -17,9 +17,7 @@ import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  *
-  */
+/** */
 class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -39,15 +37,14 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
     val rootExpected = UnitsCreator(hint.spec).usesDataType
     val amfConfig    = WebAPIConfiguration.WebAPI()
     build(rootFile, hint, amfConfig, None)
-      .map({
-        case actual: Document => actual
+      .map({ case actual: Document =>
+        actual
       })
       .map({ actual =>
         AmfObjectMatcher(withoutLocationOrSourceInfo(rootExpected)).assert(withoutLocationOrSourceInfo(actual))
-        actual.references.zipWithIndex foreach {
-          case (actualRef, index) =>
-            AmfObjectMatcher(withoutLocationOrSourceInfo(rootExpected.references(index)))
-              .assert(withoutLocationOrSourceInfo(actualRef))
+        actual.references.zipWithIndex foreach { case (actualRef, index) =>
+          AmfObjectMatcher(withoutLocationOrSourceInfo(rootExpected.references(index)))
+            .assert(withoutLocationOrSourceInfo(actualRef))
         }
         Succeeded
       })

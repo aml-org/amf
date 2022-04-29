@@ -12,8 +12,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 import amf.shapes.client.scala.model.domain.operations.AbstractOperation
 
-/**
-  * Operation internal model.
+/** Operation internal model.
   */
 case class Operation(fields: Fields, annotations: Annotations)
     extends AbstractOperation(fields, annotations)

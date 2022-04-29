@@ -44,12 +44,10 @@ import org.yaml.model.{YNode, YType}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+/** */
+case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val params = parameters(f, ordering, references)
@@ -76,9 +74,9 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlParameterEmitter(parameter, ordering, references) {
+case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlParameterEmitter(parameter, ordering, references) {
 
   override protected def emitParameter(b: EntryBuilder): Unit = {
     val fs = parameter.fields
@@ -109,9 +107,9 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
 
 }
 
-case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends PartEmitter {
+case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = RamlShapeEmitterContextAdapter(spec)
 
@@ -138,12 +136,14 @@ case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
           result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
             .entries()
         case Some(other) =>
-          spec.eh.violation(TransformationValidation,
-                            other.id,
-                            None,
-                            "Cannot emit parameter for a non WebAPI shape",
-                            other.position(),
-                            other.location())
+          spec.eh.violation(
+            TransformationValidation,
+            other.id,
+            None,
+            "Cannot emit parameter for a non WebAPI shape",
+            other.position(),
+            other.location()
+          )
         // Emit annotations for parameter only if those have not been emitted by shape
         case None => result ++= AnnotationsEmitter(parameter, ordering).emitters
       }
@@ -167,9 +167,9 @@ case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
   override def position(): Position = pos(parameter.annotations)
 }
 
-case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlParameterEmitter(parameter, ordering, references) {
+case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlParameterEmitter(parameter, ordering, references) {
 
   override protected def emitParameter(builder: EntryBuilder): Unit = {
     builder.complexEntry(
@@ -183,9 +183,9 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
   }
 }
 
-case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends PartEmitter {
+case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = raml.emitter.RamlShapeEmitterContextAdapter(spec)
 
@@ -220,9 +220,9 @@ case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
   override def position(): Position = pos(parameter.annotations)
 }
 
-abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   protected def emitParameter(builder: EntryBuilder): Unit
   protected def emitParameterKey(fields: Fields, builder: PartBuilder): Unit
@@ -248,11 +248,13 @@ abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering
   override def position(): Position = pos(parameter.annotations)
 }
 
-case class OasParametersEmitter(key: String,
-                                parameters: Seq[Parameter],
-                                ordering: SpecOrdering,
-                                payloads: Seq[Payload] = Nil,
-                                references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext) {
+case class OasParametersEmitter(
+    key: String,
+    parameters: Seq[Parameter],
+    ordering: SpecOrdering,
+    payloads: Seq[Payload] = Nil,
+    references: Seq[BaseUnit]
+)(implicit val spec: OasSpecEmitterContext) {
 
   protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -285,10 +287,10 @@ case class OasParametersEmitter(key: String,
   def emitters(): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()
     val (oasParameters, ramlParameters) =
-      parameters.partition(
-        p =>
-          Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
-            .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape])
+      parameters.partition(p =>
+        Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
+          .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape]
+      )
 
     if (oasParameters.nonEmpty || payloads.nonEmpty)
       results += OasParameterEmitter(oasParameters, references)
@@ -328,10 +330,15 @@ case class OasParametersEmitter(key: String,
         b.entry(
           key,
           _.obj(
-            traverse(ramlParameters.map(p =>
-                       Raml10ParameterEmitter(p, ordering, Nil)(
-                         new XRaml10SpecEmitterContext(spec.eh, renderConfig = spec.renderConfig))),
-                     _))
+            traverse(
+              ramlParameters.map(p =>
+                Raml10ParameterEmitter(p, ordering, Nil)(
+                  new XRaml10SpecEmitterContext(spec.eh, renderConfig = spec.renderConfig)
+                )
+              ),
+              _
+            )
+          )
         )
     }
 
@@ -339,9 +346,11 @@ case class OasParametersEmitter(key: String,
       ramlParameters.headOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO)
   }
 
-  private def parameters(parameters: Seq[Parameter],
-                         ordering: SpecOrdering,
-                         references: Seq[BaseUnit]): Seq[PartEmitter] = {
+  private def parameters(
+      parameters: Seq[Parameter],
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): Seq[PartEmitter] = {
     val result = ListBuffer[PartEmitter]()
     parameters.foreach(e => result += ParameterEmitter(e, ordering, references, asHeader = false))
     payloads.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering, references))
@@ -350,8 +359,8 @@ case class OasParametersEmitter(key: String,
 }
 
 case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
-    implicit val spec: OasSpecEmitterContext)
-    extends PartEmitter {
+    implicit val spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
@@ -402,10 +411,12 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
               result += OasSchemaEmitter(f, ordering, references)
               result ++= AnnotationsEmitter(parameter, ordering).emitters
             } else {
-              result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
-                                        ordering,
-                                        Seq(ShapeModel.Description, ShapeModel.DisplayName),
-                                        references)
+              result ++= OasTypeEmitter(
+                f.value.value.asInstanceOf[Shape],
+                ordering,
+                Seq(ShapeModel.Description, ShapeModel.DisplayName),
+                references
+              )
                 .entries()
             }
           }
@@ -424,9 +435,11 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     fs.entry(ParameterModel.Payloads).map { f: FieldEntry =>
       val payloads: Seq[Payload] = f.arrayValues
       val annotations            = f.value.annotations
-      result += EntryPartEmitter("content",
-                                 OasContentPayloadsEmitter(payloads, ordering, references, annotations),
-                                 position = pos(annotations))
+      result += EntryPartEmitter(
+        "content",
+        OasContentPayloadsEmitter(payloads, ordering, references, annotations),
+        position = pos(annotations)
+      )
     }
     fs.entry(PayloadModel.Examples).map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
     result
@@ -446,9 +459,9 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   override def position(): Position = pos(parameter.annotations)
 }
 
-case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
@@ -480,7 +493,8 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
       fs.entry(ParameterModel.Schema)
         .map(_ =>
           result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references)
-            .entries())
+            .entries()
+        )
 
       traverse(ordering.sorted(result), b)
     }
@@ -513,23 +527,26 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 }
 
 case class OasDeclaredHeadersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit val spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+    implicit val spec: OasSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    b.entry("headers", decBuilder => {
-      val emitters = parameters.map(OasHeaderEmitter(_, ordering, references))
-      decBuilder.obj(traverse(ordering.sorted(emitters), _))
-    })
+    b.entry(
+      "headers",
+      decBuilder => {
+        val emitters = parameters.map(OasHeaderEmitter(_, ordering, references))
+        decBuilder.obj(traverse(ordering.sorted(emitters), _))
+      }
+    )
   }
 
   override def position(): Position =
     parameters.headOption.map(param => pos(param.annotations)).getOrElse(Position.ZERO)
 }
 
-case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit val spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    val spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = context.OasLikeShapeEmitterContextAdapter(spec)
 
@@ -544,7 +561,8 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
             if (ns.properties.nonEmpty)
               ns.properties.foreach {
                 formDataParameter(_, b)
-              } else emptyFormData(payload, b)
+              }
+            else emptyFormData(payload, b)
           case _ => defaultPayload(b)
         }
       }
@@ -642,10 +660,15 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         .entry(PropertyShapeModel.MinCount)
         .filter(_.scalar.annotations.contains(classOf[ExplicitField]))
         .map(f =>
-          result += ValueEmitter("required",
-                                 FieldEntry(PropertyShapeModel.MinCount,
-                                            Value(AmfScalar(f.scalar.toNumber.intValue() != 0), f.scalar.annotations)),
-                                 Some(Bool)))
+          result += ValueEmitter(
+            "required",
+            FieldEntry(
+              PropertyShapeModel.MinCount,
+              Value(AmfScalar(f.scalar.toNumber.intValue() != 0), f.scalar.annotations)
+            ),
+            Some(Bool)
+          )
+        )
 
       Option(property.range).foreach { schema =>
         val fs = schema.fields

@@ -26,51 +26,71 @@ class AMFElementClient private[amf] (override protected val configuration: AMFCo
     else AMFElementRenderer.renderElement(element, configuration).asInstanceOf[SyamlParsedDocument].document.node
   }
 
-  /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asEndpoint[T <: BaseUnit](unit: T,
-                                rt: ResourceType,
-                                configuration: AMFGraphConfiguration,
-                                profile: ProfileName = Raml10Profile): EndPoint =
-    AbstractElementTransformer.asEndpoint(unit,
-                                          rt,
-                                          configuration,
-                                          profile,
-                                          configuration.errorHandlerProvider.errorHandler())
+  /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait
+    * to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit.
+    */
+  def asEndpoint[T <: BaseUnit](
+      unit: T,
+      rt: ResourceType,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): EndPoint =
+    AbstractElementTransformer.asEndpoint(
+      unit,
+      rt,
+      configuration,
+      profile,
+      configuration.errorHandlerProvider.errorHandler()
+    )
 
-  /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T,
-                                 tr: Trait,
-                                 configuration: AMFGraphConfiguration,
-                                 profile: ProfileName = Raml10Profile): Operation =
-    AbstractElementTransformer.asOperation(unit,
-                                           tr,
-                                           configuration,
-                                           profile,
-                                           configuration.errorHandlerProvider.errorHandler())
+  /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use
+    * its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit.
+    */
+  def asOperation[T <: BaseUnit](
+      unit: T,
+      tr: Trait,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): Operation =
+    AbstractElementTransformer.asOperation(
+      unit,
+      tr,
+      configuration,
+      profile,
+      configuration.errorHandlerProvider.errorHandler()
+    )
 
-  def entryAsEndpoint[T <: BaseUnit](unit: T,
-                                     rt: ResourceType,
-                                     node: DataNode,
-                                     entry: YMapEntry,
-                                     configuration: AMFGraphConfiguration,
-                                     profile: ProfileName = Raml10Profile): EndPoint =
-    AbstractElementTransformer.entryAsEndpoint(unit,
-                                               rt,
-                                               node,
-                                               entry,
-                                               configuration,
-                                               configuration.errorHandlerProvider.errorHandler(),
-                                               profile)
+  def entryAsEndpoint[T <: BaseUnit](
+      unit: T,
+      rt: ResourceType,
+      node: DataNode,
+      entry: YMapEntry,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): EndPoint =
+    AbstractElementTransformer.entryAsEndpoint(
+      unit,
+      rt,
+      node,
+      entry,
+      configuration,
+      configuration.errorHandlerProvider.errorHandler(),
+      profile
+    )
 
-  def entryAsOperation[T <: BaseUnit](unit: T,
-                                      tr: Trait,
-                                      entry: YMapEntry,
-                                      configuration: AMFGraphConfiguration,
-                                      profile: ProfileName = Raml10Profile): Operation =
-    AbstractElementTransformer.entryAsOperation(unit,
-                                                tr,
-                                                entry,
-                                                configuration,
-                                                profile,
-                                                configuration.errorHandlerProvider.errorHandler())
+  def entryAsOperation[T <: BaseUnit](
+      unit: T,
+      tr: Trait,
+      entry: YMapEntry,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): Operation =
+    AbstractElementTransformer.entryAsOperation(
+      unit,
+      tr,
+      entry,
+      configuration,
+      profile,
+      configuration.errorHandlerProvider.errorHandler()
+    )
 }

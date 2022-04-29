@@ -5,7 +5,8 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
   val property = PropertyShape(toAnnotations(ast))
 
   def parse(adopt: PropertyShape => Unit): PropertyShape = {
@@ -28,7 +29,7 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
     val range = parseType(ast, property.id)
     unpackNilUnion(range) match {
       case NullableShape(true, shape)  => property.withRange(shape).withMinCount(0)
-      case NullableShape(false,shape) => property.withRange(shape).withMinCount(1)
+      case NullableShape(false, shape) => property.withRange(shape).withMinCount(1)
     }
   }
 }

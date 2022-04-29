@@ -13,11 +13,10 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
+/** */
 case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtention: Boolean)(
-    implicit spec: ShapeEmitterContext) {
+    implicit spec: ShapeEmitterContext
+) {
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
@@ -35,9 +34,9 @@ case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: S
   }
 }
 
-case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtension: Boolean)(
-    implicit spec: ShapeEmitterContext)
-    extends PartEmitter {
+case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtension: Boolean)(implicit
+    spec: ShapeEmitterContext
+) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       documentation.annotations,
@@ -48,8 +47,9 @@ case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOr
   override def position(): Position = pos(documentation.annotations)
 }
 
-case class OasCreativeWorkItemsEmitter(document: CreativeWork, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext) {
+case class OasCreativeWorkItemsEmitter(document: CreativeWork, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) {
   def emitters(): Seq[EntryEmitter] = {
     val fs     = document.fields
     val result = ListBuffer[EntryEmitter]()
@@ -78,9 +78,9 @@ case class OasCreativeWorkEmitter(document: CreativeWork, ordering: SpecOrdering
   override def position(): Position = pos(document.annotations)
 }
 
-case class OasEntryCreativeWorkEmitter(key: String, documentation: CreativeWork, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+case class OasEntryCreativeWorkEmitter(key: String, documentation: CreativeWork, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       documentation.annotations,

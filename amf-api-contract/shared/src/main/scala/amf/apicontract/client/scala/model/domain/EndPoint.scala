@@ -11,8 +11,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 
-/**
-  * EndPoint internal model
+/** EndPoint internal model
   */
 class EndPoint(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
@@ -82,7 +81,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
       case _           => name.value().urlComponentEncoded
     }
   }
-  override def nameField: Field    = Name
+  override def nameField: Field = Name
 }
 
 object EndPoint {

@@ -9,7 +9,8 @@ import amf.core.internal.validation.ValidationConfiguration
 trait ModelResolution {
 
   def withResolvedModel[T](unit: BaseUnit, profile: ProfileName, conf: ValidationConfiguration)(
-      withResolved: (BaseUnit, Option[AMFValidationReport]) => T): T = {
+      withResolved: (BaseUnit, Option[AMFValidationReport]) => T
+  ): T = {
     if (unit.processingData.transformed.is(true)) withResolved(unit, None)
     else {
       val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf)

@@ -11,9 +11,11 @@ object DiscriminatorValueMappingModel extends DomainElementModel {
   val DiscriminatorValue: Field = Field(
     Str,
     Shapes + "discriminatorValue",
-    ModelDoc(ModelVocabularies.Shapes,
-             "discriminatorValue",
-             "Value given to a discriminator that identifies a target Shape")
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "discriminatorValue",
+      "Value given to a discriminator that identifies a target Shape"
+    )
   )
 
   val DiscriminatorValueTarget: Field =

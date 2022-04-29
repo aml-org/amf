@@ -14,9 +14,11 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
     FixtureData("repeat property in parameter", "repeat-property.raml", "repeat-property-10.raml"),
     FixtureData("date type convertion", "date-type.raml", "date-type-10.raml"),
     FixtureData("optional data nodes", "optional-data-nodes.raml", "optional-data-nodes-10.raml"),
-    FixtureData("operation base uri parameters",
-                "operation-base-uri-parameters.raml",
-                "operation-base-uri-parameters-10.raml"),
+    FixtureData(
+      "operation base uri parameters",
+      "operation-base-uri-parameters.raml",
+      "operation-base-uri-parameters-10.raml"
+    ),
     FixtureData("named parameters in media type", "named-type.raml", "named-type-10.raml"),
     FixtureData("operation with a description", "operation-description.raml", "operation-description-10.raml"),
     FixtureData("parameter with file type", "file-type.raml", "file-type-10.raml")
@@ -32,16 +34,20 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
     FixtureData("form parameters", "form-parameters.raml", "form-parameters-08.raml"),
     FixtureData("repeat property in parameter", "repeat-property.raml", "repeat-property-08.raml"),
     FixtureData("date type convertion", "date-type.raml", "date-type.raml"),
-    FixtureData("operation base uri parameters",
-                "operation-base-uri-parameters.raml",
-                "operation-base-uri-parameters.raml"),
+    FixtureData(
+      "operation base uri parameters",
+      "operation-base-uri-parameters.raml",
+      "operation-base-uri-parameters.raml"
+    ),
     FixtureData("named parameters in media type", "named-type.raml", "named-type.raml"),
     FixtureData("operation with a description", "operation-description.raml", "operation-description.raml"),
     FixtureData("Include in documentation content", "include-documentation.raml", "include-documentation-08.raml"),
     FixtureData("Include in resource types and traits", "include-resource-type.raml", "include-resource-type-08.raml"),
-    FixtureData("include in anonymous seq of schemas declaration",
-                "include-anonymous-schema.raml",
-                "include-anonymous-schema-08.raml"),
+    FixtureData(
+      "include in anonymous seq of schemas declaration",
+      "include-anonymous-schema.raml",
+      "include-anonymous-schema-08.raml"
+    ),
     FixtureData("Include xsd schema", "include-xsd-schema.raml", "include-xsd-schema-08.raml"),
     FixtureData("security schemes", "security-schemes.raml", "security-schemes-08.raml"),
     FixtureData("empty parameter", "empty-param.raml", "empty-param.raml.raml"),
@@ -63,9 +69,11 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
 
   // todo add more test, this is important for toJsonSchema logic
   val cycleOas = Seq(
-    FixtureData("operation base uri parameters",
-                "operation-base-uri-parameters.raml",
-                "operation-base-uri-parameters.json"),
+    FixtureData(
+      "operation base uri parameters",
+      "operation-base-uri-parameters.raml",
+      "operation-base-uri-parameters.json"
+    ),
     FixtureData("parameter with file type", "file-type.raml", "file-type.json")
   )
 

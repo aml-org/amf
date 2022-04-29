@@ -13,17 +13,18 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.SynthesizedField
 
-/**
-  * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
-  * criterium for AMF
+/** Place parameter models in the right locations according to the RAML/OpenAPI specs and our own criterium for AMF
   *
-  * @param profile target profile
+  * @param profile
+  *   target profile
   */
 abstract class ParametersNormalizationStage(profile: ProfileName) extends TransformationStep() {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
       transform(api)(errorHandler)
@@ -33,8 +34,9 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
 
   protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = api
 
-  protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters)(
-    implicit errorHandler: AMFErrorHandler) = {
+  protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters)(implicit
+      errorHandler: AMFErrorHandler
+  ) = {
     endpoint.operations.foreach { op =>
       setRequestParameters(op, finalParams)
     }
@@ -57,13 +59,14 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
     if (pathParams.nonEmpty) request.fields.setWithoutId(RequestModel.UriParameters, AmfArray(pathParams))
   }
 
-  private def checkDuplicatedParameters(endPointParams: Parameters, requestParams: Parameters)(
-    implicit errorHandler: AMFErrorHandler): Unit = {
+  private def checkDuplicatedParameters(endPointParams: Parameters, requestParams: Parameters)(implicit
+      errorHandler: AMFErrorHandler
+  ): Unit = {
     val duplicates = endPointParams.findDuplicatesIn(requestParams)
     duplicates.foreach({ parameter =>
-    {
-      addWarningForDuplicateParameter(parameter)
-    }
+      {
+        addWarningForDuplicateParameter(parameter)
+      }
     })
   }
 
@@ -81,12 +84,13 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
 
 class OpenApiParametersNormalizationStage extends ParametersNormalizationStage(Oas20Profile) {
 
-  /**
-    * In OpenAPI we just push the endpoint parameters to the operation level, overwriting the any endpoint parameter
+  /** In OpenAPI we just push the endpoint parameters to the operation level, overwriting the any endpoint parameter
     * with the new definition at the operation level
     *
-    * @param api WebApi in
-    * @return api WebApi out
+    * @param api
+    *   WebApi in
+    * @return
+    *   api WebApi out
     */
   override protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters
@@ -104,12 +108,13 @@ class OpenApiParametersNormalizationStage extends ParametersNormalizationStage(O
 
 class AmfParametersNormalizationStage extends ParametersNormalizationStage(AmfProfile) {
 
-  /**
-    * In AMF we push all the parameters at the operation level.
-    * Parameter references should be already resolved in previous steps.
+  /** In AMF we push all the parameters at the operation level. Parameter references should be already resolved in
+    * previous steps.
     *
-    * @param api BaseApi in
-    * @return api BaseApi out
+    * @param api
+    *   BaseApi in
+    * @return
+    *   api BaseApi out
     */
   override protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters
@@ -138,15 +143,16 @@ class AmfParametersNormalizationStage extends ParametersNormalizationStage(AmfPr
 
 class Raml10ParametersNormalizationStage extends ParametersNormalizationStage(AmfProfile) {
 
-  /**
-    * In RAML we assign the parameters at the right level according to the RAML spec:
-    * - webapi for baseURI parameters
-    * - endpoint for the path parameters
-    * - operation for the  query, path and header parameters
-    * Since parameters can be at any level due to the source of the model being an OpenAPI document
+  /** In RAML we assign the parameters at the right level according to the RAML spec:
+    *   - webapi for baseURI parameters
+    *   - endpoint for the path parameters
+    *   - operation for the query, path and header parameters Since parameters can be at any level due to the source of
+    *     the model being an OpenAPI document
     *
-    * @param baseApi Api in
-    * @return baseApi Api out
+    * @param baseApi
+    *   Api in
+    * @return
+    *   baseApi Api out
     */
   override protected def transform(baseApi: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters

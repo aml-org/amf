@@ -14,9 +14,11 @@ class MandatoryDocumentationTitle() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     // Have to filter for null documentations as the documentation method of domainElements does not return Option. It can return null
     // TODO: keeping separate treatment for Tags to keep backwards compatibility.
     extractDocumentedElements(model).foreach {

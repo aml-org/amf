@@ -18,7 +18,7 @@ class AnnotationsTest extends AnyFunSuite with Matchers with Inspectors {
     ("(invalid)regex", None),
     ("some", None),
     ("tags", None),
-    ("(tags)", Some("tags")),
+    ("(tags)", Some("tags"))
   )
 
   private val oasFixture = Seq(
@@ -48,20 +48,20 @@ class AnnotationsTest extends AnyFunSuite with Matchers with Inspectors {
   )
 
   test("Test is raml annotation") {
-    forAll(ramlFixture) {
-      case (test, expected) => isRamlAnnotation(test) should be(expected.isDefined)
+    forAll(ramlFixture) { case (test, expected) =>
+      isRamlAnnotation(test) should be(expected.isDefined)
     }
   }
 
   test("Test is oas annotation") {
-    forAll(oasFixture) {
-      case (test, expected) => isOasAnnotation(test) should be(expected.isDefined)
+    forAll(oasFixture) { case (test, expected) =>
+      isOasAnnotation(test) should be(expected.isDefined)
     }
   }
 
   test("Test resolve annotation") {
-    forAll(ramlFixture ++ oasFixture ++ knownFixture) {
-      case (test, expected) => resolveAnnotation(test) shouldBe expected
+    forAll(ramlFixture ++ oasFixture ++ knownFixture) { case (test, expected) =>
+      resolveAnnotation(test) shouldBe expected
     }
   }
 }

@@ -7,10 +7,12 @@ import amf.core.internal.metamodel.domain.common.NameFieldSchema
 
 object AsyncJsonMergePatch {
   def apply(): JsonMergePatch =
-    JsonMergePatch(_ => false,
-                   AsyncKeyCriteria(),
-                   commonIgnoredFields ++ operationIgnoredFields ++ messageIgnoredFields,
-                   Set(CustomMessageExamplesMerge, PayloadMediaTypeMerge))
+    JsonMergePatch(
+      _ => false,
+      AsyncKeyCriteria(),
+      commonIgnoredFields ++ operationIgnoredFields ++ messageIgnoredFields,
+      Set(CustomMessageExamplesMerge, PayloadMediaTypeMerge)
+    )
 
   private def operationIgnoredFields = Set(OperationModel.Method, OperationModel.Responses, OperationModel.Request)
   private def commonIgnoredFields    = Set(NameFieldSchema.Name, AbstractModel.IsAbstract, DomainElementModel.Extends)

@@ -9,8 +9,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint => InternalEndPoint}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * EndPoint model class.
+/** EndPoint model class.
   */
 @JSExportAll
 case class EndPoint(override private[amf] val _internal: InternalEndPoint)
@@ -90,27 +89,23 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     this
   }
 
-  /**
-    * Adds one Operation to the operations property of this EndPoint and returns it for population.
-    * Method property of the operation is required.
+  /** Adds one Operation to the operations property of this EndPoint and returns it for population. Method property of
+    * the operation is required.
     */
   def withOperation(method: String): Operation = _internal.withOperation(method)
 
-  /**
-    * Adds one Parameter to the uriParameters property of this EndPoint and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the uriParameters property of this EndPoint and returns it for population. Name property of
+    * the parameter is required.
     */
   def withParameter(name: String): Parameter = _internal.withParameter(name)
 
-  /**
-    * Adds one Payload to the payloads property of this EndPoint and returns it for population.
-    * mediaType property of the parameter is required.
+  /** Adds one Payload to the payloads property of this EndPoint and returns it for population. mediaType property of
+    * the parameter is required.
     */
   def withPayload(name: String): Payload = _internal.withPayload(Some(name))
 
-  /**
-    * Adds one Server to the servers property of this EndPoint and returns it for population.
-    * url property of the server is required.
+  /** Adds one Server to the servers property of this EndPoint and returns it for population. url property of the server
+    * is required.
     */
   def withServer(url: String): Server = _internal.withServer(url)
 

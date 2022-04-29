@@ -30,12 +30,14 @@ class CompatibilityCycledValidationTest extends CompatibilityCycle with Matchers
 
 trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformSecrets {
 
-  def testCycleCompatibility(filePath: String,
-                             from: Hint,
-                             to: Spec,
-                             basePath: String,
-                             syntax: Option[Syntax] = None,
-                             pipeline: Option[String] = None): Unit = {
+  def testCycleCompatibility(
+      filePath: String,
+      from: Hint,
+      to: Spec,
+      basePath: String,
+      syntax: Option[Syntax] = None,
+      pipeline: Option[String] = None
+  ): Unit = {
     for {
       file <- platform.fs.syncFile(basePath + filePath).list.sorted
     } {

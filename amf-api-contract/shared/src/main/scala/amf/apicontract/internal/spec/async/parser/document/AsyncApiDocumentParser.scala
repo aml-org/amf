@@ -85,8 +85,10 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       entry => {
         api.setWithoutId(
           WebApiModel.Documentations,
-          AmfArray(Seq(OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse()),
-                   Annotations(entry.value)),
+          AmfArray(
+            Seq(OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse()),
+            Annotations(entry.value)
+          ),
           Annotations(entry)
         )
       }
@@ -126,7 +128,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   private def parseChannels(entry: YMapEntry, api: AsyncApi): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
-      acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
+      acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse()
+    )
     api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
   }
 
@@ -207,9 +210,11 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
               entry,
               (scheme) => {
                 val name = entry.key.as[String]
-                scheme.setWithoutId(SecuritySchemeModel.Name,
-                                    AmfScalar(name, Annotations(entry.key.value)),
-                                    Annotations(entry.key))
+                scheme.setWithoutId(
+                  SecuritySchemeModel.Name,
+                  AmfScalar(name, Annotations(entry.key.value)),
+                  Annotations(entry.key)
+                )
                 scheme
               }
             )
@@ -291,10 +296,12 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     )
   }
 
-  def parseBindingsDeclarations[T <: DomainElement](keyword: String,
-                                                    componentsMap: YMap,
-                                                    parse: YMapEntry => T,
-                                                    model: DomainElementModel): Unit = {
+  def parseBindingsDeclarations[T <: DomainElement](
+      keyword: String,
+      componentsMap: YMap,
+      parse: YMapEntry => T,
+      model: DomainElementModel
+  ): Unit = {
     componentsMap.key(
       keyword,
       e => {

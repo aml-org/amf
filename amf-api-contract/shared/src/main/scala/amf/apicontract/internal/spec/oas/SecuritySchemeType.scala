@@ -34,7 +34,7 @@ object OasLikeSecuritySchemeTypeMappings {
     lazy val types = Map(
       "OAuth 2.0"            -> OAuth20,
       "Basic Authentication" -> BasicAuth,
-      "Api Key"              -> ApiKeyOas,
+      "Api Key"              -> ApiKeyOas
     )
 
     override def mapsTo(text: String): SecuritySchemeType = types.getOrElse(text, UnknownSecuritySchemeType(text))

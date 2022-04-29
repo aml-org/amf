@@ -26,12 +26,14 @@ import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.collection.mutable.ListBuffer
 
-case class OasNodeShapeEmitter(node: NodeShape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               pointer: Seq[String] = Nil,
-                               schemaPath: Seq[(String, String)] = Nil,
-                               isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
+case class OasNodeShapeEmitter(
+    node: NodeShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil,
+    isHeader: Boolean = false
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val isOas3 = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]
@@ -50,21 +52,25 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     additionalPropertiesSchema match {
       case Some(f) =>
-        result += OasEntryShapeEmitter("additionalProperties",
-                                       f.element.asInstanceOf[Shape],
-                                       ordering,
-                                       references,
-                                       pointer,
-                                       schemaPath)
+        result += OasEntryShapeEmitter(
+          "additionalProperties",
+          f.element.asInstanceOf[Shape],
+          ordering,
+          references,
+          pointer,
+          schemaPath
+        )
       case None =>
         fs.entry(NodeShapeModel.Closed)
           .filter(f => isExplicit(f) || f.scalar.toBool)
           .foreach(f => result += ValueEmitter("additionalProperties", f.negated))
     }
 
-    UntranslatableDraft2019FieldsPresentGuard(node,
-                                              Seq(UnevaluatedPropertiesSchema, UnevaluatedProperties),
-                                              Seq("unevaluatedProperties")).evaluateOrRun { () =>
+    UntranslatableDraft2019FieldsPresentGuard(
+      node,
+      Seq(UnevaluatedPropertiesSchema, UnevaluatedProperties),
+      Seq("unevaluatedProperties")
+    ).evaluateOrRun { () =>
       result += new UnevaluatedEmitter(node, unevaluatedPropertiesInfo, ordering, references, pointer, schemaPath)
     }
 
@@ -83,7 +89,8 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     fs.entry(NodeShapeModel.Properties)
       .map(f =>
-        result += OasPropertiesShapeEmitter(f, ordering, references, pointer = pointer, schemaPath = schemaPath))
+        result += OasPropertiesShapeEmitter(f, ordering, references, pointer = pointer, schemaPath = schemaPath)
+      )
 
     val emitterFactory: TypeEmitterFactory = shape =>
       OasTypeEmitter(shape, ordering, Seq(), references, pointer, schemaPath, isHeader)

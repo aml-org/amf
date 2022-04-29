@@ -32,11 +32,13 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
     wrapInDataTypeFragment(document, parsed)
   }
 
-  private def context(loc: String,
-                      refs: Seq[ParsedReference],
-                      options: ParsingOptions,
-                      wrapped: ParserContext,
-                      ds: Option[OasWebApiDeclarations] = None): JsonSchemaWebApiContext = {
+  private def context(
+      loc: String,
+      refs: Seq[ParsedReference],
+      options: ParsingOptions,
+      wrapped: ParserContext,
+      ds: Option[OasWebApiDeclarations] = None
+  ): JsonSchemaWebApiContext = {
     // todo: we can set this default as this plugin is hardcoded to not parse
     // todo 2: we should debate the default version to use in the Plugin if we are to use it.
     new JsonSchemaWebApiContext(loc, refs, wrapped, ds, options, JSONSchemaUnspecifiedVersion)
@@ -49,8 +51,7 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
     unit
   }
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(`application/json`)
 

@@ -26,8 +26,10 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("test source and lexical info in response name oas") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case r: Response => r }) match {
@@ -45,8 +47,10 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test source and lexical info in parameter name oas") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case r: Parameter => r }) match {
@@ -59,8 +63,10 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test empty oas parameter") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/empty-parameter.json",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/empty-parameter.json",
+        Oas20YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
       document.encodes.asInstanceOf[WebApi].endPoints.head.parameters.headOption match {
@@ -73,13 +79,17 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test annotation at property path") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.yaml",
-                    Oas20YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.yaml",
+        Oas20YamlHint
+      )
     } yield {
       val document                       = unit.asInstanceOf[Document]
       val properties: Seq[PropertyShape] = document.declares.head.asInstanceOf[NodeShape].properties
-      assertRange(properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-                  new Range(Position(7, 8), Position(7, 9)))
+      assertRange(
+        properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
+        new Range(Position(7, 8), Position(7, 9))
+      )
       assertRange(
         properties
           .find(_.name.value() == "n")
@@ -122,14 +132,18 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test annotation at raml property path") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.raml",
-                    Raml10YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.raml",
+        Raml10YamlHint
+      )
     } yield {
       val document                       = unit.asInstanceOf[Document]
       val properties: Seq[PropertyShape] = document.declares.head.asInstanceOf[NodeShape].properties
 
-      assertRange(properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-                  new Range(Position(8, 6), Position(8, 7)))
+      assertRange(
+        properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
+        new Range(Position(8, 6), Position(8, 7))
+      )
       assertRange(
         properties
           .find(_.name.value() == "n")
@@ -173,13 +187,17 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test raml resource type position") {
     for {
-      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/resource-type.raml",
-                    Raml10YamlHint)
+      unit <- build(
+        "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/resource-type.raml",
+        Raml10YamlHint
+      )
     } yield {
       val document = unit.asInstanceOf[Document]
-      val point = AbstractElementTransformer.asEndpoint(document,
-                                                        document.declares.head.asInstanceOf[ResourceType],
-                                                        defaultConfig)
+      val point = AbstractElementTransformer.asEndpoint(
+        document,
+        document.declares.head.asInstanceOf[ResourceType],
+        defaultConfig
+      )
       assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, Range((6, 2), (9, 12)))
       assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, Range((6, 2), (6, 5)))
       succeed
@@ -243,7 +261,8 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}example.json")
       assert(
-        targets.head._2 == List(Range(Position(9, 22), Position(9, 34)), Range(Position(21, 30), Position(21, 42))))
+        targets.head._2 == List(Range(Position(9, 22), Position(9, 34)), Range(Position(21, 30), Position(21, 42)))
+      )
 
       succeed
     }

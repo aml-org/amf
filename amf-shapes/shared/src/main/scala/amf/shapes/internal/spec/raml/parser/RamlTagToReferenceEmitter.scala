@@ -9,16 +9,17 @@ import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.{ShapeEmitterContext, TagToReferenceEmitter}
 import org.yaml.model.YDocument.PartBuilder
 
-case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUnit])(
-    implicit val spec: ShapeEmitterContext)
-    extends PartEmitter
+case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUnit])(implicit
+    val spec: ShapeEmitterContext
+) extends PartEmitter
     with TagToReferenceEmitter {
 
   override def emit(b: PartBuilder): Unit = {
     if (containsRefAnnotation)
       link.annotations.find(classOf[ExternalFragmentRef]).foreach { a =>
         spec.ref(b, a.fragment) // emits with !include
-      } else if (linkReferencesFragment)
+      }
+    else if (linkReferencesFragment)
       spec.ref(b, referenceLabel) // emits with !include
     else
       raw(b, referenceLabel)

@@ -8,9 +8,11 @@ import amf.shapes.client.scala.model.domain.ArrayShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape}
 
 class AddItemsToArrayType() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model
         .iterator()

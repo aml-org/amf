@@ -30,9 +30,9 @@ class AsyncApiEndpointsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit v
   override def position(): Position = pos(f.element.annotations)
 }
 
-class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter
+class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter
     with PartEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {

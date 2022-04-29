@@ -18,13 +18,17 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
     Field(Str, ApiBinding + "clientId", ModelDoc(ModelVocabularies.ApiBinding, "clientId", "The client identifier"))
 
   val CleanSession =
-    Field(Bool,
-          ApiBinding + "cleanSession",
-          ModelDoc(ModelVocabularies.ApiBinding, "cleanSession", "Whether to create a persistent connection or not"))
+    Field(
+      Bool,
+      ApiBinding + "cleanSession",
+      ModelDoc(ModelVocabularies.ApiBinding, "cleanSession", "Whether to create a persistent connection or not")
+    )
 
-  val LastWill = Field(MqttServerLastWillModel,
-                       ApiBinding + "lastWill",
-                       ModelDoc(ModelVocabularies.ApiBinding, "lastWill", "Last Will and Testament configuration"))
+  val LastWill = Field(
+    MqttServerLastWillModel,
+    ApiBinding + "lastWill",
+    ModelDoc(ModelVocabularies.ApiBinding, "lastWill", "Last Will and Testament configuration")
+  )
 
   val KeepAlive = Field(
     Int,
@@ -54,11 +58,15 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
 
 object MqttServerLastWillModel extends DomainElementModel {
   val Topic =
-    Field(Str,
-          ApiBinding + "topic",
-          ModelDoc(ModelVocabularies.ApiBinding,
-                   "topic",
-                   "The topic where the Last Will and Testament message will be sent"))
+    Field(
+      Str,
+      ApiBinding + "topic",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "topic",
+        "The topic where the Last Will and Testament message will be sent"
+      )
+    )
 
   val Qos = Field(
     Int,
@@ -66,23 +74,28 @@ object MqttServerLastWillModel extends DomainElementModel {
     ModelDoc(
       ModelVocabularies.ApiBinding,
       "qos",
-      "Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received")
+      "Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received"
+    )
   )
 
   val Retain = Field(
     Bool,
     ApiBinding + "retain",
-    ModelDoc(ModelVocabularies.ApiBinding,
-             "retain",
-             "Whether the broker should retain the Last Will and Testament message or not")
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "retain",
+      "Whether the broker should retain the Last Will and Testament message or not"
+    )
   )
 
   val Message = Field(
     Str,
     ApiBinding + "message",
-    ModelDoc(ModelVocabularies.ApiBinding,
-             "message",
-             "Message used to notify other clients about an ungracefully disconnected client.")
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "message",
+      "Message used to notify other clients about an ungracefully disconnected client."
+    )
   )
 
   override def fields: List[Field] = List(Topic, Qos, Retain, Message) ++ DomainElementModel.fields
@@ -103,15 +116,19 @@ object MqttOperationBindingModel extends OperationBindingModel with BindingVersi
     Field(
       Int,
       ApiBinding + "qos",
-      ModelDoc(ModelVocabularies.ApiBinding,
-               "qos",
-               "Defines how hard the broker/client will try to ensure that a message is received")
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "qos",
+        "Defines how hard the broker/client will try to ensure that a message is received"
+      )
     )
 
   val Retain =
-    Field(Bool,
-          ApiBinding + "retain",
-          ModelDoc(ModelVocabularies.ApiBinding, "retain", "Whether the broker should retain the message or not"))
+    Field(
+      Bool,
+      ApiBinding + "retain",
+      ModelDoc(ModelVocabularies.ApiBinding, "retain", "Whether the broker should retain the message or not")
+    )
 
   override val key: Field = Type
 

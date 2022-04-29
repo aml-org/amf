@@ -8,14 +8,13 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVo
 import amf.shapes.client.scala.model.domain.SchemaDependencies
 import amf.shapes.client.scala.model.domain.PropertyDependencies
 
-/**
-  *
-  */
+/** */
 trait DependenciesModel {
   val PropertySource = Field(
     Str,
     Shapes + "propertySource",
-    ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property name in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property name in the dependency")
+  )
 }
 
 object DependenciesModel extends DependenciesModel
@@ -25,7 +24,8 @@ object PropertyDependenciesModel extends DomainElementModel with DependenciesMod
   val PropertyTarget = Field(
     Array(Str),
     Shapes + "propertyTarget",
-    ModelDoc(ModelVocabularies.Shapes, "propertyTarget", "Target property name in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertyTarget", "Target property name in the dependency")
+  )
 
   override def fields: List[Field] =
     List(PropertySource, PropertyTarget) ++ DomainElementModel.fields
@@ -46,7 +46,8 @@ object SchemaDependenciesModel extends DomainElementModel with DependenciesModel
   val SchemaTarget = Field(
     ShapeModel,
     Shapes + "schemaTarget",
-    ModelDoc(ModelVocabularies.Shapes, "schemaTarget", "Target applied shape in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "schemaTarget", "Target applied shape in the dependency")
+  )
 
   override def fields: List[Field] =
     List(PropertySource, SchemaTarget) ++ DomainElementModel.fields

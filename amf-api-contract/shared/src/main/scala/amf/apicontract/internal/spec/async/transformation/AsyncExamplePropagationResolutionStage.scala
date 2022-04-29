@@ -11,9 +11,11 @@ import amf.core.client.scala.transform.TransformationStep
 
 class AsyncExamplePropagationResolutionStage() extends TransformationStep with ExamplePropagationHelper {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       propagateExamples(doc.encodes.asInstanceOf[Api])
       doc

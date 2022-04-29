@@ -20,14 +20,14 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class RamlResponsesEmitter(key: String,
-                                f: FieldEntry,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                defaultResponse: Boolean = false)(implicit spec: RamlSpecEmitterContext)
+/** */
+case class RamlResponsesEmitter(
+    key: String,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    defaultResponse: Boolean = false
+)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -55,9 +55,9 @@ case class RamlResponsesEmitter(key: String,
     }
 }
 
-case class Raml10ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlResponsePartEmitter(response, ordering, references) {
+case class Raml10ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlResponsePartEmitter(response, ordering, references) {
 
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -72,25 +72,25 @@ case class Raml10ResponsePartEmitter(response: Response, ordering: SpecOrdering,
 
 }
 
-case class Raml08ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlResponsePartEmitter(response, ordering, references) {}
+case class Raml08ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlResponsePartEmitter(response, ordering, references) {}
 
-case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlResponseEmitter(response, ordering, references) {
+case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlResponseEmitter(response, ordering, references) {
   override def partBuilder: RamlResponsePartEmitter = Raml10ResponsePartEmitter(response, ordering, references)
 }
 
-case class Raml08ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlResponseEmitter(response, ordering, references) {
+case class Raml08ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlResponseEmitter(response, ordering, references) {
   override def partBuilder: RamlResponsePartEmitter = Raml08ResponsePartEmitter(response, ordering, references)
 }
 
-abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -121,9 +121,9 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
   override def position(): Position = pos(response.annotations)
 }
 
-abstract class RamlResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends PartEmitter {
+abstract class RamlResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 

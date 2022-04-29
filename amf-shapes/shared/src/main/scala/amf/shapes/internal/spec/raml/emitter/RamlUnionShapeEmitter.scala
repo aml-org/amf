@@ -6,9 +6,9 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 
-case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(shape, ordering, references) {
+case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(shape, ordering, references) {
 
   override def emitters(): Seq[EntryEmitter] = {
     // If anyOf is empty and inherits is not empty, the shape is still not resolved. So, emit as a AnyShape

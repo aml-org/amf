@@ -10,24 +10,25 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain.FileShape
 
-/**
-  * Contrary to OAS, In RAML, mediaTypes defined in requests/responses bodies are not added to the field accepts/contentType of the model
-  * So in the MediaTypeResolutionStage, when converting from RAML to OAS 2.0, the accepts and contentType only include the global mediaType (if defined).
-  * This led to some inconsistent transformations when mediaTypes were defined in bodies as accepts/contentType did not correlate to the payload's mediaTypes.
-  * The purpose of this step is to address this issue.
-  * To do this, mediaTypes are collected from payloads and accepts and contentType fields are set with that values.
-  * This way payload's mediaTypes and modified fields will correlate, solving the inconsistency.
-  * The only particular case is when a file parameter is defined inside the request body. The accepts field is filled with the 2 possible mediaTypes according to the spec.
+/** Contrary to OAS, In RAML, mediaTypes defined in requests/responses bodies are not added to the field
+  * accepts/contentType of the model So in the MediaTypeResolutionStage, when converting from RAML to OAS 2.0, the
+  * accepts and contentType only include the global mediaType (if defined). This led to some inconsistent
+  * transformations when mediaTypes were defined in bodies as accepts/contentType did not correlate to the payload's
+  * mediaTypes. The purpose of this step is to address this issue. To do this, mediaTypes are collected from payloads
+  * and accepts and contentType fields are set with that values. This way payload's mediaTypes and modified fields will
+  * correlate, solving the inconsistency. The only particular case is when a file parameter is defined inside the
+  * request body. The accepts field is filled with the 2 possible mediaTypes according to the spec.
   */
-
 
 class FixConsumesAndProduces() extends TransformationStep() {
 
   val validConsumesForFileParam = List("multipart/form-data", "application/x-www-form-urlencoded")
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] => fixFields(doc.encodes.asInstanceOf[Api])
       case _                                              =>

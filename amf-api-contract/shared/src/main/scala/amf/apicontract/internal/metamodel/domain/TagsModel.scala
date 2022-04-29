@@ -6,7 +6,9 @@ import amf.core.internal.metamodel.Type.Array
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 trait TagsModel {
-  val Tags = Field(Array(TagModel),
-                   ApiContract + "tag",
-                   ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information"))
+  val Tags = Field(
+    Array(TagModel),
+    ApiContract + "tag",
+    ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information")
+  )
 }

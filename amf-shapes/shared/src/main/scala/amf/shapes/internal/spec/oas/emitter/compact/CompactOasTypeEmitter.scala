@@ -13,12 +13,14 @@ import amf.shapes.internal.spec.oas.OasShapeDefinitions
 import amf.shapes.internal.spec.oas.emitter.OasTypeEmitter
 import org.yaml.model.YDocument
 
-case class CompactOasTypeEmitter(shape: Shape,
-                                 ordering: SpecOrdering,
-                                 ignored: Seq[Field],
-                                 references: Seq[BaseUnit],
-                                 pointer: Seq[String],
-                                 schemaPath: Seq[(String, String)])(implicit spec: OasLikeShapeEmitterContext) {
+case class CompactOasTypeEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    ignored: Seq[Field],
+    references: Seq[BaseUnit],
+    pointer: Seq[String],
+    schemaPath: Seq[(String, String)]
+)(implicit spec: OasLikeShapeEmitterContext) {
 
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue
@@ -46,6 +48,7 @@ case class CompactOasTypeEmitter(shape: Shape,
           case _: DeclaredElement     => true
           case _: ResolvedInheritance => true
           case _                      => false
-      })
+        }
+      )
       .isEmpty || shape.isInstanceOf[RecursiveShape]
 }

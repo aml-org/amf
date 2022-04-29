@@ -8,12 +8,14 @@ class ReferencesResolutionTest extends ResolutionTest {
   val resolutionPath: String    = "amf-cli/shared/src/test/resources/resolution/"
 
   multiGoldenTest("References resolution", "with_references_resolved.%s") { config =>
-    cycle("with_references.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "with_references.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   multiGoldenTest("Oas direct type alias - All objects case - Default pipeline", "all-objects-case.%s") { config =>
@@ -41,8 +43,10 @@ class ReferencesResolutionTest extends ResolutionTest {
       )
   }
 
-  multiGoldenTest("Oas direct type alias - Array with child recursion case - Default pipeline",
-                  "array-with-child-recursion.%s") { config =>
+  multiGoldenTest(
+    "Oas direct type alias - Array with child recursion case - Default pipeline",
+    "array-with-child-recursion.%s"
+  ) { config =>
     cycle(
       "array-with-child-recursion.yaml",
       config.golden,

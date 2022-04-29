@@ -12,9 +12,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiServerBindingsEmitter(binding: ServerBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiServerBindingsEmitter(binding: ServerBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     emitterFor(binding).foreach(emitter => emitter.emit(b))

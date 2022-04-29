@@ -30,9 +30,8 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
     references.foreach { reference =>
       reference.unit match {
         case dec: DeclaresModel =>
-          dec.declares.foreach {
-            case shape: AnyShape =>
-              ctx.globalSpace += (shape.name.value() -> shape)
+          dec.declares.foreach { case shape: AnyShape =>
+            ctx.globalSpace += (shape.name.value() -> shape)
           }
         case _ => // ignore
       }
@@ -68,34 +67,32 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
   def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
   def parseMessages(node: Node): Unit = {
-    collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach {
-      case (element: ASTElement, idx: Int) =>
-        withNode(element) { node =>
-          val shape = GrpcMessageParser(node).parse(shape => {
-            shape.name.option() match {
-              case None => shape.withName(s"Message${idx}")
-              case _    =>
-            }
-            shape.adopted(webapi.id + "/types")
-          })
-          ctx.declarations += shape.add(DeclaredElement())
-        }
+    collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach { case (element: ASTElement, idx: Int) =>
+      withNode(element) { node =>
+        val shape = GrpcMessageParser(node).parse(shape => {
+          shape.name.option() match {
+            case None => shape.withName(s"Message${idx}")
+            case _    =>
+          }
+          shape.adopted(webapi.id + "/types")
+        })
+        ctx.declarations += shape.add(DeclaredElement())
+      }
     }
   }
 
   def parseEnums(node: Node): Unit = {
-    collect(node, Seq(TOP_LEVEL_DEF, ENUM_DEF)).zipWithIndex.foreach {
-      case (element: ASTElement, idx: Int) =>
-        withNode(element) { node =>
-          val shape = GrpcEnumParser(node).parse(shape => {
-            shape.name.option() match {
-              case None => shape.withName(s"Enum${idx}")
-              case _    =>
-            }
-            shape.adopted(webapi.id + "/types")
-          })
-          ctx.declarations += shape.add(DeclaredElement())
-        }
+    collect(node, Seq(TOP_LEVEL_DEF, ENUM_DEF)).zipWithIndex.foreach { case (element: ASTElement, idx: Int) =>
+      withNode(element) { node =>
+        val shape = GrpcEnumParser(node).parse(shape => {
+          shape.name.option() match {
+            case None => shape.withName(s"Enum${idx}")
+            case _    =>
+          }
+          shape.adopted(webapi.id + "/types")
+        })
+        ctx.declarations += shape.add(DeclaredElement())
+      }
     }
   }
 

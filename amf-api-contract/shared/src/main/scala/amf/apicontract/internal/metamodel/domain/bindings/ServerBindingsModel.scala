@@ -21,7 +21,7 @@ object ServerBindingsModel extends DomainElementModel with NameFieldSchema {
   override def fields: List[Field] =
     List(
       Name,
-      Bindings,
+      Bindings
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = ServerBindings()

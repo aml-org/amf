@@ -38,12 +38,11 @@ trait InheritanceChain { this: AnyShape =>
     val res =
       if (subTypes.isEmpty) Nil
       else
-        subTypes.foldLeft(Seq[Shape]()) {
-          case (acc, nextShape) =>
-            nextShape match {
-              case nestedNode: NodeShape => acc ++ Seq(nestedNode) ++ nestedNode.computeSubtypesClosure
-              case _                     => acc
-            }
+        subTypes.foldLeft(Seq[Shape]()) { case (acc, nextShape) =>
+          nextShape match {
+            case nestedNode: NodeShape => acc ++ Seq(nestedNode) ++ nestedNode.computeSubtypesClosure
+            case _                     => acc
+          }
         }
     res.distinct
   }

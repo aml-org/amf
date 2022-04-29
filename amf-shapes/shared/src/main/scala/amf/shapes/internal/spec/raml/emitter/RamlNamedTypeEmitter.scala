@@ -15,22 +15,21 @@ import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-/**
-  *
-  */
-case class RamlNamedTypeEmitter(shape: AnyShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit] = Nil,
-                                typesEmitter: (
-                                    AnyShape,
-                                    SpecOrdering,
-                                    Option[AnnotationsEmitter],
-                                    Seq[Field],
-                                    Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: ShapeEmitterContext)
+/** */
+case class RamlNamedTypeEmitter(
+    shape: AnyShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit] = Nil,
+    typesEmitter: (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
+)(implicit spec: ShapeEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimization, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
+    val name = shape.name
+      .option()
+      .getOrElse(
+        "schema"
+      ) // this used to throw an exception, but with the resolution optimization, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
     b.entry(name, b => emitLinkOr(shape, b, references)(emitInline(b)))
   }
 

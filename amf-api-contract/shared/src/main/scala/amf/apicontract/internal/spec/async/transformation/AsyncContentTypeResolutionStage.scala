@@ -7,9 +7,11 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
 
 class AsyncContentTypeResolutionStage() extends TransformationStep() {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       transform(webApi)

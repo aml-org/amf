@@ -25,15 +25,19 @@ object Raml08ParsePlugin extends RamlParsePlugin {
 
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`)
 
-  override def context(wrapped: ParserContext,
-                       root: Root,
-                       options: ParsingOptions,
-                       ds: Option[WebApiDeclarations]): RamlWebApiContext =
-    new Raml08WebApiContext(root.location,
-                            root.references ++ wrapped.refs,
-                            wrapped,
-                            ds.map(d => RamlWebApiDeclarations(d)),
-                            options = options)
+  override def context(
+      wrapped: ParserContext,
+      root: Root,
+      options: ParsingOptions,
+      ds: Option[WebApiDeclarations]
+  ): RamlWebApiContext =
+    new Raml08WebApiContext(
+      root.location,
+      root.references ++ wrapped.refs,
+      wrapped,
+      ds.map(d => RamlWebApiDeclarations(d)),
+      options = options
+    )
 
   override protected def parseSpecificVersion(root: Root, ctx: RamlWebApiContext, header: RamlHeader): BaseUnit = {
     header match {

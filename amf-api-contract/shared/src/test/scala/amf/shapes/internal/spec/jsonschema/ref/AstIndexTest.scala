@@ -171,9 +171,11 @@ trait IndexHelper extends PlatformSecrets {
     val content = platform.fs.syncFile(pathToFile).read()
     val doc     = JsonParser(content).document()
     val ctx =
-      new Async20WebApiContext("loc",
-                               Seq(),
-                               ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty)))
+      new Async20WebApiContext(
+        "loc",
+        Seq(),
+        ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty))
+      )
     AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(WebApiShapeParserContextAdapter(ctx))
   }
 }

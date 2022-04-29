@@ -74,10 +74,12 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
     cycle("simple-yaml-object.raml", "yaml-object-as-json.json", mediaType = `application/json`)
   }
 
-  private def cycle(source: String,
-                    golden: String,
-                    removeRaw: Boolean = false,
-                    mediaType: String = `application/json`) = {
+  private def cycle(
+      source: String,
+      golden: String,
+      removeRaw: Boolean = false,
+      mediaType: String = `application/json`
+  ) = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
       unit    <- config.baseUnitClient().parse(basePath + source).map(_.baseUnit)
@@ -99,10 +101,12 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
             new Raml10WebApiContext(
               "",
               Nil,
-              ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)))
+              ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty))
+            )
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
-            WebApiShapeParserContextAdapter(context)).parse()
+            WebApiShapeParserContextAdapter(context)
+          ).parse()
           Future.successful(anyShape.examples.head)
         case None => Future.failed(fail("Not a named example fragment"))
       }

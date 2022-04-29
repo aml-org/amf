@@ -11,9 +11,9 @@ import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 
 import scala.collection.mutable.ListBuffer
 
-case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(tuple, ordering, references) {
+case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(tuple, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 

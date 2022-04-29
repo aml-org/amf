@@ -37,12 +37,12 @@ object ShapePayloadValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> VIOLATION
     ),
-    SchemaException.id -> all(VIOLATION),
+    SchemaException.id -> all(VIOLATION)
   )
 
   override val validations: List[ValidationSpecification] = List(
     UntranslatableDraft2019Fields,
     ExampleValidationErrorSpecification,
-    SchemaException,
+    SchemaException
   )
 }

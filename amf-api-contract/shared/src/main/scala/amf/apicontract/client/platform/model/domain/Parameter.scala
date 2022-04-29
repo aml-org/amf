@@ -8,12 +8,10 @@ import amf.shapes.client.platform.model.domain.operations.AbstractParameter
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Parameter model class.
+/** Parameter model class.
   */
 @JSExportAll
-case class Parameter(override private[amf] val _internal: InternalParameter)
-    extends AbstractParameter(_internal) {
+case class Parameter(override private[amf] val _internal: InternalParameter) extends AbstractParameter(_internal) {
 
   @JSExportTopLevel("Parameter")
   def this() = this(InternalParameter())
@@ -25,7 +23,6 @@ case class Parameter(override private[amf] val _internal: InternalParameter)
   def allowReserved: BoolField      = _internal.allowReserved
   def payloads: ClientList[Payload] = _internal.payloads.asClient
   def examples: ClientList[Example] = _internal.examples.asClient
-
 
   /** Set deprecated property of this Parameter. */
   def withDeprecated(deprecated: Boolean): this.type = {

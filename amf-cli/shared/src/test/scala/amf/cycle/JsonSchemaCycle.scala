@@ -34,59 +34,75 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
   }
 
   test("Draft 2019-09 with semantics") {
-    cycle("draft-2019-09/semantics.json",
-          "draft-2019-09/cycled/semantics.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/semantics.json",
+      "draft-2019-09/cycled/semantics.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 duration and uuid formats") {
-    cycle("draft-2019-09/duration-uuid-format.json",
-          "draft-2019-09/cycled/duration-uuid-format.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/duration-uuid-format.json",
+      "draft-2019-09/cycled/duration-uuid-format.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 to Json-LD duration and uuid formats") {
-    cycle("draft-2019-09/duration-uuid-format.json",
-          "draft-2019-09/jsonld/duration-uuid-format.json",
-          JsonLdEmitter,
-          `application/json`)
+    cycle(
+      "draft-2019-09/duration-uuid-format.json",
+      "draft-2019-09/jsonld/duration-uuid-format.json",
+      JsonLdEmitter,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 unevaluatedProperties") {
-    cycle("draft-2019-09/unevaluatedProps-schema.json",
-          "draft-2019-09/cycled/unevaluatedProps-schema.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/unevaluatedProps-schema.json",
+      "draft-2019-09/cycled/unevaluatedProps-schema.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 unevaluatedProperties boolean") {
-    cycle("draft-2019-09/unevaluatedProps-boolean.json",
-          "draft-2019-09/cycled/unevaluatedProps-boolean.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/unevaluatedProps-boolean.json",
+      "draft-2019-09/cycled/unevaluatedProps-boolean.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 unevaluatedItems boolean") {
-    cycle("draft-2019-09/unevaluatedItems-boolean.json",
-          "draft-2019-09/cycled/unevaluatedItems-boolean.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/unevaluatedItems-boolean.json",
+      "draft-2019-09/cycled/unevaluatedItems-boolean.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 unevaluatedItems schema") {
-    cycle("draft-2019-09/unevaluatedItems-schema.json",
-          "draft-2019-09/cycled/unevaluatedItems-schema.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/unevaluatedItems-schema.json",
+      "draft-2019-09/cycled/unevaluatedItems-schema.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 7 required dependencies to Draft 7") {
-    cycle("draft-7/required-dependencies.json",
-          "draft-7/required-dependencies.json",
-          DRAFT_7_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-7/required-dependencies.json",
+      "draft-7/required-dependencies.json",
+      DRAFT_7_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 7 schema dependencies to Draft 7") {
@@ -94,38 +110,48 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
   }
 
   test("Draft 7 schema dependencies with $ref to `application/json`-LD") {
-    cycle("draft-7/schema-dependencies-ref.json",
-          "draft-7/jsonld/schema-dependencies-ref.jsonld",
-          JsonLdEmitter,
-          `application/json`)
+    cycle(
+      "draft-7/schema-dependencies-ref.json",
+      "draft-7/jsonld/schema-dependencies-ref.jsonld",
+      JsonLdEmitter,
+      `application/json`
+    )
   }
 
   test("Draft 7 required dependencies to json-ld") {
-    cycle("draft-7/required-dependencies.json",
-          "draft-7/jsonld/required-dependencies.jsonld",
-          JsonLdEmitter,
-          `application/json`)
+    cycle(
+      "draft-7/required-dependencies.json",
+      "draft-7/jsonld/required-dependencies.jsonld",
+      JsonLdEmitter,
+      `application/json`
+    )
   }
 
   test("Draft 7 schema dependencies to json-ld") {
-    cycle("draft-7/schema-dependencies.json",
-          "draft-7/jsonld/schema-dependencies.jsonld",
-          JsonLdEmitter,
-          `application/json`)
+    cycle(
+      "draft-7/schema-dependencies.json",
+      "draft-7/jsonld/schema-dependencies.jsonld",
+      JsonLdEmitter,
+      `application/json`
+    )
   }
 
   test("Draft 2019 dependents to Draft 2019") {
-    cycle("draft-2019-09/schema-required-dependencies.json",
-          "draft-2019-09/cycled/schema-required-dependencies.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/schema-required-dependencies.json",
+      "draft-2019-09/cycled/schema-required-dependencies.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019 dependents to JsonLd") {
-    cycle("draft-2019-09/schema-required-dependencies.json",
-          "draft-2019-09/jsonld/schema-required-dependencies.jsonld",
-          JsonLdEmitter,
-          `application/json`)
+    cycle(
+      "draft-2019-09/schema-required-dependencies.json",
+      "draft-2019-09/jsonld/schema-required-dependencies.jsonld",
+      JsonLdEmitter,
+      `application/json`
+    )
   }
 
   test("Draft 7 content schema to Draft 7") {
@@ -145,31 +171,39 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
   }
 
   test("Draft 2019-09 $ref alongside facets to Draft 2019") {
-    cycle("draft-2019-09/ref-alongside-facets.json",
-          "draft-2019-09/cycled/ref-alongside-facets.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/ref-alongside-facets.json",
+      "draft-2019-09/cycled/ref-alongside-facets.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 $ref with allOf to Draft 2019") {
-    cycle("draft-2019-09/ref-with-allOf.json",
-          "draft-2019-09/cycled/ref-with-allOf.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/ref-with-allOf.json",
+      "draft-2019-09/cycled/ref-with-allOf.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 standalone $ref to Draft 2019") {
-    cycle("draft-2019-09/standalone-ref.json",
-          "draft-2019-09/cycled/standalone-ref.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/standalone-ref.json",
+      "draft-2019-09/cycled/standalone-ref.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 2019-09 min and max contains to Draft 2019") {
-    cycle("draft-2019-09/min-and-max-contains.json",
-          "draft-2019-09/cycled/min-and-max-contains.json",
-          DRAFT_2019_09_EMITTER,
-          `application/json`)
+    cycle(
+      "draft-2019-09/min-and-max-contains.json",
+      "draft-2019-09/cycled/min-and-max-contains.json",
+      DRAFT_2019_09_EMITTER,
+      `application/json`
+    )
   }
 
   test("Draft 7 $id referencing test") {
@@ -188,10 +222,12 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-6/boolean-schemas.json", "draft-6/cycled/boolean-schemas.json", DRAFT_6_EMITTER, `application/json`)
   }
 
-  private def cycle(path: String,
-                    golden: String,
-                    emitter: SchemaEmitter,
-                    mediatype: String = `application/json`): Future[Assertion] = {
+  private def cycle(
+      path: String,
+      golden: String,
+      emitter: SchemaEmitter,
+      mediatype: String = `application/json`
+  ): Future[Assertion] = {
     val finalPath   = basePath + path
     val finalGolden = basePath + golden
     val fragment =

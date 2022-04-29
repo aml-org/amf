@@ -16,8 +16,7 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
-abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
-    extends SpecParserOps {
+abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext) extends SpecParserOps {
 
   protected type Binding <: DomainElement
   protected val bindingsField: Field
@@ -59,19 +58,22 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
 
   protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): Bindings
 
-  protected def remote(fullRef: String, entryLike: YMapEntryLike)(
-      implicit ctx: AsyncWebApiContext): Bindings = {
+  protected def remote(fullRef: String, entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): Bindings = {
     ctx.navigateToRemoteYNode(fullRef) match {
       case Some(result) =>
         val bindingsNode = result.remoteNode
         val external     = createParser(YMapEntryLike(bindingsNode))(result.context).parse()
-        nameAndAdopt(external.link(AmfScalar(fullRef), entryLike.annotations, Annotations.synthesized()),
-                     entryLike.key) // check if this link should be trimmed to just the label
+        nameAndAdopt(
+          external.link(AmfScalar(fullRef), entryLike.annotations, Annotations.synthesized()),
+          entryLike.key
+        ) // check if this link should be trimmed to just the label
       case None =>
-        ctx.eh.violation(CoreValidations.UnresolvedReference,
-                         "",
-                         s"Cannot find link reference $fullRef",
-                         entryLike.asMap.location)
+        ctx.eh.violation(
+          CoreValidations.UnresolvedReference,
+          "",
+          s"Cannot find link reference $fullRef",
+          entryLike.asMap.location
+        )
         val errorBinding = errorBindings(fullRef, entryLike)
         nameAndAdopt(errorBinding.link(fullRef, errorBinding.annotations), entryLike.key)
     }
@@ -138,14 +140,17 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
 
   private def validateEmptyMap(value: YNode, node: AmfObject, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
     if (value.as[YMap].entries.nonEmpty) {
-      ctx.eh.violation(ParserSideValidations.NonEmptyBindingMap,
-                       node,
-                       s"Reserved name binding '${`type`}' must have an empty map",
-                       value.location)
+      ctx.eh.violation(
+        ParserSideValidations.NonEmptyBindingMap,
+        node,
+        s"Reserved name binding '${`type`}' must have an empty map",
+        value.location
+      )
     }
 
-  protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(
-      implicit ctx: AsyncWebApiContext): Unit = {
+  protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     map.key("bindingVersion", field in binding)
 
     if (bindingVersionIsEmpty(binding)) setDefaultBindingVersionValue(binding, field)
@@ -159,12 +164,15 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
     binding.bindingVersion.isNullOrEmpty
   }
 
-  protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): Unit = {
-    OasTypeParser(YMapEntryLike(entry.value),
-                  "schema",
-                  shape => shape.withName("schema"),
-                  JSONSchemaDraft7SchemaVersion)(WebApiShapeParserContextAdapter(ctx))
+  protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
+    OasTypeParser(
+      YMapEntryLike(entry.value),
+      "schema",
+      shape => shape.withName("schema"),
+      JSONSchemaDraft7SchemaVersion
+    )(WebApiShapeParserContextAdapter(ctx))
       .parse()
       .foreach { shape =>
         binding.setWithoutId(field, shape, Annotations(entry))

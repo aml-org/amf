@@ -6,7 +6,8 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes.{NAME, NAMED_TYPE, UNI
 import amf.shapes.client.scala.model.domain.{AnyShape, UnionShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
   val union = UnionShape(toAnnotations(unionTypeDef))
 
   def parse(parentId: String): UnionShape = {
@@ -17,18 +18,18 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebA
   }
 
   private def parseMembers(): Unit = {
-    val members = collect(unionTypeDef, Seq(UNION_MEMBER_TYPES, NAMED_TYPE, NAME)).flatMap {
-      case n: Node => n.children.collectFirst {
+    val members = collect(unionTypeDef, Seq(UNION_MEMBER_TYPES, NAMED_TYPE, NAME)).flatMap { case n: Node =>
+      n.children.collectFirst {
         case t: Terminal =>
           val memberName = t.value
           Some(findOrLinkType(memberName, t))
-        case _           =>
+        case _ =>
           astError(union.id, "Missing union member", toAnnotations(n))
           None
       }
     }
 
-    val finalMembers: Seq[AnyShape] = members.collect{ case Some(t) => t}
+    val finalMembers: Seq[AnyShape] = members.collect { case Some(t) => t }
     union.withAnyOf(finalMembers)
   }
 

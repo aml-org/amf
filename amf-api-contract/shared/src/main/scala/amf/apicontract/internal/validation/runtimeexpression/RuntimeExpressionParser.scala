@@ -29,7 +29,8 @@ trait RuntimeParsingToken {
     pa("") match {
       case l: LabeledExpressionToken => Some(l.label)
       case _                         => None
-  })
+    }
+  )
 
   lazy val next: Option[RuntimeParsingToken] =
     if (extraValue.isEmpty) None
@@ -38,7 +39,8 @@ trait RuntimeParsingToken {
         followedBy
           .find(rp => rp(extraValue).nodeIsValid)
           .map(rp => rp(extraValue))
-          .getOrElse(InvalidExpressionToken(extraValue)))
+          .getOrElse(InvalidExpressionToken(extraValue))
+      )
     }
 
   def nodeIsValid: Boolean = {

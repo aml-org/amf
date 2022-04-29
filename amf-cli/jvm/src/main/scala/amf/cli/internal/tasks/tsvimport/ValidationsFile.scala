@@ -6,27 +6,28 @@ import amf.apicontract.internal.validation.model.AMFRawValidations.AMFValidation
 import java.io.{BufferedReader, File, FileReader}
 import scala.collection.JavaConverters._
 
-/**
-  * Created by antoniogarrote on 17/07/2017.
+/** Created by antoniogarrote on 17/07/2017.
   */
-/**
-  * Creates a new Validation File pointing to a TSV file with validations.
-  * Includes the logic to parse the validations file.
-  * @param validationsFile The TSV file with all the references
+/** Creates a new Validation File pointing to a TSV file with validations. Includes the logic to parse the validations
+  * file.
+  * @param validationsFile
+  *   The TSV file with all the references
   */
 class ValidationsFile(validationsFile: File) {
 
   def parseLine(line: String): Option[AMFValidation] =
     line.split("\t") match {
-      case Array(uri,
-                 message,
-                 owlClass,
-                 owlProperty,
-                 target,
-                 constraint,
-                 value,
-                 ramlErrorMessage,
-                 openAPIErrorMessage) =>
+      case Array(
+            uri,
+            message,
+            owlClass,
+            owlProperty,
+            target,
+            constraint,
+            value,
+            ramlErrorMessage,
+            openAPIErrorMessage
+          ) =>
         Some(
           AMFValidation.fromStrings(
             uri.trim,
@@ -39,7 +40,8 @@ class ValidationsFile(validationsFile: File) {
             ramlErrorMessage.trim,
             openAPIErrorMessage.trim,
             SeverityLevels.VIOLATION
-          ))
+          )
+        )
       case _ => None
     }
 

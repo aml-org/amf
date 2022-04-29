@@ -9,8 +9,7 @@ import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel._
 
-/**
-  * Payload internal model.
+/** Payload internal model.
   */
 abstract class AbstractPayload(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement

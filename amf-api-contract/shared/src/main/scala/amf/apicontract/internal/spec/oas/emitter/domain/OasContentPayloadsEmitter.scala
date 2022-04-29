@@ -11,21 +11,25 @@ import amf.core.internal.render.emitters.PartEmitter
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 
-case class OasContentPayloadsEmitter(payloads: Seq[Payload],
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit],
-                                     annotations: Annotations)(implicit spec: OasSpecEmitterContext)
+case class OasContentPayloadsEmitter(
+    payloads: Seq[Payload],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    annotations: Annotations
+)(implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       annotations,
       b.obj { b =>
-        val emitters = payloads.map(
-          payload =>
-            EntryPartEmitter(payload.mediaType.value(),
-                             OasPayloadEmitter(payload, ordering, references),
-                             YType.Str,
-                             pos(payload.annotations)))
+        val emitters = payloads.map(payload =>
+          EntryPartEmitter(
+            payload.mediaType.value(),
+            OasPayloadEmitter(payload, ordering, references),
+            YType.Str,
+            pos(payload.annotations)
+          )
+        )
         traverse(ordering.sorted(emitters), b)
       }
     )

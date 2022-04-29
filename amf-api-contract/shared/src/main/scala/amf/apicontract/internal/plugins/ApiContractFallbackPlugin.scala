@@ -16,7 +16,8 @@ import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
 
-case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false) extends DomainParsingFallback {
+case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false)
+    extends DomainParsingFallback {
 
   override def chooseFallback(root: Root, availablePlugins: Seq[AMFParsePlugin], isRoot: Boolean): AMFParsePlugin = {
     if (strict && isRoot) throw UnsupportedDomainForDocumentException(root.location)
@@ -28,7 +29,8 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
 
   def plugin(parsed: SyamlParsedDocument): ApiContractDomainFallbackPlugin = ApiContractDomainFallbackPlugin(parsed)
 
-  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument, isRoot: Boolean = false) extends AMFParsePlugin {
+  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument, isRoot: Boolean = false)
+      extends AMFParsePlugin {
     override def spec: Spec = JSONRefs
 
     override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
@@ -51,10 +53,18 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
     }
 
     private def throwUserFriendlyWarnings(document: Root, ctx: ParserContext) = {
-      if (isRoot) ctx.eh.warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
-      else if (!skipWarnings){
+      if (isRoot)
+        ctx.eh.warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
+      else if (!skipWarnings) {
         pluginThatMatches(document, ctx.config.sortedReferenceParsePlugins).foreach { spec =>
-          ctx.eh.warning(CantReferenceSpecInFileTree, "", None, s"Document identified as ${spec.id} is of different spec from root", None, Some(document.location))
+          ctx.eh.warning(
+            CantReferenceSpecInFileTree,
+            "",
+            None,
+            s"Document identified as ${spec.id} is of different spec from root",
+            None,
+            Some(document.location)
+          )
         }
       }
     }
@@ -67,7 +77,7 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
 
     override def mediaTypes: Seq[String] = Seq(
       `application/json`,
-      `application/yaml`,
+      `application/yaml`
     )
 
     override def applies(document: Root): Boolean = !document.raw.isXml // for JSON or YAML

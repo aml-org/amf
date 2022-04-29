@@ -12,9 +12,11 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVo
 object SecurityRequirementModel extends DomainElementModel with NameFieldSchema with KeyField {
 
   val Schemes =
-    Field(Array(ParametrizedSecuritySchemeModel),
-          Security + "schemes",
-          ModelDoc(ModelVocabularies.Security, "schemes", ""))
+    Field(
+      Array(ParametrizedSecuritySchemeModel),
+      Security + "schemes",
+      ModelDoc(ModelVocabularies.Security, "schemes", "")
+    )
 
   override val `type`: List[ValueType] = List(Security + "SecurityRequirement") ++ DomainElementModel.`type`
 

@@ -9,16 +9,19 @@ import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YScalar}
 
-case class InnerShapeParser(key: String,
-                            field: Field,
-                            map: YMap,
-                            shape: Shape,
-                            adopt: Shape => Unit,
-                            version: SchemaVersion)(implicit ctx: ShapeParserContext) {
+case class InnerShapeParser(
+    key: String,
+    field: Field,
+    map: YMap,
+    shape: Shape,
+    adopt: Shape => Unit,
+    version: SchemaVersion
+)(implicit ctx: ShapeParserContext) {
 
   def parse(): Unit = {
     map.key(
-      key, { entry =>
+      key,
+      { entry =>
         adopt(shape)
         val shapeName = entry.key.as[YScalar].text
         OasTypeParser(YMapEntryLike.buildFakeMapEntry(entry), shapeName, item => Unit, version).parse() match {

@@ -1,6 +1,10 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{OpenApiParametersNormalizationStage, ParametersNormalizationStage, RequestParamsLinkStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  OpenApiParametersNormalizationStage,
+  ParametersNormalizationStage,
+  RequestParamsLinkStage
+}
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
@@ -16,7 +20,7 @@ class Oas3EditingPipeline private (urlShortening: Boolean, override val name: St
 
   override def steps: Seq[TransformationStep] =
     Seq(
-      RequestParamsLinkStage,
+      RequestParamsLinkStage
     ) ++ super.steps
 }
 

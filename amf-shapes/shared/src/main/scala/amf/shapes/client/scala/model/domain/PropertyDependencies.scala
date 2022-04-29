@@ -7,8 +7,7 @@ import amf.shapes.internal.domain.metamodel.PropertyDependenciesModel
 import amf.shapes.internal.domain.metamodel.PropertyDependenciesModel._
 import org.yaml.model.YMapEntry
 
-/**
-  * Property Dependency
+/** Property Dependency
   */
 trait Dependencies extends DomainElement {
   def propertySource: StrField                              = fields.field(PropertySource)

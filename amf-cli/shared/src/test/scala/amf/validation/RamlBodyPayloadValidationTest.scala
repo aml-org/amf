@@ -38,15 +38,19 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
         hint = Raml08YamlHint
       ),
       Fixture("Required pattern property", "required-pattern-prop.raml", "element-2: 2", conforms = true),
-      Fixture("Big number payload",
-              "big-number-payload.raml",
-              "{\"in\": 22337203685477999090}",
-              conforms = true,
-              Option(`application/json`)),
-      Fixture("Invalid required pattern property",
-              "required-pattern-prop.raml",
-              "invalid-element-2: 2",
-              conforms = false)
+      Fixture(
+        "Big number payload",
+        "big-number-payload.raml",
+        "{\"in\": 22337203685477999090}",
+        conforms = true,
+        Option(`application/json`)
+      ),
+      Fixture(
+        "Invalid required pattern property",
+        "required-pattern-prop.raml",
+        "invalid-element-2: 2",
+        conforms = false
+      )
     )
 
   override protected def findShape(d: Document): Shape =
@@ -81,12 +85,14 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
   protected val basePath: String
 
   // todo: transform fixture to have more than one payload by api, so we don't need to parse multiple times same api.
-  protected case class Fixture(name: String,
-                               api: String,
-                               payload: String,
-                               conforms: Boolean,
-                               mediaType: Option[String] = None,
-                               hint: Hint = Raml10YamlHint)
+  protected case class Fixture(
+      name: String,
+      api: String,
+      payload: String,
+      conforms: Boolean,
+      mediaType: Option[String] = None,
+      hint: Hint = Raml10YamlHint
+  )
 
   protected def findShape(d: Document): Shape
 
@@ -94,10 +100,12 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def fixtureList: Seq[Fixture]
 
-  protected def validate(api: String,
-                         payload: String,
-                         mediaType: Option[String],
-                         givenHint: Hint): Future[AMFValidationReport] = {
+  protected def validate(
+      api: String,
+      payload: String,
+      mediaType: Option[String],
+      givenHint: Hint
+  ): Future[AMFValidationReport] = {
     val config = configFor(givenHint.spec)
     val client = config.baseUnitClient()
     for {
@@ -118,7 +126,8 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
             config
               .elementClient()
               .payloadValidatorFor(shape, payload.guessMediaType(false), validationMode)
-              .validate(payload))
+              .validate(payload)
+          )
       }
     } yield {
       result

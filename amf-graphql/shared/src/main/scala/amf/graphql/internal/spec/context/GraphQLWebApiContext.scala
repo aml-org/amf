@@ -21,12 +21,13 @@ object GraphQLWebApiContext {
     val Query, Subscription, Mutation = Value
   }
 }
-class GraphQLWebApiContext(override val loc: String,
-                           override val refs: Seq[ParsedReference],
-                           override val options: ParsingOptions,
-                           private val wrapped: ParserContext,
-                           private val ds: Option[WebApiDeclarations] = None)
-    extends WebApiContext(loc, refs, options, wrapped, ds) {
+class GraphQLWebApiContext(
+    override val loc: String,
+    override val refs: Seq[ParsedReference],
+    override val options: ParsingOptions,
+    private val wrapped: ParserContext,
+    private val ds: Option[WebApiDeclarations] = None
+) extends WebApiContext(loc, refs, options, wrapped, ds) {
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }

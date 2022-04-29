@@ -10,9 +10,9 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasLikeShapeEmitterContext)
-    extends EntryEmitter {
+case class OasSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasLikeShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val shape = f.value.value.asInstanceOf[Shape]
 

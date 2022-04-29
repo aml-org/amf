@@ -5,8 +5,7 @@ import amf.core.internal.metamodel.Field
 import amf.shapes.internal.domain.metamodel.operations.AbstractResponseModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractResponseModel._
 
-/**
-  * Response internal model.
+/** Response internal model.
   */
 trait AbstractResponse extends NamedDomainElement {
 

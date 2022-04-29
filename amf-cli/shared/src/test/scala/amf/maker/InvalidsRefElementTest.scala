@@ -50,7 +50,8 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
             .linkTarget
             .get
             .id
-            .startsWith("http://amferror.com/#errorTrait/"))
+            .startsWith("http://amferror.com/#errorTrait/")
+        )
       })
   }
 
@@ -67,7 +68,8 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
             .linkTarget
             .get
             .annotations
-            .contains(classOf[SourceAST]))
+            .contains(classOf[SourceAST])
+        )
         assert(
           badResource
             .asInstanceOf[ParametrizedResourceType]
@@ -75,7 +77,8 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
             .linkTarget
             .get
             .id
-            .startsWith("http://amferror.com/#errorResourceType/"))
+            .startsWith("http://amferror.com/#errorResourceType/")
+        )
       })
   }
 

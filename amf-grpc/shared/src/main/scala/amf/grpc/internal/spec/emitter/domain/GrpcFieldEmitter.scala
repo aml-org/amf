@@ -8,7 +8,8 @@ import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 import amf.grpc.internal.spec.emitter.domain
 import amf.shapes.client.scala.model.domain.ArrayShape
 
-class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
+class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext)
+    extends GrpcEmitter {
 
   def emit(): Unit = {
     if (mustEmitOptions(property)) {
@@ -28,7 +29,7 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
       builder.fixed { f =>
         f += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [", position)
         f.obj { o =>
-          o.listWithDelimiter(",\n")  { l =>
+          o.listWithDelimiter(",\n") { l =>
             property.customDomainProperties.foreach { cdp =>
               domain.GrpcOptionsEmitter(cdp, l, ctx).emitFieldExtension()
             }
@@ -45,11 +46,12 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
 
   def fieldNumber: Int = property.serializationOrder.option().getOrElse(0)
 
-
-  def repeated: String = if (property.range.isInstanceOf[ArrayShape]) { "repeated " } else { "" }
+  def repeated: String = if (property.range.isInstanceOf[ArrayShape]) { "repeated " }
+  else { "" }
 
 }
 
 object GrpcFieldEmitter {
-  def apply(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) = new GrpcFieldEmitter(property, builder, ctx)
+  def apply(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) =
+    new GrpcFieldEmitter(property, builder, ctx)
 }

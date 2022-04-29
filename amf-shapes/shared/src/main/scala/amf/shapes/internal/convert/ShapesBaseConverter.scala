@@ -10,7 +10,13 @@ import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult}
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload, ShapeRequest, ShapeResponse}
+import amf.shapes.client.scala.model.domain.operations.{
+  ShapeOperation,
+  ShapeParameter,
+  ShapePayload,
+  ShapeRequest,
+  ShapeResponse
+}
 
 trait ShapesBaseConverter
     extends VocabulariesBaseConverter

@@ -18,16 +18,22 @@ import amf.shapes.internal.spec.raml.parser.{AnyDefaultType, Raml10TypeParser, T
 import org.yaml.model.YMapEntry
 
 object AsyncSchemaFormats {
-  val async20Schema = List("application/vnd.aai.asyncapi;version=2.0.0",
-                           "application/vnd.aai.asyncapi+json;version=2.0.0",
-                           "application/vnd.aai.asyncapi+yaml;version=2.0.0")
-  val oas30Schema = List("application/vnd.oai.openapi;version=3.0.0",
-                         "application/vnd.oai.openapi+json;version=3.0.0",
-                         "application/vnd.oai.openapi+yaml;version=3.0.0")
+  val async20Schema = List(
+    "application/vnd.aai.asyncapi;version=2.0.0",
+    "application/vnd.aai.asyncapi+json;version=2.0.0",
+    "application/vnd.aai.asyncapi+yaml;version=2.0.0"
+  )
+  val oas30Schema = List(
+    "application/vnd.oai.openapi;version=3.0.0",
+    "application/vnd.oai.openapi+json;version=3.0.0",
+    "application/vnd.oai.openapi+yaml;version=3.0.0"
+  )
   val draft7JsonSchema = List("application/schema+json;version=draft-07", "application/schema+yaml;version=draft-07")
-  val avroSchema = List("application/vnd.apache.avro;version=1.9.0",
-                        "application/vnd.apache.avro+json;version=1.9.0",
-                        "application/vnd.apache.avro+yaml;version=1.9.0")
+  val avroSchema = List(
+    "application/vnd.apache.avro;version=1.9.0",
+    "application/vnd.apache.avro+json;version=1.9.0",
+    "application/vnd.apache.avro+yaml;version=1.9.0"
+  )
   val ramlSchema = List(
     "application/raml+yaml;version=1.0"
   )
@@ -46,8 +52,9 @@ object AsyncSchemaFormats {
     }
 }
 
-case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
-    implicit val ctx: OasLikeWebApiContext) {
+case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(implicit
+    val ctx: OasLikeWebApiContext
+) {
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
@@ -55,8 +62,9 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
   }
 }
 
-case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)(
-    implicit val ctx: OasLikeWebApiContext) {
+case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)(implicit
+    val ctx: OasLikeWebApiContext
+) {
 
   def parse(): Option[Shape] = {
     val shape = ctx.link(entry.value) match {
@@ -83,10 +91,12 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
       .orElse(externalFragmentRef(refValue))
 
     if (link.isEmpty)
-      ctx.eh.violation(CoreValidations.UnresolvedReference,
-                       "",
-                       s"Cannot find link reference $refValue",
-                       entry.annotations)
+      ctx.eh.violation(
+        CoreValidations.UnresolvedReference,
+        "",
+        s"Cannot find link reference $refValue",
+        entry.annotations
+      )
     link
   }
 

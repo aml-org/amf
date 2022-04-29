@@ -13,8 +13,7 @@ import scala.scalajs.js
 import scala.scalajs.js.JSConverters.JSRichFutureNonThenable
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Main entry point for the application
+/** Main entry point for the application
   */
 @JSExportTopLevel("Main")
 @JSExportAll

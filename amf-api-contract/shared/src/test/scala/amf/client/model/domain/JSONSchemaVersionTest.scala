@@ -25,7 +25,7 @@ class JSONSchemaVersionTest extends AnyFunSuite with Matchers {
       JSONSchemaDraft7SchemaVersion,
       JSONSchemaDraft4SchemaVersion,
       JSONSchemaDraft6SchemaVersion,
-      JSONSchemaUnspecifiedVersion,
+      JSONSchemaUnspecifiedVersion
     )
     versions should not be sorted
   }

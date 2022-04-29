@@ -5,8 +5,7 @@ import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
 import org.yaml.model.YType
 
-/**
-  * XSD TypeDef mapping
+/** XSD TypeDef mapping
   */
 object XsdTypeDefMapping {
 
@@ -25,7 +24,7 @@ object XsdTypeDefMapping {
       case DateOnlyType     => DataType.Date
       case ByteType         => DataType.Byte
       case BinaryType       => DataType.Binary
-      case PasswordType     => DataType.Password // custom scalar type
+      case PasswordType     => DataType.Password     // custom scalar type
       case _                => throw new RuntimeException("Unknown mapping")
     }
 

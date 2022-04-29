@@ -11,9 +11,11 @@ import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, Mo
 trait SettingsModel extends DomainElementModel
 
 object SettingsModel extends SettingsModel {
-  val AdditionalProperties: Field = Field(DataNodeModel,
-                                          Security + "additionalProperties",
-                                          ModelDoc(ModelVocabularies.Security, "additionalProperties", ""))
+  val AdditionalProperties: Field = Field(
+    DataNodeModel,
+    Security + "additionalProperties",
+    ModelDoc(ModelVocabularies.Security, "additionalProperties", "")
+  )
 
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 

@@ -17,9 +17,9 @@ import org.yaml.model.YDocument
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-abstract class OasLikeOperationEmitter(operation: Operation, ordering: SpecOrdering)(
-    implicit val spec: SpecEmitterContext)
-    extends EntryEmitter {
+abstract class OasLikeOperationEmitter(operation: Operation, ordering: SpecOrdering)(implicit
+    val spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val fs = operation.fields
@@ -37,9 +37,9 @@ abstract class OasLikeOperationEmitter(operation: Operation, ordering: SpecOrder
   override def position(): Position = pos(operation.annotations)
 }
 
-abstract class OasLikeOperationPartEmitter(operation: Operation, ordering: SpecOrdering)(
-    implicit val spec: SpecEmitterContext)
-    extends PartEmitter {
+abstract class OasLikeOperationPartEmitter(operation: Operation, ordering: SpecOrdering)(implicit
+    val spec: SpecEmitterContext
+) extends PartEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   def commonEmitters: Seq[EntryEmitter] = {
@@ -50,7 +50,8 @@ abstract class OasLikeOperationPartEmitter(operation: Operation, ordering: SpecO
     fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
     fs.entry(OperationModel.Documentation)
       .map(f =>
-        result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering))
+        result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering)
+      )
     result ++= AnnotationsEmitter(operation, ordering).emitters
   }
 

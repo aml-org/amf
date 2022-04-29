@@ -44,15 +44,19 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Resolves googleapis.compredictionv1.2swagger.raml") {
-    cycle("googleapis.compredictionv1.2swagger.raml",
-          "googleapis.compredictionv1.2swagger.raml.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint)
+    cycle(
+      "googleapis.compredictionv1.2swagger.raml",
+      "googleapis.compredictionv1.2swagger.raml.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint
+    )
   }
 
   // TODO: diff of final result is too slow
-  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
-                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
+  multiGoldenTest(
+    "Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
+    "googleapis.compredictionv1.2swagger.raml.resolved.%s"
+  ) { config =>
     cycle(
       "googleapis.compredictionv1.2swagger.raml",
       config.golden,
@@ -75,27 +79,33 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test definition_loops input") {
-    cycle("api.raml",
-          "crossfiles2.resolved.raml",
-          Raml08YamlHint,
-          Raml10YamlHint,
-          productionRaml08 + "definitions-loops-crossfiles2/")
+    cycle(
+      "api.raml",
+      "crossfiles2.resolved.raml",
+      Raml08YamlHint,
+      Raml10YamlHint,
+      productionRaml08 + "definitions-loops-crossfiles2/"
+    )
   }
 
   multiGoldenTest("Types with unions raml to AMF", "unions-example.raml.%s") { config =>
-    cycle("unions-example.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "unions-example.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Examples in header of type union", "example-in-union.raml.%s") { config =>
-    cycle("example-in-union.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "example-in-union.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   test("Complex types raml to raml") {
@@ -103,19 +113,23 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("sales-order example") {
-    cycle("sales-order-api.raml",
-          "sales-order-api.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath + "order-api/")
+    cycle(
+      "sales-order-api.raml",
+      "sales-order-api.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath + "order-api/"
+    )
   }
 
   test("american-flights-api example") {
-    cycle("api.raml",
-          "american-flights-api.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          productionRaml10 + "american-flights-api/")
+    cycle(
+      "api.raml",
+      "american-flights-api.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      productionRaml10 + "american-flights-api/"
+    )
   }
 
   test("Test trait resolution null pointer exception test") {
@@ -127,11 +141,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test resource type") {
-    cycle("input.raml",
-          "input.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          "amf-cli/shared/src/test/resources/org/raml/api/v10/library-references-absolute/")
+    cycle(
+      "input.raml",
+      "input.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      "amf-cli/shared/src/test/resources/org/raml/api/v10/library-references-absolute/"
+    )
   }
 
   test("test resource type non string scalar parameter example") {
@@ -162,11 +178,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test trait with quoted string example var") {
-    cycle("trait-string-quoted-node.raml",
-          "trait-string-quoted-node.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          completeCyclePath)
+    cycle(
+      "trait-string-quoted-node.raml",
+      "trait-string-quoted-node.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      completeCyclePath
+    )
   }
 
   test("test nullpointer in resolution") {
@@ -174,27 +192,33 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Test resolve inherited array without items") {
-    cycle("inherits-array-without-items.raml",
-          "inherits-array-without-items.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath + "types/")
+    cycle(
+      "inherits-array-without-items.raml",
+      "inherits-array-without-items.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath + "types/"
+    )
   }
 
   test("Test resolve resource type with '$' char in variable value") {
-    cycle("invalid-regexp-char-in-variable.raml",
-          "invalid-regexp-char-in-variable.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "invalid-regexp-char-in-variable.raml",
+      "invalid-regexp-char-in-variable.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("Test type resolution with property override") {
-    cycle("property-override.raml",
-          "property-override.resolved.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath + "types/")
+    cycle(
+      "property-override.raml",
+      "property-override.resolved.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath + "types/"
+    )
   }
 
   test("Test endpoints are not removed") {
@@ -211,10 +235,12 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val amfConfig                 = buildConfig(None, None)
     for {
       simpleModel <- build(config, amfConfig).map(
-        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline()))
+        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline())
+      )
       a <- Future.successful(render(simpleModel, config, amfConfig))
       doubleModel <- build(config, amfConfig).map(
-        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline()))
+        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline())
+      )
       _ <- Future.successful(render(doubleModel, config, amfConfig))
       b <- Future.successful(render(doubleModel, config, amfConfig))
     } yield {
@@ -263,12 +289,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   // TODO migrate to multiGoldenTest
   test("Test union type anyOf name values") {
-    cycle("api.raml",
-          "api.raml.resolved",
-          Raml10YamlHint,
-          AmfJsonHint,
-          basePath + "union-type/",
-          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
+    cycle(
+      "api.raml",
+      "api.raml.resolved",
+      Raml10YamlHint,
+      AmfJsonHint,
+      basePath + "union-type/",
+      renderOptions = Some(renderOptionsFor(EmbeddedForm))
+    )
   }
 
   // TODO migrate to multiGoldenTest
@@ -298,26 +326,32 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   // TODO migrate to multiGoldenTest
   test("Test resource type parameters ids") {
-    cycle("rt-parameters.raml",
-          "rt-parameters.raml.resolved",
-          Raml10YamlHint,
-          AmfJsonHint,
-          validationPath,
-          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
+    cycle(
+      "rt-parameters.raml",
+      "rt-parameters.raml.resolved",
+      Raml10YamlHint,
+      AmfJsonHint,
+      validationPath,
+      renderOptions = Some(renderOptionsFor(EmbeddedForm))
+    )
   }
 
   // TODO migrate to multiGoldenTest
   test("Test nil type with additional facets") {
-    cycle("nil-type.raml",
-          "nil-type.raml.resolved",
-          Raml10YamlHint,
-          AmfJsonHint,
-          validationPath,
-          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
+    cycle(
+      "nil-type.raml",
+      "nil-type.raml.resolved",
+      Raml10YamlHint,
+      AmfJsonHint,
+      validationPath,
+      renderOptions = Some(renderOptionsFor(EmbeddedForm))
+    )
   }
 
-  multiGoldenTest("Test first enum value and default value witha applied trait have different ids",
-                  "enum-id-with-applied-trait/golden.%s") { config =>
+  multiGoldenTest(
+    "Test first enum value and default value witha applied trait have different ids",
+    "enum-id-with-applied-trait/golden.%s"
+  ) { config =>
     cycle(
       "enum-id-with-applied-trait/api.raml",
       config.golden,

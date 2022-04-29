@@ -29,20 +29,19 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
+/** */
 case class RamlSecuritySchemesEmitters(
     securitySchemes: Seq[SecurityScheme],
     references: Seq[BaseUnit],
     ordering: SpecOrdering,
-    namedSecurityEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlNamedSecuritySchemeEmitter)(
-    implicit spec: SpecEmitterContext)
+    namedSecurityEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlNamedSecuritySchemeEmitter
+)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "securitySchemes",
-      _.obj(traverse(ordering.sorted(securitySchemes.map(s => namedSecurityEmitter(s, references, ordering))), _)))
+      _.obj(traverse(ordering.sorted(securitySchemes.map(s => namedSecurityEmitter(s, references, ordering))), _))
+    )
 
   }
 
@@ -50,25 +49,31 @@ case class RamlSecuritySchemesEmitters(
     securitySchemes.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
-case class Raml10NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                            references: Seq[BaseUnit],
-                                            ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class Raml10NamedSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: RamlSpecEmitterContext)
     extends RamlNamedSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def securitySchemeEmitter
-    : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml10SecuritySchemeEmitter.apply
+      : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml10SecuritySchemeEmitter.apply
 }
 
-case class Raml08NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                            references: Seq[BaseUnit],
-                                            ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class Raml08NamedSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: RamlSpecEmitterContext)
     extends RamlNamedSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def securitySchemeEmitter
-    : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml08SecuritySchemeEmitter.apply
+      : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml08SecuritySchemeEmitter.apply
 }
 
-abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                              references: Seq[BaseUnit],
-                                              ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+abstract class RamlNamedSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
@@ -94,25 +99,31 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 }
 
-case class Raml10SecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                       references: Seq[BaseUnit],
-                                       ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class Raml10SecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: RamlSpecEmitterContext)
     extends RamlSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def describedByEmitter
-    : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
+      : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
 }
 
-case class Raml08SecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                       references: Seq[BaseUnit],
-                                       ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class Raml08SecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: RamlSpecEmitterContext)
     extends RamlSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def describedByEmitter
-    : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
+      : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
 }
 
-abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                         references: Seq[BaseUnit],
-                                         ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+abstract class RamlSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
@@ -183,7 +194,9 @@ case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(im
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   def emitters: Seq[EntryEmitter] = {
     val settings = f.value.value.asInstanceOf[Settings]
     val results  = ListBuffer[EntryEmitter]()
@@ -263,10 +276,12 @@ case class RamlOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrde
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class Raml10DescribedByEmitter(key: String,
-                                    securityScheme: SecurityScheme,
-                                    ordering: SpecOrdering,
-                                    references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
+case class Raml10DescribedByEmitter(
+    key: String,
+    securityScheme: SecurityScheme,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: RamlSpecEmitterContext)
     extends DescribedByEmitter(key, securityScheme, ordering, references) {
 
   override def entries(fs: Fields): Seq[EntryEmitter] = {
@@ -287,31 +302,37 @@ case class Raml10DescribedByEmitter(key: String,
   }
 }
 
-case class Raml08DescribedByEmitter(key: String,
-                                    securityScheme: SecurityScheme,
-                                    ordering: SpecOrdering,
-                                    references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
+case class Raml08DescribedByEmitter(
+    key: String,
+    securityScheme: SecurityScheme,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: RamlSpecEmitterContext)
     extends DescribedByEmitter(key, securityScheme, ordering, references) {
 
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     fs.entry(SecuritySchemeModel.QueryString)
       .foreach { _ =>
-        spec.eh.violation(TransformationValidation,
-                          securityScheme.id,
-                          None,
-                          "Cannot emit query string in raml 08 spec",
-                          securityScheme.position(),
-                          securityScheme.location())
+        spec.eh.violation(
+          TransformationValidation,
+          securityScheme.id,
+          None,
+          "Cannot emit query string in raml 08 spec",
+          securityScheme.position(),
+          securityScheme.location()
+        )
       }
 
     super.entries(fs)
   }
 }
 
-abstract class DescribedByEmitter(key: String,
-                                  securityScheme: SecurityScheme,
-                                  ordering: SpecOrdering,
-                                  references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
+abstract class DescribedByEmitter(
+    key: String,
+    securityScheme: SecurityScheme,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)

@@ -19,14 +19,18 @@ import scala.concurrent.ExecutionContext
 trait PayloadValidationUtils {
   protected def defaultConfig: ShapesConfiguration = ShapesConfiguration.predefined()
 
-  protected def parameterValidator(s: Shape,
-                                   mediaType: String,
-                                   config: AMFGraphConfiguration = defaultConfig): AMFShapePayloadValidator =
+  protected def parameterValidator(
+      s: Shape,
+      mediaType: String,
+      config: AMFGraphConfiguration = defaultConfig
+  ): AMFShapePayloadValidator =
     config.elementClient().payloadValidatorFor(s, mediaType, ScalarRelaxedValidationMode)
 
-  protected def payloadValidator(s: Shape,
-                                 mediaType: String,
-                                 config: AMFGraphConfiguration = defaultConfig): AMFShapePayloadValidator =
+  protected def payloadValidator(
+      s: Shape,
+      mediaType: String,
+      config: AMFGraphConfiguration = defaultConfig
+  ): AMFShapePayloadValidator =
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
@@ -172,7 +176,7 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
   test("Test that an invalid object payload is validated against an any type") {
 
-    val test    = new AnyShape()
+    val test = new AnyShape()
     val payload = """{
                     |  "a": "something"
                     |  "b": "other thing"

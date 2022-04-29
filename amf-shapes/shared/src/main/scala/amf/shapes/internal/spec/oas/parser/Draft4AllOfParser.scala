@@ -9,8 +9,9 @@ import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAndType
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, version: SchemaVersion)(
-    implicit ctx: ShapeParserContext) {
+case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, version: SchemaVersion)(implicit
+    ctx: ShapeParserContext
+) {
 
   def parse(): Unit = {
     map.key(
@@ -20,19 +21,20 @@ case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, ve
         entry.value.to[Seq[YNode]] match {
           case Right(seq) =>
             val andNodes = seq.zipWithIndex
-              .map {
-                case (node, index) =>
-                  val entry = YMapEntry(YNode(s"item$index"), node)
-                  OasTypeParser(entry, item => Unit, version).parse()
+              .map { case (node, index) =>
+                val entry = YMapEntry(YNode(s"item$index"), node)
+                OasTypeParser(entry, item => Unit, version).parse()
               }
               .filter(_.isDefined)
               .map(_.get)
             shape.fields.setWithoutId(ShapeModel.And, AmfArray(andNodes, Annotations(entry.value)), Annotations(entry))
           case _ =>
-            ctx.eh.violation(InvalidAndType,
-                             shape,
-                             "And constraints are built from multiple shape nodes",
-                             entry.value.location)
+            ctx.eh.violation(
+              InvalidAndType,
+              shape,
+              "And constraints are built from multiple shape nodes",
+              entry.value.location
+            )
 
         }
       }

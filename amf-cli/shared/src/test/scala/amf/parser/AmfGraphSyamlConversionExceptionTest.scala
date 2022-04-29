@@ -21,13 +21,14 @@ class UniqueAmfGraphSyamlConversionExceptionTest extends UniquePlatformReportGen
   }
 
   test("Invalid expanded context entry id format") {
-    validate("invalid-expanded-context-entry-id-format.jsonld",
-             Some("invalid-expanded-context-entry-id-format.report"))
+    validate("invalid-expanded-context-entry-id-format.jsonld", Some("invalid-expanded-context-entry-id-format.report"))
   }
 
   test("Invalid expanded context entry type format") {
-    validate("invalid-expanded-context-entry-type-format.jsonld",
-             Some("invalid-expanded-context-entry-type-format.report"))
+    validate(
+      "invalid-expanded-context-entry-type-format.jsonld",
+      Some("invalid-expanded-context-entry-type-format.report")
+    )
   }
 }
 

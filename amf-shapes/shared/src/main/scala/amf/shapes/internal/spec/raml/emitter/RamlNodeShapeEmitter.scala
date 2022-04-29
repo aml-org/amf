@@ -19,9 +19,9 @@ import scala.collection.mutable.ListBuffer
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain.NodeShape
 
-case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(node, ordering, references) {
+case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(node, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
     val fs                               = node.fields
@@ -34,20 +34,20 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
       .foreach { f =>
         val closed = node.closed.value()
         if (!hasPatternProperties && (closed || f.value.annotations.contains(classOf[ExplicitField]))) {
-          result += MapEntryEmitter("additionalProperties",
-                                    (!closed).toString,
-                                    YType.Bool,
-                                    position = pos(f.value.annotations))
+          result += MapEntryEmitter(
+            "additionalProperties",
+            (!closed).toString,
+            YType.Bool,
+            position = pos(f.value.annotations)
+          )
         }
       }
 
     fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
-      .map(
-        f => {
-          val shape = f.value.value.asInstanceOf[Shape]
-          result += parser.RamlTypeEntryEmitter("additionalProperties".asRamlAnnotation, shape, ordering, references)
-        }
-      )
+      .map(f => {
+        val shape = f.value.value.asInstanceOf[Shape]
+        result += parser.RamlTypeEntryEmitter("additionalProperties".asRamlAnnotation, shape, ordering, references)
+      })
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))

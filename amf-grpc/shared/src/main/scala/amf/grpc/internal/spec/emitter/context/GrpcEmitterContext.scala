@@ -22,7 +22,7 @@ class GrpcEmitterContext(document: BaseUnit) {
   }
 
   def nestedMessages(shape: NodeShape): Seq[NodeShape] = {
-    val currentPath = shape.name.value()
+    val currentPath  = shape.name.value()
     val currentLevel = currentPath.split("\\.").length
     messages.filter { s =>
       val level = s.name.value().split("\\.").length
@@ -31,7 +31,7 @@ class GrpcEmitterContext(document: BaseUnit) {
   }
 
   def nestedEnums(shape: NodeShape): Seq[ScalarShape] = {
-    val currentPath = shape.name.value()
+    val currentPath  = shape.name.value()
     val currentLevel = currentPath.split("\\.").length
     enums.filter { s =>
       val level = s.name.value().split("\\.").length
@@ -41,14 +41,14 @@ class GrpcEmitterContext(document: BaseUnit) {
 
   def messages: Seq[NodeShape] = {
     document match {
-      case dec: DeclaresModel => dec.declares.map(isMessage).collect { case Some(s) => s}
+      case dec: DeclaresModel => dec.declares.map(isMessage).collect { case Some(s) => s }
       case _                  => Nil
     }
   }
 
   def enums: Seq[ScalarShape] = {
     document match {
-      case dec: DeclaresModel => dec.declares.map(isEnum).collect { case Some(s) => s}
+      case dec: DeclaresModel => dec.declares.map(isEnum).collect { case Some(s) => s }
       case _                  => Nil
     }
   }

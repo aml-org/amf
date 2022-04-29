@@ -7,15 +7,15 @@ import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.shapes.client.scala.model.domain.ScalarShape
 
-/**
-  * Scalar shape metamodel
+/** Scalar shape metamodel
   */
 object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
 
   val DataType = Field(
     Iri,
     Shacl + "datatype",
-    ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar range constraining this scalar shape"))
+    ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar range constraining this scalar shape")
+  )
 
   val Encoding = Field(
     Str,
@@ -36,8 +36,8 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
   )
 
   val specificFields = List(DataType, Encoding, MediaType, Schema)
-  override val fields
-    : List[Field] = specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] =
+    specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shapes + "ScalarShape") ++ AnyShapeModel.`type`
 

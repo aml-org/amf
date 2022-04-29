@@ -11,33 +11,40 @@ import amf.core.internal.metamodel.domain.templates.OptionalField
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 
-/**
-  * Parameter metaModel.
+/** Parameter metaModel.
   */
 object ParameterModel extends AbstractParameterModel with OptionalField with ExamplesField {
 
   override val ParameterName: Field = Field(
     Str,
     ApiContract + "paramName",
-    ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri())))
+    ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri()))
+  )
 
   override val Required: Field =
-    Field(Bool,
-          ApiContract + "required",
-          ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
+    Field(
+      Bool,
+      ApiContract + "required",
+      ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required")
+    )
 
-  val Deprecated: Field = Field(Bool,
-                         Document + "deprecated",
-                         ModelDoc(ModelVocabularies.ApiContract, "deprecated", "Marks the parameter as deprecated"))
+  val Deprecated: Field = Field(
+    Bool,
+    Document + "deprecated",
+    ModelDoc(ModelVocabularies.ApiContract, "deprecated", "Marks the parameter as deprecated")
+  )
 
   val AllowEmptyValue: Field = Field(
     Bool,
     ApiContract + "allowEmptyValue",
-    ModelDoc(ModelVocabularies.ApiContract, "allowEmptyValue", "Parameter can be passed without value"))
+    ModelDoc(ModelVocabularies.ApiContract, "allowEmptyValue", "Parameter can be passed without value")
+  )
 
-  val Style: Field = Field(Str,
-                    ApiContract + "style",
-                    ModelDoc(ModelVocabularies.ApiContract, "style", "Encoding style for the parameter information"))
+  val Style: Field = Field(
+    Str,
+    ApiContract + "style",
+    ModelDoc(ModelVocabularies.ApiContract, "style", "Encoding style for the parameter information")
+  )
 
   val Explode: Field = Field(Bool, ApiContract + "explode", ModelDoc(ModelVocabularies.ApiContract, "explode", ""))
 
@@ -47,9 +54,11 @@ object ParameterModel extends AbstractParameterModel with OptionalField with Exa
   override val Binding: Field = Field(
     Str,
     ApiContract + "binding",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "binding",
-             "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)")
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "binding",
+      "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)"
+    )
   )
 
   val Payloads: Field =
@@ -60,19 +69,21 @@ object ParameterModel extends AbstractParameterModel with OptionalField with Exa
   override val `type`: List[ValueType] = ApiContract + "Parameter" :: Core + "Parameter" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
-    List(Name,
-         ParameterName,
-         Description,
-         Required,
-         Deprecated,
-         AllowEmptyValue,
-         Style,
-         Explode,
-         AllowReserved,
-         Binding,
-         Schema,
-         Payloads,
-         Examples) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+    List(
+      Name,
+      ParameterName,
+      Description,
+      Required,
+      Deprecated,
+      AllowEmptyValue,
+      Style,
+      Explode,
+      AllowReserved,
+      Binding,
+      Schema,
+      Payloads,
+      Examples
+    ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = Parameter()
 

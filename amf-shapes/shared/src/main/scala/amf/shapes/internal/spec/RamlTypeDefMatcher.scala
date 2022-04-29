@@ -3,8 +3,7 @@ package amf.shapes.internal.spec
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
 
-/**
-  * Raml type to TypeDef matcher
+/** Raml type to TypeDef matcher
   */
 object RamlTypeDefMatcher {
 

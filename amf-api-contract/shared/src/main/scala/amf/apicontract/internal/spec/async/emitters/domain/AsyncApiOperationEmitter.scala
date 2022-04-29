@@ -22,17 +22,17 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiOperationEmitter(operation: Operation, ordering: SpecOrdering, isTrait: Boolean = false)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends OasLikeOperationEmitter(operation, ordering) {
+class AsyncApiOperationEmitter(operation: Operation, ordering: SpecOrdering, isTrait: Boolean = false)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends OasLikeOperationEmitter(operation, ordering) {
 
   override def operationPartEmitter(): PartEmitter = AsyncOperationPartEmitter(operation, isTrait, ordering)
 
 }
 
 case class AsyncOperationPartEmitter(operation: Operation, isTrait: Boolean, ordering: SpecOrdering)(
-    override implicit val spec: OasLikeSpecEmitterContext)
-    extends OasLikeOperationPartEmitter(operation, ordering) {
+    override implicit val spec: OasLikeSpecEmitterContext
+) extends OasLikeOperationPartEmitter(operation, ordering) {
 
   override def emit(b: PartBuilder): Unit = {
     if (operation.isLink) {
@@ -81,9 +81,9 @@ case class AsyncOperationPartEmitter(operation: Operation, isTrait: Boolean, ord
   }
 }
 
-case class AsyncOperationTraitsDeclarationEmitter(operations: Seq[Operation], ordering: SpecOrdering)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncOperationTraitsDeclarationEmitter(operations: Seq[Operation], ordering: SpecOrdering)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "operationTraits",
@@ -99,9 +99,9 @@ case class AsyncOperationTraitsDeclarationEmitter(operations: Seq[Operation], or
   override def position(): Position = operations.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-case class AsyncOperationTraitsEmitter(operations: Seq[Operation], ordering: SpecOrdering)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncOperationTraitsEmitter(operations: Seq[Operation], ordering: SpecOrdering)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "traits",

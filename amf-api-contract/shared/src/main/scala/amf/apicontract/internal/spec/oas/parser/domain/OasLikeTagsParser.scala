@@ -22,9 +22,8 @@ case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ct
       }
       .groupBy { case (name, _) => name }
     val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
-    namesWithTag.foreach {
-      case (name, tag) =>
-        ctx.eh.violation(DuplicatedTags, tag, s"Tag with name '$name' was found duplicated", tag.annotations)
+    namesWithTag.foreach { case (name, tag) =>
+      ctx.eh.violation(DuplicatedTags, tag, s"Tag with name '$name' was found duplicated", tag.annotations)
     }
   }
 

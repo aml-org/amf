@@ -35,7 +35,8 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests with Matchers {
           None,
           None,
           null
-        )),
+        )
+      ),
       basePath + "unexisting-include/"
     )
   }
@@ -76,8 +77,8 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests with Matchers {
 
   private def assertErrors(golden: List[AMFValidationResult], actual: List[AMFValidationResult]): Assertion = {
     actual.size should be(golden.size)
-    golden.zip(actual).foreach {
-      case (g, ac) => assertError(g, ac)
+    golden.zip(actual).foreach { case (g, ac) =>
+      assertError(g, ac)
     }
     succeed
   }
@@ -101,13 +102,15 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests with Matchers {
     }
   }
 
-  case class ErrorContainer(id: String,
-                            node: String,
-                            property: Option[String],
-                            message: String,
-                            lexical: Option[LexicalInformation],
-                            level: String,
-                            location: Option[String]) {
+  case class ErrorContainer(
+      id: String,
+      node: String,
+      property: Option[String],
+      message: String,
+      lexical: Option[LexicalInformation],
+      level: String,
+      location: Option[String]
+  ) {
     def toResult: AMFValidationResult =
       AMFValidationResult(message, level, node, property, id, lexical, location, null)
   }

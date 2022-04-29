@@ -9,12 +9,10 @@ import amf.shapes.client.platform.model.domain.operations.AbstractPayload
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Payload model class.
+/** Payload model class.
   */
 @JSExportAll
-case class Payload(override private[amf] val _internal: InternalPayload)
-    extends AbstractPayload(_internal) {
+case class Payload(override private[amf] val _internal: InternalPayload) extends AbstractPayload(_internal) {
 
   override def linkCopy(): Payload = _internal.linkCopy()
 

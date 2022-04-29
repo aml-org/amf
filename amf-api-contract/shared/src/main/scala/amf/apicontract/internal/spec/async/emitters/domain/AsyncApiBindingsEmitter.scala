@@ -22,13 +22,14 @@ import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode
 
-/**
-  * @param bindings is an object which contain individual bindings. (ej. ServerBindings, OperationBindings, etc)
+/** @param bindings
+  *   is an object which contain individual bindings. (ej. ServerBindings, OperationBindings, etc)
   */
 abstract class AsyncApiBindingsEntryEmitter(
     bindings: AmfElement,
     ordering: SpecOrdering,
-    extensions: Seq[DomainExtension])(implicit val spec: OasLikeSpecEmitterContext)
+    extensions: Seq[DomainExtension]
+)(implicit val spec: OasLikeSpecEmitterContext)
     extends EntryEmitter {
 
   def key: String
@@ -44,8 +45,8 @@ abstract class AsyncApiBindingsEntryEmitter(
 }
 
 case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrdering, extensions: Seq[DomainExtension])(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends PartEmitter {
+    implicit val spec: OasLikeSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -96,16 +97,14 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
 }
 
 case class AsyncApiBindingsEmitter(bindings: AmfElement, ordering: SpecOrdering, extensions: Seq[DomainExtension])(
-    override implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiBindingsEntryEmitter(bindings, ordering, extensions) {
+    override implicit val spec: OasLikeSpecEmitterContext
+) extends AsyncApiBindingsEntryEmitter(bindings, ordering, extensions) {
   override def key: String = "bindings"
 }
 
-case class AsyncApiNamedBindingsEmitter(
-    bindings: AmfElement,
-    ordering: SpecOrdering,
-    extensions: Seq[DomainExtension])(override implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiBindingsEntryEmitter(bindings, ordering, extensions) {
+case class AsyncApiNamedBindingsEmitter(bindings: AmfElement, ordering: SpecOrdering, extensions: Seq[DomainExtension])(
+    override implicit val spec: OasLikeSpecEmitterContext
+) extends AsyncApiBindingsEntryEmitter(bindings, ordering, extensions) {
   override def key: String = {
     val name = bindings match {
       case named: NamedDomainElement => named.name.option()
@@ -129,9 +128,9 @@ class EmptyBindingEmitter(binding: EmptyBinding, ordering: SpecOrdering) extends
 
 }
 
-case class AsyncApiBindingsDeclarationEmitter(key: String, bindings: Seq[AmfElement], ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncApiBindingsDeclarationEmitter(key: String, bindings: Seq[AmfElement], ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val namedBindingsEmitters =

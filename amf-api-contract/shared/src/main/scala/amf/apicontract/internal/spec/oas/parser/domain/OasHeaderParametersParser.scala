@@ -3,11 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload}
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.apicontract.internal.spec.common.parser.{
-  Oas3ParameterParser,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{Oas3ParameterParser, SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3Syntax, OasWebApiContext}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
@@ -25,15 +21,16 @@ import org.yaml.model.{YMap, YMapEntry, YScalar}
 case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {
     map.entries
-      .map(
-        entry =>
-          OasHeaderParameterParser(
-            entry.value.as[YMap], { header =>
-              header.add(Annotations(entry))
-              header.setWithoutId(ParameterModel.Name, ScalarNode(entry.key).string(), Annotations.inferred())
-              adopt(header)
-            }
-          ).parse())
+      .map(entry =>
+        OasHeaderParameterParser(
+          entry.value.as[YMap],
+          { header =>
+            header.add(Annotations(entry))
+            header.setWithoutId(ParameterModel.Name, ScalarNode(entry.key).string(), Annotations.inferred())
+            adopt(header)
+          }
+        ).parse()
+      )
   }
 }
 
@@ -66,12 +63,16 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
               ctx.navigateToRemoteYNode(fullRef) match {
                 case Some(result) =>
                   val requestNode = result.remoteNode
-                  OasHeaderParameterParser(requestNode.as[YMap], adopt)(result.context).parse().add(ExternalReferenceUrl(fullRef))
+                  OasHeaderParameterParser(requestNode.as[YMap], adopt)(result.context)
+                    .parse()
+                    .add(ExternalReferenceUrl(fullRef))
                 case None =>
-                  ctx.eh.violation(CoreValidations.UnresolvedReference,
-                                   "",
-                                   s"Cannot find header reference $fullRef",
-                                   map.location)
+                  ctx.eh.violation(
+                    CoreValidations.UnresolvedReference,
+                    "",
+                    s"Cannot find header reference $fullRef",
+                    map.location
+                  )
                   val error = ErrorParameter(label, map)
                   adopt(error)
                   error
@@ -87,7 +88,11 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parseOas2Header(header, map)
       header
     }
-    header.setWithoutId(ParameterModel.Binding, AmfScalar("header"), Annotations.synthesized()) // we need to add the binding in order to conform all parameters validations
+    header.setWithoutId(
+      ParameterModel.Binding,
+      AmfScalar("header"),
+      Annotations.synthesized()
+    ) // we need to add the binding in order to conform all parameters validations
     header
   }
 
@@ -103,7 +108,8 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       "type",
       _ => {
         OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))(
-          WebApiShapeParserContextAdapter(ctx))
+          WebApiShapeParserContextAdapter(ctx)
+        )
           .parse()
           .map(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(map)))
       }
@@ -117,8 +123,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, (shape) => shape.withName("schema"))(
-          WebApiShapeParserContextAdapter(ctx))
+        OasTypeParser(entry, (shape) => shape.withName("schema"))(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
       }

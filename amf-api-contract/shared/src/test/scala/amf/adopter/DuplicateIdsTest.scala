@@ -53,7 +53,8 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
     for {
       parseResult <- client.parse(path)
       transformResult <- Future.successful(
-        amfConfigFrom(parseResult.sourceSpec).baseUnitClient().transform(parseResult.baseUnit, PipelineId.Cache))
+        amfConfigFrom(parseResult.sourceSpec).baseUnitClient().transform(parseResult.baseUnit, PipelineId.Cache)
+      )
     } yield {
       validateIds(transformResult.baseUnit)
     }
@@ -83,10 +84,9 @@ trait DuplicateIdsTest {
 
   private def validateDuplicateIds(objs: Seq[AmfObject]): Unit = {
     val groupedById = objs.groupBy(_.id)
-    groupedById.foreach {
-      case (id, elems) =>
-        if (elems.size > 1)
-          fail(s"Duplicate id: $id")
+    groupedById.foreach { case (id, elems) =>
+      if (elems.size > 1)
+        fail(s"Duplicate id: $id")
     }
   }
 

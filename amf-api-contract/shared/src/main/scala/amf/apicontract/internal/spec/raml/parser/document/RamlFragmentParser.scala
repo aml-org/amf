@@ -38,10 +38,10 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
           ctx.eh.violation(
-              InvalidFragmentType,
-              root.location,
-              "Cannot parse empty map",
-              root.parsed.asInstanceOf[SyamlParsedDocument].document.location
+            InvalidFragmentType,
+            root.location,
+            "Cannot parse empty map",
+            root.parsed.asInstanceOf[SyamlParsedDocument].document.location
           )
         YMap.empty
     }
@@ -50,8 +50,8 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
 
     // usage is valid for a fragment, not for the encoded domain element
     val encodedMap = YMap(
-        rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"),
-        root.location
+      rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"),
+      root.location
     )
 
     val fragment = fragmentType match {
@@ -65,14 +65,14 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
     }
 
     rootMap.key(
-        "usage",
-        usage => {
-          fragment.setWithoutId(
-              FragmentModel.Usage,
-              AmfScalar(usage.value.as[String], Annotations(usage.value)),
-              Annotations(usage.value)
-          )
-        }
+      "usage",
+      usage => {
+        fragment.setWithoutId(
+          FragmentModel.Usage,
+          AmfScalar(usage.value.as[String], Annotations(usage.value)),
+          Annotations(usage.value)
+        )
+      }
     )
     fragment.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     UsageParser(rootMap, fragment).parse()
@@ -87,9 +87,9 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       .withLocation(root.location)
       .withId(root.location)
       .withEncodes(
-          ExternalDomainElement()
-            .withRaw(root.raw)
-            .withMediaType(root.mediatype)
+        ExternalDomainElement()
+          .withRaw(root.raw)
+          .withMediaType(root.mediatype)
       )
   }
 
@@ -99,9 +99,9 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       val item = DocumentationItemFragment()
 
       item.setWithoutId(
-          FragmentModel.Encodes,
-          RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse(),
-          Annotations.inferred()
+        FragmentModel.Encodes,
+        RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse(),
+        Annotations.inferred()
       )
     }
   }
@@ -111,10 +111,10 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       val dataType = DataTypeFragment()
 
       Raml10TypeParser(
-          map,
-          "type",
-          (shape: Shape) => shape.withId(root.location + "#/shape"), // TODO: this is being ignored
-          StringDefaultType
+        map,
+        "type",
+        (shape: Shape) => shape.withId(root.location + "#/shape"), // TODO: this is being ignored
+        StringDefaultType
       )(WebApiShapeParserContextAdapter(ctx))
         .parse()
         .foreach(dataType.setWithoutId(FragmentModel.Encodes, _, Annotations.inferred()))
@@ -164,13 +164,13 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       val security = SecuritySchemeFragment()
 
       security.setWithoutId(
-          FragmentModel.Encodes,
-          RamlSecuritySchemeParser(
-              map,
-              (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
-          )
-            .parse(),
-          Annotations.inferred()
+        FragmentModel.Encodes,
+        RamlSecuritySchemeParser(
+          map,
+          (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
+        )
+          .parse(),
+        Annotations.inferred()
       )
     }
   }

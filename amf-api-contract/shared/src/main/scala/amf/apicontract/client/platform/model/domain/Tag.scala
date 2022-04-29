@@ -8,8 +8,7 @@ import amf.apicontract.client.scala.model.domain.{Tag => InternalTag}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.CreativeWork
 
-/**
-  * Tag model class.
+/** Tag model class.
   */
 @JSExportAll
 case class Tag(override private[amf] val _internal: InternalTag) extends DomainElement with NamedDomainElement {

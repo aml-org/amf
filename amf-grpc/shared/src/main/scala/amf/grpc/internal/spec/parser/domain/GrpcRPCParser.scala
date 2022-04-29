@@ -29,17 +29,23 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
   }
 
   def parseOptions(ast: Node, operation: Operation): Unit = {
-    collectOptions(ast, Seq(OPTION_STATEMENT), { extension =>
-      extension.adopted(operation.id)
-      operation.withCustomDomainProperty(extension)
-    })
+    collectOptions(
+      ast,
+      Seq(OPTION_STATEMENT),
+      { extension =>
+        extension.adopted(operation.id)
+        operation.withCustomDomainProperty(extension)
+      }
+    )
   }
 
-  def buildOperation(operationName: String,
-                     operationType: String,
-                     request: String,
-                     response: String,
-                     adopt: Operation => Unit): Operation = {
+  def buildOperation(
+      operationName: String,
+      operationType: String,
+      request: String,
+      response: String,
+      adopt: Operation => Unit
+  ): Operation = {
     val operation =
       Operation(toAnnotations(ast)).withName(operationName).withOperationId(operationName).withMethod(operationType)
     adopt(operation)
@@ -64,7 +70,7 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
       case n: Node if n.name == MESSAGE_TYPE && !foundRequest  => foundRequest = true
       case t: Terminal if t.value == "stream" && !foundRequest => streamRequest = true
       case t: Terminal if t.value == "stream" && foundRequest  => streamResponse = true
-      case _                                                   => //ignore
+      case _                                                   => // ignore
     }
     (streamRequest, streamResponse)
   }

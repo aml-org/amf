@@ -91,7 +91,8 @@ object Main {
   def validateInstance(path: String): AMFResult = {
     val configFuture = for {
       jarConfig <- Future.successful(
-        AMLConfiguration.predefined().withResourceLoaders(List(AdaptedClassPathResourceLoader())))
+        AMLConfiguration.predefined().withResourceLoaders(List(AdaptedClassPathResourceLoader()))
+      )
       profileDialect <- jarConfig.baseUnitClient().parseDialect("file:///dialects/validation-profile.yaml")
       reportDialect  <- jarConfig.baseUnitClient().parseDialect("file:///dialects/validation-report.yaml")
     } yield {

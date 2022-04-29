@@ -40,9 +40,9 @@ import org.yaml.render.YamlRender
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit override val specCtx: RamlSpecEmitterContext)
-    extends RamlRootLevelEmitters(document, ordering) {
+case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(implicit
+    override val specCtx: RamlSpecEmitterContext
+) extends RamlRootLevelEmitters(document, ordering) {
   override def emitters: Seq[EntryEmitter] =
     declarationsEmitter()
 
@@ -59,34 +59,40 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 //      result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
 
     if (declarations.resourceTypes.nonEmpty)
-      result += AbstractDeclarationsEmitter("resourceTypes",
-                                            declarations.resourceTypes.values.toSeq,
-                                            ordering,
-                                            document.references)
+      result += AbstractDeclarationsEmitter(
+        "resourceTypes",
+        declarations.resourceTypes.values.toSeq,
+        ordering,
+        document.references
+      )
 
     if (declarations.traits.nonEmpty)
       result += AbstractDeclarationsEmitter("traits", declarations.traits.values.toSeq, ordering, document.references)
 
     if (declarations.securitySchemes.nonEmpty)
-      result += RamlSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq,
-                                            document.references,
-                                            ordering,
-                                            specCtx.factory.namedSecurityEmitter)
+      result += RamlSecuritySchemesEmitters(
+        declarations.securitySchemes.values.toSeq,
+        document.references,
+        ordering,
+        specCtx.factory.namedSecurityEmitter
+      )
 //    if (declarations.parameters.nonEmpty)
 //      result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
 
     if (declarations.responses.nonEmpty)
-      result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
-                                            declarations.responses.values.toSeq,
-                                            ordering,
-                                            document.references)(toOas(specCtx))
+      result += OasDeclaredResponsesEmitter(
+        "responses".asRamlAnnotation,
+        declarations.responses.values.toSeq,
+        ordering,
+        document.references
+      )(toOas(specCtx))
 
     result
   }
 }
-case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit override val specCtx: RamlSpecEmitterContext)
-    extends RamlRootLevelEmitters(document, ordering) {
+case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(implicit
+    override val specCtx: RamlSpecEmitterContext
+) extends RamlRootLevelEmitters(document, ordering) {
 
   override def emitters: Seq[EntryEmitter] = {
     val declares                    = declarationsEmitter()
@@ -105,14 +111,18 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
         extendsRef.map(MapEntryEmitter("extends", _, position = pos(f.value.annotations)))
       })
 
-  case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty],
-                                     references: Seq[BaseUnit],
-                                     ordering: SpecOrdering)
-      extends EntryEmitter {
+  case class AnnotationsTypesEmitter(
+      properties: Seq[CustomDomainProperty],
+      references: Seq[BaseUnit],
+      ordering: SpecOrdering
+  ) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      b.entry("annotationTypes", _.obj { b =>
-        traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, references, ordering))), b)
-      })
+      b.entry(
+        "annotationTypes",
+        _.obj { b =>
+          traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, references, ordering))), b)
+        }
+      )
     }
     override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
   }
@@ -130,33 +140,41 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
 
     if (declarations.resourceTypes.nonEmpty)
-      result += AbstractDeclarationsEmitter("resourceTypes",
-                                            declarations.resourceTypes.values.toSeq,
-                                            ordering,
-                                            document.references)
+      result += AbstractDeclarationsEmitter(
+        "resourceTypes",
+        declarations.resourceTypes.values.toSeq,
+        ordering,
+        document.references
+      )
 
     if (declarations.traits.nonEmpty)
       result += AbstractDeclarationsEmitter("traits", declarations.traits.values.toSeq, ordering, document.references)
 
     if (declarations.securitySchemes.nonEmpty)
-      result += emitter.domain.RamlSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq,
-                                                           document.references,
-                                                           ordering,
-                                                           specCtx.factory.namedSecurityEmitter)
+      result += emitter.domain.RamlSecuritySchemesEmitters(
+        declarations.securitySchemes.values.toSeq,
+        document.references,
+        ordering,
+        specCtx.factory.namedSecurityEmitter
+      )
 
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
     if (oasParams.nonEmpty)
-      result += OasDeclaredParametersEmitter(oasParams.toSeq,
-                                             ordering,
-                                             document.references,
-                                             "parameters".asRamlAnnotation)(toOas(specCtx))
+      result += OasDeclaredParametersEmitter(
+        oasParams.toSeq,
+        ordering,
+        document.references,
+        "parameters".asRamlAnnotation
+      )(toOas(specCtx))
 
     if (declarations.responses.nonEmpty)
-      result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
-                                            declarations.responses.values.toSeq,
-                                            ordering,
-                                            document.references)(toOas(specCtx))
+      result += OasDeclaredResponsesEmitter(
+        "responses".asRamlAnnotation,
+        declarations.responses.values.toSeq,
+        ordering,
+        document.references
+      )(toOas(specCtx))
 
     result
   }
@@ -165,31 +183,37 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       parameter.fields.getValueAsOption(ParameterModel.Binding).map(_.annotations += ExplicitField())
-      Raml10ParameterEmitter(parameter, ordering, references).emit(b) // todo, only 1.0 parametersdeclared?? move to 1.0 only, with DeclaredParametersEmitters?
+      Raml10ParameterEmitter(parameter, ordering, references).emit(
+        b
+      ) // todo, only 1.0 parametersdeclared?? move to 1.0 only, with DeclaredParametersEmitters?
     }
 
     override def position(): Position = pos(parameter.annotations)
   }
 }
 
-abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit val specCtx: RamlSpecEmitterContext) {
+abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering: SpecOrdering)(implicit
+    val specCtx: RamlSpecEmitterContext
+) {
 
   def emitters: Seq[EntryEmitter]
 
   def declarationsEmitter(): Seq[EntryEmitter]
 }
 
-case class ReferenceEmitter(reference: BaseUnit,
-                            aliases: Option[Aliases],
-                            ordering: SpecOrdering,
-                            aliasGenerator: () => String)
-    extends EntryEmitter {
+case class ReferenceEmitter(
+    reference: BaseUnit,
+    aliases: Option[Aliases],
+    ordering: SpecOrdering,
+    aliasGenerator: () => String
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
     val effectiveAlias = aliasesMap
-      .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) => (a, refInfo.relativeUrl) } getOrElse {
+      .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) =>
+      (a, refInfo.relativeUrl)
+    } getOrElse {
       (aliasGenerator(), name)
     }
     MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
@@ -208,26 +232,26 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends
     if (modules.nonEmpty) {
       var modulesEmitted = Map[String, Module]()
       val idCounter      = new IdCounter()
-      val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
-        case (alias, refInfo) =>
-          modules.find(_.id == refInfo.id) match {
-            case Some(module) =>
-              modulesEmitted += (module.id -> module)
-              Some(
-                ReferenceEmitter(module,
-                                 Some(Aliases(Set(alias -> refInfo))),
-                                 ordering,
-                                 () => idCounter.genId("uses")))
-            case _ => None
-          }
+      val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, refInfo) =>
+        modules.find(_.id == refInfo.id) match {
+          case Some(module) =>
+            modulesEmitted += (module.id -> module)
+            Some(
+              ReferenceEmitter(module, Some(Aliases(Set(alias -> refInfo))), ordering, () => idCounter.genId("uses"))
+            )
+          case _ => None
+        }
       }.toSeq
       val missingModuleEmitters = modules.filter(m => !modulesEmitted.contains(m.id)).map { module =>
         Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
       }
       val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect { case Some(e) => e }
-      b.entry("uses", _.obj { b =>
-        traverse(ordering.sorted(finalEmitters), b)
-      })
+      b.entry(
+        "uses",
+        _.obj { b =>
+          traverse(ordering.sorted(finalEmitters), b)
+        }
+      )
     }
   }
 
@@ -288,17 +312,16 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val specCtx: RamlSpe
       fs.entry(WebApiModel.Schemes).map(f => result += specCtx.arrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider)
-        .map(
-          f =>
-            result += OrganizationEmitter("contact".asRamlAnnotation,
-                                          f.value.value.asInstanceOf[Organization],
-                                          ordering))
+        .map(f =>
+          result += OrganizationEmitter("contact".asRamlAnnotation, f.value.value.asInstanceOf[Organization], ordering)
+        )
 
       fs.entry(WebApiModel.Tags)
-        .map(
-          f =>
-            result += TagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)(
-              toOas(specCtx)))
+        .map(f =>
+          result += TagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)(
+            toOas(specCtx)
+          )
+        )
 
       fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
@@ -347,7 +370,8 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val specCtx: RamlSpe
           all
             .filterKeys(_.parent.isEmpty)
             .values
-            .toSeq)
+            .toSeq
+        )
 
       } else {
         endpoints.map(specCtx.factory.endpointEmitter(_, ordering, ListBuffer(), references))
@@ -367,12 +391,12 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
       _.list { b =>
         f.array.values
           .collect({ case c: CreativeWork => c })
-          .foreach(
-            c =>
-              if (c.isLink)
-                raw(b, c.linkLabel.option().getOrElse(c.linkTarget.get.id))
-              else
-                RamlCreativeWorkEmitter(c, ordering, withExtension = true).emit(b))
+          .foreach(c =>
+            if (c.isLink)
+              raw(b, c.linkLabel.option().getOrElse(c.linkTarget.get.id))
+            else
+              RamlCreativeWorkEmitter(c, ordering, withExtension = true).emit(b)
+          )
       }
     )
   }

@@ -13,13 +13,13 @@ import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-/**
-  * This unit tests run as one, we need several steps to check that the dumped json ld, after resolve types, it's correct.
-  * That means, that not only the graph can be parsed, but also it's similar to the resolved model dumped as raml.
-  * In order to check that, first dump a raml to jsonld to clean the annotations. Then, we parse that jsonld, resolve the model and dump it to raml.
-  * We do that, to get a raml api generated from a resolved model without annotations
-  * After check that, we parse the resolved jsonld model, and generates the raml, to check that the final raml it's equivalent to the raml resolved and dumped.
-  * */
+/** This unit tests run as one, we need several steps to check that the dumped json ld, after resolve types, it's
+  * correct. That means, that not only the graph can be parsed, but also it's similar to the resolved model dumped as
+  * raml. In order to check that, first dump a raml to jsonld to clean the annotations. Then, we parse that jsonld,
+  * resolve the model and dump it to raml. We do that, to get a raml api generated from a resolved model without
+  * annotations After check that, we parse the resolved jsonld model, and generates the raml, to check that the final
+  * raml it's equivalent to the raml resolved and dumped.
+  */
 class ProductionServiceTest extends RamlResolutionTest {
 
   override def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
@@ -34,12 +34,14 @@ class ProductionServiceTest extends RamlResolutionTest {
 
   /* Generate the jsonld from a resolved raml */
   multiGoldenTest("Test step1: resolve and emit jsonld", "api.resolved.raml.%s") { config =>
-    run("api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        tFn = transform,
-        renderOptions = Some(config.renderOptions))
+    run(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      tFn = transform,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   /* Generate the api resolved directly, without serialize the jsonld */
@@ -49,12 +51,14 @@ class ProductionServiceTest extends RamlResolutionTest {
 
   /* Generate the jsonld without resolve (to clean the annotations) */
   multiGoldenTest("Test step3: emit jsonld without resolve", "api.raml.%s") { config =>
-    run("api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        tFn = dummyFunc,
-        renderOptions = Some(config.renderOptions))
+    run(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      tFn = dummyFunc,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   /* Generate the resolved raml after read the jsonld(without annotations) */
@@ -64,12 +68,14 @@ class ProductionServiceTest extends RamlResolutionTest {
 
   /* Now we really test the case, parse the json ld and compare to a similar jsonld (this should have the declarations) */
   multiTest("Test step5: parse resolved api and dump raml", "api.resolved.raml.%s", "api.resolved.%s.raml") { config =>
-    run(config.source,
-        config.golden,
-        AmfJsonHint,
-        target = Raml10YamlHint,
-        tFn = dummyFunc,
-        renderOptions = Some(config.renderOptions))
+    run(
+      config.source,
+      config.golden,
+      AmfJsonHint,
+      target = Raml10YamlHint,
+      tFn = dummyFunc,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   /* Generate the raml from a json ld without resolve */
@@ -78,15 +84,19 @@ class ProductionServiceTest extends RamlResolutionTest {
   }
 
   /* Generate the raml from a jsonld resolved raml */
-  multiTest("Test step7: emit resolved jsonld and check against normal raml",
-            "api.resolved.raml.%s",
-            "api.resolved.%s.raml") { config =>
-    run(config.source,
-        config.golden,
-        AmfJsonHint,
-        target = Raml10YamlHint,
-        tFn = dummyFunc,
-        renderOptions = Some(config.renderOptions))
+  multiTest(
+    "Test step7: emit resolved jsonld and check against normal raml",
+    "api.resolved.raml.%s",
+    "api.resolved.%s.raml"
+  ) { config =>
+    run(
+      config.source,
+      config.golden,
+      AmfJsonHint,
+      target = Raml10YamlHint,
+      tFn = dummyFunc,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   /* Generate the raml api from a resolved raml to jsonld cleaning the declarations and refs stage */
@@ -104,12 +114,14 @@ class ProductionServiceTest extends RamlResolutionTest {
     )
   }
 
-  def run(source: String,
-          golden: String,
-          hint: Hint,
-          target: Hint,
-          tFn: (BaseUnit, CycleConfig, AMFConfiguration) => BaseUnit,
-          renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
+  def run(
+      source: String,
+      golden: String,
+      hint: Hint,
+      target: Hint,
+      tFn: (BaseUnit, CycleConfig, AMFConfiguration) => BaseUnit,
+      renderOptions: Option[RenderOptions] = None
+  ): Future[Assertion] = {
 
     val config       = CycleConfig(source, golden, hint, target, basePath, None, None)
     val amfConfig    = buildConfig(renderOptions, None)

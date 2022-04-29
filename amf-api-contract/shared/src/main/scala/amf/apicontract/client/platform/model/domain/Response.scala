@@ -7,11 +7,12 @@ import amf.shapes.client.platform.model.domain.operations.AbstractResponse
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Response model class.
+/** Response model class.
   */
 @JSExportAll
-case class Response(override private[amf] val _internal: InternalResponse) extends Message(_internal) with AbstractResponse {
+case class Response(override private[amf] val _internal: InternalResponse)
+    extends Message(_internal)
+    with AbstractResponse {
 
   @JSExportTopLevel("Response")
   def this() = this(InternalResponse())
@@ -37,9 +38,8 @@ case class Response(override private[amf] val _internal: InternalResponse) exten
     this
   }
 
-  /**
-    * Adds one Parameter to the headers property of this Response]and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the headers property of this Response]and returns it for population. Name property of the
+    * parameter is required.
     */
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 

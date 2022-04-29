@@ -36,26 +36,24 @@ import org.yaml.model.YType
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlOperationEmitter(operation, ordering, references) {
+/** */
+case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlOperationEmitter(operation, ordering, references) {
   override protected val partEmitter: RamlOperationPartEmitter =
     Raml10OperationPartEmitter(operation, ordering, references)
 }
 
-case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlOperationEmitter(operation, ordering, references) {
+case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlOperationEmitter(operation, ordering, references) {
   override protected val partEmitter: RamlOperationPartEmitter =
     Raml08OperationPartEmitter(operation, ordering, references)
 }
 
-abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends EntryEmitter {
 
   protected val partEmitter: RamlOperationPartEmitter
 
@@ -73,15 +71,15 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
   override def position(): Position = pos(operation.annotations)
 }
 
-case class Raml08OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlOperationPartEmitter(operation, ordering, references) {
+case class Raml08OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlOperationPartEmitter(operation, ordering, references) {
   override protected val baseUriParameterKey: String = "baseUriParameters"
 }
 
-case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlOperationPartEmitter(operation, ordering, references) {
+case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlOperationPartEmitter(operation, ordering, references) {
   override protected val baseUriParameterKey: String = "baseUriParameters".asRamlAnnotation
 
   override protected def entries(fs: Fields): Seq[EntryEmitter] = {
@@ -96,12 +94,14 @@ case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrderi
             case Some(shape: AnyShape) =>
               results += RamlNamedTypeEmitter(shape, ordering, references, Raml10TypePartEmitter.apply)
             case Some(other) =>
-              spec.eh.violation(TransformationValidation,
-                                req.id,
-                                None,
-                                "Cannot emit non WebApi Shape",
-                                other.position(),
-                                other.location())
+              spec.eh.violation(
+                TransformationValidation,
+                req.id,
+                None,
+                "Cannot emit non WebApi Shape",
+                other.position(),
+                other.location()
+              )
             case _ => // ignore
           }
 
@@ -115,8 +115,8 @@ case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrderi
 }
 
 abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends PartEmitter {
+    implicit spec: RamlSpecEmitterContext
+) extends PartEmitter {
 
   protected val baseUriParameterKey: String
   protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
@@ -139,14 +139,17 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
 
     fs.entry(OperationModel.Tags)
       .map(f =>
-        result += StringArrayTagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering))
+        result += StringArrayTagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)
+      )
 
     fs.entry(OperationModel.Documentation)
-      .map(
-        f =>
-          result += OasEntryCreativeWorkEmitter("externalDocs".asRamlAnnotation,
-                                                f.value.value.asInstanceOf[CreativeWork],
-                                                ordering))
+      .map(f =>
+        result += OasEntryCreativeWorkEmitter(
+          "externalDocs".asRamlAnnotation,
+          f.value.value.asInstanceOf[CreativeWork],
+          ordering
+        )
+      )
 
     fs.entry(OperationModel.Schemes).map(f => result += spec.arrayEmitter("protocols", f, ordering))
 
@@ -183,13 +186,15 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
       .map(f => result += RamlResponsesEmitter("responses", f, ordering, references))
 
     fs.entry(OperationModel.Responses)
-      .map(
-        f =>
-          result += RamlResponsesEmitter("defaultResponse".asRamlAnnotation,
-                                         f,
-                                         ordering,
-                                         references,
-                                         defaultResponse = true))
+      .map(f =>
+        result += RamlResponsesEmitter(
+          "defaultResponse".asRamlAnnotation,
+          f,
+          ordering,
+          references,
+          defaultResponse = true
+        )
+      )
 
     fs.entry(OperationModel.Security)
       .map(f => result += SecurityRequirementsEmitter("securedBy", f, ordering))
@@ -197,8 +202,10 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
     operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
       val callbacks: Seq[Callback] = f.arrayValues
       val annotations              = f.value.annotations
-      result += EntryPartEmitter("callbacks".asRamlAnnotation,
-                                 OasCallbacksEmitter(callbacks, ordering, references, annotations)(toOas(spec)))
+      result += EntryPartEmitter(
+        "callbacks".asRamlAnnotation,
+        OasCallbacksEmitter(callbacks, ordering, references, annotations)(toOas(spec))
+      )
 
     }
     result
@@ -207,10 +214,12 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
   override def position(): Position = pos(operation.annotations)
 }
 
-case class OasCallbacksEmitter(callbacks: Seq[Callback],
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               annotations: Annotations)(implicit spec: OasSpecEmitterContext)
+case class OasCallbacksEmitter(
+    callbacks: Seq[Callback],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    annotations: Annotations
+)(implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
@@ -218,12 +227,13 @@ case class OasCallbacksEmitter(callbacks: Seq[Callback],
       b.obj { b =>
         // TODO multiple callbacks may have the same name due to inconsistency in the model, pending refactor in APIMF-1771
         val stringToCallbacks: Map[String, Seq[Callback]] = callbacks.groupBy(_.name.value())
-        val emitters = stringToCallbacks.map {
-          case (name, callbacks) =>
-            EntryPartEmitter(name,
-                             OasCallbackEmitter(callbacks, ordering, references),
-                             YType.Str,
-                             pos(callbacks.headOption.map(_.annotations).getOrElse(Annotations())))
+        val emitters = stringToCallbacks.map { case (name, callbacks) =>
+          EntryPartEmitter(
+            name,
+            OasCallbackEmitter(callbacks, ordering, references),
+            YType.Str,
+            pos(callbacks.headOption.map(_.annotations).getOrElse(Annotations()))
+          )
         }.toSeq
         traverse(ordering.sorted(emitters), b)
       }
@@ -233,9 +243,9 @@ case class OasCallbacksEmitter(callbacks: Seq[Callback],
   override def position(): Position = pos(annotations)
 }
 
-case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -246,13 +256,13 @@ case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, 
           OasTagToReferenceEmitter(callbacks.head).emit(p)
         else
           p.obj(
-            traverse(callbacks.map { callback =>
-              OasDocumentEmitter.endpointEmitterWithPath(callback.endpoint,
-                                                         callback.expression.value(),
-                                                         ordering,
-                                                         references,
-                                                         spec)
-            }, _)
+            traverse(
+              callbacks.map { callback =>
+                OasDocumentEmitter
+                  .endpointEmitterWithPath(callback.endpoint, callback.expression.value(), ordering, references, spec)
+              },
+              _
+            )
           )
       }
     }

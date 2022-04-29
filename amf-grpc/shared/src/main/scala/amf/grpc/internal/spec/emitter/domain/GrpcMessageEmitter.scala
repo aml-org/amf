@@ -6,12 +6,13 @@ import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
 
-case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
+case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext)
+    extends GrpcEmitter {
   def emit(): Unit = {
     builder.fixed { f =>
       f += (s"message ${messageName} {", messageNamePos)
       f.obj { o =>
-        o.list {l =>
+        o.list { l =>
           emitProperties(l)
           emitOptions(shape, l, ctx)
           ctx.nestedMessages(shape).foreach { nested =>
@@ -28,7 +29,7 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
 
   }
 
-  def messageName: String = shape.displayName.option().getOrElse("AnonymousMessage")
+  def messageName: String      = shape.displayName.option().getOrElse("AnonymousMessage")
   def messageNamePos: Position = pos(shape.displayName.annotations())
 
   def emitOneOf(builder: StringDocBuilder): Unit = {
@@ -43,5 +44,6 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
 }
 
 object GrpcMessageEmitter {
-  def apply(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) = new GrpcMessageEmitter(shape, builder, ctx)
+  def apply(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) =
+    new GrpcMessageEmitter(shape, builder, ctx)
 }

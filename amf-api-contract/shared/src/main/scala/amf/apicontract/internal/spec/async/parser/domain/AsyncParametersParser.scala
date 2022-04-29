@@ -65,7 +65,8 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
       "schema",
       entry => {
         OasTypeParser(entry, shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)(
-          WebApiShapeParserContextAdapter(ctx))
+          WebApiShapeParserContextAdapter(ctx)
+        )
           .parse()
           .foreach { schema =>
             param.setWithoutId(ParameterModel.Schema, schema, Annotations(entry))
@@ -78,8 +79,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "parameters")
     ctx.declarations
       .findParameter(label, SearchScope.Named)
-      .map(param =>
-        nameAndAdopt(param.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized())))
+      .map(param => nameAndAdopt(param.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized())))
       .getOrElse(remote(fullRef, map))
   }
 

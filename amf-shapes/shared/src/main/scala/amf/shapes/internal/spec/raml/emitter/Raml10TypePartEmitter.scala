@@ -8,11 +8,13 @@ import amf.core.internal.render.emitters.Emitter
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 
-case class Raml10TypePartEmitter(shape: Shape,
-                                 ordering: SpecOrdering,
-                                 annotations: Option[AnnotationsEmitter],
-                                 ignored: Seq[Field] = Nil,
-                                 references: Seq[BaseUnit])(implicit spec: RamlShapeEmitterContext)
+case class Raml10TypePartEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    annotations: Option[AnnotationsEmitter],
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit]
+)(implicit spec: RamlShapeEmitterContext)
     extends RamlTypePartEmitter(shape, ordering, annotations, ignored, references) {
 
   override def emitters: Seq[Emitter] = {

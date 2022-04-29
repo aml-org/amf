@@ -12,39 +12,49 @@ class Async20ResolutionTest extends ResolutionTest {
 
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>
-      cycle("message-example-propagation.yaml",
-            config.golden,
-            Async20YamlHint,
-            target = AmfJsonHint,
-            renderOptions = Some(config.renderOptions))
+      cycle(
+        "message-example-propagation.yaml",
+        config.golden,
+        Async20YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions)
+      )
   }
 
   multiGoldenTest("defaultContentType overrides message contentType", "content-type-override.%s") { config =>
-    cycle("content-type-override.yaml",
-          config.golden,
-          Async20YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "content-type-override.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Message traits are merged to message", "message-trait-merging.%s") { config =>
-    cycle("message-trait-merging.yaml",
-          config.golden,
-          Async20YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "message-trait-merging.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Operation traits are merged to operation", "operation-trait-merging.%s") { config =>
-    cycle("operation-trait-merging.yaml",
-          config.golden,
-          Async20YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "operation-trait-merging.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  multiGoldenTest("Message traits are merged to message and removed from extends",
-                  "message-trait-merging-and-removed.%s") { config =>
+  multiGoldenTest(
+    "Message traits are merged to message and removed from extends",
+    "message-trait-merging-and-removed.%s"
+  ) { config =>
     cycle(
       "message-trait-merging.yaml",
       config.golden,
@@ -55,8 +65,10 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("Operation traits are merged to operation and removed from extends",
-                  "operation-trait-merging-and-removed.%s") { config =>
+  multiGoldenTest(
+    "Operation traits are merged to operation and removed from extends",
+    "operation-trait-merging-and-removed.%s"
+  ) { config =>
     cycle(
       "operation-trait-merging.yaml",
       config.golden,
@@ -69,15 +81,19 @@ class Async20ResolutionTest extends ResolutionTest {
 
   multiGoldenTest("Named parameter with reference to parameter in components", "named-parameter-with-ref.%s") {
     config =>
-      cycle("named-parameter-with-ref.yaml",
-            config.golden,
-            Async20YamlHint,
-            target = AmfJsonHint,
-            renderOptions = Some(config.renderOptions))
+      cycle(
+        "named-parameter-with-ref.yaml",
+        config.golden,
+        Async20YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions)
+      )
   }
 
-  multiGoldenTest("Reference to external raml data type fragment with includes at root of payload",
-                  "include-root-payload.%s") { config =>
+  multiGoldenTest(
+    "Reference to external raml data type fragment with includes at root of payload",
+    "include-root-payload.%s"
+  ) { config =>
     cycle(
       "include-data-type-at-root-of-payload.yaml",
       config.golden,
@@ -134,8 +150,10 @@ class Async20ResolutionTest extends ResolutionTest {
       )
   }
 
-  multiGoldenTest("Verify isolated raml context in external data type fragment using ref",
-                  "ref-data-type-fragment-invalid.%s") { config =>
+  multiGoldenTest(
+    "Verify isolated raml context in external data type fragment using ref",
+    "ref-data-type-fragment-invalid.%s"
+  ) { config =>
     cycle(
       "ref-data-type-fragment-invalid.yaml",
       config.golden,
@@ -146,8 +164,10 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("Type forward referencing to check future declarations working correctly",
-                  "type-forward-referencing.%s") { config =>
+  multiGoldenTest(
+    "Type forward referencing to check future declarations working correctly",
+    "type-forward-referencing.%s"
+  ) { config =>
     cycle(
       "type-forward-referencing.yaml",
       config.golden,

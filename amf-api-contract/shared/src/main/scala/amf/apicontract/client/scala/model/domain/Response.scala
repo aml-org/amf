@@ -11,11 +11,10 @@ import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.operations.AbstractResponse
 import org.yaml.model.YMapEntry
 
-/**
-  * Response internal model.
+/** Response internal model.
   */
 class Response(override val fields: Fields, override val annotations: Annotations)
-  extends Message(fields: Fields, annotations: Annotations)
+    extends Message(fields: Fields, annotations: Annotations)
     with AbstractResponse {
 
   override type PayloadType = Payload
@@ -49,19 +48,21 @@ class Response(override val fields: Fields, override val annotations: Annotation
     val response: Response = Response(annotations)
     val cloned             = response.withName(name.value()).adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case a: AmfArray =>
-            AmfArray(a.values.map {
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case a: AmfArray =>
+          AmfArray(
+            a.values.map {
               case p: Parameter => p.cloneParameter(cloned.id)
               case p: Payload   => p.clonePayload(cloned.id)
               case o            => o
-            }, a.annotations)
-          case o => o
-        }
+            },
+            a.annotations
+          )
+        case o => o
+      }
 
-        cloned.set(f, clonedValue, v.annotations)
+      cloned.set(f, clonedValue, v.annotations)
     }
 
     cloned.asInstanceOf[this.type]
@@ -72,7 +73,8 @@ class Response(override val fields: Fields, override val annotations: Annotation
   override def linkCopy(): Response = Response().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/resp/" + name.option().getOrElse("default-response").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/resp/" + name.option().getOrElse("default-response").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Response.apply

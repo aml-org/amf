@@ -3,7 +3,8 @@ package amf.shapes.internal.spec.common.parser
 import scala.util.matching.Regex
 
 /** Annotations that does not exist in a spec but we save them with the 'amf-' prefix and treat them differently than
-  * other normal annotations, specially to save information from one spec that can't be expressed in the other */
+  * other normal annotations, specially to save information from one spec that can't be expressed in the other
+  */
 object WellKnownAnnotation {
 
   val ramlKnownAnnotations = Set(

@@ -9,16 +9,17 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasAndConstraintEmitter(shape: Shape,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit],
-                                   pointer: Seq[String] = Nil,
-                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasAndConstraintEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
-  val emitters: Seq[OasTypePartEmitter] = shape.and.zipWithIndex map {
-    case (s: Shape, i: Int) =>
-      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+  val emitters: Seq[OasTypePartEmitter] = shape.and.zipWithIndex map { case (s: Shape, i: Int) =>
+    OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {

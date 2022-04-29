@@ -7,8 +7,7 @@ import amf.apicontract.client.scala.model.domain.{Encoding => InternalEncoding}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Encoding model class.
+/** Encoding model class.
   */
 @JSExportAll
 case class Encoding(override private[amf] val _internal: InternalEncoding) extends DomainElement {
@@ -59,9 +58,8 @@ case class Encoding(override private[amf] val _internal: InternalEncoding) exten
     this
   }
 
-  /**
-    * Adds one Parameter to the headers property of this Encoding and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the headers property of this Encoding and returns it for population. Name property of the
+    * parameter is required.
     */
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 }

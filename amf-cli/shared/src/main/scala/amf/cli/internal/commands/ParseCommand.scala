@@ -12,7 +12,7 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
 
   override def run(origConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
     implicit val ec: ExecutionContext = configuration.getExecutionContext
-    val parserConfig                  = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some(`application/ld+json`))
+    val parserConfig = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some(`application/ld+json`))
     val res = for {
       newConf         <- processDialects(parserConfig, configuration)
       (model, specId) <- parseInput(parserConfig, newConf)

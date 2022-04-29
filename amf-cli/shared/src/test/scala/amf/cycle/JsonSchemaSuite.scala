@@ -19,10 +19,12 @@ import org.yaml.parser.JsonParser
 
 trait JsonSchemaSuite {
 
-  protected def parseSchema(platform: Platform,
-                            path: String,
-                            mediatype: String,
-                            amfConfig: AMFConfiguration): AMFParseResult = {
+  protected def parseSchema(
+      platform: Platform,
+      path: String,
+      mediatype: String,
+      amfConfig: AMFConfiguration
+  ): AMFParseResult = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -50,12 +52,14 @@ trait JsonSchemaSuite {
   }
 
   private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext = {
-    val ctx = new JsonSchemaWebApiContext(location,
-                                          Seq(),
-                                          ParserContext(config = LimitedParseConfig(eh, AMLRegistry.empty)),
-                                          None,
-                                          options,
-                                          JSONSchemaDraft7SchemaVersion)
+    val ctx = new JsonSchemaWebApiContext(
+      location,
+      Seq(),
+      ParserContext(config = LimitedParseConfig(eh, AMLRegistry.empty)),
+      None,
+      options,
+      JSONSchemaDraft7SchemaVersion
+    )
     WebApiShapeParserContextAdapter(ctx)
   }
 }

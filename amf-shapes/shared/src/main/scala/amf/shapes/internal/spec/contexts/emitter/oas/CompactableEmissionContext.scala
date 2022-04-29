@@ -27,7 +27,8 @@ trait CompactableEmissionContext {
 
 case class DefinitionsQueue(
     pendingEmission: mutable.Queue[LabeledShape] = new mutable.Queue(),
-    queuedIdsWithLabel: mutable.Map[Id, Label] = mutable.Map[String, String]())(ctx: CompactableEmissionContext) {
+    queuedIdsWithLabel: mutable.Map[Id, Label] = mutable.Map[String, String]()
+)(ctx: CompactableEmissionContext) {
 
   def enqueue(shape: Shape): String =
     queuedIdsWithLabel.getOrElse( // if the shape has already been queued the assigned label is returned

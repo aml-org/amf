@@ -12,11 +12,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
 
   cyclesAsyncAmf.foreach { f =>
     multiGoldenTest(s"${f.name} - async to amf", f.apiTo) { config =>
-      cycle(f.apiFrom,
-            config.golden,
-            Async20YamlHint,
-            target = AmfJsonHint,
-            renderOptions = Some(config.renderOptions))
+      cycle(f.apiFrom, config.golden, Async20YamlHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
     }
   }
 
@@ -34,9 +30,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Draft 7 schemas", "draft-7-schemas.yaml", "draft-7-schemas.%s"),
     FixtureData("Parameters object", "channel-parameters.yaml", "channel-parameters.%s"),
     FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.%s"),
-    FixtureData("Empty binding and annotations",
-                "empty-binding-and-annotations.yaml",
-                "empty-binding-and-annotations.%s"),
+    FixtureData(
+      "Empty binding and annotations",
+      "empty-binding-and-annotations.yaml",
+      "empty-binding-and-annotations.%s"
+    ),
     FixtureData("Amqp 0.9.1 channel binding", "amqp-channel-binding.yaml", "amqp-channel-binding.%s"),
     FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.%s"),
     FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
@@ -49,13 +47,17 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.%s"),
     FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.%s"),
     FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.%s"),
-    FixtureData("Components declarations and references",
-                "components/async-components.yaml",
-                "components/async-components.%s"),
+    FixtureData(
+      "Components declarations and references",
+      "components/async-components.yaml",
+      "components/async-components.%s"
+    ),
     FixtureData("Operation traits", "components/operation-traits.yaml", "components/operation-traits.%s"),
-    FixtureData("Operation with inline external traits",
-                "components/external-operation-traits.yaml",
-                "components/external-operation-traits.%s"),
+    FixtureData(
+      "Operation with inline external traits",
+      "components/external-operation-traits.yaml",
+      "components/external-operation-traits.%s"
+    ),
     FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.%s"),
     FixtureData("Draft-7 external reference", "draft-7/references.yaml", "draft-7/references.%s")
   )
@@ -75,30 +77,44 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Message examples cycle", "message-examples.yaml", "message-examples.yaml"),
     FixtureData("Message headers cycle", "message-headers.yaml", "message-headers.yaml"),
     FixtureData("Simple publish and subscribe", "publish-subscribe.yaml", "publish-subscribe.yaml"),
-    FixtureData("Empty and dynamic binding",
-                "bindings/empty-binding-and-annotations.yaml",
-                "bindings/empty-binding-and-annotations.yaml"),
-    FixtureData("Amqp 0.9.1 channel binding",
-                "bindings/amqp-channel-binding.yaml",
-                "bindings/amqp-channel-binding.yaml"),
-    FixtureData("Amqp 0.9.1 message binding",
-                "bindings/amqp-message-binding.yaml",
-                "bindings/amqp-message-binding.yaml"),
-    FixtureData("Amqp 0.9.1 operation binding",
-                "bindings/amqp-operation-binding.yaml",
-                "bindings/amqp-operation-binding.yaml"),
+    FixtureData(
+      "Empty and dynamic binding",
+      "bindings/empty-binding-and-annotations.yaml",
+      "bindings/empty-binding-and-annotations.yaml"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 channel binding",
+      "bindings/amqp-channel-binding.yaml",
+      "bindings/amqp-channel-binding.yaml"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 message binding",
+      "bindings/amqp-message-binding.yaml",
+      "bindings/amqp-message-binding.yaml"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 operation binding",
+      "bindings/amqp-operation-binding.yaml",
+      "bindings/amqp-operation-binding.yaml"
+    ),
     FixtureData("Http message binding", "bindings/http-message-binding.yaml", "bindings/http-message-binding.yaml"),
-    FixtureData("Http operation binding",
-                "bindings/http-operation-binding.yaml",
-                "bindings/http-operation-binding.yaml"),
+    FixtureData(
+      "Http operation binding",
+      "bindings/http-operation-binding.yaml",
+      "bindings/http-operation-binding.yaml"
+    ),
     FixtureData("Kafka message binding", "bindings/kafka-message-binding.yaml", "bindings/kafka-message-binding.yaml"),
-    FixtureData("Kafka operation binding",
-                "bindings/kafka-operation-binding.yaml",
-                "bindings/kafka-operation-binding.yaml"),
+    FixtureData(
+      "Kafka operation binding",
+      "bindings/kafka-operation-binding.yaml",
+      "bindings/kafka-operation-binding.yaml"
+    ),
     FixtureData("Mqtt message binding", "bindings/mqtt-message-binding.yaml", "bindings/mqtt-message-binding.yaml"),
-    FixtureData("Mqtt operation binding",
-                "bindings/mqtt-operation-binding.yaml",
-                "bindings/mqtt-operation-binding.yaml"),
+    FixtureData(
+      "Mqtt operation binding",
+      "bindings/mqtt-operation-binding.yaml",
+      "bindings/mqtt-operation-binding.yaml"
+    ),
     FixtureData("Mqtt server binding", "bindings/mqtt-server-binding.yaml", "bindings/mqtt-server-binding.yaml"),
     FixtureData("Websockets channel binding", "bindings/ws-channel-binding.yaml", "bindings/ws-channel-binding.yaml"),
     FixtureData("RAML type - simple union", "raml-types/simple-union.yaml", "raml-types/simple-union.yaml"),

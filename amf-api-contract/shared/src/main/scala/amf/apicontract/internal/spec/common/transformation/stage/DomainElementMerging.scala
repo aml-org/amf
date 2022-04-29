@@ -28,14 +28,11 @@ import amf.shapes.internal.domain.resolution.ExampleTracking
 
 import scala.collection.mutable
 
-/**
-  * Merge 'other' element into 'main' element:
-  * 1) 'main' node properties are inspected and those that are undefined in 'other' node remain unchanged.
-  * 2) 'main' node receives all properties of 'other' node (excluding optional ones), which are undefined in the 'main' node.
-  * 3) Properties defined in both 'main' node and 'other' node (including optional ones) are treated as follows:
-  *     a) Scalar properties remain unchanged.
-  *     b) Collection properties are merged by value.
-  *     c) Values of object properties are subjected to steps 1-3 of this procedure.
+/** Merge 'other' element into 'main' element: 1) 'main' node properties are inspected and those that are undefined in
+  * 'other' node remain unchanged. 2) 'main' node receives all properties of 'other' node (excluding optional ones),
+  * which are undefined in the 'main' node. 3) Properties defined in both 'main' node and 'other' node (including
+  * optional ones) are treated as follows: a) Scalar properties remain unchanged. b) Collection properties are merged by
+  * value. c) Values of object properties are subjected to steps 1-3 of this procedure.
   */
 case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
@@ -43,24 +40,25 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     MergingValidator.validate(main, other, ctx.eh)
     var merged = false
 
-    other.fields.fields().filter(isNotIgnored).foreach {
-      case otherFieldEntry @ FieldEntry(otherField, _) =>
-        main.fields.entry(otherField) match {
-          case None =>
-            // Case 2
-            handleNewFieldEntry(main, otherFieldEntry, ctx.eh)
-          case Some(mainFieldEntry) =>
-            // Cases 2 & 3 (check for some special conditions of case 2 where main field entry actually exists)
-            merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, ctx.eh)
-        }
+    other.fields.fields().filter(isNotIgnored).foreach { case otherFieldEntry @ FieldEntry(otherField, _) =>
+      main.fields.entry(otherField) match {
+        case None =>
+          // Case 2
+          handleNewFieldEntry(main, otherFieldEntry, ctx.eh)
+        case Some(mainFieldEntry) =>
+          // Cases 2 & 3 (check for some special conditions of case 2 where main field entry actually exists)
+          merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, ctx.eh)
+      }
     }
     fixPayloadTrackedElements(main, other)
     main
   }
 
-  def handleNewFieldEntry[T <: DomainElement](main: T,
-                                              otherFieldEntry: FieldEntry,
-                                              errorHandler: AMFErrorHandler): Unit = {
+  def handleNewFieldEntry[T <: DomainElement](
+      main: T,
+      otherFieldEntry: FieldEntry,
+      errorHandler: AMFErrorHandler
+  ): Unit = {
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
 
@@ -79,10 +77,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           main.set(otherField, adoptInner(main.id, otherValue.value))
       }
     } else if (isExplicitField(otherFieldEntry)) {
-      errorHandler.violation(CoreValidations.TransformationValidation,
-                             main.id,
-                             s"Cannot merge '${otherField.value.name}' into ${main.meta.doc.displayName}",
-                             main.annotations)
+      errorHandler.violation(
+        CoreValidations.TransformationValidation,
+        main.id,
+        s"Cannot merge '${otherField.value.name}' into ${main.meta.doc.displayName}",
+        main.annotations
+      )
     }
   }
 
@@ -99,10 +99,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
   private def isExplicitField(fe: FieldEntry) =
     !possibleImplicitFields.contains(fe.field) || fe.value.annotations.contains(classOf[ExplicitField])
 
-  def handleExistingFieldEntries[T <: DomainElement](main: T,
-                                                     mainFieldEntry: FieldEntry,
-                                                     otherFieldEntry: FieldEntry,
-                                                     errorHandler: AMFErrorHandler): Boolean = {
+  def handleExistingFieldEntries[T <: DomainElement](
+      main: T,
+      mainFieldEntry: FieldEntry,
+      otherFieldEntry: FieldEntry,
+      errorHandler: AMFErrorHandler
+  ): Boolean = {
 
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
@@ -125,15 +127,18 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
       if (mainValueIsAnyShape && otherValueIsAnyShape && mainValueIsInferred) {
 
-        /**
-          * Overwrite default-generated Any shapes by shapes coming from overlays/extensions
-          * e.g. default value of a payload
+        /** Overwrite default-generated Any shapes by shapes coming from overlays/extensions e.g. default value of a
+          * payload
           */
         val target: AnyShape = mainFieldEntry.value.value.asInstanceOf[AnyShape]
         val shape: AnyShape  = otherValue.value.asInstanceOf[AnyShape]
         val cloned           = shape.cloneShape(None).withName(target.name.value())
 
-        if (target.examples.nonEmpty) cloned.setArrayWithoutId(Examples, target.examples) // If target defines examples we want to keep their original IDs, otherwise errors will be grouped for the "default-example" of the declared shape
+        if (target.examples.nonEmpty)
+          cloned.setArrayWithoutId(
+            Examples,
+            target.examples
+          ) // If target defines examples we want to keep their original IDs, otherwise errors will be grouped for the "default-example" of the declared shape
 
         main.set(otherField, adoptInner(main.id, cloned))
         shouldMerge = false
@@ -162,10 +167,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case _: DomainElementModel =>
           merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
         case _ =>
-          errorHandler.violation(CoreValidations.TransformationValidation,
-                                 main.id,
-                                 s"Cannot merge '${otherField.`type`}':not a (Scalar|Array|Object)",
-                                 main.annotations)
+          errorHandler.violation(
+            CoreValidations.TransformationValidation,
+            main.id,
+            s"Cannot merge '${otherField.`type`}':not a (Scalar|Array|Object)",
+            main.annotations
+          )
       }
     }
     shouldMerge
@@ -178,9 +185,11 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       .exists(_.annotations.contains(classOf[DefaultNode]))
   }
 
-  private def mergeNonDefaultValues[T <: DomainElement](main: T,
-                                                        otherField: Field,
-                                                        nonDefaultValues: Seq[AmfElement]): Unit = {
+  private def mergeNonDefaultValues[T <: DomainElement](
+      main: T,
+      otherField: Field,
+      nonDefaultValues: Seq[AmfElement]
+  ): Unit = {
     val newMainValue = main.fields.getValue(otherField)
     otherField.`type` match {
       case Type.ArrayLike(element) =>
@@ -195,16 +204,17 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       .filter(!_.annotations.contains(classOf[DefaultNode]))
   }
 
-  private def handleDefaultValue[T <: DomainElement](main: T,
-                                                     mainFieldEntry: FieldEntry,
-                                                     otherFieldEntry: FieldEntry,
-                                                     otherField: Field,
-                                                     otherValue: Value,
-                                                     mainValue: Value) = {
+  private def handleDefaultValue[T <: DomainElement](
+      main: T,
+      mainFieldEntry: FieldEntry,
+      otherFieldEntry: FieldEntry,
+      otherField: Field,
+      otherValue: Value,
+      mainValue: Value
+  ) = {
 
-    /**
-      * Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type"
-      * node is on the trait side it should be merged
+    /** Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type" node is on
+      * the trait side it should be merged
       */
     otherField.`type` match {
       case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
@@ -273,13 +283,16 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     def notYet(id: String): Boolean = !adopted.contains(id)
   }
 
-  /**
-    * Adopts recursively different kinds of AMF elements if not yet adopted
+  /** Adopts recursively different kinds of AMF elements if not yet adopted
     *
-    * @param parentId id of the adopter element
-    * @param target element to be adopted
-    * @param adopted utility class containing already adopted elements
-    * @return adopted element with newly set ID
+    * @param parentId
+    *   id of the adopter element
+    * @param target
+    *   element to be adopted
+    * @param adopted
+    *   utility class containing already adopted elements
+    * @return
+    *   adopted element with newly set ID
     */
   def adoptInner(parentId: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = {
     val notAdopted = (element: DomainElement) => adopted notYet element.id
@@ -298,23 +311,24 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case element: DomainElement if notAdopted(element) && !isDeclaredShape(element) =>
         adoptElementByType(element, parentId)
         adopted += element.id
-        element.fields.foreach {
-          case (f, value) =>
-            if (isNotIgnored(FieldEntry(f, value))) {
-              adoptInner(element.id, value.value, adopted)
-            }
+        element.fields.foreach { case (f, value) =>
+          if (isNotIgnored(FieldEntry(f, value))) {
+            adoptInner(element.id, value.value, adopted)
+          }
         }
         element
       case _ => target
     }
   }
 
-  /**
-    * Adopts target domain element by parent. (Makes element's ID relative to that of parent)
+  /** Adopts target domain element by parent. (Makes element's ID relative to that of parent)
     *
-    * @param target adopted
-    * @param parentId id of the adopter element
-    * @return adopted element with newly set ID
+    * @param target
+    *   adopted
+    * @param parentId
+    *   id of the adopter element
+    * @return
+    *   adopted element with newly set ID
     */
   private def adoptElementByType(target: DomainElement, parentId: String) = {
     target match {
@@ -324,10 +338,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  private def adoptNonOptionalArrayElements(target: DomainElement,
-                                            arrayField: Field,
-                                            otherArrayValue: Value,
-                                            otherArrayElementsType: Type): Unit = {
+  private def adoptNonOptionalArrayElements(
+      target: DomainElement,
+      arrayField: Field,
+      otherArrayValue: Value,
+      otherArrayElementsType: Type
+  ): Unit = {
     otherArrayElementsType match {
       case t: OptionalField =>
         val nonOptionalElements: Seq[AmfElement] =
@@ -349,10 +365,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        ctx.eh.violation(CoreValidations.TransformationValidation,
-                         target.id,
-                         s"Cannot merge '$element': not a KeyField nor a Scalar",
-                         target.annotations)
+        ctx.eh.violation(
+          CoreValidations.TransformationValidation,
+          target.id,
+          s"Cannot merge '$element': not a KeyField nor a Scalar",
+          target.annotations
+        )
 
     }
   }
@@ -364,11 +382,13 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
     otherNodes.foreach {
       case oScalar: ScalarNode =>
-        if (mainNodes
-              .collectFirst({
-                case ms: ScalarNode if ms.value.option().contains(oScalar.value.option().getOrElse("")) => ms
-              })
-              .isEmpty)
+        if (
+          mainNodes
+            .collectFirst({
+              case ms: ScalarNode if ms.value.option().contains(oScalar.value.option().getOrElse("")) => ms
+            })
+            .isEmpty
+        )
           target.add(field, oScalar)
       case other: DataNode => target.add(field, other)
     }
@@ -384,12 +404,14 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  private def mergeByKeyValue(target: DomainElement,
-                              field: Field,
-                              element: Type,
-                              key: KeyField,
-                              main: AmfArray,
-                              other: AmfArray): Unit = {
+  private def mergeByKeyValue(
+      target: DomainElement,
+      field: Field,
+      element: Type,
+      key: KeyField,
+      main: AmfArray,
+      other: AmfArray
+  ): Unit = {
 
     val existing = main.values.map { m =>
       val obj = m.asInstanceOf[DomainElement]
@@ -460,11 +482,13 @@ object DataNodeMerging {
     for { (key, value) <- right.propertyFields().map(f => (f, right.fields[DataNode](f))) } {
       left.fields.getValueAsOption(key) match {
         case Some(Value(property: DataNode, _)) => merge(property, value)
-        case None                               => left.addPropertyByField(key, adoptTree(left.id, value), right.fields.getValue(key).annotations)
+        case None => left.addPropertyByField(key, adoptTree(left.id, value), right.fields.getValue(key).annotations)
       }
     }
 
-  /** Merge array data nodes by value: If scalar, check it's not there and add. If object or array, just add but adoptInner ids. */
+  /** Merge array data nodes by value: If scalar, check it's not there and add. If object or array, just add but
+    * adoptInner ids.
+    */
   private def mergeArrayNode(main: ArrayNode, other: ArrayNode): Unit = {
     val existing = main.members.collect { case s: ScalarNode => s.value }
 
@@ -477,8 +501,7 @@ object DataNodeMerging {
   }
 }
 
-/**
-  * Checks some conditions when merging some nodes
+/** Checks some conditions when merging some nodes
   */
 object MergingValidator {
   val reportedMissingParameters: mutable.Map[String, Seq[Parameter]] = mutable.Map.empty
@@ -498,10 +521,12 @@ object MergingValidator {
     }
   }
 
-  private def validateEndpoints[T <: DomainElement](main: T,
-                                                    errorHandler: AMFErrorHandler,
-                                                    m: EndPoint,
-                                                    o: EndPoint): Unit = {
+  private def validateEndpoints[T <: DomainElement](
+      main: T,
+      errorHandler: AMFErrorHandler,
+      m: EndPoint,
+      o: EndPoint
+  ): Unit = {
 
     val pathParams = TemplateUri.variables(m.path.value())
     val checkParameter = (p: Parameter, isOperation: Boolean) => {
@@ -534,10 +559,12 @@ object MergingValidator {
       .foreach(checkParameter(_, true))
   }
 
-  private def validatePayloads[T <: DomainElement](main: T,
-                                                   errorHandler: AMFErrorHandler,
-                                                   m: Seq[Payload],
-                                                   o: Seq[Payload]): Unit = {
+  private def validatePayloads[T <: DomainElement](
+      main: T,
+      errorHandler: AMFErrorHandler,
+      m: Seq[Payload],
+      o: Seq[Payload]
+  ): Unit = {
 
     val shouldRevise = (payloads: Seq[Payload]) => {
       payloads.nonEmpty && payloads.forall { payload =>

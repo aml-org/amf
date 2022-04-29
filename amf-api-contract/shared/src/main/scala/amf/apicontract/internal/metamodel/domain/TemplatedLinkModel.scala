@@ -9,8 +9,7 @@ import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSch
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
 
-/**
-  * Link metaModel.
+/** Link metaModel.
   */
 object TemplatedLinkModel
     extends DomainElementModel
@@ -18,22 +17,29 @@ object TemplatedLinkModel
     with NameFieldSchema
     with DescriptionField {
 
-  val Template = Field(Str,
-                       ApiContract + "template",
-                       ModelDoc(ModelVocabularies.ApiContract, "template", "URL template for a templated link"))
+  val Template = Field(
+    Str,
+    ApiContract + "template",
+    ModelDoc(ModelVocabularies.ApiContract, "template", "URL template for a templated link")
+  )
 
-  val OperationId = Field(Str,
-                          ApiContract + "operationId",
-                          ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation"))
+  val OperationId = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation")
+  )
 
   val OperationRef = Field(
     Str,
     ApiContract + "operationRef",
-    ModelDoc(ModelVocabularies.ApiContract, "operationRef", "Reference of the target operation"))
+    ModelDoc(ModelVocabularies.ApiContract, "operationRef", "Reference of the target operation")
+  )
 
-  val Mapping = Field(Array(IriTemplateMappingModel),
-                      ApiContract + "mapping",
-                      ModelDoc(ModelVocabularies.ApiContract, "mapping", "Variable mapping for the URL template"))
+  val Mapping = Field(
+    Array(IriTemplateMappingModel),
+    ApiContract + "mapping",
+    ModelDoc(ModelVocabularies.ApiContract, "mapping", "Variable mapping for the URL template")
+  )
 
   val RequestBody =
     Field(Str, ApiContract + "requestBody", ModelDoc(ModelVocabularies.ApiContract, "requestBody", ""))

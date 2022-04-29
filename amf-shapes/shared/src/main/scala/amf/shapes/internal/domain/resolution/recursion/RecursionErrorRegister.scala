@@ -16,26 +16,29 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
     r
   }
 
-  def allowedInTraversal(traversal: ShapeTraversalRegistry,
-                         r: RecursiveShape,
-                         checkId: Option[String] = None): Boolean = {
+  def allowedInTraversal(
+      traversal: ShapeTraversalRegistry,
+      r: RecursiveShape,
+      checkId: Option[String] = None
+  ): Boolean = {
     val recursiveShapeIsAllowListed = traversal.isAllowListed(r.id)
     val fixpointIsAllowListed       = r.fixpoint.option().exists(traversal.isAllowListed)
-    /***
-      * TODO (Refactor needed)
-      * When calling ShapeExpander `checkId` some times gets set to the root shape ID from where the traversal started.
-      * Why do we need to opiotnally check if this root id is allow listed? Doesn't it suffice with checking the
-      * recursive shape ID or its fixpoint?
+
+    /** * TODO (Refactor needed) When calling ShapeExpander `checkId` some times gets set to the root shape ID from
+      * where the traversal started. Why do we need to opiotnally check if this root id is allow listed? Doesn't it
+      * suffice with checking the recursive shape ID or its fixpoint?
       */
-    val checkIdIsAllowListed        = checkId.exists(traversal.isAllowListed)
+    val checkIdIsAllowListed = checkId.exists(traversal.isAllowListed)
     recursiveShapeIsAllowListed || fixpointIsAllowListed || checkIdIsAllowListed
   }
 
-  def checkRecursionError(root: Shape,
-                          r: RecursiveShape,
-                          traversal: ShapeTraversalRegistry,
-                          checkId: Option[String] = None,
-                          criteria: ThrowRecursionValidationCriteria = DefaultCriteria()): RecursiveShape = {
+  def checkRecursionError(
+      root: Shape,
+      r: RecursiveShape,
+      traversal: ShapeTraversalRegistry,
+      checkId: Option[String] = None,
+      criteria: ThrowRecursionValidationCriteria = DefaultCriteria()
+  ): RecursiveShape = {
 
     val hasNotRegisteredItYet = !errorRegister.contains(r.id)
     if (criteria.shouldThrowFor(r) && !allowedInTraversal(traversal, r, checkId) && hasNotRegisteredItYet) {

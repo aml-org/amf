@@ -10,9 +10,11 @@ class MandatoryDocumentationUrl() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case d: Document if d.encodes.isInstanceOf[Api] =>
         try {

@@ -27,13 +27,17 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
             val examples = examplesEntry.value.as[YSequence].nodes.map { node =>
               Example(node)
                 .withName(idCounter.genId("example"), Annotations.synthesized())
-                .setWithoutId(ExternalSourceElementModel.Raw,
-                     AmfScalar(node.asScalar.map(_.text).getOrElse(node.toString), Annotations(node)),
-                     Annotations.inferred())
+                .setWithoutId(
+                  ExternalSourceElementModel.Raw,
+                  AmfScalar(node.asScalar.map(_.text).getOrElse(node.toString), Annotations(node)),
+                  Annotations.inferred()
+                )
             }
-            variable.fields.setWithoutId(ExamplesField.Examples,
-                                AmfArray(examples, Annotations(examplesEntry.value)),
-                                Annotations(examplesEntry))
+            variable.fields.setWithoutId(
+              ExamplesField.Examples,
+              AmfArray(examples, Annotations(examplesEntry.value)),
+              Annotations(examplesEntry)
+            )
           case _ =>
             ctx.violation(ExamplesMustBeASeq, variable, "Examples facet must be an array of strings")
         }

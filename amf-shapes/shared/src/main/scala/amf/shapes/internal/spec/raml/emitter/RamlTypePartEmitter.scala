@@ -15,11 +15,13 @@ import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 
-abstract class RamlTypePartEmitter(shape: Shape,
-                                   ordering: SpecOrdering,
-                                   annotations: Option[AnnotationsEmitter],
-                                   ignored: Seq[Field] = Nil,
-                                   references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext)
+abstract class RamlTypePartEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    annotations: Option[AnnotationsEmitter],
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit]
+)(implicit spec: ShapeEmitterContext)
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
@@ -41,12 +43,14 @@ abstract class RamlTypePartEmitter(shape: Shape,
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(TransformationValidation,
-                        shape.id,
-                        None,
-                        s"IllegalTypeDeclarations found: $other",
-                        shape.position(),
-                        shape.location())
+      spec.eh.violation(
+        TransformationValidation,
+        shape.id,
+        None,
+        s"IllegalTypeDeclarations found: $other",
+        shape.position(),
+        shape.location()
+      )
       Right(Nil)
   }
 }

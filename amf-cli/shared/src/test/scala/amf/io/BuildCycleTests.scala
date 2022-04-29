@@ -15,8 +15,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * Cycle tests using temporary file and directory creator
+/** Cycle tests using temporary file and directory creator
   */
 trait JsonLdSerializationSuite {
   def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, EmbeddedForm)
@@ -43,7 +42,8 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
 
   // Single source, multiple JSON-LD outputs
   def multiGoldenTest(testText: String, goldenNamePattern: String, ignored: Boolean = false)(
-      testFn: MultiGoldenTestConfig => Future[Assertion]): Unit = {
+      testFn: MultiGoldenTestConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(goldenNamePattern, "goldenNamePattern")
       val golden = goldenNamePattern.format(form.extension)
@@ -59,7 +59,8 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
 
   // Multiple JSON-LD sources, single output
   def multiSourceTest(testText: String, sourceNamePattern: String, ignored: Boolean = false)(
-      testFn: MultiSourceTestConfig => Future[Assertion]): Unit = {
+      testFn: MultiSourceTestConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       val source = sourceNamePattern.format(form.extension)
@@ -75,7 +76,8 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
 
   // Multiple JSON-LD sources, multiple JSON-LD outputs. Each source matches exactly one output
   def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String, ignored: Boolean = false)(
-      testFn: MultiTestConfig => Future[Assertion]): Unit = {
+      testFn: MultiTestConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       validatePattern(goldenNamePattern, "goldenNamePattern")
@@ -110,13 +112,15 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
   def basePath: String
 
-  case class CycleConfig(source: String,
-                         golden: String,
-                         hint: Hint,
-                         renderTarget: Hint,
-                         directory: String,
-                         pipeline: Option[String],
-                         transformWith: Option[Spec] = None) {
+  case class CycleConfig(
+      source: String,
+      golden: String,
+      hint: Hint,
+      renderTarget: Hint,
+      directory: String,
+      pipeline: Option[String],
+      transformWith: Option[Spec] = None
+  ) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
@@ -148,17 +152,21 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       amfConfig.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e))
+      renderedConfig.withErrorHandlerProvider(() => e)
+    )
   }
 
-  protected def buildConfig(from: AMFConfiguration,
-                            options: Option[RenderOptions],
-                            eh: Option[AMFErrorHandler]): AMFConfiguration = {
+  protected def buildConfig(
+      from: AMFConfiguration,
+      options: Option[RenderOptions],
+      eh: Option[AMFErrorHandler]
+  ): AMFConfiguration = {
     val renderedConfig: AMFConfiguration = options.fold(from.withRenderOptions(renderOptions()))(r => {
       from.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e))
+      renderedConfig.withErrorHandlerProvider(() => e)
+    )
   }
 
 }
@@ -174,16 +182,18 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     cycle(source, source, hint, hint, directory, eh = None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  final def cycle(source: String,
-                  golden: String,
-                  hint: Hint,
-                  target: Hint,
-                  directory: String = basePath,
-                  renderOptions: Option[RenderOptions] = None,
-                  pipeline: Option[String] = None,
-                  transformWith: Option[Spec] = None,
-                  eh: Option[AMFErrorHandler] = None,
-                  amfConfig: Option[AMFConfiguration] = None): Future[Assertion] = {
+  final def cycle(
+      source: String,
+      golden: String,
+      hint: Hint,
+      target: Hint,
+      directory: String = basePath,
+      renderOptions: Option[RenderOptions] = None,
+      pipeline: Option[String] = None,
+      transformWith: Option[Spec] = None,
+      eh: Option[AMFErrorHandler] = None,
+      amfConfig: Option[AMFConfiguration] = None
+  ): Future[Assertion] = {
 
     val config      = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val parseConfig = amfConfig.getOrElse(buildConfig(renderOptions, eh))
@@ -208,12 +218,14 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
 trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
-  def cycleFullRdf(source: String,
-                   golden: String,
-                   hint: Hint,
-                   target: Hint = AmfJsonHint,
-                   directory: String = basePath,
-                   pipeline: Option[String] = None): Future[Assertion] = {
+  def cycleFullRdf(
+      source: String,
+      golden: String,
+      hint: Hint,
+      target: Hint = AmfJsonHint,
+      directory: String = basePath,
+      pipeline: Option[String] = None
+  ): Future[Assertion] = {
 
     val config    = CycleConfig(source, golden, hint, target, directory, pipeline, None)
     val amfConfig = buildConfig(None, None)
@@ -225,13 +237,15 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   }
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  def cycleRdf(source: String,
-               golden: String,
-               hint: Hint,
-               target: Hint = AmfJsonHint,
-               directory: String = basePath,
-               pipeline: Option[String] = None,
-               transformWith: Option[Spec] = None): Future[Assertion] = {
+  def cycleRdf(
+      source: String,
+      golden: String,
+      hint: Hint,
+      target: Hint = AmfJsonHint,
+      directory: String = basePath,
+      pipeline: Option[String] = None,
+      transformWith: Option[Spec] = None
+  ): Future[Assertion] = {
 
     val config    = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig = buildConfig(None, None)

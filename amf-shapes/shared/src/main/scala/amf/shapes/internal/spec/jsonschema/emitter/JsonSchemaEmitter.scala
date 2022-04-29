@@ -25,10 +25,12 @@ import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
 object JsonSchemaEmitter {
-  def apply(root: Shape,
-            declarations: Seq[DomainElement],
-            renderConfig: RenderConfiguration,
-            errorHandler: AMFErrorHandler) =
+  def apply(
+      root: Shape,
+      declarations: Seq[DomainElement],
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ) =
     new JsonSchemaEmitter(root, declarations, Lexical, renderConfig, errorHandler)
 
   def apply(root: Shape, declarations: Seq[DomainElement], options: RenderOptions, errorHandler: AMFErrorHandler) = {
@@ -38,11 +40,13 @@ object JsonSchemaEmitter {
 }
 
 // TODO improve JsonSchemaEmitter interface
-case class JsonSchemaEmitter(root: Shape,
-                             declarations: Seq[DomainElement],
-                             ordering: SpecOrdering,
-                             renderConfig: RenderConfiguration,
-                             errorHandler: AMFErrorHandler) {
+case class JsonSchemaEmitter(
+    root: Shape,
+    declarations: Seq[DomainElement],
+    ordering: SpecOrdering,
+    renderConfig: RenderConfiguration,
+    errorHandler: AMFErrorHandler
+) {
 
   private val options: RenderOptions = renderConfig.renderOptions
 
@@ -76,8 +80,8 @@ case class JsonSchemaEmitter(root: Shape,
   }
 
   private def sortedTypeEntries(ctx: OasLikeShapeEmitterContext) = {
-    val shapes = declarations.collect({
-      case s: Shape => s
+    val shapes = declarations.collect({ case s: Shape =>
+      s
     })
     ordering.sorted(emitter.OasDeclaredShapesEmitter(shapes, SpecOrdering.Lexical, Seq())(ctx).toSeq)
   }

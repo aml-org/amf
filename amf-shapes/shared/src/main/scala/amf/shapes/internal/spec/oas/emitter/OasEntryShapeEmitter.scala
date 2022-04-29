@@ -9,12 +9,14 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasEntryShapeEmitter(key: String,
-                                shape: Shape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasEntryShapeEmitter(
+    key: String,
+    shape: Shape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(

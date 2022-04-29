@@ -114,17 +114,15 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   test("Test shape id preservation") {
     val file   = "shapeIdPreservation.raml"
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    parse(file, config).map {
-      case u: Module =>
-        assert(
-          u.declares.forall {
-            case anyShape: AnyShape =>
-              val originalId = anyShape.id
-              config.elementClient().toJsonSchema(anyShape)
-              val newId = anyShape.id
-              originalId == newId
-          }
-        )
+    parse(file, config).map { case u: Module =>
+      assert(
+        u.declares.forall { case anyShape: AnyShape =>
+          val originalId = anyShape.id
+          config.elementClient().toJsonSchema(anyShape)
+          val newId = anyShape.id
+          originalId == newId
+        }
+      )
     }
   }
 
@@ -140,10 +138,12 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
     }
   }
 
-  private def cycle(file: String,
-                    golden: String,
-                    findShapeFunc: BaseUnit => Option[AnyShape],
-                    hint: Hint = Raml10YamlHint): Future[Assertion] = {
+  private def cycle(
+      file: String,
+      golden: String,
+      findShapeFunc: BaseUnit => Option[AnyShape],
+      hint: Hint = Raml10YamlHint
+  ): Future[Assertion] = {
     val config = WebAPIConfiguration
       .WebAPI()
       .withRenderOptions(RenderOptions().withoutCompactedEmission)
@@ -156,9 +156,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
           .transform(unit, PipelineId.Default)
           .baseUnit
       ).map { element =>
-          config.elementClient().toJsonSchema(element)
-        }
-        .getOrElse("")
+        config.elementClient().toJsonSchema(element)
+      }.getOrElse("")
     }
 
     jsonSchema.flatMap { writeTemporaryFile(golden) }.flatMap(assertDifferences(_, goldenPath + golden))

@@ -9,9 +9,9 @@ import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 
-case class RamlTupleItemEmitter(item: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends PartEmitter {
+case class RamlTupleItemEmitter(item: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     Raml10TypeEmitter(item, ordering, references = references).entries().foreach { e =>
       b.obj(eb => e.emit(eb))

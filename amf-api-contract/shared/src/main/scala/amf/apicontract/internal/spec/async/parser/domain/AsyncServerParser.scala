@@ -21,9 +21,11 @@ case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncW
     map.entries.map { entry =>
       AsyncServerParser(api.id, entry)
         .parse()
-        .setWithoutId(ServerModel.Name,
-             AmfScalar(entry.key.asScalar.map(_.text).getOrElse(entry.key.toString), Annotations(entry.key)),
-             Annotations.inferred())
+        .setWithoutId(
+          ServerModel.Name,
+          AmfScalar(entry.key.asScalar.map(_.text).getOrElse(entry.key.toString), Annotations(entry.key)),
+          Annotations.inferred()
+        )
     }
   }
 }
@@ -48,8 +50,7 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
         val idCounter = new IdCounter()
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .flatMap(s =>
-            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => Unit, idCounter).parse())
+          .flatMap(s => OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => Unit, idCounter).parse())
 
         server.setWithoutId(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }

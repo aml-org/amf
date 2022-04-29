@@ -7,20 +7,22 @@ import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.IriTemplateMapping
 
-/**
-  * Variable metaModel
+/** Variable metaModel
   */
 object IriTemplateMappingModel extends DomainElementModel {
 
   val TemplateVariable = Field(
     Str,
     ApiContract + "templateVariable",
-    ModelDoc(ModelVocabularies.ApiContract, "templateVariable", "Variable defined inside an URL template"))
+    ModelDoc(ModelVocabularies.ApiContract, "templateVariable", "Variable defined inside an URL template")
+  )
 
   val LinkExpression =
-    Field(Str,
-          ApiContract + "linkExpression",
-          ModelDoc(ModelVocabularies.ApiContract, "linkExpression", "OAS 3 link expression"))
+    Field(
+      Str,
+      ApiContract + "linkExpression",
+      ModelDoc(ModelVocabularies.ApiContract, "linkExpression", "OAS 3 link expression")
+    )
 
   override val `type`: List[ValueType] = ApiContract + "IriTemplateMapping" :: DomainElementModel.`type`
 

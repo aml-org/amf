@@ -21,17 +21,23 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
   test("Resource loader shouldn't have absolute path if ref and base aren't absolute") {
     val mappings = Map(
       "resource::really-cool-urn:1.0.0:raml:zip:main.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml"
+      ),
       "something.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml"
+      ),
       "examples/something/get-something-response.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml"
+      ),
       "examples/something/put-something-request.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml"
+      ),
       "examples/common/async-response.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml"
+      ),
       "libraries/resourceTypes.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml"
+      )
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
     val eh  = DefaultErrorHandler()
@@ -43,7 +49,8 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
         WebAPIConfiguration
           .WebAPI()
           .withResourceLoaders(List(new URNResourceLoader(mappings)))
-          .withErrorHandlerProvider(() => eh))
+          .withErrorHandlerProvider(() => eh)
+      )
     ).build()
       .map { _ =>
         eh.getResults should have size 0
@@ -54,15 +61,20 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
   test("Resource loader should find nested references") {
     val mappings = Map(
       "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/example.json"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/example.json"
+      ),
       "exchange.json" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/exchange.json"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/exchange.json"
+      ),
       "components/schemas/okResponse.json" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/okResponse.json"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/okResponse.json"
+      ),
       "components/schemas/item.json" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/item.json"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/item.json"
+      ),
       "components/schemas/nested.json" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/nested.json"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/nested.json"
+      )
     )
     val url = "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json"
     val client = WebAPIConfiguration
@@ -77,11 +89,14 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
   test("Parsing context generated in extends resolution stage for raml traits") {
     val mappings = Map(
       "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml"
+      ),
       "some-modules/for-health-check.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml"
+      ),
       "some-modules/trait.raml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml"),
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml"
+      )
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
     val eh  = DefaultErrorHandler()
@@ -106,7 +121,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       ),
       "utility.yaml" -> CustomContentResult(
         "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/utility.yaml"
-      ),
+      )
     )
     val url = "resource::com.mycompany:consumer-api:1.0.0:oas:zip:consumer.yaml"
     val client = WebAPIConfiguration
@@ -126,7 +141,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       ),
       "exchange_modules/8fe5354c-e64c-4eaa-addc-b50906a0b48c/datamodel-tmforum/1.0.0/4.1.0/Customer/Bucket.schema.json" -> CustomContentResult(
         "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/exchange-modules/Bucket.schema.json"
-      ),
+      )
     )
     val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:se-23375:1.0.1:oas:zip:se-23375.json"
     val client = WebAPIConfiguration
@@ -146,7 +161,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       ),
       "responses.yaml" -> CustomContentResult(
         "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/responses.yaml"
-      ),
+      )
     )
     val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml"
     val client = WebAPIConfiguration

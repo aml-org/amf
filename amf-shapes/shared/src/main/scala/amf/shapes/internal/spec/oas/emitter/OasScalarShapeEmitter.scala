@@ -17,10 +17,12 @@ import org.yaml.model.YType
 
 import scala.collection.mutable.ListBuffer
 
-case class OasScalarShapeEmitter(scalar: ScalarShape,
-                                 ordering: SpecOrdering,
-                                 references: Seq[BaseUnit],
-                                 isHeader: Boolean = false)(override implicit val spec: OasLikeShapeEmitterContext)
+case class OasScalarShapeEmitter(
+    scalar: ScalarShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    isHeader: Boolean = false
+)(override implicit val spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
@@ -38,14 +40,19 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
           case Some(lexicalInfo) =>
             result += MapEntryEmitter("type", typeDefStr, YType.Str, lexicalInfo.range.start)
           case _ =>
-            result += MapEntryEmitter("type", typeDefStr, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
+            result += MapEntryEmitter(
+              "type",
+              typeDefStr,
+              position = pos(f.value.annotations)
+            ) // TODO check this  - annotations of typeDef in parser
         }
       }
 
     result ++= ContentEmitters.emitters(
       scalar,
       spec.schemaVersion,
-      (key, version) => OasEntryShapeEmitter(key, version, ordering, references, Seq(), Seq()))
+      (key, version) => OasEntryShapeEmitter(key, version, ordering, references, Seq(), Seq())
+    )
 
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information

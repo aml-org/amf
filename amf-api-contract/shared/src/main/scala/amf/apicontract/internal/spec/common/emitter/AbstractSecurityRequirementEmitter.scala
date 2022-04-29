@@ -12,9 +12,9 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-case class SecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends SingleValueArrayEmitter {
+case class SecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends SingleValueArrayEmitter {
 
   override type Element = SecurityRequirement
 
@@ -25,9 +25,9 @@ case class SecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: Spe
     f.array.values.collect { case p: SecurityRequirement => p }
 }
 
-case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
@@ -68,9 +68,9 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
 abstract class AbstractSecurityRequirementEmitter(securityRequirement: SecurityRequirement, ordering: SpecOrdering)
     extends PartEmitter
 
-case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends AbstractSecurityRequirementEmitter(requirement, ordering) {
+case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends AbstractSecurityRequirementEmitter(requirement, ordering) {
   override def emit(b: PartBuilder): Unit = {
     requirement.schemes.foreach { scheme =>
       RamlParametrizedSecuritySchemeEmitter(scheme, ordering).emit(b)

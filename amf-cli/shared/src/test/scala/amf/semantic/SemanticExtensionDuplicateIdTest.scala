@@ -34,8 +34,8 @@ trait DuplicateIdTest extends Matchers {
   }
 
   private def idsWithMoreThanOneAssociatedElement(idMap: Map[String, List[AmfObject]]) = {
-    idMap.filter {
-      case (_: String, value: List[AmfObject]) => value.size > 1
+    idMap.filter { case (_: String, value: List[AmfObject]) =>
+      value.size > 1
     }.keySet
   }
 }
@@ -72,8 +72,10 @@ class SemanticExtensionDuplicateIdTest extends AsyncFunSuite with Matchers with 
     }
   }
 
-  private def getConfig(dialect: String,
-                        baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
+  private def getConfig(
+      dialect: String,
+      baseConfig: AMFConfiguration = APIConfiguration.API()
+  ): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)

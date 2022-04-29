@@ -13,8 +13,9 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YScalar, YSequence, YType}
 import org.yaml.render.YamlRender
 
-case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options: ExampleOptions)(
-    implicit ctx: ShapeParserContext) {
+case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options: ExampleOptions)(implicit
+    ctx: ShapeParserContext
+) {
   private val node = entryLike.value
   def parse(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
@@ -28,7 +29,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
           .get(refUrl)
           .foreach { e =>
             example.add(ExternalReferenceUrl(refUrl))
-            example.callAfterAdoption{() => example.withReference(e.encoded.id)}
+            example.callAfterAdoption { () => example.withReference(e.encoded.id) }
             example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
           }
         (mut.target.getOrElse(node), true)
@@ -57,8 +58,9 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
   }
 }
 
-case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(
-    implicit ctx: ShapeParserContext) {
+case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(implicit
+    ctx: ShapeParserContext
+) {
   def parse(): Seq[Example] = {
     val counter = new IdCounter()
     seq.nodes.map { n =>

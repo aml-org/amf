@@ -8,9 +8,7 @@ import amf.core.internal.parser.YMapOps
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode}
 
-/**
-  *
-  */
+/** */
 object LicenseParser {
   def apply(node: YNode)(implicit ctx: WebApiContext): LicenseParser = new LicenseParser(node)(toOas(ctx))
 

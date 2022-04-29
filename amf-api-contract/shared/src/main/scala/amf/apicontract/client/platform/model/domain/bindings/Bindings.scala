@@ -1,6 +1,11 @@
 package amf.apicontract.client.platform.model.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBinding => InternalChannelBinding, MessageBinding => InternalMessageBinding, OperationBinding => InternalOperationBinding, ServerBinding => InternalServerBinding}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBinding => InternalChannelBinding,
+  MessageBinding => InternalMessageBinding,
+  OperationBinding => InternalOperationBinding,
+  ServerBinding => InternalServerBinding
+}
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, Linkable}
 
