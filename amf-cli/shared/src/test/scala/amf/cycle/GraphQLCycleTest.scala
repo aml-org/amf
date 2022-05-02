@@ -18,6 +18,7 @@ trait GraphQLFunSuiteCycleTests extends FunSuiteCycleTests {
     )
   }
 
+  override def renderOptions(): RenderOptions = super.renderOptions().withPrettyPrint
 }
 
 class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
@@ -37,6 +38,10 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
 
   test("Can cycle through the SWAPI GraphQL API") {
     cycle("swapi/api.graphql", "swapi/dumped.graphql", GraphQLHint, GraphQLHint)
+  }
+
+  test("Can parse API with keywords as names") {
+    cycle("keyword-names/api.graphql", "keyword-names/api.jsonld", GraphQLHint, AmfJsonHint)
   }
 
 }

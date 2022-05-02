@@ -1,0 +1,13 @@
+schema {
+    query: Query
+}
+
+type Query {
+    person: Person
+}
+
+type Person {
+    name: String
+    type: String
+    arguments(input: String): String
+}
