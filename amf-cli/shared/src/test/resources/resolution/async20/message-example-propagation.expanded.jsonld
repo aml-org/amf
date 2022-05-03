@@ -43,6 +43,7 @@
                 "@id": "#4",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -55,6 +56,7 @@
                     "@id": "#5",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -63,6 +65,7 @@
                         "@id": "#15",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "raml-shapes:schema": [
@@ -872,7 +875,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [

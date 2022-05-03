@@ -9,8 +9,8 @@ nodeMappings:
       clientIdExpression:
         range: string
         propertyTerm: ns0.dataweaveExpression
-        mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[attributes.headers['client_id']]"
       clientSecretExpression:
         range: string
@@ -21,6 +21,7 @@ external:
   security: anypoint://vocabulary/policy.yaml#
   config: anypoint://vocabulary/policy.yaml#
   ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

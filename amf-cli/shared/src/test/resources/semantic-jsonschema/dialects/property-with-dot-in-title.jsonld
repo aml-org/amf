@@ -1,0 +1,203 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/security",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "security",
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
+    },
+    {
+      "@id": "/externals/config",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "config",
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
+    },
+    {
+      "@id": "/externals/ns0",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "ns0",
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
+    },
+    {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/testname"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/1Thisshouldbegood"
+        },
+        {
+          "@id": "#/declarations/testname"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/security"
+        },
+        {
+          "@id": "/externals/config"
+        },
+        {
+          "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/1Thisshouldbegood",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "1Thisshouldbegood",
+      "shacl:property": [
+        {
+          "@id": "/property/property/testprop/shape/testprop/property/property/key"
+        },
+        {
+          "@id": "/property/property/testprop/shape/testprop/property/property/value"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/testname",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "testname",
+      "shacl:property": [
+        {
+          "@id": "/property/property/testprop"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/property/property/testprop/shape/testprop/property/property/key",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "key",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/testprop/shape/testprop/property/property/value",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "value",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/testprop",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "testprop",
+      "shacl:node": {
+        "@id": "/property/property/testprop/list"
+      },
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/property/property/testprop/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/1Thisshouldbegood"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/property-with-dot-in-title.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

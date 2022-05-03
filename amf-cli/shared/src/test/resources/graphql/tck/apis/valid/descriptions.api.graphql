@@ -1,0 +1,13 @@
+schema {
+    query: Query
+}
+
+"""
+This is the most basic GraphQL schema
+"""
+type Query {
+    """
+    This is the most basic property
+    """
+    name: String
+}

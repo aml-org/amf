@@ -1,0 +1,11 @@
+schema {
+    query: Query
+}
+
+type Query {
+    id: ID
+    string: String
+    boolean: Boolean
+    int: Int
+    float: Float
+}

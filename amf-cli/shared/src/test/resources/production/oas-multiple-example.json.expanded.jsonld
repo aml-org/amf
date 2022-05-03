@@ -48,6 +48,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2Fexamples/supportedOperation/get/GET_examples",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -70,6 +71,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2Fexamples/supportedOperation/get/GET_examples/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -93,6 +95,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2Fexamples/supportedOperation/get/GET_examples/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -284,6 +287,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleType/supportedOperation/get/GET_exampleType",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -306,6 +310,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleType/supportedOperation/get/GET_exampleType/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -329,6 +334,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleType/supportedOperation/get/GET_exampleType/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -520,6 +526,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleInTypeAndResource/supportedOperation/get/GET_exampleInTypeAndResource",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -542,6 +549,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleInTypeAndResource/supportedOperation/get/GET_exampleInTypeAndResource/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -565,6 +573,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexampleInTypeAndResource/supportedOperation/get/GET_exampleInTypeAndResource/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -756,6 +765,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResource/supportedOperation/get/GET_examplesInResource",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -778,6 +788,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResource/supportedOperation/get/GET_examplesInResource/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -801,6 +812,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResource/supportedOperation/get/GET_examplesInResource/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1967,6 +1979,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResourceAndType/supportedOperation/get/GET_examplesInResourceAndType",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -1989,6 +2002,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResourceAndType/supportedOperation/get/GET_examplesInResourceAndType/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2012,6 +2026,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-multiple-example.json#/web-api/endpoint/%2FexamplesInResourceAndType/supportedOperation/get/GET_examplesInResourceAndType/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -2278,7 +2293,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [

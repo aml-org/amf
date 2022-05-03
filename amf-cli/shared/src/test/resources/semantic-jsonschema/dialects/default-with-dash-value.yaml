@@ -1,0 +1,16 @@
+#%Dialect 1.0
+nodeMappings:
+  Defaultwithdashvalue:
+    mapping:
+      address:
+        range: string
+        mandatory: false
+        default: "-"
+    additionalProperties: true
+external:
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Defaultwithdashvalue

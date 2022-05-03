@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -73,6 +75,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1385,7 +1388,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -1489,7 +1492,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#modelVersion": [
               {
-                "@value": "3.4.0"
+                "@value": "3.5.0"
               }
             ],
             "http://a.ml/vocabularies/document#sourceSpec": [
@@ -1667,7 +1670,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#modelVersion": [
               {
-                "@value": "3.4.0"
+                "@value": "3.5.0"
               }
             ],
             "http://a.ml/vocabularies/document#sourceSpec": [
@@ -1909,7 +1912,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#modelVersion": [
               {
-                "@value": "3.4.0"
+                "@value": "3.5.0"
               }
             ],
             "http://a.ml/vocabularies/document#sourceSpec": [
@@ -1967,6 +1970,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/references/3/scheme/fragment/header/parameter/header/Authorization",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -2156,6 +2160,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/references/3/scheme/fragment/parameter/parameter/query/access_token",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -2347,6 +2352,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/references/3/scheme/fragment/response/resp/401",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Response",
+                  "http://a.ml/vocabularies/core#Response",
                   "http://a.ml/vocabularies/apiContract#Message",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -2667,7 +2673,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#modelVersion": [
               {
-                "@value": "3.4.0"
+                "@value": "3.5.0"
               }
             ],
             "http://a.ml/vocabularies/document#sourceSpec": [

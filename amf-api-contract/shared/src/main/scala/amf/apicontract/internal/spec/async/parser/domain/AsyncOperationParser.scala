@@ -7,7 +7,6 @@ import amf.apicontract.internal.spec.async.parser.bindings.AsyncOperationBinding
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationTrait
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.oas.parser
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeOperationParser, OasLikeTagsParser}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
@@ -153,9 +152,10 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
   }
 
   private def remote(url: String, node: YNode): Operation = {
-    ctx.obtainRemoteYNode(url) match {
-      case Some(traitNode) =>
-        AsyncOperationParser(YMapEntry(name.getOrElse(url), traitNode), adopt, isTrait = true)
+    ctx.navigateToRemoteYNode(url) match {
+      case Some(result) =>
+        val operationNode = result.remoteNode
+        AsyncOperationParser(YMapEntry(name.getOrElse(url), operationNode), adopt, isTrait = true)(result.context)
           .parse()
       case None => linkError(url, node)
     }

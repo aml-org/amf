@@ -1,0 +1,16 @@
+asyncapi: 2.0.0
+info:
+  title: asdasd
+  version: asdasd
+channels:
+  someChannel:
+    publish:
+      operationId: baseId
+      summary: baseSummary
+      description: baseDescription
+      traits:
+        - $ref: "#/components/operationTraits/opTr"
+components:
+  operationTraits:
+    opTr:
+      $ref: "firstRefLevel/operation.yaml"

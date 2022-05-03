@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 0.8"
     },
     {
@@ -106,6 +106,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -176,6 +177,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -194,6 +196,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -243,6 +246,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/expects/request/parameter/parameter/query/stock",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "stock",
@@ -273,6 +277,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",

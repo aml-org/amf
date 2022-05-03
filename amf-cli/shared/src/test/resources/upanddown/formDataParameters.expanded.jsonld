@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -63,6 +65,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/uri%20parameter/parameter/path/a",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -143,6 +146,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/payload/formData",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -486,7 +490,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -501,6 +505,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/declares/parameter/path/a",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Parameter",
+          "http://a.ml/vocabularies/core#Parameter",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/core#name": [

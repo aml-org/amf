@@ -24,7 +24,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Asy
   override type Bindings = ServerBindings
   override val bindingsField: Field = ServerBindingsModel.Bindings
 
-  override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
+  override protected def createParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser =
     AsyncServerBindingsParser(entryLike)
 
   override protected def createBindings(): ServerBindings = ServerBindings()

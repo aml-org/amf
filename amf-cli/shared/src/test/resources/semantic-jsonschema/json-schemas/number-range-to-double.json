@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "Number to Double",
+  "type": "object",
+  "properties": {
+    "a": {
+      "@context": {
+        "@characteristics": [
+          "config:timePeriod"
+        ]
+      },
+      "type": "number"
+    }
+  },
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  }
+}

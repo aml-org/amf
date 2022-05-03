@@ -279,6 +279,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -311,6 +312,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -319,6 +321,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -616,6 +619,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -899,6 +903,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -922,6 +927,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1077,6 +1083,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1100,6 +1107,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/default/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1280,6 +1288,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -1312,6 +1321,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1320,6 +1330,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1439,6 +1450,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1462,6 +1474,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1547,6 +1560,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1570,6 +1584,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/returns/resp/default/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1787,6 +1802,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -1819,6 +1835,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1827,6 +1844,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2110,6 +2128,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2133,6 +2152,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -2218,6 +2238,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2241,6 +2262,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -2421,6 +2443,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -2453,6 +2476,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2461,6 +2485,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2744,6 +2769,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/returns/resp/204",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2817,6 +2843,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2840,6 +2867,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/returns/resp/default/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -3184,7 +3212,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [

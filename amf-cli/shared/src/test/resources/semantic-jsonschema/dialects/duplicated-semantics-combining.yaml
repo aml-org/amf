@@ -1,0 +1,99 @@
+#%Dialect 1.0
+nodeMappings:
+  duplicatedsemanticsincombining:
+    allOf:
+      - SchemaNode
+      - SchemaNode_1
+      - SchemaNode_5
+  SchemaNode:
+    mapping:
+      a:
+        range: string
+        propertyTerm: semantics.a_2
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_1:
+    conditional:
+      if: SchemaNode_2
+      then: SchemaNode_3
+      else: SchemaNode_4
+  SchemaNode_2:
+    mapping:
+      b:
+        range: any
+        enum:
+          - condition
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_3:
+    mapping:
+      b:
+        range: string
+        propertyTerm: semantics.b_3
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_4:
+    mapping:
+      b:
+        range: string
+        propertyTerm: semantics.b_5
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_5:
+    oneOf:
+      - SchemaNode_6
+      - SchemaNode_7
+      - SchemaNode_8
+  SchemaNode_6:
+    mapping:
+      c:
+        range: integer
+        propertyTerm: semantics.c_6
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_7:
+    mapping:
+      d:
+        range: boolean
+        propertyTerm: semantics.d_4
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_8:
+    mapping:
+      f:
+        range: boolean
+        propertyTerm: semantics.f_1
+        mandatory: false
+    additionalProperties: true
+external:
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: duplicatedsemanticsincombining
+---
+#%Vocabulary 1.0
+external:
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
+base: https://a.ml/semantic-json-schema#
+vocabulary: Semantic JSON Schema Vocabulary
+propertyTerms:
+  f_1:
+    extends:
+      - config.sensitive
+      - config.dataweaveExpression
+  a_2:
+    extends: config.sensitive
+  b_3:
+    extends: config.sensitive
+  d_4:
+    extends: config.sensitive
+  b_5:
+    extends: config.dataweaveExpression
+  c_6:
+    extends: config.dataweaveExpression

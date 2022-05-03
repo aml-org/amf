@@ -48,6 +48,7 @@
                 "@id": "#4",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -60,6 +61,7 @@
                     "@id": "#5",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -68,6 +70,7 @@
                         "@id": "#6",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:name": [
@@ -773,7 +776,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [

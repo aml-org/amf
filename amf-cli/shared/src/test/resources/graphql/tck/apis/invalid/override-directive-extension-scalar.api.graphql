@@ -1,0 +1,13 @@
+schema {
+    query: Query
+}
+
+type Query {
+    date: Date
+}
+
+directive @example on SCALAR
+
+scalar Date @example
+extend scalar Date @example
+

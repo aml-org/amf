@@ -1,22 +1,20 @@
 #%Dialect 1.0
 nodeMappings:
   SomePolicy:
-    extends:
+    allOf:
       - SchemaNode
-      - extension_SomePolicy
-  extension_SomePolicy:
     mapping:
       thisApiName:
         range: string
-        propertyTerm: semantics.thisApiName
-        mandatory: true
+        propertyTerm: semantics.thisApiName_1
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[p('applicationName')]"
       thisApiVersion:
         range: string
-        propertyTerm: semantics.thisApiVersion
-        mandatory: true
+        propertyTerm: semantics.thisApiVersion_2
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[p('applicationVersion')]"
     additionalProperties: true
   SchemaNode:
@@ -28,9 +26,9 @@ nodeMappings:
     mapping:
       logStatistics:
         range: any
-        mandatory: true
         enum:
           - true
+        mandatory: true
     additionalProperties: true
   SchemaNode_2:
     mapping:
@@ -54,10 +52,13 @@ documents:
 #%Vocabulary 1.0
 external:
   security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
 base: https://a.ml/semantic-json-schema#
 vocabulary: Semantic JSON Schema Vocabulary
 propertyTerms:
-  thisApiName:
-    extends: security.dataweaveExpression
-  thisApiVersion:
-    extends: security.dataweaveExpression
+  thisApiName_1:
+    extends: ns0.dataweaveExpression
+  thisApiVersion_2:
+    extends: ns0.dataweaveExpression

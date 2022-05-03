@@ -1,14 +1,13 @@
 #%Dialect 1.0
 nodeMappings:
   Child:
-    union:
+    oneOf:
       - SchemaNode
       - SchemaNode_1
       - SchemaNode_2
-  extension_Child:
     mapping:
       d:
-        range: number
+        range: double
         mandatory: true
     additionalProperties: true
   SchemaNode:
@@ -16,24 +15,22 @@ nodeMappings:
       a:
         range: string
         mandatory: false
-    extends: extension_Child
     additionalProperties: true
   SchemaNode_1:
     mapping:
       b:
         range: integer
         mandatory: false
-    extends: extension_Child
     additionalProperties: true
   SchemaNode_2:
     mapping:
       c:
         range: boolean
         mandatory: false
-    extends: extension_Child
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

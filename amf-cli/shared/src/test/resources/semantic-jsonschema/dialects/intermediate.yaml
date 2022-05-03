@@ -7,12 +7,13 @@ nodeMappings:
         propertyTerm: foaf.name
         mandatory: true
       age:
-        range: number
+        range: double
         mandatory: true
       hey:
         range: SchemaNode
-        mandatory: false
         allowMultiple: true
+        minItems: 0
+        mandatory: false
     additionalProperties: true
   SchemaNode:
     classTerm: foaf.Verse
@@ -24,6 +25,7 @@ nodeMappings:
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
   xsd: http://www.w3.org/2001/XMLSchema#
   foaf: http://xmlns.com/foaf/0.1/
 dialect: amf-json-schema-generated-dialect

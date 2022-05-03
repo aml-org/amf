@@ -1,0 +1,32 @@
+{
+  "title": "test name",
+  "description": "test description",
+  "type": "object",
+  "properties": {
+    "testprop": {
+      "title": "1. This should be good",
+      "type": "object",
+      "properties": {
+        "key": {
+          "title": "my key",
+          "type": "string"
+        },
+        "value": {
+          "title": "my value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    }
+  },
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "$id": "my-test",
+  "$schema": "https://json-schema.org/draft/2019-09/schema"
+}

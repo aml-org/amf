@@ -58,6 +58,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-responses.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/Some%20title",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -75,6 +76,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-responses.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/Some%20title/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -361,7 +363,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -376,6 +378,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-responses.json#/declares/resp/Default",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/core#Response",
           "http://a.ml/vocabularies/apiContract#Message",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -394,6 +397,7 @@
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-responses.json#/declares/resp/Default/header/parameter/header/Time-Ago",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Parameter",
+              "http://a.ml/vocabularies/core#Parameter",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/core#name": [

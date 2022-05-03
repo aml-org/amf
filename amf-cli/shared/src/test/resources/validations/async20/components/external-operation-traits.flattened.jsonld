@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#sourceSpec": "ASYNC 2.0"
     },
     {
@@ -71,6 +71,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/endpoint/someChannel/supportedOperation/publish/something",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "publish",
@@ -124,6 +125,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/endpoint/someChannel/supportedOperation/publish/something/extends/external-traits.json%23%2FfirstOperationTrait",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "external-traits.json#/firstOperationTrait",

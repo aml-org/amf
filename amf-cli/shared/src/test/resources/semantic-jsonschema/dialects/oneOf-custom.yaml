@@ -1,7 +1,7 @@
 #%Dialect 1.0
 nodeMappings:
   Child:
-    union:
+    oneOf:
       - SchemaNode
       - SchemaNode_1
   SchemaNode_1:
@@ -21,6 +21,7 @@ nodeMappings:
         mandatory: false
     additionalProperties: true
 external:
+  semantics: https://a.ml/semantic-json-schema#
   foaf: http://xmlns.com/foaf/0.1/
 dialect: amf-json-schema-generated-dialect
 version: "1.0"

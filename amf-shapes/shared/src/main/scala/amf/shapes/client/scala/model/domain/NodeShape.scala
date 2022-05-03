@@ -17,6 +17,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
     extends AnyShape(fields, annotations) {
 
   def isAbstract: BoolField                         = fields.field(IsAbstract)
+  def isInputOnly: BoolField                        = fields.field(InputOnly)
   def minProperties: IntField                       = fields.field(MinProperties)
   def maxProperties: IntField                       = fields.field(MaxProperties)
   def closed: BoolField                             = fields.field(Closed)
@@ -26,7 +27,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def discriminatorValueMapping: Seq[DiscriminatorValueMapping] =
     fields.field(NodeShapeModel.DiscriminatorValueMapping)
   def properties: Seq[PropertyShape]              = fields.field(Properties)
-  def operations: Seq[ShapeOperation]              = fields.field(Operations)
+  def operations: Seq[ShapeOperation]             = fields.field(Operations)
   def dependencies: Seq[PropertyDependencies]     = fields.field(Dependencies)
   def schemaDependencies: Seq[SchemaDependencies] = fields.field(NodeShapeModel.SchemaDependencies)
   def additionalPropertiesSchema: Shape           = fields.field(AdditionalPropertiesSchema)
@@ -36,6 +37,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def unevaluatedPropertiesSchema: Shape          = fields.field(UnevaluatedPropertiesSchema)
 
   def withIsAbstract(isAbstract: Boolean): this.type                         = set(IsAbstract, isAbstract)
+  def withIsInputOnly(isInputOnly: Boolean): this.type                       = set(InputOnly, isInputOnly)
   def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
   def withUnevaluatedProperties(value: Boolean): this.type                   = set(UnevaluatedProperties, value)
   def withUnevaluatedPropertiesSchema(shape: Shape): this.type               = set(UnevaluatedPropertiesSchema, shape)
@@ -47,7 +49,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def discriminatorValueMapping(mappings: Seq[DiscriminatorValueMapping]): NodeShape.this.type =
     setArray(NodeShapeModel.DiscriminatorValueMapping, mappings)
   def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
-  def withOperations(operations: Seq[ShapeOperation]): this.type            = setArray(Operations, operations)
+  def withOperations(operations: Seq[ShapeOperation]): this.type           = setArray(Operations, operations)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
   def withSchemaDependencies(dependencies: Seq[SchemaDependencies]): this.type =
     setArray(NodeShapeModel.SchemaDependencies, dependencies)
@@ -120,7 +122,8 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   override val meta: AnyShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/shape/" + name.option().getOrElse("default-node").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/shape/" + name.option().getOrElse("default-node").urlComponentEncoded
 
   private[amf] override val ramlSyntaxKey: String = "nodeShape"
 

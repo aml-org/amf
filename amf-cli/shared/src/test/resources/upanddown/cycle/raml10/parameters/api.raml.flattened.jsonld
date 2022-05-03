@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -68,6 +68,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/parameters/api.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/parameter/parameter/path/a",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "a",
@@ -187,6 +188,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/parameters/api.raml#/declares/parameter/path/a",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "a",
@@ -206,6 +208,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/parameters/api.raml#/declares/payload%3F",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "payload?",

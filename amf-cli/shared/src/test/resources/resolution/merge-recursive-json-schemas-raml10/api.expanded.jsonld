@@ -43,6 +43,7 @@
                 "@id": "#24",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -55,6 +56,7 @@
                     "@id": "#26",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -73,6 +75,7 @@
                         "@id": "#27",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -558,6 +561,7 @@
                 "@id": "#37",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -570,6 +574,7 @@
                     "@id": "#38",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -588,6 +593,7 @@
                         "@id": "#39",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -1091,7 +1097,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [

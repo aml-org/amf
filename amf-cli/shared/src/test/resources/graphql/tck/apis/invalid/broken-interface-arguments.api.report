@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/broken-interface-arguments.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'Person'
+  Severity: Violation
+  Target: null/nullwrapper/unresolved
+  Property: 
+  Range: [(6,12)-(6,12)]
+  Location: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/broken-interface-arguments.api.graphql

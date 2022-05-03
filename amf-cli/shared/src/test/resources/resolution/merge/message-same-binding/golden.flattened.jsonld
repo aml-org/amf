@@ -5,12 +5,13 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0"
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0"
     },
     {
       "@id": "testId/resp/message",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],

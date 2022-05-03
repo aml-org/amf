@@ -1,0 +1,141 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/ns0",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "ns0",
+      "meta:base": "http://test.com/vocab#"
+    },
+    {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Something"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/Something"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/Something",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Something",
+      "shacl:property": [
+        {
+          "@id": "/property/property/arrayProperty"
+        },
+        {
+          "@id": "/property/property/otherProperty"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/property/property/arrayProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "arrayProperty",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true,
+      "shacl:mandatory": true
+    },
+    {
+      "@id": "/property/property/otherProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "otherProperty",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 1
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/mandatory-array-property.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

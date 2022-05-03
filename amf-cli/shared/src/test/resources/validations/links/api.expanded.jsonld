@@ -43,6 +43,7 @@
                 "@id": "#12",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -55,6 +56,7 @@
                     "@id": "#13",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -73,6 +75,7 @@
                         "@id": "#14",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -155,7 +158,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [
@@ -350,7 +353,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.4.0"
+                "@value": "3.5.0"
               }
             ],
             "doc:sourceSpec": [

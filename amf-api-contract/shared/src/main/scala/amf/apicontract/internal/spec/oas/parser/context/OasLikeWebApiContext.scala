@@ -1,17 +1,12 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.aml.internal.semantic.SemanticExtensionsFacadeBuilder
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.OasLikeWebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecVersionFactory
-import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser.domain.{
-  OasLikeEndpointParser,
-  OasLikeOperationParser,
-  OasLikeSecuritySettingsParser,
-  OasLikeServerVariableParser
-}
+import amf.apicontract.internal.spec.common.parser.{IgnoreAnnotationSchemaValidatorBuilder, ParsingHelpers, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeEndpointParser, OasLikeOperationParser, OasLikeSecuritySettingsParser, OasLikeServerVariableParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.ExternalFragment
@@ -23,6 +18,7 @@ import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 trait OasLikeSpecVersionFactory extends SpecVersionFactory {
   def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser
@@ -52,6 +48,8 @@ abstract class OasLikeWebApiContext(loc: String,
 
   def isMainFileContext: Boolean = loc == jsonSchemaRefGuide.currentLoc
 
+  override val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder(
+    IgnoreAnnotationSchemaValidatorBuilder)
   override val declarations: OasLikeWebApiDeclarations =
     ds.getOrElse(
       new OasLikeWebApiDeclarations(

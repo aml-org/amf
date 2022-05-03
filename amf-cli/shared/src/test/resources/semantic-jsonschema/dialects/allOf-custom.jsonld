@@ -28,6 +28,16 @@
       "meta:base": "http://test.com/vocab#"
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "/externals/xsd",
       "@type": [
         "owl:Ontology",
@@ -67,9 +77,6 @@
         },
         {
           "@id": "#/declarations/Child"
-        },
-        {
-          "@id": "#/declarations/extension_Child"
         }
       ],
       "@type": [
@@ -84,6 +91,9 @@
       "meta:externals": [
         {
           "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
         },
         {
           "@id": "/externals/xsd"
@@ -122,29 +132,12 @@
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "Child",
-      "doc:extends": [
-        {
-          "@id": "#/declarations/Child/null"
-        },
-        {
-          "@id": "#/declarations/Child/null"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/extension_Child",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
       "shacl:targetClass": [
         {
           "@id": "http://xmlns.com/foaf/0.1/Person"
         }
       ],
-      "core:name": "extension_Child",
+      "core:name": "Child",
       "shacl:property": [
         {
           "@id": "/property/property/name"
@@ -153,7 +146,12 @@
           "@id": "/property/property/age"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "http://a.ml/vocabularies/amf/aml#and": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        }
+      ]
     },
     {
       "@id": "/and/shape/Parent1/property/property/displayName",
@@ -173,20 +171,6 @@
         }
       ],
       "shacl:minCount": 0
-    },
-    {
-      "@id": "#/declarations/Child/null",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "doc:link-target": [
-        {
-          "@id": "#/declarations/SchemaNode"
-        }
-      ],
-      "doc:link-label": "SchemaNode"
     },
     {
       "@id": "/property/property/name",
@@ -211,7 +195,7 @@
       "core:name": "age",
       "shacl:datatype": [
         {
-          "@id": "http://a.ml/vocabularies/shapes#number"
+          "@id": "http://www.w3.org/2001/XMLSchema#double"
         }
       ],
       "shacl:minCount": 1

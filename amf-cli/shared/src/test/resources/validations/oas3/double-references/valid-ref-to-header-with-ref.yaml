@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: Sample Pet Store App
+  description: This is a sample server for a pet store.
+  version: 1.0.1
+
+paths:
+  /path:
+    summary: an endpoint
+    description: still an endpoint
+    get:
+      tags:
+        - pet
+      summary: Updates a pet in the store with form data
+      description: Updates a pet in the store with form data
+      responses:
+        '200':
+          description: a response
+          headers:
+              header:
+                $ref: "firstRefLevel/header.yaml"

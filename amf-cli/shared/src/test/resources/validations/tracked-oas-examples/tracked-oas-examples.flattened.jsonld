@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:transformed": true,
       "doc:sourceSpec": "OAS 2.0"
     },
@@ -118,6 +118,7 @@
       "@id": "#26",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -141,6 +142,7 @@
       "@id": "#29",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -164,6 +166,7 @@
       "@id": "#33",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -187,6 +190,7 @@
       "@id": "#36",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -210,6 +214,7 @@
       "@id": "#27",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -231,6 +236,7 @@
       "@id": "#30",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -252,6 +258,7 @@
       "@id": "#34",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -273,6 +280,7 @@
       "@id": "#37",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -294,6 +302,7 @@
       "@id": "#14",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -305,6 +314,7 @@
       "@id": "#31",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -316,6 +326,7 @@
       "@id": "#19",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -327,6 +338,7 @@
       "@id": "#38",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",

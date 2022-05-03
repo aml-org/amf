@@ -43,6 +43,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -60,6 +61,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -68,6 +70,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -107,6 +110,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -146,6 +150,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -185,6 +190,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -228,6 +234,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -246,6 +253,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallFilms/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -329,6 +337,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -346,6 +355,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -354,6 +364,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -398,6 +409,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query/request/parameter/default-binding/filmID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -446,6 +458,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -464,6 +477,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Ffilm/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -547,6 +561,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -564,6 +579,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -572,6 +588,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -611,6 +628,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -650,6 +668,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -689,6 +708,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -732,6 +752,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -750,6 +771,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPeople/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -833,6 +855,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -850,6 +873,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -858,6 +882,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -902,6 +927,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query/request/parameter/default-binding/personID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -950,6 +976,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -968,6 +995,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -1051,6 +1079,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -1068,6 +1097,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1076,6 +1106,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1115,6 +1146,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1154,6 +1186,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1193,6 +1226,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1236,6 +1270,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1254,6 +1289,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallPlanets/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -1337,6 +1373,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -1354,6 +1391,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1362,6 +1400,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1406,6 +1445,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query/request/parameter/default-binding/planetID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1454,6 +1494,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1472,6 +1513,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -1555,6 +1597,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -1572,6 +1615,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1580,6 +1624,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1619,6 +1664,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1658,6 +1704,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1697,6 +1744,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1740,6 +1788,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1758,6 +1807,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallSpecies/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -1836,6 +1886,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -1853,6 +1904,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1861,6 +1913,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1905,6 +1958,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query/request/parameter/default-binding/speciesID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -1953,6 +2007,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1971,6 +2026,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fspecies/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -2049,6 +2105,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -2066,6 +2123,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2074,6 +2132,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2113,6 +2172,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2152,6 +2212,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2191,6 +2252,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2234,6 +2296,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2252,6 +2315,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallStarships/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -2330,6 +2394,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -2347,6 +2412,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2355,6 +2421,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2399,6 +2466,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query/request/parameter/default-binding/starshipID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2447,6 +2515,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2465,6 +2534,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fstarship/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -2543,6 +2613,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -2560,6 +2631,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2568,6 +2640,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/request/parameter/default-binding/after",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2607,6 +2680,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/request/parameter/default-binding/first",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2646,6 +2720,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/request/parameter/default-binding/before",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2685,6 +2760,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2728,6 +2804,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2746,6 +2823,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2FallVehicles/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -2824,6 +2902,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -2841,6 +2920,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2849,6 +2929,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2893,6 +2974,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query/request/parameter/default-binding/vehicleID",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -2941,6 +3023,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -2959,6 +3042,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fvehicle/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -3042,6 +3126,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fnode/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#method": [
@@ -3059,6 +3144,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fnode/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -3067,6 +3153,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fnode/query/request/parameter/default-binding/id",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -3120,6 +3207,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fnode/query/resp/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/apiContract#Message",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -3138,6 +3226,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/web-api/%2Fquery%2Fnode/query/resp/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
@@ -3211,7 +3300,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#modelVersion": [
 {
-"@value": "3.4.0"
+"@value": "3.5.0"
 }
 ],
 "http://a.ml/vocabularies/document#sourceSpec": [
@@ -4511,6 +4600,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4522,13 +4612,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4536,12 +4629,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4568,6 +4661,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4575,12 +4669,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4607,6 +4701,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4614,12 +4709,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4646,6 +4741,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4653,12 +4749,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4689,6 +4785,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4696,11 +4793,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/pilotConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4760,6 +4858,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4771,13 +4870,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4785,12 +4887,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4817,6 +4919,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4824,12 +4927,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4856,6 +4959,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4863,12 +4967,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4895,6 +4999,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4902,12 +5007,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -4938,6 +5043,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -4945,11 +5051,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Starship/filmConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6269,6 +6376,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6280,13 +6388,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6294,12 +6405,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6326,6 +6437,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6333,12 +6445,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6365,6 +6477,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6372,12 +6485,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6404,6 +6517,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6411,12 +6525,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6447,6 +6561,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6454,11 +6569,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/pilotConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6518,6 +6634,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6529,13 +6646,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6543,12 +6663,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6575,6 +6695,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6582,12 +6703,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6614,6 +6735,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6621,12 +6743,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6653,6 +6775,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6660,12 +6783,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -6696,6 +6819,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -6703,11 +6827,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Vehicle/filmConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -8945,6 +9070,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -8956,13 +9082,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -8970,12 +9099,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9002,6 +9131,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9009,12 +9139,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9041,6 +9171,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9048,12 +9179,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9080,6 +9211,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9087,12 +9219,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9123,6 +9255,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9130,11 +9263,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/speciesConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9194,6 +9328,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9205,13 +9340,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9219,12 +9357,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9251,6 +9389,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9258,12 +9397,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9290,6 +9429,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9297,12 +9437,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9329,6 +9469,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9336,12 +9477,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9372,6 +9513,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9379,11 +9521,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/starshipConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9443,6 +9586,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9454,13 +9598,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9468,12 +9615,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9500,6 +9647,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9507,12 +9655,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9539,6 +9687,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9546,12 +9695,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9578,6 +9727,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9585,12 +9735,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9621,6 +9771,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9628,11 +9779,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/vehicleConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9692,6 +9844,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9703,13 +9856,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9717,12 +9873,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9749,6 +9905,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9756,12 +9913,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9788,6 +9945,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9795,12 +9953,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9827,6 +9985,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9834,12 +9993,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9870,6 +10029,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9877,11 +10037,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/characterConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9941,6 +10102,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9952,13 +10114,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -9966,12 +10131,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -9998,6 +10163,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -10005,12 +10171,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -10037,6 +10203,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -10044,12 +10211,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -10076,6 +10243,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -10083,12 +10251,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -10119,6 +10287,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -10126,11 +10295,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Film/planetConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11328,6 +11498,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11339,13 +11510,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11353,12 +11527,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11385,6 +11559,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11392,12 +11567,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11424,6 +11599,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11431,12 +11607,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11463,6 +11639,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11470,12 +11647,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11506,6 +11683,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11513,11 +11691,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/residentConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11577,6 +11756,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11588,13 +11768,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11602,12 +11785,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11634,6 +11817,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11641,12 +11825,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11673,6 +11857,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11680,12 +11865,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11712,6 +11897,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11719,12 +11905,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -11755,6 +11941,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -11762,11 +11949,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Planet/filmConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -13924,6 +14112,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -13935,13 +14124,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -13949,12 +14141,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -13981,6 +14173,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -13988,12 +14181,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14020,6 +14213,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14027,12 +14221,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14059,6 +14253,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14066,12 +14261,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14102,6 +14297,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14109,11 +14305,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/filmConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14173,6 +14370,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14184,13 +14382,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14198,12 +14399,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14230,6 +14431,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14237,12 +14439,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14269,6 +14471,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14276,12 +14479,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14308,6 +14511,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14315,12 +14519,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14351,6 +14555,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14358,11 +14563,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/starshipConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14422,6 +14628,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14433,13 +14640,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14447,12 +14657,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14479,6 +14689,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14486,12 +14697,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14518,6 +14729,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14525,12 +14737,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14557,6 +14769,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14564,12 +14777,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -14600,6 +14813,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -14607,11 +14821,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Person/vehicleConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18812,6 +19027,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18823,13 +19039,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18837,12 +19056,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -18869,6 +19088,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18876,12 +19096,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -18908,6 +19128,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18915,12 +19136,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -18947,6 +19168,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18954,12 +19176,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -18990,6 +19212,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -18997,11 +19220,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/personConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19061,6 +19285,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection",
 "@type": [
 "http://a.ml/vocabularies/shapes#Operation",
+"http://a.ml/vocabularies/core#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19072,13 +19297,16 @@
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/request",
 "@type": [
-"http://a.ml/vocabularies/shapes#Request"
+"http://a.ml/vocabularies/shapes#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/apiContract#parameter": [
+"http://a.ml/vocabularies/shapes#parameter": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/request/parameter/after",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19086,12 +19314,12 @@
 "@value": "after"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -19118,6 +19346,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/request/parameter/first",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19125,12 +19354,12 @@
 "@value": "first"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -19157,6 +19386,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/request/parameter/before",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19164,12 +19394,12 @@
 "@value": "before"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -19196,6 +19426,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/request/parameter/last",
 "@type": [
 "http://a.ml/vocabularies/shapes#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19203,12 +19434,12 @@
 "@value": "last"
 }
 ],
-"http://a.ml/vocabularies/apiContract#binding": [
+"http://a.ml/vocabularies/shapes#binding": [
 {
 "@value": "query"
 }
 ],
-"http://a.ml/vocabularies/apiContract#required": [
+"http://a.ml/vocabularies/shapes#required": [
 {
 "@value": false
 }
@@ -19239,6 +19470,7 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/response",
 "@type": [
 "http://a.ml/vocabularies/shapes#Response",
+"http://a.ml/vocabularies/core#Response",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [
@@ -19246,11 +19478,12 @@
 "@value": "default"
 }
 ],
-"http://a.ml/vocabularies/apiContract#payload": [
+"http://a.ml/vocabularies/shapes#payload": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/swapi/api.graphql#/shape/Species/filmConnection/response/default",
 "@type": [
 "http://a.ml/vocabularies/shapes#Payload",
+"http://a.ml/vocabularies/core#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/core#name": [

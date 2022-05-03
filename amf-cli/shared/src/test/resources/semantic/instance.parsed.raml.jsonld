@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:sourceSpec": "RAML 1.0"
     },
     {
@@ -40,6 +40,7 @@
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -53,6 +54,7 @@
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -62,6 +64,11 @@
     },
     {
       "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declares/pagination"
+        }
+      ],
       "@type": [
         "doc:Document",
         "doc:Fragment",
@@ -75,12 +82,37 @@
       "doc:processingData": {
         "@id": "#/BaseUnitProcessingData"
       }
+    },
+    {
+      "@id": "#/declares/pagination",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#/declares/pagination/any/schema"
+      },
+      "core:name": "pagination"
+    },
+    {
+      "@id": "#/declares/pagination/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema"
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api.raml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   }
 }

@@ -9,9 +9,9 @@ nodeMappings:
     mapping:
       a:
         range: any
-        mandatory: false
         enum:
           - condition
+        mandatory: false
     additionalProperties: true
   SchemaNode_1:
     mapping:
@@ -30,6 +30,7 @@ nodeMappings:
 external:
   config: anypoint://vocabulary/policy.yaml#
   ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

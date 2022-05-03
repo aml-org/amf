@@ -138,6 +138,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/int_uri_param/api.raml#/web-api/endpoint/%2Fauthors%2F%7BauthorId%7D/parameter/parameter/path/authorId",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -403,6 +404,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/int_uri_param/api.raml#/web-api/endpoint/%2Fauthors%2F%7BauthorId%7D%2Fbooks/parameter/parameter/path/authorId",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -668,6 +670,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/int_uri_param/api.raml#/web-api/endpoint/%2Fauthors%2F%7BauthorId%7D%2Fbooks%2F%7BbookId%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -705,6 +708,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/int_uri_param/api.raml#/web-api/endpoint/%2Fauthors%2F%7BauthorId%7D%2Fbooks%2F%7BbookId%7D/parameter/parameter/path/authorId",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -905,6 +909,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/int_uri_param/api.raml#/web-api/endpoint/%2Fauthors%2F%7BauthorId%7D%2Fbooks%2F%7BbookId%7D/parameter/parameter/path/bookId",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -1158,7 +1163,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

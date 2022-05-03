@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -53,6 +53,7 @@
       "@id": "#34",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -241,6 +242,7 @@
       "@id": "#3",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "authorization",
@@ -267,6 +269,7 @@
       "@id": "#7",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "access_token",
@@ -293,6 +296,7 @@
       "@id": "#9",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -316,6 +320,7 @@
       "@id": "#12",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -363,6 +368,7 @@
       "@id": "#22",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "Authorization",
@@ -388,6 +394,7 @@
       "@id": "#24",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "token",
@@ -413,6 +420,7 @@
       "@id": "#26",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -514,6 +522,7 @@
       "@id": "#10",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -530,6 +539,7 @@
       "@id": "#13",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -841,7 +851,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:sourceSpec": "RAML 1.0"
     },
     {
@@ -887,7 +897,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:sourceSpec": "RAML 1.0"
     }
   ],

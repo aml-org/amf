@@ -28,6 +28,16 @@
       "meta:base": "http://test.com/vocab#"
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "/externals/xsd",
       "@type": [
         "owl:Ontology",
@@ -81,6 +91,9 @@
       "meta:externals": [
         {
           "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
         },
         {
           "@id": "/externals/xsd"
@@ -185,7 +198,7 @@
       "core:name": "age",
       "shacl:datatype": [
         {
-          "@id": "http://a.ml/vocabularies/shapes#number"
+          "@id": "http://www.w3.org/2001/XMLSchema#double"
         }
       ],
       "shacl:minCount": 1
@@ -201,7 +214,8 @@
         "@id": "/property/property/hey/list"
       },
       "shacl:minCount": 0,
-      "meta:allowMultiple": true
+      "meta:allowMultiple": true,
+      "shacl:mandatory": false
     },
     {
       "@id": "/property/property/hey/list",

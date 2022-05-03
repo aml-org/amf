@@ -10,8 +10,9 @@ nodeMappings:
         mandatory: true
       info:
         range: SchemaNode
-        mandatory: false
         allowMultiple: true
+        minItems: 0
+        mandatory: false
     additionalProperties: true
   SchemaNode:
     mapping:
@@ -21,6 +22,7 @@ nodeMappings:
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

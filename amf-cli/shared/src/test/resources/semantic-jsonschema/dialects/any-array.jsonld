@@ -48,6 +48,16 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "#/documents/root",
       "@type": [
         "meta:DocumentMapping",
@@ -55,7 +65,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/Jwt-policy-validation"
+          "@id": "#/declarations/Jwtpolicyvalidation"
         }
       ]
     },
@@ -63,7 +73,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/Jwt-policy-validation"
+          "@id": "#/declarations/Jwtpolicyvalidation"
         }
       ],
       "@type": [
@@ -84,6 +94,9 @@
         },
         {
           "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
         }
       ],
       "meta:documents": {
@@ -95,13 +108,13 @@
       }
     },
     {
-      "@id": "#/declarations/Jwt-policy-validation",
+      "@id": "#/declarations/Jwtpolicyvalidation",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "Jwt-policy-validation",
+      "core:name": "Jwtpolicyvalidation",
       "shacl:property": [
         {
           "@id": "/property/property/scopeheader"
@@ -138,8 +151,9 @@
           "@id": "http://www.w3.org/2001/XMLSchema#anyType"
         }
       ],
-      "shacl:minCount": 1,
-      "meta:allowMultiple": true
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true,
+      "shacl:mandatory": true
     }
   ],
   "@context": {

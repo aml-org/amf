@@ -1,21 +1,23 @@
 #%Dialect 1.0
 nodeMappings:
-  Jwt-policy-validation:
+  Jwtpolicyvalidation:
     mapping:
       scopeheader:
         range: string
         mandatory: true
       scopelist:
         range: any
-        mandatory: true
         allowMultiple: true
+        minItems: 0
+        mandatory: true
     additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#
   config: anypoint://vocabulary/policy.yaml#
   ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
   root:
-    encodes: Jwt-policy-validation
+    encodes: Jwtpolicyvalidation

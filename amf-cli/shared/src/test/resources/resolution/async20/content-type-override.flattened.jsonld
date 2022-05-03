@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -92,6 +92,7 @@
       "@id": "#4",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "subscribe",
@@ -111,6 +112,7 @@
       "@id": "#10",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "publish",
@@ -130,6 +132,7 @@
       "@id": "#17",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "subscribe",
@@ -149,6 +152,7 @@
       "@id": "#23",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "publish",
@@ -168,6 +172,7 @@
       "@id": "#5",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -186,6 +191,7 @@
       "@id": "#11",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -204,6 +210,7 @@
       "@id": "#18",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -222,6 +229,7 @@
       "@id": "#24",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -240,6 +248,7 @@
       "@id": "#6",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -258,6 +267,7 @@
       "@id": "#12",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -276,6 +286,7 @@
       "@id": "#19",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/yaml",
@@ -293,6 +304,7 @@
       "@id": "#25",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/yaml",

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -149,6 +149,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -181,6 +182,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -218,6 +220,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -255,6 +258,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -292,6 +296,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2FgetAll/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -329,6 +334,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -363,6 +369,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -405,6 +412,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -450,6 +458,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -510,6 +519,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D/parameter/parameter/path/userId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userId",
@@ -534,6 +544,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/parameter/path/userId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userId",
@@ -553,6 +564,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/parameter/path/userName",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userName",
@@ -577,6 +589,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/parameter/path/userName",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userName",
@@ -596,6 +609,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/parameter/path/userId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userId",
@@ -615,6 +629,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/parameter/path/userLastName",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userLastName",
@@ -639,6 +654,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/endpoint/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/parameter/path/userId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userId",

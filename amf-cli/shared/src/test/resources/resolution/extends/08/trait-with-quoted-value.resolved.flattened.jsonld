@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 0.8"
     },
@@ -65,6 +65,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -107,6 +108,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -149,6 +151,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/parameter/query/element",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "element",
@@ -169,6 +172,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/parameter/query/another",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "another",

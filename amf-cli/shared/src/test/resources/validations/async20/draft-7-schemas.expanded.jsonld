@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/const-key-word/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/const-key-word/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -63,6 +65,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/const-key-word/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -387,6 +390,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/conditional-subschemas/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -399,6 +403,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/conditional-subschemas/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -407,6 +412,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/conditional-subschemas/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -2318,6 +2324,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/property-names-restriction/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -2330,6 +2337,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/property-names-restriction/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2338,6 +2346,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/property-names-restriction/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -2660,6 +2669,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/contains-key/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -2672,6 +2682,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/contains-key/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2680,6 +2691,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/contains-key/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -2988,6 +3000,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/additional-items/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -3000,6 +3013,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/additional-items/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -3008,6 +3022,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/additional-items/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -3705,6 +3720,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/using-comments/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -3717,6 +3733,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/using-comments/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -3725,6 +3742,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/using-comments/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -3974,6 +3992,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/readOnly-writeOnly-schema-level/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -3986,6 +4005,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/readOnly-writeOnly-schema-level/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -3994,6 +4014,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/readOnly-writeOnly-schema-level/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -4447,6 +4468,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/exclusiveWithValues/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -4459,6 +4481,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/exclusiveWithValues/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -4467,6 +4490,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/exclusiveWithValues/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -5095,6 +5119,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/notKeyWord/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -5107,6 +5132,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/notKeyWord/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -5115,6 +5141,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7-schemas.yaml#/async-api/endpoint/notKeyWord/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -6253,7 +6280,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

@@ -1,0 +1,70 @@
+#%Dialect 1.0
+nodeMappings:
+  allOfComplex:
+    allOf:
+      - SchemaNode
+      - SchemaNode_1
+      - SchemaNode_5
+    mapping:
+      d:
+        range: double
+        mandatory: true
+    additionalProperties: true
+  SchemaNode:
+    mapping:
+      a:
+        range: string
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_1:
+    conditional:
+      if: SchemaNode_2
+      then: SchemaNode_3
+      else: SchemaNode_4
+  SchemaNode_2:
+    mapping:
+      a:
+        range: any
+        enum:
+          - condition
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_3:
+    mapping:
+      a:
+        range: string
+        propertyTerm: config.sensitive
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_4:
+    mapping:
+      a:
+        range: string
+        propertyTerm: config.dataweaveExpression
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_5:
+    oneOf:
+      - SchemaNode_6
+      - SchemaNode_7
+  SchemaNode_6:
+    mapping:
+      b:
+        range: integer
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_7:
+    mapping:
+      c:
+        range: boolean
+        mandatory: false
+    additionalProperties: true
+external:
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: allOfComplex

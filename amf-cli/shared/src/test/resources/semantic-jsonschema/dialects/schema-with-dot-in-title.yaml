@@ -1,0 +1,18 @@
+#%Dialect 1.0
+nodeMappings:
+  OAuth20accesstokenenforcementusingMuleOAuthprovider:
+    mapping:
+      scopes:
+        range: string
+        mandatory: false
+    additionalProperties: true
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: OAuth20accesstokenenforcementusingMuleOAuthprovider

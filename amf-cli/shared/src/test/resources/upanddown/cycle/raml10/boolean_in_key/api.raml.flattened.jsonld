@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -68,6 +68,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -115,6 +116,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -166,6 +168,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request/parameter/parameter/query/true",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "true",
@@ -185,6 +188,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request/parameter/parameter/query/10",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "10",
@@ -204,6 +208,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request/parameter/parameter/query/0xCAFE",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "0xCAFE",
@@ -223,6 +228,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request/parameter/parameter/query/0xJUAN",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "0xJUAN",
@@ -242,6 +248,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean_in_key/api.raml#/web-api/endpoint/%2Ftop/supportedOperation/get/expects/request/parameter/parameter/query/07",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "07",

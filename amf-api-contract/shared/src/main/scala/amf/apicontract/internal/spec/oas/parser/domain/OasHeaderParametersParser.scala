@@ -63,9 +63,10 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
               linkHeader
             })
             .getOrElse {
-              ctx.obtainRemoteYNode(fullRef) match {
-                case Some(requestNode) =>
-                  OasHeaderParameterParser(requestNode.as[YMap], adopt).parse().add(ExternalReferenceUrl(fullRef))
+              ctx.navigateToRemoteYNode(fullRef) match {
+                case Some(result) =>
+                  val requestNode = result.remoteNode
+                  OasHeaderParameterParser(requestNode.as[YMap], adopt)(result.context).parse().add(ExternalReferenceUrl(fullRef))
                 case None =>
                   ctx.eh.violation(CoreValidations.UnresolvedReference,
                                    "",

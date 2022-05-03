@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -106,6 +106,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -168,6 +169,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -210,6 +212,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/parameter/parameter/query/b",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "b",
@@ -229,6 +232,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/variable/parameter/path/env",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "env",
@@ -248,6 +252,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/parameter/parameter/path/a",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "a",

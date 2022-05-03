@@ -11,7 +11,7 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWe
   def parse(parentId: String): NodeShape = {
     obj.adopted(parentId)
     val name = findName(objTypeNode, "AnonymousInputType", "", "Missing name for input type")
-    obj.withName(name).adopted(parentId)
+    obj.withName(name).withIsInputOnly(true).adopted(parentId)
     collectFields()
     obj
   }

@@ -1,7 +1,14 @@
 package amf.apicontract.internal.validation.definitions
 
 import amf.core.client.common.validation.SeverityLevels.{VIOLATION, WARNING}
-import amf.core.client.common.validation.{Async20Profile, Oas20Profile, ProfileName}
+import amf.core.client.common.validation.{
+  Async20Profile,
+  GrpcProfile,
+  Oas20Profile,
+  ProfileName,
+  Raml08Profile,
+  Raml10Profile
+}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.AmfParser
 import amf.core.internal.validation.Validations
@@ -417,6 +424,16 @@ object ParserSideValidations extends Validations {
     "Message header must be of type object"
   )
 
+  val MissingAnnotationSchema = validation(
+    "missing-annotation-schema",
+    "Annotations must have a declared a schema even if there are extensions"
+  )
+
+  val AnnotationSchemaMustBeAny = validation(
+    "annotation-schema-must-be-any",
+    "Annotation schema must be any for api-extensions override"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -441,6 +458,12 @@ object ParserSideValidations extends Validations {
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
     HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
+    MissingAnnotationSchema.id -> Map(Raml10Profile -> VIOLATION,
+                                      Raml08Profile -> VIOLATION,
+                                      GrpcProfile   -> VIOLATION), // TODO: Add graphqlProfile
+    AnnotationSchemaMustBeAny.id -> Map(Raml10Profile -> VIOLATION,
+                                        Raml08Profile -> VIOLATION,
+                                        GrpcProfile   -> VIOLATION) // TODO: Add graphqlProfile
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -500,6 +523,8 @@ object ParserSideValidations extends Validations {
     HeaderMustBeObject,
     InvalidModuleType,
     ClosedShapeSpecification,
-    ClosedShapeSpecificationWarning
+    ClosedShapeSpecificationWarning,
+    MissingAnnotationSchema,
+    AnnotationSchemaMustBeAny
   )
 }

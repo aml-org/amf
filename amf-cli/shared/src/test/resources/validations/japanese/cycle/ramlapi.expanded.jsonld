@@ -106,6 +106,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -118,6 +119,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -126,6 +128,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -316,6 +319,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/supportedOperation/post/expects/request/header/parameter/header/%E8%AA%8D%E5%8F%AF",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -754,6 +758,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%2F%7B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BCID%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -766,6 +771,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%2F%7B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BCID%7D/supportedOperation/get/returns/resp/201",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -784,6 +790,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%2F%7B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BCID%7D/supportedOperation/get/returns/resp/201/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1050,6 +1057,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/endpoint/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%2F%7B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BCID%7D/parameter/parameter/path/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BCID",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -1968,7 +1976,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

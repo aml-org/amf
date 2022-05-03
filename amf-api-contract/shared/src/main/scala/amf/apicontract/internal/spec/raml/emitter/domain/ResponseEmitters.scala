@@ -6,6 +6,7 @@ import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
@@ -109,7 +110,7 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
     sourceOr(
       response.annotations,
       b.complexEntry(
-        ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_),
+        ScalarEmitter(fs.entry(ResponseModel.StatusCode).map(_.scalar).getOrElse(AmfScalar("default"))).emit(_),
         p => {
           partBuilder.emit(p)
         }

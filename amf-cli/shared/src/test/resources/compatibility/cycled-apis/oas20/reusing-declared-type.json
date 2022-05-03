@@ -7,6 +7,9 @@
   "paths": {
     "/aPath": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -20,6 +23,9 @@
     },
     "/anotherPath": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "",

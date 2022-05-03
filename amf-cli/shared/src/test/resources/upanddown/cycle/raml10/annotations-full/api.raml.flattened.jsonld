@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -297,6 +297,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -324,6 +325,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/delete",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "delete",
@@ -338,6 +340,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "customer_id",
@@ -387,6 +390,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -406,6 +410,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "customer_id",
@@ -452,6 +457,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "customer_id",
@@ -498,6 +504,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -517,6 +524,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "post",
@@ -536,6 +544,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "customer_id",
@@ -680,6 +689,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -844,6 +854,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1019,6 +1030,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1056,6 +1068,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1187,6 +1200,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
@@ -1337,6 +1351,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
@@ -1464,6 +1479,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
@@ -1509,6 +1525,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-full/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",

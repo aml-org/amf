@@ -4,24 +4,11 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.Emitter
-import amf.shapes.internal.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  FileShape,
-  NilShape,
-  ScalarShape,
-  SchemaShape,
-  UnionShape
-}
+import amf.shapes.internal.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common
-import amf.shapes.internal.spec.common.emitter.{
-  CommentEmitter,
-  RamlExternalReferenceUrlEmitter,
-  RamlShapeEmitterContext
-}
+import amf.shapes.internal.spec.common.emitter.{RamlExternalReferenceUrlEmitter, RamlShapeEmitterContext}
 import amf.shapes.internal.spec.raml.emitter
 import amf.shapes.internal.spec.raml.parser.RamlLocalReferenceEntryEmitter
 import org.yaml.model.YType
@@ -44,9 +31,10 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case fileShape: FileShape => Seq(Raml08FileShapeEmitter(fileShape, ordering))
       case shape: AnyShape      => RamlAnyShapeEmitter(shape, ordering, Nil).emitters()
       case other =>
+        val shapeType = if (other != null) other.getClass.getSimpleName else "null"
         Seq(
           common.emitter
-            .CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec ${other.getClass.getSimpleName}`"))
+            .CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec $shapeType`"))
     }
   }
 
@@ -60,9 +48,10 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
             .withDataType(XsdTypeDefMapping.xsdFromString("file")._1.get)
         emitter.SimpleTypeEmitter(scalar, ordering).emitters() :+ MapEntryEmitter("repeat", "true", YType.Bool)
       case other =>
+        val itemsType = if (other != null) other.getClass.getSimpleName else "null"
         Seq(
           common.emitter
-            .CommentEmitter(other, s"Cannot emit array shape with items ${other.getClass.getSimpleName} in raml 08"))
+            .CommentEmitter(other, s"Cannot emit array shape with items $itemsType in raml 08"))
     }
   }
 

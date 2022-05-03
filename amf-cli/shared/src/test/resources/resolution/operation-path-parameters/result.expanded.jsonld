@@ -63,6 +63,7 @@
                 "@id": "#4",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -85,6 +86,7 @@
                     "@id": "#5",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -93,6 +95,7 @@
                         "@id": "#6",
                         "@type": [
                           "apiContract:Parameter",
+                          "core:Parameter",
                           "doc:DomainElement"
                         ],
                         "core:name": [
@@ -183,6 +186,7 @@
                     "@id": "#8",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -223,6 +227,7 @@
                 "@id": "#9",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -245,6 +250,7 @@
                     "@id": "#10",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -253,6 +259,7 @@
                         "@id": "#11",
                         "@type": [
                           "apiContract:Parameter",
+                          "core:Parameter",
                           "doc:DomainElement"
                         ],
                         "core:name": [
@@ -343,6 +350,7 @@
                     "@id": "#13",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -403,6 +411,7 @@
                 "@id": "#15",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -425,6 +434,7 @@
                     "@id": "#16",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -467,6 +477,7 @@
                 "@id": "#17",
                 "@type": [
                   "apiContract:Parameter",
+                  "core:Parameter",
                   "doc:DomainElement"
                 ],
                 "core:name": [
@@ -578,7 +589,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [

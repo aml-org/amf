@@ -48,6 +48,7 @@
                 "@id": "#18",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -65,6 +66,7 @@
                     "@id": "#19",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -88,6 +90,7 @@
                         "@id": "#11",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -166,6 +169,7 @@
                 "@id": "#21",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -183,6 +187,7 @@
                     "@id": "#22",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -206,6 +211,7 @@
                         "@id": "#12",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -293,7 +299,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [
@@ -622,6 +628,7 @@
         "@id": "#10",
         "@type": [
           "apiContract:Response",
+          "core:Response",
           "apiContract:Message",
           "doc:DomainElement"
         ],
@@ -640,6 +647,7 @@
             "@id": "#14",
             "@type": [
               "apiContract:Payload",
+              "core:Payload",
               "doc:DomainElement"
             ],
             "raml-shapes:schema": [

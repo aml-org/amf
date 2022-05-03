@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.4.0",
+      "apiContract:modelVersion": "3.5.0",
       "doc:sourceSpec": "OAS 3.0"
     },
     {
@@ -41,6 +41,7 @@
       "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
+        "core:Operation",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -54,6 +55,7 @@
       "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],

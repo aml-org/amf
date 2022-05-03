@@ -1,0 +1,15 @@
+schema {
+    query: Query
+}
+
+type Query {
+    planet: Planet
+}
+
+enum Planet {
+    MERCURY
+    URANUS
+    URANUS
+    NEPTUNE
+}
+

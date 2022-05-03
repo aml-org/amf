@@ -38,6 +38,7 @@
                 "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -50,6 +51,7 @@
                     "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -68,6 +70,7 @@
                         "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -354,6 +357,7 @@
                 "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -366,6 +370,7 @@
                     "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -384,6 +389,7 @@
                         "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -756,7 +762,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [

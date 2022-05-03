@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
@@ -68,6 +68,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -123,6 +124,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -136,6 +138,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -176,6 +179,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fxml",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "bodyOne",
@@ -193,6 +197,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",

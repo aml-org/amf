@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#"
+  },
+  "title": "Something",
+  "type": "object",
+  "required": [
+    "arrayProperty",
+    "otherProperty"
+  ],
+  "properties": {
+    "arrayProperty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "otherProperty": {
+      "type": "integer"
+    }
+  }
+}

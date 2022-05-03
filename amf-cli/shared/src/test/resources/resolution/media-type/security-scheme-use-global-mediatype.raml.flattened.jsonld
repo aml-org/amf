@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.4.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -112,6 +112,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -185,6 +186,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -250,6 +252,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
@@ -422,6 +425,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -488,6 +492,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",

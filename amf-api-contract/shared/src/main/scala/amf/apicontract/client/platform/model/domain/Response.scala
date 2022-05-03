@@ -3,6 +3,7 @@ package amf.apicontract.client.platform.model.domain
 import amf.core.client.platform.model.StrField
 import amf.apicontract.client.scala.model.domain.{Response => InternalResponse}
 import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.shapes.client.platform.model.domain.operations.AbstractResponse
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -10,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Response model class.
   */
 @JSExportAll
-case class Response(override private[amf] val _internal: InternalResponse) extends Message(_internal) {
+case class Response(override private[amf] val _internal: InternalResponse) extends Message(_internal) with AbstractResponse {
 
   @JSExportTopLevel("Response")
   def this() = this(InternalResponse())
@@ -43,4 +44,13 @@ case class Response(override private[amf] val _internal: InternalResponse) exten
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 
   override def linkCopy(): Response = _internal.linkCopy()
+
+  override type PayloadType = Payload
+
+  override def payload: Payload = _internal.payload
+
+  override def withPayload(payload: PayloadType): this.type = {
+    _internal.withPayload(payload)
+    this
+  }
 }

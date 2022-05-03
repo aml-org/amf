@@ -1,0 +1,389 @@
+type Information implements Node {
+  name: String!
+  value: String
+
+  """The ID of the object."""
+  id: ID!
+}
+
+type InformationCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [InformationCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `InformationCountable` and its cursor."""
+type InformationCountableEdge {
+  """The item at the end of the edge"""
+  node: Information
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+Allows use of a JSON String for input / output from the GraphQL schema.
+
+Use of this type is *not recommended* as you lose the benefits of having a defined, static
+schema (one of the key benefits of GraphQL).
+"""
+scalar JSONString
+
+type Key implements Node {
+  """The ID of the object."""
+  id: ID!
+  key: String!
+  systems: System
+}
+
+type KeyCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [KeyCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `KeyCountable` and its cursor."""
+type KeyCountableEdge {
+  """The item at the end of the edge"""
+  node: Key
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Log implements Node {
+  aseId: String!
+  logfile: String
+  Logtext: String
+  systems: System
+
+  """The ID of the object."""
+  id: ID!
+}
+
+type LogCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [LogCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `LogCountable` and its cursor."""
+type LogCountableEdge {
+  """The item at the end of the edge"""
+  node: Log
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+type NumberKeyValue implements Node {
+  """The ID of the object."""
+  id: ID!
+  key: String!
+  value: Float
+  systems: System
+}
+
+type NumberKeyValueCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [NumberKeyValueCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `NumberKeyValueCountable` and its cursor."""
+type NumberKeyValueCountableEdge {
+  """The item at the end of the edge"""
+  node: NumberKeyValue
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Publication implements Node {
+  """The ID of the object."""
+  id: ID!
+  pubId: String
+  title: String
+  authors: JSONString
+  journal: String
+  volume: String
+  number: String
+  pages: String
+  year: Int
+  publisher: String
+  doi: String
+  tags: JSONString
+  pubtextsearch: JSONString
+  stime: Float
+  Stime: String
+  reactions: [Reaction]
+  systems: [System]
+}
+
+type PublicationCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [PublicationCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `PublicationCountable` and its cursor."""
+type PublicationCountableEdge {
+  """The item at the end of the edge"""
+  node: Publication
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Query {
+  """The ID of the object"""
+  node(id: ID!): Node
+  information(name: String, value: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): InformationCountableConnection
+  systems(calculator: String, calculatorParameters: String, cell: Float, charge: Float, charges: Float, constraints: String, ctime: Float, data: String, dipole: Float, energy: Float, fmax: Float, forces: Float, freeEnergy: Float, id: Int, initialCharges: Float, initialMagmoms: Float, keyValuePairs: String, magmom: Float, magmoms: Float, mass: Float, masses: Float, momenta: Float, mtime: Float, natoms: Int, numbers: Int, pbc: Int, positions: Float, smax: Float, stress: Float, tags: Float, uniqueId: String, username: String, volume: Float, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): SystemCountableConnection
+  species(id: Int, n: Int, z: Int, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): SpeciesCountableConnection
+  key(id: Int, key: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): KeyCountableConnection
+  textKeys(id: Int, key: String, value: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): TextKeyValueCountableConnection
+  numberKeys(id: Int, key: String, value: Float, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): NumberKeyValueCountableConnection
+  reactions(activationEnergy: Float, chemicalComposition: String, coverages: String, dftCode: String, dftFunctional: String, facet: String, id: Int, products: String, pubId: String, reactants: String, reactionEnergy: Float, sites: String, surfaceComposition: String, textsearch: String, username: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): ReactionCountableConnection
+  reactionSystems(aseId: String, energyCorrection: Float, id: Int, name: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): ReactionSystemCountableConnection
+  publications(authors: String, doi: String, id: Int, journal: String, number: String, pages: String, pubId: String, publisher: String, pubtextsearch: String, stime: Float, tags: String, title: String, volume: String, year: Int, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): PublicationCountableConnection
+  logs(aseId: String, logfile: String, distinct: Boolean, op: String, search: String, jsonkey: String, order: String, before: String, after: String, first: Int, last: Int): LogCountableConnection
+}
+
+type Reaction implements Node {
+  """The ID of the object."""
+  id: ID!
+  chemicalComposition: String
+  surfaceComposition: String
+  facet: String
+  sites: JSONString
+  coverages: JSONString
+  reactants: JSONString
+  products: JSONString
+  reactionEnergy: Float
+  activationEnergy: Float
+  dftCode: String
+  dftFunctional: String
+  username: String
+  pubId: String
+  textsearch: JSONString
+  Equation: String
+  reactionSystems: [ReactionSystem]
+  systems: [System]
+  publication: Publication
+}
+
+type ReactionCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ReactionCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ReactionCountable` and its cursor."""
+type ReactionCountableEdge {
+  """The item at the end of the edge"""
+  node: Reaction
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type ReactionSystem implements Node {
+  name: String
+  energyCorrection: Float
+  aseId: String!
+
+  """The ID of the object."""
+  id: ID!
+  reactions: Reaction
+  systems: System
+}
+
+type ReactionSystemCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ReactionSystemCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ReactionSystemCountable` and its cursor."""
+type ReactionSystemCountableEdge {
+  """The item at the end of the edge"""
+  node: ReactionSystem
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Species implements Node {
+  """The ID of the object."""
+  id: ID!
+  z: ID!
+  n: ID!
+  systems: System
+}
+
+type SpeciesCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SpeciesCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `SpeciesCountable` and its cursor."""
+type SpeciesCountableEdge {
+  """The item at the end of the edge"""
+  node: Species
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type System implements Node {
+  """The ID of the object."""
+  id: ID!
+  uniqueId: String
+  ctime: Float
+  mtime: Float
+  username: String
+  numbers: [Int]
+  positions: [[Float]]
+  cell: [[Float]]
+  pbc: Int
+  initialMagmoms: [Float]
+  initialCharges: [Float]
+  masses: [Float]
+  tags: [Float]
+  momenta: [String]
+  constraints: String
+  calculator: String
+  calculatorParameters: String
+  energy: Float
+  freeEnergy: Float
+  forces: [[Float]]
+  stress: [Float]
+  dipole: [Float]
+  magmoms: [Float]
+  magmom: Float
+  charges: [Float]
+  keyValuePairs: JSONString
+  data: JSONString
+  natoms: Int
+  fmax: Float
+  smax: Float
+  volume: Float
+  mass: Float
+  charge: Float
+  Formula: String
+  Cifdata: String
+  Trajdata: String
+  Pbc: String
+  Ctime: String
+  Mtime: String
+  Adsorbate: String
+  Reaction: String
+  Username: String
+  Substrate: String
+  Facet: String
+  DftCode: String
+  DftFunctional: String
+  keys(before: String, after: String, first: Int, last: Int): KeyCountableConnection
+  species(before: String, after: String, first: Int, last: Int): SpeciesCountableConnection
+  textKeys(before: String, after: String, first: Int, last: Int): TextKeyValueCountableConnection
+  numberKeys(before: String, after: String, first: Int, last: Int): NumberKeyValueCountableConnection
+  reactionSystems(before: String, after: String, first: Int, last: Int): ReactionSystemCountableConnection
+  log: [Log]
+  publication: [Publication]
+  reactions(before: String, after: String, first: Int, last: Int): ReactionCountableConnection
+  InputFile(format: String): String
+}
+
+type SystemCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SystemCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `SystemCountable` and its cursor."""
+type SystemCountableEdge {
+  """The item at the end of the edge"""
+  node: System
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type TextKeyValue implements Node {
+  """The ID of the object."""
+  id: ID!
+  key: String!
+  value: String
+  systems: System
+}
+
+type TextKeyValueCountableConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [TextKeyValueCountableEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `TextKeyValueCountable` and its cursor."""
+type TextKeyValueCountableEdge {
+  """The item at the end of the edge"""
+  node: TextKeyValue
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+

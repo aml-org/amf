@@ -1,0 +1,156 @@
+directive @rateLimit(max: Int, window: String, message: String, identityArgs: [String], arrayLengthField: String) on FIELD_DEFINITION
+
+directive @authentication on OBJECT | FIELD_DEFINITION
+
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+enum AllowTravelModes {
+  transit
+  driving
+  walking
+}
+
+type AuthData {
+  token: String!
+  user: User!
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Coords {
+  latitude: Float!
+  longitude: Float!
+}
+
+scalar Date
+
+type Direction {
+  fare: Fare
+  tripData: TripData!
+  steps: [StepNode]!
+}
+
+type DriveStep implements StepNode {
+  stepTravelMode: String!
+  stepDistance: TypedData!
+  stepDuration: TypedData!
+  startLocation: Coords!
+  endLocation: Coords!
+  polyline: String!
+  stepInstruction: String!
+  maneuver: String
+}
+
+type Fare {
+  currency: String!
+  formattedFare: String!
+  fareValue: Float!
+}
+
+type Mutation {
+  _: Boolean
+  signUp(username: String!, email: String!, password: String!): User!
+  signIn(userIdentifier: String!, password: String!): AuthData!
+  updateUser(username: String): Boolean!
+}
+
+type OtherPointDetails {
+  address: String!
+  location: Coords!
+}
+
+input PlaceCoordinatesInput {
+  startLat: Float!
+  startLng: Float!
+  endLat: Float!
+  endLng: Float!
+}
+
+union PointDetails = TransitPointDetails | OtherPointDetails
+
+type Query {
+  _: Boolean
+  users: [User]!
+  direction(coordinates: PlaceCoordinatesInput!, travelMode: AllowTravelModes!): Direction
+}
+
+interface StepNode {
+  stepTravelMode: String!
+  stepDistance: TypedData!
+  stepDuration: TypedData!
+  startLocation: Coords!
+  endLocation: Coords!
+  polyline: String!
+  stepInstruction: String!
+}
+
+type Subscription {
+  _: Boolean
+}
+
+type TransitData {
+  headSign: String!
+  tripName: String
+  url: String
+  tripShortName: String
+  stopsCount: Int
+  vehicleIcon: String!
+  vehicleName: String!
+  vehicleType: String!
+}
+
+type TransitPointDetails {
+  formatedTime: String!
+  timeZone: String!
+  timeValue: Int!
+  address: String!
+  location: Coords!
+}
+
+type TransitStep implements StepNode {
+  stepTravelMode: String!
+  stepDistance: TypedData!
+  stepDuration: TypedData!
+  startLocation: Coords!
+  endLocation: Coords!
+  polyline: String!
+  stepInstruction: String!
+  arrival: TransitPointDetails!
+  departure: TransitPointDetails!
+  transitData: TransitData!
+}
+
+type TripData {
+  arrival: PointDetails!
+  departure: PointDetails!
+  tripDistance: TypedData!
+  tripDuration: TypedData!
+}
+
+type TypedData {
+  formattedValue: String!
+  rawValue: Int!
+}
+
+scalar Upload
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+}
+
+type WalkStep implements StepNode {
+  stepTravelMode: String!
+  stepDistance: TypedData!
+  stepDuration: TypedData!
+  startLocation: Coords!
+  endLocation: Coords!
+  polyline: String!
+  stepInstruction: String!
+  walkSteps: [WalkStep!]
+}
+

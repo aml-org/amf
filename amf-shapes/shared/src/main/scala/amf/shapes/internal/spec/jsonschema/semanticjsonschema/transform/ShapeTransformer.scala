@@ -9,9 +9,12 @@ trait ShapeTransformer {
   protected val ctx: ShapeTransformationContext
 
   protected def setMappingName[T <: NodeMappableModel](shape: Shape, mapping: NodeMappable[T]): Unit = {
+    val maxLength = 60
     shape.displayName.option() match {
-      case Some(name) => mapping.withName(name.replaceAll(" ", ""))
-      case _          => ctx.genName(mapping)
+      case Some(name) =>
+        val nameMaxLength = if (name.length <= maxLength) name.length else maxLength
+        mapping.withName(name.substring(0, nameMaxLength).replaceAll("[^a-zA-Z0-9]", ""))
+      case _ => ctx.genName(mapping)
     }
   }
 

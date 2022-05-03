@@ -387,6 +387,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/supportedOperation/subscribe",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -399,6 +400,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -440,6 +442,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/supportedOperation/subscribe/returns/resp/default-response_3",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -607,6 +610,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/supportedOperation/publish",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -619,6 +623,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/supportedOperation/publish/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -970,6 +975,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/endpoint/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/parameter/%24message.payload%23%2Fuser%2Fid/someId",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -1287,7 +1293,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -2563,6 +2569,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/parameter/%24message.payload%23%2Fuser%2Fid/userId",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Parameter",
+          "http://a.ml/vocabularies/core#Parameter",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/core#name": [
@@ -2748,6 +2755,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/parameter/%24message.payload%23%2Fuser%2Fexternal/external-param",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Parameter",
+          "http://a.ml/vocabularies/core#Parameter",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/core#name": [
@@ -4463,6 +4471,7 @@
             "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/msg/someMessage/payload/application%2Fjson",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/core#Payload",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/core#mediaType": [

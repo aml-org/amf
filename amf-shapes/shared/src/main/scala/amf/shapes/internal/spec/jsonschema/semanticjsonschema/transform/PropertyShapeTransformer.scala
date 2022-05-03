@@ -10,15 +10,16 @@ import amf.core.client.scala.model.{DataType, ValueField}
 import amf.shapes.client.scala.model.domain._
 import org.mulesoft.common.collections.FilterType
 
-case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
+class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
     implicit errorHandler: AMFErrorHandler) {
 
-  val propertyMapping: PropertyMapping = PropertyMapping(property.annotations)
+  val mapping: PropertyMapping = PropertyMapping(property.annotations)
 
   def transform(): PropertyMapping = {
 
     setMappingName()
     setMappingID()
+    checkMandatoriness()
 
     property.range match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
@@ -26,62 +27,67 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       case array: ArrayShape   => transformArray(array)
       case any: AnyShape       => transformAnyProperty(any)
     }
-    checkMandatoriness()
+
     checkSemantics()
-    transformEnum(property, propertyMapping)
-    propertyMapping
+    transformEnum(property, mapping)
+    mapping
   }
 
   private def transformArray(array: ArrayShape): Unit = {
-    propertyMapping.withAllowMultiple(true)
+    mapping.withAllowMultiple(true)
+    // I will override the minCount set and use mandatory instead
+    mapping.withMinCount(0)
+    property.minCount.option() match {
+      case Some(minCount) => mapping.withMandatory(minCount == 1)
+      case None           => mapping.withMandatory(false)
+    }
     array.items match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
       case obj: NodeShape      => transformObjectProperty(obj)
       case any: AnyShape       => transformAnyProperty(any)
     }
-    Option(array.default).foreach(propertyMapping.withDefault)
+    Option(array.default).foreach(mapping.withDefault)
   }
 
-  private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
+  private def setMappingName(): Unit = mapping.withName(property.name.value().replaceAll(" ", ""))
 
-  private def setMappingID(): Unit = propertyMapping.withId(property.id)
+  private def setMappingID(): Unit = mapping.withId(property.id)
 
   private def transformScalarProperty(scalar: ScalarShape): Unit = {
     // datatype
-    val scalarRangeDatatype = sanitizeScalarRange(scalar.dataType.value())
-    propertyMapping.withLiteralRange(scalarRangeDatatype)
+    scalar.dataType.option().foreach { dataType =>
+      mapping.withLiteralRange(sanitizeScalarRange(dataType))
+    }
     // pattern
-    setWhenPresent(scalar.pattern, propertyMapping.withPattern)
-    setWhenPresent(scalar.minimum, propertyMapping.withMinimum)
-    setWhenPresent(scalar.maximum, propertyMapping.withMaximum)
-    Option(scalar.default).foreach(propertyMapping.withDefault)
+    setWhenPresent(scalar.pattern, mapping.withPattern)
+    setWhenPresent(scalar.minimum, mapping.withMinimum)
+    setWhenPresent(scalar.maximum, mapping.withMaximum)
+    Option(scalar.default).foreach(mapping.withDefault)
   }
 
   private def transformObjectProperty(obj: NodeShape): Unit = {
     val range = ShapeTransformation(obj, ctx).transform()
-    propertyMapping.withObjectRange(Seq(range.id))
-    Option(obj.default).foreach(propertyMapping.withDefault)
+    mapping.withObjectRange(Seq(range.id))
+    Option(obj.default).foreach(mapping.withDefault)
   }
 
   private def transformAnyProperty(any: AnyShape): Unit = {
-    if (any.isAnyType) propertyMapping.withLiteralRange(DataType.Any)
+    if (any.isAnyType) mapping.withLiteralRange(DataType.Any)
     else {
       val range = ShapeTransformation(any, ctx).transform()
-      propertyMapping.withObjectRange(Seq(range.id))
+      mapping.withObjectRange(Seq(range.id))
     }
-    Option(any.default).foreach(propertyMapping.withDefault)
+    Option(any.default).foreach(mapping.withDefault)
   }
 
-  private def sanitizeScalarRange(xsd: String): String = {
-    if (xsd.endsWith("#long")) {
-      xsd.replace("#long", "#float")
-    } else {
-      xsd
-    }
+  private def sanitizeScalarRange(range: String): String = {
+    if (range == DataType.Long) DataType.Float
+    else if (range == DataType.Number) DataType.Double
+    else range
   }
 
   private def checkMandatoriness(): Unit = {
-    setWhenPresent(property.minCount, propertyMapping.withMinCount)
+    setWhenPresent(property.minCount, mapping.withMinCount)
   }
 
   private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
@@ -121,13 +127,13 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     ctx.semantics.mapping.foreach { semanticMapping =>
       semanticMapping.alias
         .option()
-        .filter(alias => alias == propertyMapping.name().value())
+        .filter(alias => alias == mapping.name().value())
         .foreach { _ =>
           semanticMapping.iri.option().foreach { iri =>
-            propertyMapping.withNodePropertyMapping(iri)
+            mapping.withNodePropertyMapping(iri)
           }
           semanticMapping.coercion.option().foreach { iri =>
-            propertyMapping.withLiteralRange(iri)
+            mapping.withLiteralRange(iri)
           }
         }
     }
@@ -138,10 +144,13 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
           localContext.typeMappings
             .flatMap(_.option())
             .toList match {
-            case List(element) => propertyMapping.withNodePropertyMapping(context.expand(element))
+            // If there is only one semantic, I will set it
+            case List(element) => mapping.withNodePropertyMapping(context.expand(element))
             case List(Nil)     => // ignore
+            // If there is more than one, I will collect it to generate a vocab a the end of the process
             case elements =>
-              extractPropertyTerm(context, elements)
+              val expandedElements = elements.map(context.expand)
+              ctx.termsToExtract += CandidateProperty(mapping, expandedElements)
           }
         }
 
@@ -149,10 +158,10 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     }
   }
 
-  private def extractPropertyTerm(context: SemanticContext, elements: List[String]) = {
-    val extractedTerm = ctx.vocabBuilder.loadIriSet(property.name.value(), elements.toSet, context)
-    propertyMapping.withNodePropertyMapping(extractedTerm)
-  }
-
   private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit): Unit = field.option().foreach(setValue(_))
+}
+
+object PropertyShapeTransformer {
+  def apply(property: PropertyShape, ctx: ShapeTransformationContext)(implicit errorHandler: AMFErrorHandler) =
+    new PropertyShapeTransformer(property, ctx)
 }

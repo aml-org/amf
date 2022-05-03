@@ -1,9 +1,10 @@
 package amf.apicontract.client.platform.model.domain
 
-import amf.core.client.platform.model.BoolField
-import amf.core.client.platform.model.domain.Shape
 import amf.apicontract.client.scala.model.domain.{Request => InternalRequest}
 import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.core.client.platform.model.BoolField
+import amf.core.client.platform.model.domain.Shape
+import amf.shapes.client.platform.model.domain.operations.AbstractRequest
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -11,27 +12,32 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Request model class.
   */
 @JSExportAll
-case class Request(override private[amf] val _internal: InternalRequest) extends Message(_internal) {
+case class Request(override private[amf] val _internal: InternalRequest)
+    extends Message(_internal)
+    with AbstractRequest {
+
+  override type ParameterType = Parameter
+
+  override def withQueryParameters(parameters: ClientList[ParameterType]): this.type = {
+    _internal.withQueryParameters(parameters.asInternal)
+    this
+  }
+
+  override private[amf] def buildQueryParameter = _internal.buildQueryParameter
 
   @JSExportTopLevel("Request")
   def this() = this(InternalRequest())
 
-  def required: BoolField                     = _internal.required
-  def queryParameters: ClientList[Parameter]  = _internal.queryParameters.asClient
-  def headers: ClientList[Parameter]          = _internal.headers.asClient
-  def queryString: Shape                      = _internal.queryString
-  def uriParameters: ClientList[Parameter]    = _internal.uriParameters.asClient
-  def cookieParameters: ClientList[Parameter] = _internal.cookieParameters.asClient
+  def required: BoolField                                 = _internal.required
+  override def queryParameters: ClientList[ParameterType] = _internal.queryParameters.asClient
+  def headers: ClientList[Parameter]                      = _internal.headers.asClient
+  def queryString: Shape                                  = _internal.queryString
+  def uriParameters: ClientList[Parameter]                = _internal.uriParameters.asClient
+  def cookieParameters: ClientList[Parameter]             = _internal.cookieParameters.asClient
 
   /** Set required property of this Request. */
   def withRequired(required: Boolean): this.type = {
     _internal.withRequired(required)
-    this
-  }
-
-  /** Set queryParameters property of this Request. */
-  def withQueryParameters(parameters: ClientList[Parameter]): this.type = {
-    _internal.withQueryParameters(parameters.asInternal)
     this
   }
 

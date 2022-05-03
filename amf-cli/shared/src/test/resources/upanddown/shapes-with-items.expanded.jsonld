@@ -277,6 +277,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Payload",
+                  "http://a.ml/vocabularies/core#Payload",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -740,7 +741,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

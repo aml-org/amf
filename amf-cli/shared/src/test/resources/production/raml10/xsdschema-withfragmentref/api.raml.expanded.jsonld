@@ -72,7 +72,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -160,7 +160,63 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/synthesized-field/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#mediaType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/synthesized-field/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#location"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/external-fragment-ref/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "address"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(5,57)]"
+                  }
+                ]
+              },
               {
                 "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -186,49 +242,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/external-fragment-ref/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "address"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/synthesized-field/element_1",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#mediaType"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declares/schema/xmlSchema/source-map/synthesized-field/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/document#location"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
                   }
                 ]
               }

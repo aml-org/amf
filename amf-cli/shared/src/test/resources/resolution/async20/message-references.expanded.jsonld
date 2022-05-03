@@ -43,6 +43,7 @@
                 "@id": "#10",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -55,6 +56,7 @@
                     "@id": "#11",
                     "@type": [
                       "apiContract:Response",
+                      "core:Response",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -68,6 +70,7 @@
                         "@id": "#5",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -280,6 +283,7 @@
                 "@id": "#13",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -292,6 +296,7 @@
                     "@id": "#14",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -305,6 +310,7 @@
                         "@id": "#5",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [
@@ -525,7 +531,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "doc:transformed": [
@@ -557,6 +563,7 @@
             "@id": "#5",
             "@type": [
               "apiContract:Payload",
+              "core:Payload",
               "doc:DomainElement"
             ],
             "core:mediaType": [

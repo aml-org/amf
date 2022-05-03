@@ -5,8 +5,8 @@ nodeMappings:
       key:
         range: string
         propertyTerm: security.sensitive
-        mandatory: true
         pattern: ^[A-Za-z]*$
+        mandatory: true
       info:
         range: integer
         mandatory: true
@@ -14,6 +14,7 @@ nodeMappings:
 external:
   security: https://anypoint.mulesoft.com/security#
   ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

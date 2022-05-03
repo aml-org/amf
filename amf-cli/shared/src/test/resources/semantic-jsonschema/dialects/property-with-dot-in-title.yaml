@@ -1,0 +1,27 @@
+#%Dialect 1.0
+nodeMappings:
+  testname:
+    mapping:
+      testprop:
+        range: 1Thisshouldbegood
+        mandatory: false
+    additionalProperties: true
+  1Thisshouldbegood:
+    mapping:
+      key:
+        range: string
+        mandatory: true
+      value:
+        range: string
+        mandatory: true
+    additionalProperties: true
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: testname

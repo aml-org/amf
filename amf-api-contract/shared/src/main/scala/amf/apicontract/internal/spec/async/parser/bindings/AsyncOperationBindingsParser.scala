@@ -24,7 +24,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
 
   override protected def createBindings(): OperationBindings = OperationBindings()
 
-  protected def createParser(entryOrMap: YMapEntryLike): AsyncBindingsParser =
+  protected def createParser(entryOrMap: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser =
     AsyncOperationBindingsParser(entryOrMap)
 
   def handleRef(fullRef: String): OperationBindings = {

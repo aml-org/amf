@@ -18,7 +18,7 @@
       }
     },
     {
-      "@id": "/externals/security",
+      "@id": "semantic_vocabulary/externals/security",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -28,7 +28,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/config",
+      "@id": "semantic_vocabulary/externals/config",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -38,7 +38,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/ns0",
+      "@id": "semantic_vocabulary/externals/ns0",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -48,7 +48,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/semantics",
+      "@id": "semantic_vocabulary/externals/semantics",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -86,9 +86,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_3"
-        },
-        {
-          "@id": "#/declarations/extension_SomePolicy"
         }
       ],
       "@type": [
@@ -102,16 +99,16 @@
       "core:version": "1.0",
       "meta:externals": [
         {
-          "@id": "/externals/security"
+          "@id": "semantic_vocabulary/externals/security"
         },
         {
-          "@id": "/externals/config"
+          "@id": "semantic_vocabulary/externals/config"
         },
         {
-          "@id": "/externals/ns0"
+          "@id": "semantic_vocabulary/externals/ns0"
         },
         {
-          "@id": "/externals/semantics"
+          "@id": "semantic_vocabulary/externals/semantics"
         }
       ],
       "meta:documents": {
@@ -140,7 +137,7 @@
     {
       "@id": "#/declarations/SchemaNode",
       "@type": [
-        "meta:ConditionalNodeMapping",
+        "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
@@ -184,12 +181,18 @@
         "doc:DomainElement"
       ],
       "core:name": "SomePolicy",
-      "doc:extends": [
+      "shacl:property": [
         {
-          "@id": "#/declarations/SomePolicy/null"
+          "@id": "/property/property/thisApiName"
         },
         {
-          "@id": "#/declarations/SomePolicy/null"
+          "@id": "/property/property/thisApiVersion"
+        }
+      ],
+      "shacl:closed": false,
+      "http://a.ml/vocabularies/amf/aml#and": [
+        {
+          "@id": "#/declarations/SchemaNode"
         }
       ]
     },
@@ -201,25 +204,6 @@
         "doc:DomainElement"
       ],
       "core:name": "SchemaNode_3",
-      "shacl:property": [],
-      "shacl:closed": false
-    },
-    {
-      "@id": "#/declarations/extension_SomePolicy",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_SomePolicy",
-      "shacl:property": [
-        {
-          "@id": "/property/property/thisApiName"
-        },
-        {
-          "@id": "/property/property/thisApiVersion"
-        }
-      ],
       "shacl:closed": false
     },
     {
@@ -254,20 +238,6 @@
       }
     },
     {
-      "@id": "#/declarations/SomePolicy/null",
-      "@type": [
-        "meta:ConditionalNodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "doc:link-target": [
-        {
-          "@id": "#/declarations/SchemaNode"
-        }
-      ],
-      "doc:link-label": "SchemaNode"
-    },
-    {
       "@id": "/property/property/thisApiName",
       "@type": [
         "meta:NodePropertyMapping",
@@ -275,7 +245,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#thisApiName"
+          "@id": "https://a.ml/semantic-json-schema#thisApiName_1"
         }
       ],
       "core:name": "thisApiName",
@@ -298,7 +268,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#thisApiVersion"
+          "@id": "https://a.ml/semantic-json-schema#thisApiVersion_2"
         }
       ],
       "core:name": "thisApiVersion",

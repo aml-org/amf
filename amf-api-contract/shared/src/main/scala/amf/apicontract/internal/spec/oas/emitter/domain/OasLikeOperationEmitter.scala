@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -25,7 +26,7 @@ abstract class OasLikeOperationEmitter(operation: Operation, ordering: SpecOrder
     sourceOr(
       operation.annotations,
       b.complexEntry(
-        ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
+        ScalarEmitter(fs.entry(OperationModel.Method).map(_.scalar).getOrElse(AmfScalar(""))).emit(_),
         operationPartEmitter().emit(_)
       )
     )

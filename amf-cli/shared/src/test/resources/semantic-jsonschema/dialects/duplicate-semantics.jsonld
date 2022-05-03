@@ -18,7 +18,7 @@
       }
     },
     {
-      "@id": "/externals/somethingElse",
+      "@id": "semantic_vocabulary/externals/somethingElse",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -28,7 +28,7 @@
       "meta:base": "https://test.com/somethingElse#"
     },
     {
-      "@id": "/externals/security",
+      "@id": "semantic_vocabulary/externals/security",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -38,7 +38,7 @@
       "meta:base": "https://test.com/security#"
     },
     {
-      "@id": "/externals/ns0",
+      "@id": "semantic_vocabulary/externals/ns0",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -48,7 +48,7 @@
       "meta:base": "http://test.com/vocab#"
     },
     {
-      "@id": "/externals/semantics",
+      "@id": "semantic_vocabulary/externals/semantics",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -87,16 +87,16 @@
       "core:version": "1.0",
       "meta:externals": [
         {
-          "@id": "/externals/somethingElse"
+          "@id": "semantic_vocabulary/externals/somethingElse"
         },
         {
-          "@id": "/externals/security"
+          "@id": "semantic_vocabulary/externals/security"
         },
         {
-          "@id": "/externals/ns0"
+          "@id": "semantic_vocabulary/externals/ns0"
         },
         {
-          "@id": "/externals/semantics"
+          "@id": "semantic_vocabulary/externals/semantics"
         }
       ],
       "meta:documents": {
@@ -139,7 +139,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#key_1"
+          "@id": "https://a.ml/semantic-json-schema#key_1_3"
         }
       ],
       "core:name": "key_1",
@@ -159,7 +159,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#key_2"
+          "@id": "https://a.ml/semantic-json-schema#key_2_4"
         }
       ],
       "core:name": "key_2",
@@ -179,7 +179,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#info_1"
+          "@id": "https://a.ml/semantic-json-schema#info_1_1"
         }
       ],
       "core:name": "info_1",
@@ -198,7 +198,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#info_2"
+          "@id": "https://a.ml/semantic-json-schema#info_2_2"
         }
       ],
       "core:name": "info_2",

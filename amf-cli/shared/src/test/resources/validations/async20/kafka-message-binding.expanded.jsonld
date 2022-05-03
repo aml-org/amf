@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/async-api/endpoint/some-channel/supportedOperation/publish",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -469,7 +471,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

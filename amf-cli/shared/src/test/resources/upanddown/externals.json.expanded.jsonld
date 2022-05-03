@@ -53,6 +53,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -65,6 +66,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -73,6 +75,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -420,6 +423,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request/payload/text%2Fxml",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -673,6 +677,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -685,6 +690,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -693,6 +699,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1128,6 +1135,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request/payload/text%2Fxml",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1469,7 +1477,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.4.0"
+            "@value": "3.5.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
