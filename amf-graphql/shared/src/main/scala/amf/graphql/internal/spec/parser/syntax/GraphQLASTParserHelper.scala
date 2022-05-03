@@ -15,13 +15,6 @@ case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
-  val INT          = "Int"
-  val FLOAT        = "Float"
-  val STRING       = "String"
-  val BOOLEAN      = "Boolean"
-  val ID           = "ID"
-  val SCALAR_TYPES = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
-
   def unpackNilUnion(shape: AnyShape): NullableShape = {
     shape match {
       case union: UnionShape if union.anyOf.length == 2 =>
@@ -36,6 +29,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case _ => NullableShape(isNullable = false, shape)
     }
   }
+
   def findDescription(n: ASTElement): Option[Terminal] = {
     collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
       case n: Node => n.children.collectFirst({ case t: Terminal => t })
@@ -89,25 +83,22 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def isScalarType(n: Node): Boolean = {
-    path(n, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
-      case Some(nameTerminal: Terminal) =>
-        val name = nameTerminal.value
-        SCALAR_TYPES.contains(name)
-      case _ =>
-        false
-    }
+  def isScalarType(n: Node): Boolean = getTypeName(n).exists(SCALAR_TYPES.contains)
+
+  def isEnumType(n: Node)(implicit ctx: GraphQLWebApiContext): Boolean = getTypeName(n).exists { name =>
+    ctx.declarations.findType(name, SearchScope.All).exists(_.isInstanceOf[ScalarShape])
   }
 
-  def isNamedType(n: Node): Boolean = {
+  def getTypeName(n: Node): Option[String] = getTypeTerminal(n).map(_.value)
+
+  def isNamedType(n: Node): Boolean = getTypeName(n).exists(!SCALAR_TYPES.contains(_))
+
+  def getTypeTerminal(n: Node): Option[Terminal] =
     path(n, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
       case Some(nameTerminal: Terminal) =>
-        val name = nameTerminal.value
-        !SCALAR_TYPES.contains(name)
-      case _ =>
-        false
+        Some(nameTerminal)
+      case _ => None
     }
-  }
 
   def isNullable(n: Node): Boolean = n.children.lastOption match {
     case Some(term: Terminal) if term.value == "!" => false
@@ -205,10 +196,13 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def cleanDocumentation(doc: String): String = {
-    doc.replaceAll("\"\"\"", "").trim
-  }
+  def cleanDocumentation(doc: String): String = doc.replaceAll("\"\"\"", "").trim
 
   def elementSourceLocation(t: ASTElement): SourceLocation =
     new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)
+
+  def trimQuotes(value: String): String = {
+    if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)
+    else value
+  }
 }

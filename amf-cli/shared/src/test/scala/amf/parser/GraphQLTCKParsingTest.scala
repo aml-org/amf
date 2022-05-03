@@ -20,5 +20,10 @@ class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
     }
   }
 
+  ignore("specific graphql api") {
+    val api = "directive-arguments-default.api.graphql"
+    cycle(api, api.replace(".graphql", ".jsonld"), GraphQLHint, AmfJsonHint)
+  }
+
   override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }
