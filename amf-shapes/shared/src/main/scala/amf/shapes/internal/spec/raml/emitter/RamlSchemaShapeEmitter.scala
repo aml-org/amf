@@ -13,9 +13,9 @@ import org.yaml.model.YNode
 
 import scala.collection.mutable
 
-case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends PartEmitter {
+case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (shape.examples.nonEmpty) {
       val fs     = shape.fields

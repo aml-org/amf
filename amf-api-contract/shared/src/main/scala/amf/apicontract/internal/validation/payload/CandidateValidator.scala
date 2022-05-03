@@ -10,8 +10,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object CandidateValidator {
 
-  def validateAll(candidates: Seq[ValidationCandidate], config: ValidationConfiguration)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  def validateAll(candidates: Seq[ValidationCandidate], config: ValidationConfiguration)(implicit
+      executionContext: ExecutionContext
+  ): Future[AMFValidationReport] = {
 
     val client = config.amfConfig.elementClient()
     val cache  = mutable.Map[String, AMFShapePayloadValidator]()

@@ -15,8 +15,8 @@ trait InnerAdoption {
           adoptTree(id, dataNode)
         case element: DomainElement =>
           element.adopted(id)
-          element.fields.foreach {
-            case (_, value) => adoptInner(element.id, value.value, idTracker)
+          element.fields.foreach { case (_, value) =>
+            adoptInner(element.id, value.value, idTracker)
           }
           element
         case _ => target

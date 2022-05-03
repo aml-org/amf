@@ -41,7 +41,8 @@ object RawValidationAdapter extends ImportUtils {
           spec.copy(
             targetObject = Set(validation.owlProperty),
             nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
-          ))
+          )
+        )
       case _ => throw new Exception(s"Unknown validation target ${validation.target}")
     }
   }
@@ -80,9 +81,11 @@ object RawValidationAdapter extends ImportUtils {
     }
   }
 
-  private def parsePropertyConstraint(spec: ValidationSpecification,
-                                      validation: AMFValidation,
-                                      sh: ValueType): PropertyConstraint = {
+  private def parsePropertyConstraint(
+      spec: ValidationSpecification,
+      validation: AMFValidation,
+      sh: ValueType
+  ): PropertyConstraint = {
 
     val constraint = PropertyConstraint(
       ramlPropertyId = validation.owlProperty,
@@ -103,7 +106,7 @@ object RawValidationAdapter extends ImportUtils {
       case "http://www.w3.org/ns/shacl#node"         => constraint.copy(node = Some(validation.value))
       case "http://www.w3.org/ns/shacl#datatype"     => constraint.copy(datatype = Some(validation.value))
       case "http://www.w3.org/ns/shacl#class"        => constraint.copy(`class` = Seq(validation.value))
-      case _                                         => throw new Exception(s"Unsupported constraint ${validation.constraint}")
+      case _ => throw new Exception(s"Unsupported constraint ${validation.constraint}")
     }
   }
 

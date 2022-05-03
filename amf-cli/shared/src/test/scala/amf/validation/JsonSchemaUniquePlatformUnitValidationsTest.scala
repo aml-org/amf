@@ -18,9 +18,11 @@ class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGe
   }
 
   test("minContains and maxContains should be numbers") {
-    validate("min-and-max-contains-integers.json",
-             Some("min-and-max-contains-integers.report"),
-             hideValidationResultsIfParseNotConforms = false)
+    validate(
+      "min-and-max-contains-integers.json",
+      Some("min-and-max-contains-integers.report"),
+      hideValidationResultsIfParseNotConforms = false
+    )
   }
 
   test("unused facets in validation throw warning") {

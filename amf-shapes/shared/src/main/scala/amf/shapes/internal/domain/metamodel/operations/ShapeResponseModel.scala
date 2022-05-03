@@ -8,9 +8,11 @@ import amf.shapes.client.scala.model.domain.operations.ShapeResponse
 
 object ShapeResponseModel extends AbstractResponseModel {
 
-  override val Payload: Field = Field(ShapePayloadModel,
-                                      Shapes + "payload",
-                                      ModelDoc(ModelVocabularies.Shapes, "payload", "Payload for a Request/Response"))
+  override val Payload: Field = Field(
+    ShapePayloadModel,
+    Shapes + "payload",
+    ModelDoc(ModelVocabularies.Shapes, "payload", "Payload for a Request/Response")
+  )
 
   override val key: Field = Name
 

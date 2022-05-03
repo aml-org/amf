@@ -7,9 +7,9 @@ import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 
-case class RamlInlinedUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(shape, ordering, references) {
+case class RamlInlinedUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(shape, ordering, references) {
 
   def partEmitters(): MixedEmitters = {
     // If anyOf is empty and inherits is not empty, the shape is still not resolved. So, emit as a AnyShape

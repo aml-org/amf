@@ -26,31 +26,29 @@ class AnyShapeTransformer(shape: AnyShape, override val ctx: ShapeTransformation
   private def transformAnd(): Unit  = mapping.withAnd(collectMembers(shape.and))
   private def transformXOne(): Unit = mapping.withOr(collectMembers(shape.xone))
 
-  private def collectMembers(elements: Seq[Shape]): Seq[String] = elements.map {
-    case member: AnyShape =>
-      val transformed = ShapeTransformation(member, ctx).transform()
-      transformed.id
+  private def collectMembers(elements: Seq[Shape]): Seq[String] = elements.map { case member: AnyShape =>
+    val transformed = ShapeTransformation(member, ctx).transform()
+    transformed.id
   }
 
   private def transformConditional(): Unit = {
-    Option(shape.ifShape).foreach {
-      case ifShape: AnyShape =>
-        val transformed = ShapeTransformation(ifShape, ctx).transform()
-        mapping.withIfMapping(transformed.id)
+    Option(shape.ifShape).foreach { case ifShape: AnyShape =>
+      val transformed = ShapeTransformation(ifShape, ctx).transform()
+      mapping.withIfMapping(transformed.id)
 
-        val transformedThen = Option(shape.thenShape) match {
-          case Some(thenShape) if thenShape.isInstanceOf[AnyShape] =>
-            ShapeTransformation(thenShape.asInstanceOf[AnyShape], ctx).transform()
-          case None => ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/then"), ctx).transform()
-        }
-        mapping.withThenMapping(transformedThen.id)
+      val transformedThen = Option(shape.thenShape) match {
+        case Some(thenShape) if thenShape.isInstanceOf[AnyShape] =>
+          ShapeTransformation(thenShape.asInstanceOf[AnyShape], ctx).transform()
+        case None => ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/then"), ctx).transform()
+      }
+      mapping.withThenMapping(transformedThen.id)
 
-        val transformedElse = Option(shape.elseShape) match {
-          case Some(elseShape) if elseShape.isInstanceOf[AnyShape] =>
-            ShapeTransformation(elseShape.asInstanceOf[AnyShape], ctx).transform()
-          case None => ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/else"), ctx).transform()
-        }
-        mapping.withElseMapping(transformedElse.id)
+      val transformedElse = Option(shape.elseShape) match {
+        case Some(elseShape) if elseShape.isInstanceOf[AnyShape] =>
+          ShapeTransformation(elseShape.asInstanceOf[AnyShape], ctx).transform()
+        case None => ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/else"), ctx).transform()
+      }
+      mapping.withElseMapping(transformedElse.id)
     }
 
   }

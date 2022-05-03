@@ -9,8 +9,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMap
 
-/**
-  * Server internal model
+/** Server internal model
   */
 case class Server(fields: Fields, annotations: Annotations) extends SecuredElement {
 

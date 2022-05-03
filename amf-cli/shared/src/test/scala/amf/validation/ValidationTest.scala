@@ -15,7 +15,8 @@ case class ExpectedReport(
     conforms: Boolean,
     numErrors: Integer,
     profile: ProfileName,
-    jsNumErrors: Option[Integer] = None) // todo: we should remove this, both platforms should validate the same
+    jsNumErrors: Option[Integer] = None
+) // todo: we should remove this, both platforms should validate the same
 
 class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -50,8 +51,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // tck examples?! for definition this name its wrong. What it's testing? the name makes reference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
     for {
-      report <- parseAndValidate(validationsPath + "/tck-examples/cast-external-exception.raml",
-                                 RAMLConfiguration.RAML10())
+      report <- parseAndValidate(
+        validationsPath + "/tck-examples/cast-external-exception.raml",
+        RAMLConfiguration.RAML10()
+      )
     } yield {
       assert(report.conforms)
     }
@@ -61,8 +64,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // should we delete this case?
   test("Raml 0.8 Null pointer tck case APIMF-429") {
     for {
-      report <- parseAndValidate(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
-                                 RAMLConfiguration.RAML08())
+      report <- parseAndValidate(
+        validationsPath + "/tck-examples/nullpointer-spec-example.raml",
+        RAMLConfiguration.RAML08()
+      )
     } yield {
       assert(report.results.isEmpty)
     }
@@ -100,7 +105,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(transformResult.results.size == 2)
       assert(
         transformResult.results
-          .exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
+          .exists(_.message.contains("Security scheme 'undefined' not found in declarations."))
+      )
     }
   }
 
@@ -149,8 +155,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Matrix tests") {
     for {
-      report <- parseAndValidate(validationsPath + "/types/arrays/matrix_type_expression.raml",
-                                 RAMLConfiguration.RAML10())
+      report <- parseAndValidate(
+        validationsPath + "/types/arrays/matrix_type_expression.raml",
+        RAMLConfiguration.RAML10()
+      )
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -218,8 +226,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Recursion introduced after resource type application test") {
     for {
-      report <- parseAndValidate(productionPath + "/recursion_after_resource_type/api.raml",
-                                 RAMLConfiguration.RAML08())
+      report <- parseAndValidate(productionPath + "/recursion_after_resource_type/api.raml", RAMLConfiguration.RAML08())
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -236,13 +243,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   ignore("emilio performance") {
     for {
-      report <- parseAndValidate(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
-                                 RAMLConfiguration.RAML10())
+      report <- parseAndValidate(
+        productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
+        RAMLConfiguration.RAML10()
+      )
     } yield {
-      //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
+      // RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
       assert(report.results.isEmpty)
     }
-    //assert(true)
+    // assert(true)
   }
 
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {

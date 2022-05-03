@@ -97,10 +97,12 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Exclusive Maximum Schema") {
-    validate("/max-exclusive-schema.raml",
-             Some("max-exclusive-schema.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/max-exclusive-schema.raml",
+      Some("max-exclusive-schema.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Validate json schema with non url id.") {
@@ -120,10 +122,12 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("JSON Schema enum not array") {
-    validate("/enum-not-seq.raml",
-             Some("enum-not-seq.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/enum-not-seq.raml",
+      Some("enum-not-seq.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("JSON Schema array union") {
@@ -150,17 +154,21 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("JSON Schema 3 with invalid required array value") {
-    validate("/required/schema3-array.raml",
-             Some("/required/schema3-array.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/required/schema3-array.raml",
+      Some("/required/schema3-array.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("JSON Schema 4 with invalid required boolean value") {
-    validate("/required/schema4-boolean.raml",
-             Some("/required/schema4-boolean.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/required/schema4-boolean.raml",
+      Some("/required/schema4-boolean.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("JSON Schema 4 with valid required array value") {
@@ -180,8 +188,10 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("JSON Schema 4 property dependencies with unknown target property") {
-    validate("/dependencies/property-dependencies-unkown-target.raml",
-             Some("/dependencies/property-dependencies-unknown-target.report"))
+    validate(
+      "/dependencies/property-dependencies-unkown-target.raml",
+      Some("/dependencies/property-dependencies-unknown-target.report")
+    )
   }
 
   test("JSON Schema 4 schema dependencies with unknown source property") {

@@ -43,15 +43,19 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
         a match {
           case _: RequiredParamPayload | FormBodyParameter() | DeclaredElement() => true
           case _                                                                 => false
-      })
+        }
+      )
       .isDefined
   }
 
   override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
     Some(
-      new OasSecuritySchemeEmitter(s,
-                                   OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
-                                   SpecOrdering.Lexical))
+      new OasSecuritySchemeEmitter(
+        s,
+        OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
+        SpecOrdering.Lexical
+      )
+    )
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
     Some(ExampleDataNodePartEmitter(example, SpecOrdering.Lexical))
@@ -60,7 +64,8 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
 object Oas20EmitterFactory {
   def apply(eh: AMFErrorHandler, config: RenderConfiguration): Oas20EmitterFactory =
     Oas20EmitterFactory()(
-      new Oas2SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission)))
+      new Oas2SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission))
+    )
 }
 
 case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) extends OasEmitterFactory {
@@ -79,9 +84,12 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 
   override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
     Some(
-      Oas3SecuritySchemeEmitter(s,
-                                OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
-                                SpecOrdering.Lexical))
+      Oas3SecuritySchemeEmitter(
+        s,
+        OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
+        SpecOrdering.Lexical
+      )
+    )
 
   override def payloadEmitter(p: Payload): Option[PartEmitter] =
     Some(OasPayloadEmitter(p, SpecOrdering.Lexical, Nil))
@@ -90,7 +98,8 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 object Oas30EmitterFactory {
   def apply(eh: AMFErrorHandler, config: RenderConfiguration): Oas30EmitterFactory =
     Oas30EmitterFactory()(
-      new Oas3SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission)))
+      new Oas3SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission))
+    )
 }
 
 trait OasEmitterFactory extends OasLikeEmitterFactory {
@@ -105,9 +114,8 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
   private def isExplicitHeader(p: Parameter): Boolean =
     p.annotations.contains(classOf[DeclaredHeader]) || {
       val bindingValue = p.fields.getValueAsOption(ParameterModel.Binding)
-      bindingValue.exists {
-        case Value(v: AmfScalar, a: Annotations) =>
-          a.contains(classOf[SynthesizedField]) && v.toString == "header"
+      bindingValue.exists { case Value(v: AmfScalar, a: Annotations) =>
+        a.contains(classOf[SynthesizedField]) && v.toString == "header"
       }
     }
 

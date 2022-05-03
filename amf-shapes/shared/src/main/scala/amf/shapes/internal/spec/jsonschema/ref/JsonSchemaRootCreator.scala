@@ -21,13 +21,15 @@ object JsonSchemaRootCreator {
 
   def getYNodeFrom(inputFragment: Fragment, errorHandler: AMFErrorHandler): YNode = {
     inputFragment match {
-      case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
+      case fragment: ExternalFragment => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
       case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, errorHandler)
       case _ =>
-        errorHandler.violation(UnableToParseJsonSchema,
-                               inputFragment,
-                               None,
-                               "Cannot parse JSON Schema from unit with missing syntax information")
+        errorHandler.violation(
+          UnableToParseJsonSchema,
+          inputFragment,
+          None,
+          "Cannot parse JSON Schema from unit with missing syntax information"
+        )
         YNode(YMap(IndexedSeq(), ""))
     }
   }

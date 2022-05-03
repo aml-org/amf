@@ -8,8 +8,7 @@ import amf.shapes.client.platform.model.domain.operations.AbstractRequest
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Request model class.
+/** Request model class.
   */
 @JSExportAll
 case class Request(override private[amf] val _internal: InternalRequest)
@@ -65,27 +64,23 @@ case class Request(override private[amf] val _internal: InternalRequest)
     this
   }
 
-  /**
-    * Adds one Parameter to the queryParameters property of this Request and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the queryParameters property of this Request and returns it for population. Name property of
+    * the parameter is required.
     */
   def withQueryParameter(name: String): Parameter = _internal.withQueryParameter(name)
 
-  /**
-    * Adds one Parameter]to the headers property of this Request and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter]to the headers property of this Request and returns it for population. Name property of the
+    * parameter is required.
     */
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 
-  /**
-    * Adds one Parameter to the uriParameters property of this Request and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the uriParameters property of this Request and returns it for population. Name property of
+    * the parameter is required.
     */
   def withUriParameter(name: String): Parameter = _internal.withUriParameter(name)
 
-  /**
-    * Adds one Parameter to the cookieParameters property of this Request and returns it for population.
-    * Name property of the parameter is required.
+  /** Adds one Parameter to the cookieParameters property of this Request and returns it for population. Name property
+    * of the parameter is required.
     */
   def withCookieParameter(name: String): Parameter = _internal.withCookieParameter(name)
 

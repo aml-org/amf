@@ -6,9 +6,11 @@ import amf.core.internal.metamodel.Type.Bool
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 trait AbstractModel {
-  val IsAbstract = Field(Bool,
-                         ApiContract + "isAbstract",
-                         ModelDoc(ModelVocabularies.ApiContract, "isAbstract", "Defines a model as abstract"))
+  val IsAbstract = Field(
+    Bool,
+    ApiContract + "isAbstract",
+    ModelDoc(ModelVocabularies.ApiContract, "isAbstract", "Defines a model as abstract")
+  )
 }
 
 object AbstractModel extends AbstractModel

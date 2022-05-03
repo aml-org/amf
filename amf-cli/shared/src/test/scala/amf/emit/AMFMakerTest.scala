@@ -31,15 +31,17 @@ class AMFMakerTest extends AnyFunSuite with Matchers with AMFUnitFixtureTest wit
 
     assertNode(
       root,
-      ("info",
-       List(
-         ("title", "test"),
-         ("description", "test description"),
-         ("version", "1.1"),
-         ("termsOfService", "termsOfService"),
-         ("license", List(("url", "licenseUrl"), ("name", "licenseName"))),
-         ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test")))
-       ))
+      (
+        "info",
+        List(
+          ("title", "test"),
+          ("description", "test description"),
+          ("version", "1.1"),
+          ("termsOfService", "termsOfService"),
+          ("license", List(("url", "licenseUrl"), ("name", "licenseName"))),
+          ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test")))
+        )
+      )
     )
     assertNode(root, ("schemes", Array("http", "https")))
     assertNode(root, ("basePath", "/api"))
@@ -47,12 +49,16 @@ class AMFMakerTest extends AnyFunSuite with Matchers with AMFUnitFixtureTest wit
     assertNode(root, ("consumes", Array(`application/json`)))
     assertNode(root, ("produces", Array(`application/json`)))
 
-    assertNode(root,
-               ("externalDocs",
-                List(
-                  ("url", "creativoWorkUrl"),
-                  ("description", "creativeWorkDescription")
-                )))
+    assertNode(
+      root,
+      (
+        "externalDocs",
+        List(
+          ("url", "creativoWorkUrl"),
+          ("description", "creativeWorkDescription")
+        )
+      )
+    )
 
   }
 
@@ -72,7 +78,8 @@ class AMFMakerTest extends AnyFunSuite with Matchers with AMFUnitFixtureTest wit
 
     assertNode(
       root,
-      ("(amf-contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
+      ("(amf-contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test")))
+    )
 
 //    assertNode(root,
 //               ("(amf-externalDocs)",
@@ -85,16 +92,21 @@ class AMFMakerTest extends AnyFunSuite with Matchers with AMFUnitFixtureTest wit
 
   test("Test Raml generation with operations") {
     val root = ast(`document/api/advanced`, Raml10YamlHint)
-    assertNode(root,
-               ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
+    assertNode(
+      root,
+      ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get")))))
+    )
   }
 
   test("Test Oas generation with operations") {
     val root = ast(`document/api/advanced`, Oas20JsonHint)
     assertNode(
       root,
-      ("paths",
-       List(("/endpoint", List(("get", List(("description", "test operation get"), ("operationId", "test get"))))))))
+      (
+        "paths",
+        List(("/endpoint", List(("get", List(("description", "test operation get"), ("operationId", "test get"))))))
+      )
+    )
   }
 
   private def assertNode(container: YMap, expected: (String, Any)): Assertion = {

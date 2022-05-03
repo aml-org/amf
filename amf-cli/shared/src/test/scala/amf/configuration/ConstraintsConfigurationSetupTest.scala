@@ -40,10 +40,14 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
     constraints.size == vendors.length && vendors.forall(v => constraints.contains(ProfileName(v.id)))
   }
 
-  private def generateConstraintExistenceFixtures(config: AMFConfiguration,
-                                                  expectedConstraintOwners: Seq[Spec]): Seq[Any] = {
+  private def generateConstraintExistenceFixtures(
+      config: AMFConfiguration,
+      expectedConstraintOwners: Seq[Spec]
+  ): Seq[Any] = {
     val errorConfigs = vendors.diff(expectedConstraintOwners)
-    Seq(ExpectedConstraintExistenceCase(config, expectedConstraintOwners),
-        ErrorConstraintExistenceCase(config, errorConfigs))
+    Seq(
+      ExpectedConstraintExistenceCase(config, expectedConstraintOwners),
+      ErrorConstraintExistenceCase(config, errorConfigs)
+    )
   }
 }

@@ -9,8 +9,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.operations.AbstractRequest
 import org.yaml.model.YPart
 
-/**
-  * Request internal model.
+/** Request internal model.
   */
 class Request(override val fields: Fields, override val annotations: Annotations)
     extends Message(fields: Fields, annotations: Annotations)

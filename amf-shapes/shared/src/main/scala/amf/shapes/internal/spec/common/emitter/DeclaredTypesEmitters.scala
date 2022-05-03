@@ -14,9 +14,9 @@ import amf.shapes.internal.spec.oas.emitter
 import amf.shapes.internal.spec.raml.emitter.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
 import org.yaml.model.YDocument.EntryBuilder
 
-case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: OasLikeShapeEmitterContext)
-    extends DeclaredTypesEmitters(types, references, ordering) {
+case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(implicit
+    spec: OasLikeShapeEmitterContext
+) extends DeclaredTypesEmitters(types, references, ordering) {
 
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty || spec.definitionsQueue.nonEmpty)
@@ -30,11 +30,13 @@ case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit],
             // used to force shape to be emitted with OasTypeEmitter, and not as a ref
             spec.setForceEmission(Some(labeledShape.shape.id))
             emitter
-              .OasNamedTypeEmitter(labeledShape.shape,
-                                   ordering,
-                                   references,
-                                   pointer = Seq("definitions"),
-                                   Some(labeledShape.label))
+              .OasNamedTypeEmitter(
+                labeledShape.shape,
+                ordering,
+                references,
+                pointer = Seq("definitions"),
+                Some(labeledShape.label)
+              )
               .emit(entryBuilder)
           }
         }
@@ -42,9 +44,9 @@ case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit],
   }
 }
 
-abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
   override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 
   // TODO: THIS SHOULD BE PART OF A SpecSettings object or something of the sort that the context has and we could access.
@@ -58,14 +60,16 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
   def emitTypes(b: EntryBuilder): Unit
 
   override final def emit(b: EntryBuilder): Unit = {
-    spec.runAsDeclarations(() => emitTypes(b)) // todo : extract this to "Declaration emitter"?? and set the boolean to false from root emition?
+    spec.runAsDeclarations(() =>
+      emitTypes(b)
+    ) // todo : extract this to "Declaration emitter"?? and set the boolean to false from root emition?
   }
 
 }
 
-case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: RamlShapeEmitterContext)
-    extends DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering) {
+case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(implicit
+    spec: RamlShapeEmitterContext
+) extends DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering) {
 
   override def emitTypes(b: EntryBuilder): Unit = {
     b.entry(
@@ -76,12 +80,14 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
             case s: AnyShape       => Some(RamlNamedTypeEmitter(s, ordering, references, spec.typesEmitter))
             case r: RecursiveShape => Some(RamlRecursiveShapeTypeEmitter(r, ordering, references))
             case other =>
-              spec.eh.violation(RenderValidation,
-                                other.id,
-                                None,
-                                "Cannot emit non WebApi shape",
-                                other.position(),
-                                other.location())
+              spec.eh.violation(
+                RenderValidation,
+                other.id,
+                None,
+                "Cannot emit non WebApi shape",
+                other.position(),
+                other.location()
+              )
               None
           }),
           b
@@ -91,9 +97,9 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
   }
 }
 
-case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: OasLikeShapeEmitterContext)
-    extends DeclaredTypesEmitters(types, references, ordering) {
+case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(implicit
+    spec: OasLikeShapeEmitterContext
+) extends DeclaredTypesEmitters(types, references, ordering) {
 
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty)
@@ -102,7 +108,9 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
         _.obj(
           traverse(
             ordering.sorted(types.map(emitter.OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))),
-            _))
+            _
+          )
+        )
       )
   }
 }

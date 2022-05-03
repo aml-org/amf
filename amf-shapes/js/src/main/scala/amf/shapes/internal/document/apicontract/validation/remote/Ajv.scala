@@ -1,7 +1,7 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSGlobal, JSImport}
+import scala.scalajs.js.annotation.JSImport
 
 object Draft4MetaSchema {
   val text =
@@ -30,11 +30,13 @@ protected[amf] class Ajv(options: js.Object) extends js.Object {
 protected[amf] object AjvValidator {
   private lazy val options = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+    )
     .asInstanceOf[js.Object]
   private lazy val fastOptions = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+    )
     .asInstanceOf[js.Object]
 
   def apply(): Ajv = {
@@ -59,7 +61,8 @@ protected[amf] object AjvValidator {
       )
       .addFormat(
         "date-time-only",
-        "^([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$")
+        "^([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
+      )
       .addFormat("date", "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$")
   }
 }

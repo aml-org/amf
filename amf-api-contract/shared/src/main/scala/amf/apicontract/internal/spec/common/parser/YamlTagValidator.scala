@@ -12,9 +12,8 @@ import org.yaml.model.{YMap, YNode, YType}
 
 object YamlTagValidator {
 
-  /**
-    * validate that the node and its nested nodes do not contain any unknown yaml tags
-    * values limited to json schema ruleset
+  /** validate that the node and its nested nodes do not contain any unknown yaml tags values limited to json schema
+    * ruleset
     */
   def validate(root: Root)(implicit ctx: WebApiContext): Unit = {
     val severityLevel = getSeverityLevel
@@ -30,11 +29,13 @@ object YamlTagValidator {
     val tagText = node.tag.text
     YType(tagText) match {
       case YType.Unknown | YType.Timestamp if tagIsExplicit(node) =>
-        ctx.eh.reportConstraint(ParserSideValidations.UnknownYamlTag,
-                                "",
-                                s"Unknown tag '$tagText', must be allowed by json schema ruleset",
-                                node.tag.location,
-                                severity)
+        ctx.eh.reportConstraint(
+          ParserSideValidations.UnknownYamlTag,
+          "",
+          s"Unknown tag '$tagText', must be allowed by json schema ruleset",
+          node.tag.location,
+          severity
+        )
       case _ => // valid tag
     }
   }

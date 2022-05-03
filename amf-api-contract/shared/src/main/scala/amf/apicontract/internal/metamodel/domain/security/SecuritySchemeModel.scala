@@ -20,25 +20,39 @@ object SecuritySchemeModel
   val Name = Field(
     Str,
     Core + "name",
-    ModelDoc(ModelVocabularies.Core, "name", "Name for the security scheme", Seq((Namespace.Core + "name").iri())))
+    ModelDoc(ModelVocabularies.Core, "name", "Name for the security scheme", Seq((Namespace.Core + "name").iri()))
+  )
 
   val Type = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
 
   val Responses = Field(
     Array(ResponseModel),
     ApiContract + "response",
-    ModelDoc(ModelVocabularies.ApiContract, "response", "Response associated to this security scheme"))
+    ModelDoc(ModelVocabularies.ApiContract, "response", "Response associated to this security scheme")
+  )
 
-  val Settings = Field(SettingsModel,
-                       Security + "settings",
-                       ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings"))
+  val Settings = Field(
+    SettingsModel,
+    Security + "settings",
+    ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings")
+  )
 
   override val key: Field = Name
 
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
-    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+    List(
+      Name,
+      Type,
+      DisplayName,
+      Description,
+      Headers,
+      QueryParameters,
+      Responses,
+      Settings,
+      QueryString
+    ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = SecurityScheme()
 

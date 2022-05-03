@@ -7,8 +7,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Organization model class.
+/** Organization model class.
   */
 @JSExportAll
 case class Organization(override private[amf] val _internal: InternalOrganization)

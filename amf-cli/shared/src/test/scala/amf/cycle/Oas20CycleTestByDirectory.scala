@@ -2,10 +2,8 @@ package amf.cycle
 
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
 
-/**
-  * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml]]
-  *   origin: Oas20
-  *   target: Oas20
+/** Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml]] origin: Oas20
+  * target: Oas20
   */
 class Oas20YamlCycleTestByDirectory extends CycleTestByDirectory {
   override def origin: Hint          = Oas20YamlHint
@@ -18,10 +16,8 @@ class Oas20YamlCycleTestByDirectory extends CycleTestByDirectory {
     "amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/" // todo: move one level up
 }
 
-/**
-  * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json]]
-  *   origin: Oas20
-  *   target: Oas20
+/** Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json]] origin: Oas20
+  * target: Oas20
   */
 class Oas20JsonCycleTestByDirectory extends CycleTestByDirectory {
   override def origin: Hint          = Oas20JsonHint

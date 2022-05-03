@@ -12,8 +12,9 @@ import org.yaml.model.YNode
 import org.yaml.model.YNodeLike.toBoolean
 
 object BooleanSchemaParser {
-  def apply(entryOrNode: YMapEntryLike, node: YNode, version: SchemaVersion,
-  )(implicit ctx: ShapeParserContext): Option[AnyShape] = {
+  def apply(entryOrNode: YMapEntryLike, node: YNode, version: SchemaVersion)(implicit
+      ctx: ShapeParserContext
+  ): Option[AnyShape] = {
     if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion) {
       mapSchemaToEquivalent(entryOrNode)
     } else {
@@ -34,10 +35,12 @@ object BooleanSchemaParser {
   }
 
   private def throwInvalidDraftVersion(node: YNode)(implicit ctx: ShapeParserContext): Unit = {
-    ctx.eh.violation(InvalidBooleanSchemaForSchemaVersion,
+    ctx.eh.violation(
+      InvalidBooleanSchemaForSchemaVersion,
       node.toString,
       "Boolean schemas not supported in JSON Schema below version draft-6",
-      node.location)
+      node.location
+    )
   }
 
   private def valueIsFalse(entryOrNode: YMapEntryLike) = !toBoolean(entryOrNode.value)

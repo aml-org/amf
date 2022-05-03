@@ -9,8 +9,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMap
 
-/**
-  * Callback internal model
+/** Callback internal model
   */
 case class Callback(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

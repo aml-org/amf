@@ -11,8 +11,7 @@ import amf.shapes.client.platform.model.domain.operations.AbstractOperation
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Operation model class.
+/** Operation model class.
   */
 @JSExportAll
 case class Operation(override private[amf] val _internal: InternalOperation)
@@ -132,20 +131,17 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     this
   }
 
-  /**
-    * Adds a Request to this Operation and returns it for population.
+  /** Adds a Request to this Operation and returns it for population.
     */
   def withRequest(): Request = _internal.withRequest()
 
-  /**
-    * Adds one Callback to the callbacks property of this Operation and returns it for population.
-    * Name property of the callback is required.
+  /** Adds one Callback to the callbacks property of this Operation and returns it for population. Name property of the
+    * callback is required.
     */
   def withCallback(name: String): Callback = _internal.withCallback(name)
 
-  /**
-    * Adds one Server to the servers property of this Operation and returns it for population.
-    * Url property of the server is required.
+  /** Adds one Server to the servers property of this Operation and returns it for population. Url property of the
+    * server is required.
     */
   def withServer(name: String): Server = _internal.withServer(name)
 

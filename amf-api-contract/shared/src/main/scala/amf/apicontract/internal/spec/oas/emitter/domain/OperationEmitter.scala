@@ -30,20 +30,24 @@ import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable
 
-class OperationEmitter(operation: Operation,
-                       ordering: SpecOrdering,
-                       endpointPayloadEmitted: Boolean,
-                       references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+class OperationEmitter(
+    operation: Operation,
+    ordering: SpecOrdering,
+    endpointPayloadEmitted: Boolean,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
     extends OasLikeOperationEmitter(operation, ordering) {
 
   override def operationPartEmitter(): PartEmitter =
     OasOperationPartEmitter(operation, ordering, endpointPayloadEmitted, references)
 }
 
-case class OasOperationPartEmitter(operation: Operation,
-                                   ordering: SpecOrdering,
-                                   endpointPayloadEmitted: Boolean,
-                                   references: Seq[BaseUnit])(override implicit val spec: OasSpecEmitterContext)
+case class OasOperationPartEmitter(
+    operation: Operation,
+    ordering: SpecOrdering,
+    endpointPayloadEmitted: Boolean,
+    references: Seq[BaseUnit]
+)(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeOperationPartEmitter(operation, ordering) {
   override def emit(p: PartBuilder): Unit = {
     p.obj { eb =>
@@ -65,7 +69,8 @@ case class OasOperationPartEmitter(operation: Operation,
         operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
       fs.entry(OperationModel.Responses)
         .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
-          result += new ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
+          result += new ResponsesEmitter("responses", f, ordering, references, orphanAnnotations)
+        )
 
       fs.entry(OperationModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
@@ -74,8 +79,10 @@ case class OasOperationPartEmitter(operation: Operation,
         operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
           val callbacks: Seq[Callback] = f.arrayValues
           val annotations              = f.value.annotations
-          result += EntryPartEmitter("callbacks",
-                                     OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
+          result += EntryPartEmitter(
+            "callbacks",
+            OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec)
+          )
         }
 
         fs.entry(OperationModel.Servers)
@@ -108,11 +115,13 @@ case class OasOperationPartEmitter(operation: Operation,
       val payloads = OasPayloads(body)
 
       if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
-        result ++= OasParametersEmitter("parameters",
-                                        parameters,
-                                        ordering,
-                                        payloads.default.toSeq ++ formData,
-                                        references)
+        result ++= OasParametersEmitter(
+          "parameters",
+          parameters,
+          ordering,
+          payloads.default.toSeq ++ formData,
+          references
+        )
           .emitters()
 
       if (payloads.other.nonEmpty)
@@ -124,12 +133,14 @@ case class OasOperationPartEmitter(operation: Operation,
             case Some(shape: AnyShape) =>
               result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
             case Some(other) =>
-              spec.eh.violation(TransformationValidation,
-                                request.id,
-                                None,
-                                "Cannot emit a non WebApi Shape",
-                                other.position(),
-                                other.location())
+              spec.eh.violation(
+                TransformationValidation,
+                request.id,
+                None,
+                "Cannot emit a non WebApi Shape",
+                other.position(),
+                other.location()
+              )
             case None => // ignore
           }
         }
@@ -140,11 +151,13 @@ case class OasOperationPartEmitter(operation: Operation,
     result
   }
 
-  def ramlTypesEmitter(s: AnyShape,
-                       o: SpecOrdering,
-                       a: Option[AnnotationsEmitter],
-                       fs: Seq[Field],
-                       us: Seq[BaseUnit]): RamlTypePartEmitter = {
+  def ramlTypesEmitter(
+      s: AnyShape,
+      o: SpecOrdering,
+      a: Option[AnnotationsEmitter],
+      fs: Seq[Field],
+      us: Seq[BaseUnit]
+  ): RamlTypePartEmitter = {
     val ramlCtx = new Raml10SpecEmitterContext(spec.eh, config = spec.renderConfig)
     Raml10TypePartEmitter(s, o, a, fs, us)(emitter.RamlShapeEmitterContextAdapter(ramlCtx))
   }

@@ -8,7 +8,13 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.{SourceCodeBlock, StringDocBuilder}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
-import amf.grpc.internal.spec.emitter.domain.{GrpcEmitter, GrpcEnumEmitter, GrpcExtensionEmitter, GrpcMessageEmitter, GrpcServiceEmitter}
+import amf.grpc.internal.spec.emitter.domain.{
+  GrpcEmitter,
+  GrpcEnumEmitter,
+  GrpcExtensionEmitter,
+  GrpcMessageEmitter,
+  GrpcServiceEmitter
+}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GrpcEmitter {
@@ -30,14 +36,15 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     }
   }
 
-  def webApi: WebApi = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+  def webApi: WebApi           = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
   def endpoints: Seq[EndPoint] = webApi.endPoints
 
   def emitReferences(b: StringDocBuilder): Unit = {
     var checkDefaultGoogleDescriptor = false
     // we make the location relative to the location of the unit if we can
-    val rootLocation = document.location().getOrElse("").replace("file://", "").split("/").dropRight(1).mkString("/") + "/"
-    document.references.collect{ case r if r.location().isDefined => r }.foreach { ref =>
+    val rootLocation =
+      document.location().getOrElse("").replace("file://", "").split("/").dropRight(1).mkString("/") + "/"
+    document.references.collect { case r if r.location().isDefined => r }.foreach { ref =>
       val refLocation = ref.location().get.replace("file://", "").replace(rootLocation, "")
       if (refLocation.contains("google/protobuf/descriptor.proto\"")) {
         checkDefaultGoogleDescriptor = true
@@ -57,7 +64,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     document match {
       case lib: DeclaresModel =>
         lib.declares.exists(_.isInstanceOf[CustomDomainProperty])
-      case _                    => false
+      case _ => false
     }
   }
 
@@ -67,9 +74,9 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     } else {
       webApi.name
     }
-    val position = pos(nameField.annotations())
-    val name = nameField.option().getOrElse("anonymous")
-    val normalizedName = name.toLowerCase.replaceAll("-", "_").replaceAll( " ", "")
+    val position       = pos(nameField.annotations())
+    val name           = nameField.option().getOrElse("anonymous")
+    val normalizedName = name.toLowerCase.replaceAll("-", "_").replaceAll(" ", "")
     l += (s"package $normalizedName;", position)
   }
 

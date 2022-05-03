@@ -38,10 +38,12 @@ trait RamlExternalTypesParser
     case _                            => None
   }
 
-  protected case class ValueAndOrigin(text: String,
-                                      valueAST: YNode,
-                                      originalUrlText: Option[String],
-                                      errorShape: Option[AnyShape] = None)
+  protected case class ValueAndOrigin(
+      text: String,
+      valueAST: YNode,
+      originalUrlText: Option[String],
+      errorShape: Option[AnyShape] = None
+  )
 
   protected def buildTextAndOrigin(): ValueAndOrigin = {
     value.tagType match {
@@ -63,10 +65,12 @@ trait RamlExternalTypesParser
   private def failSchemaExpressionParser = {
     val shape = SchemaShape()
     adopt(shape)
-    shapeCtx.eh.violation(InvalidExternalTypeType,
-                          shape,
-                          s"Cannot parse $externalType Schema expression out of a non string value",
-                          value.location)
+    shapeCtx.eh.violation(
+      InvalidExternalTypeType,
+      shape,
+      s"Cannot parse $externalType Schema expression out of a non string value",
+      value.location
+    )
     ValueAndOrigin("", value, None, Some(shape))
   }
 }

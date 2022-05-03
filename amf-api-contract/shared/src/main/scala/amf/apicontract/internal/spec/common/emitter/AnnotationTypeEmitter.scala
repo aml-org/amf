@@ -23,8 +23,9 @@ import amf.shapes.internal.vocabulary.VocabularyMappings
 
 import scala.collection.mutable.ListBuffer
 
-abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
 
   private val fs = property.fields
   protected val shapeEmitters: Seq[Emitter]
@@ -64,9 +65,9 @@ abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
   }
 }
 
-case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends AnnotationTypeEmitter(property, ordering) {
+case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends AnnotationTypeEmitter(property, ordering) {
 
   private val fs = property.fields
   protected override implicit val shapeCtx: OasLikeShapeEmitterContextAdapter =
@@ -80,9 +81,9 @@ case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: Sp
     .toSeq
 }
 
-case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
-    implicit spec: RamlSpecEmitterContext)
-    extends AnnotationTypeEmitter(property, ordering) {
+case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(implicit
+    spec: RamlSpecEmitterContext
+) extends AnnotationTypeEmitter(property, ordering) {
 
   protected override implicit val shapeCtx: RamlShapeEmitterContextAdapter =
     raml.emitter.RamlShapeEmitterContextAdapter(spec)
@@ -95,16 +96,18 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
         case Some(shape: AnyShape) =>
           Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
             case es if es.forall(_.isInstanceOf[EntryEmitter]) => es.collect { case e: EntryEmitter => e }
-            case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+            case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
           }
         case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
         case Some(x) =>
-          spec.eh.violation(RenderValidation,
-                            property.id,
-                            None,
-                            "Cannot emit raml type for a shape that is not an AnyShape",
-                            x.position(),
-                            x.location())
+          spec.eh.violation(
+            RenderValidation,
+            property.id,
+            None,
+            "Cannot emit raml type for a shape that is not an AnyShape",
+            x.position(),
+            x.location()
+          )
           Nil
         case _ => Nil // ignore
       }

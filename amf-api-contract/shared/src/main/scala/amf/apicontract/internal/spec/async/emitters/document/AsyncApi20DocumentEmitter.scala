@@ -39,12 +39,14 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
   private def retrieveWebApi(): Api = document match {
     case document: Document => document.encodes.asInstanceOf[Api]
     case _ =>
-      specCtx.eh.violation(TransformationValidation,
-                           document.id,
-                           None,
-                           "BaseUnit doesn't encode a WebApi.",
-                           document.position(),
-                           document.location())
+      specCtx.eh.violation(
+        TransformationValidation,
+        document.id,
+        None,
+        "BaseUnit doesn't encode a WebApi.",
+        document.position(),
+        document.location()
+      )
       WebApi()
   }
 

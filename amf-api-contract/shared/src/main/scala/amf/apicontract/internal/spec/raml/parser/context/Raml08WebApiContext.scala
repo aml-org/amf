@@ -8,13 +8,14 @@ import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
-class Raml08WebApiContext(loc: String,
-                          refs: Seq[ParsedReference],
-                          override val wrapped: ParserContext,
-                          private val ds: Option[RamlWebApiDeclarations] = None,
-                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
-                          options: ParsingOptions = ParsingOptions())
-    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
+class Raml08WebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    override val wrapped: ParserContext,
+    private val ds: Option[RamlWebApiDeclarations] = None,
+    contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+    options: ParsingOptions = ParsingOptions()
+) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val spec: Spec                      = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax

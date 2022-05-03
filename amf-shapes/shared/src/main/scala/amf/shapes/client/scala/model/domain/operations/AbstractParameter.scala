@@ -9,8 +9,7 @@ import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel._
 
-/**
-  * ShapeParameter internal model.
+/** ShapeParameter internal model.
   */
 abstract class AbstractParameter(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement {
@@ -45,14 +44,13 @@ abstract class AbstractParameter(override val fields: Fields, override val annot
     val parameter = buildParameter(Annotations(annotations))
     val cloned    = parameter.withName(name.value()).adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case s: Shape => s.cloneShape(None)
-          case o        => o
-        }
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case s: Shape => s.cloneShape(None)
+        case o        => o
+      }
 
-        cloned.set(f, clonedValue, Annotations() ++= v.annotations)
+      cloned.set(f, clonedValue, Annotations() ++= v.annotations)
     }
 
     cloned

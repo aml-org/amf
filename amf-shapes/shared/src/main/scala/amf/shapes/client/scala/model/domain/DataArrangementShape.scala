@@ -6,8 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils._
 import amf.shapes.internal.domain.metamodel.ArrayShapeModel._
 
-/**
-  * Array shape
+/** Array shape
   */
 abstract class DataArrangementShape private[amf] (fields: Fields, annotations: Annotations)
     extends AnyShape(fields, annotations) {

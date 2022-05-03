@@ -15,9 +15,11 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Documentation path and response description") {
-    validate("documentation-path-and-response-description.json",
-             profile = Oas30Profile,
-             overridedHint = Some(Oas30JsonHint))
+    validate(
+      "documentation-path-and-response-description.json",
+      profile = Oas30Profile,
+      overridedHint = Some(Oas30JsonHint)
+    )
   }
 
   test("Documentation path item description") {
@@ -33,10 +35,12 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Facet string pattern invalid") {
-    validate("facet-string-pattern-invalid.yaml",
-             Some("facet-string-pattern-invalid.report"),
-             profile = Oas30Profile,
-             overridedHint = Some(Oas30YamlHint))
+    validate(
+      "facet-string-pattern-invalid.yaml",
+      Some("facet-string-pattern-invalid.report"),
+      profile = Oas30Profile,
+      overridedHint = Some(Oas30YamlHint)
+    )
   }
 
   test("Facet string length valid") {
@@ -68,9 +72,11 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Non ASCII header names OAS 3.0") {
-    validate("non-ascii-headers-oas3.json",
-             Some("non-ascii-headers-oas3.report"),
-             profile = Oas30Profile,
-             overridedHint = Some(Oas30JsonHint))
+    validate(
+      "non-ascii-headers-oas3.json",
+      Some("non-ascii-headers-oas3.report"),
+      profile = Oas30Profile,
+      overridedHint = Some(Oas30JsonHint)
+    )
   }
 }

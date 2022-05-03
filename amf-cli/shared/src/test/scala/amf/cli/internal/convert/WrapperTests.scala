@@ -84,7 +84,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     } yield {
       val declarations = unit.vocabulary.declares.asSeq
 
-      val classes    = declarations.collect { case term: ClassTerm    => term }
+      val classes    = declarations.collect { case term: ClassTerm => term }
       val properties = declarations.collect { case prop: PropertyTerm => prop }
 
       assert(classes.size == numClasses)
@@ -397,7 +397,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |  raml-doc.test:
         |    range: string
         |""".stripMargin)
-   */
+     */
   }
 
   /*
@@ -632,9 +632,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       override def accepts(resource: String): Boolean = true
     }
 
-    val loaders: List[ResourceLoader] = List(TestResourceLoader(),
-                                             FailingResourceLoader("Unreachable network"),
-                                             FailingResourceLoader("Invalid protocol"))
+    val loaders: List[ResourceLoader] = List(
+      TestResourceLoader(),
+      FailingResourceLoader("Unreachable network"),
+      FailingResourceLoader("Invalid protocol")
+    )
     val config = RAMLConfiguration.RAML10().withResourceLoaders(loaders.asClient)
 
     for {
@@ -1106,13 +1108,15 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       responses.head.payloads.asSeq.head.schema
         .asInstanceOf[ScalarShape]
         .dataType
-        .is("http://www.w3.org/2001/XMLSchema#string"))
+        .is("http://www.w3.org/2001/XMLSchema#string")
+    )
 
     assert(
       payloads.head.schema
         .asInstanceOf[ScalarShape]
         .dataType
-        .is("http://www.w3.org/2001/XMLSchema#string"))
+        .is("http://www.w3.org/2001/XMLSchema#string")
+    )
 
     assert(responses.head.statusCode.is("200"))
   }
@@ -1324,7 +1328,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         client
           .getConfiguration()
           .withResourceLoaders(loaders.asInstanceOf[List[ResourceLoader]].asClient)
-          .baseUnitClient())
+          .baseUnitClient()
+      )
       parsed <- withLoader.parse(url).asFuture
     } yield {
       val buildedProp: CustomDomainProperty =
@@ -1369,8 +1374,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       option2.get.annotations().isTracked should be(true)
 
       shape.examples.asSeq
-        .find(_.id.equals(
-          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declares/shape/A/examples/example/declared"))
+        .find(
+          _.id.equals(
+            "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declares/shape/A/examples/example/declared"
+          )
+        )
         .head
         .annotations()
         .isTracked should be(false)
@@ -1508,13 +1516,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit <- RAMLConfiguration.RAML10().baseUnitClient().parse(file).asFuture.map(_.baseUnit)
     } yield {
-      assert(
-        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
   test("Test emission of json schema of a shape with file type") {
-    val api    = """#%RAML 1.0
+    val api = """#%RAML 1.0
                 |
                 |title: test
                 |
@@ -1534,9 +1541,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       report   <- client.validate(unit.baseUnit).asFuture
       json <- Future {
         val shape = resolved.baseUnit.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape]
-        JsonSchemaShapeRenderer.buildJsonSchema(shape,
-                                                client
-                                                  .getConfiguration())
+        JsonSchemaShapeRenderer.buildJsonSchema(
+          shape,
+          client
+            .getConfiguration()
+        )
       }
     } yield {
       val golden = """{
@@ -1612,12 +1621,14 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |  }
                         |}
                         |""".stripMargin
-      val shape  = resolved.baseUnit.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape]
+      val shape = resolved.baseUnit.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape]
       val generated =
-        JsonSchemaShapeRenderer.buildJsonSchema(shape,
-                                                client
-                                                  .getConfiguration()
-                                                  .withRenderOptions(new RenderOptions().withoutCompactedEmission()))
+        JsonSchemaShapeRenderer.buildJsonSchema(
+          shape,
+          client
+            .getConfiguration()
+            .withRenderOptions(new RenderOptions().withoutCompactedEmission())
+        )
       assert(generated == golden)
     }
   }
@@ -1726,10 +1737,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         .asSeq
         .head
         .asInstanceOf[AnyShape]
-      val schema = JsonSchemaShapeRenderer.buildJsonSchema(shape,
-                                                           client
-                                                             .getConfiguration()
-                                                             .withRenderOptions(options))
+      val schema = JsonSchemaShapeRenderer.buildJsonSchema(
+        shape,
+        client
+          .getConfiguration()
+          .withRenderOptions(options)
+      )
       assert(report.conforms)
       assert(schema == expectedSchema)
     }
@@ -1768,7 +1781,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Test resolution error with resolve stage") {
-    val api    = """#%RAML 1.0
+    val api = """#%RAML 1.0
                 |title: API
                 |
                 |types:
@@ -1894,7 +1907,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit     <- client.parse(api).asFuture
       resolved <- Future(client.transform(unit.baseUnit, PipelineId.Cache))
     } yield {
-      val golden  = """{
+      val golden = """{
                         |  "$schema": "http://json-schema.org/draft-07/schema#",
                         |  "$ref": "#/definitions/conditional-subschemas",
                         |  "definitions": {
@@ -1971,10 +1984,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           }
           .get
           .asInstanceOf[NodeShape]
-      val generated = JsonSchemaShapeRenderer.buildJsonSchema(shape,
-                                                              client
-                                                                .getConfiguration()
-                                                                .withRenderOptions(options))
+      val generated = JsonSchemaShapeRenderer.buildJsonSchema(
+        shape,
+        client
+          .getConfiguration()
+          .withRenderOptions(options)
+      )
       assert(generated == golden)
     }
   }
@@ -2031,7 +2046,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test domain element emitter with unknown spec") {
     assertThrows[Throwable](
-      amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode()))
+      amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode())
+    )
   }
 
   test("Test domain element emitter with unhandled domain element") {
@@ -2042,7 +2058,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         ._internal
         .withErrorHandlerProvider(() => eh)
         .elementClient()
-        .renderElement(CorrelationId()))
+        .renderElement(CorrelationId())
+    )
     assert(exception.getMessage == "Cannot serialize domain element 'null' with plugins: List(RAML 1.0 Element)")
   }
 

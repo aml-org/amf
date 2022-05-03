@@ -17,12 +17,18 @@ trait AbstractPayloadModel
     with DescriptionField
     with ExamplesField {
 
-  val MediaType: Field = Field(Str,
-                               Core + "mediaType",
-                               ModelDoc(ModelVocabularies.Core, "mediaType", "Media types supported in the payload"))
+  val MediaType: Field = Field(
+    Str,
+    Core + "mediaType",
+    ModelDoc(ModelVocabularies.Core, "mediaType", "Media types supported in the payload")
+  )
 
   val Schema: Field =
-    Field(ShapeModel, Shapes + "schema", ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
+    Field(
+      ShapeModel,
+      Shapes + "schema",
+      ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload")
+    )
 
   override val key: Field = Name
 

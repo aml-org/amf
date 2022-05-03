@@ -11,17 +11,19 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 
-/**
-  * Applies summary and description defined in path item to all of its child operations
+/** Applies summary and description defined in path item to all of its child operations
   *
-  * @param profile target profile
+  * @param profile
+  *   target profile
   */
 class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile | Async20Profile => normalizeDescriptions(model)
@@ -29,12 +31,13 @@ class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInf
     }
   }
 
-  /**
-    * Applies summary and description defined in EndPoint to all Operations.
-    * If editing is true, the Endpoint with maintain its values.
+  /** Applies summary and description defined in EndPoint to all Operations. If editing is true, the Endpoint with
+    * maintain its values.
     *
-    * @param unit BaseUnit in
-    * @return unit BaseUnit out
+    * @param unit
+    *   BaseUnit in
+    * @return
+    *   unit BaseUnit out
     */
   protected def normalizeDescriptions(unit: BaseUnit): BaseUnit = {
     unit match {

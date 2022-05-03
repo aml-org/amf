@@ -13,8 +13,11 @@ case class RamlRequiredShapeEmitter(shape: Shape, minCount: Option[FieldEntry]) 
     minCount.flatMap { entry =>
       if (entry.value.annotations.contains(classOf[ExplicitField])) {
         Some(
-          EntryPartEmitter("required",
-                           RawEmitter(if (entry.scalar.toNumber.intValue() > 0) "true" else "false", YType.Bool)))
+          EntryPartEmitter(
+            "required",
+            RawEmitter(if (entry.scalar.toNumber.intValue() > 0) "true" else "false", YType.Bool)
+          )
+        )
       } else {
         None
       }

@@ -19,9 +19,9 @@ import amf.shapes.internal.spec.common.TypeDef
 
 import scala.collection.mutable.ListBuffer
 
-case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(scalar, ordering, references)
+case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
 
   private val rawTypeDef: TypeDef       = TypeDefXsdMapping.typeDef(scalar.dataType.value())
@@ -37,9 +37,12 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
         .flatMap(f =>
           if (!f.value.isSynthesized) {
             scalar.fields
-              .removeField(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
+              .removeField(
+                ShapeModel.Inherits
+              ) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
             Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))
-          } else None) // TODO check this  - annotations of typeDef in parser
+          } else None
+        ) // TODO check this  - annotations of typeDef in parser
     } else {
       None
     }

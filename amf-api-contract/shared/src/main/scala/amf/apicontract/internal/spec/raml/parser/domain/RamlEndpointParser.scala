@@ -36,34 +36,38 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-/**
-  *
-  */
-case class Raml10EndpointParser(entry: YMapEntry,
-                                producer: String => EndPoint,
-                                parent: Option[EndPoint],
-                                collector: mutable.ListBuffer[EndPoint],
-                                parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
+/** */
+case class Raml10EndpointParser(
+    entry: YMapEntry,
+    producer: String => EndPoint,
+    parent: Option[EndPoint],
+    collector: mutable.ListBuffer[EndPoint],
+    parseOptionalOperations: Boolean = false
+)(implicit ctx: RamlWebApiContext)
     extends RamlEndpointParser(entry, producer, parent, collector, parseOptionalOperations) {
 
   override protected def uriParametersKey: String = "uriParameters"
 }
 
-case class Raml08EndpointParser(entry: YMapEntry,
-                                producer: String => EndPoint,
-                                parent: Option[EndPoint],
-                                collector: mutable.ListBuffer[EndPoint],
-                                parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
+case class Raml08EndpointParser(
+    entry: YMapEntry,
+    producer: String => EndPoint,
+    parent: Option[EndPoint],
+    collector: mutable.ListBuffer[EndPoint],
+    parseOptionalOperations: Boolean = false
+)(implicit ctx: RamlWebApiContext)
     extends RamlEndpointParser(entry, producer, parent, collector, parseOptionalOperations) {
 
   override protected def uriParametersKey: String = "uriParameters|baseUriParameters"
 }
 
-abstract class RamlEndpointParser(entry: YMapEntry,
-                                  producer: String => EndPoint,
-                                  parent: Option[EndPoint],
-                                  collector: mutable.ListBuffer[EndPoint],
-                                  parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
+abstract class RamlEndpointParser(
+    entry: YMapEntry,
+    producer: String => EndPoint,
+    parent: Option[EndPoint],
+    collector: mutable.ListBuffer[EndPoint],
+    parseOptionalOperations: Boolean = false
+)(implicit ctx: RamlWebApiContext)
     extends SpecParserOps {
 
   def parse(): Unit = {
@@ -109,10 +113,12 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     collector += endpoint
 
-    AnnotationParser(endpoint,
-                     map,
-                     if (isResourceType) List(VocabularyMappings.resourceType)
-                     else List(VocabularyMappings.endpoint))(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(
+      endpoint,
+      map,
+      if (isResourceType) List(VocabularyMappings.resourceType)
+      else List(VocabularyMappings.endpoint)
+    )(WebApiShapeParserContextAdapter(ctx)).parse()
 
     parseNestedEndPoints(endpoint, map, isResourceType)
   }
@@ -145,18 +151,22 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     map.key(
       "payloads".asRamlAnnotation,
       entry => {
-        endpoint.setWithoutId(EndPointModel.Payloads,
-                              AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
-                              Annotations(entry))
+        endpoint.setWithoutId(
+          EndPointModel.Payloads,
+          AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
     endpoint
   }
 
-  private def parseParameters(endpoint: EndPoint,
-                              map: YMap,
-                              uriParametersKey: String,
-                              isResourceType: Boolean): EndPoint = {
+  private def parseParameters(
+      endpoint: EndPoint,
+      map: YMap,
+      uriParametersKey: String,
+      isResourceType: Boolean
+  ): EndPoint = {
     var parameters               = Parameters()
     var annotations: Annotations = Annotations()
 
@@ -179,10 +189,12 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             param
           })
 
-        implicitPathParamsOrdered(endpoint,
-                                  isResourceType,
-                                  variable => !explicitParameters.exists(_.name.is(variable)),
-                                  explicitParameters)
+        implicitPathParamsOrdered(
+          endpoint,
+          isResourceType,
+          variable => !explicitParameters.exists(_.name.is(variable)),
+          explicitParameters
+        )
     }
 
     parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
@@ -222,19 +234,23 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
           val operationContext = ctx match {
             case _: Raml08WebApiContext =>
-              new Raml08WebApiContext(ctx.loc,
-                                      ctx.refs,
-                                      ParserContext(config = ctx.wrapped.config),
-                                      Some(ctx.declarations),
-                                      ctx.contextType,
-                                      ctx.options)
+              new Raml08WebApiContext(
+                ctx.loc,
+                ctx.refs,
+                ParserContext(config = ctx.wrapped.config),
+                Some(ctx.declarations),
+                ctx.contextType,
+                ctx.options
+              )
             case _ =>
-              new Raml10WebApiContext(ctx.loc,
-                                      ctx.refs,
-                                      ParserContext(config = ctx.wrapped.config),
-                                      Some(ctx.declarations),
-                                      ctx.contextType,
-                                      ctx.options)
+              new Raml10WebApiContext(
+                ctx.loc,
+                ctx.refs,
+                ParserContext(config = ctx.wrapped.config),
+                Some(ctx.declarations),
+                ctx.contextType,
+                ctx.options
+              )
           }
           operationContext.nodeRefIds ++= ctx.nodeRefIds
           val operation = RamlOperationParser(entry, endpoint.id, parseOptionalOperations)(operationContext)
@@ -242,9 +258,11 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           operations += operation
           ctx.operationContexts.put(operation, operationContext)
         })
-        endpoint.setWithoutId(EndPointModel.Operations,
-                              AmfArray(operations, Annotations.virtual()),
-                              Annotations.inferred())
+        endpoint.setWithoutId(
+          EndPointModel.Operations,
+          AmfArray(operations, Annotations.virtual()),
+          Annotations.inferred()
+        )
       }
     )
   }
@@ -254,13 +272,17 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "type",
       entry => {
         endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
-        val declaration = ParametrizedDeclarationParser(entry.value,
-                                                        (name: String) => ParametrizedResourceType().withName(name),
-                                                        ctx.declarations.findResourceTypeOrError(entry.value))
+        val declaration = ParametrizedDeclarationParser(
+          entry.value,
+          (name: String) => ParametrizedResourceType().withName(name),
+          ctx.declarations.findResourceTypeOrError(entry.value)
+        )
           .parse()
-        endpoint.setWithoutId(EndPointModel.Extends,
-                              AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
-                              Annotations(Annotations.inferred()))
+        endpoint.setWithoutId(
+          EndPointModel.Extends,
+          AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
+          Annotations(Annotations.inferred())
+        )
       }
     )
     endpoint
@@ -279,11 +301,11 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   private def validateSlashsInSchema(shape: Shape, entry: YMapEntry): Unit = {
-    //default values
+    // default values
     Option(shape.default).foreach(validateSlashInDataNode(_, entry))
-    //enum values
+    // enum values
     shape.values.foreach(value => validateSlashInDataNode(value, entry))
-    //example values
+    // example values
     shape match {
       case scalar: ScalarShape =>
         scalar.examples.foreach(example => Option(example.structuredValue).foreach(validateSlashInDataNode(_, entry)))
@@ -293,10 +315,12 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
   private def validateSlashInDataNode(node: DataNode, entry: YMapEntry): Unit = node match {
     case scalar: ScalarDataNode if scalar.value.option().exists(_.contains('/')) =>
-      ctx.eh.violation(SlashInUriParameterValues,
-                       node,
-                       s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
-                       entry.value.location)
+      ctx.eh.violation(
+        SlashInUriParameterValues,
+        node,
+        s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
+        entry.value.location
+      )
     case _ =>
   }
 
@@ -320,10 +344,12 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     }
   }
 
-  private def implicitPathParamsOrdered(endpoint: EndPoint,
-                                        isResourceType: Boolean,
-                                        paramFilter: String => Boolean = _ => true,
-                                        explicitParams: Seq[Parameter] = Nil): Seq[Parameter] = {
+  private def implicitPathParamsOrdered(
+      endpoint: EndPoint,
+      isResourceType: Boolean,
+      paramFilter: String => Boolean = _ => true,
+      explicitParams: Seq[Parameter] = Nil
+  ): Seq[Parameter] = {
     val parentParams: Map[String, Parameter] = parent.fold(Map[String, Parameter]()) { collectPathParametersByName }
     val pathParams: Seq[String]              = TemplateUri.variables(parsePath())
     val findExplicitlyDefinedParam = (variable: String, binding: String) =>
@@ -352,9 +378,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   private def collectPathParametersByName(e: EndPoint) = {
-    e.parameters.filter(_.binding.value() == "path").foldLeft(Map[String, Parameter]()) {
-      case (acc, p) =>
-        acc.updated(p.name.value(), p)
+    e.parameters.filter(_.binding.value() == "path").foldLeft(Map[String, Parameter]()) { case (acc, p) =>
+      acc.updated(p.name.value(), p)
     }
   }
 

@@ -7,14 +7,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.Root
-import amf.core.internal.parser.domain.{
-  Annotations,
-  Declarations,
-  Fields,
-  FragmentRef,
-  FutureDeclarations,
-  SearchScope
-}
+import amf.core.internal.parser.domain.{Annotations, Declarations, Fields, FragmentRef, FutureDeclarations, SearchScope}
 import amf.core.internal.remote.{JsonSchemaDialect, Spec}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.core.internal.validation.core.ValidationSpecification
@@ -205,9 +198,11 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
   override def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape =
     throw new Exception("Parser - Can only be used from JSON Schema")
 
-  override def findDocumentations(key: String,
-                                  scope: SearchScope.Scope,
-                                  error: Option[String => Unit]): Option[CreativeWork] = None
+  override def findDocumentations(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit]
+  ): Option[CreativeWork] = None
 
   override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
@@ -257,9 +252,11 @@ object JsonSchemaContext {
         (name: String) => SemanticExtensionsFacade.apply(name, ctx.config)
       override val defaultSchemaVersion: JSONSchemaVersion = schemaVersion.getOrElse(defaultSchemaVersion)
 
-      override def makeJsonSchemaContextForParsing(url: String,
-                                                   document: Root,
-                                                   options: ParsingOptions): ShapeParserContext =
+      override def makeJsonSchemaContextForParsing(
+          url: String,
+          document: Root,
+          options: ParsingOptions
+      ): ShapeParserContext =
         JsonSchemaContext(ctx, schemaVersion)
     }
   }

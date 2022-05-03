@@ -14,10 +14,10 @@ import sbt.SettingsDefinition
 object TypingGenerationSettings {
 
   val settings: Seq[SettingsDefinition] = Seq(
-    typingModuleName := typingsModuleName,
-    customMappings := typingsCustomMappings,
-    namespaceReplacer := typingsNamespaceReplacer,
-    scalaFilteredClasses := typingsFilters,
+    typingModuleName         := typingsModuleName,
+    customMappings           := typingsCustomMappings,
+    namespaceReplacer        := typingsNamespaceReplacer,
+    scalaFilteredClasses     := typingsFilters,
     namespaceTopLevelExports := false
   )
 

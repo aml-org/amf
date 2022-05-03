@@ -35,12 +35,13 @@ import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations
 
 import scala.collection.mutable
 
-class InheritanceIncompatibleShapeError(val message: String,
-                                        val property: Option[String] = None,
-                                        val location: Option[String] = None,
-                                        val position: Option[LexicalInformation] = None,
-                                        val isViolation: Boolean = false)
-    extends Exception(message)
+class InheritanceIncompatibleShapeError(
+    val message: String,
+    val property: Option[String] = None,
+    val location: Option[String] = None,
+    val position: Option[LexicalInformation] = None,
+    val isViolation: Boolean = false
+) extends Exception(message)
 
 private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext)
     extends RestrictionComputation {
@@ -73,10 +74,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           val s = superScalar.dataType.value()
           if (b == s) {
             computeMinScalar(baseScalar, superScalar)
-          } else if (b == DataType.Integer &&
-                     (s == DataType.Float ||
-                     s == DataType.Double ||
-                     s == DataType.Number)) {
+          } else if (
+            b == DataType.Integer &&
+            (s == DataType.Float ||
+              s == DataType.Double ||
+              s == DataType.Number)
+          ) {
             computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
           } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
             computeMinShape(baseScalar.withDataType(s), superScalar)
@@ -165,7 +168,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
             derivedShape,
             Some(ShapeModel.Inherits.value.iri()),
             s"Resolution error: Incompatible types [${RamlShapeTypeBeautifier
-              .beautify(derivedShape.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(superShape.ramlSyntaxKey)}]"
+                .beautify(derivedShape.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(superShape.ramlSyntaxKey)}]"
           )
           derivedShape
       }
@@ -212,10 +215,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
-    computeNarrowRestrictions(ScalarShapeModel.fields,
-                              baseScalar,
-                              superScalar,
-                              filteredFields = Seq(ScalarShapeModel.Examples))
+    computeNarrowRestrictions(
+      ScalarShapeModel.fields,
+      baseScalar,
+      superScalar,
+      filteredFields = Seq(ScalarShapeModel.Examples)
+    )
     baseScalar
   }
 
@@ -239,10 +244,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       val newItems = context.minShape(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
-      computeNarrowRestrictions(ArrayShapeModel.fields,
-                                baseMatrix,
-                                superMatrix,
-                                filteredFields = Seq(ArrayShapeModel.Items))
+      computeNarrowRestrictions(
+        ArrayShapeModel.fields,
+        baseMatrix,
+        superMatrix,
+        filteredFields = Seq(ArrayShapeModel.Items)
+      )
     } else {
       if (Option(superItems).isDefined) baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, superItems)
     }
@@ -262,10 +269,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       val newItems = context.minShape(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
-      computeNarrowRestrictions(ArrayShapeModel.fields,
-                                baseMatrix,
-                                superArray,
-                                filteredFields = Seq(ArrayShapeModel.Items))
+      computeNarrowRestrictions(
+        ArrayShapeModel.fields,
+        baseMatrix,
+        superArray,
+        filteredFields = Seq(ArrayShapeModel.Items)
+      )
     } else {
       if (Option(superItems).isDefined) baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, superItems)
     }
@@ -279,16 +288,19 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
     if (superItems.length != baseItems.length) {
       if (context.isRaml08 && baseItems.isEmpty) {
-        baseTuple.fields.setWithoutId(TupleShapeModel.Items,
-                                      AmfArray(superItems),
-                                      baseTuple.fields.get(TupleShapeModel.Items).annotations)
+        baseTuple.fields.setWithoutId(
+          TupleShapeModel.Items,
+          AmfArray(superItems),
+          baseTuple.fields.get(TupleShapeModel.Items).annotations
+        )
         baseTuple
       } else {
         throw new InheritanceIncompatibleShapeError(
           "Cannot inherit from a tuple shape with different number of elements",
           None,
           baseTuple.location(),
-          baseTuple.position())
+          baseTuple.position()
+        )
       }
     } else {
       val newItems = for {
@@ -297,14 +309,18 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         context.minShape(baseItem, superItems(i))
       }
 
-      baseTuple.fields.setWithoutId(TupleShapeModel.Items,
-                                    AmfArray(newItems),
-                                    baseTuple.fields.get(TupleShapeModel.Items).annotations)
+      baseTuple.fields.setWithoutId(
+        TupleShapeModel.Items,
+        AmfArray(newItems),
+        baseTuple.fields.get(TupleShapeModel.Items).annotations
+      )
 
-      computeNarrowRestrictions(TupleShapeModel.fields,
-                                baseTuple,
-                                superTuple,
-                                filteredFields = Seq(TupleShapeModel.Items))
+      computeNarrowRestrictions(
+        TupleShapeModel.fields,
+        baseTuple,
+        superTuple,
+        filteredFields = Seq(TupleShapeModel.Items)
+      )
 
       baseTuple
     }
@@ -326,10 +342,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       baseArray.withItems(ni)
     }
 
-    computeNarrowRestrictions(ArrayShapeModel.fields,
-                              baseArray,
-                              superArray,
-                              filteredFields = Seq(ArrayShapeModel.Items))
+    computeNarrowRestrictions(
+      ArrayShapeModel.fields,
+      baseArray,
+      superArray,
+      filteredFields = Seq(ArrayShapeModel.Items)
+    )
 
     baseArray
   }
@@ -385,10 +403,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
     baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), annotations)
 
-    computeNarrowRestrictions(NodeShapeModel.fields,
-                              baseNode,
-                              superNode,
-                              filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples))
+    computeNarrowRestrictions(
+      NodeShapeModel.fields,
+      baseNode,
+      superNode,
+      filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples)
+    )
 
     // if its raml 08 i need to keep parsed json schema annotation in order to emit a valid nodeshape.
     // Remember that objects in 08 are only valid in external schemas or as formProperties under only two media types (form undercoder and formData)
@@ -440,22 +460,28 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         }
         val finalMinShapes = minShapes.collect { case Some(s) => s }
         if (finalMinShapes.isEmpty)
-          throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union",
-                                                      None,
-                                                      baseUnion.location(),
-                                                      baseUnion.position())
+          throw new InheritanceIncompatibleShapeError(
+            "Cannot compute inheritance for union",
+            None,
+            baseUnion.location(),
+            baseUnion.position()
+          )
         finalMinShapes
       }
 
     avoidDuplicatedIds(newUnionItems)
-    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
-                                  AmfArray(newUnionItems),
-                                  baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    baseUnion.fields.setWithoutId(
+      UnionShapeModel.AnyOf,
+      AmfArray(newUnionItems),
+      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+    )
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superUnion,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(
+      UnionShapeModel.fields,
+      baseUnion,
+      superUnion,
+      filteredFields = Seq(UnionShapeModel.AnyOf)
+    )
 
     baseUnion
   }
@@ -478,14 +504,13 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       unionContext.minShape(baseUnionElement, superNode)
     }
 
-    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
-                                  AmfArray(newUnionItems),
-                                  baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    baseUnion.fields.setWithoutId(
+      UnionShapeModel.AnyOf,
+      AmfArray(newUnionItems),
+      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+    )
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superNode,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
@@ -505,39 +530,41 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
     val newUnionItems = minItems collect { case Some(s) => s }
     if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union",
-                                                  None,
-                                                  baseShape.location(),
-                                                  baseShape.position())
+      throw new InheritanceIncompatibleShapeError(
+        "Cannot compute inheritance from union",
+        None,
+        baseShape.location(),
+        baseShape.position()
+      )
     }
 
     var accExamples = List[Example]()
 
-    newUnionItems.zipWithIndex.foreach {
-      case (shape, i) =>
-        shape.id = shape.id + s"_$i"
-        shape match {
-          case any: AnyShape =>
-            accExamples ++= any.examples
-            any.fields.removeField(AnyShapeModel.Examples)
-            any.fields.removeField(AnyShapeModel.DefaultValueString)
-            any.fields.removeField(AnyShapeModel.Default)
-            any.fields.removeField(AnyShapeModel.Values)
-          case _ => // ignore
-        }
-        shape
+    newUnionItems.zipWithIndex.foreach { case (shape, i) =>
+      shape.id = shape.id + s"_$i"
+      shape match {
+        case any: AnyShape =>
+          accExamples ++= any.examples
+          any.fields.removeField(AnyShapeModel.Examples)
+          any.fields.removeField(AnyShapeModel.DefaultValueString)
+          any.fields.removeField(AnyShapeModel.Default)
+          any.fields.removeField(AnyShapeModel.Values)
+        case _ => // ignore
+      }
+      shape
     }
 
-    superUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
-                                   AmfArray(newUnionItems),
-                                   superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    superUnion.fields.setWithoutId(
+      UnionShapeModel.AnyOf,
+      AmfArray(newUnionItems),
+      superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+    )
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
-    baseShape.fields foreach {
-      case (field, value) =>
-        if (field != UnionShapeModel.AnyOf) {
-          superUnion.fields.setWithoutId(field, value.value, value.annotations)
-        }
+    baseShape.fields foreach { case (field, value) =>
+      if (field != UnionShapeModel.AnyOf) {
+        superUnion.fields.setWithoutId(field, value.value, value.annotations)
+      }
     }
 
     if (accExamples.nonEmpty)
@@ -556,11 +583,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       case (newShape: NodeShape, superUnion: NodeShape) =>
         newShape.fields
           .getValueAsOption(NodeShapeModel.Closed)
-          .map(
-            closedValue =>
-              newShape.set(NodeShapeModel.Closed,
-                           AmfScalar(superUnion.closed.value(), closedValue.value.annotations),
-                           closedValue.annotations)
+          .map(closedValue =>
+            newShape.set(
+              NodeShapeModel.Closed,
+              AmfScalar(superUnion.closed.value(), closedValue.value.annotations),
+              closedValue.annotations
+            )
           )
       case _ =>
     }
@@ -576,14 +604,18 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       )
     } else {
       val newRange = context.minShape(baseProperty.range, superProperty.range)
-      baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
-                                       newRange,
-                                       baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
+      baseProperty.fields.setWithoutId(
+        PropertyShapeModel.Range,
+        newRange,
+        baseProperty.fields.getValue(PropertyShapeModel.Range).annotations
+      )
 
-      computeNarrowRestrictions(PropertyShapeModel.fields,
-                                baseProperty,
-                                superProperty,
-                                filteredFields = Seq(PropertyShapeModel.Range))
+      computeNarrowRestrictions(
+        PropertyShapeModel.fields,
+        baseProperty,
+        superProperty,
+        filteredFields = Seq(PropertyShapeModel.Range)
+      )
     }
 
     baseProperty

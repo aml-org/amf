@@ -10,9 +10,11 @@ import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 object APIContractProcessingDataModel extends BaseUnitProcessingDataModel {
   val APIContractModelVersion: Field =
-    Field(Str,
-          ApiContract + "modelVersion",
-          ModelDoc(ModelVocabularies.AmlDoc, "modelVersion", "Version of the API contract model"))
+    Field(
+      Str,
+      ApiContract + "modelVersion",
+      ModelDoc(ModelVocabularies.AmlDoc, "modelVersion", "Version of the API contract model")
+    )
 
   override def modelInstance: APIContractProcessingData = APIContractProcessingData()
 

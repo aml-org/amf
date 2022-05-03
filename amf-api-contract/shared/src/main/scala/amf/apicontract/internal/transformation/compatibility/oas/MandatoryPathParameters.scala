@@ -8,9 +8,11 @@ import amf.core.client.scala.transform.TransformationStep
 
 class MandatoryPathParameters() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case param: Parameter if param.isPath =>

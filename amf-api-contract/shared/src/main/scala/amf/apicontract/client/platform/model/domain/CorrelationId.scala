@@ -7,8 +7,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * CorrelationId model class.
+/** CorrelationId model class.
   */
 @JSExportAll
 case class CorrelationId(override private[amf] val _internal: InternalCorrelationId)

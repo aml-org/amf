@@ -27,10 +27,12 @@ case class DeclaredAnnotationSchemaValidator(override val annotationIndex: Map[S
   }
 
   private def addMissingAnnotationViolation(name: String, key: YNode, eh: AMFErrorHandler): Unit = {
-    eh.violation(MissingAnnotationSchema,
-                 name,
-                 MissingAnnotationSchema.message,
-                 SourceLocation(key.sourceName, key.range))
+    eh.violation(
+      MissingAnnotationSchema,
+      name,
+      MissingAnnotationSchema.message,
+      SourceLocation(key.sourceName, key.range)
+    )
   }
 }
 

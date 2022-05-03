@@ -12,18 +12,18 @@ import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.resolution.ExampleTracking
 
-/**
-  * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated
-  * in the examples validation phase
-  * Only necessary for OAS 3.0 spec
+/** Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated in the
+  * examples validation phase Only necessary for OAS 3.0 spec
   */
 class PayloadAndParameterResolutionStage(profile: ProfileName) extends TransformationStep() {
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit =
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit =
     if (appliesTo(profile)) resolveExamples(model)
     else model
 

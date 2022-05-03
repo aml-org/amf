@@ -11,7 +11,6 @@ import org.mulesoft.antlrast.ast.{ASTElement, Node}
 case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyMap: PropertyShape = PropertyShape(toAnnotations(ast))
 
-
   def parse(adopt: PropertyShape => Unit): PropertyShape = {
     parseName(adopt)
     parseFields()
@@ -26,25 +25,25 @@ case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends Grp
         withOptTerminal(f) {
           case Some(t) =>
             t.value
-          case _       =>
+          case _ =>
             astError(propertyMap.id, "missing mandatory Proto3 map field name", toAnnotations(field))
             ""
         }
-      case _       =>
+      case _ =>
         astError(propertyMap.id, "missing mandatory Proto3 map field name", toAnnotations(field))
         ""
     }
   }
 
   def parseFields(): Any = {
-    val range = parseFieldRange(ast).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
-    val key = parseFieldRange(ast, KEY_TYPE).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
+    val range          = parseFieldRange(ast).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
+    val key            = parseFieldRange(ast, KEY_TYPE).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
     val mapValueSchema = NodeShape(toAnnotations(ast)).adopted(propertyMap.id)
     mapValueSchema.withAdditionalPropertiesSchema(range)
     mapValueSchema.withAdditionalPropertiesKeySchema(key)
 
     val order = parseFieldNumber(ast).getOrElse(0)
-    val name = parseFieldName(ast)
+    val name  = parseFieldName(ast)
     propertyMap
       .withName(name)
       .withSerializationOrder(order)

@@ -31,6 +31,5 @@ case class GrpcOneOfParser(ast: Node)(implicit context: GrpcWebApiContext) exten
     union.withAnyOf(members)
   }
 
-
-  protected def parseName(adopt: UnionShape => Unit): Unit = withName(ast, ONE_OF_NAME, union, { _ => adopt(union)})
+  protected def parseName(adopt: UnionShape => Unit): Unit = withName(ast, ONE_OF_NAME, union, { _ => adopt(union) })
 }

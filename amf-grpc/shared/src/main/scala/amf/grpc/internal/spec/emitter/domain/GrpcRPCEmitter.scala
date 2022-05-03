@@ -6,7 +6,8 @@ import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 
-case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
+case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: GrpcEmitterContext)
+    extends GrpcEmitter {
 
   def emit(): Unit = {
     if (mustEmitOptions(operation)) {
@@ -27,7 +28,8 @@ case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: 
 
   def operationPos: Position = pos(operation.annotations)
 
-  def name: String = operation.operationId.option()
+  def name: String = operation.operationId
+    .option()
     .orElse(operation.name.option())
     .getOrElse(s"operation${operation.method.value()}")
 
@@ -41,13 +43,13 @@ case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: 
 
   def streamRequest: String = operation.method.option().getOrElse("") match {
     case "publish" => "stream "
-    case "pubsub" => "stream "
-    case _ => ""
+    case "pubsub"  => "stream "
+    case _         => ""
   }
 
   def streamResponse: String = operation.method.option().getOrElse("") match {
     case "subscribe" => "stream "
-    case "pubsub" => "stream "
-    case _ => ""
+    case "pubsub"    => "stream "
+    case _           => ""
   }
 }

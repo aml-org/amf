@@ -19,9 +19,9 @@ import org.yaml.model._
 import scala.collection.mutable.ListBuffer
 
 trait QuickFieldParserOps {
-  class ObjectField(target: Target, field: Field)(
-      implicit iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler)
-      extends (YMapEntry => Unit) {
+  class ObjectField(target: Target, field: Field)(implicit
+      iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler
+  ) extends (YMapEntry => Unit) {
 
     // Custom annotations
     private val custom: Annotations = Annotations()
@@ -152,8 +152,9 @@ trait QuickFieldParserOps {
     }
   }
 
-  implicit class FieldOps(field: Field)(
-      implicit iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
+  implicit class FieldOps(field: Field)(implicit
+      iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler
+  ) {
     def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
 
     def in(target: Target): ObjectField = new ObjectField(target, field)
@@ -173,9 +174,9 @@ trait QuickFieldParserOps {
 }
 
 /** Scalar valued raml node (based on obj node). */
-private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(
-    implicit iv: ErrorHandlingContext with IllegalTypeHandler)
-    extends ScalarNode {
+private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit
+    iv: ErrorHandlingContext with IllegalTypeHandler
+) extends ScalarNode {
 
   override def string(): AmfScalar = as(_.string())
 
@@ -244,8 +245,9 @@ object RamlScalarNode {
     }
   }
 
-  private def createScalarValuedNode(obj: YMap)(
-      implicit iv: ErrorHandlingContext with IllegalTypeHandler): RamlScalarValuedNode = {
+  private def createScalarValuedNode(
+      obj: YMap
+  )(implicit iv: ErrorHandlingContext with IllegalTypeHandler): RamlScalarValuedNode = {
     var values = ListBuffer[YMapEntry]()
 
     obj.entries.foreach { entry =>
@@ -262,23 +264,28 @@ object RamlScalarNode {
 
     if (values.nonEmpty) {
       values.tail.foreach(d =>
-        iv.eh.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d.location))
+        iv.eh.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d.location)
+      )
     }
 
     // When an annotated scalar node has no value, the default is an empty node (null).
-    RamlScalarValuedNode(obj,
-                         values.headOption
-                           .map { entry =>
-                             ScalarNode(entry.value)
-                           }
-                           .getOrElse {
-                             ScalarNode(YNode.Empty)
-                           })
+    RamlScalarValuedNode(
+      obj,
+      values.headOption
+        .map { entry =>
+          ScalarNode(entry.value)
+        }
+        .getOrElse {
+          ScalarNode(YNode.Empty)
+        }
+    )
   }
 
   private def unexpected(key: YNode)(implicit iv: ErrorHandlingContext): Unit =
-    iv.eh.violation(UnexpectedRamlScalarKey,
-                    "",
-                    s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
-                    key.location)
+    iv.eh.violation(
+      UnexpectedRamlScalarKey,
+      "",
+      s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
+      key.location
+    )
 }

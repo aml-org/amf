@@ -17,9 +17,11 @@ class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)
@@ -39,22 +41,21 @@ class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
   }
 
   private def mergeOperations(operations: Seq[Operation]) =
-    operations.map(o => (o, getOperationTraits(o))).foreach {
-      case (operation, traits) =>
-        merge(operation, traits)
-        if (!isEditing) removeExtends(operation)
+    operations.map(o => (o, getOperationTraits(o))).foreach { case (operation, traits) =>
+      merge(operation, traits)
+      if (!isEditing) removeExtends(operation)
     }
 
-  private def mergeMessages(message: Seq[Message]) = message.map(m => (m, getMessageTraits(m))).foreach {
-    case (message, traits) =>
+  private def mergeMessages(message: Seq[Message]) =
+    message.map(m => (m, getMessageTraits(m))).foreach { case (message, traits) =>
       merge(message, traits)
       if (!isEditing) removeExtends(message)
-  }
+    }
 
   private def getMessages(operation: Operation): Seq[Message] = operation.requests ++ operation.responses
 
-  private def getOperationTraits(extended: Operation): Seq[Operation] = extended.extend.collect {
-    case t: Operation => t
+  private def getOperationTraits(extended: Operation): Seq[Operation] = extended.extend.collect { case t: Operation =>
+    t
   }
   private def getMessageTraits(extended: Message): Seq[Message] = extended.extend.collect { case t: Message => t }
 

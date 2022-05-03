@@ -11,9 +11,9 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.oas.emitter.OasPropertyShapeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasLikeShapeEmitterContext)
-    extends CustomFacetsEmitter(f, ordering, references) {
+case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasLikeShapeEmitterContext
+) extends CustomFacetsEmitter(f, ordering, references) {
 
   override val key: String = "facets".asOasExtension
 

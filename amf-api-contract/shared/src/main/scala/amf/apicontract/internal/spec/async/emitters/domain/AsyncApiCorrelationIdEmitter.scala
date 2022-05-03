@@ -15,9 +15,9 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiCorrelationIdEmitter(correlationId: CorrelationId, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiCorrelationIdEmitter(correlationId: CorrelationId, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val result = ListBuffer[EntryEmitter]()
@@ -31,9 +31,9 @@ class AsyncApiCorrelationIdEmitter(correlationId: CorrelationId, ordering: SpecO
   override def position(): Position = pos(correlationId.annotations)
 }
 
-case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends PartEmitter {
+case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends PartEmitter {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     val fs = idObj.fields
@@ -59,9 +59,9 @@ case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: S
   override def position(): Position = pos(idObj.annotations)
 }
 
-case class AsyncCorrelationIdDeclarationsEmitter(ids: Seq[CorrelationId], ordering: SpecOrdering)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncCorrelationIdDeclarationsEmitter(ids: Seq[CorrelationId], ordering: SpecOrdering)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "correlationIds",

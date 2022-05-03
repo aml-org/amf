@@ -32,9 +32,9 @@ import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader] = None)(
-    implicit val ctx: OasWebApiContext)
-    extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
+case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader] = None)(implicit
+    val ctx: OasWebApiContext
+) extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
     with PlatformSecrets {
 
   def parseFragment(): BaseUnit = {
@@ -43,10 +43,12 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
     val map: YMap = parsed.document.to[YMap] match {
       case Right(m) => m
       case _ =>
-        ctx.eh.violation(InvalidFragmentType,
-                         root.location,
-                         "Cannot parse empty map",
-                         root.parsed.asInstanceOf[SyamlParsedDocument].document.location)
+        ctx.eh.violation(
+          InvalidFragmentType,
+          root.location,
+          "Cannot parse empty map",
+          root.parsed.asInstanceOf[SyamlParsedDocument].document.location
+        )
         YMap.empty
     }
 
@@ -110,10 +112,12 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       )
 
       val shapeOption =
-        OasTypeParser(YMapEntryLike(filterMap),
-                      "type",
-                      (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(SchemaPosition.Schema))(WebApiShapeParserContextAdapter(ctx))
+        OasTypeParser(
+          YMapEntryLike(filterMap),
+          "type",
+          (shape: Shape) => shape.withId(root.location + "#/shape"),
+          OAS20SchemaVersion(SchemaPosition.Schema)
+        )(WebApiShapeParserContextAdapter(ctx))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -138,9 +142,11 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       val resourceType = ResourceTypeFragment()
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id + "#/"),
-                                      resourceType.id,
-                                      YMapEntryLike(map)).parse()
+        new AbstractDeclarationParser(
+          ResourceType(map).withId(resourceType.id + "#/"),
+          resourceType.id,
+          YMapEntryLike(map)
+        ).parse()
 
       resourceType.withEncodes(abstractDeclaration)
 
@@ -165,10 +171,12 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
       security.withEncodes(
         ctx.factory
-          .securitySchemeParser(map,
-                                (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) =>
-                                  security)
-          .parse())
+          .securitySchemeParser(
+            map,
+            (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
+          )
+          .parse()
+      )
     }
   }
 
@@ -186,7 +194,9 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
       namedExample.withEncodes(
         RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true))(
-          WebApiShapeParserContextAdapter(ctx)).parse())
+          WebApiShapeParserContextAdapter(ctx)
+        ).parse()
+      )
     }
   }
 }

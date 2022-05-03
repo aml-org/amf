@@ -34,13 +34,14 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
       case o2: OAuth2Settings                            => OasOAuth2SettingsEmitters(o2, ordering).emitters()
       case apiKey: ApiKeySettings                        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
       case http: HttpSettings                            => OasHttpSettingsEmitters(http, ordering).emitters()
-      case openId: OpenIdConnectSettings                 => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
+      case openId: OpenIdConnectSettings => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
       case _ =>
         val internals = ListBuffer[EntryEmitter]()
         settings.fields
           .entry(SettingsModel.AdditionalProperties)
           .foreach(f =>
-            internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
+            internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters()
+          )
         if (internals.nonEmpty)
           Seq(OasSettingsTypeEmitter(internals, settings, ordering))
         else Nil
@@ -48,8 +49,9 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
   }
 }
 
-case class OasOpenIdConnectSettingsEmitters(settings: Settings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class OasOpenIdConnectSettingsEmitters(settings: Settings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
     val fs        = settings.fields
@@ -75,7 +77,9 @@ case class OasHttpSettingsEmitters(settings: Settings, ordering: SpecOrdering)(i
   }
 }
 
-case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   def emitters(): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]() ++= RamlApiKeySettingsEmitters(apiKey, ordering).emitters()
 
@@ -91,8 +95,9 @@ case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrder
   }
 }
 
-case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
     val fs        = settings.fields
@@ -135,8 +140,9 @@ case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrd
   }
 }
 
-case class Oas3OAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class Oas3OAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
 
   def emitters(): Seq[EntryEmitter] = {
     val externals = ListBuffer[EntryEmitter]()
@@ -147,9 +153,9 @@ case class Oas3OAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOr
   }
 }
 
-private case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+private case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
@@ -171,9 +177,11 @@ private case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: Spe
     settings.flows.headOption.map(flow => pos(flow.annotations)).getOrElse(Position.ZERO)
 }
 
-private case class Oas3OAuthFlowsEmitter(f: FieldEntry,
-                                         ordering: SpecOrdering,
-                                         orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext)
+private case class Oas3OAuthFlowsEmitter(
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    orphanAnnotations: Seq[DomainExtension]
+)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
@@ -199,24 +207,23 @@ private case class Oas3OAuthFlowEmitter(flow: OAuth2Flow, ordering: SpecOrdering
     b.entry(
       YNode(flow.flow.value()),
       builder => {
-        builder.obj {
-          mapBuilder =>
-            val builders = ListBuffer[EntryEmitter]()
+        builder.obj { mapBuilder =>
+          val builders = ListBuffer[EntryEmitter]()
 
-            fs.entry(OAuth2FlowModel.AuthorizationUri)
-              .map(f => builders += ValueEmitter("authorizationUrl", f))
+          fs.entry(OAuth2FlowModel.AuthorizationUri)
+            .map(f => builders += ValueEmitter("authorizationUrl", f))
 
-            fs.entry(OAuth2FlowModel.AccessTokenUri).map(f => builders += ValueEmitter("tokenUrl", f))
+          fs.entry(OAuth2FlowModel.AccessTokenUri).map(f => builders += ValueEmitter("tokenUrl", f))
 
-            fs.entry(OAuth2FlowModel.RefreshUri).map(f => builders += ValueEmitter("refreshUrl", f))
+          fs.entry(OAuth2FlowModel.RefreshUri).map(f => builders += ValueEmitter("refreshUrl", f))
 
-            val orphanAnnotations =
-              flow.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+          val orphanAnnotations =
+            flow.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
 
-            fs.entry(OAuth2FlowModel.Scopes)
-              .foreach(f => builders += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
+          fs.entry(OAuth2FlowModel.Scopes)
+            .foreach(f => builders += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
 
-            traverse(ordering.sorted(builders), mapBuilder)
+          traverse(ordering.sorted(builders), mapBuilder)
         }
       }
     )
@@ -225,10 +232,12 @@ private case class Oas3OAuthFlowEmitter(flow: OAuth2Flow, ordering: SpecOrdering
   override def position(): Position = pos(flow.annotations)
 }
 
-case class OasOAuth2ScopeEmitter(key: String,
-                                 f: FieldEntry,
-                                 ordering: SpecOrdering,
-                                 orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext)
+case class OasOAuth2ScopeEmitter(
+    key: String,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    orphanAnnotations: Seq[DomainExtension]
+)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
@@ -251,8 +260,10 @@ case class OasScopeValuesEmitters(f: FieldEntry) {
 case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: Settings, ordering: SpecOrdering)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    sourceOr(settings.annotations,
-             b.entry("settings".asOasExtension, _.obj(traverse(ordering.sorted(settingsEntries), _))))
+    sourceOr(
+      settings.annotations,
+      b.entry("settings".asOasExtension, _.obj(traverse(ordering.sorted(settingsEntries), _)))
+    )
   }
 
   override def position(): Position = settingsEntries.headOption.map(_.position()).getOrElse(Position.ZERO)

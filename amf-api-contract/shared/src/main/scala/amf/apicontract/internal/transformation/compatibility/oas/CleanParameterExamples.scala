@@ -9,9 +9,11 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 
 class CleanParameterExamples() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case param: Parameter =>

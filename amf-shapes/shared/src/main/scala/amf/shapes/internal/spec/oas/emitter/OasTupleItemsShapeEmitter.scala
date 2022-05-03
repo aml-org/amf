@@ -17,17 +17,17 @@ case class OasTupleItemsShapeEmitter(
     references: Seq[BaseUnit],
     additionalEntry: Option[ValueEmitter],
     pointer: Seq[String] = Nil,
-    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
   val itemEmitters: Seq[OasTypeEmitter] = {
-    array.items.zipWithIndex.map {
-      case (shape, i) =>
-        /*
+    array.items.zipWithIndex.map { case (shape, i) =>
+      /*
       val collector = new SimpleOasTypePartCollector(shape, ordering, Nil, references)
       collector.computeEmitters(pointer ++ Seq("items", s"$i"), schemaPath)
-         */
-        OasTypeEmitter(shape, ordering, Nil, references, pointer ++ Seq("items", s"$i"), schemaPath)
+       */
+      OasTypeEmitter(shape, ordering, Nil, references, pointer ++ Seq("items", s"$i"), schemaPath)
     }
   }
 

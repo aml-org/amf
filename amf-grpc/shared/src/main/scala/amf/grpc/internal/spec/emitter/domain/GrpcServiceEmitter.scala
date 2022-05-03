@@ -6,7 +6,8 @@ import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 
-case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
+case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx: GrpcEmitterContext)
+    extends GrpcEmitter {
 
   def emit(): Unit = {
     builder.fixed { f =>

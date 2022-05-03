@@ -2,7 +2,12 @@ package amf.shapes.client.scala.plugin
 
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator, ShapeValidationConfiguration, ValidatePayloadRequest}
+import amf.core.client.scala.validation.payload.{
+  AMFShapePayloadValidationPlugin,
+  AMFShapePayloadValidator,
+  ShapeValidationConfiguration,
+  ValidatePayloadRequest
+}
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
@@ -17,10 +22,12 @@ object JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationP
     isAnyShape(shape) && supportsMediaType(mediaType)
   }
 
-  override def validator(shape: Shape,
-                         mediaType: String,
-                         config: ShapeValidationConfiguration,
-                         validationMode: ValidationMode): AMFShapePayloadValidator = {
+  override def validator(
+      shape: Shape,
+      mediaType: String,
+      config: ShapeValidationConfiguration,
+      validationMode: ValidationMode
+  ): AMFShapePayloadValidator = {
     JsonSchemaValidatorBuilder.payloadValidator(shape, mediaType, validationMode, config)
   }
 

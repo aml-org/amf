@@ -10,9 +10,11 @@ import amf.core.internal.transform.stages.elements.resolution.ReferenceResolutio
 import amf.core.internal.transform.stages.selectors.{LinkSelector, Selector}
 
 object RequestParamsLinkStage extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit =
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit =
     new RequestParamsLinkStage(errorHandler).resolve(model, configuration)
 }
 
@@ -23,9 +25,11 @@ private class RequestParamsLinkStage(val errorHandler: AMFErrorHandler) {
       .asInstanceOf[T]
   }
 
-  private def transform(e: DomainElement,
-                        isCycle: Boolean,
-                        configuration: AMFGraphConfiguration): Option[DomainElement] = {
+  private def transform(
+      e: DomainElement,
+      isCycle: Boolean,
+      configuration: AMFGraphConfiguration
+  ): Option[DomainElement] = {
     val referenceResolution =
       new ReferenceResolution(errorHandler, customDomainElementTransformation = customDomainElementTransformation)
     referenceResolution.transform(e, conditions = Seq(ReferenceResolution.ASSERT_DIFFERENT), configuration)

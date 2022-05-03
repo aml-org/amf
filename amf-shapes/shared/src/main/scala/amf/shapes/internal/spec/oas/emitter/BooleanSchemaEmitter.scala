@@ -9,10 +9,10 @@ import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 import scala.language.postfixOps
 
-case class BooleanSchemaEmitter(shape: Shape) extends PartEmitter{
+case class BooleanSchemaEmitter(shape: Shape) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     b += {
-      if(shape.fields.exists(Not)) YNode(false) else YNode(true)
+      if (shape.fields.exists(Not)) YNode(false) else YNode(true)
     }
   }
   override def position(): Position = {

@@ -7,8 +7,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala.model.domain.{Callback => InternalCallback}
 
-/**
-  * Callback model class.
+/** Callback model class.
   */
 @JSExportAll
 case class Callback(override private[amf] val _internal: InternalCallback)

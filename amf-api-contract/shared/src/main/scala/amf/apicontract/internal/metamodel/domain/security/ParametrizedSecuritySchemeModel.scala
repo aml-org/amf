@@ -13,22 +13,27 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField 
   val Name = Field(
     Str,
     Core + "name",
-    ModelDoc(ModelVocabularies.Core, "name", "Name for the security scheme", Seq((Namespace.Core + "name").iri())))
+    ModelDoc(ModelVocabularies.Core, "name", "Name for the security scheme", Seq((Namespace.Core + "name").iri()))
+  )
 
   val Description = Field(
     Str,
     Namespace.Core + "description",
-    ModelDoc(ModelVocabularies.Security,
-             "description",
-             "Name for the security scheme",
-             Seq((Namespace.Core + "description").iri()))
+    ModelDoc(
+      ModelVocabularies.Security,
+      "description",
+      "Name for the security scheme",
+      Seq((Namespace.Core + "description").iri())
+    )
   )
 
   val Scheme = Field(SecuritySchemeModel, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))
 
-  val Settings = Field(SettingsModel,
-                       Security + "settings",
-                       ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings"))
+  val Settings = Field(
+    SettingsModel,
+    Security + "settings",
+    ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings")
+  )
 
   override val key: Field = Name
 

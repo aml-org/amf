@@ -22,37 +22,40 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
 
   test("Validate scalar semantic extensions in RAML 1.0 api") {
     getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      validate("api.raml",
-               Some("api.raml.report"),
-               overridedHint = Some(Raml10YamlHint),
-               configOverride = Some(config))
+      validate("api.raml", Some("api.raml.report"), overridedHint = Some(Raml10YamlHint), configOverride = Some(config))
     }
   }
 
   test("Validate scalar semantic extensions in OAS 2.0 api") {
     getConfig("dialect.yaml", OASConfiguration.OAS20()).flatMap { config =>
-      validate("api.oas20.yaml",
-               Some("api.oas20.report"),
-               overridedHint = Some(Oas20YamlHint),
-               configOverride = Some(config))
+      validate(
+        "api.oas20.yaml",
+        Some("api.oas20.report"),
+        overridedHint = Some(Oas20YamlHint),
+        configOverride = Some(config)
+      )
     }
   }
 
   test("Validate scalar semantic extensions in OAS 3.0 api") {
     getConfig("dialect.yaml", OASConfiguration.OAS30()).flatMap { config =>
-      validate("api.oas30.yaml",
-               Some("api.oas30.report"),
-               overridedHint = Some(Oas30YamlHint),
-               configOverride = Some(config))
+      validate(
+        "api.oas30.yaml",
+        Some("api.oas30.report"),
+        overridedHint = Some(Oas30YamlHint),
+        configOverride = Some(config)
+      )
     }
   }
 
   test("Validate scalar semantic extensions in ASYNC 2.0 api") {
     getConfig("dialect.yaml", AsyncAPIConfiguration.Async20()).flatMap { config =>
-      validate("api.async.yaml",
-               Some("api.async.report"),
-               overridedHint = Some(Async20YamlHint),
-               configOverride = Some(config))
+      validate(
+        "api.async.yaml",
+        Some("api.async.report"),
+        overridedHint = Some(Async20YamlHint),
+        configOverride = Some(config)
+      )
     }
   }
 
@@ -69,24 +72,30 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
 
   test("Validate missing annotation definition at a RAML 1.0 SemEx") {
     getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      validate("api-without-schema.raml",
-               Some("api-without-schema.raml.report"),
-               overridedHint = Some(Raml10YamlHint),
-               configOverride = Some(config))
+      validate(
+        "api-without-schema.raml",
+        Some("api-without-schema.raml.report"),
+        overridedHint = Some(Raml10YamlHint),
+        configOverride = Some(config)
+      )
     }
   }
 
   test("Validate invalid (not any) annotation definition at a RAML 1.0 SemEx") {
     getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      validate("api-not-any-schema.raml",
-               Some("api-not-any-schema.raml.report"),
-               overridedHint = Some(Raml10YamlHint),
-               configOverride = Some(config))
+      validate(
+        "api-not-any-schema.raml",
+        Some("api-not-any-schema.raml.report"),
+        overridedHint = Some(Raml10YamlHint),
+        configOverride = Some(config)
+      )
     }
   }
 
-  private def getConfig(dialect: String,
-                        baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
+  private def getConfig(
+      dialect: String,
+      baseConfig: AMFConfiguration = APIConfiguration.API()
+  ): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withDialect(s"$basePath" + dialect)

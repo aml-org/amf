@@ -8,9 +8,11 @@ import amf.shapes.client.scala.model.domain.UnionShape
 
 object UnionShapeModel extends AnyShapeModel {
 
-  val AnyOf = Field(Array(ShapeModel),
-                    Namespace.Shapes + "anyOf",
-                    ModelDoc(ModelVocabularies.Shapes, "anyOf", "Data shapes in the union"))
+  val AnyOf = Field(
+    Array(ShapeModel),
+    Namespace.Shapes + "anyOf",
+    ModelDoc(ModelVocabularies.Shapes, "anyOf", "Data shapes in the union")
+  )
 
   val specificFields = List(AnyOf)
 

@@ -9,9 +9,9 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.AstFinder
 import org.yaml.model.YNode
 
-case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReference])(
-    implicit val context: ShapeParserContext)
-    extends PlatformSecrets {
+case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReference])(implicit
+    val context: ShapeParserContext
+) extends PlatformSecrets {
 
   def obtainRemoteYNode(ref: String): Option[YNode] = {
     withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>

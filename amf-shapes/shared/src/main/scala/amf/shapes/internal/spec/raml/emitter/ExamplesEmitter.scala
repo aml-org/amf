@@ -16,10 +16,12 @@ import amf.shapes.internal.spec.common.emitter.{
 import scala.collection.mutable.ListBuffer
 
 trait ExamplesEmitter {
-  def emitExamples(shape: AnyShape,
-                   results: ListBuffer[EntryEmitter],
-                   ordering: SpecOrdering,
-                   references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext): Unit = {
+  def emitExamples(
+      shape: AnyShape,
+      results: ListBuffer[EntryEmitter],
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  )(implicit spec: ShapeEmitterContext): Unit = {
     shape.fields
       .entry(AnyShapeModel.Examples)
       .foreach(f => {

@@ -5,12 +5,14 @@ import amf.apicontract.internal.annotations.FormBodyParameter
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import org.yaml.model.YPart
 
-case class Parameters(query: Seq[Parameter] = Nil,
-                      path: Seq[Parameter] = Nil,
-                      header: Seq[Parameter] = Nil,
-                      cookie: Seq[Parameter] = Nil,
-                      baseUri08: Seq[Parameter] = Nil,
-                      body: Seq[Payload] = Nil) {
+case class Parameters(
+    query: Seq[Parameter] = Nil,
+    path: Seq[Parameter] = Nil,
+    header: Seq[Parameter] = Nil,
+    cookie: Seq[Parameter] = Nil,
+    baseUri08: Seq[Parameter] = Nil,
+    body: Seq[Payload] = Nil
+) {
   def merge(inner: Parameters): Parameters = {
     Parameters(
       mergeParams(query, inner.query),
@@ -43,7 +45,7 @@ case class Parameters(query: Seq[Parameter] = Nil,
 
   private def mergeParams(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name.value() -> p).toMap
-    val innerMap  = inner.map(p => p.name.value()  -> p).toMap
+    val innerMap  = inner.map(p => p.name.value() -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
@@ -52,7 +54,7 @@ case class Parameters(query: Seq[Parameter] = Nil,
 
   private def addParams(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name.value() -> p).toMap
-    val innerMap  = inner.map(p => p.name.value()  -> p).toMap
+    val innerMap  = inner.map(p => p.name.value() -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
@@ -80,24 +82,26 @@ object Parameters {
       else
         uriParams ++= Seq(param)
     }
-    Parameters(params.filter(_.isQuery),
-               pathParams,
-               params.filter(_.isHeader),
-               params.filter(_.isCookie),
-               uriParams,
-               payloads)
+    Parameters(
+      params.filter(_.isQuery),
+      pathParams,
+      params.filter(_.isHeader),
+      params.filter(_.isCookie),
+      uriParams,
+      payloads
+    )
   }
 }
 
-/**
-  * I need to be sure that always i will have either a param or a payload.
+/** I need to be sure that always i will have either a param or a payload.
   */
 class OasParameter(val element: Either[Parameter, Payload], val ast: Option[YPart] = None) {
 
-  val isFormData: Boolean = element.right.toOption.exists(
-    p =>
-      (p.isLink && p.effectiveLinkTarget().annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
-        classOf[FormBodyParameter]))
+  val isFormData: Boolean = element.right.toOption.exists(p =>
+    (p.isLink && p.effectiveLinkTarget().annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
+      classOf[FormBodyParameter]
+    )
+  )
   val isBody: Boolean              = element.isRight && !isFormData
   private val paramOption          = element.left.toOption
   def query: Option[Parameter]     = paramOption.filter(_.isQuery)

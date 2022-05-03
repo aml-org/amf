@@ -33,7 +33,7 @@ object OasCustomSyntax extends CustomSyntax {
         "authorizationUrl",
         "tokenUrl",
         "flow",
-        "scopes",
+        "scopes"
       )
     ),
     "implicit" -> SpecNode(

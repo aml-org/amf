@@ -30,8 +30,8 @@ object ExtensionsCollector extends ValidationCandidateCollector {
         Seq(shapeExtension)
       case scalar: AmfScalar if scalar.annotations.contains(classOf[DomainExtensionAnnotation]) =>
         scalar.annotations
-          .collect[DomainExtension] {
-            case domainAnnotation: DomainExtensionAnnotation => domainAnnotation.extension
+          .collect[DomainExtension] { case domainAnnotation: DomainExtensionAnnotation =>
+            domainAnnotation.extension
           }
       case _ => Nil
     }

@@ -6,8 +6,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class ShapeResponse(override private[amf] val _internal: InternalShapeResponse)
-    extends AbstractResponse {
+case class ShapeResponse(override private[amf] val _internal: InternalShapeResponse) extends AbstractResponse {
 
   override type PayloadType = ShapePayload
 

@@ -4,7 +4,18 @@ import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.shapes.internal.domain.metamodel.{operations, _}
-import amf.shapes.internal.domain.metamodel.operations.{AbstractOperationModel, AbstractParameterModel, AbstractPayloadModel, AbstractRequestModel, AbstractResponseModel, ShapeOperationModel, ShapeParameterModel, ShapePayloadModel, ShapeRequestModel, ShapeResponseModel}
+import amf.shapes.internal.domain.metamodel.operations.{
+  AbstractOperationModel,
+  AbstractParameterModel,
+  AbstractPayloadModel,
+  AbstractRequestModel,
+  AbstractResponseModel,
+  ShapeOperationModel,
+  ShapeParameterModel,
+  ShapePayloadModel,
+  ShapeRequestModel,
+  ShapeResponseModel
+}
 
 private[amf] object ShapeEntities extends Entities {
 

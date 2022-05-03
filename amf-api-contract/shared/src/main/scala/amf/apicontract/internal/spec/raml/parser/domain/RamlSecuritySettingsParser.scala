@@ -2,12 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.parser.{
-  SpecField,
-  SpecNode,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{SpecField, SpecNode, SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   MissingRequiredFieldForGrantType,
@@ -25,9 +20,9 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(
-    implicit val ctx: RamlWebApiContext)
-    extends SpecParserOps {
+case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(implicit
+    val ctx: RamlWebApiContext
+) extends SpecParserOps {
 
   protected val map: YMap = node.as[YMap]
   def parse(): Settings = {
@@ -54,7 +49,8 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
 
     if (entries.nonEmpty) {
       val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
-        WebApiShapeParserContextAdapter(ctx)).parse()
+        WebApiShapeParserContextAdapter(ctx)
+      ).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
     settings
@@ -72,8 +68,10 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
     val flow     = new Lazy[OAuth2Flow](() => OAuth2Flow(map))
 
     map.key("authorizationUri", entry => (OAuth2FlowModel.AuthorizationUri in flow.getOrCreate).apply(entry))
-    map.key("accessTokenUri",
-            entry => (OAuth2FlowModel.AccessTokenUri in flow.getOrCreate).allowingAnnotations.apply(entry))
+    map.key(
+      "accessTokenUri",
+      entry => (OAuth2FlowModel.AccessTokenUri in flow.getOrCreate).allowingAnnotations.apply(entry)
+    )
     map.key("flow".asRamlAnnotation, entry => (OAuth2FlowModel.Flow in flow.getOrCreate).apply(entry))
     map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
@@ -107,10 +105,10 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
       (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
     }
 
-    flow.option.foreach(
-      f =>
-        settings.fields
-          .setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred()))
+    flow.option.foreach(f =>
+      settings.fields
+        .setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred())
+    )
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings
@@ -138,9 +136,9 @@ object RamlSecuritySettingsParser {
   }
 }
 
-class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(
-    implicit override val ctx: RamlWebApiContext)
-    extends RamlSecuritySettingsParser(node, `type`, scheme) {
+class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(implicit
+    override val ctx: RamlWebApiContext
+) extends RamlSecuritySettingsParser(node, `type`, scheme) {
 
   override protected def oauth2(): OAuth2Settings = {
     val settings = super.oauth2()
@@ -152,13 +150,14 @@ class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainEl
     val grants            = settings.authorizationGrants.flatMap(_.option())
     val requiredFields    = requiredFieldsWithGrant(grants)
     val keys: Seq[String] = map.entries.map(ctx.getEntryKey)
-    requiredFields.foreach {
-      case (requiredField, grant) =>
-        if (!keys.contains(requiredField.name))
-          ctx.eh.warning(MissingRequiredFieldForGrantType,
-                         settings,
-                         s"'${requiredField.name}' is required when '$grant' grant type is used",
-                         map.location)
+    requiredFields.foreach { case (requiredField, grant) =>
+      if (!keys.contains(requiredField.name))
+        ctx.eh.warning(
+          MissingRequiredFieldForGrantType,
+          settings,
+          s"'${requiredField.name}' is required when '$grant' grant type is used",
+          map.location
+        )
     }
   }
 

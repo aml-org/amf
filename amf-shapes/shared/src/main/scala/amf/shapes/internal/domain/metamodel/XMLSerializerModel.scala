@@ -7,8 +7,7 @@ import amf.core.internal.metamodel.Type.{Bool, Str}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.XMLSerializer
 
-/**
-  * Scalar shape metamodel
+/** Scalar shape metamodel
   */
 object XMLSerializerModel extends DomainElementModel {
 

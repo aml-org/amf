@@ -10,13 +10,15 @@ import org.mulesoft.lexer.SourceLocation
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 
   // TODO: all documents should have a Vendor
-  protected def restrictCrossSpecReferences(optionalReferencedSpec: Option[Spec], reference: Reference)(
-      implicit errorHandler: AMFErrorHandler): Unit = {
+  protected def restrictCrossSpecReferences(optionalReferencedSpec: Option[Spec], reference: Reference)(implicit
+      errorHandler: AMFErrorHandler
+  ): Unit = {
     val possibleReferencedSpec: List[Spec] = (optionalReferencedSpec ++ validSpecsToReference).toList
     optionalReferencedSpec.foreach { referencedSpec =>
       if (!possibleReferencedSpec.contains(referencedSpec)) {
         referenceNodes(reference).foreach(node =>
-          errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node))
+          errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node)
+        )
       }
     }
   }
@@ -27,5 +29,7 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
     }
   }
 
-  private def referenceNodes(reference: Reference): Seq[SourceLocation] = reference.refs.collect { case ref: ASTRefContainer => ref.pos }
+  private def referenceNodes(reference: Reference): Seq[SourceLocation] = reference.refs.collect {
+    case ref: ASTRefContainer => ref.pos
+  }
 }

@@ -43,7 +43,8 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
     val result = RdfUnitConverter.fromNativeRdfModel(
       baseUnitId,
       modelDoc.model,
-      WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler))
+      WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    )
     Some(result)
   }
 

@@ -8,8 +8,8 @@ import amf.core.internal.render.emitters.Emitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 
 class SimpleOasTypePartCollector(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field], references: Seq[BaseUnit])(
-    implicit spec: OasLikeShapeEmitterContext)
-    extends OasTypePartCollector(shape, ordering, ignored, references) {
+    implicit spec: OasLikeShapeEmitterContext
+) extends OasTypePartCollector(shape, ordering, ignored, references) {
 
   def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]): Seq[Emitter] =
     emitters(pointer, schemaPath)

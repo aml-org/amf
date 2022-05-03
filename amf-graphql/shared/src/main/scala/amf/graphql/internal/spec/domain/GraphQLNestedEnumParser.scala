@@ -9,7 +9,8 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
   val enum = ScalarShape(toAnnotations(enumTypeDef)).withDataType(Namespace.XsdTypes.xsdString.iri())
 
   def parse(parentId: String): ScalarShape = {
@@ -20,7 +21,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseName(): Unit = {
-    val name= findName(enumTypeDef, "AnonymousEnum", "Missing enumeration type name", enum.id)
+    val name = findName(enumTypeDef, "AnonymousEnum", "Missing enumeration type name", enum.id)
     enum.withName(name)
   }
 

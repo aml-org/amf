@@ -43,24 +43,23 @@ case class InfoEmitter(fs: Fields, ordering: SpecOrdering)(implicit val spec: Sp
   override def position(): Position = {
     var result: Position = ZERO
     fs.entry(WebApiModel.Version)
-      .foreach(
-        f =>
-          f.value.annotations
-            .find(classOf[LexicalInformation])
-            .foreach({
-              case LexicalInformation(range) => result = range.start
-            }))
+      .foreach(f =>
+        f.value.annotations
+          .find(classOf[LexicalInformation])
+          .foreach({ case LexicalInformation(range) =>
+            result = range.start
+          })
+      )
     fs.entry(WebApiModel.Name)
-      .foreach(
-        f =>
-          f.value.annotations
-            .find(classOf[LexicalInformation])
-            .foreach({
-              case LexicalInformation(range) =>
-                if (result.isZero || range.start.lt(result)) {
-                  result = range.start
-                }
-            }))
+      .foreach(f =>
+        f.value.annotations
+          .find(classOf[LexicalInformation])
+          .foreach({ case LexicalInformation(range) =>
+            if (result.isZero || range.start.lt(result)) {
+              result = range.start
+            }
+          })
+      )
     result
   }
 }

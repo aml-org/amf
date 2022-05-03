@@ -24,8 +24,9 @@ import org.yaml.model.YType
 
 import scala.collection.mutable.ListBuffer
 
-abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext) {
+abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) {
 
   val typeName: Option[String]
   var typeEmitted                = false
@@ -41,20 +42,24 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
 
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>
-        result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                   position = pos(f.value.annotations))
+        result += EntryPartEmitter(
+          "default",
+          DataNodeEmitter(shape.default, ordering)(spec.eh),
+          position = pos(f.value.annotations)
+        )
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
 
     fs.entry(ShapeModel.Values).map(f => result += emitter.EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(AnyShapeModel.Documentation)
-      .map(
-        f =>
-          result += OasEntryCreativeWorkEmitter("externalDocs".asRamlAnnotation,
-                                                f.value.value.asInstanceOf[CreativeWork],
-                                                ordering))
+      .map(f =>
+        result += OasEntryCreativeWorkEmitter(
+          "externalDocs".asRamlAnnotation,
+          f.value.value.asInstanceOf[CreativeWork],
+          ordering
+        )
+      )
 
     fs.entry(PropertyShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly".asRamlAnnotation, fe))
 

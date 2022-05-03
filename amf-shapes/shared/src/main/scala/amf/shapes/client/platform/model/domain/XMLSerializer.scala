@@ -7,8 +7,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * XMLSerializer model class.
+/** XMLSerializer model class.
   */
 @JSExportAll
 case class XMLSerializer(override private[amf] val _internal: InternalXMLSerializer) extends DomainElement {

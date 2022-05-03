@@ -9,9 +9,10 @@ import amf.core.client.common.transform._
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.internal.remote.Raml08
 
-class Raml08EditingPipeline private (urlShortening: Boolean = true,
-                                     override val name: String = Raml08EditingPipeline.name)
-    extends AmfEditingPipeline(urlShortening, name) {
+class Raml08EditingPipeline private (
+    urlShortening: Boolean = true,
+    override val name: String = Raml08EditingPipeline.name
+) extends AmfEditingPipeline(urlShortening, name) {
   override def profileName: ProfileName = Raml08Profile
   override def references               = new WebApiReferenceResolutionStage(true)
 

@@ -8,17 +8,19 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
 
-/**
-  * Place server models in the right locations according to OAS 3.0 and our own criterium for AMF
+/** Place server models in the right locations according to OAS 3.0 and our own criterium for AMF
   *
-  * @param profile target profile
+  * @param profile
+  *   target profile
   */
 class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile => normalizeServers(model)
@@ -26,11 +28,12 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
     }
   }
 
-  /**
-    * Push all server definitions to the operation level.
+  /** Push all server definitions to the operation level.
     *
-    * @param unit BaseUnit in
-    * @return unit BaseUnit out
+    * @param unit
+    *   BaseUnit in
+    * @return
+    *   unit BaseUnit out
     */
   protected def normalizeServers(unit: BaseUnit): BaseUnit = {
     unit match {
@@ -46,8 +49,7 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
     }
   }
 
-  /**
-    * moves servers defined in base to each child that has no servers defined.
+  /** moves servers defined in base to each child that has no servers defined.
     */
   private def propagateServers(base: ServerContainer, children: Seq[ServerContainer]): Unit =
     if (children.nonEmpty && base.servers.nonEmpty) {

@@ -41,24 +41,30 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         checkForUndefinedVersion(entry, variables)
         parseBaseUriParameters(server, TemplateUri.variables(value))
 
-        api.setWithoutId(WebApiModel.Servers,
-                AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-                Annotations(entry))
+        api.setWithoutId(
+          WebApiModel.Servers,
+          AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+          Annotations(entry)
+        )
       case None =>
         map
           .key("baseUriParameters")
           .foreach { entry =>
-            ctx.eh.violation(ParametersWithoutBaseUri,
-                             api,
-                             "'baseUri' not defined and 'baseUriParameters' defined.",
-                             entry.location)
+            ctx.eh.violation(
+              ParametersWithoutBaseUri,
+              api,
+              "'baseUri' not defined and 'baseUriParameters' defined.",
+              entry.location
+            )
 
             val server = Server()
             parseBaseUriParameters(server, Nil)
 
-            api.setWithoutId(WebApiModel.Servers,
-                    AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-                    Annotations(entry))
+            api.setWithoutId(
+              WebApiModel.Servers,
+              AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+              Annotations(entry)
+            )
           }
     }
 
@@ -83,12 +89,14 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         val finalParams             = flatten ++ unused
         server.setWithoutId(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
         unused.foreach { p =>
-          ctx.eh.warning(UnusedBaseUriParameter,
-                         p,
-                         None,
-                         s"Unused base uri parameter ${p.name.value()}",
-                         p.position(),
-                         p.location())
+          ctx.eh.warning(
+            UnusedBaseUriParameter,
+            p,
+            None,
+            s"Unused base uri parameter ${p.name.value()}",
+            p.position(),
+            p.location()
+          )
         }
       case None if orderedVariables.nonEmpty =>
         server.setWithoutId(ServerModel.Variables, AmfArray(orderedVariables.map(buildParamFromVar(_, server.id))))
@@ -103,7 +111,8 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         case Some(p) => p
         case _       => buildParamFromVar(v, server.id)
 
-    })
+      }
+    )
   }
 
   private def parseExplicitParameters(entry: YMapEntry, server: Server) = {
@@ -128,23 +137,29 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   private def checkForUndefinedVersion(entry: YMapEntry, variables: Seq[String]): Unit = {
     val webapiHasVersion = map.key("version").isDefined
     if (variables.contains("version") && !webapiHasVersion) {
-      ctx.eh.warning(ImplicitVersionParameterWithoutApiVersion,
-                     api,
-                     "'baseUri' defines 'version' variable without the API defining one",
-                     entry.location)
+      ctx.eh.warning(
+        ImplicitVersionParameterWithoutApiVersion,
+        api,
+        "'baseUri' defines 'version' variable without the API defining one",
+        entry.location
+      )
     }
   }
 
-  private def checkIfVersionParameterIsDefined(orderedVariables: Seq[String],
-                                               parameters: Seq[Parameter],
-                                               entry: YMapEntry): Unit = {
+  private def checkIfVersionParameterIsDefined(
+      orderedVariables: Seq[String],
+      parameters: Seq[Parameter],
+      entry: YMapEntry
+  ): Unit = {
     val apiHasVersion          = api.version.option().isDefined
     val versionParameterExists = parameters.exists(_.name.option().exists(name => name.equals("version")))
     if (orderedVariables.contains("version") && versionParameterExists && apiHasVersion) {
-      ctx.eh.warning(InvalidVersionBaseUriParameterDefinition,
-                     api,
-                     "'version' baseUriParameter can't be defined if present in baseUri as variable",
-                     entry.location)
+      ctx.eh.warning(
+        InvalidVersionBaseUriParameterDefinition,
+        api,
+        "'version' baseUriParameter can't be defined if present in baseUri as variable",
+        entry.location
+      )
     }
   }
 
@@ -187,8 +202,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         "baseUriParameters".asOasExtension,
         entry => {
           val uriParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(
-              toRaml(ctx)).parse()
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(toRaml(ctx)).parse()
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }

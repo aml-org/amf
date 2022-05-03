@@ -46,12 +46,14 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   }
 
   multiGoldenTest("Test included schema and example", "api.%s") { config =>
-    cycle("api.raml",
-          config.golden,
-          Raml08YamlHint,
-          target = AmfJsonHint,
-          directory = basePath + "included-schema-and-example/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml08YamlHint,
+      target = AmfJsonHint,
+      directory = basePath + "included-schema-and-example/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   test("Test json_schemasa refs") {

@@ -13,9 +13,9 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
-case class OrganizationEmitter(key: String, org: Organization, ordering: SpecOrdering)(
-    implicit val spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class OrganizationEmitter(key: String, org: Organization, ordering: SpecOrdering)(implicit
+    val spec: SpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       org.annotations,

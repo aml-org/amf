@@ -10,14 +10,14 @@ import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.templates.OptionalField
 import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
 
-/**
-  * Payload metamodel.
+/** Payload metamodel.
   */
 object PayloadModel extends AbstractPayloadModel with OptionalField with LinkableElementModel {
   val SchemaMediaType: Field = Field(
     Str,
     ApiContract + "schemaMediaType",
-    ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "Defines the format of the payload schema"))
+    ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "Defines the format of the payload schema")
+  )
 
   val Encoding: Field =
     Field(

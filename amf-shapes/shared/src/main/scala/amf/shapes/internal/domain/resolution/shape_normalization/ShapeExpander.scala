@@ -17,9 +17,9 @@ private[resolution] object ShapeExpander {
     new ShapeExpander(s, recursionRegister: RecursionErrorRegister)(context).normalize()
 }
 
-sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRegister)(
-    implicit val context: NormalizationContext)
-    extends ShapeNormalizer {
+sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRegister)(implicit
+    val context: NormalizationContext
+) extends ShapeNormalizer {
 
   def normalize(): Shape = normalize(root)
 
@@ -27,12 +27,14 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   protected def ensureHasId(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
-      context.errorHandler.violation(TransformationValidation,
-                                     shape.id,
-                                     None,
-                                     s"Resolution error: Found shape without ID: $shape",
-                                     shape.position(),
-                                     shape.location())
+      context.errorHandler.violation(
+        TransformationValidation,
+        shape.id,
+        None,
+        s"Resolution error: Found shape without ID: $shape",
+        shape.position(),
+        shape.location()
+      )
     }
   }
 
@@ -41,19 +43,19 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
       case l: Linkable if l.isLink =>
-        /***
-          * TODO: (Refactor needed)
-          * Why do we create a recursive shape when we find a linkable? Shouldn't this be subject only to traversals?
-          * The motivation is not explicit in the code. There is for sure some corner case where this case is needed.
-          * After finding the cocrete case please extract this to a function and make explicit the conditions where
-          * this is needed, otherwise delete this code.
+        /** * TODO: (Refactor needed) Why do we create a recursive shape when we find a linkable? Shouldn't this be
+          * subject only to traversals? The motivation is not explicit in the code. There is for sure some corner case
+          * where this case is needed. After finding the cocrete case please extract this to a function and make
+          * explicit the conditions where this is needed, otherwise delete this code.
           */
         val recursiveShape = recursionRegister.buildRecursion(Some(root.id), shape)
-        recursionRegister.checkRecursionError(root,
-                                              recursiveShape,
-                                              traversal,
-                                              Some(root.id),
-                                              LinkableCriteria(root, shape))
+        recursionRegister.checkRecursionError(
+          root,
+          recursiveShape,
+          traversal,
+          Some(root.id),
+          LinkableCriteria(root, shape)
+        )
         recursiveShape
 
       case _ if traversal.foundRecursion(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
@@ -263,10 +265,12 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
     } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {
-      context.errorHandler.violation(TransformationValidation,
-                                     union.id,
-                                     s"Resolution error: Union shape with missing anyof: $union",
-                                     union.annotations)
+      context.errorHandler.violation(
+        TransformationValidation,
+        union.id,
+        s"Resolution error: Union shape with missing anyof: $union",
+        union.annotations
+      )
     }
 
     union

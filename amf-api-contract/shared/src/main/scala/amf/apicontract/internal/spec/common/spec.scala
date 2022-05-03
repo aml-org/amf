@@ -13,8 +13,7 @@ import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.emitter.SpecAwareEmitterContext
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 
-/**
-  * Oas package object
+/** Oas package object
   */
 package object spec {
 
@@ -38,8 +37,9 @@ package object spec {
         url.stripPrefix(responsesDefinitionsPrefix)
     }
 
-    def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: SpecAwareEmitterContext): String = {
+    def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(implicit
+        spec: SpecAwareEmitterContext
+    ): String = {
       if (spec.isOas3 || spec.isAsync)
         appendOas3ComponentsPrefix(url, "parameters")
       else
@@ -58,17 +58,21 @@ package object spec {
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     val result = ctx.spec match {
       case Spec.OAS30 =>
-        new Oas3WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(toOasDeclarations(ctx.declarations)),
-                              ctx.options)
+        new Oas3WebApiContext(
+          ctx.rootContextDocument,
+          ctx.refs,
+          ctx,
+          Some(toOasDeclarations(ctx.declarations)),
+          ctx.options
+        )
       case _ =>
-        new Oas2WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(toOasDeclarations(ctx.declarations)),
-                              ctx.options)
+        new Oas2WebApiContext(
+          ctx.rootContextDocument,
+          ctx.refs,
+          ctx,
+          Some(toOasDeclarations(ctx.declarations)),
+          ctx.options
+        )
     }
     result.indexCache = ctx.indexCache
     result
@@ -81,11 +85,13 @@ package object spec {
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument,
-                            ctx.refs,
-                            ctx,
-                            Some(toRamlDeclarations(ctx.declarations)),
-                            options = ctx.options)
+    new Raml10WebApiContext(
+      ctx.rootContextDocument,
+      ctx.refs,
+      ctx,
+      Some(toRamlDeclarations(ctx.declarations)),
+      options = ctx.options
+    )
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -111,23 +117,27 @@ package object spec {
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    val result = new JsonSchemaWebApiContext(ctx.rootContextDocument,
-                                             ctx.refs,
-                                             ctx,
-                                             Some(toOasDeclarations(ctx.declarations)),
-                                             ctx.options,
-                                             ctx.defaultSchemaVersion)
+    val result = new JsonSchemaWebApiContext(
+      ctx.rootContextDocument,
+      ctx.refs,
+      ctx,
+      Some(toOasDeclarations(ctx.declarations)),
+      ctx.options,
+      ctx.defaultSchemaVersion
+    )
     result.indexCache = ctx.indexCache
     result
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    val result = new JsonSchemaWebApiContext(root,
-                                             refs,
-                                             ctx,
-                                             Some(toOasDeclarations(ctx.declarations)),
-                                             ctx.options,
-                                             ctx.defaultSchemaVersion)
+    val result = new JsonSchemaWebApiContext(
+      root,
+      refs,
+      ctx,
+      Some(toOasDeclarations(ctx.declarations)),
+      ctx.options,
+      ctx.defaultSchemaVersion
+    )
     result.indexCache = ctx.indexCache
     result
   }

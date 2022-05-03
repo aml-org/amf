@@ -54,9 +54,11 @@ class ParseContentTest extends AsyncFunSuite with Matchers with PlatformSecrets 
     run("vocabulary.yaml", AML, expectVocabulary)
   }
 
-  private def run(apiName: String,
-                  expectedSpec: Spec,
-                  expectType: BaseUnit => Assertion = expectDocument): Future[Assertion] = {
+  private def run(
+      apiName: String,
+      expectedSpec: Spec,
+      expectType: BaseUnit => Assertion = expectDocument
+  ): Future[Assertion] = {
     val content = readContent(basePath + apiName)
     val config  = APIConfiguration.API()
     config.baseUnitClient().parseContent(content).map { result =>

@@ -17,11 +17,13 @@ import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable.ListBuffer
 
-case class RamlExternalSchemaWrapperEmitter(shape: AnyShape,
-                                            ordering: SpecOrdering,
-                                            ignored: Seq[Field] = Nil,
-                                            references: Seq[BaseUnit],
-                                            forceEntry: Boolean = false)(implicit spec: RamlShapeEmitterContext)
+case class RamlExternalSchemaWrapperEmitter(
+    shape: AnyShape,
+    ordering: SpecOrdering,
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit],
+    forceEntry: Boolean = false
+)(implicit spec: RamlShapeEmitterContext)
     extends PartEmitter
     with ExamplesEmitter {
 
@@ -33,14 +35,17 @@ case class RamlExternalSchemaWrapperEmitter(shape: AnyShape,
       fs.entry(ShapeModel.Description).map(f => result += RamlScalarEmitter("description", f))
       fs.entry(ShapeModel.Default) match {
         case Some(f) =>
-          result += EntryPartEmitter("default",
-                                     DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                     position = pos(f.value.annotations))
+          result += EntryPartEmitter(
+            "default",
+            DataNodeEmitter(shape.default, ordering)(spec.eh),
+            position = pos(f.value.annotations)
+          )
         case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
       }
       emitExamples(shape, result, ordering, references)
       result ++= shape.inherits.headOption.toSeq.flatMap(s =>
-        Raml10TypeEmitter(s, ordering, ignored, references, forceEntry).entries())
+        Raml10TypeEmitter(s, ordering, ignored, references, forceEntry).entries()
+      )
       b.obj(traverse(ordering.sorted(result), _))
     } else {
       shape.inherits.headOption.foreach(s => emitReference(s, b))

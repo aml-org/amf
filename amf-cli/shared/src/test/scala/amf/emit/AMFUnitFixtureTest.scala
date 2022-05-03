@@ -9,9 +9,7 @@ import amf.core.internal.remote.Mimes._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.{CreativeWork, ScalarShape}
 
-/**
-  *
-  */
+/** */
 trait AMFUnitFixtureTest extends PlatformSecrets {
 
   def `document/api/bare`: Document = doc(bare())

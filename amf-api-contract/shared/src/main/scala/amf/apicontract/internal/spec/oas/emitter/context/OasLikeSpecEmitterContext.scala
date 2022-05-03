@@ -25,25 +25,30 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
-  def typeEmitters(shape: Shape,
-                   ordering: SpecOrdering,
-                   ignored: Seq[Field] = Nil,
-                   references: Seq[BaseUnit],
-                   pointer: Seq[String] = Nil,
-                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter]
+  def typeEmitters(
+      shape: Shape,
+      ordering: SpecOrdering,
+      ignored: Seq[Field] = Nil,
+      references: Seq[BaseUnit],
+      pointer: Seq[String] = Nil,
+      schemaPath: Seq[(String, String)] = Nil
+  ): Seq[Emitter]
 
-  def recursiveShapeEmitter(shape: RecursiveShape,
-                            ordering: SpecOrdering,
-                            schemaPath: Seq[(String, String)]): EntryEmitter
+  def recursiveShapeEmitter(
+      shape: RecursiveShape,
+      ordering: SpecOrdering,
+      schemaPath: Seq[(String, String)]
+  ): EntryEmitter
 
   override def annotationEmitter: (CustomizableElement, DomainExtension, SpecOrdering) => AnnotationEmitter =
     OasAnnotationEmitter.apply
 }
 
-abstract class OasLikeSpecEmitterContext(eh: AMFErrorHandler,
-                                         refEmitter: RefEmitter = OasRefEmitter,
-                                         renderConfig: RenderConfiguration)
-    extends SpecEmitterContext(eh, refEmitter, renderConfig) {
+abstract class OasLikeSpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = OasRefEmitter,
+    renderConfig: RenderConfiguration
+) extends SpecEmitterContext(eh, refEmitter, renderConfig) {
   override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
 

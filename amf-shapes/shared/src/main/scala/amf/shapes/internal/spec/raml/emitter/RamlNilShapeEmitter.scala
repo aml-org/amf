@@ -7,9 +7,9 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.client.scala.model.domain.NilShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 
-case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(shape, ordering, references) {
+case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(shape, ordering, references) {
 
   override def emitters(): Seq[EntryEmitter] = {
     var result: Seq[EntryEmitter] = super.emitters()

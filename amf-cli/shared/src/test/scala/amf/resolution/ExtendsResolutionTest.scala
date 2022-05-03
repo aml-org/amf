@@ -17,12 +17,14 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Simple extends resolution to Amf", "simple-merge.raml.%s") { config =>
-    cycle("simple-merge.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "simple-merge.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Extends resolution with parameters resolution to Raml") {
@@ -30,12 +32,14 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Extends resolution with parameters resolution to Amf", "parameters.raml.%s") { config =>
-    cycle("parameters.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "parameters.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Extends resolution with parameter and transformation resolution to Raml") {
@@ -43,10 +47,12 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Extends resolution with parameter and multiple transformation resolution to Raml") {
-    cycle("resource-type-multi-transformation.raml",
-          "resource-type-multi-transformation.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint)
+    cycle(
+      "resource-type-multi-transformation.raml",
+      "resource-type-multi-transformation.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint
+    )
   }
 
   test("Extends resolution with optional method to Raml") {
@@ -54,12 +60,14 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Extends resolution with optional method to Amf", "optional-method.raml.%s") { config =>
-    cycle("optional-method.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "optional-method.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Extends resolution with scalar collection to Raml") {
@@ -67,10 +75,12 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Complex extends resolution to Raml") {
-    cycle("complex-traits-resource-types.raml",
-          "complex-traits-resource-types.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint)
+    cycle(
+      "complex-traits-resource-types.raml",
+      "complex-traits-resource-types.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint
+    )
   }
 
   multiGoldenTest("Complex extends resolution to Amf", "complex-traits-resource-types.raml.%s") { config =>
@@ -85,10 +95,12 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Traits and resourceTypes with complex variables raml to raml test") {
-    cycle("resource-type-complex-variables.raml",
-          "resource-type-complex-variables.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint)
+    cycle(
+      "resource-type-complex-variables.raml",
+      "resource-type-complex-variables.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint
+    )
   }
 
   test("Resolution using libraries to Raml") {
@@ -124,12 +136,14 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Trait application with quoted value") {
-    cycle("trait-with-quoted-value.raml",
-          "trait-with-quoted-value.resolved.raml",
-          Raml08YamlHint,
-          Raml08YamlHint,
-          basePath + "08/",
-          transformWith = Some(Raml10))
+    cycle(
+      "trait-with-quoted-value.raml",
+      "trait-with-quoted-value.resolved.raml",
+      Raml08YamlHint,
+      Raml08YamlHint,
+      basePath + "08/",
+      transformWith = Some(Raml10)
+    )
   }
 
   multiGoldenTest("Trait application with quoted value to jsonld", "trait-with-quoted-value.resolved.%s") { config =>
@@ -149,82 +163,102 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Extension with library multilevel usage") {
-    cycle("extension-library-multilevel/api.raml",
-          "extension-library-multilevel/api.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint)
+    cycle(
+      "extension-library-multilevel/api.raml",
+      "extension-library-multilevel/api.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint
+    )
   }
 
   test("Trait with main parameter without type and trait with array type") {
-    cycle("trait-parameter-infered-type-array.raml",
-          "trait-parameter-infered-type-array.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "trait-parameter-infered-type-array.raml",
+      "trait-parameter-infered-type-array.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("Trait with main parameter without type and trait with string type") {
-    cycle("trait-parameter-infered-type-string.raml",
-          "trait-parameter-infered-type-string.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "trait-parameter-infered-type-string.raml",
+      "trait-parameter-infered-type-string.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("Trait with main parameter without type and trait with obj type") {
-    cycle("trait-parameter-infered-type-obj.raml",
-          "trait-parameter-infered-type-obj.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "trait-parameter-infered-type-obj.raml",
+      "trait-parameter-infered-type-obj.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("Trait with main parameter without type and trait with integer type") {
-    cycle("trait-parameter-infered-type-integer.raml",
-          "trait-parameter-infered-type-integer.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "trait-parameter-infered-type-integer.raml",
+      "trait-parameter-infered-type-integer.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("Trait with main parameter without type and trait with any type") {
-    cycle("trait-parameter-infered-type-any.raml",
-          "trait-parameter-infered-type-any.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "trait-parameter-infered-type-any.raml",
+      "trait-parameter-infered-type-any.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("ResourceType with main shape without type and resourceType with string type") {
-    cycle("resource-type-any-infered-type-string.raml",
-          "resource-type-any-infered-type-string.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "resource-type-any-infered-type-string.raml",
+      "resource-type-any-infered-type-string.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("ResourceType with main shape without type and resourceType with array type") {
-    cycle("resource-type-any-infered-type-array.raml",
-          "resource-type-any-infered-type-array.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "resource-type-any-infered-type-array.raml",
+      "resource-type-any-infered-type-array.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("ResourceType with main shape without type and resourceType with obj type") {
-    cycle("resource-type-any-infered-type-obj.raml",
-          "resource-type-any-infered-type-obj.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "resource-type-any-infered-type-obj.raml",
+      "resource-type-any-infered-type-obj.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   test("ResourceType with main shape without type and resourceType with any type") {
-    cycle("resource-type-any-infered-type-any.raml",
-          "resource-type-any-infered-type-any.raml.raml",
-          Raml10YamlHint,
-          Raml10YamlHint,
-          basePath)
+    cycle(
+      "resource-type-any-infered-type-any.raml",
+      "resource-type-any-infered-type-any.raml.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      basePath
+    )
   }
 
   multiGoldenTest("Test api with declared shaped reference in trait", "api.%s") { config =>

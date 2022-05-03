@@ -70,8 +70,10 @@ class OverlayResolutionTest extends ResolutionTest {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
-    super.render(unit,
-                 config,
-                 amfConfig.withRenderOptions(amfConfig.options.renderOptions.withSourceMaps.withPrettyPrint))
+    super.render(
+      unit,
+      config,
+      amfConfig.withRenderOptions(amfConfig.options.renderOptions.withSourceMaps.withPrettyPrint)
+    )
   }
 }

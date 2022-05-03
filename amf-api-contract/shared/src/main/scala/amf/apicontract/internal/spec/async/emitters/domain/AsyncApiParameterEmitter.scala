@@ -20,9 +20,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val parameterEmitters = parameters.map(p => new AsyncApiSingleParameterEmitter(p, ordering))
@@ -35,9 +35,9 @@ class AsyncApiParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrderi
   override def position(): Position = parameters.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val paramName = parameter.name.value()
@@ -50,9 +50,9 @@ class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrderin
   override def position(): Position = pos(parameter.annotations)
 }
 
-case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends PartEmitter {
+case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends PartEmitter {
   protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: YDocument.PartBuilder): Unit = {

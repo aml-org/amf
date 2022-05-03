@@ -7,8 +7,6 @@ import org.scalatest.funsuite.AnyFunSuite
 class AMFValidationReportTest extends AnyFunSuite {
 
   test("Test to string report with null values in results") {
-
-    //noinspection ScalaStyle
     AMFValidationReport(
       null,
       Raml10Profile,

@@ -27,8 +27,7 @@ case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(im
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema"))(
-          WebApiShapeParserContextAdapter(ctx))
+        OasTypeParser(entry, shape => shape.withName("schema"))(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(s => payload.setWithoutId(PayloadModel.Schema, tracking(s, payload), Annotations(entry)))
       }

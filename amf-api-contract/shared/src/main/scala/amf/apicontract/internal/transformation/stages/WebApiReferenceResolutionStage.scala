@@ -42,13 +42,14 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
       }
     }
 
-  /**
-    * called when there is a link to a message, this method creates a request or response that has the same
-    * content (fields and annotations) of the declared message.
+  /** called when there is a link to a message, this method creates a request or response that has the same content
+    * (fields and annotations) of the declared message.
     */
-  private def copyMessage(message: Message,
-                          link: Message,
-                          constructor: (Fields, Annotations) => Message): DomainElement = {
+  private def copyMessage(
+      message: Message,
+      link: Message,
+      constructor: (Fields, Annotations) => Message
+  ): DomainElement = {
     val copy = constructor(message.fields.copy(), message.annotations.copy())
     copy.withId(link.id)
   }

@@ -11,11 +11,12 @@ import amf.shapes.internal.validation.jsonschema._
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
-class JsShapePayloadValidator(private val shape: Shape,
-                              private val mediaType: String,
-                              protected val validationMode: ValidationMode,
-                              private val configuration: ShapeValidationConfiguration)
-    extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+class JsShapePayloadValidator(
+    private val shape: Shape,
+    private val mediaType: String,
+    protected val validationMode: ValidationMode,
+    private val configuration: ShapeValidationConfiguration
+) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
 
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]
@@ -47,7 +48,8 @@ class JsShapePayloadValidator(private val shape: Shape,
   override protected def loadSchema(
       jsonSchema: CharSequence,
       element: DomainElement,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[Dictionary[js.Dynamic]]] = {
+      validationProcessor: ValidationProcessor
+  ): Either[validationProcessor.Return, Option[Dictionary[js.Dynamic]]] = {
     var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[Dictionary[js.Dynamic]]
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
@@ -56,10 +58,12 @@ class JsShapePayloadValidator(private val shape: Shape,
     Right(Some(schemaNode))
   }
 
-  override protected def callValidator(schema: Dictionary[js.Dynamic],
-                                       obj: js.Dynamic,
-                                       fragment: Option[PayloadFragment],
-                                       validationProcessor: ValidationProcessor): validationProcessor.Return = {
+  override protected def callValidator(
+      schema: Dictionary[js.Dynamic],
+      obj: js.Dynamic,
+      fragment: Option[PayloadFragment],
+      validationProcessor: ValidationProcessor
+  ): validationProcessor.Return = {
 
     val fast      = validationProcessor.isInstanceOf[BooleanValidationProcessor.type]
     val validator = if (fast) LazyAjv.fast else LazyAjv.default
@@ -100,9 +104,10 @@ class JsShapePayloadValidator(private val shape: Shape,
 
 }
 
-case class JsReportValidationProcessor(override val profileName: ProfileName,
-                                       override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
-    extends ReportValidationProcessor {
+case class JsReportValidationProcessor(
+    override val profileName: ProfileName,
+    override protected var intermediateResults: Seq[AMFValidationResult] = Seq()
+) extends ReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
@@ -119,7 +124,8 @@ case class JsReportValidationProcessor(override val profileName: ProfileName,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e
-          ))
+          )
+        )
       case other => processCommonException(other, element)
     }
     processResults(results)

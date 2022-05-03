@@ -12,9 +12,11 @@ import amf.core.internal.annotations.NullSecurity
 
 class CleanNullSecurity() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case op: Operation =>
@@ -34,7 +36,8 @@ class CleanNullSecurity() extends TransformationStep {
             op.withCustomDomainProperty(
               DomainExtension()
                 .withName("optionalSecurity")
-                .withExtension(ScalarNode("true", Some(DataType.Boolean))))
+                .withExtension(ScalarNode("true", Some(DataType.Boolean)))
+            )
           }
 
         case _ => // ignore

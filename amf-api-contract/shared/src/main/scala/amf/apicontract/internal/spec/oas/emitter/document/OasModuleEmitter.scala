@@ -26,9 +26,7 @@ import amf.shapes.internal.spec.oas.emitter.{OasSpecEmitter, OasTypeEmitter}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
-/**
-  *
-  */
+/** */
 abstract class OasModuleEmitter(module: Module)(implicit val specCtx: OasSpecEmitterContext) extends OasSpecEmitter {
 
   def emitModule(): YDocument = {
@@ -84,9 +82,11 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
 
     YDocument {
       _.obj { b =>
-        traverse(Seq(typeEmitter.header)
-                   ++ typeEmitter.emitters ++ usage :+ references,
-                 b)
+        traverse(
+          Seq(typeEmitter.header)
+            ++ typeEmitter.emitters ++ usage :+ references,
+          b
+        )
       }
     }
   }
@@ -128,9 +128,9 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
       }
   }
 
-  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)(
-      implicit eh: AMFErrorHandler)
-      extends OasFragmentTypeEmitter {
+  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)(implicit
+      eh: AMFErrorHandler
+  ) extends OasFragmentTypeEmitter {
 
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20ResourceType)
 
@@ -164,7 +164,8 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
       new OasSecuritySchemeEmitter(
         securityScheme.encodes,
         OasLikeSecuritySchemeTypeMappings.mapsTo(specCtx.spec, securityScheme.encodes.`type`.value()),
-        ordering).emitters()
+        ordering
+      ).emitters()
   }
 
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)

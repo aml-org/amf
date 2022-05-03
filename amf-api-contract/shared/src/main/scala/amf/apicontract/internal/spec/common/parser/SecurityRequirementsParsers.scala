@@ -17,7 +17,8 @@ import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import org.yaml.model._
 
 case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequirement => Unit, idCounter: IdCounter)(
-    implicit val ctx: OasLikeWebApiContext) {
+    implicit val ctx: OasLikeWebApiContext
+) {
   def parse(): Option[SecurityRequirement] = node.to[YMap] match {
     case Right(map) if map.entries.nonEmpty =>
       val securityRequirement =
@@ -27,9 +28,11 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       val schemes = map.entries.flatMap { entry =>
         OasLikeParametrizedSecuritySchemeParser(entry, p => Unit).parse()
       }
-      securityRequirement.setWithoutId(SecurityRequirementModel.Schemes,
-                              AmfArray(schemes, Annotations(map)),
-                              Annotations.inferred())
+      securityRequirement.setWithoutId(
+        SecurityRequirementModel.Schemes,
+        AmfArray(schemes, Annotations(map)),
+        Annotations.inferred()
+      )
       Some(securityRequirement)
     case Right(map) if map.entries.isEmpty =>
       None
@@ -37,12 +40,19 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       val requirement = SecurityRequirement(Annotations(node)).withName(ScalarNode(node))
       adopted(requirement)
 
-      ctx.eh.violation(InvalidSecurityRequirementObject, requirement, s"Invalid security requirement $node", node.location)
+      ctx.eh.violation(
+        InvalidSecurityRequirementObject,
+        requirement,
+        s"Invalid security requirement $node",
+        node.location
+      )
       Some(requirement)
   }
 
-  case class OasLikeParametrizedSecuritySchemeParser(schemeEntry: YMapEntry,
-                                                     adopted: ParametrizedSecurityScheme => Unit) {
+  case class OasLikeParametrizedSecuritySchemeParser(
+      schemeEntry: YMapEntry,
+      adopted: ParametrizedSecurityScheme => Unit
+  ) {
     def parse(): Option[ParametrizedSecurityScheme] = {
 
       val name = schemeEntry.key.asScalar.map(_.text)
@@ -63,14 +73,15 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings(Annotations(schemeEntry))
-        val scopes   = getScopes(schemeEntry)
+        val settings         = OAuth2Settings(Annotations(schemeEntry))
+        val scopes           = getScopes(schemeEntry)
         val flow: OAuth2Flow = OAuth2Flow(Annotations.virtual())
 
         flow.fields.setWithoutId(
-                        OAuth2FlowModel.Scopes,
-                        AmfArray(scopes, Annotations(schemeEntry.value)),
-                        Annotations(schemeEntry))
+          OAuth2FlowModel.Scopes,
+          AmfArray(scopes, Annotations(schemeEntry.value)),
+          Annotations(schemeEntry)
+        )
         val flows = Seq(flow)
 
         scheme.scheme.settings match {
@@ -87,7 +98,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
                 )
               }
             })
-          case _ => //Nothing to do
+          case _ => // Nothing to do
         }
 
         scheme
@@ -121,10 +132,12 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
         case None =>
           val securityScheme = SecurityScheme(Annotations.virtual())
           scheme.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, securityScheme, Annotations.synthesized())
-          ctx.eh.violation(DeclarationNotFound,
-                           securityScheme,
-                           s"Security scheme '$name' not found in declarations.",
-                           part.location)
+          ctx.eh.violation(
+            DeclarationNotFound,
+            securityScheme,
+            s"Security scheme '$name' not found in declarations.",
+            part.location
+          )
           securityScheme
       }
     }
@@ -137,17 +150,23 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
 }
 
 object RamlSecurityRequirementParser {
-  def parse(parentId: String, idCounter: IdCounter)(node: YNode)(
-      implicit ctx: RamlWebApiContext): SecurityRequirement = {
+  def parse(parentId: String, idCounter: IdCounter)(
+      node: YNode
+  )(implicit ctx: RamlWebApiContext): SecurityRequirement = {
     RamlSecurityRequirementParser(node, parentId, idCounter).parse()
   }
 }
-case class RamlSecurityRequirementParser(node: YNode, parentId: String, idCounter: IdCounter)(
-    implicit val ctx: RamlWebApiContext) {
+case class RamlSecurityRequirementParser(node: YNode, parentId: String, idCounter: IdCounter)(implicit
+    val ctx: RamlWebApiContext
+) {
   def parse(): SecurityRequirement = {
     val requirement = SecurityRequirement(node).withSynthesizeName(idCounter.genId("default-requirement"))
     val scheme: ParametrizedSecurityScheme = RamlParametrizedSecuritySchemeParser(node, requirement.id).parse()
-    requirement.setWithoutId(SecurityRequirementModel.Schemes, AmfArray(Seq(scheme), Annotations(node)), Annotations.inferred())
+    requirement.setWithoutId(
+      SecurityRequirementModel.Schemes,
+      AmfArray(Seq(scheme), Annotations(node)),
+      Annotations.inferred()
+    )
   }
 
 }

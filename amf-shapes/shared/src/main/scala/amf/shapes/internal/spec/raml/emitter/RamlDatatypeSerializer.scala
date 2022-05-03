@@ -14,8 +14,7 @@ import scala.concurrent.ExecutionContext
 /** Serializes AnyShape to RAML Data Type. */
 trait RamlDatatypeSerializer extends PlatformSecrets {
 
-  /** Delegates generation of a new RAML Data Type or returns cached
-    * one if it was generated before.
+  /** Delegates generation of a new RAML Data Type or returns cached one if it was generated before.
     */
   protected def toRamlDatatype(element: AnyShape, config: AMFGraphConfiguration): String = {
     element.annotations.find(classOf[ParsedRamlDatatype]) match {
@@ -33,9 +32,11 @@ trait RamlDatatypeSerializer extends PlatformSecrets {
     implicit val executionContext: ExecutionContext = config.getExecutionContext
 
     val ramlDatatype =
-      new AMFSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)),
-                        config.renderConfiguration,
-                        Some(`application/yaml`)).render()
+      new AMFSerializer(
+        Module().withDeclaredElement(fixNameIfNeeded(element)),
+        config.renderConfiguration,
+        Some(`application/yaml`)
+      ).render()
     element.annotations.reject(_.isInstanceOf[ParsedRamlDatatype])
     element.annotations.reject(_.isInstanceOf[GeneratedRamlDatatype])
     element.annotations += GeneratedRamlDatatype(ramlDatatype)

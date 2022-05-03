@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import org.yaml.model.YNode
 
-/**
-  * Organization internal model
+/** Organization internal model
   */
 case class Organization(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 

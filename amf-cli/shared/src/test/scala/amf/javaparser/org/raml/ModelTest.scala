@@ -43,15 +43,18 @@ trait ModelValidationTest extends DirectoryTest {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
       val usePlatform = !unifiedReport.conforms && unifiedReport.results.exists(result =>
-        result.validationId == ExampleValidationErrorSpecification.id || result.validationId == UnresolvedReference.id)
+        result.validationId == ExampleValidationErrorSpecification.id || result.validationId == UnresolvedReference.id
+      )
       (output, usePlatform)
     }
   }
 
-  private def renderOutput(d: String,
-                           model: BaseUnit,
-                           report: AMFValidationReport,
-                           amfConfig: AMFConfiguration): String = {
+  private def renderOutput(
+      d: String,
+      model: BaseUnit,
+      report: AMFValidationReport,
+      amfConfig: AMFConfiguration
+  ): String = {
     if (report.conforms) {
       val spec = HintProvider.defaultHintFor(target(model))
       render(model, d, spec, amfConfig)

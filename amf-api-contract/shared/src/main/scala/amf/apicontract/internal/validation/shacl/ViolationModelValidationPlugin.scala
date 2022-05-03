@@ -16,15 +16,17 @@ case class ViolationModelValidationPlugin(configName: String) extends BaseApiVal
 
   override protected def profile: ProfileName = ProfileNames.AMF
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[ValidationResult] = {
     specificValidate(unit, options).map { report =>
       ValidationResult(unit, report)
     }
   }
 
-  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[AMFValidationReport] = {
     Future.successful { AMFValidationReport(unit.id, UnknownProfile, Seq(validationResult)) }
   }
 

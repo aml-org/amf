@@ -82,7 +82,7 @@ class ParserTest extends AnyFunSuite with Matchers {
     Some(entry.key.value.asInstanceOf[YScalar].text) should contain oneOf ("b", "d")
 
     entry.value.value shouldBe a[YScalar]
-    //todo parser: missing property for tag!
+    // todo parser: missing property for tag!
     entry.value.as[YScalar].text should startWith("include")
   }
 

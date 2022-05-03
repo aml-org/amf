@@ -27,13 +27,15 @@ import amf.shapes.internal.spec.common.emitter.{OasLikeShapeEmitterContext, OasS
 import amf.shapes.internal.spec.oas.emitter
 import org.yaml.model.{YDocument, YNode}
 
-case class OasTypeEmitter(shape: Shape,
-                          ordering: SpecOrdering,
-                          ignored: Seq[Field] = Nil,
-                          references: Seq[BaseUnit],
-                          pointer: Seq[String] = Nil,
-                          schemaPath: Seq[(String, String)] = Nil,
-                          isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext) {
+case class OasTypeEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil,
+    isHeader: Boolean = false
+)(implicit spec: OasLikeShapeEmitterContext) {
   def emitters(): Seq[Emitter] = {
 
     // Adjusting JSON Schema  pointer
@@ -55,10 +57,12 @@ case class OasTypeEmitter(shape: Shape,
       case _ if shape.annotations.contains(classOf[ExternalJsonSchemaShape]) =>
         Seq(ExternalJsonSchemaShapeEmitter(shape))
       case schema: SchemaShape =>
-        val copiedNode = schema.copy(fields = schema.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+        val copiedNode =
+          schema.copy(fields = schema.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasSchemaShapeEmitter(copiedNode, ordering).emitters()
       case node: NodeShape =>
-        val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+        val copiedNode =
+          node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasNodeShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case union: UnionShape if nilUnion(union) =>
         OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
@@ -97,7 +101,8 @@ case class OasTypeEmitter(shape: Shape,
       case recursive: RecursiveShape =>
         Seq(spec.recursiveShapeEmitter(recursive, ordering, schemaPath))
       case any: AnyShape =>
-        val copiedNode = any.copyAnyShape(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+        val copiedNode =
+          any.copyAnyShape(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasAnyShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case _ => Seq()
     }

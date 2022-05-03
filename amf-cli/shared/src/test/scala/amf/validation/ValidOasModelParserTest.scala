@@ -66,9 +66,11 @@ class ValidOasModelParserTest extends ValidModelTest {
   }
 
   test("Callback definitions") {
-    validate("../upanddown/oas3/one-subscription-multiple-callbacks.json",
-             profile = Oas30Profile,
-             overridedHint = Some(Oas30JsonHint))
+    validate(
+      "../upanddown/oas3/one-subscription-multiple-callbacks.json",
+      profile = Oas30Profile,
+      overridedHint = Some(Oas30JsonHint)
+    )
   }
 
   test("Security requirements") {

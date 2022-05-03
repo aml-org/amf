@@ -18,11 +18,13 @@ import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 
 import scala.language.postfixOps
 
-class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
-                                  domainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
-                                  extensionId: String,
-                                  extensionLocation: Option[String],
-                                  preMergeTransform: PreMergeTransform)(implicit val errorHandler: AMFErrorHandler)
+class ExtensionDomainElementMerge(
+    restrictions: MergingRestrictions,
+    domainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
+    extensionId: String,
+    extensionLocation: Option[String],
+    preMergeTransform: PreMergeTransform
+)(implicit val errorHandler: AMFErrorHandler)
     extends InnerAdoption {
 
   def merge(master: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {
@@ -40,10 +42,12 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     master
   }
 
-  private def mergeField(entry: FieldEntry,
-                         master: DomainElement,
-                         overlay: DomainElement,
-                         idTracker: IdTracker): Unit = {
+  private def mergeField(
+      entry: FieldEntry,
+      master: DomainElement,
+      overlay: DomainElement,
+      idTracker: IdTracker
+  ): Unit = {
     val FieldEntry(field, value) = entry
     master.fields.entry(field) match {
       case None if restrictions allowsNodeInsertionIn field                  => insertNode(master, idTracker, entry)
@@ -59,10 +63,12 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
           case Type.ArrayLike(element) =>
             mergeArrays(master, field, element, existing.array, entry.array)
           case DataNodeModel =>
-            mergeDataNode(master,
-                          field,
-                          existing.element.asInstanceOf[DomainElement],
-                          entry.element.asInstanceOf[DomainElement])
+            mergeDataNode(
+              master,
+              field,
+              existing.element.asInstanceOf[DomainElement],
+              entry.element.asInstanceOf[DomainElement]
+            )
           case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
             master
               .set(field, entry.domainElement)
@@ -132,10 +138,12 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
 
   private def areSameType(master: DomainElement, overlay: DomainElement) = master.getClass == overlay.getClass
 
-  private def mergeDataNode(master: DomainElement,
-                            field: Field,
-                            existing: DomainElement,
-                            overlay: DomainElement): Unit = {
+  private def mergeDataNode(
+      master: DomainElement,
+      field: Field,
+      existing: DomainElement,
+      overlay: DomainElement
+  ): Unit = {
     (existing, overlay) match {
       case (e: DataNode, o: DataNode) if areSameType(existing, overlay) => DataNodeMerging.merge(e, o)
       case _                                                            =>
@@ -151,10 +159,12 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case _: DomainElementModel =>
         domainElementArrayMergeStrategy.merge(target, field, other, extensionId, extensionLocation)
       case _ =>
-        errorHandler.violation(TransformationValidation,
-                               extensionId,
-                               s"Cannot merge '$element': not a KeyField nor a Scalar",
-                               target.annotations)
+        errorHandler.violation(
+          TransformationValidation,
+          extensionId,
+          s"Cannot merge '$element': not a KeyField nor a Scalar",
+          target.annotations
+        )
     }
   }
 
@@ -169,36 +179,39 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     }
   }
 
-  private def mergeArraysByKey(target: DomainElement,
-                               field: Field,
-                               key: KeyField,
-                               master: AmfArray,
-                               extension: AmfArray): Unit = {
+  private def mergeArraysByKey(
+      target: DomainElement,
+      field: Field,
+      key: KeyField,
+      master: AmfArray,
+      extension: AmfArray
+  ): Unit = {
 
     val asSimpleProperty                          = isSimpleProperty(key)
     var existingElements: Map[Any, DomainElement] = buildElementByKeyMap(key, master)
     // if we have multiple elements with null key we merge by meta Obj
     var existingNullKeyElements: Map[Obj, DomainElement] = findElementsWithNullKey(key, master)
 
-    extension.values.foreach {
-      case obj: DomainElement =>
-        val tracker = IdTracker()
-        obj.fields.entry(key.key) match {
-          case Some(value) =>
-            val keyValue = value.scalar.value
-            existingElements += keyValue -> mergeByKeyResult(target,
-                                                             asSimpleProperty,
-                                                             existingElements.get(keyValue),
-                                                             obj,
-                                                             field,
-                                                             tracker)
+    extension.values.foreach { case obj: DomainElement =>
+      val tracker = IdTracker()
+      obj.fields.entry(key.key) match {
+        case Some(value) =>
+          val keyValue = value.scalar.value
+          existingElements += keyValue -> mergeByKeyResult(
+            target,
+            asSimpleProperty,
+            existingElements.get(keyValue),
+            obj,
+            field,
+            tracker
+          )
 
-          case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            val element =
-              mergeByKeyResult(target, asSimpleProperty, existingNullKeyElements.get(obj.meta), obj, field, tracker)
+        case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
+          val element =
+            mergeByKeyResult(target, asSimpleProperty, existingNullKeyElements.get(obj.meta), obj, field, tracker)
 
-            existingNullKeyElements = existingNullKeyElements + (element.meta -> element)
-        }
+          existingNullKeyElements = existingNullKeyElements + (element.meta -> element)
+      }
     }
 
     target.setArray(field, existingElements.values.toSeq ++ existingNullKeyElements.values.toSeq)
@@ -223,12 +236,14 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       }
       .toMap
 
-  private def mergeByKeyResult(target: DomainElement,
-                               asSimpleProperty: Boolean,
-                               existing: Option[DomainElement],
-                               obj: DomainElement,
-                               field: Field,
-                               idTracker: IdTracker) = {
+  private def mergeByKeyResult(
+      target: DomainElement,
+      asSimpleProperty: Boolean,
+      existing: Option[DomainElement],
+      obj: DomainElement,
+      field: Field,
+      idTracker: IdTracker
+  ) = {
     existing match {
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), idTracker)
       case None if !(restrictions allowsNodeInsertionIn field) =>

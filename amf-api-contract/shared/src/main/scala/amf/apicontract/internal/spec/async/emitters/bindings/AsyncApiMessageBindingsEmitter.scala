@@ -22,9 +22,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     emitterFor(binding).foreach(emitter => emitter.emit(b))
@@ -41,9 +41,9 @@ class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrde
   override def position(): Position = pos(binding.annotations)
 }
 
-class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       YNode("http"),
@@ -63,9 +63,9 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(
   override def position(): Position = pos(binding.annotations)
 }
 
-class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       YNode("kafka"),
@@ -74,9 +74,7 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
         val fs     = binding.fields
 
         fs.entry(KafkaMessageBindingModel.MessageKey)
-          .foreach(
-            f => result += domain.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq())
-          )
+          .foreach(f => result += domain.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }
@@ -86,9 +84,9 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
   override def position(): Position = pos(binding.annotations)
 }
 
-class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       YNode("mqtt"),
@@ -104,9 +102,9 @@ class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(
   override def position(): Position = pos(binding.annotations)
 }
 
-class Amqp091MessageEmitter(binding: Amqp091MessageBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class Amqp091MessageEmitter(binding: Amqp091MessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       YNode("amqp"),

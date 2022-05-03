@@ -13,8 +13,9 @@ object EnumParsing {
 
 object CommonEnumParser {
 
-  def apply(parentId: String, enumType: String = EnumParsing.UNKNOWN_ENUM)(
-      implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): YNode => DataNode = {
+  def apply(parentId: String, enumType: String = EnumParsing.UNKNOWN_ENUM)(implicit
+      ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler
+  ): YNode => DataNode = {
     enumType match {
       case EnumParsing.SCALAR_ENUM => ScalarNodeParser().parse
       case _                       => DataNodeParser.parse(idCounter = new IdCounter())

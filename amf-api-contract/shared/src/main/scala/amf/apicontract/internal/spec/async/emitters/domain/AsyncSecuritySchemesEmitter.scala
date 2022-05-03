@@ -14,9 +14,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncSecuritySchemesEmitter(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+class AsyncSecuritySchemesEmitter(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val emitters = ordering.sorted(securitySchemes.map(AsyncSingleSchemeEmitter(_, ordering)))
     b.entry(
@@ -28,9 +28,9 @@ class AsyncSecuritySchemesEmitter(securitySchemes: Seq[SecurityScheme], ordering
   override def position(): Position = securitySchemes.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
-private case class AsyncSingleSchemeEmitter(scheme: SecurityScheme, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+private case class AsyncSingleSchemeEmitter(scheme: SecurityScheme, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -42,9 +42,9 @@ private case class AsyncSingleSchemeEmitter(scheme: SecurityScheme, ordering: Sp
   override def position(): Position = pos(scheme.annotations)
 }
 
-case class AsyncSingleSchemePartEmitter(scheme: SecurityScheme, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends PartEmitter {
+case class AsyncSingleSchemePartEmitter(scheme: SecurityScheme, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
     b.obj { emitter =>
@@ -81,8 +81,9 @@ class AsyncSecuritySettingsEmitter(settings: Settings, ordering: SpecOrdering)(i
   }
 }
 
-case class HttpApiKeySettingsEmitters(settings: HttpApiKeySettings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class HttpApiKeySettingsEmitters(settings: HttpApiKeySettings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   def emitters(): Seq[EntryEmitter] = {
     val fs     = settings.fields
     val result = ListBuffer[EntryEmitter]()
@@ -104,8 +105,9 @@ case class HttpSettingsEmitters(settings: HttpSettings, ordering: SpecOrdering)(
   }
 }
 
-case class OpenIdConnectSettingsEmitters(settings: OpenIdConnectSettings, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class OpenIdConnectSettingsEmitters(settings: OpenIdConnectSettings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
   def emitters(): Seq[EntryEmitter] = {
     val fs     = settings.fields
     val result = ListBuffer[EntryEmitter]()

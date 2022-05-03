@@ -51,7 +51,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     OasSecurityRequirementEmitter.apply
 
   override def parametrizedSecurityEmitter
-    : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
+      : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     OasParametrizedSecuritySchemeEmitter.apply
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
@@ -61,89 +61,111 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 
   def serversEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
 
-  def serversEmitter(operation: Operation,
-                     f: FieldEntry,
-                     ordering: SpecOrdering,
-                     references: Seq[BaseUnit]): OasServersEmitter
+  def serversEmitter(
+      operation: Operation,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): OasServersEmitter
 
-  def serversEmitter(endpoint: EndPoint,
-                     f: FieldEntry,
-                     ordering: SpecOrdering,
-                     references: Seq[BaseUnit]): OasServersEmitter
+  def serversEmitter(
+      endpoint: EndPoint,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): OasServersEmitter
 
   def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = OasHeaderEmitter.apply
 
 }
 
 class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
-  override def serversEmitter(api: Api,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): Oas2ServersEmitter =
+  override def serversEmitter(
+      api: Api,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): Oas2ServersEmitter =
     Oas2ServersEmitter(api, f, ordering, references)(spec)
 
-  override def serversEmitter(operation: Operation,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): Oas3OperationServersEmitter =
+  override def serversEmitter(
+      operation: Operation,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): Oas3OperationServersEmitter =
     Oas3OperationServersEmitter(operation, f, ordering, references)(spec)
 
-  override def serversEmitter(endpoint: EndPoint,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): OasServersEmitter =
+  override def serversEmitter(
+      endpoint: EndPoint,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
 
-  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
-                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+  override def securitySchemesEmitters(
+      securitySchemes: Seq[SecurityScheme],
+      ordering: SpecOrdering
+  ): OasSecuritySchemesEmitters =
     new Oas2SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
-/**
-  * Overrides type emitter to avoid extracting nested types to definitions.
-  * Uses compact emission to use dynamic queue when emitting recursive shapes.
+/** Overrides type emitter to avoid extracting nested types to definitions. Uses compact emission to use dynamic queue
+  * when emitting recursive shapes.
   */
 case class InlinedJsonSchemaEmitterFactory()(override implicit val spec: JsonSchemaEmitterContext)
     extends Oas2SpecEmitterFactory(spec) {
 
-  override def typeEmitters(shape: Shape,
-                            ordering: SpecOrdering,
-                            ignored: Seq[Field],
-                            references: Seq[BaseUnit],
-                            pointer: Seq[String],
-                            schemaPath: Seq[(String, String)]): Seq[Emitter] =
+  override def typeEmitters(
+      shape: Shape,
+      ordering: SpecOrdering,
+      ignored: Seq[Field],
+      references: Seq[BaseUnit],
+      pointer: Seq[String],
+      schemaPath: Seq[(String, String)]
+  ): Seq[Emitter] =
     OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
 
 }
 
 case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
-  override def serversEmitter(api: Api,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): Oas3WebApiServersEmitter =
+  override def serversEmitter(
+      api: Api,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): Oas3WebApiServersEmitter =
     Oas3WebApiServersEmitter(api, f, ordering, references)(spec)
 
-  override def serversEmitter(operation: Operation,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): Oas3OperationServersEmitter =
+  override def serversEmitter(
+      operation: Operation,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): Oas3OperationServersEmitter =
     Oas3OperationServersEmitter(operation, f, ordering, references)(spec)
 
-  override def serversEmitter(endpoint: EndPoint,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit]): OasServersEmitter =
+  override def serversEmitter(
+      endpoint: EndPoint,
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
 
-  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
-                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+  override def securitySchemesEmitters(
+      securitySchemes: Seq[SecurityScheme],
+      ordering: SpecOrdering
+  ): OasSecuritySchemesEmitters =
     new Oas3SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
-abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
-                                     refEmitter: RefEmitter = OasRefEmitter,
-                                     renderConfig: RenderConfiguration)
-    extends OasLikeSpecEmitterContext(eh, refEmitter, renderConfig)
+abstract class OasSpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = OasRefEmitter,
+    renderConfig: RenderConfiguration
+) extends OasLikeSpecEmitterContext(eh, refEmitter, renderConfig)
     with CompactableEmissionContext {
 
   def schemasDeclarationsPath: String

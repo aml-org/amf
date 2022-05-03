@@ -20,8 +20,7 @@ import amf.shapes.internal.spec.raml.parser.{Raml08TypeParser, StringDefaultType
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidTypeDefinition
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
-/**
-  * Raml 0.8 spec parser
+/** Raml 0.8 spec parser
   */
 case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
     extends RamlDocumentParser(root, Spec.RAML08)
@@ -56,10 +55,12 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   }
 
-  private def parseAbstractDeclarations(key: String,
-                                        producer: YMapEntry => AbstractDeclaration,
-                                        map: YMap,
-                                        parent: String): Unit = {
+  private def parseAbstractDeclarations(
+      key: String,
+      producer: YMapEntry => AbstractDeclaration,
+      map: YMap,
+      parent: String
+  ): Unit = {
 
     map.key(key).foreach { entry =>
       {
@@ -69,10 +70,12 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
           case YType.Map => entry.value.as[YMap].entries
           case t =>
             ctx.eh
-              .violation(InvalidAbstractDeclarationType,
-                         parent,
-                         s"Invalid node $t in abstract declaration",
-                         entry.value.location)
+              .violation(
+                InvalidAbstractDeclarationType,
+                parent,
+                s"Invalid node $t in abstract declaration",
+                entry.value.location
+              )
             Nil
         }
         entries.foreach { entry =>
@@ -93,10 +96,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
           case YType.Map  => parseEntries(e.value.as[YMap].entries, parent)
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidSecuredByType,
-                             parent,
-                             s"Invalid type $t for 'securitySchemes' node.",
-                             e.value.location)
+            ctx.eh
+              .violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value.location)
         }
       }
     )
@@ -104,10 +105,13 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
     ctx.declarations += ctx.factory
-      .securitySchemeParser(entry, scheme => {
-        val name = entry.key.as[String]
-        scheme.withName(name)
-      })
+      .securitySchemeParser(
+        entry,
+        scheme => {
+          val name = entry.key.as[String]
+          scheme.withName(name)
+        }
+      )
       .parse()
       .add(DeclaredElement())
   }
@@ -138,7 +142,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       }
 
       Raml08TypeParser(entry, shape => shape.withName(entry.key), isAnnotation = false, StringDefaultType)(
-        WebApiShapeParserContextAdapter(ctx))
+        WebApiShapeParserContextAdapter(ctx)
+      )
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())

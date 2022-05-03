@@ -8,9 +8,11 @@ import amf.core.client.scala.transform.TransformationStep
 
 class MandatoryResponses() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case operation: Operation =>

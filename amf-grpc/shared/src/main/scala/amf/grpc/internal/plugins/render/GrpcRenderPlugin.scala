@@ -19,10 +19,12 @@ object GrpcRenderPlugin extends AMFRenderPlugin {
 
   override val id: String = "grpc-render-plugin"
 
-  override def emit[T](unit: BaseUnit,
-                       builder: ASTBuilder[T],
-                       renderConfiguration: RenderConfiguration,
-                       mediaType: String): Boolean = {
+  override def emit[T](
+      unit: BaseUnit,
+      builder: ASTBuilder[T],
+      renderConfiguration: RenderConfiguration,
+      mediaType: String
+  ): Boolean = {
     builder match {
       case stringBuilder: StringDocBuilder =>
         new GrpcDocumentEmitter(unit, stringBuilder).emit()

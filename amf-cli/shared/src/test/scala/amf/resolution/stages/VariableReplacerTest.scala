@@ -9,9 +9,7 @@ import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
+/** */
 class VariableReplacerTest extends AnyFunSuite with Matchers with Inspectors {
 
   case class ReplacerExamples(name: String, transformation: String, base: String, result: String)
@@ -40,7 +38,8 @@ class VariableReplacerTest extends AnyFunSuite with Matchers with Inspectors {
   examples.foreach { example =>
     test(s"Test transformation : ${example.name} of Raml spec example") {
       VariableReplacer.variableTransformation((e: String) => fail(e))(example.base, example.transformation) should be(
-        example.result)
+        example.result
+      )
     }
   }
 
@@ -49,18 +48,18 @@ class VariableReplacerTest extends AnyFunSuite with Matchers with Inspectors {
     case class Replacement(expression: String, variable: (String, String), expected: String)
 
     val replacements = Set(
-      Replacement("<<resourcePathName|!singularize|!uppercamelcase>>",
-                  "resourcePathName" -> "preferredCustomers",
-                  "PreferredCustomer"),
-      Replacement("<<resourcePathName | !singularize | !uppercamelcase>>",
-                  "resourcePathName" -> "preferredCustomers",
-                  "PreferredCustomer"),
-      Replacement("<<resourcePathName|!singularize>>",
-                  "resourcePathName" -> "preferredCustomers",
-                  "preferredCustomer"),
-      Replacement("<<resourcePathName| !singularize>>",
-                  "resourcePathName" -> "preferredCustomers",
-                  "preferredCustomer")
+      Replacement(
+        "<<resourcePathName|!singularize|!uppercamelcase>>",
+        "resourcePathName" -> "preferredCustomers",
+        "PreferredCustomer"
+      ),
+      Replacement(
+        "<<resourcePathName | !singularize | !uppercamelcase>>",
+        "resourcePathName" -> "preferredCustomers",
+        "PreferredCustomer"
+      ),
+      Replacement("<<resourcePathName|!singularize>>", "resourcePathName" -> "preferredCustomers", "preferredCustomer"),
+      Replacement("<<resourcePathName| !singularize>>", "resourcePathName" -> "preferredCustomers", "preferredCustomer")
     )
 
     val errors = ListBuffer[String]()

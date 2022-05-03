@@ -44,46 +44,56 @@ class CycledSemanticRenderTest extends FunSuiteCycleTests {
 
   test("Cycle OAS 2.0 with scalar semantic extensions") {
     getConfig("scalar-dialect.yaml", OASConfiguration.OAS20()).flatMap { config =>
-      cycle("api-scalar.oas20.yaml",
-            golden = "api-scalar.oas20.yaml",
-            Oas20YamlHint,
-            Oas20YamlHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.oas20.yaml",
+        golden = "api-scalar.oas20.yaml",
+        Oas20YamlHint,
+        Oas20YamlHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Cycle OAS 3.0 with scalar semantic extensions") {
     getConfig("scalar-dialect.yaml", OASConfiguration.OAS30()).flatMap { config =>
-      cycle("api-scalar.oas30.yaml",
-            golden = "api-scalar.oas30.yaml",
-            Oas30YamlHint,
-            Oas30YamlHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.oas30.yaml",
+        golden = "api-scalar.oas30.yaml",
+        Oas30YamlHint,
+        Oas30YamlHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Cycle ASYNC 2.0 with scalar semantic extensions") {
     getConfig("scalar-dialect.yaml", AsyncAPIConfiguration.Async20()).flatMap { config =>
-      cycle("api-scalar.async.yaml",
-            golden = "api-scalar.async.yaml",
-            Async20YamlHint,
-            Async20YamlHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-scalar.async.yaml",
+        golden = "api-scalar.async.yaml",
+        Async20YamlHint,
+        Async20YamlHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
   test("Cycle RAML 1.0 with nested object semantic extensions") {
     getConfig("nested-object-dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      cycle("api-nested-object.raml",
-            golden = "api-nested-object.raml",
-            Raml10YamlHint,
-            Raml10YamlHint,
-            amfConfig = Some(config))
+      cycle(
+        "api-nested-object.raml",
+        golden = "api-nested-object.raml",
+        Raml10YamlHint,
+        Raml10YamlHint,
+        amfConfig = Some(config)
+      )
     }
   }
 
-  private def getConfig(dialect: String,
-                        baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
+  private def getConfig(
+      dialect: String,
+      baseConfig: AMFConfiguration = APIConfiguration.API()
+  ): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)

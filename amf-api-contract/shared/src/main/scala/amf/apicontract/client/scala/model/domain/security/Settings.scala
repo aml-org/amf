@@ -5,10 +5,7 @@ import amf.core.client.scala.model.{StrField, domain}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.security.ApiKeySettingsModel._
 import amf.apicontract.internal.metamodel.domain.security.HttpSettingsModel._
-import amf.apicontract.internal.metamodel.domain.security.OAuth1SettingsModel.{
-  AuthorizationUri => AuthorizationUri1,
-  _
-}
+import amf.apicontract.internal.metamodel.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.apicontract.internal.metamodel.domain.security.OAuth2SettingsModel._
 import amf.apicontract.internal.metamodel.domain.security.OpenIdConnectSettingsModel._
 import amf.apicontract.internal.metamodel.domain.security.SettingsModel._
@@ -31,18 +28,20 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
     }
     cloned.adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case a: AmfArray =>
-            domain.AmfArray(a.values.map {
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case a: AmfArray =>
+          domain.AmfArray(
+            a.values.map {
               case s: Scope => s.cloneScope()
               case o        => o
-            }, a.annotations)
-          case o => o
-        }
+            },
+            a.annotations
+          )
+        case o => o
+      }
 
-        cloned.set(f, clonedValue, v.annotations)
+      cloned.set(f, clonedValue, v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

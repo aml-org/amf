@@ -27,16 +27,17 @@ case class RamlExternalReferenceUrlEmitter(element: DomainElement)(fallback: => 
   override def emitRef(b: PartBuilder, url: String): Unit = b += YNode.include(url)
 }
 
-case class OasExternalReferenceUrlEmitter(element: DomainElement)(fallback: => Unit = Unit)(
-    implicit val spec: ShapeEmitterContext)
-    extends ExternalReferenceUrlEmitter(element, fallback) {
+case class OasExternalReferenceUrlEmitter(element: DomainElement)(fallback: => Unit = Unit)(implicit
+    val spec: ShapeEmitterContext
+) extends ExternalReferenceUrlEmitter(element, fallback) {
   override def emitRef(b: PartBuilder, url: String): Unit = spec.ref(b, url)
 }
 
 object ExternalReferenceUrlEmitter {
 
-  def handleInlinedRefOr(b: PartBuilder, element: DomainElement)(fallback: => Unit)(
-      implicit spec: ShapeEmitterContext): Unit =
+  def handleInlinedRefOr(b: PartBuilder, element: DomainElement)(
+      fallback: => Unit
+  )(implicit spec: ShapeEmitterContext): Unit =
     spec match {
       case _ if spec.isOasLike => OasExternalReferenceUrlEmitter(element)(fallback).emit(b)
       case _ if spec.isRaml    => RamlExternalReferenceUrlEmitter(element)(fallback).emit(b)

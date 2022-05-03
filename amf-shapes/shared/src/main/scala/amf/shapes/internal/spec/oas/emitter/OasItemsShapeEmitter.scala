@@ -11,12 +11,14 @@ import amf.shapes.internal.domain.metamodel.ArrayShapeModel
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-case class OasItemsShapeEmitter(array: ArrayShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                additionalEntry: Option[ValueEmitter],
-                                pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasItemsShapeEmitter(
+    array: ArrayShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    additionalEntry: Option[ValueEmitter],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasTypePartCollector(array.items, ordering, Nil, references)
     with EntryEmitter {
 

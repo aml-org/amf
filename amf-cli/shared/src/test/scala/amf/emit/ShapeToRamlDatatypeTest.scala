@@ -39,10 +39,12 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
   }
 
   test("Test parsed from json expression forced to build new") {
-    cycle("json-expression.json",
-          "json-expression-new.raml",
-          generalFindShapeFunc,
-          (a: AnyShape) => toRamlDatatype(a, parseConfig))
+    cycle(
+      "json-expression.json",
+      "json-expression-new.raml",
+      generalFindShapeFunc,
+      (a: AnyShape) => toRamlDatatype(a, parseConfig)
+    )
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -63,7 +65,8 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       sourceFile: String,
       goldenFile: String,
       findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, parseConfig)): Future[Assertion] = {
+      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, parseConfig)
+  ): Future[Assertion] = {
     val client       = parseConfig.baseUnitClient()
     val renderClient = renderConfig.baseUnitClient()
     val ramlDatatype: Future[String] = for {

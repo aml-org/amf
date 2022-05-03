@@ -9,6 +9,8 @@ import amf.shapes.client.scala.model.domain._
 import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 import org.mulesoft.lexer.SourceLocation
 
+import scala.collection.mutable
+
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
@@ -45,12 +47,19 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     val potentialPaths: Seq[Seq[String]] = Stream(
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
+      Seq(NAME, KEYWORD),
       Seq(NAME)
     )
 
-    val maybeName = potentialPaths.map { path =>
-      pathToTerminal(n, path)
-    } collectFirst { case Some(t) => t.value }
+    val maybeName = potentialPaths.map { p =>
+      path(n, p)
+    } collectFirst {
+      case Some(t: Terminal) => t.value
+      case Some(n: Node) =>
+        n.children match {
+          case mutable.Buffer(onlyChild: Terminal) => onlyChild.value
+        }
+    }
 
     maybeName match {
       case Some(name) =>
@@ -148,9 +157,13 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def parseObjectType(t: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
-    maybeNullable(t, errorId, (t, typeName) => {
-      findOrLinkType(typeName, t)
-    })
+    maybeNullable(
+      t,
+      errorId,
+      (t, typeName) => {
+        findOrLinkType(typeName, t)
+      }
+    )
   }
 
   def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
@@ -167,14 +180,16 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def maybeNullable(t: Node, errorId: String, parse: (Node, String) => AnyShape)(
-      implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def maybeNullable(t: Node, errorId: String, parse: (Node, String) => AnyShape)(implicit
+      ctx: GraphQLWebApiContext
+  ): AnyShape = {
     val typeName = findName(t, "UnknownType", errorId, "Cannot find type name")
     maybeNamedNullable(t, typeName, parse)
   }
 
-  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(
-      implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(implicit
+      ctx: GraphQLWebApiContext
+  ): AnyShape = {
     val shape = parse(t, typeName)
     if (isNullable(t)) {
       UnionShape()
@@ -183,7 +198,8 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
           Seq(
             NilShape().withId(shape.id + "/nullwrapper/nil"),
             shape
-          ))
+          )
+        )
     } else {
       shape
     }

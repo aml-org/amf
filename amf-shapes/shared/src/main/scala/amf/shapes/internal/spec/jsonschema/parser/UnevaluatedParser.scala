@@ -12,24 +12,41 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{InvalidUnevaluatedItemsType, InvalidUnevaluatedPropertiesType}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  InvalidUnevaluatedItemsType,
+  InvalidUnevaluatedPropertiesType
+}
 import org.yaml.model.{YMap, YType}
 
-case class UnevaluatedInfo(key: String, booleanField: Field, schemaField: Field, error: ValidationSpecification, message: String)
+case class UnevaluatedInfo(
+    key: String,
+    booleanField: Field,
+    schemaField: Field,
+    error: ValidationSpecification,
+    message: String
+)
 
 object UnevaluatedParser {
-  val unevaluatedPropertiesInfo: UnevaluatedInfo = UnevaluatedInfo("unevaluatedProperties",
+  val unevaluatedPropertiesInfo: UnevaluatedInfo = UnevaluatedInfo(
+    "unevaluatedProperties",
     NodeShapeModel.UnevaluatedProperties,
     NodeShapeModel.UnevaluatedPropertiesSchema,
     InvalidUnevaluatedPropertiesType,
-    "Invalid part type for unevaluated properties node. Should be a boolean or a map",
-    )
+    "Invalid part type for unevaluated properties node. Should be a boolean or a map"
+  )
 
   val unevaluatedItemsInfo: UnevaluatedInfo =
-    UnevaluatedInfo("unevaluatedItems", ArrayShapeModel.UnevaluatedItems, ArrayShapeModel.UnevaluatedItemsSchema, InvalidUnevaluatedItemsType, "Invalid part type for unevaluated items node. Should be a boolean or a map")
+    UnevaluatedInfo(
+      "unevaluatedItems",
+      ArrayShapeModel.UnevaluatedItems,
+      ArrayShapeModel.UnevaluatedItemsSchema,
+      InvalidUnevaluatedItemsType,
+      "Invalid part type for unevaluated items node. Should be a boolean or a map"
+    )
 }
 
-class UnevaluatedParser(version: SchemaVersion, info: UnevaluatedInfo)(implicit ctx: ShapeParserContext) extends QuickFieldParserOps {
+class UnevaluatedParser(version: SchemaVersion, info: UnevaluatedInfo)(implicit ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
 
   private val UnevaluatedInfo(key, booleanField, schemaField, error, message) = info
 

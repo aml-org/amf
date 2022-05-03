@@ -9,9 +9,11 @@ import amf.core.client.scala.transform.TransformationStep
 
 class DeclareUndeclaredSecuritySchemes() extends TransformationStep() {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         DeclareSecuritySchemes(doc)

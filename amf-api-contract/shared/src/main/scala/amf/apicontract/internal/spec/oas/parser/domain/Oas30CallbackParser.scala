@@ -11,12 +11,12 @@ import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-/**
-  * A single named callback may be parsed into multiple Callback when multiple expressions are defined.
-  * This is due to inconsistency in the model, pending refactor in APIMF-1771
+/** A single named callback may be parsed into multiple Callback when multiple expressions are defined. This is due to
+  * inconsistency in the model, pending refactor in APIMF-1771
   */
-case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String, rootEntry: YMapEntry)(
-    implicit val ctx: OasWebApiContext) {
+case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String, rootEntry: YMapEntry)(implicit
+    val ctx: OasWebApiContext
+) {
   def parse(): List[Callback] = {
     ctx.link(map) match {
       case Left(fullRef) =>
@@ -37,10 +37,12 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
                   .parse()
                   .map(_.add(ExternalReferenceUrl(fullRef)))
               case None =>
-                ctx.eh.violation(CoreValidations.UnresolvedReference,
-                                 "",
-                                 s"Cannot find callback reference $fullRef",
-                                 map.location)
+                ctx.eh.violation(
+                  CoreValidations.UnresolvedReference,
+                  "",
+                  s"Cannot find callback reference $fullRef",
+                  map.location
+                )
                 val callback: Callback = new ErrorCallback(label, map).link(name, Annotations(rootEntry))
 
                 adopt(callback)
@@ -52,13 +54,19 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
         callbackEntries.map { entry =>
           val expression = entry.key.as[YScalar].text
           val callback   = Callback().add(Annotations(entry))
-          callback.fields.setWithoutId(CallbackModel.Expression,
-                                       AmfScalar(expression, Annotations(entry.key)),
-                                       Annotations.inferred())
+          callback.fields.setWithoutId(
+            CallbackModel.Expression,
+            AmfScalar(expression, Annotations(entry.key)),
+            Annotations.inferred()
+          )
           adopt(callback)
           val collected = ctx.factory.endPointParser(entry, callback.id, List()).parse()
           collected.foreach(e => {
-            e.setWithoutId(EndPointModel.Path, AmfScalar(s"/$expression", Annotations(entry.key)), Annotations.inferred())
+            e.setWithoutId(
+              EndPointModel.Path,
+              AmfScalar(s"/$expression", Annotations(entry.key)),
+              Annotations.inferred()
+            )
             callback.setWithoutId(CallbackModel.Endpoint, e, Annotations.inferred())
           }) // rename path to avoid endpoint validations
 

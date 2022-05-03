@@ -30,10 +30,12 @@ object Oas20ParsePlugin extends OasParsePlugin {
         throw new InvalidDocumentHeaderException(spec.id)
     }
 
-  override protected def context(loc: String,
-                                 refs: Seq[ParsedReference],
-                                 options: ParsingOptions,
-                                 wrapped: ParserContext,
-                                 ds: Option[OasWebApiDeclarations]): OasWebApiContext =
+  override protected def context(
+      loc: String,
+      refs: Seq[ParsedReference],
+      options: ParsingOptions,
+      wrapped: ParserContext,
+      ds: Option[OasWebApiDeclarations]
+  ): OasWebApiContext =
     new Oas2WebApiContext(loc, refs, wrapped, ds, options)
 }

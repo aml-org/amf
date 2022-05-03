@@ -22,9 +22,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiOperationBindingsEmitter(binding: OperationBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiOperationBindingsEmitter(binding: OperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     emitterFor(binding).foreach(emitter => emitter.emit(b))
@@ -41,9 +41,9 @@ class AsyncApiOperationBindingsEmitter(binding: OperationBinding, ordering: Spec
   override def position(): Position = pos(binding.annotations)
 }
 
-class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
       YNode("http"),
@@ -65,9 +65,9 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
   override def position(): Position = pos(binding.annotations)
 }
 
-class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
       YNode("kafka"),
@@ -76,13 +76,9 @@ class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: Spe
         val result = ListBuffer[EntryEmitter]()
 
         fs.entry(KafkaOperationBindingModel.GroupId)
-          .foreach(
-            f => result += domain.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq())
-          )
+          .foreach(f => result += domain.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq()))
         fs.entry(KafkaOperationBindingModel.ClientId)
-          .foreach(
-            f => result += domain.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq())
-          )
+          .foreach(f => result += domain.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -93,9 +89,9 @@ class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: Spe
   override def position(): Position = pos(binding.annotations)
 }
 
-class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
       YNode("mqtt"),
@@ -115,9 +111,9 @@ class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecO
   override def position(): Position = pos(binding.annotations)
 }
 
-class Amqp091OperationBindingEmitter(binding: Amqp091OperationBinding, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends AsyncApiCommonBindingEmitter {
+class Amqp091OperationBindingEmitter(binding: Amqp091OperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
       YNode("amqp"),

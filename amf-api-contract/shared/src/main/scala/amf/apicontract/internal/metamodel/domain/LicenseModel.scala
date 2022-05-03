@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Type.Iri
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-/**
-  * License metamodel
+/** License metamodel
   *
   * License for the API
   */

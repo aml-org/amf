@@ -23,7 +23,7 @@ case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extend
 
   def parseElements(): Unit = {
     val values: mutable.Buffer[DataNode] = mutable.Buffer()
-    val enumSchema = NodeShape(toAnnotations(ast)).adopted(enum.id)
+    val enumSchema                       = NodeShape(toAnnotations(ast)).adopted(enum.id)
     collect(ast, Seq(ENUM_BODY, ENUM_ELEMENT, ENUM_FIELD)).foreach { enumField =>
       val propertySchema = PropertyShape(toAnnotations(enumField)).adopted(enumSchema.id)
       path(enumField, Seq(IDENTIFIER)) match {
@@ -34,21 +34,21 @@ case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extend
               val data = ScalarNode(toAnnotations(e)).withValue(t.value)
               data.adopted(enumSchema.id)
               values.append(data)
-            case _       =>
+            case _ =>
               astError(propertySchema.id, "Missing protobuf 3 enumeration field name", toAnnotations(e))
           }
-        case _        =>
+        case _ =>
           astError(propertySchema.id, "Missing protobuf 3 enumeration field name", toAnnotations(enumField))
       }
-      path(enumField, Seq(INT_LITERAL)) match  {
+      path(enumField, Seq(INT_LITERAL)) match {
         case Some(e) =>
           withOptTerminal(e) {
             case Some(t) =>
               propertySchema.withSerializationOrder(Integer.parseInt(t.value))
-            case _       =>
+            case _ =>
               astError(propertySchema.id, "Missing protobuf 3 enumeration field order", toAnnotations(e))
           }
-        case _       =>
+        case _ =>
           astError(propertySchema.id, "Missing protobuf 3 enumeration field order", toAnnotations(enumField))
       }
       enumSchema.withProperties(enumSchema.properties ++ Seq(propertySchema))

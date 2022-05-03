@@ -28,8 +28,10 @@ object ContentEmitters {
   }
 
   private def draft7Emitters(node: Shape): Seq[EntryEmitter] =
-    Seq(ContentEmitterFactory.emitterFor("contentEncoding", node, Encoding),
-        ContentEmitterFactory.emitterFor("contentMediaType", node, MediaType)).flatten
+    Seq(
+      ContentEmitterFactory.emitterFor("contentEncoding", node, Encoding),
+      ContentEmitterFactory.emitterFor("contentMediaType", node, MediaType)
+    ).flatten
 
   private def draft2019Emitters(node: Shape, typeParserFactory: TypeParserFactory) = {
     val optionalTypeEmitter = node.fields.entry(Schema).map { f =>

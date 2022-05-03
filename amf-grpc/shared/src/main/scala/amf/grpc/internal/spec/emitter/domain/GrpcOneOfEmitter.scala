@@ -23,7 +23,7 @@ class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEm
   }
   def emitFields(builder: StringDocBuilder) = {
     builder.list { l =>
-      union.anyOf.foreach { case member:NodeShape =>
+      union.anyOf.foreach { case member: NodeShape =>
         member.properties.foreach { property =>
           GrpcFieldEmitter(property, l, ctx).emit()
         }
@@ -33,5 +33,6 @@ class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEm
 }
 
 object GrpcOneOfEmitter {
-  def apply(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) = new GrpcOneOfEmitter(union, builder, ctx)
+  def apply(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) =
+    new GrpcOneOfEmitter(union, builder, ctx)
 }

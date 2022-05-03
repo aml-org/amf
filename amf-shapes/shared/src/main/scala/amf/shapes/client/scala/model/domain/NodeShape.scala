@@ -10,8 +10,7 @@ import amf.shapes.internal.domain.metamodel.NodeShapeModel._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NodeShapeModel}
 import org.yaml.model.YPart
 
-/**
-  * Node shape.
+/** Node shape.
   */
 case class NodeShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {

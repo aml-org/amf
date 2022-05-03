@@ -7,9 +7,11 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
 
 class CleanRepeatedOperationIds() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit =
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit =
     try {
       val operations           = getOperationsFromModel(model)
       val repeatedOperationIds = operationsWithRepeatedIds(operations)
@@ -20,8 +22,8 @@ class CleanRepeatedOperationIds() extends TransformationStep {
     }
 
   private def addDistinctOperationIds(operations: Seq[Operation]): Unit =
-    operations.zipWithIndex.foreach {
-      case (operation, index) => operation.withName(operation.name + s"_${index}")
+    operations.zipWithIndex.foreach { case (operation, index) =>
+      operation.withName(operation.name + s"_${index}")
     }
 
   private def operationsWithRepeatedIds(operations: Seq[Operation]): Seq[Seq[Operation]] =
@@ -37,8 +39,8 @@ class CleanRepeatedOperationIds() extends TransformationStep {
   private def getOperationsFromModel[T <: BaseUnit](model: T): Seq[Operation] =
     model
       .iterator()
-      .collect {
-        case operation: Operation => operation
+      .collect { case operation: Operation =>
+        operation
       }
       .toSeq
 }

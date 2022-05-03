@@ -11,8 +11,9 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import org.yaml.model._
 
 object ParametrizedDeclarationParser {
-  def parse(producer: String => ParametrizedDeclaration)(node: YNode)(
-      implicit ctx: WebApiContext): ParametrizedDeclaration =
+  def parse(producer: String => ParametrizedDeclaration)(node: YNode)(implicit
+      ctx: WebApiContext
+  ): ParametrizedDeclaration =
     ParametrizedDeclarationParser(node, producer, ctx.declarations.findTraitOrError(node)).parse()
 }
 
@@ -34,23 +35,26 @@ case class ParametrizedDeclarationParser(
               producer(name)
                 .add(Annotations(entry))
             setName(declaration, name, entry.key)
-            declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target,
-                                            declarations(name, SearchScope.Named),
-                                            Annotations.inferred())
+            declaration.fields.setWithoutId(
+              ParametrizedDeclarationModel.Target,
+              declarations(name, SearchScope.Named),
+              Annotations.inferred()
+            )
             val variables = entry.value
               .as[YMap]
               .entries
               .zipWithIndex
-              .map {
-                case (variableEntry, index) =>
-                  val node = DataNodeParser(variableEntry.value)(WebApiShapeParserContextAdapter(ctx)).parse()
-                  VariableValue(variableEntry)
-                    .withName(variableEntry.key)
-                    .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))
+              .map { case (variableEntry, index) =>
+                val node = DataNodeParser(variableEntry.value)(WebApiShapeParserContextAdapter(ctx)).parse()
+                VariableValue(variableEntry)
+                  .withName(variableEntry.key)
+                  .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))
               }
-            declaration.setWithoutId(ParametrizedDeclarationModel.Variables,
-                                     AmfArray(variables, Annotations(entry.value)),
-                                     Annotations.inferred())
+            declaration.setWithoutId(
+              ParametrizedDeclarationModel.Variables,
+              AmfArray(variables, Annotations(entry.value)),
+              Annotations.inferred()
+            )
         }
       case _ if node.tagType == YType.Str =>
         val declaration = fromStringNode(node)

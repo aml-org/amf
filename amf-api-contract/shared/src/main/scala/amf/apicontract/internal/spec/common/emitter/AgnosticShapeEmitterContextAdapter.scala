@@ -33,17 +33,17 @@ class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext
   override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter =
     specCtx.arrayEmitter(asOasExtension, f, ordering)
 
-  override def customFacetsEmitter(f: FieldEntry,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit]): CustomFacetsEmitter =
+  override def customFacetsEmitter(
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): CustomFacetsEmitter =
     specCtx.factory.customFacetsEmitter(f, ordering, references)
 
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
     specCtx.factory.facetsInstanceEmitter(extension, ordering)
 
-  override def annotationEmitter(parent: CustomizableElement,
-                                 e: DomainExtension,
-                                 default: SpecOrdering): EntryEmitter =
+  override def annotationEmitter(parent: CustomizableElement, e: DomainExtension, default: SpecOrdering): EntryEmitter =
     specCtx.factory.annotationEmitter(parent, e, default)
 
   override def eh: AMFErrorHandler = specCtx.eh

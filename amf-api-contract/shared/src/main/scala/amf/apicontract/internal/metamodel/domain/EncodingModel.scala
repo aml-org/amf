@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-/**
-  * Encoding metamodel.
+/** Encoding metamodel.
   */
 object EncodingModel extends DomainElementModel with KeyField {
 
@@ -25,9 +24,11 @@ object EncodingModel extends DomainElementModel with KeyField {
   val Style = Field(
     Str,
     ApiContract + "style",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "style",
-             "Describes how a specific property value will be serialized depending on its type.")
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "style",
+      "Describes how a specific property value will be serialized depending on its type."
+    )
   )
 
   val Explode = Field(Bool, ApiContract + "explode", ModelDoc(ModelVocabularies.ApiContract, "explode", ""))

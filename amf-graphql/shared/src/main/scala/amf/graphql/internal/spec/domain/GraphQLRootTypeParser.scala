@@ -4,7 +4,12 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, FIELDS_DEFINITION, FIELD_DEFINITION, INPUT_VALUE_DEFINITION}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
+  ARGUMENTS_DEFINITION,
+  FIELDS_DEFINITION,
+  FIELD_DEFINITION,
+  INPUT_VALUE_DEFINITION
+}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
@@ -17,16 +22,15 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
   }
 
   private def parseFields(n: Node, adopt: EndPoint => Unit): Seq[EndPoint] = {
-    collect(n, Seq(FIELDS_DEFINITION, FIELD_DEFINITION)).map {
-      case f: Node =>
-        parseField(f, adopt)
+    collect(n, Seq(FIELDS_DEFINITION, FIELD_DEFINITION)).map { case f: Node =>
+      parseField(f, adopt)
     }
   }
 
   private def path(fieldName: String): String = {
     queryType match {
-      case RootTypes.Query => s"/query/$fieldName"
-      case RootTypes.Mutation => s"/mutation/$fieldName"
+      case RootTypes.Query        => s"/query/$fieldName"
+      case RootTypes.Mutation     => s"/mutation/$fieldName"
       case RootTypes.Subscription => s"/subscription/$fieldName"
     }
   }
@@ -55,24 +59,23 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
     val op: Operation = endPoint.withOperation(method).withName(operationId).withOperationId(operationId)
     val request       = op.withRequest()
-    collect(f, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach {
-      case argumentNode: Node =>
-        val fieldName =
-          findName(argumentNode, "AnonymousArgument", "", s"Missing name for field at root operation $method ")
+    collect(f, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argumentNode: Node =>
+      val fieldName =
+        findName(argumentNode, "AnonymousArgument", "", s"Missing name for field at root operation $method ")
 
-        val queryParam = request.withQueryParameter(fieldName).withBinding("query")
+      val queryParam = request.withQueryParameter(fieldName).withBinding("query")
 
-        findDescription(argumentNode) match {
-          case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
-          case _                 => // ignore
-        }
+      findDescription(argumentNode) match {
+        case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
+        case _                 => // ignore
+      }
 
-        unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
-          case NullableShape(true, shape)  =>
-            queryParam.withSchema(shape).withRequired(false)
-          case NullableShape(false, shape) =>
-            queryParam.withSchema(shape).withRequired(true)
-        }
+      unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
+        case NullableShape(true, shape) =>
+          queryParam.withSchema(shape).withRequired(false)
+        case NullableShape(false, shape) =>
+          queryParam.withSchema(shape).withRequired(true)
+      }
     }
 
     val payload = op.withResponse("default").withPayload()

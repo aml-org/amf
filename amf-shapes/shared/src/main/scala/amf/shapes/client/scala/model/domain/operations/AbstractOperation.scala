@@ -25,7 +25,7 @@ abstract class AbstractOperation(fields: Fields, annotations: Annotations) exten
 
   def withResponse(name: String = "default"): ResponseType = {
     val result = buildResponse.withName(name)
-    val prev = Option(responses).getOrElse(Nil)
+    val prev   = Option(responses).getOrElse(Nil)
     withResponses(prev :+ result)
     result
   }

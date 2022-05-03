@@ -24,9 +24,9 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
-case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
@@ -75,8 +75,8 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
 }
 
 case class OasPayloadsEmitter(key: String, payloads: Seq[Payload], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+    implicit spec: OasSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
@@ -88,13 +88,13 @@ case class OasPayloadsEmitter(key: String, payloads: Seq[Payload], ordering: Spe
     val filtered = payloads
       .filter(p => p.annotations.find(classOf[LexicalInformation]).exists(!_.range.start.isZero))
     val result = filtered
-      .foldLeft[Position](ZERO)(
-        (pos, p) =>
-          p.annotations
-            .find(classOf[LexicalInformation])
-            .map(_.range.start)
-            .filter(newPos => pos.isZero || pos.lt(newPos))
-            .getOrElse(pos))
+      .foldLeft[Position](ZERO)((pos, p) =>
+        p.annotations
+          .find(classOf[LexicalInformation])
+          .map(_.range.start)
+          .filter(newPos => pos.isZero || pos.lt(newPos))
+          .getOrElse(pos)
+      )
     result
   }
 }

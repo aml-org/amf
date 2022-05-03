@@ -12,11 +12,10 @@ import amf.shapes.client.scala.model.domain.operations.AbstractPayload
 import amf.shapes.internal.domain.resolution.ExampleTracking
 import org.yaml.model.YPart
 
-/**
-  * Payload internal model.
+/** Payload internal model.
   */
 case class Payload(override val fields: Fields, override val annotations: Annotations)
-  extends AbstractPayload(fields, annotations)
+    extends AbstractPayload(fields, annotations)
     with SchemaContainer
     with ExemplifiedDomainElement {
 
@@ -42,14 +41,13 @@ case class Payload(override val fields: Fields, override val annotations: Annota
   def clonePayload(parent: String): Payload = {
     val cloned = Payload(annotations).withMediaType(mediaType.value()).adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case s: Shape => s.cloneShape(None)
-          case o        => o
-        }
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case s: Shape => s.cloneShape(None)
+        case o        => o
+      }
 
-        cloned.set(f, clonedValue, v.annotations)
+      cloned.set(f, clonedValue, v.annotations)
     }
 
     cloned.asInstanceOf[this.type]
@@ -59,7 +57,7 @@ case class Payload(override val fields: Fields, override val annotations: Annota
   override def adopted(parent: String, cycle: Seq[String]): Payload.this.type = {
     val oldId = this.id
     super.adopted(parent, cycle)
-    if(this.id != oldId)
+    if (this.id != oldId)
       ExampleTracking.replaceTracking(this.schema, this, oldId)
     this
   }

@@ -25,12 +25,10 @@ import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
-case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+/** */
+case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit =
     if (examples.nonEmpty) {
@@ -45,8 +43,9 @@ case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], order
 }
 
 object OasResponseExamplesEmitter {
-  def apply(key: String, f: FieldEntry, ordering: SpecOrdering)(
-      implicit spec: ShapeEmitterContext): OasResponseExamplesEmitter =
+  def apply(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit
+      spec: ShapeEmitterContext
+  ): OasResponseExamplesEmitter =
     OasResponseExamplesEmitter(key, f.array.values.collect({ case e: Example => e }), ordering)(spec)
 }
 
@@ -85,9 +84,11 @@ case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering
     fs.entry(ExampleModel.ExternalValue).foreach(f => results += RamlScalarEmitter("externalValue", f))
     fs.entry(ExampleModel.StructuredValue)
       .foreach { f =>
-        results += EntryPartEmitter("value",
-                                    DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
-                                    position = pos(f.value.annotations))
+        results += EntryPartEmitter(
+          "value",
+          DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
+          position = pos(f.value.annotations)
+        )
       }
     results ++= AnnotationsEmitter(example, ordering).emitters
 
@@ -119,10 +120,12 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
   override def position(): Position = pos(example.annotations)
 }
 
-abstract class MultipleExampleEmitter(key: String,
-                                      examples: Seq[Example],
-                                      ordering: SpecOrdering,
-                                      references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext)
+abstract class MultipleExampleEmitter(
+    key: String,
+    examples: Seq[Example],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: ShapeEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
@@ -141,10 +144,12 @@ abstract class MultipleExampleEmitter(key: String,
   override def position(): Position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO)
 }
 
-case class NamedMultipleExampleEmitter(key: String,
-                                       examples: Seq[Example],
-                                       ordering: SpecOrdering,
-                                       references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext)
+case class NamedMultipleExampleEmitter(
+    key: String,
+    examples: Seq[Example],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: ShapeEmitterContext)
     extends MultipleExampleEmitter(key, examples, ordering, references) {
 
   def emit(b: PartBuilder) = {
@@ -154,19 +159,20 @@ case class NamedMultipleExampleEmitter(key: String,
 
   private def examplesWithKey: Map[String, Example] = {
     val counter = new IdCounter()
-    examples.foldLeft(Map.empty[String, Example]) {
-      case (map, ex) =>
-        val name = ex.name.option()
-        val key  = name.filter(!map.contains(_)).getOrElse(counter.genId("amf_example"))
-        map + (key -> ex)
+    examples.foldLeft(Map.empty[String, Example]) { case (map, ex) =>
+      val name = ex.name.option()
+      val key  = name.filter(!map.contains(_)).getOrElse(counter.genId("amf_example"))
+      map + (key -> ex)
     }
   }
 }
 
-case class SafeNamedMultipleExampleEmitter(key: String,
-                                           examples: Seq[Example],
-                                           ordering: SpecOrdering,
-                                           references: Seq[BaseUnit])(implicit spec: ShapeEmitterContext)
+case class SafeNamedMultipleExampleEmitter(
+    key: String,
+    examples: Seq[Example],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: ShapeEmitterContext)
     extends MultipleExampleEmitter(key, examples, ordering, references) {
   override def emit(b: PartBuilder): Unit = {
     val idCounter = new IdCounter()
@@ -181,9 +187,9 @@ case class SafeNamedMultipleExampleEmitter(key: String,
   }
 }
 
-case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
 
@@ -193,7 +199,7 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
         valueEmitter match {
           case Left(entry) => p.obj(entry.emit)
           case Right(map)  => map.emit(p)
-      }
+        }
     )
   }
 
@@ -233,10 +239,7 @@ object RamlExampleValuesEmitter {
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitMetaFields =
-      List(ExampleModel.Strict,
-           ExampleModel.Description,
-           ExampleModel.DisplayName,
-           ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
@@ -274,9 +277,11 @@ class ExpandedRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)
         }
       })(f => {
         // TODO: fix because emission changes with raw value change (see ignored test upanddown/cycle/raml10/referenced-example)
-        results += EntryPartEmitter("value",
-                                    DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
-                                    position = pos(f.value.annotations))
+        results += EntryPartEmitter(
+          "value",
+          DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
+          position = pos(f.value.annotations)
+        )
       })
 
     results ++= AnnotationsEmitter(example, ordering).emitters
@@ -308,12 +313,14 @@ abstract class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(TransformationValidation,
-                        example.id,
-                        None,
-                        s"IllegalTypeDeclarations found: $other",
-                        example.position(),
-                        example.location())
+      spec.eh.violation(
+        TransformationValidation,
+        example.id,
+        None,
+        s"IllegalTypeDeclarations found: $other",
+        example.position(),
+        example.location()
+      )
       Right(Nil)
   }
 
@@ -354,8 +361,8 @@ case class StringToAstEmitter(value: String) extends PartEmitter {
   private def emitNode(node: YNode, b: PartBuilder): Unit = {
 
     node.value match {
-      case map: YMap       => b.obj(e => map.entries.foreach(entry => e.entry(entry.key, p => emitNode(entry.value, p))))
-      case seq: YSequence  => b.list(p => seq.nodes.foreach(emitNode(_, p)))
+      case map: YMap      => b.obj(e => map.entries.foreach(entry => e.entry(entry.key, p => emitNode(entry.value, p))))
+      case seq: YSequence => b.list(p => seq.nodes.foreach(emitNode(_, p)))
       case scalar: YScalar => b += scalar.text
       case _               => // ignore
     }

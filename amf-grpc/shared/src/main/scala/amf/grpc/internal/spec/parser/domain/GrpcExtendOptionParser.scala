@@ -31,20 +31,21 @@ case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext
     path(ast, Seq(EXTEND_IDENTIFIER)) match {
       case Some(n: Node) =>
         withOptTerminal(n) {
-          case Some(t: Terminal) => t.value match {
-            case FIELD_OPTIONS => "field"
-            case ENUM_OPTIONS  => "enum"
-            case ENUM_VALUE_OPTIONS => "enum_value"
-            case EXTENSION_RANGE_OPTIONS => "extension_range"
-            case MESSAGE_OPTIONS => VocabularyMappings.shape
-            case METHOD_OPTIONS => VocabularyMappings.operation
-            case SERVICE_OPTIONS => VocabularyMappings.endpoint
-            case FILE_OPTIONS => VocabularyMappings.webapi
-            case ONEOF_OPTIONS => "oneof"
-          }
-          case _                 => VocabularyMappings.webapi
+          case Some(t: Terminal) =>
+            t.value match {
+              case FIELD_OPTIONS           => "field"
+              case ENUM_OPTIONS            => "enum"
+              case ENUM_VALUE_OPTIONS      => "enum_value"
+              case EXTENSION_RANGE_OPTIONS => "extension_range"
+              case MESSAGE_OPTIONS         => VocabularyMappings.shape
+              case METHOD_OPTIONS          => VocabularyMappings.operation
+              case SERVICE_OPTIONS         => VocabularyMappings.endpoint
+              case FILE_OPTIONS            => VocabularyMappings.webapi
+              case ONEOF_OPTIONS           => "oneof"
+            }
+          case _ => VocabularyMappings.webapi
         }
-      case _             =>  VocabularyMappings.webapi
+      case _ => VocabularyMappings.webapi
     }
   }
 }

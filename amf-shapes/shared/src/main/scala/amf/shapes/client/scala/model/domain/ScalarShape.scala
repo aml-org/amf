@@ -8,8 +8,7 @@ import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel._
 import org.yaml.model.YPart
 
-/**
-  * Scalar shape
+/** Scalar shape
   */
 case class ScalarShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)

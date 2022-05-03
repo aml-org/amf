@@ -8,38 +8,46 @@ class ParameterResolutionTest extends ResolutionTest {
   override val basePath = "amf-cli/shared/src/test/resources/resolution/"
 
   multiGoldenTest("resolution AMF", "parameters.raml.%s") { config =>
-    cycle("parameters.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "parameters.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("resolution OpenAPI", "parameters.json.%s") { config =>
-    cycle("parameters.json",
-          config.golden,
-          Oas20JsonHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Oas20))
+    cycle(
+      "parameters.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Oas20)
+    )
   }
 
   multiGoldenTest("nested parameters AMF", "nested-parameters.raml.%s") { config =>
-    cycle("nested-parameters.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "nested-parameters.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("RAML 0.8 overrided baseUriParams are propagated to request", "overrided-baseUriParams.%s") {
     config =>
-      cycle("overrided-baseUriParams.raml",
-            config.golden,
-            Raml08YamlHint,
-            target = AmfJsonHint,
-            renderOptions = Some(config.renderOptions),
-            transformWith = Some(Raml08))
+      cycle(
+        "overrided-baseUriParams.raml",
+        config.golden,
+        Raml08YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions),
+        transformWith = Some(Raml08)
+      )
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint

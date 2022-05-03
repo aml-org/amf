@@ -10,8 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala.model.domain.{Server => InternalServer}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
-/**
-  * Server model class.
+/** Server model class.
   */
 @JSExportAll
 case class Server(override private[amf] val _internal: InternalServer) extends DomainElement {
@@ -66,9 +65,8 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
     this
   }
 
-  /**
-    * Adds one Parameter to the variables property of this Server and returns it for population.
-    * name property of the Parameter is required.
+  /** Adds one Parameter to the variables property of this Server and returns it for population. name property of the
+    * Parameter is required.
     */
   def withVariable(name: String): Parameter = _internal.withVariable(name)
 }

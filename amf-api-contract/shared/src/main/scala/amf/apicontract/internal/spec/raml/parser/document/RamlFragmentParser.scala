@@ -22,11 +22,10 @@ import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{RamlCreativeWorkParser, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
+import amf.shapes.internal.vocabulary.VocabularyMappings.shape
 import org.yaml.model.{YMap, YScalar}
 
-/**
-  *
-  */
+/** */
 case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment)(implicit val ctx: RamlWebApiContext)
     extends RamlSpecParser {
 
@@ -38,10 +37,12 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.eh.violation(InvalidFragmentType,
-                           root.location,
-                           "Cannot parse empty map",
-                           root.parsed.asInstanceOf[SyamlParsedDocument].document.location)
+          ctx.eh.violation(
+            InvalidFragmentType,
+            root.location,
+            "Cannot parse empty map",
+            root.parsed.asInstanceOf[SyamlParsedDocument].document.location
+          )
         YMap.empty
     }
 
@@ -50,7 +51,8 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
     // usage is valid for a fragment, not for the encoded domain element
     val encodedMap = YMap(
       rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"),
-      root.location)
+      root.location
+    )
 
     val fragment = fragmentType match {
       case Raml10DocumentationItem         => DocumentationItemFragmentParser(encodedMap).parse()
@@ -62,13 +64,16 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       case Raml10NamedExample              => NamedExampleFragmentParser(encodedMap).parse()
     }
 
-    rootMap.key("usage", usage => {
-      fragment.setWithoutId(
-        FragmentModel.Usage,
-        AmfScalar(usage.value.as[String], Annotations(usage.value)),
-        Annotations(usage.value)
-      )
-    })
+    rootMap.key(
+      "usage",
+      usage => {
+        fragment.setWithoutId(
+          FragmentModel.Usage,
+          AmfScalar(usage.value.as[String], Annotations(usage.value)),
+          Annotations(usage.value)
+        )
+      }
+    )
     fragment.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     UsageParser(rootMap, fragment).parse()
     fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
@@ -84,7 +89,8 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       .withEncodes(
         ExternalDomainElement()
           .withRaw(root.raw)
-          .withMediaType(root.mediatype))
+          .withMediaType(root.mediatype)
+      )
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
@@ -92,8 +98,11 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
 
       val item = DocumentationItemFragment()
 
-      item.setWithoutId(FragmentModel.Encodes,
-                        (RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse()))
+      item.setWithoutId(
+        FragmentModel.Encodes,
+        RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse(),
+        Annotations.inferred()
+      )
     }
   }
 
@@ -108,7 +117,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
         StringDefaultType
       )(WebApiShapeParserContextAdapter(ctx))
         .parse()
-        .foreach(dataType.setWithoutId(FragmentModel.Encodes, _))
+        .foreach(dataType.setWithoutId(FragmentModel.Encodes, _, Annotations.inferred()))
 
       dataType
     }
@@ -123,7 +132,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
           .parse()
 
       resourceType.withEncodes(abstractDeclaration)
-      resourceType.setWithoutId(FragmentModel.Encodes, abstractDeclaration)
+      resourceType.setWithoutId(FragmentModel.Encodes, abstractDeclaration, Annotations.inferred())
     }
   }
 
@@ -135,7 +144,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
         new AbstractDeclarationParser(Trait(map).withId(traitFragment.id), traitFragment.id, YMapEntryLike(map))
           .parse()
 
-      traitFragment.setWithoutId(FragmentModel.Encodes, abstractDeclaration)
+      traitFragment.setWithoutId(FragmentModel.Encodes, abstractDeclaration, Annotations.inferred())
     }
   }
 
@@ -146,7 +155,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       val property =
         AnnotationTypesParser(map, "annotation", map, (annotation: CustomDomainProperty) => Unit).parse()
 
-      annotation.setWithoutId(FragmentModel.Encodes, property)
+      annotation.setWithoutId(FragmentModel.Encodes, property, Annotations.inferred())
     }
   }
 
@@ -158,8 +167,11 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
         FragmentModel.Encodes,
         RamlSecuritySchemeParser(
           map,
-          (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security)
-          .parse())
+          (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
+        )
+          .parse(),
+        Annotations.inferred()
+      )
     }
   }
 

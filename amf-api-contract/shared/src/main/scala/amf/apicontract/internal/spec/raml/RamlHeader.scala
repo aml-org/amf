@@ -6,8 +6,7 @@ import amf.core.internal.parser.Root
 
 import scala.util.matching.Regex
 
-/**
-  * Raml header comment
+/** Raml header comment
   */
 case class RamlHeader(text: String) {
   def asRegExp(): Regex = ("\\s*" + text.replaceAll(" ", "\\\\s*") + "\\s*").r

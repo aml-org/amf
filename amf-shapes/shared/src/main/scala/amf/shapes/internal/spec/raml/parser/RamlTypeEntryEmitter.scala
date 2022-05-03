@@ -11,15 +11,18 @@ import amf.shapes.internal.spec.raml.emitter
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-case class RamlTypeEntryEmitter(key: String, shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlTypeEntryEmitter(key: String, shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(key, _.obj { b =>
-      val emitters = emitter.Raml10TypeEmitter(shape, ordering, references = references).entries()
-      traverse(ordering.sorted(emitters), b)
-    })
+    b.entry(
+      key,
+      _.obj { b =>
+        val emitters = emitter.Raml10TypeEmitter(shape, ordering, references = references).entries()
+        traverse(ordering.sorted(emitters), b)
+      }
+    )
   }
 
   override def position(): Position = pos(shape.annotations)

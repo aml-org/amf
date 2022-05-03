@@ -10,8 +10,9 @@ import amf.core.client.scala.model.{DataType, ValueField}
 import amf.shapes.client.scala.model.domain._
 import org.mulesoft.common.collections.FilterType
 
-class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
-    implicit errorHandler: AMFErrorHandler) {
+class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(implicit
+    errorHandler: AMFErrorHandler
+) {
 
   val mapping: PropertyMapping = PropertyMapping(property.annotations)
 

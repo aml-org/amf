@@ -8,9 +8,11 @@ import amf.shapes.client.scala.model.domain.FileShape
 
 object FileShapeModel extends AnyShapeModel with CommonShapeFields {
 
-  val FileTypes = Field(Array(Str),
-                        Namespace.Shapes + "fileType",
-                        ModelDoc(ModelVocabularies.Shapes, "fileType", "Type of file described by this shape"))
+  val FileTypes = Field(
+    Array(Str),
+    Namespace.Shapes + "fileType",
+    ModelDoc(ModelVocabularies.Shapes, "fileType", "Type of file described by this shape")
+  )
 
   val specificFields = List(FileTypes)
   override val fields: List[Field] =

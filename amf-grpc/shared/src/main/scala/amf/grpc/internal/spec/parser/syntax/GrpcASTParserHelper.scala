@@ -17,7 +17,9 @@ import org.mulesoft.lexer.SourceLocation
 
 trait GrpcASTParserHelper extends AntlrASTParserHelper {
 
-  def withName(ast: Node, nametoken: String, element: NamedDomainElement, adopt: NamedDomainElement => Unit = { _ => })(implicit ctx: GrpcWebApiContext): Unit = {
+  def withName(ast: Node, nametoken: String, element: NamedDomainElement, adopt: NamedDomainElement => Unit = { _ => })(
+      implicit ctx: GrpcWebApiContext
+  ): Unit = {
     path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
@@ -42,7 +44,9 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def withDeclaredShape(ast: Node, nametoken: String, element: AnyShape, adopt: NamedDomainElement => Unit = { _ => })(implicit ctx: GrpcWebApiContext): Unit = {
+  def withDeclaredShape(ast: Node, nametoken: String, element: AnyShape, adopt: NamedDomainElement => Unit = { _ => })(
+      implicit ctx: GrpcWebApiContext
+  ): Unit = {
     path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
@@ -81,22 +85,22 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
         val shape: Option[Shape] = withOptTerminal(n) {
           case Some(t) =>
             t.value match {
-              case "double" => Some(parseScalarRange(n, DoubleType, None))
-              case "float" => Some(parseScalarRange(n, FloatType, None))
-              case "int32" => Some(parseScalarRange(n, IntType, Some("int32")))
-              case "int64" => Some(parseScalarRange(n, LongType, Some("int64")))
-              case "uint32" => Some(parseScalarRange(n, IntType, Some("uint32")))
-              case "uint64" => Some(parseScalarRange(n, LongType, Some("uint64")))
-              case "sint32" => Some(parseScalarRange(n, IntType, Some("sint32")))
-              case "sint64" => Some(parseScalarRange(n, LongType, Some("sint64")))
-              case "fixed32" => Some(parseScalarRange(n, IntType, Some("fixed32")))
-              case "fixed64" => Some(parseScalarRange(n, LongType, Some("fixed64")))
+              case "double"   => Some(parseScalarRange(n, DoubleType, None))
+              case "float"    => Some(parseScalarRange(n, FloatType, None))
+              case "int32"    => Some(parseScalarRange(n, IntType, Some("int32")))
+              case "int64"    => Some(parseScalarRange(n, LongType, Some("int64")))
+              case "uint32"   => Some(parseScalarRange(n, IntType, Some("uint32")))
+              case "uint64"   => Some(parseScalarRange(n, LongType, Some("uint64")))
+              case "sint32"   => Some(parseScalarRange(n, IntType, Some("sint32")))
+              case "sint64"   => Some(parseScalarRange(n, LongType, Some("sint64")))
+              case "fixed32"  => Some(parseScalarRange(n, IntType, Some("fixed32")))
+              case "fixed64"  => Some(parseScalarRange(n, LongType, Some("fixed64")))
               case "sfixed32" => Some(parseScalarRange(n, IntType, Some("sfixed32")))
               case "sfixed64" => Some(parseScalarRange(n, LongType, Some("sfixed64")))
-              case "bool" => Some(parseScalarRange(n, BoolType, None))
-              case "string" => Some(parseScalarRange(n, StrType, None))
-              case "bytes" => Some(parseScalarRange(n, ByteType, None))
-              case _ => None
+              case "bool"     => Some(parseScalarRange(n, BoolType, None))
+              case "string"   => Some(parseScalarRange(n, StrType, None))
+              case "bytes"    => Some(parseScalarRange(n, ByteType, None))
+              case _          => None
             }
           case _ =>
             path(n, Seq(MESSAGE_TYPE)).flatMap { case messageRef: Node =>
@@ -117,41 +121,51 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
   }
 
   protected def parseObjectRange(n: ASTElement, literalReference: String)(implicit ctx: GrpcWebApiContext): AnyShape = {
-    val topLevelAlias = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
+    val topLevelAlias      = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
-    val externalReference = s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
+    val externalReference =
+      s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
     ctx.declarations
-      .findType(qualifiedReference, SearchScope.All) // local reference inside a nested message, transformed into a top-level for possibly nested type
+      .findType(
+        qualifiedReference,
+        SearchScope.All
+      )         // local reference inside a nested message, transformed into a top-level for possibly nested type
       .orElse { // top-level reference for a reference, using just the name + plus package
         topLevelAlias.headOption.flatMap { alias =>
           ctx.declarations.findType(alias, SearchScope.All)
         }
       }
-      .orElse(ctx.globalSpace.get(externalReference)) // fully qualified reference for an external package that might be in the global space
+      .orElse(
+        ctx.globalSpace.get(externalReference)
+      ) // fully qualified reference for an external package that might be in the global space
       .orElse { // fully qualified reference for this package that might have been defined in a different file, and thus might be registered in the global space
         topLevelAlias.headOption.flatMap { alias =>
           ctx.globalSpace.get(alias)
         }
-      }
-    match {
+      } match {
       case Some(s: NodeShape) =>
         s.link(literalReference, toAnnotations(n)).asInstanceOf[NodeShape].withName(literalReference, toAnnotations(n))
       case Some(s: ScalarShape) =>
-        s.link(literalReference, toAnnotations(n)).asInstanceOf[ScalarShape].withName(literalReference, toAnnotations(n))
+        s.link(literalReference, toAnnotations(n))
+          .asInstanceOf[ScalarShape]
+          .withName(literalReference, toAnnotations(n))
       case _ =>
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
         shape.withContext(ctx)
-        shape.unresolved(literalReference, Seq(qualifiedReference) ++ topLevelAlias, Some(new SourceLocation(n.file, 0, 0, n.start.line, n.start.column, n.end.line, n.end.column)))
+        shape.unresolved(
+          literalReference,
+          Seq(qualifiedReference) ++ topLevelAlias,
+          Some(new SourceLocation(n.file, 0, 0, n.start.line, n.start.column, n.end.line, n.end.column))
+        )
         shape
     }
   }
-
 
   private def parseScalarRange(n: ASTElement, scalarType: TypeDef, format: Option[String]): ScalarShape = {
     val scalar = ScalarShape(toAnnotations(n)).withDataType(XsdTypeDefMapping.xsd(scalarType))
     format match {
       case Some(format) => scalar.withFormat(format)
-      case _ =>
+      case _            =>
     }
     scalar
   }
@@ -161,14 +175,16 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
       case node: Node =>
         find(node, REPEATED).headOption match {
           case Some(n: Terminal) => true
-          case _ => false
+          case _                 => false
         }
       case _ => false
     }
 
   }
 
-  def collectOptions(ast: Node, path: Seq[String], adopt: DomainExtension => Unit)(implicit ctx: GrpcWebApiContext): Unit = {
+  def collectOptions(ast: Node, path: Seq[String], adopt: DomainExtension => Unit)(implicit
+      ctx: GrpcWebApiContext
+  ): Unit = {
     collect(ast, path).map { case optNode: Node =>
       GrpcOptionParser(optNode).parse(adopt)
     }

@@ -96,10 +96,12 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test invalid responses api (2)") {
-    validate("/production/responses-invalid-2.raml",
-             golden = Some("production_responses_invalid_2.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/production/responses-invalid-2.raml",
+      golden = Some("production_responses_invalid_2.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Test invalid responses api (3)") {
@@ -111,10 +113,12 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test valid api with type problems 1") {
-    validate("/production/type_problems1.raml",
-             golden = Some("type_problems1.report"),
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/production/type_problems1.raml",
+      golden = Some("type_problems1.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   ignore("Test valid api with type problems 2") {
@@ -235,9 +239,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test double with .00 against integer") {
-    validate("/examples/double-against-integer/api.raml",
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate("/examples/double-against-integer/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test raml 08 with 2 schemas that contains definitions with same name but different content") {

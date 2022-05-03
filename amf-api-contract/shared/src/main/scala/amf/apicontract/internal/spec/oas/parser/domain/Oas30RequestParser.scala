@@ -43,10 +43,12 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
           case Some(entry) =>
             payloads ++= OasContentsParser(entry, request.withPayload).parse()
           case None =>
-            ctx.eh.violation(RequestBodyContentRequired,
-                             request,
-                             s"Request body must have a 'content' field defined",
-                             map.location)
+            ctx.eh.violation(
+              RequestBodyContentRequired,
+              request,
+              s"Request body must have a 'content' field defined",
+              map.location
+            )
         }
         request.setWithoutId(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
@@ -68,10 +70,12 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
               .parse()
               .add(ExternalReferenceUrl(fullRef))
           case None =>
-            ctx.eh.violation(CoreValidations.UnresolvedReference,
-                             "",
-                             s"Cannot find requestBody reference $fullRef",
-                             map.location)
+            ctx.eh.violation(
+              CoreValidations.UnresolvedReference,
+              "",
+              s"Cannot find requestBody reference $fullRef",
+              map.location
+            )
             adopt(ErrorRequest(fullRef, map).link(name))
         }
       }

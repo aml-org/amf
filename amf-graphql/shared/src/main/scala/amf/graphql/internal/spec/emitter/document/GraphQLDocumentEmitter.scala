@@ -45,20 +45,19 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
 
   def emitTopLevelTypes(b: StringDocBuilder): Unit = {
     ctx.queryType.foreach { queryType =>
-      GraphQLRootTypeEmitter(queryType, ctx,b).emit()
+      GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
     ctx.mutationType.foreach { queryType =>
-      GraphQLRootTypeEmitter(queryType, ctx,b).emit()
+      GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
     ctx.subscriptionType.foreach { queryType =>
-      GraphQLRootTypeEmitter(queryType, ctx,b).emit()
+      GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
   }
 
   def emitTypes(doc: StringDocBuilder): Unit = {
-    document.asInstanceOf[Document].declares.foreach {
-      case shape: AnyShape =>
-        GraphQLTypeEmitter(shape, ctx, doc).emit()
+    document.asInstanceOf[Document].declares.foreach { case shape: AnyShape =>
+      GraphQLTypeEmitter(shape, ctx, doc).emit()
     }
   }
 

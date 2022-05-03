@@ -20,8 +20,9 @@ class PathNormalizationTest extends AsyncBeforeAndAfterEach with PlatformSecrets
   test("Reference file located outside of root directory") {
     val rootUrl = "file:///api.raml"
     val rl = ContentResourceLoader(
-      Map(rootUrl ->
-        """
+      Map(
+        rootUrl ->
+          """
         |#%RAML 1.0
         |title: reduced-root-path-spec
         |
@@ -29,7 +30,9 @@ class PathNormalizationTest extends AsyncBeforeAndAfterEach with PlatformSecrets
         |  valid: !include ./dataType.raml
         |  invalid1: !include ./../dataType.raml
         |  invalid2: !include ./../../../dataType.raml
-        |""".stripMargin))
+        |""".stripMargin
+      )
+    )
 
     val client = WebAPIConfiguration.WebAPI().withResourceLoaders(List(rl)).baseUnitClient()
     client.parse(rootUrl).map { _ =>

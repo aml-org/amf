@@ -4,9 +4,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import org.yaml.model.YMap
 
-/**
-  *
-  */
+/** */
 class AsyncHeader(val key: String, val value: String) {
   def tuple: (String, String) = (key, value)
 }

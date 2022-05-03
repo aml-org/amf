@@ -11,8 +11,7 @@ import amf.shapes.client.scala.model.domain.DocumentedElement
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 import org.yaml.model.YNode
 
-/**
-  * Tag internal model
+/** Tag internal model
   */
 case class Tag(fields: Fields, annotations: Annotations) extends NamedDomainElement with DocumentedElement {
 

@@ -11,12 +11,14 @@ import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 
-case class OasTypePartEmitter(shape: Shape,
-                              ordering: SpecOrdering,
-                              ignored: Seq[Field] = Nil,
-                              references: Seq[BaseUnit],
-                              pointer: Seq[String] = Nil,
-                              schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasTypePartEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    ignored: Seq[Field] = Nil,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasTypePartCollector(shape, ordering, ignored, references)
     with PartEmitter {
 

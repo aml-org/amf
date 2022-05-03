@@ -15,8 +15,7 @@ import amf.core.client.platform.model.domain.{DataNode, DomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Settings model class.
+/** Settings model class.
   */
 @JSExportAll
 class Settings(override private[amf] val _internal: InternalSettings) extends DomainElement {

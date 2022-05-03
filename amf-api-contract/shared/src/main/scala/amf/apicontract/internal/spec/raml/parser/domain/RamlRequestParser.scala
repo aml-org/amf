@@ -17,19 +17,16 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
 
-/**
-  *
-  */
-case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends RamlRequestParser(map, producer, parseOptional) {
+/** */
+case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(implicit
+    ctx: RamlWebApiContext
+) extends RamlRequestParser(map, producer, parseOptional) {
 
   override def parse(request: Lazy[Request], target: Target): Unit = {
     map.key(
       "queryString",
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => Unit)(
-          WebApiShapeParserContextAdapter(ctx))
+        Raml10TypeParser(queryEntry, shape => Unit)(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(q => {
             val finalRequest = request.getOrCreate
@@ -47,10 +44,12 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     )
   }
 
-  override protected def parseParameter(entry: YMapEntry,
-                                        adopt: Parameter => Unit,
-                                        parseOptional: Boolean,
-                                        binding: String): Parameter =
+  override protected def parseParameter(
+      entry: YMapEntry,
+      adopt: Parameter => Unit,
+      parseOptional: Boolean,
+      binding: String
+  ): Parameter =
     Raml10ParameterParser(entry, (p: Parameter) => Unit, parseOptional, binding)
       .parse()
 
@@ -59,27 +58,29 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
   override protected val defaultType: DefaultType = AnyDefaultType
 }
 
-case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends RamlRequestParser(map, producer, parseOptional) {
+case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(implicit
+    ctx: RamlWebApiContext
+) extends RamlRequestParser(map, producer, parseOptional) {
 
   override protected val baseUriParametersKey: String = "baseUriParameters"
 
   override def parse(request: Lazy[Request], target: Target): Unit = Unit
 
-  override protected def parseParameter(entry: YMapEntry,
-                                        adopt: Parameter => Unit,
-                                        parseOptional: Boolean,
-                                        binding: String): Parameter =
+  override protected def parseParameter(
+      entry: YMapEntry,
+      adopt: Parameter => Unit,
+      parseOptional: Boolean,
+      binding: String
+  ): Parameter =
     Raml08ParameterParser(entry, (p: Parameter) => Unit, parseOptional, binding)
       .parse()
 
   override protected val defaultType: DefaultType = AnyDefaultType
 }
 
-abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends SpecParserOps {
+abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(implicit
+    ctx: RamlWebApiContext
+) extends SpecParserOps {
   protected val request = new Lazy[Request](producer)
 
   protected val baseUriParametersKey: String
@@ -87,10 +88,12 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
   def parse(request: Lazy[Request], target: Target): Unit
   protected val defaultType: DefaultType
 
-  protected def parseParameter(entry: YMapEntry,
-                               adopt: Parameter => Unit,
-                               parseOptional: Boolean,
-                               binding: String): Parameter
+  protected def parseParameter(
+      entry: YMapEntry,
+      adopt: Parameter => Unit,
+      parseOptional: Boolean,
+      binding: String
+  ): Parameter
 
   def parse(): Option[Request] = {
 
@@ -117,9 +120,8 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
           parseParameter(paramEntry, (p: Parameter) => Unit, parseOptional, "path")
         }
 
-        request.getOrCreate.setWithoutId(RequestModel.UriParameters,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
+        request.getOrCreate
+          .setWithoutId(RequestModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
 
       }
     )
@@ -132,10 +134,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
         entry.value.tagType match {
           case YType.Null =>
             ctx.factory
-              .typeParser(entry,
-                          shape => shape.withName("default"),
-                          false,
-                          defaultType)
+              .typeParser(entry, shape => shape.withName("default"), false, defaultType)
               .parse()
               .foreach { schema =>
                 val payload = request.getOrCreate.withPayload(None)
@@ -148,10 +147,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
 
           case YType.Str =>
             ctx.factory
-              .typeParser(entry,
-                          shape => shape.withName("default"),
-                          false,
-                          defaultType)
+              .typeParser(entry, shape => shape.withName("default"), false, defaultType)
               .parse()
               .foreach { schema =>
                 val payload = request.getOrCreate.withPayload(None)
@@ -179,10 +175,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     ctx.factory
-                      .typeParser(entry,
-                                  shape => shape.withName("default"),
-                                  false,
-                                  defaultType)
+                      .typeParser(entry, shape => shape.withName("default"), false, defaultType)
                       .parse()
                       .foreach { schema =>
                         val payload = request.getOrCreate.withPayload(None)
@@ -192,12 +185,14 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                           .setWithoutId(PayloadModel.Schema, tracking(schema, payload), Annotations(entry.value))
                       }
                   } else {
-                    others.entries.foreach(
-                      e =>
-                        ctx.eh.violation(UnsupportedExampleMediaTypeErrorSpecification,
-                                         request.getOrCreate,
-                                         s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
-                                         e.location))
+                    others.entries.foreach(e =>
+                      ctx.eh.violation(
+                        UnsupportedExampleMediaTypeErrorSpecification,
+                        request.getOrCreate,
+                        s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
+                        e.location
+                      )
+                    )
                   }
                 }
               case _ =>
@@ -205,9 +200,8 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
         }
 
         if (payloads.nonEmpty)
-          request.getOrCreate.setWithoutId(RequestModel.Payloads,
-                                  AmfArray(payloads, Annotations(entry.value)),
-                                  Annotations(entry))
+          request.getOrCreate
+            .setWithoutId(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
     parse(request, target)

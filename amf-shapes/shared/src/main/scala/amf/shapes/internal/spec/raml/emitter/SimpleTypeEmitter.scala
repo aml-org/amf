@@ -61,9 +61,11 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     fs.entry(ShapeModel.Default)
       .map(f => {
-        result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                   position = pos(f.value.annotations))
+        result += EntryPartEmitter(
+          "default",
+          DataNodeEmitter(shape.default, ordering)(spec.eh),
+          position = pos(f.value.annotations)
+        )
       })
 
     result

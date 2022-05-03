@@ -38,8 +38,8 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
   def emitObject(node: NodeShape, b: StringDocBuilder): Unit = {
     b.fixed { f =>
       val maybeInheritance = renderInheritance(node)
-      val name = shape.name.value()
-      val effectiveType = checkObjectType(name, node)
+      val name             = shape.name.value()
+      val effectiveType    = checkObjectType(name, node)
       f.+=(s"$effectiveType $name $maybeInheritance{", pos(node.annotations))
       f.obj { o =>
         o.list { l =>
@@ -64,7 +64,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
 
   def emitEnum(shape: ScalarShape, b: StringDocBuilder): Unit = {
     b.fixed { f =>
-      val name = shape.name.value()
+      val name    = shape.name.value()
       val members = shape.values.collect { case s: ScalarNode => s }
       f.+=(s"enum $name {", pos(shape.annotations))
       f.obj { o =>

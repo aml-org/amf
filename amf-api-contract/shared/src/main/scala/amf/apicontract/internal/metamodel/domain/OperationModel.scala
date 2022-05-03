@@ -12,58 +12,74 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementMo
 import amf.shapes.internal.domain.metamodel.common.DocumentationField
 import amf.shapes.internal.domain.metamodel.operations.AbstractOperationModel
 
-/**
-  * Operation meta model.
+/** Operation meta model.
   */
 object OperationModel
-  extends AbstractOperationModel
+    extends AbstractOperationModel
     with DocumentationField
     with TagsModel
     with AbstractModel
     with LinkableElementModel {
 
-  override val Method: Field = Field(Str,
-                     ApiContract + "method",
-                     ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
+  override val Method: Field = Field(
+    Str,
+    ApiContract + "method",
+    ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation")
+  )
 
-  val OperationId: Field = Field(Str,
-                          ApiContract + "operationId",
-                          ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation"))
+  val OperationId: Field = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation")
+  )
 
-  val Deprecated: Field = Field(Bool,
-                         Core + "deprecated",
-                         ModelDoc(ModelVocabularies.Core, "deprecated", "Marks the operation as deprecated"))
+  val Deprecated: Field = Field(
+    Bool,
+    Core + "deprecated",
+    ModelDoc(ModelVocabularies.Core, "deprecated", "Marks the operation as deprecated")
+  )
 
   val Summary: Field = Field(
     Str,
     ApiContract + "guiSummary",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "guiSummary",
-             "Human readable description of the operation",
-             Seq((Namespace.Core + "description").iri()))
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "guiSummary",
+      "Human readable description of the operation",
+      Seq((Namespace.Core + "description").iri())
+    )
   )
 
   val Schemes: Field =
-    Field(Array(Str),
-          ApiContract + "scheme",
-          ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol"))
+    Field(
+      Array(Str),
+      ApiContract + "scheme",
+      ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol")
+    )
 
-  val Accepts: Field = Field(Array(Str),
-                      ApiContract + "accepts",
-                      ModelDoc(ModelVocabularies.ApiContract, "accepts", "Media-types accepted in a API request"))
+  val Accepts: Field = Field(
+    Array(Str),
+    ApiContract + "accepts",
+    ModelDoc(ModelVocabularies.ApiContract, "accepts", "Media-types accepted in a API request")
+  )
 
-  val ContentType: Field = Field(Array(Str),
-                          Core + "mediaType",
-                          ModelDoc(ModelVocabularies.Core, "mediaType", "Media types returned by a API response"))
+  val ContentType: Field = Field(
+    Array(Str),
+    Core + "mediaType",
+    ModelDoc(ModelVocabularies.Core, "mediaType", "Media types returned by a API response")
+  )
 
   override val Request: Field = Field(
     Array(RequestModel),
     ApiContract + "expects",
-    ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation"))
+    ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation")
+  )
 
-  override val Responses: Field = Field(Array(ResponseModel),
-                        ApiContract + "returns",
-                        ModelDoc(ModelVocabularies.ApiContract, "returns", "Response data returned by the operation"))
+  override val Responses: Field = Field(
+    Array(ResponseModel),
+    ApiContract + "returns",
+    ModelDoc(ModelVocabularies.ApiContract, "returns", "Response data returned by the operation")
+  )
 
   val Security: Field = Field(
     Array(SecurityRequirementModel),
@@ -71,14 +87,18 @@ object OperationModel
     ModelDoc(ModelVocabularies.Security, "security", "Security schemes applied to an element in the API spec")
   )
 
-  val Callbacks: Field = Field(Array(CallbackModel),
-                        ApiContract + "callback",
-                        ModelDoc(ModelVocabularies.ApiContract, "callback", "Associated callbacks"))
+  val Callbacks: Field = Field(
+    Array(CallbackModel),
+    ApiContract + "callback",
+    ModelDoc(ModelVocabularies.ApiContract, "callback", "Associated callbacks")
+  )
 
   val Servers: Field =
-    Field(Array(ServerModel),
-          ApiContract + "server",
-          ModelDoc(ModelVocabularies.ApiContract, "server", "Server information"))
+    Field(
+      Array(ServerModel),
+      ApiContract + "server",
+      ModelDoc(ModelVocabularies.ApiContract, "server", "Server information")
+    )
 
   val Bindings: Field = Field(
     OperationBindingsModel,

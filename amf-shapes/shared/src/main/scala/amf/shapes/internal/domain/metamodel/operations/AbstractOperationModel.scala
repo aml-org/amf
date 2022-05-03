@@ -16,18 +16,23 @@ trait AbstractOperationModel
     with NameFieldSchema
     with DescriptionField {
 
-  val Method: Field = Field(Str,
-                            Core + "method",
-                            ModelDoc(ModelVocabularies.Core, "method", "Type of operation. It follows HTTP semantics"))
+  val Method: Field = Field(
+    Str,
+    Core + "method",
+    ModelDoc(ModelVocabularies.Core, "method", "Type of operation. It follows HTTP semantics")
+  )
 
   val Request: Field = Field(
     Array(AbstractRequestModel),
     Core + "expects",
-    ModelDoc(ModelVocabularies.Core, "expects", "Request information required by the operation"))
+    ModelDoc(ModelVocabularies.Core, "expects", "Request information required by the operation")
+  )
 
-  val Responses: Field = Field(Array(AbstractResponseModel),
+  val Responses: Field = Field(
+    Array(AbstractResponseModel),
     Core + "returns",
-    ModelDoc(ModelVocabularies.Core, "returns", "Response data returned by the operation"))
+    ModelDoc(ModelVocabularies.Core, "returns", "Response data returned by the operation")
+  )
 
   override val key: Field = Name
 
@@ -37,7 +42,7 @@ trait AbstractOperationModel
     Name,
     Description,
     Request,
-    Responses,
+    Responses
   ) ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

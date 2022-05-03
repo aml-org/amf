@@ -11,8 +11,7 @@ import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
-/**
-  * Created by pedro.colunga on 10/10/17.
+/** Created by pedro.colunga on 10/10/17.
   */
 class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSecrets {
 
@@ -28,7 +27,8 @@ class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSec
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error.raml")
+        )
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
     )
@@ -41,7 +41,8 @@ class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSec
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
+        )
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 40))))
       }
     )
@@ -54,7 +55,8 @@ class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSec
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-array.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-array.raml")
+        )
         undefined.position.map(_.range) should be(Some(Range((5, 26), (5, 39))))
       }
     )
@@ -88,8 +90,8 @@ class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSec
       .map { _ =>
         val report = eh.getResults.distinct
         if (report.size == fixture.size) {
-          fixture.zip(report).foreach {
-            case (fn, result) => fn(result)
+          fixture.zip(report).foreach { case (fn, result) =>
+            fn(result)
           }
         } else fail(s"Report and fixture sizes are different!\nActual:\n${report.map(_.toString).mkString("\n")}")
         Succeeded

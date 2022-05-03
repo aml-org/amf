@@ -59,68 +59,68 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     ShapesRegister.register(platform)
 
     // Api (document)
-    platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) {
-      case s: AnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(s)
+    platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) { case s: AnnotationTypeDeclarationFragment =>
+      AnnotationTypeDeclaration(s)
     }
-    platform.registerWrapper(DataTypeFragmentModel) {
-      case s: DataTypeFragment => DataType(s)
+    platform.registerWrapper(DataTypeFragmentModel) { case s: DataTypeFragment =>
+      DataType(s)
     }
-    platform.registerWrapper(PayloadFragmentModel) {
-      case s: amf.core.client.scala.model.document.PayloadFragment => PayloadFragment(s)
+    platform.registerWrapper(PayloadFragmentModel) { case s: amf.core.client.scala.model.document.PayloadFragment =>
+      PayloadFragment(s)
     }
-    platform.registerWrapper(DocumentationItemFragmentModel) {
-      case s: DocumentationItemFragment => DocumentationItem(s)
+    platform.registerWrapper(DocumentationItemFragmentModel) { case s: DocumentationItemFragment =>
+      DocumentationItem(s)
     }
-    platform.registerWrapper(NamedExampleFragmentModel) {
-      case s: NamedExampleFragment => NamedExample(s)
+    platform.registerWrapper(NamedExampleFragmentModel) { case s: NamedExampleFragment =>
+      NamedExample(s)
     }
-    platform.registerWrapper(ResourceTypeFragmentModel) {
-      case s: document.ResourceTypeFragment => ResourceTypeFragment(s)
+    platform.registerWrapper(ResourceTypeFragmentModel) { case s: document.ResourceTypeFragment =>
+      ResourceTypeFragment(s)
     }
-    platform.registerWrapper(SecuritySchemeFragmentModel) {
-      case s: document.SecuritySchemeFragment => SecuritySchemeFragment(s)
+    platform.registerWrapper(SecuritySchemeFragmentModel) { case s: document.SecuritySchemeFragment =>
+      SecuritySchemeFragment(s)
     }
-    platform.registerWrapper(TraitFragmentModel) {
-      case s: document.TraitFragment => TraitFragment(s)
+    platform.registerWrapper(TraitFragmentModel) { case s: document.TraitFragment =>
+      TraitFragment(s)
     }
-    platform.registerWrapper(ExtensionModel) {
-      case m: document.Extension => Extension(m)
+    platform.registerWrapper(ExtensionModel) { case m: document.Extension =>
+      Extension(m)
     }
-    platform.registerWrapper(OverlayModel) {
-      case m: document.Overlay => Overlay(m)
+    platform.registerWrapper(OverlayModel) { case m: document.Overlay =>
+      Overlay(m)
     }
 
     // Api (domain)
-    platform.registerWrapper(EndPointModel) {
-      case s: domain.EndPoint => EndPoint(s)
+    platform.registerWrapper(EndPointModel) { case s: domain.EndPoint =>
+      EndPoint(s)
     }
-    platform.registerWrapper(LicenseModel) {
-      case s: domain.License => License(s)
+    platform.registerWrapper(LicenseModel) { case s: domain.License =>
+      License(s)
     }
-    platform.registerWrapper(OperationModel) {
-      case s: domain.Operation => Operation(s)
+    platform.registerWrapper(OperationModel) { case s: domain.Operation =>
+      Operation(s)
     }
-    platform.registerWrapper(OrganizationModel) {
-      case s: domain.Organization => Organization(s)
+    platform.registerWrapper(OrganizationModel) { case s: domain.Organization =>
+      Organization(s)
     }
-    platform.registerWrapper(ParameterModel) {
-      case s: domain.Parameter => Parameter(s)
+    platform.registerWrapper(ParameterModel) { case s: domain.Parameter =>
+      Parameter(s)
     }
-    platform.registerWrapper(ServerModel) {
-      case s: domain.Server => Server(s)
+    platform.registerWrapper(ServerModel) { case s: domain.Server =>
+      Server(s)
     }
-    platform.registerWrapper(CallbackModel) {
-      case s: domain.Callback => Callback(s)
+    platform.registerWrapper(CallbackModel) { case s: domain.Callback =>
+      Callback(s)
     }
-    platform.registerWrapper(EncodingModel) {
-      case s: domain.Encoding => Encoding(s)
+    platform.registerWrapper(EncodingModel) { case s: domain.Encoding =>
+      Encoding(s)
     }
     platform.registerWrapper(ParametrizedResourceTypeModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ParametrizedResourceType =>
         ParametrizedResourceType(s)
     }
-    platform.registerWrapper(TagModel) {
-      case s: domain.Tag => Tag(s)
+    platform.registerWrapper(TagModel) { case s: domain.Tag =>
+      Tag(s)
     }
     platform.registerWrapper(ParametrizedTraitModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ParametrizedTrait => ParametrizedTrait(s)
@@ -135,26 +135,26 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(SecuritySchemeModel) {
       case s: amf.apicontract.client.scala.model.domain.security.SecurityScheme => SecurityScheme(s)
     }
-    platform.registerWrapper(PayloadModel) {
-      case s: domain.Payload => Payload(s)
+    platform.registerWrapper(PayloadModel) { case s: domain.Payload =>
+      Payload(s)
     }
-    platform.registerWrapper(RequestModel) {
-      case s: domain.Request => Request(s)
+    platform.registerWrapper(RequestModel) { case s: domain.Request =>
+      Request(s)
     }
-    platform.registerWrapper(ResponseModel) {
-      case s: domain.Response => Response(s)
+    platform.registerWrapper(ResponseModel) { case s: domain.Response =>
+      Response(s)
     }
-    platform.registerWrapper(MessageModel) {
-      case s: domain.Message => new Message(s)
+    platform.registerWrapper(MessageModel) { case s: domain.Message =>
+      new Message(s)
     }
-    platform.registerWrapper(ScopeModel) {
-      case s: amf.apicontract.client.scala.model.domain.security.Scope => Scope(s)
+    platform.registerWrapper(ScopeModel) { case s: amf.apicontract.client.scala.model.domain.security.Scope =>
+      Scope(s)
     }
     platform.registerWrapper(OAuth2FlowModel) {
       case of: amf.apicontract.client.scala.model.domain.security.OAuth2Flow => OAuth2Flow(of)
     }
-    platform.registerWrapper(SettingsModel) {
-      case s: amf.apicontract.client.scala.model.domain.security.Settings => new Settings(s)
+    platform.registerWrapper(SettingsModel) { case s: amf.apicontract.client.scala.model.domain.security.Settings =>
+      new Settings(s)
     }
     platform.registerWrapper(OAuth2SettingsModel) {
       case s: amf.apicontract.client.scala.model.domain.security.OAuth2Settings => OAuth2Settings(s)
@@ -174,23 +174,23 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(HttpApiKeySettingsModel) {
       case s: amf.apicontract.client.scala.model.domain.security.HttpApiKeySettings => HttpApiKeySettings(s)
     }
-    platform.registerWrapper(WebApiModel) {
-      case s: amf.apicontract.client.scala.model.domain.api.WebApi => WebApi(s)
+    platform.registerWrapper(WebApiModel) { case s: amf.apicontract.client.scala.model.domain.api.WebApi =>
+      WebApi(s)
     }
-    platform.registerWrapper(AsyncApiModel) {
-      case s: amf.apicontract.client.scala.model.domain.api.AsyncApi => AsyncApi(s)
+    platform.registerWrapper(AsyncApiModel) { case s: amf.apicontract.client.scala.model.domain.api.AsyncApi =>
+      AsyncApi(s)
     }
-    platform.registerWrapper(TraitModel) {
-      case s: amf.apicontract.client.scala.model.domain.templates.Trait => Trait(s)
+    platform.registerWrapper(TraitModel) { case s: amf.apicontract.client.scala.model.domain.templates.Trait =>
+      Trait(s)
     }
     platform.registerWrapper(ResourceTypeModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ResourceType => ResourceType(s)
     }
-    platform.registerWrapper(TemplatedLinkModel) {
-      case s: domain.TemplatedLink => TemplatedLink(s)
+    platform.registerWrapper(TemplatedLinkModel) { case s: domain.TemplatedLink =>
+      TemplatedLink(s)
     }
-    platform.registerWrapper(CorrelationIdModel) {
-      case s: domain.CorrelationId => CorrelationId(s)
+    platform.registerWrapper(CorrelationIdModel) { case s: domain.CorrelationId =>
+      CorrelationId(s)
     }
     platform.registerWrapper(Amqp091ChannelBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelBinding => Amqp091ChannelBinding(s)

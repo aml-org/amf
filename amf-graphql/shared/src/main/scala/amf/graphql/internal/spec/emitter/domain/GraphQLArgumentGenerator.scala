@@ -8,7 +8,7 @@ case class GeneratedGraphQLArgument(documentation: Option[String], value: String
 case class GraphQLArgumentGenerator(param: Parameter, ctx: GraphQLEmitterContext) extends GraphQLEmitter {
 
   def generate(): GeneratedGraphQLArgument = {
-    val name = param.name.value()
+    val name       = param.name.value()
     val targetName = typeTarget(param.schema)
     val effetiveTargetName = if (param.required.option().getOrElse(false)) {
       targetName

@@ -6,7 +6,7 @@ import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.Node
 
-case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper  {
+case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val endpoint: EndPoint = EndPoint(toAnnotations(ast))
 
   def parse(adopt: EndPoint => Unit): EndPoint = {
@@ -17,10 +17,14 @@ case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) ext
   }
 
   def parseOptions(): Unit = {
-    collectOptions(ast, Seq(SERVICE_ELEMENT, OPTION_STATEMENT), { extension =>
-      extension.adopted(endpoint.id)
-      endpoint.withCustomDomainProperty(extension)
-    })
+    collectOptions(
+      ast,
+      Seq(SERVICE_ELEMENT, OPTION_STATEMENT),
+      { extension =>
+        extension.adopted(endpoint.id)
+        endpoint.withCustomDomainProperty(extension)
+      }
+    )
   }
 
   def parseRPCs(): Unit = {
@@ -38,7 +42,7 @@ case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) ext
         case Some(serviceName) =>
           endpoint.withName(serviceName.value)
           adopt(endpoint)
-        case None              =>
+        case None =>
           astError(endpoint.id, "missing Protobuf3 service name", endpoint.annotations)
       }
     }

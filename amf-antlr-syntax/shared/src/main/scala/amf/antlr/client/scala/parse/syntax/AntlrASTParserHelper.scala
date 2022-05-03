@@ -44,7 +44,7 @@ trait AntlrASTParserHelper {
   }
 
   def pathToTerminal(node: Node, names: Seq[String]): Option[Terminal] = {
-    path(node, names)  match {
+    path(node, names) match {
       case Some(t: Terminal) => Some(t)
       case _                 => None
     }

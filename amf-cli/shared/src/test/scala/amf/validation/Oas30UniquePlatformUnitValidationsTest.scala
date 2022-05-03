@@ -60,10 +60,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   // todo: what does this source in here?
   test("invalid query parameter schema") {
-    validate("invalid-query-parameter-schema.json",
-             Some("invalid-query-parameter-schema.report"),
-             Oas30Profile,
-             overridedHint = Some(Oas20JsonHint))
+    validate(
+      "invalid-query-parameter-schema.json",
+      Some("invalid-query-parameter-schema.report"),
+      Oas30Profile,
+      overridedHint = Some(Oas20JsonHint)
+    )
   }
 
   test("invalid ref inside paths object") {
@@ -103,9 +105,11 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Explicit timestamp invalid yaml tags") {
-    validate("explicit-timestamp-invalid-yaml-tags.yaml",
-             Some("explicit-timestamp-invalid-yaml-tags.report"),
-             Oas30Profile)
+    validate(
+      "explicit-timestamp-invalid-yaml-tags.yaml",
+      Some("explicit-timestamp-invalid-yaml-tags.report"),
+      Oas30Profile
+    )
   }
 
   test("Invalid header names according to RFC-7230") {
@@ -133,10 +137,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Unresolved value in discriminator mapping results in warning") {
-    validate("oas30-discriminator-invalid-mapping/api.yaml",
-             Some("warning-unresolved-ref.report"),
-             Oas30Profile,
-             directory = resolutionPath)
+    validate(
+      "oas30-discriminator-invalid-mapping/api.yaml",
+      Some("warning-unresolved-ref.report"),
+      Oas30Profile,
+      directory = resolutionPath
+    )
   }
 
   test("Valid oas3 with inlined ref to schema with nullable") {

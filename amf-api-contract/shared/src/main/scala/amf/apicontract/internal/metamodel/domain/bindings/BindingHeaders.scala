@@ -8,9 +8,11 @@ trait BindingHeaders {
   val Headers = Field(
     ShapeModel,
     ApiBinding + "headers",
-    ModelDoc(ModelVocabularies.ApiBinding,
-             "headers",
-             "A Schema object containing the definitions for HTTP-specific headers")
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "headers",
+      "A Schema object containing the definitions for HTTP-specific headers"
+    )
   )
 }
 

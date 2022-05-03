@@ -63,7 +63,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
   def retrieveHeader(document: BaseUnit): Option[String]
 
   def endpointEmitter
-    : (EndPoint, SpecOrdering, mutable.ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter
+      : (EndPoint, SpecOrdering, mutable.ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter
 
   def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter
 
@@ -72,7 +72,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
   val typesKey: String
 
   def typesEmitter
-    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
+      : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
 
   def namedSecurityEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlNamedSecuritySchemeEmitter
 
@@ -82,7 +82,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
     RamlTagToReferenceEmitter.apply
 
   override def parametrizedSecurityEmitter
-    : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
+      : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     RamlParametrizedSecuritySchemeEmitter.apply
 
   override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
@@ -104,23 +104,25 @@ class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
     case _: Overlay   => Some(RamlHeader.Raml10Overlay.text)
     case _: Document  => Some(RamlHeader.Raml10.text)
     case _ =>
-      spec.eh.violation(RenderValidation,
-                        document.id,
-                        None,
-                        "Document has no header.",
-                        document.position(),
-                        document.location())
+      spec.eh.violation(
+        RenderValidation,
+        document.id,
+        None,
+        "Document has no header.",
+        document.position(),
+        document.location()
+      )
       None
   }
 
   override def endpointEmitter
-    : (EndPoint, SpecOrdering, ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter =
+      : (EndPoint, SpecOrdering, ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter =
     Raml10EndPointEmitter.apply
 
   override val typesKey: String = "types"
 
   override def typesEmitter
-    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
+      : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
     Raml10TypePartEmitter.apply
 
   override def namedSecurityEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlNamedSecuritySchemeEmitter =
@@ -158,23 +160,25 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def retrieveHeader(document: BaseUnit): Option[String] = document match {
     case _: Document => Some(RamlHeader.Raml08.text)
     case _ =>
-      spec.eh.violation(RenderValidation,
-                        document.id,
-                        None,
-                        "Document has no header.",
-                        document.position(),
-                        document.location())
+      spec.eh.violation(
+        RenderValidation,
+        document.id,
+        None,
+        "Document has no header.",
+        document.position(),
+        document.location()
+      )
       None
   }
 
   override def endpointEmitter
-    : (EndPoint, SpecOrdering, ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter =
+      : (EndPoint, SpecOrdering, ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter =
     Raml08EndPointEmitter.apply
 
   override val typesKey: String = "schemas"
 
   override def typesEmitter
-    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
+      : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
     Raml08TypePartEmitter.apply
 
   override def namedSecurityEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlNamedSecuritySchemeEmitter =
@@ -247,12 +251,14 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
           Left(shapeEmitters.asInstanceOf[Seq[EntryEmitter]])
         override protected val shapeEmitters: Seq[Emitter] = Seq(new EntryEmitter {
           override def emit(b: EntryBuilder): Unit = {
-            spec.eh.violation(RenderValidation,
-                              property.id,
-                              None,
-                              s"Custom facets not supported for spec ${spec.spec}",
-                              property.position(),
-                              property.location())
+            spec.eh.violation(
+              RenderValidation,
+              property.id,
+              None,
+              s"Custom facets not supported for spec ${spec.spec}",
+              property.position(),
+              property.location()
+            )
           }
           override def position(): Position = pos(property.annotations)
         })
@@ -273,25 +279,28 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
 }
 
-class Raml10SpecEmitterContext(eh: AMFErrorHandler,
-                               refEmitter: RefEmitter = RamlRefEmitter,
-                               config: RenderConfiguration)
-    extends RamlSpecEmitterContext(eh, refEmitter, config) {
+class Raml10SpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = RamlRefEmitter,
+    config: RenderConfiguration
+) extends RamlSpecEmitterContext(eh, refEmitter, config) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val spec: Spec                         = Raml10
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
-class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
-                                refEmitter: RefEmitter = OasRefEmitter,
-                                renderConfig: RenderConfiguration)
-    extends Raml10SpecEmitterContext(eh, refEmitter, renderConfig) {
+class XRaml10SpecEmitterContext(
+    eh: AMFErrorHandler,
+    refEmitter: RefEmitter = OasRefEmitter,
+    renderConfig: RenderConfiguration
+) extends Raml10SpecEmitterContext(eh, refEmitter, renderConfig) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
-    new Oas2SpecEmitterContext(eh, refEmitter, renderConfig))
+    new Oas2SpecEmitterContext(eh, refEmitter, renderConfig)
+  )
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
@@ -304,10 +313,11 @@ class Raml08SpecEmitterContext(eh: AMFErrorHandler, renderConfig: RenderConfigur
   override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }
 
-abstract class RamlSpecEmitterContext(override val eh: AMFErrorHandler,
-                                      refEmitter: RefEmitter,
-                                      renderConfig: RenderConfiguration)
-    extends SpecEmitterContext(eh, refEmitter, renderConfig) {
+abstract class RamlSpecEmitterContext(
+    override val eh: AMFErrorHandler,
+    refEmitter: RefEmitter,
+    renderConfig: RenderConfiguration
+) extends SpecEmitterContext(eh, refEmitter, renderConfig) {
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
 

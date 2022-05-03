@@ -13,9 +13,9 @@ import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 
-case class OasEncodingsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class OasEncodingsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   private def encodings(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val result = f.array.values.map(e => OasEncodingEmitter(e.asInstanceOf[Encoding], ordering, references))
@@ -37,9 +37,9 @@ case class OasEncodingsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
 
 }
 
-case class OasEncodingEmitter(encoding: Encoding, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class OasEncodingEmitter(encoding: Encoding, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = encoding.fields
@@ -51,29 +51,29 @@ case class OasEncodingEmitter(encoding: Encoding, ordering: SpecOrdering, refere
         _.obj { b =>
           val result = mutable.ListBuffer[EntryEmitter]()
 
-          //contentType
+          // contentType
           fs.entry(EncodingModel.ContentType)
             .map(f => {
               result += ValueEmitter("contentType", f)
             })
 
-          //headers
+          // headers
           fs.entry(EncodingModel.Headers)
             .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
 
-          //style
+          // style
           fs.entry(EncodingModel.Style)
             .map(f => {
               result += ValueEmitter("style", f)
             })
 
-          //explode
+          // explode
           fs.entry(EncodingModel.Explode)
             .map(f => {
               result += ValueEmitter("explode", f)
             })
 
-          //allowReserved
+          // allowReserved
           fs.entry(EncodingModel.AllowReserved)
             .map(f => {
               result += ValueEmitter("allowReserved", f)

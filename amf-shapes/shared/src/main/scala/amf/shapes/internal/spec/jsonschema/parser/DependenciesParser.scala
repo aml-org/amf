@@ -17,11 +17,10 @@ import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model._
 
-/**
-  *
-  */
-case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(
-    implicit ctx: ShapeParserContext) {
+/** */
+case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(implicit
+    ctx: ShapeParserContext
+) {
 
   def parse(): Unit = {
 
@@ -36,18 +35,22 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
     val propertyDependencies =
       seqEntries.map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
     if (propertyDependencies.nonEmpty)
-      shape.setWithoutId(NodeShapeModel.Dependencies,
-                AmfArray(propertyDependencies, Annotations.virtual()),
-                Annotations.inferred())
+      shape.setWithoutId(
+        NodeShapeModel.Dependencies,
+        AmfArray(propertyDependencies, Annotations.virtual()),
+        Annotations.inferred()
+      )
   }
 
   private def parseSchemaDependencies(entries: Seq[YMapEntry]) = {
     val schemaDependencies =
       entries.map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
     if (schemaDependencies.nonEmpty)
-      shape.setWithoutId(NodeShapeModel.SchemaDependencies,
-                AmfArray(schemaDependencies, Annotations.virtual()),
-                Annotations.inferred())
+      shape.setWithoutId(
+        NodeShapeModel.SchemaDependencies,
+        AmfArray(schemaDependencies, Annotations.virtual()),
+        Annotations.inferred()
+      )
   }
 
   private def getEntriesOfType(tagType: YType) =
@@ -58,16 +61,19 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
 }
 
 case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(
-    implicit ctx: ShapeParserContext) {
+    implicit ctx: ShapeParserContext
+) {
   def parse(): Unit = {
     map.key("dependentSchemas").foreach { entry =>
       val schemaDependencies = entry.value
         .as[YMap]
         .entries
         .map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
-      shape.setWithoutId(NodeShapeModel.SchemaDependencies,
-                AmfArray(schemaDependencies, Annotations(entry.value)),
-                Annotations(entry))
+      shape.setWithoutId(
+        NodeShapeModel.SchemaDependencies,
+        AmfArray(schemaDependencies, Annotations(entry.value)),
+        Annotations(entry)
+      )
     }
 
     map.key("dependentRequired").foreach { entry =>
@@ -76,7 +82,11 @@ case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentI
         .entries
         .map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
       shape
-        .setWithoutId(NodeShapeModel.Dependencies, AmfArray(propertyDependencies, Annotations(entry.value)), Annotations(entry))
+        .setWithoutId(
+          NodeShapeModel.Dependencies,
+          AmfArray(propertyDependencies, Annotations(entry.value)),
+          Annotations(entry)
+        )
     }
   }
 }
@@ -101,8 +111,7 @@ case class SchemaDependencyParser(node: YNode, version: SchemaVersion)(implicit 
   }
 }
 
-case class PropertyDependencyParser(node: YNode)(implicit ctx: ShapeParserContext)
-    extends SpecializedDependencyParser {
+case class PropertyDependencyParser(node: YNode)(implicit ctx: ShapeParserContext) extends SpecializedDependencyParser {
 
   override def create(entry: YMapEntry): Dependencies = PropertyDependencies(entry)
 
@@ -117,8 +126,9 @@ case class PropertyDependencyParser(node: YNode)(implicit ctx: ShapeParserContex
   }
 }
 
-case class DependenciesParser(entry: YMapEntry, parentId: String, parser: SpecializedDependencyParser)(
-    implicit ctx: ShapeParserContext) {
+case class DependenciesParser(entry: YMapEntry, parentId: String, parser: SpecializedDependencyParser)(implicit
+    ctx: ShapeParserContext
+) {
   def parse(): Dependencies = {
     val dependency = parser.create(entry)
     dependency.setWithoutId(DependenciesModel.PropertySource, AmfScalar(dependencyKey), Annotations(entry.key))

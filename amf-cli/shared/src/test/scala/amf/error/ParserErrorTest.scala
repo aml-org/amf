@@ -20,9 +20,11 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
     validateWithUnit(file, (_: BaseUnit) => Unit, fixture)
   }
 
-  protected def validateWithUnit(file: String,
-                                 unitAssertion: BaseUnit => Unit,
-                                 fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
+  protected def validateWithUnit(
+      file: String,
+      unitAssertion: BaseUnit => Unit,
+      fixture: Seq[AMFValidationResult => Unit]
+  ): Future[Assertion] = {
     val client = APIConfiguration.API().baseUnitClient()
     client
       .parse(basePath + file)
@@ -33,8 +35,8 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
           results.foreach(println)
           fail(s"Expected results has length of ${fixture.size} while actual results are ${results.size}")
         }
-        fixture.zip(results).foreach {
-          case (fn, result) => fn(result)
+        fixture.zip(results).foreach { case (fn, result) =>
+          fn(result)
         }
         Succeeded
       }

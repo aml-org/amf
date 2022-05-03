@@ -7,16 +7,21 @@ import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.UntranslatableDraft2019Fields
 
 case class UntranslatableDraft2019FieldsPresentGuard[T <: Shape](shape: T, fields: Seq[Field], fieldNames: Seq[String])(
-    implicit spec: ShapeEmitterContext) {
+    implicit spec: ShapeEmitterContext
+) {
 
   def evaluateOrRun(toRun: () => Unit): Unit = {
     val fieldsSeq                      = shape.fields.fields().map(_.field).toSeq
     val fieldsContainsNonValidateField = fields.exists(fieldsSeq.contains)
-    if (!isDraft2019OrBigger && fieldsContainsNonValidateField && spec.options.shouldEmitWarningForUnsupportedValidationFacets)
-      spec.eh.warning(UntranslatableDraft2019Fields,
-                      shape.id,
-                      s"${fieldNamesString(fieldNames)} won't be used for validation",
-                      shape.annotations)
+    if (
+      !isDraft2019OrBigger && fieldsContainsNonValidateField && spec.options.shouldEmitWarningForUnsupportedValidationFacets
+    )
+      spec.eh.warning(
+        UntranslatableDraft2019Fields,
+        shape.id,
+        s"${fieldNamesString(fieldNames)} won't be used for validation",
+        shape.annotations
+      )
     else
       toRun()
   }

@@ -20,15 +20,17 @@ import scala.concurrent.{ExecutionContext, Future}
 class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(plugin.id) {
 
   /** Update parsed reference if needed. */
-  override def update(reference: ParsedReference, compilerContext: CompilerContext)(
-      implicit executionContext: ExecutionContext): Future[ParsedReference] = {
+  override def update(reference: ParsedReference, compilerContext: CompilerContext)(implicit
+      executionContext: ExecutionContext
+  ): Future[ParsedReference] = {
     if (reference.isExternalFragment)
       handleRamlExternalFragment(reference, compilerContext)
     else Future.successful(reference)
   }
 
-  private def handleRamlExternalFragment(reference: ParsedReference, compilerContext: CompilerContext)(
-      implicit executionContext: ExecutionContext): Future[ParsedReference] = {
+  private def handleRamlExternalFragment(reference: ParsedReference, compilerContext: CompilerContext)(implicit
+      executionContext: ExecutionContext
+  ): Future[ParsedReference] = {
     resolveUnitDocument(reference, compilerContext.parserContext) match {
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
@@ -50,9 +52,11 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
                         res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
                         mut.target = res.ast
                       case other =>
-                        compilerContext.violation(InvalidFragmentType,
-                                                  "Cannot inline a fragment in a not mutable node",
-                                                  other.location)
+                        compilerContext.violation(
+                          InvalidFragmentType,
+                          "Cannot inline a fragment in a not mutable node",
+                          other.location
+                        )
                     }
                   // not meaning, only for collect all futures, not matter the type
                   }
@@ -88,7 +92,8 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
         Right(
           YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(new SYamlAMFParserErrorHandler(ctx.eh))
             .withIncludeTag("!include")
-            .document())
+            .document()
+        )
       case e: ExternalFragment =>
         Left(e.encodes.raw.value())
       case o if hasDocumentAST(o) =>

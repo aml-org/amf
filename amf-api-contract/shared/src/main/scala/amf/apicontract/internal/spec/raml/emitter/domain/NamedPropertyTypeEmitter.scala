@@ -12,9 +12,11 @@ import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
-                                    references: Seq[BaseUnit],
-                                    ordering: SpecOrdering)(implicit val spec: RamlSpecEmitterContext)
+case class NamedPropertyTypeEmitter(
+    annotation: CustomDomainProperty,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering
+)(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter
     with PartEmitter {
 
@@ -24,12 +26,14 @@ case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
     val name = annotation.name.option() match {
       case Some(n) => n
       case _ =>
-        spec.eh.violation(TransformationValidation,
-                          annotation.id,
-                          None,
-                          s"Annotation type without name $annotation",
-                          annotation.position(),
-                          annotation.location())
+        spec.eh.violation(
+          TransformationValidation,
+          annotation.id,
+          None,
+          s"Annotation type without name $annotation",
+          annotation.position(),
+          annotation.location()
+        )
         "default-name"
     }
     b.entry(name, b => emit(b))

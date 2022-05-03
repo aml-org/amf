@@ -20,10 +20,11 @@ import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 
-abstract class SpecEmitterContext(val eh: AMFErrorHandler,
-                                  private val refEmitter: RefEmitter,
-                                  val renderConfig: RenderConfiguration)
-    extends DeclarationEmissionDecorator {
+abstract class SpecEmitterContext(
+    val eh: AMFErrorHandler,
+    private val refEmitter: RefEmitter,
+    val renderConfig: RenderConfiguration
+) extends DeclarationEmissionDecorator {
 
   val options: RenderOptions = renderConfig.renderOptions
 
