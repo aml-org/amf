@@ -1,7 +1,7 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSGlobal, JSImport}
+import scala.scalajs.js.annotation.JSImport
 
 object Draft4MetaSchema {
   val text =
