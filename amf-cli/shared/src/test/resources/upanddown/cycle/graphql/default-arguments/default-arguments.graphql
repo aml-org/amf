@@ -1,0 +1,50 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name(
+        testDefaultString: String = "Darth Vader",
+        testDefaultInt: Int = 7,
+        testDefaultFloat: Float = 6.9,
+        testDefaultBoolean: Boolean = false,
+        testDefaultID: ID = 123,
+        testDefaultEnum: Letter = A,
+    ): String
+}
+
+type Spaceship {
+    name(
+        testDefaultString: String = "Darth Vader",
+        testDefaultInt: Int = 7,
+        testDefaultFloat: Float = 6.9,
+        testDefaultBoolean: Boolean = false,
+        testDefaultID: ID = 123,
+        testDefaultEnum: Letter = A,
+    ): String
+}
+
+interface SpaceshipInterface {
+    name(
+        testDefaultString: String = "Darth Vader",
+        testDefaultInt: Int = 7,
+        testDefaultFloat: Float = 6.9,
+        testDefaultBoolean: Boolean = false,
+        testDefaultID: ID = 123,
+        testDefaultEnum: Letter = A,
+    ): String
+}
+
+enum Letter {
+    A
+    B
+}
+
+directive @MyDirective(
+    testDefaultString: String = "Darth Vader",
+    testDefaultInt: Int = 7,
+    testDefaultFloat: Float = 6.9,
+    testDefaultBoolean: Boolean = false,
+    testDefaultID: ID = 123,
+    testDefaultEnum: Letter = A,
+) on SCHEMA

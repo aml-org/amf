@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import amf.graphql.internal.spec.parser.syntax.{DefaultValueParser, GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
@@ -15,7 +15,7 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
 
-  val rootTypeName = findName(ast, "AnonymousType", "", "Missing name for root type")
+  val rootTypeName: String = findName(ast, "AnonymousType", "", "Missing name for root type")
 
   def parse(adopt: EndPoint => Unit): Seq[EndPoint] = {
     parseFields(ast, adopt)
@@ -39,7 +39,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     val endPoint: EndPoint = EndPoint(toAnnotations(f))
     val fieldName          = findName(f, "AnonymousField", "", "Missing name for root type field")
     val endpointPath       = path(fieldName)
-    endPoint.withPath(endpointPath).withName(s"${rootTypeName}.${fieldName}")
+    endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName")
     adopt(endPoint)
     findDescription(f).foreach { description =>
       endPoint.withDescription(cleanDocumentation(description.value))
@@ -49,7 +49,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
   }
 
   def parseOperation(f: Node, endPoint: EndPoint, fieldName: String): Unit = {
-    val operationId = s"${rootTypeName}.${fieldName}"
+    val operationId = s"$rootTypeName.$fieldName"
 
     val method = queryType match {
       case RootTypes.Query        => "query"
@@ -72,13 +72,15 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
       unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
         case NullableShape(true, shape) =>
-          queryParam.withSchema(shape).withRequired(false)
+          val schema = DefaultValueParser.putDefaultValue(ast, shape)
+          queryParam.withSchema(schema).withRequired(false)
         case NullableShape(false, shape) =>
-          queryParam.withSchema(shape).withRequired(true)
+          val schema = DefaultValueParser.putDefaultValue(ast, shape)
+          queryParam.withSchema(schema).withRequired(true)
       }
     }
 
-    val payload = op.withResponse("default").withPayload()
+    val payload = op.withResponse().withPayload()
     payload.withSchema(parseType(f, payload.id))
   }
 }
