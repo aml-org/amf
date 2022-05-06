@@ -44,4 +44,30 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     cycle("keyword-names/api.graphql", "keyword-names/api.jsonld", GraphQLHint, AmfJsonHint)
   }
 
+  test("Can parse root type API") {
+    cycle("root-type/root-type.graphql", "root-type/root-type.jsonld", GraphQLHint, AmfJsonHint)
+  }
+
+  test("Can parse non root type API") {
+    cycle("root-type/non-root-type.graphql", "root-type/non-root-type.jsonld", GraphQLHint, AmfJsonHint)
+  }
+
+  test("Can parse arguments with default values") {
+    cycle(
+      "default-arguments/default-arguments.graphql",
+      "default-arguments/default-arguments.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
+  test("Can parse arguments with incorrect default values") {
+    cycle(
+      "default-arguments/invalid-default-arguments.graphql",
+      "default-arguments/invalid-default-arguments.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
 }

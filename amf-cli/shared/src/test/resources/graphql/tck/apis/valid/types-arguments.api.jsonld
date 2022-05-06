@@ -362,6 +362,26 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ],
+                        "http://www.w3.org/ns/shacl#defaultValue": [
+                          {
+                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "false"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
