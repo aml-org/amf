@@ -13,11 +13,11 @@ nodeMappings:
         pattern: ^[A-Za-z]*$
         mandatory: false
       info_1:
-        range: integer
+        range: long
         propertyTerm: semantics.info_1_1
         mandatory: true
       info_2:
-        range: integer
+        range: long
         propertyTerm: semantics.info_2_2
         mandatory: false
     additionalProperties: true

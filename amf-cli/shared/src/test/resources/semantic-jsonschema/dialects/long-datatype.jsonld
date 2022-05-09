@@ -91,37 +91,18 @@
       "core:name": "Something",
       "shacl:property": [
         {
-          "@id": "/property/property/arrayProperty"
-        },
-        {
-          "@id": "/property/property/otherProperty"
+          "@id": "/property/property/bigNumberProp"
         }
       ],
       "shacl:closed": false
     },
     {
-      "@id": "/property/property/arrayProperty",
+      "@id": "/property/property/bigNumberProp",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "arrayProperty",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:minCount": 0,
-      "meta:allowMultiple": true,
-      "shacl:mandatory": true
-    },
-    {
-      "@id": "/property/property/otherProperty",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "otherProperty",
+      "core:name": "bigNumberProp",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#long"
@@ -131,7 +112,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/mandatory-array-property.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/long-datatype.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
