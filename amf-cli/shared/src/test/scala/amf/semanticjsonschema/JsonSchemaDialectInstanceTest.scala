@@ -52,6 +52,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
     instanceValidation("number-range-to-double")
   }
   instanceValidation("mandatory-array-property")
+  instanceValidation("long-datatype")
 
   private def instanceValidation(schemaName: String, instanceName: Option[String] = None): Unit = {
     val instanceFinal = instanceName.getOrElse(schemaName)
