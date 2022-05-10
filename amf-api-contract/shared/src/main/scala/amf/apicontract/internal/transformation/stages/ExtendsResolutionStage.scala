@@ -170,7 +170,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       val resolver = TraitTransformer()
 
       // Iterate operations and resolve extends with inherited traits.
-      val traitList = endpoint.operations.flatMap { operation =>
+      val traitList = endpoint.operations.toList.flatMap { operation =>
         val local = context.add("methodName", operation.method.value())
 
         val branches = ListBuffer[BranchContainer]()
@@ -212,7 +212,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       extendsContext.futureDeclarations.resolve()
       if (resourceTypes.nonEmpty || traitList.nonEmpty)
         new ReferenceResolutionStage(keepEditingInfo)
-          .resolveDomainElement(endpoint, errorHandler, configuration) // TODO revise why this is not working
+          .resolveDomainElement(endpoint, errorHandler, configuration)
       else
         endpoint
     }

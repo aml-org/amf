@@ -43,5 +43,17 @@ class ExtensionResolutionTest extends ResolutionTest {
     cycle("input.raml", "output.raml", Raml10YamlHint, target = Raml10YamlHint, directory = s"${basePath}example/")
   }
 
+  multiGoldenTest("Trait should be applied to all operations that inherit from it", "output.%s") { config =>
+    cycle(
+      "extension.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = s"${basePath}operation/",
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
+  }
+
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }
