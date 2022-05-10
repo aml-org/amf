@@ -1,0 +1,17 @@
+#%RAML 1.0 Extension
+extends: api.raml
+
+title: My Dev API
+baseUri: http://localhost
+protocols: [ HTTP, HTTPS ]
+
+traits:
+  customHeaders:
+    headers:
+      X-My-Custom-Header:
+
+/types:
+  get:
+    is: [customHeaders]
+  post:
+    is: [customHeaders]
