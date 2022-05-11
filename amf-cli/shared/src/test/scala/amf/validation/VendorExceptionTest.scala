@@ -10,19 +10,19 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-// This suite is to test that AMF throws an UnsupportedMediaTypeException when the master API is an empty file
+// This suite is to test that AMF throws an UnsupportedMediaTypeException when the main API is an empty file
 class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
 
   val basePath                                             = "file://amf-cli/shared/src/test/resources/validations/"
   implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
-  test("Empty RAML master API file to test spec exception") {
+  test("Empty RAML main API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(basePath + "/empty-raml.raml", OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
     }
   }
 
-  test("Empty OAS json master API file to test spec exception") {
+  test("Empty OAS json main API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(
         basePath + "/empty-oas.json",
@@ -31,7 +31,7 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Empty OAS yaml master API file to test spec exception") {
+  test("Empty OAS yaml main API file to test spec exception") {
     recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(
         basePath + "/empty-oas.yaml",

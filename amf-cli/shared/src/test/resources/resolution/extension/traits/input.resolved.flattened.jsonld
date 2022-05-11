@@ -36,7 +36,7 @@
         "apiContract:EndPoint",
         "doc:DomainElement"
       ],
-      "apiContract:path": "/master",
+      "apiContract:path": "/main",
       "apiContract:supportedOperation": [
         {
           "@id": "#14"
@@ -62,7 +62,7 @@
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
-      "core:description": "Master description",
+      "core:description": "main description",
       "doc:extends": [
         {
           "@id": "#15"
@@ -81,14 +81,14 @@
         "doc:ParametrizedDeclaration",
         "doc:DomainElement"
       ],
-      "core:name": "master",
+      "core:name": "main",
       "doc:target": {
         "@id": "#1"
       },
       "smaps": {
         "lexical": {
-          "core:name": "[(9,7)-(9,13)]",
-          "#13": "[(9,7)-(9,13)]"
+          "core:name": "[(9,7)-(9,11)]",
+          "#13": "[(9,7)-(9,11)]"
         }
       }
     },
@@ -117,7 +117,7 @@
         "doc:AbstractDeclaration",
         "doc:DomainElement"
       ],
-      "core:name": "master",
+      "core:name": "main",
       "doc:dataNode": {
         "@id": "#2"
       },
@@ -131,7 +131,7 @@
         "lexical": {
           "doc:dataNode": "[(6,4)-(8,0)]",
           "#1": "[(5,2)-(8,0)]",
-          "core:name": "[(5,2)-(5,8)]"
+          "core:name": "[(5,2)-(5,6)]"
         },
         "resolved-link": {
           "#1": "amf://id#4"
@@ -215,7 +215,7 @@
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:value": "Master description",
+      "data:value": "main description",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -227,7 +227,7 @@
           "core:name": "true"
         },
         "lexical": {
-          "#3": "[(6,17)-(6,35)]"
+          "#3": "[(6,17)-(6,33)]"
         }
       }
     },

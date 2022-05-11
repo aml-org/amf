@@ -2,7 +2,6 @@ package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Oas20TransformationPipeline
-import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -45,7 +44,7 @@ class OASProductionResolutionTest extends ResolutionTest {
 
   multiGoldenTest("OAS with external fragment reference in upper folder", "api.resolved.%s") { config =>
     cycle(
-      "master/master.json",
+      "main/main.json",
       config.golden,
       Oas20JsonHint,
       target = AmfJsonHint,

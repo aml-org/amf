@@ -1,5 +1,5 @@
 #%RAML 1.0 Extension
-extends: master.raml
+extends: main.raml
 title: overlay
 description: some overlaid description
 
@@ -7,6 +7,6 @@ traits:
   secondary:
     description: secondary description
 # THIS IS THE PROBLEM!!!!
-/master:
+/main:
   get:
     is: [secondary]
