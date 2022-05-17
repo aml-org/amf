@@ -27,30 +27,30 @@ class ExtensionDomainElementMerge(
 )(implicit val errorHandler: AMFErrorHandler)
     extends InnerAdoption {
 
-  def merge(master: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {
-    val ids = master.id :: overlay.id :: Nil
+  def merge(main: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {
+    val ids = main.id :: overlay.id :: Nil
     if (idTracker.notTracking(ids)) {
       idTracker.track(ids)
-      cleanSynthesizedFacets(master)
+      cleanSynthesizedFacets(main)
       preMergeTransform
-        .transform(master, overlay)
+        .transform(main, overlay)
         .fields
         .fields()
-        .filter(f => ignored(f, master))
-        .foreach(mergeField(_, master, overlay, idTracker))
+        .filter(f => ignored(f, main))
+        .foreach(mergeField(_, main, overlay, idTracker))
     }
-    master
+    main
   }
 
   private def mergeField(
       entry: FieldEntry,
-      master: DomainElement,
+      main: DomainElement,
       overlay: DomainElement,
       idTracker: IdTracker
   ): Unit = {
     val FieldEntry(field, value) = entry
-    master.fields.entry(field) match {
-      case None if restrictions allowsNodeInsertionIn field                  => insertNode(master, idTracker, entry)
+    main.fields.entry(field) match {
+      case None if restrictions allowsNodeInsertionIn field                  => insertNode(main, idTracker, entry)
       case None if field == ScalarShapeModel.DataType && value.isSynthesized => skipNode()
       // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
       // Nothing to do
@@ -59,18 +59,18 @@ class ExtensionDomainElementMerge(
       case Some(existing) if restrictions allowsOverride field =>
         field.`type` match {
           case _: Type.Scalar =>
-            master.set(field, entry.element)
+            main.set(field, entry.element)
           case Type.ArrayLike(element) =>
-            mergeArrays(master, field, element, existing.array, entry.array)
+            mergeArrays(main, field, element, existing.array, entry.array)
           case DataNodeModel =>
             mergeDataNode(
-              master,
+              main,
               field,
               existing.element.asInstanceOf[DomainElement],
               entry.element.asInstanceOf[DomainElement]
             )
           case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
-            master
+            main
               .set(field, entry.domainElement)
           case _: DomainElementModel =>
             merge(existing.domainElement, entry.domainElement, idTracker)
@@ -87,17 +87,17 @@ class ExtensionDomainElementMerge(
           errorHandler.violation(
             TransformationValidation,
             field.toString,
-            s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+            s"Property '${existing.field.toString}' in '${main.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
             value.annotations
           )
     }
 
   }
 
-  private def insertNode(master: DomainElement, idTracker: IdTracker, entry: FieldEntry): Unit = {
+  private def insertNode(main: DomainElement, idTracker: IdTracker, entry: FieldEntry): Unit = {
     val FieldEntry(field, value) = entry
-    val newValue                 = adoptInner(master.id, value.value, idTracker)
-    master.set(field, newValue)
+    val newValue                 = adoptInner(main.id, value.value, idTracker)
+    main.set(field, newValue)
   }
 
   private def skipNode(): Unit = Unit
@@ -123,23 +123,23 @@ class ExtensionDomainElementMerge(
   }
   private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
-  private def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean =
-    existing.value.toString == master.value.toString
+  private def isSameValue(existing: FieldEntry, main: FieldEntry): Boolean =
+    existing.value.toString == main.value.toString
 
   private def cleanSynthesizedFacets(domain: DomainElement): Unit = domain match {
     case shape: Shape => shape.annotations.reject(_.isInstanceOf[SynthesizedField])
     case _            => // ignore
   }
 
-  private def incompatibleType(master: DomainElement, overlay: DomainElement): Boolean = (master, overlay) match {
-    case (_: Shape, _: Shape) => !areSameType(master, overlay)
+  private def incompatibleType(main: DomainElement, overlay: DomainElement): Boolean = (main, overlay) match {
+    case (_: Shape, _: Shape) => !areSameType(main, overlay)
     case _                    => false
   }
 
-  private def areSameType(master: DomainElement, overlay: DomainElement) = master.getClass == overlay.getClass
+  private def areSameType(main: DomainElement, overlay: DomainElement) = main.getClass == overlay.getClass
 
   private def mergeDataNode(
-      master: DomainElement,
+      main: DomainElement,
       field: Field,
       existing: DomainElement,
       overlay: DomainElement
@@ -148,7 +148,7 @@ class ExtensionDomainElementMerge(
       case (e: DataNode, o: DataNode) if areSameType(existing, overlay) => DataNodeMerging.merge(e, o)
       case _                                                            =>
         // Different types of nodes means the overlay has redefined this extension, so replace it
-        master.set(field, overlay)
+        main.set(field, overlay)
     }
   }
 
@@ -183,14 +183,14 @@ class ExtensionDomainElementMerge(
       target: DomainElement,
       field: Field,
       key: KeyField,
-      master: AmfArray,
+      main: AmfArray,
       extension: AmfArray
   ): Unit = {
 
     val asSimpleProperty                          = isSimpleProperty(key)
-    var existingElements: Map[Any, DomainElement] = buildElementByKeyMap(key, master)
+    var existingElements: Map[Any, DomainElement] = buildElementByKeyMap(key, main)
     // if we have multiple elements with null key we merge by meta Obj
-    var existingNullKeyElements: Map[Obj, DomainElement] = findElementsWithNullKey(key, master)
+    var existingNullKeyElements: Map[Obj, DomainElement] = findElementsWithNullKey(key, main)
 
     extension.values.foreach { case obj: DomainElement =>
       val tracker = IdTracker()
@@ -221,15 +221,15 @@ class ExtensionDomainElementMerge(
     key == ExampleModel || key == DomainExtensionModel || key == ParametrizedTraitModel || key == ParametrizedSecuritySchemeModel
   }
 
-  private def findElementsWithNullKey(key: KeyField, master: AmfArray): Map[Obj, DomainElement] = {
-    master.values.iterator
+  private def findElementsWithNullKey(key: KeyField, main: AmfArray): Map[Obj, DomainElement] = {
+    main.values.iterator
       .map(_.asInstanceOf[DomainElement])
       .filter(_.fields.entry(key.key).isEmpty)
       .map(e => e.meta -> e) toMap
   }
 
-  private def buildElementByKeyMap(key: KeyField, master: AmfArray) =
-    master.values
+  private def buildElementByKeyMap(key: KeyField, main: AmfArray) =
+    main.values
       .map(_.asInstanceOf[DomainElement])
       .flatMap { element =>
         element.fields.entry(key.key).map(_.scalar.value -> element)
