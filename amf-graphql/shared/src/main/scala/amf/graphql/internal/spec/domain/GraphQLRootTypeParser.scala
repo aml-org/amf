@@ -10,6 +10,7 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   FIELD_DEFINITION,
   INPUT_VALUE_DEFINITION
 }
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
@@ -80,7 +81,9 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
       }
     }
 
-    val payload = op.withResponse().withPayload()
-    payload.withSchema(parseType(f, payload.id))
+    val payload                 = op.withResponse().withPayload()
+    val adopt: AnyShape => Unit = (shape: AnyShape) => shape.adopted(payload.id)
+    val shape = parseType(f, payload.id, adopt)
+    payload.withSchema(shape)
   }
 }
