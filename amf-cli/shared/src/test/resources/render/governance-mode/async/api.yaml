@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: Example
+  version: 1.0.0
+
+channels:
+  user/signedup:
+    subscribe:
+      operationId: subscribe operation
+      message:
+        payload:
+          type: string
+
+components:
+  schemas:
+    Schema:
+      type: object
+      properties:
+        name:
+          type: string
