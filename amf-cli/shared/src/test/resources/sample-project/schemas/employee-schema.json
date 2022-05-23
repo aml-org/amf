@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "employeeId": {
+              "example": "1111111111",
+							"maxLength": 10
+            },
+            "employeeType": {
+              "type": ["string", "null"],
+							"enum": ["Temporary", "Permenant"]
+            }
+          },
+          "required": [
+            "employeeId",
+            "employeeType"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "employee"
+  ]
+}
