@@ -1,0 +1,12 @@
+schema {
+    query: Query
+}
+
+type Query {
+    fragment: String
+    another: Another
+}
+
+type Another {
+    fragment: String!
+}
