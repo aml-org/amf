@@ -70,4 +70,13 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
+  test("Can parse API with root level non-optional arrays") {
+    cycle(
+      "non-root-optional-array/api.graphql",
+      "non-root-optional-array/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
 }

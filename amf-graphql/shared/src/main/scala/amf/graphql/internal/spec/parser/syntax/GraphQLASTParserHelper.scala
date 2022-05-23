@@ -14,6 +14,8 @@ import scala.collection.mutable
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
+  type Adopt = AnyShape => Unit
+  private val defaultAdopt: Adopt = () => _
 
   def unpackNilUnion(shape: AnyShape): NullableShape = {
     shape match {
@@ -67,19 +69,25 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def searchName(n: Node): Option[String] = pathToTerminal(n, Seq(NAME, NAME_TERMINAL)).map(_.value)
 
   // GraphQL specific helpers
-  def parseType(n: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def parseType(n: Node, errorId: String, adopt: Adopt = defaultAdopt)(implicit ctx: GraphQLWebApiContext): AnyShape = {
     path(n, Seq(TYPE_)) match {
       case Some(t: Node) =>
-        if (isScalarType(t)) parseScalarType(t, errorId)
-        else if (isListType(t)) parseListType(t, errorId)
-        else if (isNamedType(t)) parseObjectType(t, errorId)
-        else {
-          astError(errorId, "Unknown input type syntax", toAnnotations(n))
-          AnyShape(toAnnotations(n))
+        val shape = {
+          if (isScalarType(t)) parseScalarType(t, errorId, adopt)
+          else if (isListType(t)) parseListType(t, errorId, adopt)
+          else if (isNamedType(t)) parseObjectType(t, errorId, adopt)
+          else {
+            astError(errorId, "Unknown input type syntax", toAnnotations(n))
+            AnyShape(toAnnotations(n))
+          }
         }
+        adopt(shape)
+        shape
       case _ =>
         astError(errorId, "Unknown input type syntax", toAnnotations(n))
-        AnyShape(toAnnotations(n))
+        val shape = AnyShape(toAnnotations(n))
+        adopt(shape)
+        shape
     }
   }
 
@@ -107,54 +115,51 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def isListType(n: Node): Boolean = path(n, Seq(LIST_TYPE)).isDefined
 
-  def parseScalarType(t: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
-    maybeNullable(
-      t,
-      errorId,
-      (t, typeName) => {
-        val scalar = ScalarShape(toAnnotations(t))
-        typeName match {
-          case INT     => scalar.withDataType(XsdTypes.xsdInteger.iri())
-          case FLOAT   => scalar.withDataType(XsdTypes.xsdFloat.iri())
-          case STRING  => scalar.withDataType(XsdTypes.xsdString.iri())
-          case BOOLEAN => scalar.withDataType(XsdTypes.xsdBoolean.iri())
-          case ID =>
-            scalar.withDataType(XsdTypes.xsdString.iri())
-            scalar.withFormat("ID")
-          case _ =>
-            astError(errorId, s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
-        }
-        scalar
+  def parseScalarType(t: Node, errorId: String, adopt: Adopt = defaultAdopt)(implicit
+      ctx: GraphQLWebApiContext
+  ): AnyShape = {
+    val parseFn: (Node, String) => AnyShape = (t, typeName) => {
+      val scalar = ScalarShape(toAnnotations(t))
+      typeName match {
+        case INT     => scalar.withDataType(XsdTypes.xsdInteger.iri())
+        case FLOAT   => scalar.withDataType(XsdTypes.xsdFloat.iri())
+        case STRING  => scalar.withDataType(XsdTypes.xsdString.iri())
+        case BOOLEAN => scalar.withDataType(XsdTypes.xsdBoolean.iri())
+        case ID =>
+          scalar.withDataType(XsdTypes.xsdString.iri())
+          scalar.withFormat("ID")
+        case _ =>
+          astError(errorId, s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
       }
-    )
+      scalar
+    }
+    maybeNullable(t, errorId, parseFn, adopt)
   }
 
-  def parseListType(t: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
-    maybeNamedNullable(
-      t,
-      "",
-      (t, _) => {
-        val array = ArrayShape(toAnnotations(t))
-        path(t, Seq(LIST_TYPE)) match {
-          case Some(n: Node) =>
-            val range = parseType(n, errorId)
-            array.withItems(range)
-          case _ =>
-            astError(errorId, s"Unknown listType range", toAnnotations(t))
-        }
-        array
+  def parseListType(t: Node, errorId: String, adopt: Adopt = defaultAdopt)(implicit
+      ctx: GraphQLWebApiContext
+  ): AnyShape = {
+    val parseFn: (Node, String) => AnyShape = (t, _) => {
+      val array = ArrayShape(toAnnotations(t))
+      path(t, Seq(LIST_TYPE)) match {
+        case Some(n: Node) =>
+          val range = parseType(n, errorId)
+          array.withItems(range)
+        case _ =>
+          astError(errorId, s"Unknown listType range", toAnnotations(t))
       }
-    )
+      array
+    }
+    maybeNamedNullable(t, "", parseFn, adopt)
   }
 
-  def parseObjectType(t: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
-    maybeNullable(
-      t,
-      errorId,
-      (t, typeName) => {
-        findOrLinkType(typeName, t)
-      }
-    )
+  def parseObjectType(t: Node, errorId: String, adopt: Adopt = defaultAdopt)(implicit
+      ctx: GraphQLWebApiContext
+  ): AnyShape = {
+    val parseFn: (Node, String) => AnyShape = (t, typeName) => {
+      findOrLinkType(typeName, t)
+    }
+    maybeNullable(t, errorId, parseFn, adopt)
   }
 
   def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
@@ -171,17 +176,18 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def maybeNullable(t: Node, errorId: String, parse: (Node, String) => AnyShape)(implicit
+  def maybeNullable(t: Node, errorId: String, parse: (Node, String) => AnyShape, adopt: Adopt = defaultAdopt)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
     val typeName = findName(t, "UnknownType", errorId, "Cannot find type name")
-    maybeNamedNullable(t, typeName, parse)
+    maybeNamedNullable(t, typeName, parse, adopt)
   }
 
-  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(implicit
-      ctx: GraphQLWebApiContext
+  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape, adopt: Adopt = defaultAdopt)(
+      implicit ctx: GraphQLWebApiContext
   ): AnyShape = {
     val shape = parse(t, typeName)
+    adopt(shape)
     if (isNullable(t)) {
       UnionShape()
         .withId(shape.id + "/nullwrapper")
