@@ -1,0 +1,29 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Example.com
+paths:
+  /echo:
+    post:
+      requestBody:
+        $ref: "#/components/requestBodies/myReqBody"
+      responses:
+        '200':
+          description: Ok
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+  requestBodies:
+    myReqBody:
+      description: Accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: "202"
