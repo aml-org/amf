@@ -4,13 +4,13 @@ import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFa
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
-import amf.core.internal.annotations.{LexicalInformation, SourceAST}
 import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
@@ -76,12 +76,15 @@ object AnnotationParser {
       semanticParser: Option[SemanticExtensionsFacade]
   )(implicit ctx: ErrorHandlingContext): Option[DomainExtension] = {
     semanticParser.flatMap { parser =>
-      val nextCtx = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
-      parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
+      val nextCtx        = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
+      val maybeExtension = parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
+      // Inject and anyShape inside the SemEx to avoid validation of annotationType definition
+      maybeExtension.foreach(_.definedBy.withSchema(AnyShape()))
+      maybeExtension
     }
   }
 
-  private def entryKey(entry: YMapEntry) = {
+  private def entryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
 }
