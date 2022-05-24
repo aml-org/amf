@@ -92,6 +92,17 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
     }
   }
 
+  test("Validate valid multiple SemEx in the same branch at a RAML 1.0") {
+    getConfig("../dialect-endpoint-operation.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
+      validate(
+        "../api-endpoint-operation.raml",
+        None,
+        overridedHint = Some(Raml10YamlHint),
+        configOverride = Some(config)
+      )
+    }
+  }
+
   private def getConfig(
       dialect: String,
       baseConfig: AMFConfiguration = APIConfiguration.API()

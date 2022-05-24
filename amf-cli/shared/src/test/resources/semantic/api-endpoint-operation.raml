@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Something
+
+annotationTypes:
+  pagination: any
+
+/sample:
+  (pagination):
+    pageSize: 15
+  get:
+    (pagination):
+      pageSize: 10
+    responses:
+      200:
+        description: A Response
