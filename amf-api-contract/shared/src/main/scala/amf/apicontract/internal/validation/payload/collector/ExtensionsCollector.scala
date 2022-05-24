@@ -1,5 +1,6 @@
 package amf.apicontract.internal.validation.payload.collector
 
+import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
@@ -23,7 +24,7 @@ object ExtensionsCollector extends ValidationCandidateCollector {
     element match {
       case extension: DomainExtension if Option(extension.definedBy).exists(definition => {
             Option(definition.schema).isDefined && resolveAnnotation(s"(${definition.name.value()})").isDefined
-          }) =>
+          }) && !isSemanticExtension(extension) =>
         Seq(extension)
       case shapeExtension: ShapeExtension
           if Option(shapeExtension.definedBy).isDefined && Option(shapeExtension.obtainSchema).isDefined =>
@@ -35,4 +36,8 @@ object ExtensionsCollector extends ValidationCandidateCollector {
           }
       case _ => Nil
     }
+
+  // If it is a SemEx I don't want to validate the candidates
+  private def isSemanticExtension(extension: DomainExtension) =
+    extension.fields.fields().exists(_.value.value.isInstanceOf[DialectDomainElement])
 }
