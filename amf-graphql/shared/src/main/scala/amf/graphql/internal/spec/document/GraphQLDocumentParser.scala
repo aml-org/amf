@@ -24,6 +24,9 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   var SUBSCRIPTION_TYPE = "Subscription"
   var MUTATION_TYPE     = "Mutation"
 
+  val typeSystemDefinitionPath: Seq[String] = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION)
+  val typeDefinitionPath: Seq[String]       = typeSystemDefinitionPath :+ TYPE_DEFINITION
+
   val doc: Document          = Document()
   private def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
@@ -93,7 +96,14 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   private def processTypes(node: Node): Unit = {
-    this.collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, SCHEMA_DEFINITION)).toList match {
+    // let's parse directive declarations first of all, because anything can have a directive applied to it
+    this
+      .collect(node, typeSystemDefinitionPath :+ DIRECTIVE_DEFINITION) foreach { case directiveDef: Node =>
+      parseDirectiveDeclaration(directiveDef)
+    }
+
+    // look for schema definition
+    this.collect(node, typeSystemDefinitionPath :+ SCHEMA_DEFINITION).toList match {
       case head :: Nil => parseSchemaNode(head)
       case _           => // ignore TODO violation
     }
@@ -102,56 +112,43 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     this
       .collect(
         node,
-        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)
+        typeDefinitionPath :+ OBJECT_TYPE_DEFINITION
       ) foreach { case objTypeDef: Node =>
       searchName(objTypeDef) match {
-        case Some(query) if query == QUERY_TYPE => parseTopLevelType(objTypeDef, RootTypes.Query)
-        case Some(subscription) if subscription == SUBSCRIPTION_TYPE =>
-          parseTopLevelType(objTypeDef, RootTypes.Subscription)
-        case Some(mutation) if mutation == MUTATION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Mutation)
-        case _                                           => parseNestedType(objTypeDef)
+        case Some(typeName) =>
+          val rootTypeOption = getRootType(typeName)
+          if (rootTypeOption.isDefined) parseTopLevelType(objTypeDef, rootTypeOption.get)
+          else parseNestedType(objTypeDef)
+        case _ => parseNestedType(objTypeDef)
       }
     }
 
     // let's parse input types
     this
-      .collect(
-        node,
-        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INPUT_OBJECT_TYPE_DEFINITION)
-      ) foreach { case objTypeDef: Node =>
+      .collect(node, typeDefinitionPath :+ INPUT_OBJECT_TYPE_DEFINITION) foreach { case objTypeDef: Node =>
       parseInputType(objTypeDef)
     }
     // let's parse interfaces
     this
-      .collect(
-        node,
-        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INTERFACE_TYPE_DEFINITION)
-      ) foreach { case objTypeDef: Node =>
+      .collect(node, typeDefinitionPath :+ INTERFACE_TYPE_DEFINITION) foreach { case objTypeDef: Node =>
       parseInterfaceType(objTypeDef)
     }
 
     // let's parse unions
     this
-      .collect(
-        node,
-        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, UNION_TYPE_DEFINITION)
-      ) foreach { case unionTypeDef: Node =>
+      .collect(node, typeDefinitionPath :+ UNION_TYPE_DEFINITION) foreach { case unionTypeDef: Node =>
       parseUnionType(unionTypeDef)
     }
 
     // let's parse enums
     this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, ENUM_TYPE_DEFINITION)) foreach {
-      case enumTypeDef: Node =>
-        parseEnumType(enumTypeDef)
+      .collect(node, typeDefinitionPath :+ ENUM_TYPE_DEFINITION) foreach { case enumTypeDef: Node =>
+      parseEnumType(enumTypeDef)
     }
 
     // let's parse custom scalars
     this
-      .collect(
-        node,
-        Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, SCALAR_TYPE_DEFINITION)
-      ) foreach { case customScalarTypeDef: Node =>
+      .collect(node, typeDefinitionPath :+ SCALAR_TYPE_DEFINITION) foreach { case customScalarTypeDef: Node =>
       parseCustomScalarTypeDef(customScalarTypeDef)
     }
 
@@ -171,6 +168,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   private def parseSchemaNode(schemaNode: ASTElement): Unit = {
+    GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse(webapi.id)
     findDescription(schemaNode) match {
       case Some(terminal: Terminal) => // the description of the schema is set at the API level
         webapi.set(WebApiModel.Description, cleanDocumentation(terminal.value), toAnnotations(terminal))
@@ -224,7 +222,16 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     GraphQLRootTypeParser(objTypeDef, queryType).parse { ep: EndPoint =>
       ep.adopted(webapi.id)
       val oldEndpoints = webapi.endPoints
-      webapi.withEndPoints(oldEndpoints ++ Seq(ep))
+      webapi.withEndPoints(oldEndpoints :+ ep)
+    }
+  }
+
+  private def getRootType(typeName: String): Option[RootTypes.Value] = {
+    typeName match {
+      case q if q == QUERY_TYPE        => Some(RootTypes.Query)
+      case s if s == SUBSCRIPTION_TYPE => Some(RootTypes.Subscription)
+      case m if m == MUTATION_TYPE     => Some(RootTypes.Mutation)
+      case _                           => None
     }
   }
 }

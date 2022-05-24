@@ -30,13 +30,14 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         parseArgument(argument)
     }
     val schema = NodeShape().withProperties(properties)
-    directive = directive.withSchema(schema)
+    directive.withSchema(schema)
   }
 
   private def parseArgument(n: Node): PropertyShape = {
     val propertyShape = PropertyShape()
     val name          = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
-    val argumentType  = parseType(n, directive.id)
+    // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
+    val argumentType = parseType(n, directive.id)
     propertyShape.withName(name).withRange(argumentType)
     DefaultValueParser.putDefaultValue(n, propertyShape)
   }
