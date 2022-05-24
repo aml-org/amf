@@ -14,8 +14,8 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   val enum = ScalarShape(toAnnotations(enumTypeDef)).withDataType(Namespace.XsdTypes.xsdString.iri())
 
   def parse(parentId: String): ScalarShape = {
-    enum.adopted(parentId)
     parseName()
+    enum.adopted(parentId)
     parseValues()
     enum
   }

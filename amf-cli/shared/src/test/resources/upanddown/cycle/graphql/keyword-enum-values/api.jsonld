@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/link--1005472748",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/link--1005472748",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar"
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -177,7 +177,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -197,11 +197,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/list",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/INPUT",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/INPUT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -226,7 +226,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/TYPE",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/TYPE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -251,7 +251,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/ENUM",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/ENUM",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -276,7 +276,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_4": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/SCALAR",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/SCALAR",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -301,7 +301,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_5": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/INTERFACE",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/INTERFACE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -326,7 +326,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_6": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/DIRECTIVE",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/DIRECTIVE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -351,7 +351,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_7": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/EXTEND",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/EXTEND",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -376,7 +376,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_8": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/UNION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/UNION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -401,7 +401,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_9": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/IMPLEMENTS",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/IMPLEMENTS",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -426,7 +426,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_10": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/QUERY",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/QUERY",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -451,7 +451,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_11": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/MUTATION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/MUTATION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -476,7 +476,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_12": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/SUBSCRIPTION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/SUBSCRIPTION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -501,7 +501,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_13": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/SCHEMA",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/SCHEMA",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -526,7 +526,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_14": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/FRAGMENT",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/FRAGMENT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -551,7 +551,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_15": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/FIELD",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/FIELD",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -576,7 +576,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_16": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/FRAGMENT_DEFINITION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/FRAGMENT_DEFINITION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -601,7 +601,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_17": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/FRAGMENT_SPREAD",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/FRAGMENT_SPREAD",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -626,7 +626,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_18": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/INLINE_FRAGMENT",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/INLINE_FRAGMENT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -651,7 +651,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_19": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/OBJECT",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/OBJECT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -676,7 +676,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_20": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/FIELD_DEFINITION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/FIELD_DEFINITION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -701,7 +701,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_21": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/ARGUMENT_DEFINITION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/ARGUMENT_DEFINITION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -726,7 +726,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_22": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/ENUM_VALUE",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/ENUM_VALUE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -751,7 +751,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_23": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/INPUT_OBJECT",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/INPUT_OBJECT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -776,7 +776,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_24": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/default-scalar/INPUT_FIELD_DEFINITION",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql/scalar/MyEnum/INPUT_FIELD_DEFINITION",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",

@@ -11,9 +11,9 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(parentId: String): NodeShape = {
-    obj.adopted(parentId)
     val name = findName(objTypeNode, "AnonymousNestedType", "", "Missing name for root nested type")
     obj.withName(name).adopted(parentId)
+    obj.adopted(parentId)
     collectInheritance()
     collectFields()
     if (isInterface) {
