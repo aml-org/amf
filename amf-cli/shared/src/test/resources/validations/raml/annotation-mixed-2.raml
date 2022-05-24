@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: something
+
+annotationTypes:
+  other:
+    type: any
+
+/test:
+  (other): 44
+  get:
+    responses:
+      (something): blablabla
+      200:
+        body:
+          application/json:
+            (something): sarasa
+            type: string

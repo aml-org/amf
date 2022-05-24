@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/annotation-without-definition.raml
+Profile: RAML 1.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#DomainProperty-schema-minCount
+  Message: type is mandatory for a RAML annotationType
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/annotation-without-definition.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/scalar/schema/customDomainProperties/something/something
+  Property: http://a.ml/vocabularies/shapes#schema
+  Range: [(10,12)-(11,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/annotation-without-definition.raml

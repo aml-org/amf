@@ -729,4 +729,25 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("json with object as key throws violation") {
     validate("/raml/json-example-with-object-as-key.raml", Some("json-example-with-object-as-key.report"))
   }
+
+  test("annotation without definition") {
+    validate("/raml/annotation-without-definition.raml", Some("annotation-without-definition.report"))
+  }
+
+  test("annotation with definition") {
+    validate("/raml/annotation-with-definition.raml", None)
+  }
+
+  test("multiple annotations with definition in the same branch") {
+    validate("/raml/annotation-with-definition-multiple.raml", None)
+  }
+
+  test("multiple annotations without definition 1") {
+    validate("/raml/annotation-mixed-1.raml", Some("annotation-mixed-1.report"))
+  }
+
+  // TODO this should show 2 errors and is showing only 1
+  test("multiple annotations without definition 2") {
+    validate("/raml/annotation-mixed-2.raml", Some("annotation-mixed-2.report"))
+  }
 }
