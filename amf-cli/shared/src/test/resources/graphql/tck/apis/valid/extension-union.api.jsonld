@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/default-union/link-839168396",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult/link-839168396",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#UnionShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/default-union"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -444,7 +444,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/default-union",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult",
         "@type": [
           "http://a.ml/vocabularies/shapes#UnionShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -454,7 +454,7 @@
         ],
         "http://a.ml/vocabularies/shapes#anyOf": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/default-union#/shape/Person",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult#/shape/Person",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -479,7 +479,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/default-union#/shape/Dog",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult#/shape/Dog",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

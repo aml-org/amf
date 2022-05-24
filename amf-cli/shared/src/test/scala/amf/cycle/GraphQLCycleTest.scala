@@ -79,4 +79,22 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
+  test("Can parse API with 'fragment' field name") {
+    cycle(
+      "fragment-reserved-name/api.graphql",
+      "fragment-reserved-name/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
+  test("Can parse API with keyword enum values") {
+    cycle(
+      "keyword-enum-values/api.graphql",
+      "keyword-enum-values/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
 }

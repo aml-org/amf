@@ -14,8 +14,8 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   val enum = ScalarShape(toAnnotations(enumTypeDef)).withDataType(Namespace.XsdTypes.xsdString.iri())
 
   def parse(parentId: String): ScalarShape = {
-    enum.adopted(parentId)
     parseName()
+    enum.adopted(parentId)
     parseValues()
     enum
   }
@@ -26,13 +26,18 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseValues(): Unit = {
-    val values = collect(enumTypeDef, Seq(ENUM_VALUES_DEFINITION, ENUM_VALUE_DEFINITION, ENUM_VALUE, NAME)) collect {
+    val values = valuesFrom(Seq(ENUM_VALUES_DEFINITION, ENUM_VALUE_DEFINITION, ENUM_VALUE, NAME))
+    val keywordValues = valuesFrom(Seq(ENUM_VALUES_DEFINITION, ENUM_VALUE_DEFINITION, ENUM_VALUE, NAME, KEYWORD))
+    enum.withValues(values ++ keywordValues)
+  }
+
+  private def valuesFrom(path: Seq[String]): Seq[ScalarNode] = {
+    val values = collect(enumTypeDef, path) collect {
       case n: Node if n.children.head.isInstanceOf[Terminal] => n.children.head.asInstanceOf[Terminal]
     }
-    val dataNodes = values.map { t =>
+    values.map { t =>
       val s = ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t)).withName(t.value)
       s.adopted(enum.id)
     }
-    enum.withValues(dataNodes)
   }
 }

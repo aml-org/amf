@@ -230,7 +230,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -250,11 +250,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar/A",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum/A",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -279,7 +279,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar/B",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum/B",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -417,7 +417,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/default-union/link--1978959250",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/Union/link--1978959250",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#UnionShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -427,7 +427,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/default-union"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/Union"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -499,7 +499,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar/link-415757530",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum/link-415757530",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -509,7 +509,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/default-scalar"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/scalar/Enum"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -669,7 +669,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/default-union",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/Union",
         "@type": [
           "http://a.ml/vocabularies/shapes#UnionShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -679,7 +679,7 @@
         ],
         "http://a.ml/vocabularies/shapes#anyOf": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/default-union#/shape/Object1",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/Union#/shape/Object1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -704,7 +704,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/default-union#/shape/Object2",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-interface-fields.api.graphql/union/Union#/shape/Object2",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

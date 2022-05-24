@@ -1,0 +1,3449 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "api.graphql"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/mutation/addFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Mutation.addFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Mutation.addFruit"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/id",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/shapes#format": [
+                              {
+                                "@value": "ID"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/scientific_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "scientific_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/scientific_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/tree_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "tree_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/tree_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/fruit_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "fruit_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/fruit_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/family",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "family"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/origin",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "origin"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/description",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "description"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/description/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/bloom",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "bloom"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/bloom/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/maturation_fruit",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "maturation_fruit"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/maturation_fruit/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/life_cycle",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "life_cycle"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/life_cycle/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/climatic_zone",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "climatic_zone"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/climatic_zone/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default/default/shape/Fruits",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/document#link-target": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document#link-label": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Mutation.addFruit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/mutation/updateFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Mutation.updateFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Mutation.updateFruit"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/id",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/shapes#format": [
+                              {
+                                "@value": "ID"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/scientific_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "scientific_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/scientific_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/tree_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "tree_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/tree_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/fruit_name",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "fruit_name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/fruit_name/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/family",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "family"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/origin",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "origin"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/description",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "description"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/description/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/bloom",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "bloom"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/bloom/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/maturation_fruit",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "maturation_fruit"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/maturation_fruit/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/life_cycle",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "life_cycle"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/life_cycle/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/climatic_zone",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "climatic_zone"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/climatic_zone/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default/default/shape/Fruits",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/document#link-target": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document#link-label": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Mutation.updateFruit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/mutation/deleteFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Mutation.deleteFruit"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Mutation.deleteFruit"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request/parameter/default-binding/id",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/shapes#format": [
+                              {
+                                "@value": "ID"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default/default/shape/Fruits",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/document#link-target": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document#link-label": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "Fruits"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Mutation.deleteFruit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/fruit"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.fruit"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.fruit"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request/parameter/default-binding/id",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/shapes#format": [
+                              {
+                                "@value": "ID"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/shape/Fruit/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/shape/Fruit/nullwrapper/shape/Fruit",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "Fruit"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "Fruit"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.fruit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/fruits"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.fruits"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.fruits"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/shapes#items": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#UnionShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/shapes#anyOf": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link-2081434932/nullwrapper/nil/default-nil",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#NilShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link-2081434932/nullwrapper/shape/Fruits",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://a.ml/vocabularies/shapes#AnyShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-target": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-label": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.fruits"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/filterFruitsFam"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.filterFruitsFam"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.filterFruitsFam"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request/parameter/default-binding/family",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "family"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/shapes#items": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#UnionShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/shapes#anyOf": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--329037318/nullwrapper/nil/default-nil",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#NilShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--329037318/nullwrapper/shape/Fruits",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://a.ml/vocabularies/shapes#AnyShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-target": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-label": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.filterFruitsFam"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/filterFruitsOri"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.filterFruitsOri"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.filterFruitsOri"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request/parameter/default-binding/origin",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "origin"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/shapes#items": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#UnionShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/shapes#anyOf": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--805966792/nullwrapper/nil/default-nil",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#NilShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--805966792/nullwrapper/shape/Fruits",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://a.ml/vocabularies/shapes#AnyShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-target": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-label": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "Fruits"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.filterFruitsOri"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.5.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/id",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/id/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#format": [
+                  {
+                    "@value": "ID"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "id"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/scientific_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/scientific_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "scientific_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/tree_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/tree_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "tree_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/fruit_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/fruit_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "fruit_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/family",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/family/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "family"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/origin",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/origin/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "origin"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/description",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/description/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "description"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/bloom",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/bloom/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "bloom"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/maturation_fruit",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/maturation_fruit/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "maturation_fruit"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/life_cycle",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/life_cycle/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "life_cycle"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/climatic_zone",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/climatic_zone/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "climatic_zone"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries/array/default-array",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#items": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries/array/default-array/items/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1790659731/nullwrapper/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1790659731/nullwrapper/shape/countries",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#NodeShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "countries"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "countries"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "producing_countries"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Fruits"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "CacheControlScope"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#in": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/list",
+            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+            "http://www.w3.org/2000/01/rdf-schema#_1": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/PUBLIC",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "PUBLIC"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "PUBLIC"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#_2": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/PRIVATE",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "PRIVATE"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "PRIVATE"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/id",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/id/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#format": [
+                  {
+                    "@value": "ID"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "id"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/scientific_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/scientific_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "scientific_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/tree_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/tree_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "tree_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/fruit_name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/fruit_name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "fruit_name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/family",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/family/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "family"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/origin",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/origin/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "origin"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/description",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/description/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "description"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/bloom",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/bloom/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "bloom"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/maturation_fruit",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/maturation_fruit/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "maturation_fruit"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/life_cycle",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/life_cycle/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "life_cycle"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/climatic_zone",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/climatic_zone/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "climatic_zone"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries/array/default-array",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#items": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries/array/default-array/items/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1801067851/nullwrapper/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1801067851/nullwrapper/shape/countries",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#NodeShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "countries"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "countries"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "producing_countries"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Fruit"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/property/country",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/property/country/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "country"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "countries"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/Upload",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#format": [
+          {
+            "@value": "Upload"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Upload"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://www.w3.org/ns/shacl#NodeShape"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/shapes#Operation"
+          },
+          {
+            "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/maxAge",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "maxAge"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/scope",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/scalar/CacheControlScope",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "CacheControlScope"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "CacheControlScope"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "scope"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "cacheControl"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/shapes#ScalarShape"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node/property/url",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node/property/url/scalar/default-scalar",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "url"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "specifiedBy"
+          }
+        ]
+      }
+    ]
+  }
+]
