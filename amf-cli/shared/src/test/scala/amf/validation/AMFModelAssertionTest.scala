@@ -377,4 +377,20 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       bu.fields.fields().head.value.annotations.nonEmpty shouldBe true
     }
   }
+
+  // W-11210133
+  test("semex and normal annotations should have the same lexical") {
+    val api = s"$basePath/oas3/annotations/semantic.yaml"
+    ramlConfig.withDialect(s"$basePath/raml/semantic-extensions/dialect.yaml") flatMap { config =>
+      val client = config.baseUnitClient()
+      client.parse(s"$basePath/raml/semantic-extensions/api.raml") map { parseResult =>
+        println(parseResult.toString())
+        val bu          = parseResult.baseUnit
+        val annotations = bu.asInstanceOf[Document].declares.last.customDomainProperties
+        val lexicals    = annotations map (_.annotations.lexical())
+        // both lexicals should start in column 4
+        lexicals map (_.start.column) exists (_ != 4) shouldBe false
+      }
+    }
+  }
 }
