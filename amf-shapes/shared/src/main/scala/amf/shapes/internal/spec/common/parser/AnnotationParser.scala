@@ -76,11 +76,8 @@ object AnnotationParser {
       semanticParser: Option[SemanticExtensionsFacade]
   )(implicit ctx: ErrorHandlingContext): Option[DomainExtension] = {
     semanticParser.flatMap { parser =>
-      val nextCtx        = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
-      val maybeExtension = parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
-      // Inject and anyShape inside the SemEx to avoid validation of annotationType definition
-      maybeExtension.foreach(_.definedBy.withSchema(AnyShape()))
-      maybeExtension
+      val nextCtx = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
+      parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
     }
   }
 
