@@ -1,6 +1,5 @@
 package amf.apicontract.internal.validation.payload.collector
 
-import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
@@ -38,6 +37,5 @@ object ExtensionsCollector extends ValidationCandidateCollector {
     }
 
   // If it is a SemEx I don't want to validate the candidates
-  private def isSemanticExtension(extension: DomainExtension) =
-    extension.fields.fields().exists(_.value.value.isInstanceOf[DialectDomainElement])
+  private def isSemanticExtension(extension: DomainExtension) = Option(extension.extension).isEmpty
 }
