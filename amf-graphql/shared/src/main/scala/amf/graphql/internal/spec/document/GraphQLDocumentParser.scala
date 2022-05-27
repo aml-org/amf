@@ -39,6 +39,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     doc
       .withDeclares(
         ctx.declarations.shapes.values.toList ++
+          ctx.declarations.shapeExtensions.values.toList.flatten ++
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
@@ -84,6 +85,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   private def parseDirectiveDeclaration(directiveDef: Node): Unit = {
     val directive: CustomDomainProperty = GraphQLDirectiveDeclarationParser(directiveDef).parse(doc.id)
     ctx.declarations += directive
+  }
+
+  def parseTypeExtension(typeExtensionDef: Node): Unit = {
+    val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse(doc.id)
+    ctx.declarations += shapeExtension
   }
 
   private def processTypes(node: Node): Unit = {
@@ -154,6 +160,13 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, DIRECTIVE_DEFINITION)) foreach {
       case directiveDef: Node =>
         parseDirectiveDeclaration(directiveDef)
+    }
+
+    // let's parse type extensions
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION, TYPE_EXTENSION)) foreach {
+      case typeExtensionDef: Node =>
+        parseTypeExtension(typeExtensionDef)
     }
   }
 

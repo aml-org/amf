@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -18,29 +18,29 @@
         ],
         "http://a.ml/vocabularies/core#name": [
           {
-            "@value": "extension-interface.api.graphql"
+            "@value": "api.graphql"
           }
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiContract#path": [
               {
-                "@value": "/query/person"
+                "@value": "/query/a"
               }
             ],
             "http://a.ml/vocabularies/core#name": [
               {
-                "@value": "Query.person"
+                "@value": "Query.a"
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -53,12 +53,12 @@
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
-                    "@value": "Query.person"
+                    "@value": "Query.a"
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/web-api/%2Fquery%2Fperson/query/resp/default/default/unresolved/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,22 +115,17 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person/link-1454684092",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                                 "@type": [
-                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/document#link-target": [
+                                "http://www.w3.org/ns/shacl#datatype": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#link-label": [
-                                  {
-                                    "@value": "Person"
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
                                 ]
                               }
@@ -143,7 +138,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
-                    "@value": "Query.person"
+                    "@value": "Query.a"
                   }
                 ]
               }
@@ -159,7 +154,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -177,7 +172,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -187,7 +182,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -196,7 +191,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -221,9 +216,26 @@
                 "@value": "name"
               }
             ]
-          },
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person/property/surname",
+            "@value": "Person"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-1477627054",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-1477627054/property/surname",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -232,7 +244,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/Person/property/surname/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-1477627054/property/surname/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -264,31 +276,14 @@
             "@value": "Person"
           }
         ],
-        "http://a.ml/vocabularies/shapes#inherits": [
+        "http://a.ml/vocabularies/shapes#isExtension": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName/link--415341012",
-            "@type": [
-              "http://www.w3.org/ns/shacl#NodeShape",
-              "http://a.ml/vocabularies/shapes#AnyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#link-target": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName"
-              }
-            ],
-            "http://a.ml/vocabularies/document#link-label": [
-              {
-                "@value": "HasName"
-              }
-            ]
+            "@value": true
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-328325471",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -296,14 +291,9 @@
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/shapes#isAbstract": [
-          {
-            "@value": true
-          }
-        ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-328325471/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -312,7 +302,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/multiple-extensions/api.graphql#/shape/Person-extension-328325471/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -324,63 +314,10 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "name"
-              }
-            ]
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "HasName"
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName-extension--1758314696",
-        "@type": [
-          "http://www.w3.org/ns/shacl#NodeShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://a.ml/vocabularies/shapes#isAbstract": [
-          {
-            "@value": true
-          }
-        ],
-        "http://www.w3.org/ns/shacl#property": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName-extension--1758314696/property/surname",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-interface.api.graphql#/shape/HasName-extension--1758314696/property/surname/scalar/default-scalar",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/shacl#datatype": [
+                "http://a.ml/vocabularies/shapes#format": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "ID"
                   }
                 ]
               }
@@ -392,14 +329,14 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "surname"
+                "@value": "id"
               }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
-            "@value": "HasName"
+            "@value": "Person"
           }
         ],
         "http://a.ml/vocabularies/shapes#isExtension": [

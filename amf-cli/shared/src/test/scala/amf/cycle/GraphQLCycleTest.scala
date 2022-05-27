@@ -97,4 +97,13 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
+  test("Can parse API multiple extensions on same object") {
+    cycle(
+      "multiple-extensions/api.graphql",
+      "multiple-extensions/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint
+    )
+  }
+
 }
