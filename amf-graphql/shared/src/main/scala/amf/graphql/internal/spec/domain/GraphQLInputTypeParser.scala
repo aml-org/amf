@@ -14,6 +14,7 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWe
     obj.withName(name).withIsInputOnly(true).adopted(parentId)
     obj.adopted(parentId)
     collectFields()
+    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse(obj.id)
     obj
   }
 

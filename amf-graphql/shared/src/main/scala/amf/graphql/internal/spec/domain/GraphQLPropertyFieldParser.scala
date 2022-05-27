@@ -7,13 +7,14 @@ import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
-  val property = PropertyShape(toAnnotations(ast))
+  val property: PropertyShape = PropertyShape(toAnnotations(ast))
 
   def parse(adopt: PropertyShape => Unit): PropertyShape = {
     parseName()
     adopt(property)
     parseDescription()
     parseRange()
+    GraphQLDirectiveApplicationParser(ast, property).parse(property.id)
     property
   }
 

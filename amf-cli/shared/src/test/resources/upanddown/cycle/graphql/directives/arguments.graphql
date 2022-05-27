@@ -1,0 +1,21 @@
+schema @MyDirective(testString: "custom") {
+    query: Query
+}
+
+type Query @MyDirective(testString: "custom") {
+    name: String @MyDirective(testString: "custom")
+}
+
+type Spaceship @MyDirective(testString: "custom") {
+    shipType: ShipType @MyDirective(testString: "custom")
+}
+
+enum ShipType @MyDirective(testString: "custom") {
+    X_WING @MyDirective(testString: "custom"),
+    DRONE,
+    FALCON
+}
+
+scalar Date @MyDirective(testString: "custom")
+
+directive @MyDirective(testString: String = "default") on SCHEMA | OBJECT

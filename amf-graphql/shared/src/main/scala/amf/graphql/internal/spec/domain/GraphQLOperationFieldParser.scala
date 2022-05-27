@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.domain
 
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{DefaultValueParser, GraphQLASTParserHelper, NullableShape}
+import amf.graphql.internal.spec.parser.syntax.{ScalarValueParser, GraphQLASTParserHelper, NullableShape}
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
 import org.mulesoft.antlrast.ast.Node
 
@@ -16,6 +16,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     parseDescription()
     parseArguments()
     parseRange()
+    GraphQLDirectiveApplicationParser(ast, operation).parse(operation.id)
   }
 
   private def parseArguments(): Unit = {
@@ -35,10 +36,10 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
     unpackNilUnion(parseType(n, param.id)) match {
       case NullableShape(true, shape) =>
-        val schema = DefaultValueParser.putDefaultValue(n, shape)
+        val schema = ScalarValueParser.putDefaultValue(n, shape)
         param.withSchema(schema).withRequired(false)
       case NullableShape(false, shape) =>
-        val schema = DefaultValueParser.putDefaultValue(n, shape)
+        val schema = ScalarValueParser.putDefaultValue(n, shape)
         param.withSchema(schema).withRequired(true)
     }
   }

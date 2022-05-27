@@ -13,7 +13,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   val directiveApplication: DomainExtension = DomainExtension(toAnnotations(node))
 
   def parse(parentId: String): Unit = {
-    getDirectiveNode() map { directive =>
+    getDirectiveNode map { directive =>
       parseName(directive)
       directiveApplication.adopted(parentId)
       putDefinedBy()
@@ -43,9 +43,13 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
     ScalarValueParser.parseValue(n).map(scalarNode => objectNode.addProperty(name, scalarNode, toAnnotations(n)))
   }
 
-  private def getDirectiveNode(): Option[Node] = path(node, Seq(DIRECTIVES, DIRECTIVE)).map(_.asInstanceOf[Node])
+  private def getDirectiveNode: Option[Node] = path(node, Seq(DIRECTIVES, DIRECTIVE)).map(_.asInstanceOf[Node])
 
-  private def putDefinedBy(): Unit =
-    ctx.findAnnotation(directiveApplication.name.value(), SearchScope.All).getOrElse(CustomDomainProperty())
+  private def putDefinedBy(): Unit = {
+    val definedBy = ctx
+      .findAnnotation(directiveApplication.name.value(), SearchScope.All)
+      .getOrElse(CustomDomainProperty())
+    directiveApplication.withDefinedBy(definedBy)
+  }
 
 }

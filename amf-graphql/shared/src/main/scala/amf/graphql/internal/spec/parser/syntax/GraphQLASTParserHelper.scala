@@ -169,10 +169,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case Some(s: NodeShape) =>
         s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case _ =>
-        val shape = UnresolvedShape(typeName, toAnnotations(t))
-        shape.withContext(ctx)
-        shape.unresolved(typeName, Nil, Some(elementSourceLocation(t)))
-        shape
+        unresolvedShape(typeName, t)
     }
   }
 
@@ -210,5 +207,12 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def trimQuotes(value: String): String = {
     if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)
     else value
+  }
+
+  def unresolvedShape(typeName: String, element: ASTElement)(implicit ctx: GraphQLWebApiContext): UnresolvedShape = {
+    val shape = UnresolvedShape(typeName, toAnnotations(element))
+    shape.withContext(ctx)
+    shape.unresolved(typeName, Nil, Some(elementSourceLocation(element)))
+    shape
   }
 }

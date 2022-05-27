@@ -106,4 +106,11 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
+  test("Can parse API with simple directive applications") {
+    cycle("directives/simple.graphql", "directives/simple.jsonld", GraphQLHint, AmfJsonHint)
+  }
+
+  test("Can parse API with directive applications with arguments") {
+    cycle("directives/arguments.graphql", "directives/arguments.jsonld", GraphQLHint, AmfJsonHint)
+  }
 }

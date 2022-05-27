@@ -1,0 +1,19 @@
+schema @MyDirective {
+    query: Query
+}
+
+type Query {
+    name: String @MyDirective
+}
+
+type Spaceship @MyDirective {
+    shipType: ShipType @MyDirective
+}
+
+enum ShipType @MyDirective {
+    X_WING @MyDirective,
+    DRONE,
+    FALCON
+}
+
+directive @MyDirective on SCHEMA | OBJECT

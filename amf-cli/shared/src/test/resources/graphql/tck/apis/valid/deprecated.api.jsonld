@@ -256,6 +256,49 @@
               {
                 "@value": "firstName"
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/shape/Person/property/firstName/extension/": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/shape/Person/property/firstName/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "null/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `name` instead"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/shape/Person/property/firstName/extension/"
+              }
             ]
           }
         ],

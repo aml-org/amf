@@ -19,6 +19,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     if (isInterface) {
       obj.withIsAbstract(true)
     }
+    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse(parentId)
     obj
   }
 
@@ -42,10 +43,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
         astError(obj.id, "Error extending non interface type", toAnnotations(t))
         n.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case _ =>
-        val shape = UnresolvedShape(typeName, toAnnotations(t))
-        shape.withContext(ctx)
-        shape.unresolved(typeName, Nil, Some(elementSourceLocation(t)))
-        shape
+        unresolvedShape(typeName, t)
     }
   }
 }
