@@ -433,6 +433,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -512,6 +513,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -1311,6 +1313,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -1528,6 +1531,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -1720,6 +1724,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -1806,6 +1811,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -2205,6 +2211,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## PublicNodeMapping
@@ -2252,6 +2259,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## Request
@@ -2418,6 +2426,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -2473,6 +2482,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -2658,6 +2668,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
 
 ## ShapeExtension
 Custom extensions for a data shape definition inside an API definition
@@ -2867,6 +2878,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |
@@ -2934,6 +2946,7 @@ Types:
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
+ | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | http://a.ml/vocabularies/shapes#isExtension |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
  | comment | string | A comment on an item. The comment's content is expressed via the text | http://a.ml/vocabularies/core#comment |

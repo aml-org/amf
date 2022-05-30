@@ -202,6 +202,36 @@
         ]
       },
       {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/scalar/Date-extension-1024861559",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#format": [
+          {
+            "@value": "Date"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Date"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#isExtension": [
+          {
+            "@value": true
+          }
+        ]
+      },
+      {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#example",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",

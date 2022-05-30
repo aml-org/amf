@@ -509,6 +509,53 @@
             "@value": "SearchResult"
           }
         ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult-extension--42465094",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#UnionShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#anyOf": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql/union/SearchResult#/shape/Cat",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-union.api.graphql#/shape/Cat"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Cat"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Cat"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "SearchResult"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#isExtension": [
+          {
+            "@value": true
+          }
+        ]
       }
     ]
   }
