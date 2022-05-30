@@ -1238,7 +1238,7 @@ declare module 'amf-client-js' {
     payload: AbstractPayload
     name: StrField
 
-    withPayload(payload: AbstractPayload): this
+    withPayload(payload: AbstractPayload): AbstractPayload
 
     withName(name: string): this
 
@@ -1492,8 +1492,6 @@ declare module 'amf-client-js' {
 
     withPayloads(payloads: Array<Payload>): this
 
-    withPayload(): Payload
-
     linkCopy(): Message
 
     withAbstract(isAbstract: boolean): this
@@ -1505,8 +1503,6 @@ declare module 'amf-client-js' {
     withTitle(title: string): this
 
     withBindings(bindings: MessageBindings): this
-
-    withPayload(mediaType: string): Payload
 
     withExamples(examples: Array<Example>): this
 
@@ -1529,8 +1525,6 @@ declare module 'amf-client-js' {
     link<T>(): T
 
     withLinkTarget(target: undefined): this
-
-    withPayload(mediaType: undefined | string): Payload
 
     withDisplayName(displayName: string): this
 
@@ -1949,7 +1943,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Response extends Message implements AbstractResponse  {
+  export class Response extends Message implements AbstractResponse {
     statusCode: StrField
     name: StrField
     customDomainProperties: Array<DomainExtension>
@@ -1973,8 +1967,13 @@ declare module 'amf-client-js' {
 
     graph(): Graph
 
-    // @ts-ignore
-    withPayload(payload: Payload): this
+    withPayload(payload: Payload): Payload
+
+    withPayload(): Payload
+
+    withPayload(mediaType: string): Payload
+
+    withPayload(mediaType: undefined | string): Payload
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
@@ -3105,7 +3104,7 @@ declare module 'amf-client-js' {
 
     graph(): Graph
 
-    withPayload(payload: ShapePayload): this
+    withPayload(payload: ShapePayload): ShapePayload
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
@@ -3730,6 +3729,11 @@ declare module 'amf-client-js' {
 
     withUriParameters(uriParameters: Array<Parameter>): this
 
+    withPayload(): Payload
+
+    withPayload(mediaType: string): Payload
+
+    withPayload(mediaType: undefined | string): Payload
 
   }
   export class CreativeWork implements DomainElement  {
