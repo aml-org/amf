@@ -16,13 +16,14 @@ object GrpcVersionFactory extends SpecVersionFactory {
     throw new Exception("GRPC specs don't support security schemes")
 }
 
-class GrpcWebApiContext(override val loc: String,
-                        override val refs: Seq[ParsedReference],
-                        override val options: ParsingOptions,
-                        private val wrapped: ParserContext,
-                        private val ds: Option[WebApiDeclarations] = None,
-                        val messagePath: Seq[String] = Seq(""))
-    extends WebApiContext(loc, refs, options, wrapped, ds) {
+class GrpcWebApiContext(
+    override val loc: String,
+    override val refs: Seq[ParsedReference],
+    override val options: ParsingOptions,
+    private val wrapped: ParserContext,
+    private val ds: Option[WebApiDeclarations] = None,
+    val messagePath: Seq[String] = Seq("")
+) extends WebApiContext(loc, refs, options, wrapped, ds) {
 
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()

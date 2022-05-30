@@ -9,34 +9,36 @@ import amf.core.internal.transform.stages.elements.resolution.ReferenceResolutio
 import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
 
 abstract class AmfElementLinkResolutionStage() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document =>
         val resolver = new ReferenceResolution(errorHandler)
-        doc.iterator().foreach {
-          case d: DomainElement =>
-            d.fields
-              .fields()
-              .foreach(f =>
-                f.element match {
-                  case l: Linkable if l.isLink && selector(l, doc) =>
-                    resolver.transform(l.asInstanceOf[DomainElement], Seq(ASSERT_DIFFERENT), configuration) match {
-                      case Some(resolved) => d.fields.setWithoutId(f.field, resolved)
-                      case None           => // Nothing
-                    }
-                  case a: AmfArray =>
-                    val newItems = a.values.map {
-                      case l: Linkable if l.isLink && selector(l, doc) =>
-                        resolver
-                          .transform(l.asInstanceOf[DomainElement], Seq(ASSERT_DIFFERENT), configuration)
-                          .getOrElse(l)
-                      case i => i
-                    }
-                    d.fields.setWithoutId(f.field, a.copy(newItems))
-                  case _ => // Nothing
-              })
+        doc.iterator().foreach { case d: DomainElement =>
+          d.fields
+            .fields()
+            .foreach(f =>
+              f.element match {
+                case l: Linkable if l.isLink && selector(l, doc) =>
+                  resolver.transform(l.asInstanceOf[DomainElement], Seq(ASSERT_DIFFERENT), configuration) match {
+                    case Some(resolved) => d.fields.setWithoutId(f.field, resolved)
+                    case None           => // Nothing
+                  }
+                case a: AmfArray =>
+                  val newItems = a.values.map {
+                    case l: Linkable if l.isLink && selector(l, doc) =>
+                      resolver
+                        .transform(l.asInstanceOf[DomainElement], Seq(ASSERT_DIFFERENT), configuration)
+                        .getOrElse(l)
+                    case i => i
+                  }
+                  d.fields.setWithoutId(f.field, a.copy(newItems))
+                case _ => // Nothing
+              }
+            )
         }
       case _ => // Nothing
     }

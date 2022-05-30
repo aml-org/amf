@@ -6,9 +6,11 @@ import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.oas.emitter.OasRecursiveShapeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-class CompactOasRecursiveShapeEmitter(recursive: RecursiveShape,
-                                      ordering: SpecOrdering,
-                                      schemaPath: Seq[(String, String)])(implicit spec: OasLikeShapeEmitterContext)
+class CompactOasRecursiveShapeEmitter(
+    recursive: RecursiveShape,
+    ordering: SpecOrdering,
+    schemaPath: Seq[(String, String)]
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasRecursiveShapeEmitter(recursive, ordering, schemaPath) {
 
   override def emit(b: EntryBuilder): Unit = {

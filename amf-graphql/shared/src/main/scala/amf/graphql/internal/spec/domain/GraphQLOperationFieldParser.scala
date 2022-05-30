@@ -2,11 +2,12 @@ package amf.graphql.internal.spec.domain
 
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import amf.graphql.internal.spec.parser.syntax.{DefaultValueParser, GraphQLASTParserHelper, NullableShape}
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
   val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
 
   def parse(adopt: ShapeOperation => Unit): Unit = {
@@ -19,9 +20,8 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
   private def parseArguments(): Unit = {
     val request = operation.withRequest()
-    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach {
-      case argument: Node =>
-        parseArgument(argument, request)
+    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
+      parseArgument(argument, request)
     }
   }
 
@@ -34,8 +34,12 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     }
 
     unpackNilUnion(parseType(n, param.id)) match {
-      case NullableShape(true, shape)  => param.withSchema(shape).withRequired(false)
-      case NullableShape(false, shape) => param.withSchema(shape).withRequired(true)
+      case NullableShape(true, shape) =>
+        val schema = DefaultValueParser.putDefaultValue(n, shape)
+        param.withSchema(schema).withRequired(false)
+      case NullableShape(false, shape) =>
+        val schema = DefaultValueParser.putDefaultValue(n, shape)
+        param.withSchema(schema).withRequired(true)
     }
   }
 
@@ -48,8 +52,8 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
   }
 
   private def parseRange(): Unit = {
-    val response = operation.withResponse("default")
-    val payload = ShapePayload().withName("default")
+    val response = operation.withResponse()
+    val payload  = ShapePayload().withName("default")
     payload.adopted(response.id).withSchema(parseType(ast, operation.id))
     response.withPayload(payload)
   }

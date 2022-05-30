@@ -8,12 +8,10 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * ParametrizedSecurityScheme model class.
+/** ParametrizedSecurityScheme model class.
   */
 @JSExportAll
-case class SecurityRequirement(override private[amf] val _internal: InternalSecurityRequirement)
-    extends DomainElement {
+case class SecurityRequirement(override private[amf] val _internal: InternalSecurityRequirement) extends DomainElement {
 
   @JSExportTopLevel("SecurityRequirement")
   def this() = this(InternalSecurityRequirement())

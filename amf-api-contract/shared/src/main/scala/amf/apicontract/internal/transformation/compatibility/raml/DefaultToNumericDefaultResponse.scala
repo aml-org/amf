@@ -8,9 +8,11 @@ import amf.core.client.scala.transform.TransformationStep
 
 class DefaultToNumericDefaultResponse() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       model.iterator().foreach {
         case operation: Operation =>
@@ -26,9 +28,8 @@ class DefaultToNumericDefaultResponse() extends TransformationStep {
   def checkDefaultResponse(operation: Operation): Unit = {
     operation.responses.find(_.statusCode.value() == "default") match {
       case Some(defaultResponse) =>
-        val responsesMap = operation.responses.foldLeft(Map[String, Response]()) {
-          case (acc, resp) =>
-            acc.updated(resp.statusCode.value(), resp)
+        val responsesMap = operation.responses.foldLeft(Map[String, Response]()) { case (acc, resp) =>
+          acc.updated(resp.statusCode.value(), resp)
         }
         val preferredStatusCodes = Seq("200", "500")
         preferredStatusCodes.find(responsesMap.get(_).isEmpty) match {

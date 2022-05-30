@@ -45,21 +45,21 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "G", "g2_valid.json")  -> ExpectedReport(conforms = true, 0, PayloadProfile),
     // jvm reports two nested error for the anyOf
     // js reports an error for each failed shape and one more for the fialed anyOf
-    ("payloads.raml", "G", "g_invalid.json") -> ExpectedReport(conforms = false,
-                                                               2,
-                                                               PayloadProfile,
-                                                               jsNumErrors = Some(3)),
+    ("payloads.raml", "G", "g_invalid.json") -> ExpectedReport(
+      conforms = false,
+      2,
+      PayloadProfile,
+      jsNumErrors = Some(3)
+    ),
     ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PayloadProfile),
     ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
     ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
-                                                                                    0,
-                                                                                    PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_valid.json")     -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")   -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_valid.json")    -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")  -> ExpectedReport(conforms = false, 1, PayloadProfile)
+    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("payloads.raml", "CustomerData", "person_valid.yaml")        -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_valid.json")            -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")  -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json") -> ExpectedReport(conforms = false, 1, PayloadProfile)
   )
 
   for {
@@ -82,8 +82,8 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         val targetType = library
           .asInstanceOf[Module]
           .declares
-          .find {
-            case s: Shape => s.name.is(shapeName)
+          .find { case s: Shape =>
+            s.name.is(shapeName)
           }
           .get
 

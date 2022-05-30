@@ -54,9 +54,11 @@ class E2EAMLRelatedConfigurationSetupTest extends AsyncFunSuite with Matchers {
       }
   }
 
-  private def checkValidAndSourceVendor(file: String,
-                                        spec: Spec,
-                                        config: AMLConfiguration = baseConfig): Future[Assertion] = {
+  private def checkValidAndSourceVendor(
+      file: String,
+      spec: Spec,
+      config: AMLConfiguration = baseConfig
+  ): Future[Assertion] = {
     config.baseUnitClient().parse(base + file).map { result =>
       result.results should have length 0
       result.baseUnit.sourceSpec shouldEqual Some(spec)

@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "null/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql#/web-api/%2Fquery%2Fseason/query/resp/default/default/unresolved/nullwrapper/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/link-163137738",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/link-163137738",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -177,7 +177,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -197,11 +197,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/SPRING",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/SPRING",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -226,7 +226,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/AUTUMN",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/AUTUMN",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -251,7 +251,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/SUMMER",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/SUMMER",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -276,7 +276,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_4": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/default-scalar/WINTER",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-enum.api.graphql/scalar/Season/WINTER",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",

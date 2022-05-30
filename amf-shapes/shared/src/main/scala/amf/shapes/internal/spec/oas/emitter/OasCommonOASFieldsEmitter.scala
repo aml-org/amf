@@ -61,10 +61,12 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
       }
     } else {
       fs.entry(ScalarShapeModel.Format).map { f =>
-        result += RawValueEmitter("format",
-                                  ScalarShapeModel.Format,
-                                  checkRamlFormats(f.scalar.toString),
-                                  f.value.annotations)
+        result += RawValueEmitter(
+          "format",
+          ScalarShapeModel.Format,
+          checkRamlFormats(f.scalar.toString),
+          f.value.annotations
+        )
       }
       emitMinAndMax(fs, result)
     }
@@ -83,14 +85,18 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
   }
 
   private def emitMin(f: FieldEntry, result: ListBuffer[EntryEmitter], isExclusive: Boolean = false) =
-    result += ValueEmitter(if (isExclusive) "exclusiveMinimum" else "minimum",
-                           f,
-                           Some(NumberTypeToYTypeConverter.convert(typeDef)))
+    result += ValueEmitter(
+      if (isExclusive) "exclusiveMinimum" else "minimum",
+      f,
+      Some(NumberTypeToYTypeConverter.convert(typeDef))
+    )
 
   private def emitMax(f: FieldEntry, result: ListBuffer[EntryEmitter], isExclusive: Boolean = false) =
-    result += ValueEmitter(if (isExclusive) "exclusiveMaximum" else "maximum",
-                           f,
-                           Some(NumberTypeToYTypeConverter.convert(typeDef)))
+    result += ValueEmitter(
+      if (isExclusive) "exclusiveMaximum" else "maximum",
+      f,
+      Some(NumberTypeToYTypeConverter.convert(typeDef))
+    )
 
   private def buildMin(min: Double, result: ListBuffer[EntryEmitter]): Unit =
     build(min, "minimum", ScalarShapeModel.Minimum, result)
@@ -99,8 +105,10 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
     build(max, "maximum", ScalarShapeModel.Maximum, result)
 
   private def build(value: Double, constraint: String, f: Field, result: ListBuffer[EntryEmitter]): Unit =
-    result += ValueEmitter(constraint,
-                           FieldEntry(f, Value(AmfScalar(value), Annotations())),
-                           Some(NumberTypeToYTypeConverter.convert(typeDef)))
+    result += ValueEmitter(
+      constraint,
+      FieldEntry(f, Value(AmfScalar(value), Annotations())),
+      Some(NumberTypeToYTypeConverter.convert(typeDef))
+    )
 
 }

@@ -9,14 +9,15 @@ import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import scala.collection.mutable.ListBuffer
 
 object RamlAnyShapeEmitter {
-  def apply(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit spec: RamlShapeEmitterContext): RamlAnyShapeEmitter =
+  def apply(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+      spec: RamlShapeEmitterContext
+  ): RamlAnyShapeEmitter =
     new RamlAnyShapeEmitter(shape, ordering, references)
 }
 
-class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlShapeEmitter(shape, ordering, references)
+class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlShapeEmitter(shape, ordering, references)
     with ExamplesEmitter {
   override def emitters(): Seq[EntryEmitter] = {
     val results = ListBuffer(super.emitters(): _*)

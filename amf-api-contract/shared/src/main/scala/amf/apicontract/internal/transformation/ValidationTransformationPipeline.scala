@@ -27,9 +27,10 @@ import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 // Validation pipeline is not registered in AMF configuration, is it only called internally.
-class ValidationTransformationPipeline private[amf] (profile: ProfileName,
-                                                     override val name: String = "ValidationTransformationPipeline")
-    extends TransformationPipeline() {
+class ValidationTransformationPipeline private[amf] (
+    profile: ProfileName,
+    override val name: String = "ValidationTransformationPipeline"
+) extends TransformationPipeline() {
 
   override def steps: Seq[TransformationStep] =
     Seq(
@@ -43,7 +44,7 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       new PayloadAndParameterResolutionStage(profile),
       new SemanticExtensionFlatteningStage,
       SourceInformationStage,
-      new AnnotationRemovalStage(),
+      new AnnotationRemovalStage()
     )
 
   private def parameterNormalizationStageFor(profile: ProfileName): ParametersNormalizationStage = {

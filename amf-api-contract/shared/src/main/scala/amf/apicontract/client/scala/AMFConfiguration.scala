@@ -65,13 +65,15 @@ trait APIConfigurationBuilder {
       configuration.registry
         .withEntities(APIEntities.entities ++ FragmentEntities.entities ++ ShapeEntities.entities ++ coreEntities)
         .withAnnotations(
-          APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations),
+          APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations
+        ),
       configuration.listeners,
       configuration.options
-    ).withPlugins(List(
+    ).withPlugins(
+      List(
         JsonSchemaShapePayloadValidationPlugin
-      ))
-      .withFallback(ApiContractFallbackPlugin())
+      )
+    ).withFallback(ApiContractFallbackPlugin())
     result
   }
 }
@@ -84,8 +86,7 @@ private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
       .withTransformationPipelines(unsupportedTransformationsSet("Base"))
 }
 
-/**
-  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for RAML like:
+/** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for RAML like:
   *   - Validation rules
   *   - Parse and emit plugins
   *   - Transformation Pipelines
@@ -96,13 +97,15 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 
   def RAML10(): AMFConfiguration =
     common()
-      .withPlugins(List(
-        Raml10ParsePlugin,
-        Raml10RenderPlugin,
-        Raml10ElementRenderPlugin,
-        ShaclModelValidationPlugin(ProfileNames.RAML10),
-        PayloadValidationPlugin(ProfileNames.RAML10)
-      ))
+      .withPlugins(
+        List(
+          Raml10ParsePlugin,
+          Raml10RenderPlugin,
+          Raml10ElementRenderPlugin,
+          ShaclModelValidationPlugin(ProfileNames.RAML10),
+          PayloadValidationPlugin(ProfileNames.RAML10)
+        )
+      )
       .withValidationProfile(Raml10ValidationProfile, Raml10EffectiveValidations)
       .withTransformationPipelines(
         List(
@@ -110,16 +113,19 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml10EditingPipeline(),
           Raml10CompatibilityPipeline(),
           Raml10CachePipeline()
-        ))
+        )
+      )
   def RAML08(): AMFConfiguration =
     common()
-      .withPlugins(List(
-        Raml08ParsePlugin,
-        Raml08RenderPlugin,
-        Raml08ElementRenderPlugin,
-        ShaclModelValidationPlugin(ProfileNames.RAML08),
-        PayloadValidationPlugin(ProfileNames.RAML08)
-      ))
+      .withPlugins(
+        List(
+          Raml08ParsePlugin,
+          Raml08RenderPlugin,
+          Raml08ElementRenderPlugin,
+          ShaclModelValidationPlugin(ProfileNames.RAML08),
+          PayloadValidationPlugin(ProfileNames.RAML08)
+        )
+      )
       .withValidationProfile(Raml08ValidationProfile, Raml08EffectiveValidations)
       .withTransformationPipelines(
         List(
@@ -127,7 +133,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml08EditingPipeline(),
           Raml08CompatibilityPipeline(),
           Raml08CachePipeline()
-        ))
+        )
+      )
 
   def RAML(): AMFConfiguration =
     common()
@@ -144,11 +151,10 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   }
 }
 
-/**
-  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for OAS like:
-  *  - Validation rules
-  *  - Parse and emit plugins
-  *  - Transformation Pipelines
+/** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for OAS like:
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 object OASConfiguration extends APIConfigurationBuilder {
 
@@ -156,13 +162,15 @@ object OASConfiguration extends APIConfigurationBuilder {
 
   def OAS20(): AMFConfiguration =
     common()
-      .withPlugins(List(
-        Oas20ParsePlugin,
-        Oas20RenderPlugin,
-        Oas20ElementRenderPlugin,
-        ShaclModelValidationPlugin(ProfileNames.OAS20),
-        PayloadValidationPlugin(ProfileNames.OAS20)
-      ))
+      .withPlugins(
+        List(
+          Oas20ParsePlugin,
+          Oas20RenderPlugin,
+          Oas20ElementRenderPlugin,
+          ShaclModelValidationPlugin(ProfileNames.OAS20),
+          PayloadValidationPlugin(ProfileNames.OAS20)
+        )
+      )
       .withValidationProfile(Oas20ValidationProfile, Oas20EffectiveValidations)
       .withTransformationPipelines(
         List(
@@ -170,17 +178,20 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas20EditingPipeline(),
           Oas20CompatibilityPipeline(),
           Oas20CachePipeline()
-        ))
+        )
+      )
 
   def OAS30(): AMFConfiguration =
     common()
-      .withPlugins(List(
-        Oas30ParsePlugin,
-        Oas30RenderPlugin,
-        Oas30ElementRenderPlugin,
-        ShaclModelValidationPlugin(ProfileNames.OAS30),
-        PayloadValidationPlugin(ProfileNames.OAS30)
-      ))
+      .withPlugins(
+        List(
+          Oas30ParsePlugin,
+          Oas30RenderPlugin,
+          Oas30ElementRenderPlugin,
+          ShaclModelValidationPlugin(ProfileNames.OAS30),
+          PayloadValidationPlugin(ProfileNames.OAS30)
+        )
+      )
       .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
       .withTransformationPipelines(
         List(
@@ -188,7 +199,8 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas3EditingPipeline(),
           Oas3CompatibilityPipeline(),
           Oas3CachePipeline()
-        ))
+        )
+      )
 
   def OAS(): AMFConfiguration =
     common()
@@ -216,11 +228,14 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
     common()
       .withFallback(ApiContractFallbackPlugin(false))
       .withPlugins(
-        List(Oas30ParsePlugin,
-             Oas20ParsePlugin,
-             Raml10ParsePlugin,
-             Raml08ParsePlugin,
-             ViolationModelValidationPlugin(name)))
+        List(
+          Oas30ParsePlugin,
+          Oas20ParsePlugin,
+          Raml10ParsePlugin,
+          Raml08ParsePlugin,
+          ViolationModelValidationPlugin(name)
+        )
+      )
       .withTransformationPipelines(unsupportedTransformationsSet(name))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
@@ -235,8 +250,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
   }
 }
 
-/**
-  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for AsyncApi like:
+/** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for AsyncApi like:
   *   - Validation rules
   *   - Parse and emit plugins
   *   - Transformation Pipelines
@@ -260,7 +274,8 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
           Async20TransformationPipeline(),
           Async20EditingPipeline(),
           Async20CachePipeline()
-        ))
+        )
+      )
 }
 
 /** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration.Async20()]] configurations */
@@ -287,17 +302,18 @@ object APIConfiguration extends APIConfigurationBuilder {
   }
 }
 
-/**
-  * The AMFConfiguration lets you customize all AMF-specific configurations.
-  * Its immutable and created through builders. An instance is needed to use AMF.
-  * @see [[AMFBaseUnitClient]]
+/** The AMFConfiguration lets you customize all AMF-specific configurations. Its immutable and created through builders.
+  * An instance is needed to use AMF.
+  * @see
+  *   [[AMFBaseUnitClient]]
   */
-class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
-                                     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                     override private[amf] val registry: AMLRegistry,
-                                     override private[amf] val listeners: Set[AMFEventListener],
-                                     override private[amf] val options: AMFOptions)
-    extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+class AMFConfiguration private[amf] (
+    override private[amf] val resolvers: AMFResolvers,
+    override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
+    override private[amf] val registry: AMLRegistry,
+    override private[amf] val listeners: Set[AMFEventListener],
+    override private[amf] val options: AMFOptions
+) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
@@ -308,34 +324,38 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   /** Contains methods to get information about the current state of the configuration */
   override def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
-  /**
-    * Set [[ParsingOptions]]
-    * @param parsingOptions [[ParsingOptions]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[ParsingOptions]] added
+  /** Set [[ParsingOptions]]
+    * @param parsingOptions
+    *   [[ParsingOptions]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ParsingOptions]] added
     */
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     super._withParsingOptions(parsingOptions)
 
-  /**
-    * Add a [[ResourceLoader]]
-    * @param rl [[ResourceLoader]] to add to configuration object
-    * @return [[AMFConfiguration]] with the [[ResourceLoader]] added
+  /** Add a [[ResourceLoader]]
+    * @param rl
+    *   [[ResourceLoader]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with the [[ResourceLoader]] added
     */
   override def withResourceLoader(rl: ResourceLoader): AMFConfiguration =
     super._withResourceLoader(rl)
 
-  /**
-    * Set the configuration [[ResourceLoader]]s
-    * @param rl a list of [[ResourceLoader]] to set to the configuration object
-    * @return [[AMFConfiguration]] with [[ResourceLoader]]s set
+  /** Set the configuration [[ResourceLoader]]s
+    * @param rl
+    *   a list of [[ResourceLoader]] to set to the configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ResourceLoader]]s set
     */
   override def withResourceLoaders(rl: List[ResourceLoader]): AMFConfiguration =
     super._withResourceLoaders(rl)
 
-  /**
-    * Set [[UnitCache]]
-    * @param cache [[UnitCache]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[UnitCache]] added
+  /** Set [[UnitCache]]
+    * @param cache
+    *   [[UnitCache]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[UnitCache]] added
     */
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
     super._withUnitCache(cache)
@@ -364,14 +384,17 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     super._withValidationProfile(profile)
 
   // Keep AMF internal, done to avoid recomputing validations every time a config is requested
-  private[amf] override def withValidationProfile(profile: ValidationProfile,
-                                                  effective: EffectiveValidations): AMFConfiguration =
+  private[amf] override def withValidationProfile(
+      profile: ValidationProfile,
+      effective: EffectiveValidations
+  ): AMFConfiguration =
     super._withValidationProfile(profile, effective)
 
-  /**
-    * Add a [[TransformationPipeline]]
-    * @param pipeline [[TransformationPipeline]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[TransformationPipeline]] added
+  /** Add a [[TransformationPipeline]]
+    * @param pipeline
+    *   [[TransformationPipeline]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[TransformationPipeline]] added
     */
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     super._withTransformationPipeline(pipeline)
@@ -380,65 +403,74 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AMFConfiguration =
     super._withTransformationPipelines(pipelines)
 
-  /**
-    * Set [[RenderOptions]]
-    * @param renderOptions [[RenderOptions]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[RenderOptions]] added
+  /** Set [[RenderOptions]]
+    * @param renderOptions
+    *   [[RenderOptions]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[RenderOptions]] added
     */
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
     super._withRenderOptions(renderOptions)
 
-  /**
-    * Set [[ErrorHandlerProvider]]
-    * @param provider [[ErrorHandlerProvider]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[ErrorHandlerProvider]] set
+  /** Set [[ErrorHandlerProvider]]
+    * @param provider
+    *   [[ErrorHandlerProvider]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[ErrorHandlerProvider]] set
     */
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
     super._withErrorHandlerProvider(provider)
 
-  /**
-    * Add an [[AMFEventListener]]
-    * @param listener [[AMFEventListener]] to add to configuration object
-    * @return [[AMFConfiguration]] with [[AMFEventListener]] added
+  /** Add an [[AMFEventListener]]
+    * @param listener
+    *   [[AMFEventListener]] to add to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[AMFEventListener]] added
     */
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = super._withEventListener(listener)
 
-  /**
-    * Register a Dialect
-    * @param url URL of the Dialect to register
-    * @return A CompletableFuture of [[AMFConfiguration]]
+  /** Register a Dialect
+    * @param url
+    *   URL of the Dialect to register
+    * @return
+    *   A CompletableFuture of [[AMFConfiguration]]
     */
   override def withDialect(url: String): Future[AMFConfiguration] =
     super.withDialect(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
-  /**
-    * Register a Dialect
-    * @param dialect [[Dialect]] to register
-    * @return [[AMFConfiguration]] with [[Dialect]] registered
+  /** Register a Dialect
+    * @param dialect
+    *   [[Dialect]] to register
+    * @return
+    *   [[AMFConfiguration]] with [[Dialect]] registered
     */
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
 
-  /**
-    * Register a [[Dialect]] linked from a [[DialectInstance]]
-    * @param url of the [[DialectInstance]]
-    * @return A CompletableFuture of [[AMFConfiguration]]
+  /** Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url
+    *   of the [[DialectInstance]]
+    * @return
+    *   A CompletableFuture of [[AMFConfiguration]]
     */
   override def forInstance(url: String): Future[AMFConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
-  /**
-    * Set [[BaseExecutionEnvironment]]
-    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
-    * @return [[AMFConfiguration]] with [[BaseExecutionEnvironment]] set
+  /** Set [[BaseExecutionEnvironment]]
+    * @param executionEnv
+    *   [[BaseExecutionEnvironment]] to set to configuration object
+    * @return
+    *   [[AMFConfiguration]] with [[BaseExecutionEnvironment]] set
     */
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  override protected[amf] def copy(resolvers: AMFResolvers,
-                                   errorHandlerProvider: ErrorHandlerProvider,
-                                   registry: AMFRegistry,
-                                   listeners: Set[AMFEventListener],
-                                   options: AMFOptions): AMFConfiguration =
+  override protected[amf] def copy(
+      resolvers: AMFResolvers,
+      errorHandlerProvider: ErrorHandlerProvider,
+      registry: AMFRegistry,
+      listeners: Set[AMFEventListener],
+      options: AMFOptions
+  ): AMFConfiguration =
     new AMFConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
 }

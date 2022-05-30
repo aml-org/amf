@@ -10,9 +10,7 @@ import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.metamodel.ExampleModel._
 import org.yaml.model.YPart
 
-/**
-  *
-  */
+/** */
 class Example private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
     with Linkable

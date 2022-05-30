@@ -10,27 +10,32 @@ import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-/**
-  * Server meta model
+/** Server meta model
   */
 object ServerModel extends DomainElementModel with NameFieldSchema with DescriptionField {
-  val Url = Field(Str,
-                  Core + "urlTemplate",
-                  ModelDoc(ModelVocabularies.Core, "urlTemplate", "URL (potentially a template) for the server"))
+  val Url = Field(
+    Str,
+    Core + "urlTemplate",
+    ModelDoc(ModelVocabularies.Core, "urlTemplate", "URL (potentially a template) for the server")
+  )
 
-  val Variables = Field(Array(ParameterModel),
-                        ApiContract + "variable",
-                        ModelDoc(ModelVocabularies.ApiContract, "variable", "Variables in the URL for the server"))
+  val Variables = Field(
+    Array(ParameterModel),
+    ApiContract + "variable",
+    ModelDoc(ModelVocabularies.ApiContract, "variable", "Variables in the URL for the server")
+  )
 
   val Protocol = Field(
     Str,
     ApiContract + "protocol",
-    ModelDoc(ModelVocabularies.ApiContract, "protocol", "The protocol this URL supports for connection"))
+    ModelDoc(ModelVocabularies.ApiContract, "protocol", "The protocol this URL supports for connection")
+  )
 
   val ProtocolVersion = Field(
     Str,
     ApiContract + "protocolVersion",
-    ModelDoc(ModelVocabularies.ApiContract, "protocolVersion", "The version of the protocol used for connection"))
+    ModelDoc(ModelVocabularies.ApiContract, "protocolVersion", "The version of the protocol used for connection")
+  )
 
   val Security = Field(
     Array(SecurityRequirementModel),

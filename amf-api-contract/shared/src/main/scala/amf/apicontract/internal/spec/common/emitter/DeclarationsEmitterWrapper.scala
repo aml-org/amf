@@ -11,9 +11,12 @@ case class DeclarationsEmitterWrapper(emitters: Seq[EntryEmitter], ordering: Spe
 
   override def emit(b: YDocument.EntryBuilder): Unit =
     if (emitters.nonEmpty)
-      b.entry("components", _.obj { b =>
-        traverse(ordering.sorted(emitters), b)
-      })
+      b.entry(
+        "components",
+        _.obj { b =>
+          traverse(ordering.sorted(emitters), b)
+        }
+      )
 
   // Position of any of the components.
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)

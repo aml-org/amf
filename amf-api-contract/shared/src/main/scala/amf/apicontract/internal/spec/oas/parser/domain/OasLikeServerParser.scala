@@ -14,11 +14,13 @@ import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, QuickFieldParserOps, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry}
 
-/**
-  * Single server OAS-like parser
-  * @param parent parent node for server
-  * @param entryLike map representing server | entry representing the server and its name
-  * @param ctx parsing context
+/** Single server OAS-like parser
+  * @param parent
+  *   parent node for server
+  * @param entryLike
+  *   map representing server | entry representing the server and its name
+  * @param ctx
+  *   parsing context
   */
 class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val ctx: OasLikeWebApiContext)
     extends QuickFieldParserOps {
@@ -77,10 +79,13 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
       .withDataType(DataType.String, Annotations.synthesized())
     val counter: IdCounter = new IdCounter();
     map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(counter))
-    map.key("default", entry => {
-      schema.withDefaultStr(entry.value)
-      schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry.value))
-    })
+    map.key(
+      "default",
+      entry => {
+        schema.withDefaultStr(entry.value)
+        schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry.value))
+      }
+    )
     map.key("description", ShapeModel.Description in schema)
   }
 }

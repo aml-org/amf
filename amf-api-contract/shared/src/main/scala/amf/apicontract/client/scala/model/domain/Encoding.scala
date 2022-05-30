@@ -8,8 +8,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMap
 
-/**
-  * Encoding internal model
+/** Encoding internal model
   */
 case class Encoding(fields: Fields, annotations: Annotations) extends DomainElement {
 

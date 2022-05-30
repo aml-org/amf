@@ -9,9 +9,9 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-case class StringArrayTagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class StringArrayTagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def position(): Position = tags.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 

@@ -23,7 +23,10 @@ class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuild
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("Api (raml)") {
-    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Raml10YamlHint) map assertDocument
+    build(
+      "file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
+      Raml10YamlHint
+    ) map assertDocument
   }
 
   test("Vocabulary") {
@@ -33,11 +36,17 @@ class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuild
   }
 
   test("Api (oas)") {
-    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", Oas20JsonHint) map assertDocument
+    build(
+      "file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi",
+      Oas20JsonHint
+    ) map assertDocument
   }
 
   test("Api (amf)") {
-    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", AmfJsonHint) map assertDocument
+    build(
+      "file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld",
+      AmfJsonHint
+    ) map assertDocument
   }
 
   test("Simple import") {
@@ -61,16 +70,22 @@ class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuild
         None
       )
     } map { ex =>
-      assert(ex.getMessage.contains(
-        s"Cyclic found following references file://amf-cli/shared/src/test/resources/reference-itself.raml -> file://amf-cli/shared/src/test/resources/reference-itself.raml"))
+      assert(
+        ex.getMessage.contains(
+          s"Cyclic found following references file://amf-cli/shared/src/test/resources/reference-itself.raml -> file://amf-cli/shared/src/test/resources/reference-itself.raml"
+        )
+      )
     }
   }
 
   test("Cache duplicate imports") {
     val cache = new TestCache()
-    build("file://amf-cli/shared/src/test/resources/input-duplicate-includes.json", Oas20JsonHint, cache = Some(cache)) map {
-      _ =>
-        cache.assertCacheSize(2)
+    build(
+      "file://amf-cli/shared/src/test/resources/input-duplicate-includes.json",
+      Oas20JsonHint,
+      cache = Some(cache)
+    ) map { _ =>
+      cache.assertCacheSize(2)
     }
   }
 
@@ -113,10 +128,12 @@ class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuild
         assert(r.results.lengthCompare(2) == 0)
         assert(
           r.results.head.message
-            .contains("amf-cli/shared/src/test/resources/nonExists.raml"))
+            .contains("amf-cli/shared/src/test/resources/nonExists.raml")
+        )
         assert(
           r.results.head.message
-            .contains("such file or directory")) // temp, assert better the message for js and jvm
+            .contains("such file or directory")
+        ) // temp, assert better the message for js and jvm
       })
   }
 
@@ -161,17 +178,19 @@ class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuild
         None
       )
     } map { ex =>
-      assert(ex.getMessage.contains(
-        s"Cyclic found following references file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension}"))
+      assert(
+        ex.getMessage.contains(
+          s"Cyclic found following references file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension}"
+        )
+      )
     }
   }
 
   private class TestCache extends Cache {
     def assertCacheSize(expectedSize: Int): Assertion = {
       if (size != expectedSize) {
-        cache.foreach {
-          case (a, b) =>
-            println(s"$a -> ${System.identityHashCode(b)}")
+        cache.foreach { case (a, b) =>
+          println(s"$a -> ${System.identityHashCode(b)}")
         }
       }
       size should be(expectedSize)

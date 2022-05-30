@@ -82,8 +82,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Invalid annotation override in overlay") {
-    checkReport("/overlays/invalid-override-annotation/overlay.raml",
-                Some("overlay-invalid-override-annotation.report"))
+    checkReport(
+      "/overlays/invalid-override-annotation/overlay.raml",
+      Some("overlay-invalid-override-annotation.report")
+    )
   }
 
   test("Invalid baseuri override in overlay") {
@@ -91,8 +93,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Invalid declaration override in overlay") {
-    checkReport("/overlays/invalid-override-declaration/overlay.raml",
-                Some("overlay-invalid-override-declaration.report"))
+    checkReport(
+      "/overlays/invalid-override-declaration/overlay.raml",
+      Some("overlay-invalid-override-declaration.report")
+    )
   }
 
   test("Valid annotation insertion in overlay") {
@@ -160,9 +164,11 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Test reference to non existing entry at oas definitions") {
-    checkReport("/reference-jsonschema-property/bad-link.raml",
-                profile = Oas20Profile,
-                golden = Some("ref-jsonschema-bad-link.report"))
+    checkReport(
+      "/reference-jsonschema-property/bad-link.raml",
+      profile = Oas20Profile,
+      golden = Some("ref-jsonschema-bad-link.report")
+    )
   }
 
   test("Test resolve double var at resource type (resolved link replacement)") {

@@ -34,15 +34,20 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Asy
     ctx.declarations
       .findServerBindings(label, SearchScope.Named)
       .map(serverBindings =>
-        nameAndAdopt(serverBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
-                     entryLike.key))
+        nameAndAdopt(
+          serverBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
+          entryLike.key
+        )
+      )
       .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ServerBindings =
     new ErrorServerBindings(fullRef, entryLike.asMap)
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ServerBinding = {
+  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): ServerBinding = {
     val binding = MqttServerBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -61,7 +66,8 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Asy
 
   private def parseLastWill(binding: MqttServerBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
-      "lastWill", { entry =>
+      "lastWill",
+      { entry =>
         val lastWill    = MqttServerLastWill(Annotations(entry.value))
         val lastWillMap = entry.value.as[YMap]
 

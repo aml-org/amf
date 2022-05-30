@@ -16,7 +16,8 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
     nodeShape
   }
 
-  def parseName(adopt: NodeShape => Unit): Unit = withDeclaredShape(ast, MESSAGE_NAME, nodeShape, { _ => adopt(nodeShape)})
+  def parseName(adopt: NodeShape => Unit): Unit =
+    withDeclaredShape(ast, MESSAGE_NAME, nodeShape, { _ => adopt(nodeShape) })
 
   def parseMessageBody(): Unit = {
     collect(ast, Seq(MESSAGE_BODY, MESSAGE_ELEMENT)).foreach { case messageElement: Node =>
@@ -32,26 +33,33 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
             enum.adopted(nodeShape.id)
           })
         case ONE_OF =>
-          GrpcOneOfParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({ union: UnionShape =>
-            union.adopted(nodeShape.id)
-            nodeShape.withAnd(nodeShape.and ++ Seq(union))
+          GrpcOneOfParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({
+            union: UnionShape =>
+              union.adopted(nodeShape.id)
+              nodeShape.withAnd(nodeShape.and ++ Seq(union))
           })
         case MAP_FIELD =>
-          GrpcMapParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({ mapProperty: PropertyShape =>
-            mapProperty.adopted(nodeShape.id)
-            nodeShape.withProperties(nodeShape.properties ++ Seq(mapProperty))
+          GrpcMapParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({
+            mapProperty: PropertyShape =>
+              mapProperty.adopted(nodeShape.id)
+              nodeShape.withProperties(nodeShape.properties ++ Seq(mapProperty))
           })
         case MESSAGE_DEF =>
-          GrpcMessageParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({nestedNodeShape: NodeShape =>
-            nestedNodeShape.adopted(nodeShape.id)
+          GrpcMessageParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({
+            nestedNodeShape: NodeShape =>
+              nestedNodeShape.adopted(nodeShape.id)
           })
         case OPTION_STATEMENT =>
           GrpcOptionParser(messageElementAst).parse({ extension =>
             extension.adopted(nodeShape.id)
             nodeShape.withCustomDomainProperty(extension)
           })
-        case _        =>
-          astError(nodeShape.id, s"unexpected Proto3 message element ${messageElement.children.head.name}", toAnnotations(messageElement.children.head))
+        case _ =>
+          astError(
+            nodeShape.id,
+            s"unexpected Proto3 message element ${messageElement.children.head.name}",
+            toAnnotations(messageElement.children.head)
+          )
       }
     }
   }

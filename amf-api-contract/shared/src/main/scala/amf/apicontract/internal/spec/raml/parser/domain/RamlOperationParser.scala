@@ -27,9 +27,9 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends SpecParserOps {
+case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional: Boolean = false)(implicit
+    ctx: RamlWebApiContext
+) extends SpecParserOps {
 
   private def build(): Operation = {
     val method: String = entry.key.as[YScalar].text
@@ -38,9 +38,11 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
 
     if (parseOptional && method.endsWith("?")) {
       operation.set(OperationModel.Optional, value = true)
-      operation.set(OperationModel.Method,
-                    AmfScalar(method.stripSuffix("?"), methodNode.annotations),
-                    Annotations.inferred())
+      operation.set(
+        OperationModel.Method,
+        AmfScalar(method.stripSuffix("?"), methodNode.annotations),
+        Annotations.inferred()
+      )
     } else {
       operation.setWithoutId(Method, methodNode, Annotations.inferred())
     }
@@ -56,10 +58,12 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       // Empty operation
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
       case _ =>
-        ctx.eh.violation(InvalidOperationType,
-                         operation,
-                         s"Invalid node ${entry.value} for method ${operation.method.value()}",
-                         entry.value.location)
+        ctx.eh.violation(
+          InvalidOperationType,
+          operation,
+          s"Invalid node ${entry.value} for method ${operation.method.value()}",
+          entry.value.location
+        )
         operation
     }
   }
@@ -76,7 +80,8 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key(
       "externalDocs".asRamlAnnotation,
       OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
-        WebApiShapeParserContextAdapter(ctx)))
+        WebApiShapeParserContextAdapter(ctx)
+      ))
     )
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
@@ -102,7 +107,8 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       .parse()
       .foreach(req =>
         operation
-          .setWithoutId(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))
+          .setWithoutId(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred())
+      )
 
     map.key(
       "defaultResponse".asRamlAnnotation,
@@ -138,9 +144,11 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
         }
 
         val defaultResponses = operation.responses
-        operation.setWithoutId(OperationModel.Responses,
-                               AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
-                               Annotations(entry))
+        operation.setWithoutId(
+          OperationModel.Responses,
+          AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
 
@@ -165,10 +173,12 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 
-    AnnotationParser(operation,
-                     map,
-                     if (isTrait) List(VocabularyMappings.`trait`)
-                     else List(VocabularyMappings.operation))(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(
+      operation,
+      map,
+      if (isTrait) List(VocabularyMappings.`trait`)
+      else List(VocabularyMappings.operation)
+    )(WebApiShapeParserContextAdapter(ctx)).parse()
 
     operation
   }

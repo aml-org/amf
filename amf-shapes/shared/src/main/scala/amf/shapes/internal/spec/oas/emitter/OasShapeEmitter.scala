@@ -26,11 +26,13 @@ import amf.shapes.internal.spec.oas.emitter
 
 import scala.collection.mutable.ListBuffer
 
-abstract class OasShapeEmitter(shape: Shape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               pointer: Seq[String] = Nil,
-                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext) {
+abstract class OasShapeEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val emitDocumentation = spec.options.isWithDocumentation
@@ -45,15 +47,18 @@ abstract class OasShapeEmitter(shape: Shape,
 
       fs.entry(ShapeModel.Default) match {
         case Some(f) =>
-          result += EntryPartEmitter("default",
-                                     DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                     position = pos(f.value.annotations))
+          result += EntryPartEmitter(
+            "default",
+            DataNodeEmitter(shape.default, ordering)(spec.eh),
+            position = pos(f.value.annotations)
+          )
         case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
       }
 
       fs.entry(AnyShapeModel.Documentation)
         .map(f =>
-          result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering))
+          result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering)
+        )
     }
 
     fs.entry(ShapeModel.Values).map(f => result += common.emitter.EnumValuesEmitter("enum", f.value, ordering))
@@ -82,8 +87,10 @@ abstract class OasShapeEmitter(shape: Shape,
 
     fs.entry(ShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly", fe))
 
-    if (spec.schemaVersion.isInstanceOf[OAS30SchemaVersion] || spec.schemaVersion.isBiggerThanOrEqualTo(
-          JSONSchemaDraft7SchemaVersion)) {
+    if (
+      spec.schemaVersion
+        .isInstanceOf[OAS30SchemaVersion] || spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)
+    ) {
       fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
       fs.entry(ShapeModel.WriteOnly).map(fe => result += ValueEmitter("writeOnly", fe))
     }
@@ -105,9 +112,11 @@ abstract class OasShapeEmitter(shape: Shape,
         result += ValueEmitter(
           "nullable",
           FieldEntry(
-            Field(Bool,
-                  Namespace.Shapes + "nullable",
-                  ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
+            Field(
+              Bool,
+              Namespace.Shapes + "nullable",
+              ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")
+            ),
             Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))
           )
         )

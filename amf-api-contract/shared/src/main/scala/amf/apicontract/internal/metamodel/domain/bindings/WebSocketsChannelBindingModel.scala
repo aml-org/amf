@@ -14,9 +14,11 @@ object WebSocketsChannelBindingModel
     with BindingHeaders
     with BindingQuery {
   val Method =
-    Field(Str,
-          ApiBinding + "method",
-          ModelDoc(ModelVocabularies.ApiBinding, "method", "The HTTP method to use when establishing the connection"))
+    Field(
+      Str,
+      ApiBinding + "method",
+      ModelDoc(ModelVocabularies.ApiBinding, "method", "The HTTP method to use when establishing the connection")
+    )
 
   override def modelInstance: AmfObject = WebSocketsChannelBinding()
 

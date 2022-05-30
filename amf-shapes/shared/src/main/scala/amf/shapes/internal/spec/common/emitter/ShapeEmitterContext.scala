@@ -38,7 +38,7 @@ trait SpecAwareEmitterContext {
 
 trait RamlShapeEmitterContext extends ShapeEmitterContext {
   def typesEmitter
-    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
+      : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
   def typesKey: YNode
 
   def localReference(shape: Shape): PartEmitter
@@ -54,18 +54,20 @@ object JsonSchemaDeclarationsPath {
   }
 }
 
-/**
-  * InlinedJsonSchemaShape context is used when emitting a single shape in a non compacted form.
-  * This implies having to use compact declaredTypesEmitter and recursiveShapeEmitter emitters to handle shapes that have RecursiveShapes,
+/** InlinedJsonSchemaShape context is used when emitting a single shape in a non compacted form. This implies having to
+  * use compact declaredTypesEmitter and recursiveShapeEmitter emitters to handle shapes that have RecursiveShapes,
   * emitting their fixpoint target to the schemas definitions facet dynamically.
   */
-class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
-                                          schemaVersion: SchemaVersion,
-                                          config: RenderConfiguration)
-    extends JsonSchemaShapeEmitterContext(eh, schemaVersion, config) {
-  override def recursiveShapeEmitter(shape: RecursiveShape,
-                                     ordering: SpecOrdering,
-                                     schemaPath: Seq[(String, String)]): EntryEmitter = {
+class InlineJsonSchemaShapeEmitterContext(
+    eh: AMFErrorHandler,
+    schemaVersion: SchemaVersion,
+    config: RenderConfiguration
+) extends JsonSchemaShapeEmitterContext(eh, schemaVersion, config) {
+  override def recursiveShapeEmitter(
+      shape: RecursiveShape,
+      ordering: SpecOrdering,
+      schemaPath: Seq[(String, String)]
+  ): EntryEmitter = {
     new CompactOasRecursiveShapeEmitter(shape, ordering, schemaPath)
   }
 
@@ -79,10 +81,11 @@ object JsonSchemaShapeEmitterContext {
     new JsonSchemaShapeEmitterContext(eh, schemaVersion, config)
 }
 
-class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
-                                    val schemaVersion: SchemaVersion,
-                                    val config: RenderConfiguration)
-    extends OasLikeShapeEmitterContext {
+class JsonSchemaShapeEmitterContext(
+    val eh: AMFErrorHandler,
+    val schemaVersion: SchemaVersion,
+    val config: RenderConfiguration
+) extends OasLikeShapeEmitterContext {
 
   override def options: RenderOptions = config.renderOptions
 
@@ -98,17 +101,17 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
   override def arrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter =
     MultipleValuesArrayEmitter(key, f, ordering)
 
-  override def customFacetsEmitter(f: FieldEntry,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit]): CustomFacetsEmitter =
+  override def customFacetsEmitter(
+      f: FieldEntry,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit]
+  ): CustomFacetsEmitter =
     OasCustomFacetsEmitter(f, ordering, references)
 
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
     OasFacetsInstanceEmitter(extension, ordering)
 
-  override def annotationEmitter(parent: CustomizableElement,
-                                 e: DomainExtension,
-                                 default: SpecOrdering): EntryEmitter =
+  override def annotationEmitter(parent: CustomizableElement, e: DomainExtension, default: SpecOrdering): EntryEmitter =
     OasAnnotationEmitter(parent, e, default)
 
   override def spec: Spec = Spec.JSONSCHEMA
@@ -133,17 +136,21 @@ trait OasLikeShapeEmitterContext
     with CompactableEmissionContext
     with OasCompactEmitterFactory {
 
-  def recursiveShapeEmitter(recursive: RecursiveShape,
-                            ordering: SpecOrdering,
-                            schemaPath: Seq[(String, String)]): Emitter
+  def recursiveShapeEmitter(
+      recursive: RecursiveShape,
+      ordering: SpecOrdering,
+      schemaPath: Seq[(String, String)]
+  ): Emitter
 
   def schemasDeclarationsPath: String
-  def typeEmitters(shape: Shape,
-                   ordering: SpecOrdering,
-                   ignored: Seq[Field],
-                   references: Seq[BaseUnit],
-                   pointer: Seq[String],
-                   schemaPath: Seq[(String, String)]): Seq[Emitter]
+  def typeEmitters(
+      shape: Shape,
+      ordering: SpecOrdering,
+      ignored: Seq[Field],
+      references: Seq[BaseUnit],
+      pointer: Seq[String],
+      schemaPath: Seq[(String, String)]
+  ): Seq[Emitter]
   def anyOfKey: YNode
 }
 

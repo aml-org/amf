@@ -25,8 +25,9 @@ trait BaseApiValidationPlugin extends AMFValidatePlugin with ModelResolution wit
 
   override def applies(element: ValidationInfo): Boolean = !isAmlUnit(element.baseUnit)
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[ValidationResult] = {
     withResolvedModel(unit, profile, options.config) { (resolvedUnit, resolutionReport) =>
       val report = resolutionReport match {
         case Some(report) if !report.conforms => Future.successful(report)
@@ -39,8 +40,9 @@ trait BaseApiValidationPlugin extends AMFValidatePlugin with ModelResolution wit
     }
   }
 
-  protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport]
+  protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[AMFValidationReport]
 
   protected def effectiveOrException(config: ValidationConfiguration, profile: ProfileName): EffectiveValidations = {
     config.effectiveValidations.getOrElse(profile, throw ProfileNotFoundException(profile))

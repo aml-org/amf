@@ -31,11 +31,13 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
   def basePath: String
   def spec: Spec
 
-  def renderElement(source: String,
-                    extractor: BaseUnit => Option[DomainElement],
-                    golden: String,
-                    target: Hint,
-                    directory: String = basePath): Future[Assertion] = {
+  def renderElement(
+      source: String,
+      extractor: BaseUnit => Option[DomainElement],
+      golden: String,
+      target: Hint,
+      directory: String = basePath
+  ): Future[Assertion] = {
 
     val config    = EmissionConfig(source, golden, target, directory)
     val amfConfig = ConfigProvider.configFor(target.spec)

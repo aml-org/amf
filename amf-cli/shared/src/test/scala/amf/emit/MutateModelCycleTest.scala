@@ -20,19 +20,23 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
       traitNode.asInstanceOf[ParametrizedDeclaration].withVariables(Seq(newParam))
       bu
     }
-    transformCycle("add-empty-variable.raml",
-                   "add-empty-variable-mutated.raml",
-                   Raml10YamlHint,
-                   Raml10YamlHint,
-                   transform)
+    transformCycle(
+      "add-empty-variable.raml",
+      "add-empty-variable-mutated.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      transform
+    )
   }
 
-  final def transformCycle(source: String,
-                           golden: String,
-                           hint: Hint,
-                           target: Hint,
-                           transform: BaseUnit => BaseUnit,
-                           directory: String = basePath): Future[Assertion] = {
+  final def transformCycle(
+      source: String,
+      golden: String,
+      hint: Hint,
+      target: Hint,
+      transform: BaseUnit => BaseUnit,
+      directory: String = basePath
+  ): Future[Assertion] = {
     val config    = CycleConfig(source, golden, hint, target, directory, None, None)
     val amfConfig = buildConfig(configFor(target.spec), None, None)
     build(config, amfConfig)

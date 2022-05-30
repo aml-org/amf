@@ -19,9 +19,11 @@ object Oas20RenderPlugin extends OasRenderPlugin {
 
   override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 
-  override def unparseAsYDocument(unit: BaseUnit,
-                                  renderConfig: RenderConfiguration,
-                                  errorHandler: AMFErrorHandler): Option[YDocument] =
+  override def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderConfig, errorHandler)).emitModule())
       case document: Document =>

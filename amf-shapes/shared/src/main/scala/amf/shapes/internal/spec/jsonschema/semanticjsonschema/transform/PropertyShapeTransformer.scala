@@ -10,8 +10,9 @@ import amf.core.client.scala.model.{DataType, ValueField}
 import amf.shapes.client.scala.model.domain._
 import org.mulesoft.common.collections.FilterType
 
-class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
-    implicit errorHandler: AMFErrorHandler) {
+class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(implicit
+    errorHandler: AMFErrorHandler
+) {
 
   val mapping: PropertyMapping = PropertyMapping(property.annotations)
 
@@ -81,7 +82,9 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
   }
 
   private def sanitizeScalarRange(range: String): String = {
-    if (range == DataType.Long) DataType.Float
+    // In JSON Schema type integer represents all non decimal numbers (without int32 limit), so we will convert it to AML long
+    if (range == DataType.Integer) DataType.Long
+    // In JSON Schema type number usually is used to represent decimal numbers (or at least it accept them), so we will convert it to AML double
     else if (range == DataType.Number) DataType.Double
     else range
   }

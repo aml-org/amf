@@ -10,9 +10,9 @@ import amf.shapes.internal.domain.metamodel.UnionShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-abstract class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends Emitter {
+abstract class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends Emitter {
 
   def emitUnionExpanded(b: EntryBuilder): Unit = {
     b.entry(
@@ -29,9 +29,9 @@ abstract class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
   override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)
 }
 
-case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends AnyOfShapeEmitter(shape, ordering, references)
+case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends AnyOfShapeEmitter(shape, ordering, references)
     with EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = typeExpression match {
@@ -42,9 +42,9 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
   def emitUnionInlined(expression: String, b: EntryBuilder): Unit = b.entry("type", expression)
 }
 
-case class RamlInlinedAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends AnyOfShapeEmitter(shape, ordering, references)
+case class RamlInlinedAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends AnyOfShapeEmitter(shape, ordering, references)
     with PartEmitter {
 
   override def emit(b: PartBuilder): Unit = typeExpression match {

@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: main test
+version: v1
+
+types:
+    User:
+        properties:
+            name: string
+
+traits:
+    parametrized:
+        body:
+            application/json:
+                type: <<model>>
+
+/resource:
+    post:
+        is:
+          - { parametrized: { model: User } }

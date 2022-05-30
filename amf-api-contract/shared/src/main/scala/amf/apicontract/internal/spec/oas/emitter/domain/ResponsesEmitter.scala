@@ -16,11 +16,13 @@ import amf.shapes.internal.spec.oas.emitter
 import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-class ResponsesEmitter(key: String,
-                       f: FieldEntry,
-                       ordering: SpecOrdering,
-                       references: Seq[BaseUnit],
-                       orphanAnnotations: Seq[DomainExtension])(implicit val spec: OasSpecEmitterContext)
+class ResponsesEmitter(
+    key: String,
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    orphanAnnotations: Seq[DomainExtension]
+)(implicit val spec: OasSpecEmitterContext)
     extends EntryEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {

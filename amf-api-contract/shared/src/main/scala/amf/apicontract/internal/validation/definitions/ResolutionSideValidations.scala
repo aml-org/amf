@@ -69,8 +69,8 @@ object ResolutionSideValidations extends Validations {
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidTypeInheritanceWarningSpecification.id -> all(WARNING),
-    InvalidConsumesWithFileParameter.id -> all(WARNING),
-    DuplicatedParameterWarning.id -> all(WARNING)
+    InvalidConsumesWithFileParameter.id           -> all(WARNING),
+    DuplicatedParameterWarning.id                 -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(

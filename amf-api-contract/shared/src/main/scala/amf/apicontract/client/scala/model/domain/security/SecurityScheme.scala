@@ -54,9 +54,11 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
           case other                 => other
         }
         // TODO had to reject sourceAST because it is used by CustomShaclValidator (IDKW)
-        set(Type,
-            AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST]) += Inferred()),
-            fields.getValue(Type).annotations)
+        set(
+          Type,
+          AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST]) += Inferred()),
+          fields.getValue(Type).annotations
+        )
       case _ => // ignore
     }
   }
@@ -138,20 +140,22 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
     val scheme: SecurityScheme = SecurityScheme(annotations)
     val cloned                 = scheme.withName(name.value()).adopted(parent)
 
-    this.fields.foreach {
-      case (f, v) =>
-        val clonedValue = v.value match {
-          case s: Settings => s.cloneSettings(cloned.id)
-          case a: AmfArray =>
-            AmfArray(a.values.map {
+    this.fields.foreach { case (f, v) =>
+      val clonedValue = v.value match {
+        case s: Settings => s.cloneSettings(cloned.id)
+        case a: AmfArray =>
+          AmfArray(
+            a.values.map {
               case p: Parameter => p.cloneParameter(cloned.id)
               case r: Response  => r.cloneResponse(cloned.id)
               case o            => o
-            }, a.annotations)
-          case o => o
-        }
+            },
+            a.annotations
+          )
+        case o => o
+      }
 
-        cloned.set(f, clonedValue, v.annotations)
+      cloned.set(f, clonedValue, v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

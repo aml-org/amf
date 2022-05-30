@@ -28,28 +28,30 @@ object RuntimeProc extends Proc {
   override def exit(statusCode: Int): Unit = System.exit(statusCode)
 }
 
-case class ParserConfig(mode: Option[String] = None,
-                        input: Option[String] = None,
-                        inputFormat: Option[String] = None,
-                        inputMediaType: Option[String] = None,
-                        output: Option[String] = None,
-                        outputFormat: Option[String] = None,
-                        outputMediaType: Option[String] = None,
-                        withSourceMaps: Boolean = false,
-                        withSourceInformation: Boolean = false,
-                        withCompactNamespaces: Boolean = false,
-                        validate: Boolean = true,
-                        trace: Boolean = false,
-                        patchTarget: Option[String] = None,
-                        validationProfile: String = AmfProfile.profile,
-                        customProfile: Option[String] = None,
-                        resolve: Boolean = false,
-                        // list of dialects that will be loaded in the registry
-                        // before parsing
-                        dialects: Seq[String] = Seq(),
-                        stdout: ProcWriter = StdOutWriter,
-                        stderr: ProcWriter = StdErrWriter,
-                        proc: Proc = RuntimeProc) {
+case class ParserConfig(
+    mode: Option[String] = None,
+    input: Option[String] = None,
+    inputFormat: Option[String] = None,
+    inputMediaType: Option[String] = None,
+    output: Option[String] = None,
+    outputFormat: Option[String] = None,
+    outputMediaType: Option[String] = None,
+    withSourceMaps: Boolean = false,
+    withSourceInformation: Boolean = false,
+    withCompactNamespaces: Boolean = false,
+    validate: Boolean = true,
+    trace: Boolean = false,
+    patchTarget: Option[String] = None,
+    validationProfile: String = AmfProfile.profile,
+    customProfile: Option[String] = None,
+    resolve: Boolean = false,
+    // list of dialects that will be loaded in the registry
+    // before parsing
+    dialects: Seq[String] = Seq(),
+    stdout: ProcWriter = StdOutWriter,
+    stderr: ProcWriter = StdErrWriter,
+    proc: Proc = RuntimeProc
+) {
 
   val profile: ProfileName = ProfileName(validationProfile)
 }

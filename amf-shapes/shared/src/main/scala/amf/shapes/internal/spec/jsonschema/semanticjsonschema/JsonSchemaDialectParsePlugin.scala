@@ -4,12 +4,7 @@ import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
-import amf.core.client.scala.parse.document.{
-  ParserContext,
-  ReferenceHandler,
-  SyamlParsedDocument,
-  UnspecifiedReference
-}
+import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument, UnspecifiedReference}
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchemaDialect, Mimes, Spec}
@@ -54,15 +49,16 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
   }
 
   private def context(wrapped: ParserContext): ShapeParserContext =
-    JsonSchemaContext(wrapped, Some(JSONSchemaDraft201909SchemaVersion)) // If $schema key is absent, default schema version is 2019-09
+    JsonSchemaContext(
+      wrapped,
+      Some(JSONSchemaDraft201909SchemaVersion)
+    ) // If $schema key is absent, default schema version is 2019-09
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/semantics+schema+json`, Mimes.`application/json`)
 
-  /**
-    * media types which specifies vendors that may be referenced.
+  /** media types which specifies vendors that may be referenced.
     */
   override def validSpecsToReference: Seq[Spec] = Nil
 

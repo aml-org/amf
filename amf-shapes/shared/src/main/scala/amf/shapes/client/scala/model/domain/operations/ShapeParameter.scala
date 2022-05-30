@@ -10,12 +10,13 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
     extends AbstractParameter(fields, annotations) {
 
   override private[amf] def buildParameter(ann: Annotations): ShapeParameter = ShapeParameter(ann)
-  override def parameterName: StrField    = fields.field(ParameterName)
-  override def required: BoolField        = fields.field(Required)
-  override def binding: StrField          = fields.field(Binding)
-  override def withParameterName(name: String, annots: Annotations = Annotations()): this.type = set(ParameterName, name, annots)
-  override def withRequired(required: Boolean): this.type               = set(Required, required)
-  override def withBinding(binding: String): this.type =set(Binding, binding)
+  override def parameterName: StrField                                       = fields.field(ParameterName)
+  override def required: BoolField                                           = fields.field(Required)
+  override def binding: StrField                                             = fields.field(Binding)
+  override def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
+    set(ParameterName, name, annots)
+  override def withRequired(required: Boolean): this.type = set(Required, required)
+  override def withBinding(binding: String): this.type    = set(Binding, binding)
 
   override def meta: ShapeParameterModel.type = ShapeParameterModel
 }

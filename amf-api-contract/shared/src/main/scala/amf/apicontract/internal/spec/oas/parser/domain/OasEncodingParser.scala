@@ -32,13 +32,14 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              OasHeaderParametersParser(entry.value.as[YMap], { header =>
-                encoding.add(Headers, header)
-              }).parse()
-            encoding.fields.setWithoutId(
-                                EncodingModel.Headers,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
+              OasHeaderParametersParser(
+                entry.value.as[YMap],
+                { header =>
+                  encoding.add(Headers, header)
+                }
+              ).parse()
+            encoding.fields
+              .setWithoutId(EncodingModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
 

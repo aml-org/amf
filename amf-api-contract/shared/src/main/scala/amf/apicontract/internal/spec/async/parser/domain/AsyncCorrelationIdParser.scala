@@ -28,10 +28,10 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
   }
 
   private def nameAndAdopt(correlationId: CorrelationId, key: Option[YNode]): CorrelationId = {
-    key.foreach(
-      k =>
-        correlationId
-          .setWithoutId(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
+    key.foreach(k =>
+      correlationId
+        .setWithoutId(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k))
+    )
     correlationId.add(entryLike.annotations)
   }
 
@@ -40,8 +40,11 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     ctx.declarations
       .findCorrelationId(label, SearchScope.Named)
       .map(correlationId =>
-        nameAndAdopt(correlationId.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
-                     entryLike.key))
+        nameAndAdopt(
+          correlationId.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
+          entryLike.key
+        )
+      )
       .getOrElse(remote(fullRef, map))
   }
 

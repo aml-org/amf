@@ -22,9 +22,11 @@ trait ApiElementRenderPlugin extends AMFElementRenderPlugin {
   override def applies(element: DomainElement, config: RenderConfiguration): Boolean =
     emitterFactory(IgnoringErrorHandler, config).emitter(element).isDefined
 
-  override def render(element: DomainElement,
-                      errorHandler: AMFErrorHandler,
-                      config: RenderConfiguration): ParsedDocument = {
+  override def render(
+      element: DomainElement,
+      errorHandler: AMFErrorHandler,
+      config: RenderConfiguration
+  ): ParsedDocument = {
     val emitter = emitterFactory(errorHandler, config).emitter(element).getOrElse(new EmptyEmitter())
     val document = YDocument { b =>
       traverse(Seq(emitter), b)

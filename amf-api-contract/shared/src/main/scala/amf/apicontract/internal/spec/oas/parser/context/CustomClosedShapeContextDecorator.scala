@@ -50,10 +50,12 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       val required = requiredFields.map(_.name)
       keys.foreach(key => {
         if (!possible.contains(key) && !required.contains(key) && !ignore(shape, key)) {
-          throwClosedShapeError(node,
-                                s"Property '$key' not supported in a $spec $shape node",
-                                getAstEntry(ast, key),
-                                isWarning = true)
+          throwClosedShapeError(
+            node,
+            s"Property '$key' not supported in a $spec $shape node",
+            getAstEntry(ast, key),
+            isWarning = true
+          )
         }
       })
     }

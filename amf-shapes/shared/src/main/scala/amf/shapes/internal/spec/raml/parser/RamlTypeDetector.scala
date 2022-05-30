@@ -28,7 +28,8 @@ import org.yaml.model._
 
 object RamlTypeDetection {
   def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
-      implicit ctx: ShapeParserContext): Option[TypeDef] =
+      implicit ctx: ShapeParserContext
+  ): Option[TypeDef] =
     RamlTypeDetector(parent, format, defaultType).detect(node)
 
   def parseFormat(node: YNode): Option[String] =
@@ -39,11 +40,13 @@ object RamlTypeDetection {
       }
 }
 
-case class RamlTypeDetector(parent: String,
-                            format: Option[String] = None,
-                            defaultType: DefaultType = StringDefaultType,
-                            recursive: Boolean = false,
-                            isExplicit: Boolean = false)(implicit ctx: ShapeParserContext)
+case class RamlTypeDetector(
+    parent: String,
+    format: Option[String] = None,
+    defaultType: DefaultType = StringDefaultType,
+    recursive: Boolean = false,
+    isExplicit: Boolean = false
+)(implicit ctx: ShapeParserContext)
     extends RamlTypeSyntax {
 
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
@@ -117,10 +120,12 @@ case class RamlTypeDetector(parent: String,
   }
 
   private def throwInvalidAbstractDeclarationError(node: YNode, t: String) = {
-    ctx.eh.violation(InvalidAbstractDeclarationParameterInType,
-                     parent,
-                     s"Resource Type/Trait parameter $t in type",
-                     node.location)
+    ctx.eh.violation(
+      InvalidAbstractDeclarationParameterInType,
+      parent,
+      s"Resource Type/Trait parameter $t in type",
+      node.location
+    )
   }
 
   private def isRamlVariable(t: String) = t.startsWith("<<") && t.endsWith(">>")
@@ -171,15 +176,22 @@ case class RamlTypeDetector(parent: String,
       _ <- `type`
       s <- schema
     } {
-      ctx.eh.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key.location)
+      ctx.eh.violation(
+        ExclusiveSchemaType,
+        parent,
+        "'schema' and 'type' properties are mutually exclusive",
+        s.key.location
+      )
     }
 
-    schema.foreach(
-      s =>
-        ctx.eh.warning(SchemaDeprecated,
-                       parent,
-                       "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
-                       s.key.location))
+    schema.foreach(s =>
+      ctx.eh.warning(
+        SchemaDeprecated,
+        parent,
+        "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
+        s.key.location
+      )
+    )
 
     `type`.orElse(schema)
   }
@@ -200,10 +212,12 @@ case class RamlTypeDetector(parent: String,
           else {
             val head = definedTypes.headOption
             if (inheritsHasDifferentSuperClasses(definedTypes)) {
-              ctx.eh.violation(InvalidTypeInheritanceErrorSpecification,
-                               parent,
-                               "Can't inherit from more than one class type",
-                               ast.location)
+              ctx.eh.violation(
+                InvalidTypeInheritanceErrorSpecification,
+                parent,
+                "Can't inherit from more than one class type",
+                ast.location
+              )
               Some(UndefinedType)
             } else head
           }
@@ -227,10 +241,12 @@ case class RamlTypeDetector(parent: String,
             case Some(linkedShape: Shape) if linkedShape == shape => Some(AnyType)
             case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
-              ctx.eh.violation(InvalidTypeDefinition,
-                               shape,
-                               "Found reference to domain element different of Shape when shape was expected",
-                               part.location)
+              ctx.eh.violation(
+                InvalidTypeDefinition,
+                shape,
+                "Found reference to domain element different of Shape when shape was expected",
+                part.location
+              )
               None
           }
         case _: NilShape => Some(NilType)
@@ -245,8 +261,9 @@ case class RamlTypeDetector(parent: String,
         case _                 => None
       }
 
-    private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(
-        implicit ctx: ShapeParserContext): Option[TypeDef] = {
+    private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(implicit
+        ctx: ShapeParserContext
+    ): Option[TypeDef] = {
       val typeSet =
         union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
       if (typeSet.size == 1) Some(typeSet.head)

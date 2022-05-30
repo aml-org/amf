@@ -11,11 +11,13 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasPropertiesShapeEmitter(f: FieldEntry,
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit],
-                                     pointer: Seq[String] = Nil,
-                                     schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasPropertiesShapeEmitter(
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val properties = f.array.values.partition(_.asInstanceOf[PropertyShape].patternName.option().isDefined)
@@ -40,14 +42,16 @@ case class OasPropertiesShapeEmitter(f: FieldEntry,
       propertiesKey,
       _.obj { b =>
         val result =
-          properties.map(
-            v =>
-              OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape],
-                                      ordering,
-                                      references,
-                                      propertiesKey,
-                                      pointer,
-                                      schemaPath))
+          properties.map(v =>
+            OasPropertyShapeEmitter(
+              v.asInstanceOf[PropertyShape],
+              ordering,
+              references,
+              propertiesKey,
+              pointer,
+              schemaPath
+            )
+          )
         traverse(ordering.sorted(result), b)
       }
     )

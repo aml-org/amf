@@ -9,9 +9,11 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation
 
 class CustomAnnotationDeclaration() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     try {
       val annotationsTypes = WellKnownAnnotation.ramlKnownAnnotations
         .map(name => CustomDomainProperty().withName(s"amf-$name").withSchema(AnyShape()))

@@ -12,9 +12,7 @@ import amf.core.internal.validation.CoreValidations.ExpectedModule
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
-/**
-  *
-  */
+/** */
 case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideEffect[BaseUnit] {
   override def onCollect(alias: String, unit: BaseUnit): Unit = {
     ctx.declarations.getOrCreateLibrary(alias)
@@ -53,11 +51,13 @@ abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit
   protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit
 }
 
-case class ReferencesParser(baseUnit: BaseUnit,
-                            rootLoc: String,
-                            key: String,
-                            map: YMap,
-                            references: Seq[ParsedReference])(implicit ctx: WebApiContext)
+case class ReferencesParser(
+    baseUnit: BaseUnit,
+    rootLoc: String,
+    key: String,
+    map: YMap,
+    references: Seq[ParsedReference]
+)(implicit ctx: WebApiContext)
     extends CommonReferencesParser(references) {
 
   private def target(url: String): Option[BaseUnit] =
@@ -89,11 +89,13 @@ case class ReferencesParser(baseUnit: BaseUnit,
               })
           case YType.Null =>
           case _ =>
-            ctx.eh.violation(InvalidModuleType,
-                             rootLoc,
-                             s"Invalid ast type for uses: ${entry.value.tagType}",
-                             entry.value.location)
-      }
+            ctx.eh.violation(
+              InvalidModuleType,
+              rootLoc,
+              s"Invalid ast type for uses: ${entry.value.tagType}",
+              entry.value.location
+            )
+        }
     )
   }
 
@@ -114,8 +116,9 @@ case class AsyncReferencesParser(references: Seq[ParsedReference])(implicit ctx:
 
 // Helper method to parse references and annotations before having an actual base unit
 object ReferencesParserAnnotations {
-  def apply(key: String, map: YMap, root: Root)(
-      implicit ctx: WebApiContext): (ReferenceCollector[BaseUnit], Option[Aliases]) = {
+  def apply(key: String, map: YMap, root: Root)(implicit
+      ctx: WebApiContext
+  ): (ReferenceCollector[BaseUnit], Option[Aliases]) = {
     val tmp          = Document()
     val declarations = ReferencesParser(tmp, root.location, key, map, root.references).parse()
     (declarations, tmp.annotations.find(classOf[Aliases]))

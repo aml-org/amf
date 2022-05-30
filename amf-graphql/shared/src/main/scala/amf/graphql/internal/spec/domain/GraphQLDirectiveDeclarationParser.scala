@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
+import amf.graphql.internal.spec.parser.syntax.{DefaultValueParser, GraphQLASTParserHelper, Locations}
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
@@ -34,9 +34,11 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseArgument(n: Node): PropertyShape = {
-    val name         = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
-    val argumentType = parseType(n, directive.id)
-    PropertyShape().withName(name).withRange(argumentType)
+    val propertyShape = PropertyShape()
+    val name          = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
+    val argumentType  = parseType(n, directive.id)
+    propertyShape.withName(name).withRange(argumentType)
+    DefaultValueParser.putDefaultValue(n, propertyShape)
   }
 
   private def parseLocations(): Unit = {

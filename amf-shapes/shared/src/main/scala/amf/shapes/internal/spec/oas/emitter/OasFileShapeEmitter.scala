@@ -11,11 +11,9 @@ import amf.shapes.internal.spec.common.TypeDef
 
 import scala.collection.mutable.ListBuffer
 
-case class OasFileShapeEmitter(scalar: FileShape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               isHeader: Boolean)(override implicit val spec: OasLikeShapeEmitterContext)
-    extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
+case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
+    override implicit val spec: OasLikeShapeEmitterContext
+) extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
   override def typeDef: Option[TypeDef] = None

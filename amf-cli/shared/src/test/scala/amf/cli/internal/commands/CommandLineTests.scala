@@ -47,12 +47,14 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ParseCommand(platform).run(cfg.get.copy(
-                                 stdout = stdout,
-                                 stderr = stderr,
-                                 proc = proc
-                               ),
-                               RAMLConfiguration.RAML10()) map { _ =>
+    ParseCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      ),
+      RAMLConfiguration.RAML10()
+    ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)
@@ -80,12 +82,14 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ParseCommand(platform).run(cfg.get.copy(
-                                 stdout = stdout,
-                                 stderr = stderr,
-                                 proc = proc
-                               ),
-                               APIConfiguration.API()) map { _ =>
+    ParseCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      ),
+      APIConfiguration.API()
+    ) map { _ =>
       val result = stdout.acc
       assert(stderr.acc == "")
       assert(proc.successful)
@@ -116,12 +120,14 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    TranslateCommand(platform).run(cfg.get.copy(
-                                     stdout = stdout,
-                                     stderr = stderr,
-                                     proc = proc
-                                   ),
-                                   WebAPIConfiguration.WebAPI()) map { _ =>
+    TranslateCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      ),
+      WebAPIConfiguration.WebAPI()
+    ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)
@@ -146,12 +152,14 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(cfg.get.copy(
-                                    stdout = stdout,
-                                    stderr = stderr,
-                                    proc = proc
-                                  ),
-                                  RAMLConfiguration.RAML10()) map { _ =>
+    ValidateCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      ),
+      RAMLConfiguration.RAML10()
+    ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(!proc.successful)
@@ -176,12 +184,14 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(cfg.get.copy(
-                                    stdout = stdout,
-                                    stderr = stderr,
-                                    proc = proc
-                                  ),
-                                  RAMLConfiguration.RAML10()) map { _ =>
+    ValidateCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      ),
+      RAMLConfiguration.RAML10()
+    ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(!proc.successful)

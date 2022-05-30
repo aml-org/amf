@@ -35,16 +35,20 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
     ctx.declarations
       .findChannelBindings(label, SearchScope.Named)
       .map(channelBindings =>
-        nameAndAdopt(channelBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
-                     entryLike.key))
+        nameAndAdopt(
+          channelBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
+          entryLike.key
+        )
+      )
       .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ChannelBindings =
     new ErrorChannelBindings(fullRef, entryLike.asMap)
 
-  override protected def parseAmqp(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): ChannelBinding = {
+  override protected def parseAmqp(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): ChannelBinding = {
     val binding = Amqp091ChannelBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -64,7 +68,8 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
 
   private def parseExchange(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
-      "exchange", { entry =>
+      "exchange",
+      { entry =>
         val exchange    = Amqp091ChannelExchange(Annotations(entry.value))
         val exchangeMap = entry.value.as[YMap]
 
@@ -84,7 +89,8 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
 
   private def parseQueue(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
-      "queue", { entry =>
+      "queue",
+      { entry =>
         val queue    = Amqp091Queue(Annotations(entry.value))
         val queueMap = entry.value.as[YMap]
 
@@ -117,8 +123,10 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
 
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
     map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, binding.id + "/query"))
-    map.key("headers",
-            entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, binding.id + "/headers"))
+    map.key(
+      "headers",
+      entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, binding.id + "/headers")
+    )
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding, map, "wsChannelBinding")

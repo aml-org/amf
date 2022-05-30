@@ -12,9 +12,11 @@ import scala.collection.mutable.ListBuffer
 
 class RecursionDetection() extends TransformationStep {
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model match {
       case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
       case _             => // Nothing
@@ -29,7 +31,7 @@ class RecursionDetection() extends TransformationStep {
         val id = obj.id
         if (branch.contains(id))
           RecursiveShape(obj.asInstanceOf[Shape]) // If the ID already exists in the branch, then is a recursion
-        else if (general.contains(id)) obj // If the ID already was visited, then don't need to do it again
+        else if (general.contains(id)) obj        // If the ID already was visited, then don't need to do it again
         else {
           val branchIds = if (isValidShape(obj)) {
             general += id

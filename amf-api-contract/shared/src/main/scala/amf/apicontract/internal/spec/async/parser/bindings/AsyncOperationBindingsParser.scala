@@ -32,16 +32,20 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
     ctx.declarations
       .findOperationBindings(label, SearchScope.Named)
       .map(operationBindings =>
-        nameAndAdopt(operationBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
-                     entryLike.key))
+        nameAndAdopt(
+          operationBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
+          entryLike.key
+        )
+      )
       .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): OperationBindings =
     new ErrorOperationBindings(fullRef, entryLike.asMap)
 
-  override protected def parseHttp(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): OperationBinding = {
+  override protected def parseHttp(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): OperationBinding = {
     val binding = HttpOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -55,8 +59,9 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
     binding
   }
 
-  override protected def parseAmqp(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): OperationBinding = {
+  override protected def parseAmqp(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): OperationBinding = {
     val binding = Amqp091OperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -78,15 +83,20 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
     binding
   }
 
-  override protected def parseKafka(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): OperationBinding = {
+  override protected def parseKafka(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): OperationBinding = {
     val binding = KafkaOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
-    map.key("groupId",
-            entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry, binding.id + "/group-id"))
-    map.key("clientId",
-            entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry, binding.id + "/client-id"))
+    map.key(
+      "groupId",
+      entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry, binding.id + "/group-id")
+    )
+    map.key(
+      "clientId",
+      entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry, binding.id + "/client-id")
+    )
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding, map, "kafkaOperationBinding")
@@ -94,8 +104,9 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
     binding
   }
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): OperationBinding = {
+  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): OperationBinding = {
     val binding = MqttOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 

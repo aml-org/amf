@@ -46,7 +46,8 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     if (entries.nonEmpty) {
       val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
-        WebApiShapeParserContextAdapter(ctx)).parse()
+        WebApiShapeParserContextAdapter(ctx)
+      ).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
 
@@ -57,15 +58,21 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
   def parseApiKeySettings(settings: ApiKeySettings): ApiKeySettings = {
 
-    map.key("name", entry => {
-      val value = ScalarNode(entry.value)
-      settings.setWithoutId(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
-    })
+    map.key(
+      "name",
+      entry => {
+        val value = ScalarNode(entry.value)
+        settings.setWithoutId(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+      }
+    )
 
-    map.key("in", entry => {
-      val value = ScalarNode(entry.value)
-      settings.setWithoutId(ApiKeySettingsModel.In, value.string(), Annotations(entry))
-    })
+    map.key(
+      "in",
+      entry => {
+        val value = ScalarNode(entry.value)
+        settings.setWithoutId(ApiKeySettingsModel.In, value.string(), Annotations(entry))
+      }
+    )
 
     map.key(
       "settings".asOasExtension,
@@ -108,9 +115,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     Scope(scopeEntry)
       .setWithoutId(ScopeModel.Name, AmfScalar(name, Annotations(scopeEntry.key)), Annotations.inferred())
-      .setWithoutId(ScopeModel.Description,
-                    AmfScalar(description, Annotations(scopeEntry.key)),
-                    Annotations.inferred())
+      .setWithoutId(ScopeModel.Description, AmfScalar(description, Annotations(scopeEntry.key)), Annotations.inferred())
 
   }
 

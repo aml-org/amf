@@ -3,23 +3,24 @@ package amf.shapes.internal.spec
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
 
-/**
-  * Oas type to TypeDef matcher
+/** Oas type to TypeDef matcher
   */
 object OasTypeDefMatcher {
 
-  val knownFormats: Set[String] = Set("time-only",
-                                      "date-only",
-                                      "date",
-                                      "date-time",
-                                      "date-time-only",
-                                      "password",
-                                      "byte",
-                                      "binary",
-                                      "int32",
-                                      "int64",
-                                      "long",
-                                      "float")
+  val knownFormats: Set[String] = Set(
+    "time-only",
+    "date-only",
+    "date",
+    "date-time",
+    "date-time-only",
+    "password",
+    "byte",
+    "binary",
+    "int32",
+    "int64",
+    "long",
+    "float"
+  )
 
   def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef = ramlType match {
     case "string" =>

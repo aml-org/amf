@@ -8,9 +8,8 @@ import amf.shapes.client.scala.ShapesBaseUnitClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * The AMF Client contains common AMF operations associated to base unit and documents.
-  * For more complex uses see [[AMFParser]] or [[amf.core.client.scala.render.AMFRenderer]]
+/** The AMF Client contains common AMF operations associated to base unit and documents. For more complex uses see
+  * [[AMFParser]] or [[amf.core.client.scala.render.AMFRenderer]]
   */
 class AMFBaseUnitClient private[amf] (override protected val configuration: AMFConfiguration)
     extends ShapesBaseUnitClient(configuration) {
@@ -19,10 +18,11 @@ class AMFBaseUnitClient private[amf] (override protected val configuration: AMFC
 
   override def getConfiguration: AMFConfiguration = configuration
 
-  /**
-    * parse a [[amf.core.client.platform.model.document.Document]]
-    * @param url of the resource to parse
-    * @return a Future [[AMFDocumentResult]]
+  /** parse a [[amf.core.client.platform.model.document.Document]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a Future [[AMFDocumentResult]]
     */
   def parseDocument(url: String): Future[AMFDocumentResult] = AMFParser.parse(url, configuration).map {
     case result: AMFParseResult if result.baseUnit.isInstanceOf[Document] =>
@@ -31,10 +31,11 @@ class AMFBaseUnitClient private[amf] (override protected val configuration: AMFC
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DocumentModel)
   }
 
-  /**
-    * parse a [[amf.core.client.scala.model.document.Module]]
-    * @param url of the resource to parse
-    * @return a Future [[AMFLibraryResult]]
+  /** parse a [[amf.core.client.scala.model.document.Module]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a Future [[AMFLibraryResult]]
     */
   def parseLibrary(url: String): Future[AMFLibraryResult] = AMFParser.parse(url, configuration).map {
     case result: AMFParseResult if result.baseUnit.isInstanceOf[Module] =>

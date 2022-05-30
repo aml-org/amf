@@ -7,9 +7,11 @@ import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 trait BindingType {
 
-  val Type = Field(Str,
-                   ApiBinding + "type",
-                   ModelDoc(ModelVocabularies.ApiBinding, "type", "Binding for a corresponding known type"))
+  val Type = Field(
+    Str,
+    ApiBinding + "type",
+    ModelDoc(ModelVocabularies.ApiBinding, "type", "Binding for a corresponding known type")
+  )
 
 }
 

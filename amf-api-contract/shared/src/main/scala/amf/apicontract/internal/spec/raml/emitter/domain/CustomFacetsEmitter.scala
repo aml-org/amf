@@ -10,9 +10,9 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.CustomFacetsEmitter
 import amf.shapes.internal.spec.raml.emitter.RamlPropertyShapeEmitter
 
-case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends CustomFacetsEmitter(f, ordering, references) {
+case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends CustomFacetsEmitter(f, ordering, references) {
 
   private implicit val shapeCtx = RamlShapeEmitterContextAdapter(spec)
   override val key: String      = "facets"

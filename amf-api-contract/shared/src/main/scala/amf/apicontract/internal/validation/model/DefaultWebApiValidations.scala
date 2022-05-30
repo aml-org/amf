@@ -102,8 +102,8 @@ object DefaultAMFValidations extends ImportUtils {
   protected def all(lvl: String): Map[ProfileName, String] = ProfileNames.specProfiles.map(_ -> lvl).toMap
 
   def profiles(): List[ValidationProfile] =
-    AMFRawValidations.profileToValidationMap.map {
-      case (profile, profileValidations) => buildProfileFrom(profile, profileValidations)
+    AMFRawValidations.profileToValidationMap.map { case (profile, profileValidations) =>
+      buildProfileFrom(profile, profileValidations)
     }.toList
 
   private def getValidationsWithSeverity(profile: ProfileName, severity: String) = {

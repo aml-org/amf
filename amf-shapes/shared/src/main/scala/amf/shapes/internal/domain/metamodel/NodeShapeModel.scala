@@ -10,25 +10,27 @@ import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 
-/**
-  * Node shape metaModel.
+/** Node shape metaModel.
   */
 trait NodeShapeModel extends AnyShapeModel with ClosedModel {
 
   val MinProperties: Field = Field(
     Int,
     Shapes + "minProperties",
-    ModelDoc(ModelVocabularies.Shapes, "minProperties", "Minimum number of properties in the input node constraint"))
+    ModelDoc(ModelVocabularies.Shapes, "minProperties", "Minimum number of properties in the input node constraint")
+  )
 
   val MaxProperties: Field = Field(
     Int,
     Shapes + "maxProperties",
-    ModelDoc(ModelVocabularies.Shapes, "maxProperties", "Maximum number of properties in the input node constraint"))
+    ModelDoc(ModelVocabularies.Shapes, "maxProperties", "Maximum number of properties in the input node constraint")
+  )
 
   val AdditionalPropertiesSchema: Field = Field(
     ShapeModel,
     Shacl + "additionalPropertiesSchema",
-    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesSchema", "Additional properties schema"))
+    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesSchema", "Additional properties schema")
+  )
 
   val AdditionalPropertiesKeySchema: Field = Field(
     ShapeModel,
@@ -39,7 +41,8 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
   val InputOnly: Field = Field(
     Bool,
     Shapes + "inputOnly",
-    ModelDoc(ModelVocabularies.Shapes, "inputOnly", "Indicates if the shape is used as schema for input data only"))
+    ModelDoc(ModelVocabularies.Shapes, "inputOnly", "Indicates if the shape is used as schema for input data only")
+  )
 
   val Discriminator: Field =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
@@ -47,37 +50,47 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
   val DiscriminatorValue: Field = Field(
     Str,
     Shapes + "discriminatorValue",
-    ModelDoc(ModelVocabularies.Shapes, "discriminatorValue", "Values for the discriminator property"))
+    ModelDoc(ModelVocabularies.Shapes, "discriminatorValue", "Values for the discriminator property")
+  )
 
 //  @deprecated("Use DiscriminatorValueMapping", "4.7.2")
   val DiscriminatorMapping: Field = Field(
     Array(IriTemplateMappingModel),
     Shapes + "discriminatorMapping",
-    ModelDoc(ModelVocabularies.Shapes,
-             "discriminatorMapping",
-             "Mapping of acceptable values for the node discriminator")
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "discriminatorMapping",
+      "Mapping of acceptable values for the node discriminator"
+    )
   )
 
   val DiscriminatorValueMapping: Field = Field(
     Array(DiscriminatorValueMappingModel),
     Shapes + "discriminatorValueMapping",
-    ModelDoc(ModelVocabularies.AmlDoc,
-             "discriminatorValueMapping",
-             "Mapping of acceptable values for the node discriminator")
+    ModelDoc(
+      ModelVocabularies.AmlDoc,
+      "discriminatorValueMapping",
+      "Mapping of acceptable values for the node discriminator"
+    )
   )
 
   val Properties: Field = Field(
     Array(PropertyShapeModel),
     Shacl + "property",
-    ModelDoc(ExternalModelVocabularies.Shacl, "property", "Properties associated to this node"))
+    ModelDoc(ExternalModelVocabularies.Shacl, "property", "Properties associated to this node")
+  )
 
-  val PropertyNames: Field = Field(ShapeModel,
-                                   Shacl + "propertyNames",
-                                   ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema"))
+  val PropertyNames: Field = Field(
+    ShapeModel,
+    Shacl + "propertyNames",
+    ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema")
+  )
 
-  val Dependencies: Field = Field(Array(PropertyDependenciesModel),
-                                  Shapes + "dependencies",
-                                  ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
+  val Dependencies: Field = Field(
+    Array(PropertyDependenciesModel),
+    Shapes + "dependencies",
+    ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint")
+  )
 
   val SchemaDependencies: Field = Field(
     Array(SchemaDependenciesModel),
@@ -88,17 +101,21 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
   val UnevaluatedProperties: Field = Field(
     Bool,
     Shapes + "unevaluatedProperties",
-    ModelDoc(ModelVocabularies.Shapes,
-             "unevaluatedProperties",
-             "Accepts that properties may not be evaluated in schema validation")
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "unevaluatedProperties",
+      "Accepts that properties may not be evaluated in schema validation"
+    )
   )
 
   val UnevaluatedPropertiesSchema: Field = Field(
     ShapeModel,
     Shapes + "unevaluatedPropertiesSchema",
-    ModelDoc(ModelVocabularies.Shapes,
-             "unevaluatedPropertiesSchema",
-             "Properties that may not be evaluated in schema validation")
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "unevaluatedPropertiesSchema",
+      "Properties that may not be evaluated in schema validation"
+    )
   )
 
   val Operations: Field = Field(
@@ -110,9 +127,11 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
   val IsAbstract: Field = Field(
     Bool,
     Shapes + "isAbstract",
-    ModelDoc(ModelVocabularies.Shapes,
-             "isAbstract",
-             "Marks this shape as an abstract node shape declared for pure re-use")
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "isAbstract",
+      "Marks this shape as an abstract node shape declared for pure re-use"
+    )
   )
 
   val specificFields = List(

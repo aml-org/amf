@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *//*
+ */ /*
  * Copyright 2000-2008 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,27 +37,28 @@ import org.yaml.YAMLTokenTypes._
 import org.yaml.lexer.YAMLFlexLexer
 
 class YamlSyntaxHighlighter extends SyntaxHighlighterBase with YAMLTokenTypes {
-    private val map: Map[IElementType, TextAttributesKey] = Map(
-        SCALAR_KEY -> YamlHighlighter.SCALAR_KEY,
-        SCALAR_STRING -> YamlHighlighter.SCALAR_STRING,
-        SCALAR_DSTRING -> YamlHighlighter.SCALAR_DSTRING,
-        SCALAR_TEXT -> YamlHighlighter.SCALAR_TEXT,
-        SCALAR_LIST -> YamlHighlighter.SCALAR_LIST,
-        COMMENT -> YamlHighlighter.COMMENT,
-        TEXT -> YamlHighlighter.TEXT,
-        LBRACE -> SIGN,
-        RBRACE -> SIGN,
-        LBRACKET -> SIGN,
-        RBRACKET -> SIGN,
-        COMMA -> SIGN,
-        QUESTION -> SIGN,
-        COLON -> SIGN,
-        DOCUMENT_MARKER -> SIGN,
-        SEQUENCE_MARKER -> SIGN)
+  private val map: Map[IElementType, TextAttributesKey] = Map(
+    SCALAR_KEY      -> YamlHighlighter.SCALAR_KEY,
+    SCALAR_STRING   -> YamlHighlighter.SCALAR_STRING,
+    SCALAR_DSTRING  -> YamlHighlighter.SCALAR_DSTRING,
+    SCALAR_TEXT     -> YamlHighlighter.SCALAR_TEXT,
+    SCALAR_LIST     -> YamlHighlighter.SCALAR_LIST,
+    COMMENT         -> YamlHighlighter.COMMENT,
+    TEXT            -> YamlHighlighter.TEXT,
+    LBRACE          -> SIGN,
+    RBRACE          -> SIGN,
+    LBRACKET        -> SIGN,
+    RBRACKET        -> SIGN,
+    COMMA           -> SIGN,
+    QUESTION        -> SIGN,
+    COLON           -> SIGN,
+    DOCUMENT_MARKER -> SIGN,
+    SEQUENCE_MARKER -> SIGN
+  )
 
-    override def getTokenHighlights(tokenType: IElementType): Array[TextAttributesKey] = {
-        SyntaxHighlighterBase.pack(map.getOrElse(tokenType, null))
-    }
+  override def getTokenHighlights(tokenType: IElementType): Array[TextAttributesKey] = {
+    SyntaxHighlighterBase.pack(map.getOrElse(tokenType, null))
+  }
 
-    override def getHighlightingLexer = new YAMLFlexLexer
+  override def getHighlightingLexer = new YAMLFlexLexer
 }

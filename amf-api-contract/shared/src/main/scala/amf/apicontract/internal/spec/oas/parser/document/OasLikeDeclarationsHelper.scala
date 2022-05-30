@@ -19,7 +19,8 @@ trait OasLikeDeclarationsHelper {
   protected val definitionsKey: String
 
   def parseTypeDeclarations(map: YMap, typesPrefix: String, declarationKeysHolder: Option[DeclarationKeyCollector])(
-      implicit ctx: OasLikeWebApiContext): Unit = {
+      implicit ctx: OasLikeWebApiContext
+  ): Unit = {
     map.key(
       definitionsKey,
       entry => {
@@ -30,17 +31,17 @@ trait OasLikeDeclarationsHelper {
           .foreach(e => {
             val typeName = e.key.as[YScalar].text
             OasTypeParser
-              .buildDeclarationParser(e, shape => {
-                shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              })(WebApiShapeParserContextAdapter(ctx))
+              .buildDeclarationParser(
+                e,
+                shape => {
+                  shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
+                }
+              )(WebApiShapeParserContextAdapter(ctx))
               .parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
-                ctx.eh.violation(UnableToParseShape,
-                                 NodeShape().id,
-                                 s"Error parsing shape at $typeName",
-                                 e.location)
+                ctx.eh.violation(UnableToParseShape, NodeShape().id, s"Error parsing shape at $typeName", e.location)
             }
           })
       }
@@ -57,7 +58,8 @@ trait OasLikeDeclarationsHelper {
             if (!keyRegex.pattern.matcher(name).matches())
               violation(
                 elem,
-                s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations")
+                s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations"
+              )
           case None =>
             violation(elem, "No name is defined for given component declaration")
         }

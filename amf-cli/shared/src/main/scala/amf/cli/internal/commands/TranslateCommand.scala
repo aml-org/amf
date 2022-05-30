@@ -37,10 +37,12 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def checkValidation(parserConfig: ParserConfig,
-                      model: BaseUnit,
-                      specId: Spec,
-                      configuration: AMLConfiguration): Future[Unit] = {
+  def checkValidation(
+      parserConfig: ParserConfig,
+      model: BaseUnit,
+      specId: Spec,
+      configuration: AMLConfiguration
+  ): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
 
     val dialects = configuration.configurationState().getDialects()

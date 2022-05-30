@@ -42,10 +42,11 @@ object BaseJsonSchemaPayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
 }
 
-abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
-                                              mediaType: String,
-                                              configuration: ShapeValidationConfiguration)
-    extends AMFShapePayloadValidator {
+abstract class BaseJsonSchemaPayloadValidator(
+    shape: Shape,
+    mediaType: String,
+    configuration: ShapeValidationConfiguration
+) extends AMFShapePayloadValidator {
 
   private val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
@@ -53,12 +54,14 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   override def validate(payload: String): Future[AMFValidationReport] = {
     Future.successful(
-      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    )
   }
 
   override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
     Future.successful(
-      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    )
   }
 
   override def syncValidate(payload: String): AMFValidationReport = {
@@ -77,10 +80,12 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
-  protected def callValidator(schema: LoadedSchema,
-                              obj: LoadedObj,
-                              fragment: Option[PayloadFragment],
-                              validationProcessor: ValidationProcessor): validationProcessor.Return
+  protected def callValidator(
+      schema: LoadedSchema,
+      obj: LoadedObj,
+      fragment: Option[PayloadFragment],
+      validationProcessor: ValidationProcessor
+  ): validationProcessor.Return
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj]
 
@@ -91,10 +96,13 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
   protected def loadSchema(
       jsonSchema: CharSequence,
       element: DomainElement,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]]
+      validationProcessor: ValidationProcessor
+  ): Either[validationProcessor.Return, Option[LoadedSchema]]
 
-  protected def validateForFragment(fragment: PayloadFragment,
-                                    validationProcessor: ValidationProcessor): ValidationProcessor#Return = {
+  protected def validateForFragment(
+      fragment: PayloadFragment,
+      validationProcessor: ValidationProcessor
+  ): ValidationProcessor#Return = {
 
     try {
       performValidation(buildCandidate(fragment), validationProcessor)
@@ -105,8 +113,10 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
   }
 
   /* i need to do this check?? */
-  protected def validateForPayload(payload: String,
-                                   validationProcessor: ValidationProcessor): validationProcessor.Return = {
+  protected def validateForPayload(
+      payload: String,
+      validationProcessor: ValidationProcessor
+  ): validationProcessor.Return = {
     if (!supportedMediaTypes.contains(mediaType)) {
       validationProcessor.processResults(
         Seq(
@@ -119,7 +129,9 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
             None,
             None,
             null
-          )))
+          )
+        )
+      )
     } else
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
@@ -134,7 +146,8 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   private def generateSchema(
       fragmentShape: Shape,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+      validationProcessor: ValidationProcessor
+  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
     val schemaOption: Option[CharSequence] = generateSchemaString(fragmentShape, validationProcessor)
 
@@ -180,7 +193,8 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   private def getOrCreateSchema(
       s: AnyShape,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+      validationProcessor: ValidationProcessor
+  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
     schemas.get(s.id) match {
       case Some(json) => Right(Some(json))
       case _ =>
@@ -195,8 +209,10 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     }
   }
 
-  protected def buildPayloadObj(mediaType: String,
-                                payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
+  protected def buildPayloadObj(
+      mediaType: String,
+      payload: String
+  ): (Option[LoadedObj], Option[PayloadParsingResult]) = {
     if (mediaType == `application/json` && validationMode != ScalarRelaxedValidationMode)
       (Some(loadJson(payload)), None)
     else {
@@ -228,7 +244,8 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   private def dataNodeParsingCtx(
       errorHandler: AMFErrorHandler,
-      maxYamlRefs: Option[Int]): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
+      maxYamlRefs: Option[Int]
+  ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
     new ErrorHandlingContext()(errorHandler) with DataNodeParserContext with IllegalTypeHandler {
       val syamleh = new SYamlAMFParserErrorHandler(errorHandler)
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
@@ -244,7 +261,10 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     }
   }
 
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(
+      mediaType: String,
+      payload: String
+  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -255,8 +275,10 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     else (None, Some(fixedResult))
   }
 
-  private def performValidation(payload: (Option[LoadedObj], Option[PayloadParsingResult]),
-                                validationProcessor: ValidationProcessor): validationProcessor.Return = {
+  private def performValidation(
+      payload: (Option[LoadedObj], Option[PayloadParsingResult]),
+      validationProcessor: ValidationProcessor
+  ): validationProcessor.Return = {
     payload match {
       case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
       case (Some(obj), resultOption) =>
@@ -268,16 +290,21 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
                 getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
                 Left(
-                  validationProcessor.processResults(Seq(AMFValidationResult(
-                    "Cannot validate shape that is not an any shape",
-                    defaultSeverity,
-                    "",
-                    Some(shape.id),
-                    ExampleValidationErrorSpecification.id,
-                    shape.position(),
-                    shape.location(),
-                    null
-                  ))))
+                  validationProcessor.processResults(
+                    Seq(
+                      AMFValidationResult(
+                        "Cannot validate shape that is not an any shape",
+                        defaultSeverity,
+                        "",
+                        Some(shape.id),
+                        ExampleValidationErrorSpecification.id,
+                        shape.position(),
+                        shape.location(),
+                        null
+                      )
+                    )
+                  )
+                )
             }
           } match {
             case Right(Some(schema)) => callValidator(schema, obj, fragmentOption, validationProcessor)
@@ -317,8 +344,7 @@ object ScalarPayloadForParam {
 
       fragment.encodes match {
         case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
-                          fragment.mediaType.value())
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations), fragment.mediaType.value())
         case _ => fragment
       }
     } else fragment

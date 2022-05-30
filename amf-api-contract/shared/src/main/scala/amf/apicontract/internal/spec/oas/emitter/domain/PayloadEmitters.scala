@@ -28,12 +28,10 @@ import amf.shapes.internal.spec.raml.emitter.{
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YType}
 
-/**
-  *
-  */
-case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+/** */
+case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx = RamlShapeEmitterContextAdapter(spec)
 
@@ -45,29 +43,35 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
           .foreach(mediaType => {
             b.complexEntry(
               ScalarEmitter(mediaType.scalar).emit(_),
-              Raml10TypePartEmitter(shape,
-                                    ordering,
-                                    Some(AnnotationsEmitter(payload, ordering)),
-                                    references = references)
+              Raml10TypePartEmitter(
+                shape,
+                ordering,
+                Some(AnnotationsEmitter(payload, ordering)),
+                references = references
+              )
                 .emit(_)
             )
           })
       case Some(other) =>
-        spec.eh.violation(TransformationValidation,
-                          other.id,
-                          None,
-                          "Cannot emit a non WebAPI Shape",
-                          other.position(),
-                          other.location())
+        spec.eh.violation(
+          TransformationValidation,
+          other.id,
+          None,
+          "Cannot emit a non WebAPI Shape",
+          other.position(),
+          other.location()
+        )
       case None =>
         fs.entry(PayloadModel.MediaType)
           .foreach(mediaType => {
             b.complexEntry(
               ScalarEmitter(mediaType.scalar).emit(_),
-              Raml10TypePartEmitter(null,
-                                    ordering,
-                                    Some(AnnotationsEmitter(payload, ordering)),
-                                    references = references)
+              Raml10TypePartEmitter(
+                null,
+                ordering,
+                Some(AnnotationsEmitter(payload, ordering)),
+                references = references
+              )
                 .emit(_)
             )
           })
@@ -79,9 +83,9 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
 
 trait RamlPayloadsEmitter extends EntryEmitter {}
 
-case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlPayloadsEmitter {
+case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlPayloadsEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
     b.complexEntry(
@@ -113,9 +117,9 @@ object Raml08PayloadsEmitter {
   }
 }
 
-case class Raml10PayloadPartEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends PartEmitter {
+case class Raml10PayloadPartEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     val emitters = Raml08PayloadEmitter(payload, ordering).emitters
     Raml08PayloadsEmitter.processEmitters(b, emitters, ordering)
@@ -143,12 +147,14 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
                     case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
                       p.obj(traverse(ordering.sorted(es.collect { case e: EntryEmitter => e }), _))
                     case other =>
-                      spec.eh.violation(TransformationValidation,
-                                        payload.id,
-                                        None,
-                                        s"IllegalTypeDeclarations found: $other",
-                                        payload.position(),
-                                        payload.location())
+                      spec.eh.violation(
+                        TransformationValidation,
+                        payload.id,
+                        None,
+                        s"IllegalTypeDeclarations found: $other",
+                        payload.position(),
+                        payload.location()
+                      )
                   }
                 }
               )
@@ -185,9 +191,9 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
   }
 }
 
-case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(implicit
+    spec: RamlSpecEmitterContext
+) extends EntryEmitter {
 
   protected implicit val shapeCtx = emitter.RamlShapeEmitterContextAdapter(spec)
 
@@ -196,32 +202,33 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
       "formParameters",
       builder => {
         builder.obj(ob => {
-          nodeShape.properties.foreach {
-            p =>
-              p.range match {
-                case anyShape: AnyShape =>
-                  ob.entry(
-                    p.name.value(),
-                    pb => {
-                      Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
-                        case Left(prop) => prop.emit(pb)
-                        case Right(entries) =>
-                          val additionalEmitters: Seq[EntryEmitter] =
-                            RamlRequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount))
-                              .emitter() match {
-                              case Some(emitter) => Seq(emitter)
-                              case None          => Nil
-                            }
-                          pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
-                      }
+          nodeShape.properties.foreach { p =>
+            p.range match {
+              case anyShape: AnyShape =>
+                ob.entry(
+                  p.name.value(),
+                  pb => {
+                    Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
+                      case Left(prop) => prop.emit(pb)
+                      case Right(entries) =>
+                        val additionalEmitters: Seq[EntryEmitter] =
+                          RamlRequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount))
+                            .emitter() match {
+                            case Some(emitter) => Seq(emitter)
+                            case None          => Nil
+                          }
+                        pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
                     }
-                  )
+                  }
+                )
 
-                case other =>
-                  val prop = if (other != null) other.getClass.toString else "null"
-                  ob.entry(p.name.value(),
-                           CommentEmitter(other, s"Cannot emit property $prop in raml 08 form properties").emit(_))
-              }
+              case other =>
+                val prop = if (other != null) other.getClass.toString else "null"
+                ob.entry(
+                  p.name.value(),
+                  CommentEmitter(other, s"Cannot emit property $prop in raml 08 form properties").emit(_)
+                )
+            }
 
           }
         })
@@ -232,9 +239,9 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
   override def position(): Position = pos(nodeShape.annotations)
 }
 
-case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends RamlPayloadsEmitter {
+case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) extends RamlPayloadsEmitter {
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       f.value.annotations, {
@@ -249,15 +256,17 @@ case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   }
 
   private def payloads(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[Emitter] = {
-    ordering.sorted(f.array.values.flatMap(e =>
-      Raml10Payloads(e.asInstanceOf[Payload], ordering, references = references).emitters()))
+    ordering.sorted(
+      f.array.values.flatMap(e => Raml10Payloads(e.asInstanceOf[Payload], ordering, references = references).emitters())
+    )
   }
 
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext) {
+case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlSpecEmitterContext
+) {
 
   protected implicit val shapeCtx = emitter.RamlShapeEmitterContextAdapter(spec)
 
@@ -268,12 +277,14 @@ case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: 
       Option(payload.schema) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = references).emitters()
         case Some(other) =>
-          spec.eh.violation(TransformationValidation,
-                            other.id,
-                            None,
-                            "Cannot emit a non WebAPI shape",
-                            payload.position(),
-                            payload.location())
+          spec.eh.violation(
+            TransformationValidation,
+            other.id,
+            None,
+            "Cannot emit a non WebAPI shape",
+            payload.position(),
+            payload.location()
+          )
           Nil
         case _ => Nil // ignore
       }

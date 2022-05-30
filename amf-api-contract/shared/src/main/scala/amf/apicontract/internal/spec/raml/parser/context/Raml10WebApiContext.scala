@@ -10,14 +10,14 @@ import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.mulesoft.lexer.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
-class Raml10WebApiContext(loc: String,
-                          refs: Seq[ParsedReference],
-                          override val wrapped: ParserContext,
-                          private val ds: Option[RamlWebApiDeclarations] = None,
-                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
-                          options: ParsingOptions = ParsingOptions())
-    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType)
-{
+class Raml10WebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    override val wrapped: ParserContext,
+    private val ds: Option[RamlWebApiDeclarations] = None,
+    contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+    options: ParsingOptions = ParsingOptions()
+) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val spec: Spec                      = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
@@ -26,30 +26,35 @@ class Raml10WebApiContext(loc: String,
     new Raml10WebApiContext(loc, refs, wrapped, Some(declarations), options = options)
 }
 
-class ExtensionLikeWebApiContext(loc: String,
-                                 refs: Seq[ParsedReference],
-                                 override val wrapped: ParserContext,
-                                 val ds: Option[RamlWebApiDeclarations] = None,
-                                 val parentDeclarations: RamlWebApiDeclarations,
-                                 parserCount: Option[Int] = None,
-                                 contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
-                                 options: ParsingOptions = ParsingOptions())
-    extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType, options) {
+class ExtensionLikeWebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    override val wrapped: ParserContext,
+    val ds: Option[RamlWebApiDeclarations] = None,
+    val parentDeclarations: RamlWebApiDeclarations,
+    parserCount: Option[Int] = None,
+    contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+    options: ParsingOptions = ParsingOptions()
+) extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType, options) {
 
   override val declarations: ExtensionWebApiDeclarations =
     ds match {
       case Some(dec) =>
-        new ExtensionWebApiDeclarations(dec.externalShapes,
-                                        dec.externalLibs,
-                                        parentDeclarations,
-                                        dec.alias,
-                                        dec.errorHandler,
-                                        dec.futureDeclarations)
+        new ExtensionWebApiDeclarations(
+          dec.externalShapes,
+          dec.externalLibs,
+          parentDeclarations,
+          dec.alias,
+          dec.errorHandler,
+          dec.futureDeclarations
+        )
       case None =>
-        new ExtensionWebApiDeclarations(parentDeclarations = parentDeclarations,
-                                        alias = None,
-                                        errorHandler = eh,
-                                        futureDeclarations = futureDeclarations)
+        new ExtensionWebApiDeclarations(
+          parentDeclarations = parentDeclarations,
+          alias = None,
+          errorHandler = eh,
+          futureDeclarations = futureDeclarations
+        )
     }
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =

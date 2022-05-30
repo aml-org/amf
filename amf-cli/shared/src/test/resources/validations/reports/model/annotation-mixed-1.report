@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/annotation-mixed-1.raml
+Profile: RAML 1.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#DomainProperty-schema-minCount
+  Message: type is mandatory for a RAML annotationType
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/annotation-mixed-1.raml#/web-api/endpoint/%2Ftest/customDomainProperties/other/other
+  Property: http://a.ml/vocabularies/shapes#schema
+  Range: [(9,2)-(10,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/annotation-mixed-1.raml

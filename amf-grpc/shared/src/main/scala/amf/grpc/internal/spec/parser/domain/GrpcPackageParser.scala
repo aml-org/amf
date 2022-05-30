@@ -9,21 +9,25 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  val webApi  = WebApi()
+  val webApi = WebApi()
 
   def parse(): WebApi = {
     parseName() match {
       case Some((pkg, annotations)) =>
         doc.withPkg(pkg, annotations)
         webApi.withName(pkg, annotations)
-      case _         =>
+      case _ =>
         astError(webApi.id, "Missing protobuf3 package statement", toAnnotations(ast))
         webApi.withName(ctx.rootContextDocument.split("/").last)
     }
-    collectOptions(ast, Seq(OPTION_STATEMENT), { extension =>
-      extension.adopted(webApi.id)
-      webApi.withCustomDomainProperty(extension)
-    })
+    collectOptions(
+      ast,
+      Seq(OPTION_STATEMENT),
+      { extension =>
+        extension.adopted(webApi.id)
+        webApi.withCustomDomainProperty(extension)
+      }
+    )
     webApi
   }
 
@@ -34,7 +38,7 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
           withOptTerminal(element) {
             case Some(packageId) =>
               packageId.value
-            case None            =>
+            case None =>
               ""
           }
         }
@@ -50,5 +54,6 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
 }
 
 object GrpcPackageParser {
-  def apply(ast: Node, doc: Document)(implicit ctx: GrpcWebApiContext): GrpcPackageParser = new GrpcPackageParser(ast, doc)
+  def apply(ast: Node, doc: Document)(implicit ctx: GrpcWebApiContext): GrpcPackageParser =
+    new GrpcPackageParser(ast, doc)
 }

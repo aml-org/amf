@@ -15,9 +15,7 @@ import amf.shapes.internal.spec.RamlWebApiContextType.LIBRARY
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.YMap
 
-/**
-  *
-  */
+/** */
 case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: RamlWebApiContext)
     extends Raml10BaseSpecParser {
 

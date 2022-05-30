@@ -5,13 +5,14 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLCommonTypeParser {
+case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(parentId: String): NodeShape = {
-    obj.adopted(parentId)
     val name = findName(objTypeNode, "AnonymousInputType", "", "Missing name for input type")
     obj.withName(name).withIsInputOnly(true).adopted(parentId)
+    obj.adopted(parentId)
     collectFields()
     obj
   }
@@ -19,4 +20,3 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWe
   def collectFields(): Unit = collectFieldsFromPath(objTypeNode, Seq(INPUT_FIELDS_DEFINITION, INPUT_VALUE_DEFINITION))
 
 }
-

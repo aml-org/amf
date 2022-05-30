@@ -7,8 +7,7 @@ import amf.core.internal.metamodel.domain.templates.ParametrizedDeclarationModel
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
-  override val `type`
-    : List[ValueType] = ApiContract + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
 
   override def modelInstance = ParametrizedResourceType()
 

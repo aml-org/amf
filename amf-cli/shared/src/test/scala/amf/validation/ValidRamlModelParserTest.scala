@@ -93,9 +93,11 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Test media type with + char in resource type") {
-    validate("/resource_types/media-type-resource-type.raml",
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "/resource_types/media-type-resource-type.raml",
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Empty responses") {
@@ -139,9 +141,11 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Included json schema with ref to himself with file name") {
-    validate("shapes/ref-recursive-samefilename/api.raml",
-             profile = Raml08Profile,
-             overridedHint = Some(Raml08YamlHint))
+    validate(
+      "shapes/ref-recursive-samefilename/api.raml",
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Included json schema with ref inner ref to another") {

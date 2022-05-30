@@ -1,7 +1,11 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
-import amf.apicontract.internal.spec.oas.parser.context.{CustomClosedShapeContextDecorator, OasCustomSyntax, OasLikeWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{
+  CustomClosedShapeContextDecorator,
+  OasCustomSyntax,
+  OasLikeWebApiContext
+}
 import amf.core.internal.parser.YMapOps
 import org.yaml.model.{YMap, YPart}
 
@@ -10,9 +14,9 @@ object Oas2SecuritySchemeParser {
     new Oas2SecuritySchemeParser(part, adopt)(new CustomClosedShapeContextDecorator(ctx, OasCustomSyntax))
 }
 
-case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: OasLikeWebApiContext)
-    extends OasLikeSecuritySchemeParser(part, adopt) {
+case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+    ctx: OasLikeWebApiContext
+) extends OasLikeSecuritySchemeParser(part, adopt) {
   override def closedShape(scheme: SecurityScheme, map: YMap, shape: String): Unit = {
 
     val key = getSchemeType(map).getOrElse(shape)
@@ -31,6 +35,6 @@ case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
   }
 }
 
-case class Oas3SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: OasLikeWebApiContext)
-    extends OasLikeSecuritySchemeParser(part, adopt) {}
+case class Oas3SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+    ctx: OasLikeWebApiContext
+) extends OasLikeSecuritySchemeParser(part, adopt) {}

@@ -14,13 +14,14 @@ import amf.core.internal.remote.{JsonSchema, Spec}
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
-class JsonSchemaWebApiContext(loc: String,
-                              refs: Seq[ParsedReference],
-                              private val wrapped: ParserContext,
-                              private val ds: Option[OasWebApiDeclarations],
-                              options: ParsingOptions = ParsingOptions(),
-                              override val defaultSchemaVersion: SchemaVersion)
-    extends OasWebApiContext(loc, refs, options, wrapped, ds) {
+class JsonSchemaWebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    private val wrapped: ParserContext,
+    private val ds: Option[OasWebApiDeclarations],
+    options: ParsingOptions = ParsingOptions(),
+    override val defaultSchemaVersion: SchemaVersion
+) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax

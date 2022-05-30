@@ -39,16 +39,18 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
   override def parseOauth2Settings(settings: OAuth2Settings): OAuth2Settings = {
     val flow = new Lazy[OAuth2Flow](() => OAuth2Flow(map))
 
-    map.key("authorizationUrl",
-            entry =>
-              flow.getOrCreate.setWithoutId(OAuth2FlowModel.AuthorizationUri,
-                                   ScalarNode(entry.value).string(),
-                                   Annotations(entry.value)))
-    map.key("tokenUrl",
-            entry =>
-              flow.getOrCreate.setWithoutId(OAuth2FlowModel.AccessTokenUri,
-                                   ScalarNode(entry.value).string(),
-                                   Annotations(entry.value)))
+    map.key(
+      "authorizationUrl",
+      entry =>
+        flow.getOrCreate
+          .setWithoutId(OAuth2FlowModel.AuthorizationUri, ScalarNode(entry.value).string(), Annotations(entry.value))
+    )
+    map.key(
+      "tokenUrl",
+      entry =>
+        flow.getOrCreate
+          .setWithoutId(OAuth2FlowModel.AccessTokenUri, ScalarNode(entry.value).string(), Annotations(entry.value))
+    )
 
     map.key(
       "flow",

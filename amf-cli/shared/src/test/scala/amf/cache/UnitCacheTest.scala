@@ -91,7 +91,8 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
           .schema
           .asInstanceOf[NodeShape]
           .properties
-          .size == 6)
+          .size == 6
+      )
     }
   }
 
@@ -119,7 +120,8 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
           .schema
           .asInstanceOf[NodeShape]
           .properties
-          .size == 2)
+          .size == 2
+      )
     }
   }
 
@@ -214,7 +216,8 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
   }
 
   private def runCacheTest(main: String, filesToCache: Seq[String], shouldResolve: Boolean)(
-      assert: (BaseUnit, AMFValidationReport) => Assertion) = {
+      assert: (BaseUnit, AMFValidationReport) => Assertion
+  ) = {
     for {
       client <- createClientWithCache(filesToCache, shouldResolve).map(_.baseUnitClient())
       root   <- client.parseDocument(main).map(_.document)

@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import org.yaml.model.YNode
 
-/**
-  * License internal model
+/** License internal model
   */
 case class License(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 

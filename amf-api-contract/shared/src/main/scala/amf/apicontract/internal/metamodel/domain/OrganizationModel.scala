@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Type.{Iri, Str}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-/**
-  * Organization metamodel
+/** Organization metamodel
   */
 object OrganizationModel extends DomainElementModel with NameFieldSchema {
 

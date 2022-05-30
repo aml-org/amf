@@ -35,10 +35,12 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
           semanticContext.foreach(context => shape.withSemanticContext(context))
           semanticContext
         case _ =>
-          ctx.eh.violation(InvalidContextNode,
-                           shape,
-                           "@context must be an object or a string",
-                           Annotations(entry.value))
+          ctx.eh.violation(
+            InvalidContextNode,
+            shape,
+            "@context must be an object or a string",
+            Annotations(entry.value)
+          )
           None
       }
     }
@@ -113,10 +115,12 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
         }
       context.withTypeMappings(iris)
     case _ =>
-      ctx.eh.violation(InvalidCharacteristicsNode,
-                       shape,
-                       "@context must be a sequence of strings",
-                       Annotations(node.value))
+      ctx.eh.violation(
+        InvalidCharacteristicsNode,
+        shape,
+        "@context must be a sequence of strings",
+        Annotations(node.value)
+      )
   }
 
   private def validateIri(node: YNode, compactIri: String, context: SemanticContext): String = {
@@ -127,10 +131,12 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
         prefixes.get(prefix) match {
           case Some(mapping) => s"$mapping$suffix"
           case None =>
-            ctx.eh.violation(InvalidPrefixReference,
-                             shape,
-                             "the referenced prefix could not be found in the @context declarations",
-                             Annotations(node.value))
+            ctx.eh.violation(
+              InvalidPrefixReference,
+              shape,
+              "the referenced prefix could not be found in the @context declarations",
+              Annotations(node.value)
+            )
             compactIri
         }
       case _ => compactIri

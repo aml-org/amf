@@ -36,10 +36,12 @@ abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
-  def parameterParser(entryOrNode: YMapEntryLike,
-                      parentId: String,
-                      nameNode: Option[YNode],
-                      nameGenerator: IdCounter): OasParameterParser
+  def parameterParser(
+      entryOrNode: YMapEntryLike,
+      parentId: String,
+      nameNode: Option[YNode],
+      nameGenerator: IdCounter
+  ): OasParameterParser
 }
 
 case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -57,10 +59,12 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Oas2SecuritySchemeParser.apply
 
-  override def parameterParser(entryOrNode: YMapEntryLike,
-                               parentId: String,
-                               nameNode: Option[YNode],
-                               nameGenerator: IdCounter): OasParameterParser =
+  override def parameterParser(
+      entryOrNode: YMapEntryLike,
+      parentId: String,
+      nameNode: Option[YNode],
+      nameGenerator: IdCounter
+  ): OasParameterParser =
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
@@ -88,10 +92,12 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Oas3SecuritySettingsParser(map, scheme)(ctx)
 
-  override def parameterParser(entryOrNode: YMapEntryLike,
-                               parentId: String,
-                               nameNode: Option[YNode],
-                               nameGenerator: IdCounter): OasParameterParser =
+  override def parameterParser(
+      entryOrNode: YMapEntryLike,
+      parentId: String,
+      nameNode: Option[YNode],
+      nameGenerator: IdCounter
+  ): OasParameterParser =
     new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =

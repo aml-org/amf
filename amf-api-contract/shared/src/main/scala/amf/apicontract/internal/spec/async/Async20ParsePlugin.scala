@@ -39,11 +39,13 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
     }
   }
 
-  private def context(loc: String,
-                      refs: Seq[ParsedReference],
-                      options: ParsingOptions,
-                      wrapped: ParserContext,
-                      ds: Option[AsyncWebApiDeclarations] = None): Async20WebApiContext = {
+  private def context(
+      loc: String,
+      refs: Seq[ParsedReference],
+      options: ParsingOptions,
+      wrapped: ParserContext,
+      ds: Option[AsyncWebApiDeclarations] = None
+  ): Async20WebApiContext = {
     // ensure unresolved references in external fragments are not resolved with main api definitions
     val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
     cleanContext.globalSpace = wrapped.globalSpace

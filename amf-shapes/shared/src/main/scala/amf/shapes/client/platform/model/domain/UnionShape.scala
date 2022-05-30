@@ -13,8 +13,8 @@ case class UnionShape(override private[amf] val _internal: InternalUnionShape) e
   @JSExportTopLevel("UnionShape")
   def this() = this(InternalUnionShape())
 
-  def anyOf: ClientList[Shape] = _internal.anyOf.asClient
-  def serializationSchema: Shape   = _internal.serializationSchema
+  def anyOf: ClientList[Shape]   = _internal.anyOf.asClient
+  def serializationSchema: Shape = _internal.serializationSchema
 
   def withAnyOf(anyOf: ClientList[Shape]): UnionShape = {
     _internal.withAnyOf(anyOf.asInternal)

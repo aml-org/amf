@@ -30,8 +30,10 @@ class SemanticExtensionOnTraitsTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  private def getConfig(dialect: String,
-                        baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
+  private def getConfig(
+      dialect: String,
+      baseConfig: AMFConfiguration = APIConfiguration.API()
+  ): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)

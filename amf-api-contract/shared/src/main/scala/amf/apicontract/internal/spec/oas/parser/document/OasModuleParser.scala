@@ -12,9 +12,7 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.utils._
 import org.yaml.model.YMap
 
-/**
-  *
-  */
+/** */
 case class OasModuleParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 

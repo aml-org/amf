@@ -33,16 +33,20 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
     ctx.declarations
       .findMessageBindings(label, SearchScope.Named)
       .map(messageBindings =>
-        nameAndAdopt(messageBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
-                     entryLike.key))
+        nameAndAdopt(
+          messageBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
+          entryLike.key
+        )
+      )
       .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): MessageBindings =
     new ErrorMessageBindings(fullRef, entryLike.asMap)
 
-  override protected def parseAmqp(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBinding = {
+  override protected def parseAmqp(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): MessageBinding = {
     val binding = Amqp091MessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -55,8 +59,9 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
     binding
   }
 
-  override protected def parseHttp(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBinding = {
+  override protected def parseHttp(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): MessageBinding = {
     val binding = HttpMessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -68,8 +73,9 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
     binding
   }
 
-  override protected def parseKafka(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBinding = {
+  override protected def parseKafka(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): MessageBinding = {
     val binding = KafkaMessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
@@ -81,8 +87,9 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
     binding
   }
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBinding = {
+  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): MessageBinding = {
     val binding = MqttMessageBinding(Annotations(entry))
 
     val map = entry.value.as[YMap]

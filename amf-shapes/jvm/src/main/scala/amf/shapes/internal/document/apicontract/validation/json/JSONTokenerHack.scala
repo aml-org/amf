@@ -20,8 +20,8 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   override def nextValue(): Object = nextValueHack()
 
-  /** This is extracted from JSONTokener class to replace the JSONObject.stringToValue method used in the superclass
-    * so that we can fail when an unquoted value is processed (as all the other json parsers).
+  /** This is extracted from JSONTokener class to replace the JSONObject.stringToValue method used in the superclass so
+    * that we can fail when an unquoted value is processed (as all the other json parsers).
     */
   private def nextValueHack(): Object = hackDecimal {
     this.nextClean() match {
@@ -50,9 +50,8 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   protected def shouldContinueParsing(newChar: Char) = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
 
-  /**
-    * numbers ending with .0 are converted to integer value. This is needed to maintain compatibility with js.
-    * */
+  /** numbers ending with .0 are converted to integer value. This is needed to maintain compatibility with js.
+    */
   private def hackDecimal(value: Object) =
     value match {
       case double: lang.Double      => removeRedundantDecimal(double.toString, double)

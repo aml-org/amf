@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *//*
+ */ /*
  * Copyright 2000-2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,11 +35,11 @@ import org.yaml.YAMLTokenTypes._
 
 class YamlSpellcheckerStrategy extends SpellcheckingStrategy {
 
-    override def getTokenizer(element: PsiElement): Tokenizer[_ <: PsiElement] =
-        if (element.getNode == null) super.getTokenizer(element)
-        else
-            element.getNode.getElementType match {
-                case SCALAR_TEXT | SCALAR_STRING | SCALAR_DSTRING | COMMENT => SpellcheckingStrategy.TEXT_TOKENIZER
-                case _ => super.getTokenizer(element)
-            }
+  override def getTokenizer(element: PsiElement): Tokenizer[_ <: PsiElement] =
+    if (element.getNode == null) super.getTokenizer(element)
+    else
+      element.getNode.getElementType match {
+        case SCALAR_TEXT | SCALAR_STRING | SCALAR_DSTRING | COMMENT => SpellcheckingStrategy.TEXT_TOKENIZER
+        case _                                                      => super.getTokenizer(element)
+      }
 }

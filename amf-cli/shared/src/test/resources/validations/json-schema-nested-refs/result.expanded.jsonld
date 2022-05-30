@@ -532,7 +532,7 @@
                 "#21": "[(13,4)-(15,5)]"
               },
               "inheritance-provenance": {
-                "#21": "amf://id#11"
+                "#21": "amf://id#20"
               }
             }
           },
@@ -790,7 +790,7 @@
                 "#30": "[(16,4)-(18,5)]"
               },
               "inheritance-provenance": {
-                "#30": "amf://id#11"
+                "#30": "amf://id#20"
               }
             }
           },
@@ -850,7 +850,7 @@
             ],
             "smaps": {
               "inheritance-provenance": {
-                "#31": "amf://id#11"
+                "#31": "amf://id#20"
               },
               "lexical": {
                 "shacl:minCount": "[(21,4)-(21,14)]",
@@ -914,7 +914,7 @@
             ],
             "smaps": {
               "inheritance-provenance": {
-                "#33": "amf://id#11"
+                "#33": "amf://id#20"
               },
               "lexical": {
                 "shacl:minCount": "[(22,4)-(22,14)]",
@@ -930,7 +930,7 @@
         ],
         "apiContract:examples": [
           {
-            "@id": "#12",
+            "@id": "#11",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -942,7 +942,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#13",
+                "@id": "#12",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -950,7 +950,7 @@
                 ],
                 "data:additionalApplicants": [
                   {
-                    "@id": "#14",
+                    "@id": "#13",
                     "@type": [
                       "data:Object",
                       "data:Node",
@@ -958,7 +958,7 @@
                     ],
                     "data:addresses": [
                       {
-                        "@id": "#15",
+                        "@id": "#14",
                         "@type": [
                           "data:Object",
                           "data:Node",
@@ -966,7 +966,7 @@
                         ],
                         "data:randomKey": [
                           {
-                            "@id": "#16",
+                            "@id": "#15",
                             "@type": [
                               "data:Scalar",
                               "data:Node",
@@ -993,7 +993,7 @@
                                 "shacl:datatype": "true"
                               },
                               "lexical": {
-                                "#16": "[(4,19)-(4,28)]"
+                                "#15": "[(4,19)-(4,28)]"
                               }
                             }
                           }
@@ -1009,14 +1009,14 @@
                           },
                           "lexical": {
                             "data:randomKey": "[(4,6)-(4,28)]",
-                            "#15": "[(3,17)-(5,5)]"
+                            "#14": "[(3,17)-(5,5)]"
                           }
                         }
                       }
                     ],
                     "data:expenses": [
                       {
-                        "@id": "#17",
+                        "@id": "#16",
                         "@type": [
                           "data:Object",
                           "data:Node",
@@ -1024,7 +1024,7 @@
                         ],
                         "data:otherRandomKey": [
                           {
-                            "@id": "#18",
+                            "@id": "#17",
                             "@type": [
                               "data:Scalar",
                               "data:Node",
@@ -1051,7 +1051,7 @@
                                 "shacl:datatype": "true"
                               },
                               "lexical": {
-                                "#18": "[(7,24)-(7,31)]"
+                                "#17": "[(7,24)-(7,31)]"
                               }
                             }
                           }
@@ -1067,7 +1067,7 @@
                           },
                           "lexical": {
                             "data:otherRandomKey": "[(7,6)-(7,31)]",
-                            "#17": "[(6,16)-(8,5)]"
+                            "#16": "[(6,16)-(8,5)]"
                           }
                         }
                       }
@@ -1083,7 +1083,7 @@
                       },
                       "lexical": {
                         "data:expenses": "[(6,4)-(8,5)]",
-                        "#14": "[(2,26)-(9,3)]",
+                        "#13": "[(2,26)-(9,3)]",
                         "data:addresses": "[(3,4)-(5,5)]"
                       }
                     }
@@ -1091,7 +1091,7 @@
                 ],
                 "data:merchant": [
                   {
-                    "@id": "#19",
+                    "@id": "#18",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -1118,14 +1118,14 @@
                         "shacl:datatype": "true"
                       },
                       "lexical": {
-                        "#19": "[(10,14)-(10,30)]"
+                        "#18": "[(10,14)-(10,30)]"
                       }
                     }
                   }
                 ],
                 "data:operator": [
                   {
-                    "@id": "#20",
+                    "@id": "#19",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -1152,7 +1152,7 @@
                         "shacl:datatype": "true"
                       },
                       "lexical": {
-                        "#20": "[(11,14)-(11,31)]"
+                        "#19": "[(11,14)-(11,31)]"
                       }
                     }
                   }
@@ -1169,11 +1169,11 @@
                   "lexical": {
                     "data:operator": "[(11,2)-(11,31)]",
                     "data:additionalApplicants": "[(2,2)-(9,3)]",
-                    "#13": "[(1,0)-(12,1)]",
+                    "#12": "[(1,0)-(12,1)]",
                     "data:merchant": "[(10,2)-(10,30)]"
                   },
                   "parsed-json-example": {
-                    "#13": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+                    "#12": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
                   }
                 }
               }
@@ -1193,7 +1193,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "#12": "[(1,0)-(1,0)]"
+                "#11": "[(1,0)-(1,0)]"
               }
             }
           }
@@ -1205,7 +1205,7 @@
         ],
         "smaps": {
           "inheritance-provenance": {
-            "doc:reference-id": "amf://id#11"
+            "doc:reference-id": "amf://id#20"
           },
           "declared-element": {
             "#10": ""

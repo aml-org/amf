@@ -104,21 +104,27 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("Required httpOperationBinding type") {
-    validate("required-httpOperationBinding-type.yaml",
-             Some("required-httpOperationBinding-type.report"),
-             Async20Profile)
+    validate(
+      "required-httpOperationBinding-type.yaml",
+      Some("required-httpOperationBinding-type.report"),
+      Async20Profile
+    )
   }
 
   test("HttpOperationBinding type must be request or response") {
-    validate("required-httpOperationBinding-type-values.yaml",
-             Some("required-httpOperationBinding-type-values.report"),
-             Async20Profile)
+    validate(
+      "required-httpOperationBinding-type-values.yaml",
+      Some("required-httpOperationBinding-type-values.report"),
+      Async20Profile
+    )
   }
 
   test("HttpOperationBinding method must be an HTTP operation") {
-    validate("required-httpOperationBinding-method-values.yaml",
-             Some("required-httpOperationBinding-method-values.report"),
-             Async20Profile)
+    validate(
+      "required-httpOperationBinding-method-values.yaml",
+      Some("required-httpOperationBinding-method-values.report"),
+      Async20Profile
+    )
   }
 
   test("WebSocketChannelBinding method must be GET or POST") {
@@ -130,9 +136,11 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("AmqpChannelBinding name max length of 255") {
-    validate("amqp-channel-binding-name-max-length.yaml",
-             Some("amqp-channel-binding-name-max-length.report"),
-             Async20Profile)
+    validate(
+      "amqp-channel-binding-name-max-length.yaml",
+      Some("amqp-channel-binding-name-max-length.report"),
+      Async20Profile
+    )
   }
 
   test("LastWill binding Qos field value must be 0, 1 or 2") {
@@ -144,15 +152,15 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("AmqpOperationBinding deliveryMode field value must be 1 or 2") {
-    validate("amqp-operation-binding-deliveryMode.yaml",
-             Some("amqp-operation-binding-deliveryMode.report"),
-             Async20Profile)
+    validate(
+      "amqp-operation-binding-deliveryMode.yaml",
+      Some("amqp-operation-binding-deliveryMode.report"),
+      Async20Profile
+    )
   }
 
   test("AmqpOperationBinding expiration field value must greater than or equal to 0") {
-    validate("amqp-operation-binding-expiration.yaml",
-             Some("amqp-operation-binding-expiration.report"),
-             Async20Profile)
+    validate("amqp-operation-binding-expiration.yaml", Some("amqp-operation-binding-expiration.report"), Async20Profile)
   }
 
   test("WsSocketChannelBinding query and header field must be an object type and have properties key") {
@@ -172,9 +180,11 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("Nested external operation refs") {
-    validate("nested-libraries/nested-operation-traits/api.yaml",
-             Some("nested-libraries/nested-external-operation-trait-refs.report"),
-             Async20Profile)
+    validate(
+      "nested-libraries/nested-operation-traits/api.yaml",
+      Some("nested-libraries/nested-external-operation-trait-refs.report"),
+      Async20Profile
+    )
   }
 
   test("Valid message trait node") {
@@ -190,9 +200,11 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("JsonReference is invalid with '#' only") {
-    validate("json-reference/invalid-json-reference-format.yaml",
-             Some("invalid-json-reference-format.report"),
-             Async20Profile)
+    validate(
+      "json-reference/invalid-json-reference-format.yaml",
+      Some("invalid-json-reference-format.report"),
+      Async20Profile
+    )
   }
 
   test("Several url formats") {
@@ -220,9 +232,11 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("Invalid query parameter defined in channel uri") {
-    validate("invalid-query-param-in-channel.yaml",
-             Some("invalid-query-param-in-channel.report"),
-             profile = Async20Profile)
+    validate(
+      "invalid-query-param-in-channel.yaml",
+      Some("invalid-query-param-in-channel.report"),
+      profile = Async20Profile
+    )
   }
 
   test("Invalid fragment defined in channel uri") {
@@ -246,10 +260,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json",
-             Some("duplicate-keys.report"),
-             Async20Profile,
-             overridedHint = Some(Async20JsonHint))
+    validate(
+      "duplicate-keys.json",
+      Some("duplicate-keys.report"),
+      Async20Profile,
+      overridedHint = Some(Async20JsonHint)
+    )
   }
 
   test("Components must use keys with certain regex") {

@@ -12,10 +12,12 @@ import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable
 
-case class RamlJsonShapeEmitter(shape: AnyShape,
-                                ordering: SpecOrdering,
-                                references: Seq[BaseUnit],
-                                typeKey: String = "type")(implicit spec: ShapeEmitterContext)
+case class RamlJsonShapeEmitter(
+    shape: AnyShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    typeKey: String = "type"
+)(implicit spec: ShapeEmitterContext)
     extends PartEmitter
     with ExamplesEmitter {
 

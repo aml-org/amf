@@ -15,19 +15,22 @@ trait WithIri {
 
 object ContextElementWithIri extends WithIri
 
-/**
-  * Encodes information about the base document IRI for the model element @ids
+/** Encodes information about the base document IRI for the model element @ids
   */
 object BaseIRIModel extends DomainElementModel with WithIri {
 
   override val `type`: List[ValueType] = List(Meta + "ContextBaseIri")
 
   val Nulled =
-    Field(Bool,
-          Meta + "nulled",
-          ModelDoc(ModelVocabularies.Meta,
-                   "nulled",
-                   "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"))
+    Field(
+      Bool,
+      Meta + "nulled",
+      ModelDoc(
+        ModelVocabularies.Meta,
+        "nulled",
+        "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"
+      )
+    )
 
   override def modelInstance: AmfObject = BaseIri()
 
@@ -40,8 +43,7 @@ object BaseIRIModel extends DomainElementModel with WithIri {
   )
 }
 
-/**
-  * Encodes information about the base vocabulary to map by default properties and types in the model
+/** Encodes information about the base vocabulary to map by default properties and types in the model
   */
 object DefaultVocabularyModel extends DomainElementModel with WithIri {
 
@@ -58,17 +60,18 @@ object DefaultVocabularyModel extends DomainElementModel with WithIri {
   )
 }
 
-/**
-  * Stores information about a CURIE prefix defined in the context
+/** Stores information about a CURIE prefix defined in the context
   */
 object CuriePrefixModel extends DomainElementModel with WithIri {
 
   override val `type`: List[ValueType] = List(Meta + "ContextCuriePrefix")
 
   val Alias =
-    Field(Str,
-          Meta + "contextAlias",
-          ModelDoc(ModelVocabularies.Meta, "contextAlias", "lexical value of the alias in the context"))
+    Field(
+      Str,
+      Meta + "contextAlias",
+      ModelDoc(ModelVocabularies.Meta, "contextAlias", "lexical value of the alias in the context")
+    )
 
   override def modelInstance: AmfObject = CuriePrefix()
 
@@ -81,26 +84,31 @@ object CuriePrefixModel extends DomainElementModel with WithIri {
   )
 }
 
-/**
-  * Stores information about mapping rules for a property in the model
+/** Stores information about mapping rules for a property in the model
   */
 object ContextMappingModel extends DomainElementModel with WithIri {
   override val `type`: List[ValueType] = List(Meta + "ContextMapping")
 
   val Alias =
-    Field(Str,
-          Meta + "contextAlias",
-          ModelDoc(ModelVocabularies.Meta, "contextAlias", "lexical value of the alias in the context"))
+    Field(
+      Str,
+      Meta + "contextAlias",
+      ModelDoc(ModelVocabularies.Meta, "contextAlias", "lexical value of the alias in the context")
+    )
 
   val Coercion =
     Field(Str, Meta + "coercion", ModelDoc(ModelVocabularies.Meta, "coercion", "Type to coerce the mapped model"))
 
   val Nulled =
-    Field(Bool,
-          Meta + "nulled",
-          ModelDoc(ModelVocabularies.Meta,
-                   "nulled",
-                   "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"))
+    Field(
+      Bool,
+      Meta + "nulled",
+      ModelDoc(
+        ModelVocabularies.Meta,
+        "nulled",
+        "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"
+      )
+    )
 
   override def fields: List[Field] = List(Alias, IRI, Coercion, Nulled)
 
@@ -113,40 +121,49 @@ object ContextMappingModel extends DomainElementModel with WithIri {
   )
 }
 
-/**
-  * Set of semantic contextual information that can be attached to a schema
+/** Set of semantic contextual information that can be attached to a schema
   */
 object SemanticContextModel extends DomainElementModel {
   override val `type`: List[ValueType] = List(Meta + "SemanticContext")
 
   val Base =
-    Field(BaseIRIModel,
-          Meta + "base",
-          ModelDoc(ModelVocabularies.Meta, "base", "Base IRI used to generate all the @ids in the model"))
+    Field(
+      BaseIRIModel,
+      Meta + "base",
+      ModelDoc(ModelVocabularies.Meta, "base", "Base IRI used to generate all the @ids in the model")
+    )
 
   val Vocab =
     Field(
       DefaultVocabularyModel,
       Meta + "vocab",
-      ModelDoc(ModelVocabularies.Meta,
-               "vocab",
-               "Default IRI prefix used to map by default all properties and terms in the model")
+      ModelDoc(
+        ModelVocabularies.Meta,
+        "vocab",
+        "Default IRI prefix used to map by default all properties and terms in the model"
+      )
     )
 
   val Curies =
-    Field(Array(CuriePrefixModel),
-          Meta + "curies",
-          ModelDoc(ModelVocabularies.Meta, "curies", "Set of CURIE prefixes defined in a context"))
+    Field(
+      Array(CuriePrefixModel),
+      Meta + "curies",
+      ModelDoc(ModelVocabularies.Meta, "curies", "Set of CURIE prefixes defined in a context")
+    )
 
   val Mapping =
-    Field(Array(ContextMappingModel),
-          Meta + "mappings",
-          ModelDoc(ModelVocabularies.Meta, "mappings", "Set of property mappings and coercions defined in a context"))
+    Field(
+      Array(ContextMappingModel),
+      Meta + "mappings",
+      ModelDoc(ModelVocabularies.Meta, "mappings", "Set of property mappings and coercions defined in a context")
+    )
 
   val TypeMapping =
-    Field(Array(Iri),
-          Meta + "typeMapping",
-          ModelDoc(ModelVocabularies.Meta, "typeMapping", "Set of types for a particular node"))
+    Field(
+      Array(Iri),
+      Meta + "typeMapping",
+      ModelDoc(ModelVocabularies.Meta, "typeMapping", "Set of types for a particular node")
+    )
 
   override def fields: List[Field] = List(Base, Vocab, Curies, Mapping)
 
@@ -164,5 +181,6 @@ trait WithSemanticContext {
     Field(
       SemanticContextModel,
       Meta + "semantics",
-      ModelDoc(ModelVocabularies.Meta, "semantics", "Associated context model for domain element holding a schema"))
+      ModelDoc(ModelVocabularies.Meta, "semantics", "Associated context model for domain element holding a schema")
+    )
 }

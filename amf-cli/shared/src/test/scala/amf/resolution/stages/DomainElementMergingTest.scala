@@ -14,8 +14,7 @@ import amf.shapes.client.scala.model.domain.ScalarShape
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-/**
-  * Created by pedro.colunga on 10/31/17.
+/** Created by pedro.colunga on 10/31/17.
   */
 class DomainElementMergingTest extends AnyFunSuite with Matchers {
 
@@ -166,8 +165,10 @@ class DomainElementMergingTest extends AnyFunSuite with Matchers {
   }
 
   private def ctx: Raml10WebApiContext = {
-    new Raml10WebApiContext("",
-                            Nil,
-                            ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty)))
+    new Raml10WebApiContext(
+      "",
+      Nil,
+      ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty))
+    )
   }
 }

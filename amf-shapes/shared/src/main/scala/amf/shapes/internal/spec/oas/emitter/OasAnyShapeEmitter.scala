@@ -13,21 +13,25 @@ import amf.shapes.internal.spec.jsonschema.emitter.Draft6ExamplesEmitter
 import scala.collection.mutable.ListBuffer
 
 object OasAnyShapeEmitter {
-  def apply(shape: AnyShape,
-            ordering: SpecOrdering,
-            references: Seq[BaseUnit],
-            pointer: Seq[String] = Nil,
-            schemaPath: Seq[(String, String)] = Nil,
-            isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext): OasAnyShapeEmitter =
+  def apply(
+      shape: AnyShape,
+      ordering: SpecOrdering,
+      references: Seq[BaseUnit],
+      pointer: Seq[String] = Nil,
+      schemaPath: Seq[(String, String)] = Nil,
+      isHeader: Boolean = false
+  )(implicit spec: OasLikeShapeEmitterContext): OasAnyShapeEmitter =
     new OasAnyShapeEmitter(shape, ordering, references, pointer, schemaPath, isHeader)(spec)
 }
 
-class OasAnyShapeEmitter(shape: AnyShape,
-                         ordering: SpecOrdering,
-                         references: Seq[BaseUnit],
-                         pointer: Seq[String] = Nil,
-                         schemaPath: Seq[(String, String)] = Nil,
-                         isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
+class OasAnyShapeEmitter(
+    shape: AnyShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil,
+    isHeader: Boolean = false
+)(implicit spec: OasLikeShapeEmitterContext)
     extends OasShapeEmitter(shape, ordering, references, pointer, schemaPath) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()

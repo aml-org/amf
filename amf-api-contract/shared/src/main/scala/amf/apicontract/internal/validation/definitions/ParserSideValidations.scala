@@ -458,12 +458,16 @@ object ParserSideValidations extends Validations {
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
     HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
-    MissingAnnotationSchema.id -> Map(Raml10Profile -> VIOLATION,
-                                      Raml08Profile -> VIOLATION,
-                                      GrpcProfile   -> VIOLATION), // TODO: Add graphqlProfile
-    AnnotationSchemaMustBeAny.id -> Map(Raml10Profile -> VIOLATION,
-                                        Raml08Profile -> VIOLATION,
-                                        GrpcProfile   -> VIOLATION) // TODO: Add graphqlProfile
+    MissingAnnotationSchema.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      GrpcProfile   -> VIOLATION
+    ), // TODO: Add graphqlProfile
+    AnnotationSchemaMustBeAny.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      GrpcProfile   -> VIOLATION
+    ) // TODO: Add graphqlProfile
   )
 
   override val validations: List[ValidationSpecification] = List(

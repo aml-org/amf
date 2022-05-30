@@ -8,13 +8,14 @@ import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 import scala.collection.mutable
 
-class Async20WebApiContext(loc: String,
-                           refs: Seq[ParsedReference],
-                           private val wrapped: ParserContext,
-                           private val ds: Option[AsyncWebApiDeclarations] = None,
-                           private val operationIds: mutable.Set[String] = mutable.HashSet(),
-                           options: ParsingOptions = ParsingOptions())
-    extends AsyncWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
+class Async20WebApiContext(
+    loc: String,
+    refs: Seq[ParsedReference],
+    private val wrapped: ParserContext,
+    private val ds: Option[AsyncWebApiDeclarations] = None,
+    private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    options: ParsingOptions = ParsingOptions()
+) extends AsyncWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
   override val factory: Async20VersionFactory = Async20VersionFactory()(this)
   override val spec: Spec                     = AsyncApi20
   override val syntax: SpecSyntax             = Async20Syntax

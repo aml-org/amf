@@ -25,9 +25,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiMessageEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiMessageEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val messages = fieldEntry.arrayValues[Message]
     messages.size match {
@@ -55,9 +55,9 @@ class AsyncApiMessageEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering)(
   override def position(): Position = pos(fieldEntry.value.annotations)
 }
 
-case class AsyncMessageDeclarationsEmitter(messages: Seq[Message], isTrait: Boolean, ordering: SpecOrdering)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncMessageDeclarationsEmitter(messages: Seq[Message], isTrait: Boolean, ordering: SpecOrdering)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       if (isTrait) "messageTraits" else "messages",
@@ -73,9 +73,9 @@ case class AsyncMessageDeclarationsEmitter(messages: Seq[Message], isTrait: Bool
   override def position(): Position = messages.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-case class AsyncTraitMessagesEmitter(messages: Seq[Message], ordering: SpecOrdering)(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+case class AsyncTraitMessagesEmitter(messages: Seq[Message], ordering: SpecOrdering)(implicit
+    spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "traits",
@@ -90,9 +90,9 @@ case class AsyncTraitMessagesEmitter(messages: Seq[Message], ordering: SpecOrder
   override def position(): Position = messages.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
 }
 
-private class AsyncApiOneOfMessageEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+private class AsyncApiOneOfMessageEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val messages: Seq[Message] = fieldEntry.arrayValues[Message]
     val emitters               = messages.map(x => new AsyncApiMessageContentEmitter(x, ordering = ordering))
@@ -105,9 +105,9 @@ private class AsyncApiOneOfMessageEmitter(fieldEntry: FieldEntry, ordering: Spec
   override def position(): Position = pos(fieldEntry.value.annotations)
 }
 
-class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends PartEmitter {
+class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends PartEmitter {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     val fs = message.fields
@@ -116,38 +116,39 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
       if (message.isLink)
         emitLink(b)
       else {
-        b.obj {
-          emitter =>
-            {
-              val result = ListBuffer[EntryEmitter]()
-              fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
-              val bindingOrphanAnnotations =
-                message.customDomainProperties.filter(e => Option(e.extension).isDefined).filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
-              fs.entry(MessageModel.HeaderSchema).foreach(emitHeader(result, _))
-              fs.entry(MessageModel.CorrelationId)
-                .map(f => result += new AsyncApiCorrelationIdEmitter(f.element.asInstanceOf[CorrelationId], ordering))
-              fs.entry(MessageModel.Title).map(f => result += ValueEmitter("title", f))
-              fs.entry(MessageModel.Summary).map(f => result += ValueEmitter("summary", f))
-              fs.entry(MessageModel.Description).map(f => result += ValueEmitter("description", f))
-              fs.entry(MessageModel.Tags)
-                .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
-              fs.entry(MessageModel.Documentation)
-                .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
-              fs.entry(MessageModel.Bindings)
-                .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
+        b.obj { emitter =>
+          {
+            val result = ListBuffer[EntryEmitter]()
+            fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
+            val bindingOrphanAnnotations =
+              message.customDomainProperties
+                .filter(e => Option(e.extension).isDefined)
+                .filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+            fs.entry(MessageModel.HeaderSchema).foreach(emitHeader(result, _))
+            fs.entry(MessageModel.CorrelationId)
+              .map(f => result += new AsyncApiCorrelationIdEmitter(f.element.asInstanceOf[CorrelationId], ordering))
+            fs.entry(MessageModel.Title).map(f => result += ValueEmitter("title", f))
+            fs.entry(MessageModel.Summary).map(f => result += ValueEmitter("summary", f))
+            fs.entry(MessageModel.Description).map(f => result += ValueEmitter("description", f))
+            fs.entry(MessageModel.Tags)
+              .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
+            fs.entry(MessageModel.Documentation)
+              .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
+            fs.entry(MessageModel.Bindings)
+              .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
 
-              val headerExamples  = fs.entry(MessageModel.HeaderExamples).map(_.arrayValues[Example]).getOrElse(Nil)
-              val payloadExamples = fs.entry(MessageModel.Examples).map(_.arrayValues[Example]).getOrElse(Nil)
-              if (payloadExamples.nonEmpty || headerExamples.nonEmpty)
-                result += MessageExamplesEmitter(headerExamples, payloadExamples, ordering)
+            val headerExamples  = fs.entry(MessageModel.HeaderExamples).map(_.arrayValues[Example]).getOrElse(Nil)
+            val payloadExamples = fs.entry(MessageModel.Examples).map(_.arrayValues[Example]).getOrElse(Nil)
+            if (payloadExamples.nonEmpty || headerExamples.nonEmpty)
+              result += MessageExamplesEmitter(headerExamples, payloadExamples, ordering)
 
-              if (!isTrait) {
-                fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
-                fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
-              }
-              result ++= AnnotationsEmitter(message, ordering)(OasLikeShapeEmitterContextAdapter(spec)).emitters
-              traverse(ordering.sorted(result), emitter)
+            if (!isTrait) {
+              fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
+              fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
             }
+            result ++= AnnotationsEmitter(message, ordering)(OasLikeShapeEmitterContextAdapter(spec)).emitters
+            traverse(ordering.sorted(result), emitter)
+          }
         }
       }
     )
@@ -171,7 +172,9 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
       fs.entry(PayloadModel.SchemaMediaType).map(field => result += ValueEmitter("schemaFormat", field))
       fs.entry(PayloadModel.Schema)
         .map(field =>
-          result += domain.AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType))
+          result += domain
+            .AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType)
+        )
     }
   }
 
@@ -179,15 +182,16 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
 }
 
 case class MessageExamplesEmitter(headerExamples: Seq[Example], payloadExamples: Seq[Example], ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+    implicit val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
       "examples",
       b => {
         b.list { listBuilder =>
-          val pairs = findExamplePairs(headerExamples, payloadExamples, maxIndex = headerExamples.size + payloadExamples.size)
+          val pairs =
+            findExamplePairs(headerExamples, payloadExamples, maxIndex = headerExamples.size + payloadExamples.size)
           val pairEmitters = pairs.map { MessageExamplePairEmitter(_, ordering) }
           traverse(ordering.sorted(pairEmitters), listBuilder)
         }
@@ -195,19 +199,22 @@ case class MessageExamplesEmitter(headerExamples: Seq[Example], payloadExamples:
     )
   }
 
-  private def findExamplePairs(headerExamples: Seq[Example],
-                               payloadExamples: Seq[Example],
-                               pairIndex: Int = 0,
-                               maxIndex: Int,
+  private def findExamplePairs(
+      headerExamples: Seq[Example],
+      payloadExamples: Seq[Example],
+      pairIndex: Int = 0,
+      maxIndex: Int
   ): Seq[MessageExamplePair] = {
     if ((headerExamples.isEmpty && payloadExamples.isEmpty) || pairIndex >= maxIndex) Nil
     else {
       val (headerExample, updatedHeaderExamples)   = findAndRemoveExampleOfIndex(headerExamples, pairIndex)
       val (payloadExample, updatedPayloadExamples) = findAndRemoveExampleOfIndex(payloadExamples, pairIndex)
-      MessageExamplePair(headerExample, payloadExample) +: findExamplePairs(updatedHeaderExamples,
-                                                          updatedPayloadExamples,
-                                                          pairIndex + 1,
-                                                          maxIndex)
+      MessageExamplePair(headerExample, payloadExample) +: findExamplePairs(
+        updatedHeaderExamples,
+        updatedPayloadExamples,
+        pairIndex + 1,
+        maxIndex
+      )
     }
   }
 
@@ -230,18 +237,22 @@ case class MessageExamplesEmitter(headerExamples: Seq[Example], payloadExamples:
 
 case class MessageExamplePair(headerExample: Option[Example], payloadExample: Option[Example])
 
-case class MessageExamplePairEmitter(pair: MessageExamplePair,
-                                     ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
-    extends PartEmitter {
+case class MessageExamplePairEmitter(pair: MessageExamplePair, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends PartEmitter {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     b.obj { entryBuilder =>
-      val emitters: List[EntryEmitter] = List("headers" -> pair.headerExample, "payload" -> pair.payloadExample).flatMap {
-        case (key, example) =>
+      val emitters: List[EntryEmitter] =
+        List("headers" -> pair.headerExample, "payload" -> pair.payloadExample).flatMap { case (key, example) =>
           example.map { ex =>
-            EntryPartEmitter(key, ExampleDataNodePartEmitter(ex, ordering)(AgnosticShapeEmitterContextAdapter(spec)), position = pos(ex.annotations))
+            EntryPartEmitter(
+              key,
+              ExampleDataNodePartEmitter(ex, ordering)(AgnosticShapeEmitterContextAdapter(spec)),
+              position = pos(ex.annotations)
+            )
           }
-      }
+        }
       traverse(ordering.sorted(emitters), entryBuilder)
     }
   }

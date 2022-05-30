@@ -56,7 +56,11 @@ trait SemanticExtensionParseTest extends PlatformSecrets with Matchers {
       .withDialect(extension)
   }
 
-  private def configWithCompanion(config: AMFConfiguration, extension: Dialect, spec: Spec): Future[AMFConfiguration] = {
+  private def configWithCompanion(
+      config: AMFConfiguration,
+      extension: Dialect,
+      spec: Spec
+  ): Future[AMFConfiguration] = {
     companionLibSearch(extension.location().getOrElse(extension.id), spec).map { moduleResult =>
       moduleResult.map(r => config.withUnitCache(handleCompanionModule(r.library, extension)))
     } getOrElse Future.successful(config)
@@ -71,7 +75,8 @@ trait SemanticExtensionParseTest extends PlatformSecrets with Matchers {
   }
 
   protected def assertModel(dialect: String, api: String, spec: Spec)(
-      assertion: Document => Assertion): Future[Assertion] = {
+      assertion: Document => Assertion
+  ): Future[Assertion] = {
     for {
       extension     <- getDialect(basePath + dialect).map(_.dialect)
       parsingConfig <- configWithCompanion(extendConfig(extension, spec), extension, spec)

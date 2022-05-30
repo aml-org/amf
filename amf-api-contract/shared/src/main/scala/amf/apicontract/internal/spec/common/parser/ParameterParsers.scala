@@ -39,10 +39,9 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 import scala.language.postfixOps
 
-case class RamlParametersParser(map: YMap,
-                                adopted: Parameter => Unit,
-                                parseOptional: Boolean = false,
-                                binding: String)(implicit ctx: RamlWebApiContext) {
+case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
+    implicit ctx: RamlWebApiContext
+) {
 
   def parse(): Seq[Parameter] =
     map.entries
@@ -50,38 +49,47 @@ case class RamlParametersParser(map: YMap,
 }
 
 object RamlHeaderParser {
-  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
-      implicit ctx: RamlWebApiContext): Parameter = {
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(
+      node: YNode
+  )(implicit ctx: RamlWebApiContext): Parameter = {
     RamlParameterParser.parse(adopted, parseOptional, "header")(node)
   }
 }
 
 object RamlQueryParameterParser {
-  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
-      implicit ctx: RamlWebApiContext): Parameter = {
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(
+      node: YNode
+  )(implicit ctx: RamlWebApiContext): Parameter = {
     RamlParameterParser.parse(adopted, parseOptional, "query")(node)
   }
 }
 
 object RamlParameterParser {
-  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(node: YNode)(
-      implicit ctx: RamlWebApiContext): Parameter = {
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
+      node: YNode
+  )(implicit ctx: RamlWebApiContext): Parameter = {
     val head = node.as[YMap].entries.head
     ctx.factory.parameterParser(head, adopted, parseOptional, binding).parse()
   }
 }
 
-case class Raml10ParameterParser(entry: YMapEntry,
-                                 adopted: Parameter => Unit,
-                                 parseOptional: Boolean = false,
-                                 binding: String)(implicit ctx: RamlWebApiContext)
+case class Raml10ParameterParser(
+    entry: YMapEntry,
+    adopted: Parameter => Unit,
+    parseOptional: Boolean = false,
+    binding: String
+)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
 
   override def parse(): Parameter = {
     val nameNode = ScalarNode(entry.key)
     val parameter = Parameter(entry)
       .withName(nameNode)
-      .setWithoutId(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
+      .setWithoutId(
+        ParameterModel.ParameterName,
+        nameNode.text(),
+        Annotations.inferred()
+      ) // TODO parameter id is using a name that is not final.
     parameter.syntheticBinding(binding)
     adopted(parameter)
     val p = entry.value.to[YMap] match {
@@ -89,9 +97,9 @@ case class Raml10ParameterParser(entry: YMapEntry,
         map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
         map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
         map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
-        Raml10TypeParser(entry,
-                         shape => shape.withName("schema"),
-                         TypeInfo(isPropertyOrParameter = true))(WebApiShapeParserContextAdapter(ctx))
+        Raml10TypeParser(entry, shape => shape.withName("schema"), TypeInfo(isPropertyOrParameter = true))(
+          WebApiShapeParserContextAdapter(ctx)
+        )
           .parse()
           .foreach(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
 
@@ -127,19 +135,27 @@ case class Raml10ParameterParser(entry: YMapEntry,
                   entry,
                   shape => shape.withName("schema", Annotations(SynthesizedField())),
                   TypeInfo(isPropertyOrParameter = true),
-                  StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
+                  StringDefaultType
+                )(WebApiShapeParserContextAdapter(ctx))
                   .parse() match {
                   case Some(schema) =>
                     parameter.setWithoutId(ParameterModel.Schema, tracking(schema, parameter), Annotations(entry))
                   case None =>
-                    ctx.eh.violation(UnresolvedReference,
-                                     parameter,
-                                     "Cannot declare unresolved parameter",
-                                     entry.value.location)
+                    ctx.eh.violation(
+                      UnresolvedReference,
+                      parameter,
+                      "Cannot declare unresolved parameter",
+                      entry.value.location
+                    )
                     parameter
                 }
               case _ =>
-                ctx.eh.violation(UnresolvedReference, parameter, "Cannot declare unresolved parameter", entry.value.location)
+                ctx.eh.violation(
+                  UnresolvedReference,
+                  parameter,
+                  "Cannot declare unresolved parameter",
+                  entry.value.location
+                )
                 parameter
 
             }
@@ -153,11 +169,20 @@ case class Raml10ParameterParser(entry: YMapEntry,
       // should this be always synthetized? if so, change validation for RAML Overlay overriding required (to ignore Synthetized)
       if (optionalParam)
         p.setWithoutId(ParameterModel.Required, AmfScalar(!optionalParam), Annotations.synthesized())
-      else p.setWithoutId(ParameterModel.Required, AmfScalar(!optionalParam, Annotations.synthesized()), Annotations.inferred())
+      else
+        p.setWithoutId(
+          ParameterModel.Required,
+          AmfScalar(!optionalParam, Annotations.synthesized()),
+          Annotations.inferred()
+        )
 
       val paramName = if (optionalParam) stringName.stripSuffix("?") else stringName
       p.setWithoutId(ParameterModel.Name, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
-        .setWithoutId(ParameterModel.ParameterName, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
+        .setWithoutId(
+          ParameterModel.ParameterName,
+          AmfScalar(paramName, nameNode.text().annotations),
+          Annotations.inferred()
+        )
     }
     p.syntheticBinding(binding)
     p
@@ -168,16 +193,22 @@ case class Raml10ParameterParser(entry: YMapEntry,
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry,
-                                 adopted: Parameter => Unit,
-                                 parseOptional: Boolean = false,
-                                 binding: String)(implicit ctx: RamlWebApiContext)
+case class Raml08ParameterParser(
+    entry: YMapEntry,
+    adopted: Parameter => Unit,
+    parseOptional: Boolean = false,
+    binding: String
+)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
     val nameNode = ScalarNode(entry.key)
     val parameter = Parameter(entry)
       .withName(nameNode)
-      .setWithoutId(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
+      .setWithoutId(
+        ParameterModel.ParameterName,
+        nameNode.text(),
+        Annotations.inferred()
+      ) // TODO parameter id is using a name that is not final.
     parameter.syntheticBinding(binding)
     adopted(parameter)
 
@@ -192,10 +223,12 @@ case class Raml08ParameterParser(entry: YMapEntry,
         }
       case _ =>
         // Named Parameter Parse
-        Raml08TypeParser(entry,
-                         (s: Shape) => s.withName(nameNode.text().toString),
-                         isAnnotation = false,
-                         StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
+        Raml08TypeParser(
+          entry,
+          (s: Shape) => s.withName(nameNode.text().toString),
+          isAnnotation = false,
+          StringDefaultType
+        )(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .foreach(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
     }
@@ -234,10 +267,12 @@ trait OasParameterParser extends SpecParserOps {
   def parse: OasParameter
 }
 
-case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
-                               parentId: String,
-                               nameNode: Option[YNode],
-                               nameGenerator: IdCounter)(implicit ctx: WebApiContext)
+case class Oas2ParameterParser(
+    entryOrNode: YMapEntryLike,
+    parentId: String,
+    nameNode: Option[YNode],
+    nameGenerator: IdCounter
+)(implicit ctx: WebApiContext)
     extends OasParameterParser {
 
   protected val map: YMap = entryOrNode.asMap
@@ -247,7 +282,10 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
       case _: Shape if nameNode.isDefined =>
         p.setWithoutId(ShapeModel.Name, nameNode.map(ScalarNode(_).text()).get, Annotations.inferred())
       case _: Shape =>
-        map.key("name", ShapeModel.Name in p) // name of the parameter in the HTTP binding (path, request parameter, etc)
+        map.key(
+          "name",
+          ShapeModel.Name in p
+        ) // name of the parameter in the HTTP binding (path, request parameter, etc)
       case p: Payload =>
         if (nameNode.nonEmpty)
           p.setWithoutId(
@@ -266,7 +304,10 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
         if (nameNode.nonEmpty)
           p.withName(nameNode.map(ScalarNode(_)).get)
         else
-          map.key("name", ParameterModel.Name in p) // name of the parameter in the HTTP binding (path, request parameter, etc)
+          map.key(
+            "name",
+            ParameterModel.Name in p
+          ) // name of the parameter in the HTTP binding (path, request parameter, etc)
         validateEntryName(p)
     }
     p
@@ -290,9 +331,11 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
   private def validateEntryName(element: DomainElement with NamedDomainElement): Unit = {
     // if is invalid need a aut generated name different from default to avoid collision with uri parameters
     if (element.name.option().isEmpty)
-      element.setWithoutId(ParameterModel.Name,
-                  AmfScalar(nameGenerator.genId("parameter"), Annotations(AutoGeneratedName())),
-                  Annotations.synthesized())
+      element.setWithoutId(
+        ParameterModel.Name,
+        AmfScalar(nameGenerator.genId("parameter"), Annotations(AutoGeneratedName())),
+        Annotations.synthesized()
+      )
     if (map.key("name").isEmpty) {
       ctx.eh.violation(
         ParameterNameRequired,
@@ -312,9 +355,8 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             val in = entry.value.as[YScalar].text
             buildFromBinding(in, Some(entry))
           case _ => // ignore
-            /**
-              * Binding is required, i'm not setting any default value so It will be some model validation.
-              * */
+            /** Binding is required, i'm not setting any default value so It will be some model validation.
+              */
             val parameter = Parameter(entryOrNode.annotations)
             setName(parameter)
             OasParameter(parameter, Some(map))
@@ -374,7 +416,10 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     setName(parameter)
     parameter.setWithoutId(ParameterModel.Required, AmfScalar(false), Annotations.synthesized())
 
-    map.key("name", ParameterModel.ParameterName in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
+    map.key(
+      "name",
+      ParameterModel.ParameterName in parameter
+    ) // name of the parameter in the HTTP binding (path, request parameter, etc)
 
     map.key("in", ParameterModel.Binding in parameter)
     map.key("description", ParameterModel.Description in parameter)
@@ -385,17 +430,23 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     parameter
   }
 
-  def parseType(container: SchemaContainer with AmfObject, binding: String, typeParsing: () => Unit): SchemaContainer = {
+  def parseType(
+      container: SchemaContainer with AmfObject,
+      binding: String,
+      typeParsing: () => Unit
+  ): SchemaContainer = {
 
     def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
 
     map.key("type") match {
       case None =>
         setDefaultSchema(container)
-        ctx.eh.violation(MissingParameterType,
-                         container,
-                         s"'type' is required in a parameter with binding '$binding'",
-                         map.location)
+        ctx.eh.violation(
+          MissingParameterType,
+          container,
+          s"'type' is required in a parameter with binding '$binding'",
+          map.location
+        )
       case Some(entry) =>
         checkItemsField(entry, container)
         typeParsing()
@@ -407,10 +458,12 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     val typeValue = entry.value.asScalar.get.text
     val items     = map.key("items")
     if (typeValue == "array" && items.isEmpty)
-      ctx.eh.warning(ItemsFieldRequiredWarning, // TODO: Should be violation
-                     container,
-                     "'items' field is required when schema type is array",
-                     map.location)
+      ctx.eh.warning(
+        ItemsFieldRequiredWarning, // TODO: Should be violation
+        container,
+        "'items' field is required when schema type is array",
+        map.location
+      )
   }
 
   private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
@@ -451,10 +504,13 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     setName(payload)
     if (payload.name.option().isEmpty)
       payload.setWithoutId(ParameterModel.Name, AmfScalar("default"), Annotations() += Inferred())
-    map.key("required", entry => {
-      val req: Boolean = entry.value.as[Boolean]
-      payload.annotations += RequiredParamPayload(req, Range(entry.range))
-    })
+    map.key(
+      "required",
+      entry => {
+        val req: Boolean = entry.value.as[Boolean]
+        payload.annotations += RequiredParamPayload(req, Range(entry.range))
+      }
+    )
     map.key("description", PayloadModel.Description in payload)
     AnnotationParser(payload, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     payload
@@ -472,7 +528,8 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
       case Some(entry) =>
         // i don't need to set param need in here. Its necessary only for form data, because of the properties
         OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape])(
-          WebApiShapeParserContextAdapter(ctx).toOasNext)
+          WebApiShapeParserContextAdapter(ctx).toOasNext
+        )
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)
@@ -491,16 +548,20 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
   private def invalidBinding(bindingEntry: Option[YMapEntry], binding: String, parameter: OasParameter): Unit = {
     val entryValueAnnotations = bindingEntry.map(e => Annotations(e.value)).getOrElse(Annotations())
 
-    ctx.eh.violation(OasInvalidParameterBinding,
-                     "",
-                     s"Invalid parameter binding '$binding'",
-                     bindingEntry.map(_.value).getOrElse(map).location)
+    ctx.eh.violation(
+      OasInvalidParameterBinding,
+      "",
+      s"Invalid parameter binding '$binding'",
+      bindingEntry.map(_.value).getOrElse(map).location
+    )
 
     parameter.domainElement match {
       case p: Parameter =>
-        p.setWithoutId(ParameterModel.Binding,
-              AmfScalar(p.binding.value(), entryValueAnnotations),
-              entryValueAnnotations += InvalidBinding(binding))
+        p.setWithoutId(
+          ParameterModel.Binding,
+          AmfScalar(p.binding.value(), entryValueAnnotations),
+          entryValueAnnotations += InvalidBinding(binding)
+        )
       case p: Payload =>
         p.add(InvalidBinding(binding))
       case _ => // ignore
@@ -534,7 +595,8 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
           case Some(payload) =>
             OasParameter(
               payload.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized()).asInstanceOf[Payload],
-              Some(ref))
+              Some(ref)
+            )
           case None =>
             val fullRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, refUrl)
             ctx.parseRemoteOasParameter(fullRef, parentId)(toOas(ctx)) match {
@@ -551,10 +613,12 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                 val parameter: Parameter =
                   ErrorParameter(refUrl, ref).link(AmfScalar(refUrl), Annotations(ref), Annotations.synthesized())
                 setName(parameter)
-                ctx.eh.violation(UnresolvedParameter,
-                                 parameter,
-                                 s"Cannot find parameter or payload reference $refUrl",
-                                 ref.location)
+                ctx.eh.violation(
+                  UnresolvedParameter,
+                  parameter,
+                  s"Cannot find parameter or payload reference $refUrl",
+                  ref.location
+                )
                 OasParameter(parameter, Some(ref))
             }
         }
@@ -562,10 +626,12 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
   }
 }
 
-class Oas3ParameterParser(entryOrNode: YMapEntryLike,
-                          parentId: String,
-                          nameNode: Option[YNode],
-                          nameGenerator: IdCounter)(implicit ctx: WebApiContext)
+class Oas3ParameterParser(
+    entryOrNode: YMapEntryLike,
+    parentId: String,
+    nameNode: Option[YNode],
+    nameGenerator: IdCounter
+)(implicit ctx: WebApiContext)
     extends Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator) {
 
   override def parse(): OasParameter = {
@@ -597,16 +663,17 @@ class Oas3ParameterParser(entryOrNode: YMapEntryLike,
           result.set(ParameterModel.AllowEmptyValue, value = false)
           map.key("allowReserved", (ParameterModel.AllowReserved in result).explicit)
           map.key("allowEmptyValue", (ParameterModel.AllowEmptyValue in result).explicit)
-      })
+        }
+      )
   }
 
   private def parseSchema(param: Parameter): Unit =
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry,
-                      shape => setName(shape).asInstanceOf[Shape],
-                      OAS30SchemaVersion(SchemaPosition.Schema))(WebApiShapeParserContextAdapter(ctx).toOasNext)
+        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape], OAS30SchemaVersion(SchemaPosition.Schema))(
+          WebApiShapeParserContextAdapter(ctx).toOasNext
+        )
           .parse()
           .map { schema =>
             ctx.autoGeneratedAnnotation(schema)
@@ -656,9 +723,11 @@ object Oas3ParameterParser {
   def parseExplodeField(map: YMap, result: Parameter)(implicit errorHandler: IllegalTypeHandler): Unit = {
     map.key("explode") match {
       case Some(entry) =>
-        result.fields.setWithoutId(ParameterModel.Explode,
-                                   AmfScalar(entry.value.as[Boolean], Annotations(entry.value)),
-                                   Annotations(entry) += ExplicitField())
+        result.fields.setWithoutId(
+          ParameterModel.Explode,
+          AmfScalar(entry.value.as[Boolean], Annotations(entry.value)),
+          Annotations(entry) += ExplicitField()
+        )
       case None =>
         val defValue: Option[Boolean] = result.style.option().map {
           case "form" => true
@@ -673,9 +742,11 @@ object Oas3ParameterParser {
       case Some(entry) =>
         val styleText = entry.value.asScalar.map(_.text).getOrElse("")
         validateStyle(result, styleText, ctx)
-        result.fields.setWithoutId(ParameterModel.Style,
-                                   AmfScalar(styleText, Annotations(entry.value)),
-                                   Annotations(entry) += ExplicitField())
+        result.fields.setWithoutId(
+          ParameterModel.Style,
+          AmfScalar(styleText, Annotations(entry.value)),
+          Annotations(entry) += ExplicitField()
+        )
       case None =>
         val defValue: Option[String] = result.binding.option() match {
           case Some("query") | Some("cookie") => Some("form")
@@ -693,9 +764,11 @@ object Oas3ParameterParser {
   private def validateStyle(param: Parameter, style: String, ctx: WebApiContext): Unit = {
     val paramBinding = param.binding.value()
     if (!isStyleValid(paramBinding, style))
-      ctx.eh.violation(InvalidParameterStyleBindingCombination,
-                       param,
-                       s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'")
+      ctx.eh.violation(
+        InvalidParameterStyleBindingCombination,
+        param,
+        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'"
+      )
   }
 
   def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
@@ -727,11 +800,15 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
         payload.annotations.find(classOf[RequiredParamPayload]) match {
           case None => property.set(PropertyShapeModel.MinCount, 0)
           case Some(a) if !a.required =>
-            property.set(PropertyShapeModel.MinCount,
-                         AmfScalar(0, Annotations() += LexicalInformation(a.range) += ExplicitField()))
+            property.set(
+              PropertyShapeModel.MinCount,
+              AmfScalar(0, Annotations() += LexicalInformation(a.range) += ExplicitField())
+            )
           case Some(a) =>
-            property.set(PropertyShapeModel.MinCount,
-                         AmfScalar(1, Annotations() += LexicalInformation(a.range) += ExplicitField()))
+            property.set(
+              PropertyShapeModel.MinCount,
+              AmfScalar(1, Annotations() += LexicalInformation(a.range) += ExplicitField())
+            )
         }
 
         Option(payload.schema).foreach(property.withRange(_))
@@ -740,9 +817,9 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       Some(
         Payload()
           .withName("formData")
-
           .setWithoutId(PayloadModel.Schema, schema, Annotations.inferred())
-          .add(FormBodyParameter()))
+          .add(FormBodyParameter())
+      )
     }
 
   private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
@@ -783,46 +860,43 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
   }
 
   private def validateDuplicated(oasParameters: Seq[OasParameter]): Unit = {
-    val paramsInformation = oasParameters.flatMap(
-      oasParam => {
-        oasParam.element match {
-          case Left(parameter) =>
-            val effectiveParam = parameter.effectiveLinkTarget().asInstanceOf[Parameter]
-            for {
-              name    <- Option(effectiveParam.parameterName.value())
-              binding <- Option(effectiveParam.binding.value())
-            } yield ParameterInformation(oasParam, name, binding)
-          case Right(payload) =>
-            val effectivePayload = payload.effectiveLinkTarget().asInstanceOf[Payload]
-            val name             = obtainName(effectivePayload)
-            Some(ParameterInformation(oasParam, name, if (oasParam.isFormData) "formData" else "body"))
-        }
+    val paramsInformation = oasParameters.flatMap(oasParam => {
+      oasParam.element match {
+        case Left(parameter) =>
+          val effectiveParam = parameter.effectiveLinkTarget().asInstanceOf[Parameter]
+          for {
+            name    <- Option(effectiveParam.parameterName.value())
+            binding <- Option(effectiveParam.binding.value())
+          } yield ParameterInformation(oasParam, name, binding)
+        case Right(payload) =>
+          val effectivePayload = payload.effectiveLinkTarget().asInstanceOf[Payload]
+          val name             = obtainName(effectivePayload)
+          Some(ParameterInformation(oasParam, name, if (oasParam.isFormData) "formData" else "body"))
       }
-    )
+    })
 
-    val groupedByBinding = paramsInformation.groupBy {
-      case ParameterInformation(_, name, binding) => (name, binding)
+    val groupedByBinding = paramsInformation.groupBy { case ParameterInformation(_, name, binding) =>
+      (name, binding)
     }.values
     groupedByBinding
       .foreach {
         case equalParams if equalParams.length > 1 =>
-          equalParams.tail.foreach {
-            case ParameterInformation(oasParam, name, binding) =>
-              oasParam.ast match {
-                case Some(ast) =>
-                  ctx.eh.violation(
-                    DuplicatedParameters,
-                    oasParam.domainElement,
-                    s"Parameter $name of type $binding was found duplicated",
-                    ast.location
-                  )
-                case None =>
-                  ctx.eh.violation(
-                    DuplicatedParameters,
-                    oasParam.domainElement,
-                    s"Parameter $name of type $binding was found duplicated"
-                  )
-              }
+          equalParams.tail.foreach { case ParameterInformation(oasParam, name, binding) =>
+            oasParam.ast match {
+              case Some(ast) =>
+                ctx.eh.violation(
+                  DuplicatedParameters,
+                  oasParam.domainElement,
+                  s"Parameter $name of type $binding was found duplicated",
+                  ast.location
+                )
+              case None =>
+                ctx.eh.violation(
+                  DuplicatedParameters,
+                  oasParam.domainElement,
+                  s"Parameter $name of type $binding was found duplicated"
+                )
+            }
 
           }
         case _ =>

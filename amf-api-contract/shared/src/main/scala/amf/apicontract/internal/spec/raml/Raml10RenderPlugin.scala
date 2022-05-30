@@ -4,11 +4,7 @@ import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
-import amf.apicontract.internal.spec.raml.emitter.document.{
-  RamlDocumentEmitter,
-  RamlFragmentEmitter,
-  RamlModuleEmitter
-}
+import amf.apicontract.internal.spec.raml.emitter.document.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -22,9 +18,11 @@ object Raml10RenderPlugin extends ApiRenderPlugin {
 
   override def spec: Spec = Spec.RAML10
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = unit match {
     case module: Module => Some(RamlModuleEmitter(module)(specContext(renderConfig, errorHandler)).emitModule())
     case document: Document =>
       Some(RamlDocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())

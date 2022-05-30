@@ -50,7 +50,7 @@ class AMFEventReportBuilderTest
     TimedEvent(23, MyMockLonelyEvent("group-d-1-lonely")),
     TimedEvent(24, MyMockGroupedEvent("group-b-3", "group-b")),
     TimedEvent(26, MyMockLonelyEvent("group-c-lonely")),
-    TimedEvent(27, MyMockGroupedEvent("group-b-4", "group-b")),
+    TimedEvent(27, MyMockGroupedEvent("group-b-4", "group-b"))
   )
 
   case class MyMockGroupedEvent(name: String, groupKey: String) extends AMFEvent with GroupedEvent

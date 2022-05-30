@@ -10,9 +10,9 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class RamlSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     f.value.value match {
       case shape: AnyShape =>

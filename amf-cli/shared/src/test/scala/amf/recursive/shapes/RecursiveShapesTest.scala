@@ -31,7 +31,11 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
       RecursiveShapeFixture("items1.raml", "items1.report", "items1.json"),
       RecursiveShapeFixture("union1.raml", "union1.report", "union1.json"),
       RecursiveShapeFixture("inherits-and-props.raml", "inherits-and-props.report", "inherits-and-props.json"),
-      RecursiveShapeFixture("response-without-mediatype.raml", "response-without-mediatype.report", "response-without-mediatype.json"),
+      RecursiveShapeFixture(
+        "response-without-mediatype.raml",
+        "response-without-mediatype.report",
+        "response-without-mediatype.json"
+      )
     )
 
   fixture.foreach { rf =>
@@ -46,13 +50,10 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   }
 
   def cycle(source: String, golden: String): Future[Assertion] = {
-      super.cycle(source,
-                  "oas/" + golden,
-                  Raml10YamlHint,
-                  Oas20JsonHint,
-                  directory = basePath.replace("file://", ""))
+    super.cycle(source, "oas/" + golden, Raml10YamlHint, Oas20JsonHint, directory = basePath.replace("file://", ""))
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig:AMFConfiguration): BaseUnit = ValidationTransformationPipeline(Raml10Profile, unit, amfConfig.validationConfiguration)
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit =
+    ValidationTransformationPipeline(Raml10Profile, unit, amfConfig.validationConfiguration)
 }

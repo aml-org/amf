@@ -7,10 +7,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel
-import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel.{
-  Settings => SettingsField,
-  _
-}
+import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
 import org.yaml.model.YPart
 
 case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)

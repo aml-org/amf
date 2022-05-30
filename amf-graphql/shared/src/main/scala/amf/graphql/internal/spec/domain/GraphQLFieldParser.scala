@@ -12,9 +12,9 @@ case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
   def parse(adopt: Either[PropertyShape, ShapeOperation] => Unit): Unit = {
     arguments() match {
       case args if args.nonEmpty =>
-        GraphQLOperationFieldParser(ast).parse((operation) => adopt(Right(operation)))
-      case args if args.isEmpty  =>
-        GraphQLPropertyFieldParser(ast).parse((property) => adopt(Left(property)))
+        GraphQLOperationFieldParser(ast).parse(operation => adopt(Right(operation)))
+      case args if args.isEmpty =>
+        GraphQLPropertyFieldParser(ast).parse(property => adopt(Left(property)))
     }
   }
 

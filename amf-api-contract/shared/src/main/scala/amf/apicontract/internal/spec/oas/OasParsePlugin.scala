@@ -24,11 +24,13 @@ trait OasParsePlugin extends OasLikeParsePlugin {
 
   protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit
 
-  protected def context(loc: String,
-                        refs: Seq[ParsedReference],
-                        options: ParsingOptions,
-                        wrapped: ParserContext,
-                        ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
+  protected def context(
+      loc: String,
+      refs: Seq[ParsedReference],
+      options: ParsingOptions,
+      wrapped: ParserContext,
+      ds: Option[OasWebApiDeclarations] = None
+  ): OasWebApiContext
 
   override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }

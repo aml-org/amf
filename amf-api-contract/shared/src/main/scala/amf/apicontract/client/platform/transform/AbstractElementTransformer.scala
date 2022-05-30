@@ -13,34 +13,42 @@ import amf.core.internal.convert.ClientErrorHandlerConverter._
 
 import scala.scalajs.js.annotation.JSExportAll
 
-/**
-  * Temporally object to respect new domain interfaces. Probably this will be grouped at some Domain Element client logic.
+/** Temporally object to respect new domain interfaces. Probably this will be grouped at some Domain Element client
+  * logic.
   */
 @JSExportAll
 object AbstractElementTransformer {
 
-  def asEndpoint[T <: BaseUnit](unit: T,
-                                rt: ResourceType,
-                                errorHandler: ClientErrorHandler,
-                                configuration: AMFGraphConfiguration,
-                                profile: ProfileName = Raml10Profile): EndPoint = {
-    InternalTransformer.asEndpoint(unit._internal,
-                                   rt._internal,
-                                   configuration._internal,
-                                   profile,
-                                   ClientErrorHandlerConverter.convert(errorHandler))
+  def asEndpoint[T <: BaseUnit](
+      unit: T,
+      rt: ResourceType,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): EndPoint = {
+    InternalTransformer.asEndpoint(
+      unit._internal,
+      rt._internal,
+      configuration._internal,
+      profile,
+      ClientErrorHandlerConverter.convert(errorHandler)
+    )
   }
 
-  def asOperation[T <: BaseUnit](unit: T,
-                                 tr: Trait,
-                                 errorHandler: ClientErrorHandler,
-                                 configuration: AMFGraphConfiguration,
-                                 profile: ProfileName = Raml10Profile): Operation = {
-    InternalTransformer.asOperation(unit._internal,
-                                    tr._internal,
-                                    configuration._internal,
-                                    profile,
-                                    ClientErrorHandlerConverter.convert(errorHandler))
+  def asOperation[T <: BaseUnit](
+      unit: T,
+      tr: Trait,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName = Raml10Profile
+  ): Operation = {
+    InternalTransformer.asOperation(
+      unit._internal,
+      tr._internal,
+      configuration._internal,
+      profile,
+      ClientErrorHandlerConverter.convert(errorHandler)
+    )
 
   }
 

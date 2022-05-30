@@ -9,20 +9,25 @@ import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-/**
-  * Callback metaModel.
+/** Callback metaModel.
   */
 object CallbackModel extends DomainElementModel with KeyField with NameFieldSchema {
 
-  val Expression = Field(Str,
-                         ApiContract + "expression",
-                         ModelDoc(ModelVocabularies.ApiContract,
-                                  "expression",
-                                  "Structural location of the information to fulfill the callback"))
+  val Expression = Field(
+    Str,
+    ApiContract + "expression",
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "expression",
+      "Structural location of the information to fulfill the callback"
+    )
+  )
 
-  val Endpoint = Field(EndPointModel,
-                       ApiContract + "endpoint",
-                       ModelDoc(ModelVocabularies.ApiContract, "endpoint", "Endpoint targeted by the callback"))
+  val Endpoint = Field(
+    EndPointModel,
+    ApiContract + "endpoint",
+    ModelDoc(ModelVocabularies.ApiContract, "endpoint", "Endpoint targeted by the callback")
+  )
 
   override val `type`: List[ValueType] = ApiContract + "Callback" :: DomainElementModel.`type`
 

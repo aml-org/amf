@@ -35,12 +35,12 @@ import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
 import org.yaml.model.{YNode, YPart}
 
-/**
-  * Declarations object.
+/** Declarations object.
   */
 class WebApiDeclarations(
     val alias: Option[String],
-    var libs: Map[String, WebApiDeclarations] = Map(), // TODO: sync this with libraries, is confusing and we end having tw different maps (one of them is not being filled)
+    var libs: Map[String, WebApiDeclarations] =
+      Map(), // TODO: sync this with libraries, is confusing and we end having tw different maps (one of them is not being filled)
     var frags: Map[String, FragmentRef] = Map(),
     var shapes: Map[String, Shape] = Map(),
     var anns: Map[String, CustomDomainProperty] = Map(),
@@ -66,8 +66,8 @@ class WebApiDeclarations(
     val errorHandler: AMFErrorHandler,
     val futureDeclarations: FutureDeclarations,
     var others: Map[String, BaseUnit] = Map(),
-    var extensions: Map[String, Dialect] = Map())
-    extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
+    var extensions: Map[String, Dialect] = Map()
+) extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
   def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
     fragments.get(text) match {
@@ -85,40 +85,38 @@ class WebApiDeclarations(
   }
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
-    libs.foreach { case (k, s)                  => merged.libs += (k -> s) }
-    other.libs.foreach { case (k, s)            => merged.libs += (k -> s) }
-    frags.foreach { case (k, s)                 => merged.frags += (k -> s) }
-    other.frags.foreach { case (k, s)           => merged.frags += (k -> s) }
-    libraries.foreach { case (k, s)             => merged.libraries += (k -> s) }
-    other.libraries.foreach { case (k, s)       => merged.libraries += (k -> s) }
-    fragments.foreach { case (k, s)             => merged.fragments += (k -> s) }
-    other.fragments.foreach { case (k, s)       => merged.fragments += (k -> s) }
-    shapes.foreach { case (k, s)                => merged.shapes += (k -> s) }
-    other.shapes.foreach { case (k, s)          => merged.shapes += (k -> s) }
-    anns.foreach { case (k, s)                  => merged.anns += (k -> s) }
-    other.anns.foreach { case (k, s)            => merged.anns += (k -> s) }
-    annotations.foreach { case (k, s)           => merged.annotations += (k -> s) }
-    other.annotations.foreach { case (k, s)     => merged.annotations += (k -> s) }
-    resourceTypes.foreach { case (k, s)         => merged.resourceTypes += (k -> s) }
-    other.resourceTypes.foreach { case (k, s)   => merged.resourceTypes += (k -> s) }
-    parameters.foreach { case (k, s)            => merged.parameters += (k -> s) }
-    other.parameters.foreach { case (k, s)      => merged.parameters += (k -> s) }
-    payloads.foreach { case (k, s)              => merged.payloads += (k -> s) }
-    other.payloads.foreach { case (k, s)        => merged.payloads += (k -> s) }
-    traits.foreach { case (k, s)                => merged.traits += (k -> s) }
-    other.traits.foreach { case (k, s)          => merged.traits += (k -> s) }
-    securitySchemes.foreach { case (k, s)       => merged.securitySchemes += (k -> s) }
+    libs.foreach { case (k, s) => merged.libs += (k -> s) }
+    other.libs.foreach { case (k, s) => merged.libs += (k -> s) }
+    frags.foreach { case (k, s) => merged.frags += (k -> s) }
+    other.frags.foreach { case (k, s) => merged.frags += (k -> s) }
+    libraries.foreach { case (k, s) => merged.libraries += (k -> s) }
+    other.libraries.foreach { case (k, s) => merged.libraries += (k -> s) }
+    fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
+    other.fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
+    shapes.foreach { case (k, s) => merged.shapes += (k -> s) }
+    other.shapes.foreach { case (k, s) => merged.shapes += (k -> s) }
+    anns.foreach { case (k, s) => merged.anns += (k -> s) }
+    other.anns.foreach { case (k, s) => merged.anns += (k -> s) }
+    annotations.foreach { case (k, s) => merged.annotations += (k -> s) }
+    other.annotations.foreach { case (k, s) => merged.annotations += (k -> s) }
+    resourceTypes.foreach { case (k, s) => merged.resourceTypes += (k -> s) }
+    other.resourceTypes.foreach { case (k, s) => merged.resourceTypes += (k -> s) }
+    parameters.foreach { case (k, s) => merged.parameters += (k -> s) }
+    other.parameters.foreach { case (k, s) => merged.parameters += (k -> s) }
+    payloads.foreach { case (k, s) => merged.payloads += (k -> s) }
+    other.payloads.foreach { case (k, s) => merged.payloads += (k -> s) }
+    traits.foreach { case (k, s) => merged.traits += (k -> s) }
+    other.traits.foreach { case (k, s) => merged.traits += (k -> s) }
+    securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s) }
     other.securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s) }
-    responses.foreach { case (k, s)             => merged.responses += (k -> s) }
-    other.responses.foreach { case (k, s)       => merged.responses += (k -> s) }
-    extensions.foreach { case (k, s)            => merged.extensions = merged.extensions + (k -> s) }
+    responses.foreach { case (k, s) => merged.responses += (k -> s) }
+    other.responses.foreach { case (k, s) => merged.responses += (k -> s) }
+    extensions.foreach { case (k, s) => merged.extensions = merged.extensions + (k -> s) }
   }
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
     val merged =
-      new WebApiDeclarations(alias = alias,
-                             errorHandler = errorHandler,
-                             futureDeclarations = EmptyFutureDeclarations())
+      new WebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
     mergeParts(other, merged)
     merged
   }
@@ -217,9 +215,11 @@ class WebApiDeclarations(
     libraries.get(alias) match {
       case Some(lib: WebApiDeclarations) => lib
       case _ =>
-        val result = new WebApiDeclarations(Some(alias),
-                                            errorHandler = errorHandler,
-                                            futureDeclarations = EmptyFutureDeclarations())
+        val result = new WebApiDeclarations(
+          Some(alias),
+          errorHandler = errorHandler,
+          futureDeclarations = EmptyFutureDeclarations()
+        )
         libraries = libraries + (alias -> result)
         result
     }
@@ -239,73 +239,73 @@ class WebApiDeclarations(
     }
 
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect {
-      case p: Parameter => p
+    findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect { case p: Parameter =>
+      p
     }
 
   def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect {
-      case p: Payload => p
+    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect { case p: Payload =>
+      p
     }
 
   def findRequestBody(key: String, scope: SearchScope.Scope): Option[Request] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect {
-      case r: Request => r
+    findForType(key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect { case r: Request =>
+      r
     }
 
   def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].examples, scope) collect {
-      case e: Example => e
+    findForType(key, _.asInstanceOf[WebApiDeclarations].examples, scope) collect { case e: Example =>
+      e
     }
 
   def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect {
-      case r: Response => r
+    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect { case r: Response =>
+      r
     }
 
   def findTemplatedLink(key: String, scope: SearchScope.Scope): Option[TemplatedLink] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].links, scope) collect {
-      case l: TemplatedLink => l
+    findForType(key, _.asInstanceOf[WebApiDeclarations].links, scope) collect { case l: TemplatedLink =>
+      l
     }
 
   def findHeader(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect {
-      case p: Parameter => p
+    findForType(key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect { case p: Parameter =>
+      p
     }
 
   def findCorrelationId(key: String, scope: SearchScope.Scope): Option[CorrelationId] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect {
-      case c: CorrelationId => c
+    findForType(key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect { case c: CorrelationId =>
+      c
     }
 
   def findServerBindings(key: String, scope: SearchScope.Scope): Option[ServerBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect {
-      case c: ServerBindings => c
+    findForType(key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect { case c: ServerBindings =>
+      c
     }
 
   def findOperationBindings(key: String, scope: SearchScope.Scope): Option[OperationBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect {
-      case c: OperationBindings => c
+    findForType(key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect { case c: OperationBindings =>
+      c
     }
 
   def findChannelBindings(key: String, scope: SearchScope.Scope): Option[ChannelBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect {
-      case c: ChannelBindings => c
+    findForType(key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect { case c: ChannelBindings =>
+      c
     }
 
   def findMessageBindings(key: String, scope: SearchScope.Scope): Option[MessageBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect {
-      case c: MessageBindings => c
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect { case c: MessageBindings =>
+      c
     }
 
   def findMessage(key: String, scope: SearchScope.Scope): Option[Message] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect {
-      case m: Message => m
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect { case m: Message =>
+      m
     }
 
   def findOperationTrait(key: String, scope: SearchScope.Scope): Option[Operation] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].operationTraits, scope) collect {
-      case o: Operation => o
+    findForType(key, _.asInstanceOf[WebApiDeclarations].operationTraits, scope) collect { case o: Operation =>
+      o
     }
 
   def findDialect(key: String): Option[Dialect] = {
@@ -317,8 +317,8 @@ class WebApiDeclarations(
   }
 
   def findMessageTrait(key: String, scope: SearchScope.Scope): Option[Message] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messageTraits, scope) collect {
-      case o: Message => o
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messageTraits, scope) collect { case o: Message =>
+      o
     }
 
   def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
@@ -331,26 +331,32 @@ class WebApiDeclarations(
         ErrorResourceType(key, ast)
     }
 
-  def findResourceType(key: String,
-                       scope: SearchScope.Scope,
-                       error: Option[String => Unit] = None): Option[ResourceType] =
+  def findResourceType(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit] = None
+  ): Option[ResourceType] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].resourceTypes, scope) match {
       case Some(r: ResourceType) => Some(r)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type ResourceType"))
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type ResourceType")
+        )
         None
       case _ => None
     }
 
-  def findDocumentations(key: String,
-                         scope: SearchScope.Scope,
-                         error: Option[String => Unit] = None): Option[CreativeWork] =
+  def findDocumentations(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit] = None
+  ): Option[CreativeWork] =
     findForType(key, Map.empty, scope) match {
       case Some(u: CreativeWork) => Some(u)
       case Some(other) if scope == SearchScope.Fragments =>
-        error.foreach(_(
-          s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DocumentationItem"))
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DocumentationItem")
+        )
         None
       case _ => None
     }
@@ -367,7 +373,8 @@ class WebApiDeclarations(
       case Some(t: Trait) => Some(t)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type Trait"))
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type Trait")
+        )
         None
       case _ => None
     }
@@ -377,7 +384,8 @@ class WebApiDeclarations(
       case Some(anyShape: AnyShape) => Some(anyShape)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DataType"))
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DataType")
+        )
         None
       case _ => None
     }
@@ -390,14 +398,17 @@ class WebApiDeclarations(
         ErrorSecurityScheme(key, ast)
     }
 
-  def findSecurityScheme(key: String,
-                         scope: SearchScope.Scope,
-                         error: Option[String => Unit] = None): Option[SecurityScheme] =
+  def findSecurityScheme(
+      key: String,
+      scope: SearchScope.Scope,
+      error: Option[String => Unit] = None
+  ): Option[SecurityScheme] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].securitySchemes, scope) match {
       case Some(ss: SecurityScheme) => Some(ss)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type SecurityScheme"))
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type SecurityScheme")
+        )
         None
       case _ => None
     }
@@ -434,9 +445,11 @@ class WebApiDeclarations(
 
 object WebApiDeclarations {
 
-  def apply(declarations: Seq[DomainElement],
-            errorHandler: AMFErrorHandler,
-            futureDeclarations: FutureDeclarations): WebApiDeclarations = {
+  def apply(
+      declarations: Seq[DomainElement],
+      errorHandler: AMFErrorHandler,
+      futureDeclarations: FutureDeclarations
+  ): WebApiDeclarations = {
     val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
@@ -625,27 +638,33 @@ object WebApiDeclarations {
   }
 }
 
-class OasLikeWebApiDeclarations(val asts: Map[String, YNode],
-                                override val alias: Option[String],
-                                override val errorHandler: AMFErrorHandler,
-                                override val futureDeclarations: FutureDeclarations)
-    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+class OasLikeWebApiDeclarations(
+    val asts: Map[String, YNode],
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
 
-class OasWebApiDeclarations(override val asts: Map[String, YNode],
-                            override val alias: Option[String],
-                            override val errorHandler: AMFErrorHandler,
-                            override val futureDeclarations: FutureDeclarations)
-    extends OasLikeWebApiDeclarations(asts,
-                                      alias,
-                                      errorHandler = errorHandler,
-                                      futureDeclarations = futureDeclarations) {}
+class OasWebApiDeclarations(
+    override val asts: Map[String, YNode],
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends OasLikeWebApiDeclarations(
+      asts,
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations
+    ) {}
 
 object OasWebApiDeclarations {
   def apply(d: WebApiDeclarations): OasWebApiDeclarations = {
-    val declarations = new OasWebApiDeclarations(Map(),
-                                                 d.alias,
-                                                 errorHandler = d.errorHandler,
-                                                 futureDeclarations = d.futureDeclarations)
+    val declarations = new OasWebApiDeclarations(
+      Map(),
+      d.alias,
+      errorHandler = d.errorHandler,
+      futureDeclarations = d.futureDeclarations
+    )
     declarations.libs = d.libs
     declarations.frags = d.frags
     declarations.shapes = d.shapes
@@ -657,25 +676,30 @@ object OasWebApiDeclarations {
     declarations.securitySchemes = d.securitySchemes
     declarations.responses = d.responses
     declarations.annotations = d.annotations // FOR OAS -> RAML CONVERSION
-    declarations // add withs methods?
+    declarations                             // add withs methods?
   }
 }
 
-class AsyncWebApiDeclarations(override val asts: Map[String, YNode],
-                              override val alias: Option[String],
-                              override val errorHandler: AMFErrorHandler,
-                              override val futureDeclarations: FutureDeclarations)
-    extends OasLikeWebApiDeclarations(asts,
-                                      alias,
-                                      errorHandler = errorHandler,
-                                      futureDeclarations = futureDeclarations) {}
+class AsyncWebApiDeclarations(
+    override val asts: Map[String, YNode],
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends OasLikeWebApiDeclarations(
+      asts,
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations
+    ) {}
 
 object AsyncWebApiDeclarations {
   def apply(d: WebApiDeclarations): AsyncWebApiDeclarations = {
-    val declarations = new AsyncWebApiDeclarations(Map(),
-                                                   d.alias,
-                                                   errorHandler = d.errorHandler,
-                                                   futureDeclarations = d.futureDeclarations)
+    val declarations = new AsyncWebApiDeclarations(
+      Map(),
+      d.alias,
+      errorHandler = d.errorHandler,
+      futureDeclarations = d.futureDeclarations
+    )
 
     // TODO ASYNC complete this
     declarations.securitySchemes = d.securitySchemes
@@ -683,12 +707,13 @@ object AsyncWebApiDeclarations {
   }
 }
 
-class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
-                             var externalLibs: Map[String, Map[String, AnyShape]] = Map(),
-                             override val alias: Option[String],
-                             override val errorHandler: AMFErrorHandler,
-                             override val futureDeclarations: FutureDeclarations)
-    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
+class RamlWebApiDeclarations(
+    var externalShapes: Map[String, AnyShape] = Map(),
+    var externalLibs: Map[String, Map[String, AnyShape]] = Map(),
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
 
   def registerExternalRef(external: (String, AnyShape)): WebApiDeclarations = { // particular case for jsonschema # fragment
     externalShapes = externalShapes + (external._1 -> external._2)
@@ -710,29 +735,32 @@ class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
     val merged =
       new RamlWebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     super.mergeParts(other, merged)
-    externalShapes.foreach { case (k, s)       => merged.externalShapes += (k -> s) }
+    externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
     other.externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
     merged
   }
 
   def absorb(other: RamlWebApiDeclarations): Unit = {
     super.mergeParts(other, this)
-    externalShapes.foreach { case (k, s)       => this.externalShapes += (k -> s) }
+    externalShapes.foreach { case (k, s) => this.externalShapes += (k -> s) }
     other.externalShapes.foreach { case (k, s) => this.externalShapes += (k -> s) }
   }
 }
 
-class ExtensionWebApiDeclarations(externalShapes: Map[String, AnyShape] = Map(),
-                                  externalLibs: Map[String, Map[String, AnyShape]] = Map(),
-                                  parentDeclarations: RamlWebApiDeclarations,
-                                  override val alias: Option[String],
-                                  override val errorHandler: AMFErrorHandler,
-                                  override val futureDeclarations: FutureDeclarations)
-    extends RamlWebApiDeclarations(externalShapes, externalLibs, alias, errorHandler, futureDeclarations) {
+class ExtensionWebApiDeclarations(
+    externalShapes: Map[String, AnyShape] = Map(),
+    externalLibs: Map[String, Map[String, AnyShape]] = Map(),
+    parentDeclarations: RamlWebApiDeclarations,
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends RamlWebApiDeclarations(externalShapes, externalLibs, alias, errorHandler, futureDeclarations) {
 
-  override def findForType(key: String,
-                           map: Declarations => Map[String, DomainElement],
-                           scope: SearchScope.Scope): Option[DomainElement] = {
+  override def findForType(
+      key: String,
+      map: Declarations => Map[String, DomainElement],
+      scope: SearchScope.Scope
+  ): Option[DomainElement] = {
     super.findForType(key, map, scope) match {
       case Some(x) => Some(x)
       case None    => parentDeclarations.findForType(key, map, scope)
@@ -742,11 +770,13 @@ class ExtensionWebApiDeclarations(externalShapes: Map[String, AnyShape] = Map(),
 
 object RamlWebApiDeclarations {
   def apply(d: WebApiDeclarations): RamlWebApiDeclarations = {
-    val declarations = new RamlWebApiDeclarations(Map(),
-                                                  Map(),
-                                                  d.alias,
-                                                  errorHandler = d.errorHandler,
-                                                  futureDeclarations = d.futureDeclarations)
+    val declarations = new RamlWebApiDeclarations(
+      Map(),
+      Map(),
+      d.alias,
+      errorHandler = d.errorHandler,
+      futureDeclarations = d.futureDeclarations
+    )
     declarations.libs = d.libs
     declarations.frags = d.frags
     declarations.fragments = d.fragments

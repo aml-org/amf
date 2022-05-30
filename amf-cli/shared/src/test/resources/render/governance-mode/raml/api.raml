@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Api
+types:
+  Person:
+    type: object
+    properties:
+      name:
+        type: string
+
+/endPoint:
+  get:
+    headers:
+      header:
+        type: Person
+        example:
+          name: Jorge

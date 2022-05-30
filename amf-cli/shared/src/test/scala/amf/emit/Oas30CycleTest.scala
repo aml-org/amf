@@ -38,27 +38,39 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     FixtureData("Basic operation", "basic-operation.json", "basic-operation.json"),
     FixtureData("Basic oas3 patch version", "basic-oas-patch.json", "basic-oas-patch-corrected.json"),
     FixtureData("Response codes with wildcard", "response-code-wildcards.json", "response-code-wildcards.json"),
-    FixtureData("Basic paths object with single server",
-                "basic-paths-object-with-server.json",
-                "basic-paths-object-with-server.json"),
-    FixtureData("Basic paths object with multiple servers",
-                "basic-paths-object-with-servers.json",
-                "basic-paths-object-with-servers.json"),
-    FixtureData("Basic discriminator object",
-                "discriminator-object/discriminator-object.json",
-                "discriminator-object/output.json"),
+    FixtureData(
+      "Basic paths object with single server",
+      "basic-paths-object-with-server.json",
+      "basic-paths-object-with-server.json"
+    ),
+    FixtureData(
+      "Basic paths object with multiple servers",
+      "basic-paths-object-with-servers.json",
+      "basic-paths-object-with-servers.json"
+    ),
+    FixtureData(
+      "Basic discriminator object",
+      "discriminator-object/discriminator-object.json",
+      "discriminator-object/output.json"
+    ),
     FixtureData("Security scheme types", "basic-security-types.json", "basic-security-types.json"),
-    FixtureData("Basic parameter object",
-                "basic-parameters/basic-parameters.json",
-                "basic-parameters/basic-parameters-output.json"),
+    FixtureData(
+      "Basic parameter object",
+      "basic-parameters/basic-parameters.json",
+      "basic-parameters/basic-parameters-output.json"
+    ),
     FixtureData("Basic components object", "components/basic-components.json", "components/components-output.json"),
-    FixtureData("One subscription with multiple callbacks",
-                "one-subscription-multiple-callbacks.json",
-                "one-subscription-multiple-callbacks.json"),
+    FixtureData(
+      "One subscription with multiple callbacks",
+      "one-subscription-multiple-callbacks.json",
+      "one-subscription-multiple-callbacks.json"
+    ),
     FixtureData("Deprecated field in schema object", "deprecated-field.json", "deprecated-field.json"),
-    FixtureData("Several security schemes of same type",
-                "several-security-schemes-of-same-type.json",
-                "several-security-schemes-of-same-type.json")
+    FixtureData(
+      "Several security schemes of same type",
+      "several-security-schemes-of-same-type.json",
+      "several-security-schemes-of-same-type.json"
+    )
   )
 
   cyclesOas3.foreach { f =>

@@ -13,9 +13,9 @@ import scala.collection.mutable.ListBuffer
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain.ArrayShape
 
-case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends RamlAnyShapeEmitter(array, ordering, references) {
+case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends RamlAnyShapeEmitter(array, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 

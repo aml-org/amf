@@ -18,9 +18,11 @@ object Raml08RenderPlugin extends ApiRenderPlugin {
 
   override def spec: Spec = Spec.RAML08
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = unit match {
     case document: Document =>
       Some(RamlDocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())
     case fragment: Fragment =>

@@ -7,8 +7,9 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class ShapeOperation(override private[amf] val _internal: InternalShapeOperation) extends AbstractOperation(_internal) {
-  override type RequestType = ShapeRequest
+case class ShapeOperation(override private[amf] val _internal: InternalShapeOperation)
+    extends AbstractOperation(_internal) {
+  override type RequestType  = ShapeRequest
   override type ResponseType = ShapeResponse
 
   override def request: RequestType = _internal.request

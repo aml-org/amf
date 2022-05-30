@@ -6,10 +6,12 @@ import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YMapEntry
 
 object JsonSchemaParsingHelper {
-  def createTemporaryShape(adopt: Shape => Unit,
-                           schemaEntry: YMapEntry,
-                           ctx: ShapeParserContext,
-                           fullRef: String): UnresolvedShape = {
+  def createTemporaryShape(
+      adopt: Shape => Unit,
+      schemaEntry: YMapEntry,
+      ctx: ShapeParserContext,
+      fullRef: String
+  ): UnresolvedShape = {
     val tmpShape =
       UnresolvedShape(fullRef, schemaEntry)
         .withName(fullRef)

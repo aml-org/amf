@@ -30,7 +30,7 @@ class VocabularyGenerator(dialect: Dialect, multipleTerms: Seq[CandidateProperty
 
   // This method resolve the problem of multiple properties at same level with the same term
   private def collectTermDuplicationsCases(mapping: NodeMapping): Seq[CandidateProperty] = {
-    val finalProperties                                   = mapping.propertiesMapping() ++ collectInheritsProperties(mapping)
+    val finalProperties = mapping.propertiesMapping() ++ collectInheritsProperties(mapping)
     val termToPropsMap: Map[String, Seq[PropertyMapping]] = generateMapPropToTerms(finalProperties)
     val duplicatedTerms                                   = termToPropsMap.filter(_._2.size > 1)
     generateCandidates(duplicatedTerms)
@@ -42,8 +42,8 @@ class VocabularyGenerator(dialect: Dialect, multipleTerms: Seq[CandidateProperty
       .groupBy(_.nodePropertyMapping().value())
 
   private def generateCandidates(duplicatedTerms: Map[String, Seq[PropertyMapping]]): Seq[CandidateProperty] =
-    duplicatedTerms.flatMap {
-      case (term, properties) => properties.map(property => CandidateProperty(property, Seq(term)))
+    duplicatedTerms.flatMap { case (term, properties) =>
+      properties.map(property => CandidateProperty(property, Seq(term)))
     }.toSeq
 
   // This method resolve the problem of properties with more than 1 term. This cases are collected in conversion
@@ -72,16 +72,15 @@ class VocabularyGenerator(dialect: Dialect, multipleTerms: Seq[CandidateProperty
     else {
       val counter: IdCounter = new IdCounter
       val visited: Visited   = new Visited // Necessary because a property could be duplicated in many combinations
-      val terms: Seq[PropertyTerm] = termsToExtract.flatMap {
-        case CandidateProperty(property, terms) =>
-          if (!visited.alreadyVisited(property.id)) {
-            val parentTerm = counter.genId(property.name().value())
-            property.withNodePropertyMapping(options.vocabBase + parentTerm)
-            val term = DatatypePropertyTerm()
-              .withId(parentTerm)
-              .withSubClassOf(terms)
-            Some(term)
-          } else None
+      val terms: Seq[PropertyTerm] = termsToExtract.flatMap { case CandidateProperty(property, terms) =>
+        if (!visited.alreadyVisited(property.id)) {
+          val parentTerm = counter.genId(property.name().value())
+          property.withNodePropertyMapping(options.vocabBase + parentTerm)
+          val term = DatatypePropertyTerm()
+            .withId(parentTerm)
+            .withSubClassOf(terms)
+          Some(term)
+        } else None
       }
 
       val vocabulary = Vocabulary()

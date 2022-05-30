@@ -11,7 +11,11 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext, RemoteNodeNavigation}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.spec.spec.toRaml
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  InvalidEndpointType
+}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -21,9 +25,9 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
-    implicit val ctx: OasLikeWebApiContext)
-    extends SpecParserOps {
+abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(implicit
+    val ctx: OasLikeWebApiContext
+) extends SpecParserOps {
 
   type ConcreteContext <: OasLikeWebApiContext
   def apply(entry: YMapEntry, parentId: String, collector: List[EndPoint])(ctx: ConcreteContext): OasLikeEndpointParser
@@ -48,8 +52,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     }
   }
 
-  /**
-    * Verify if two paths are identical.
+  /** Verify if two paths are identical.
     */
   protected def identicalPaths(first: String, second: String): Boolean = first == second
 
@@ -71,7 +74,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
   private def getNodeFromDeclarations(endpoint: EndPoint, value: String) = {
     ctx.declarations.asts.get(value) match {
       case Some(node) if isMap(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
-      case Some(notMapNode)              =>
+      case Some(notMapNode) =>
         invalidNodeViolation(endpoint, notMapNode)
         None
       case None =>
@@ -93,10 +96,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
   }
 
   private def cannotFindReferencedEndPointViolation(endpoint: EndPoint, value: String): Unit = {
-    ctx.eh.violation(InvalidEndpointPath,
-      endpoint,
-      s"Cannot find fragment path item ref $value",
-      entry.value.location)
+    ctx.eh.violation(InvalidEndpointPath, endpoint, s"Cannot find fragment path item ref $value", entry.value.location)
   }
 
   protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
@@ -114,8 +114,8 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
 }
 
 abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
-    override implicit val ctx: OasWebApiContext)
-    extends OasLikeEndpointParser(entry, parentId, collector) {
+    override implicit val ctx: OasWebApiContext
+) extends OasLikeEndpointParser(entry, parentId, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     super.parseEndpointMap(endpoint, map)
@@ -135,17 +135,18 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
     map.key("uriParameters".asOasExtension).foreach { entry =>
       entries += entry
       val uriParameters =
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(
-          toRaml(ctx))
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(toRaml(ctx))
           .parse()
       parameters = parameters.add(Parameters(path = uriParameters))
     }
     parameters match {
       case Parameters(query, path, header, cookie, _, _)
           if query.nonEmpty || path.nonEmpty || header.nonEmpty || cookie.nonEmpty =>
-        endpoint.setWithoutId(EndPointModel.Parameters,
-                     AmfArray(query ++ path ++ header ++ cookie, Annotations(entries.head.value)),
-                     Annotations(entries.head))
+        endpoint.setWithoutId(
+          EndPointModel.Parameters,
+          AmfArray(query ++ path ++ header ++ cookie, Annotations(entries.head.value)),
+          Annotations(entries.head)
+        )
       case _ =>
     }
     if (parameters.body.nonEmpty)
@@ -155,16 +156,20 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
 
     map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
 
-    map.key("is".asOasExtension,
-            (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
-              .parse(endpoint.withTrait)).allowingSingleValue)
+    map.key(
+      "is".asOasExtension,
+      (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+        .parse(endpoint.withTrait)).allowingSingleValue
+    )
 
     map.key(
       "type".asOasExtension,
       entry =>
-        ParametrizedDeclarationParser(entry.value,
-                                      endpoint.withResourceType,
-                                      ctx.declarations.findResourceTypeOrError(entry.value))
+        ParametrizedDeclarationParser(
+          entry.value,
+          endpoint.withResourceType,
+          ctx.declarations.findResourceTypeOrError(entry.value)
+        )
           .parse()
     )
 
@@ -179,9 +184,14 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
           .as[Seq[YNode]]
           .flatMap(s =>
             OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => Unit, idCounter)
-              .parse())
+              .parse()
+          )
 
-        endpoint.setWithoutId(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        endpoint.setWithoutId(
+          OperationModel.Security,
+          AmfArray(securedBy, Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
 
@@ -193,7 +203,11 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
           val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
           operations += operationParser.parse()
         }
-        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations.inferred()), Annotations.inferred())
+        endpoint.setWithoutId(
+          EndPointModel.Operations,
+          AmfArray(operations, Annotations.inferred()),
+          Annotations.inferred()
+        )
       }
     )
 
@@ -202,16 +216,14 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
 }
 
 case class Oas20EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
-    override implicit val ctx: OasWebApiContext)
-    extends OasEndpointParser(entry, parentId, collector) {
+    override implicit val ctx: OasWebApiContext
+) extends OasEndpointParser(entry, parentId, collector) {
 
   override type ConcreteContext = OasWebApiContext
 
-
-  override def apply(entry: YMapEntry,
-                     parentId: String,
-                     collector: List[EndPoint])(
-                      ctx: ConcreteContext): Oas20EndpointParser = {
+  override def apply(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
+      ctx: ConcreteContext
+  ): Oas20EndpointParser = {
     Oas20EndpointParser(entry, parentId, collector)(ctx)
   }
 
@@ -222,21 +234,19 @@ case class Oas20EndpointParser(entry: YMapEntry, parentId: String, collector: Li
 }
 
 case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
-    override implicit val ctx: OasWebApiContext)
-    extends OasEndpointParser(entry, parentId, collector) {
+    override implicit val ctx: OasWebApiContext
+) extends OasEndpointParser(entry, parentId, collector) {
 
   override type ConcreteContext = OasWebApiContext
 
-  override def apply(entry: YMapEntry,
-                     parentId: String,
-                     collector: List[EndPoint])(
-                      ctx: ConcreteContext): Oas30EndpointParser = {
+  override def apply(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
+      ctx: ConcreteContext
+  ): Oas30EndpointParser = {
     Oas30EndpointParser(entry, parentId, collector)(ctx)
   }
 
-  /**
-    * Verify if two paths are identical.
-    * In the case of OAS 3.0, paths with the same hierarchy but different templated names are considered identical.
+  /** Verify if two paths are identical. In the case of OAS 3.0, paths with the same hierarchy but different templated
+    * names are considered identical.
     */
   override protected def identicalPaths(first: String, second: String): Boolean = {
     def stripPathParams(s: String): String = {
@@ -255,15 +265,14 @@ case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: Li
 }
 
 case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
-    override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeEndpointParser(entry, parentId, collector) {
+    override implicit val ctx: AsyncWebApiContext
+) extends OasLikeEndpointParser(entry, parentId, collector) {
 
   override type ConcreteContext = AsyncWebApiContext
 
-  override def apply(entry: YMapEntry,
-                     parentId: String,
-                     collector: List[EndPoint])(
-                      ctx: ConcreteContext): AsyncEndpointParser = {
+  override def apply(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
+      ctx: ConcreteContext
+  ): AsyncEndpointParser = {
     AsyncEndpointParser(entry, parentId, collector)(ctx)
   }
 
@@ -283,10 +292,8 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       "parameters",
       entry => {
         val parameters = AsyncParametersParser(endpoint.id, entry.value.as[YMap]).parse()
-        endpoint.fields.setWithoutId(
-                            EndPointModel.Parameters,
-                            AmfArray(parameters, Annotations(entry.value)),
-                            Annotations(entry))
+        endpoint.fields
+          .setWithoutId(EndPointModel.Parameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 

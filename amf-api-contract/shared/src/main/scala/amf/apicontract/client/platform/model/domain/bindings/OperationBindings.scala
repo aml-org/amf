@@ -6,8 +6,7 @@ import amf.apicontract.client.scala.model.domain.bindings.{OperationBindings => 
 import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Operation channel model class.
+/** Operation channel model class.
   */
 @JSExportAll
 case class OperationBindings(override private[amf] val _internal: InternalOperationBindings)

@@ -3,6 +3,55 @@ declare module 'amf-client-js' {
     results: Array<AMFValidationResult>
 
   }
+  export class AbstractPayload implements DomainElement, Linkable  {
+    mediaType: StrField
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    linkTarget: undefined | DomainElement
+    isLink: boolean
+    isExternalLink: BoolField
+    id: string
+    schema: Shape
+    position: Range
+    linkLabel: StrField
+    extendsNode: Array<DomainElement>
+
+    link<T>(label: string): T
+
+    linkCopy(): Linkable
+
+    withName(name: string): this
+
+    withScalarSchema(name: string): ScalarShape
+
+    withArraySchema(name: string): ArrayShape
+
+    withObjectSchema(name: string): NodeShape
+
+    withSchema(schema: Shape): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withMediaType(mediaType: string): this
+
+    withLinkLabel(label: string): this
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
+
+    withLinkTarget(target: undefined): this
+
+    withId(id: string): this
+
+    annotations(): Annotations;
+
+
+  }
   export class FinishedRenderingSyntaxEvent  {
     unit: BaseUnit
 
@@ -153,6 +202,18 @@ declare module 'amf-client-js' {
   }
   export interface JsAMFPlugin  {
     readonly ID: string
+
+  }
+  export interface AbstractRequest extends DomainElement  {
+    queryParameters: Array<AbstractParameter>
+    name: StrField
+
+    withQueryParameters(parameters: Array<AbstractParameter>): this
+
+    withQueryParameter(name: string): AbstractParameter
+
+    withName(name: string): this
+
 
   }
   export interface BaseFileResourceLoader extends ResourceLoader  {
@@ -700,6 +761,46 @@ declare module 'amf-client-js' {
     document: Document
 
   }
+  export class AbstractOperation implements DomainElement  {
+    method: StrField
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    request: AbstractRequest
+    description: StrField
+    isExternalLink: BoolField
+    response: AbstractResponse
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    withResponses(responses: Array<AbstractResponse>): this
+
+    withName(name: string): this
+
+    withMethod(method: string): this
+
+    withDescription(description: string): this
+
+    withRequest(name: string): AbstractRequest
+
+    withRequest(request: AbstractRequest): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withResponse(name: string): AbstractResponse
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+    annotations(): Annotations;
+
+
+  }
   export class DetectedSyntaxMediaTypeEvent  {
   }
   export class RecursiveShape implements Shape  {
@@ -1133,7 +1234,61 @@ declare module 'amf-client-js' {
     totalPlugins: number
 
   }
+  export interface AbstractResponse extends DomainElement  {
+    payload: AbstractPayload
+    name: StrField
+
+    withPayload(payload: AbstractPayload): AbstractPayload
+
+    withName(name: string): this
+
+
+  }
   export class StrictValidationMode extends ValidationMode  {
+  }
+  export class AbstractParameter implements DomainElement  {
+    annotations(): Annotations
+    name: StrField
+    binding: StrField
+    customDomainProperties: Array<DomainExtension>
+    description: StrField
+    isExternalLink: BoolField
+    id: string
+    schema: Shape
+    parameterName: StrField
+    position: Range
+    required: BoolField
+    extendsNode: Array<DomainElement>
+
+    withName(name: string): this
+
+    withScalarSchema(name: string): ScalarShape
+
+    withDescription(description: string): this
+
+    withObjectSchema(name: string): NodeShape
+
+    withSchema(schema: Shape): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    cloneParameter(parent: string): this
+
+    withRequired(required: boolean): this
+
+    withId(id: string): this
+
+    withParameterName(name: string): this
+
+    withBinding(binding: string): this
+
+
   }
   export class ShapesElementClient extends BaseShapesElementClient  {
     getConfiguration(): ShapesConfiguration
@@ -1337,8 +1492,6 @@ declare module 'amf-client-js' {
 
     withPayloads(payloads: Array<Payload>): this
 
-    withPayload(): Payload
-
     linkCopy(): Message
 
     withAbstract(isAbstract: boolean): this
@@ -1350,8 +1503,6 @@ declare module 'amf-client-js' {
     withTitle(title: string): this
 
     withBindings(bindings: MessageBindings): this
-
-    withPayload(mediaType: string): Payload
 
     withExamples(examples: Array<Example>): this
 
@@ -1374,8 +1525,6 @@ declare module 'amf-client-js' {
     link<T>(): T
 
     withLinkTarget(target: undefined): this
-
-    withPayload(mediaType: undefined | string): Payload
 
     withDisplayName(displayName: string): this
 
@@ -1794,10 +1943,17 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Response extends Message  {
+  export class Response extends Message implements AbstractResponse {
     statusCode: StrField
-    headers: Array<Parameter>
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    payload: Payload
+    isExternalLink: BoolField
     links: Array<TemplatedLink>
+    id: string
+    position: Range
+    headers: Array<Parameter>
+    extendsNode: Array<DomainElement>
 
     constructor()
 
@@ -1805,10 +1961,35 @@ declare module 'amf-client-js' {
 
     withHeaders(headers: Array<Parameter>): this
 
-    withLinks(links: Array<TemplatedLink>): this
+    withStatusCode(statusCode: string): this
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withPayload(payload: Payload): Payload
+
+    withPayload(): Payload
+
+    withPayload(mediaType: string): Payload
+
+    withPayload(mediaType: undefined | string): Payload
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
 
     withHeader(name: string): Parameter
 
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withLinks(links: Array<TemplatedLink>): this
+
+    withId(id: string): this
+
+    withHeader(name: string): Parameter
+
+    // @ts-ignore
     linkCopy(): Response
 
 
@@ -2401,55 +2582,54 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Payload implements DomainElement  {
-    mediaType: StrField
-    name: StrField
-    customDomainProperties: Array<DomainExtension>
-    examples: Array<Example>
+  export class Payload extends AbstractPayload  {
     encoding: Array<Encoding>
-    isExternalLink: BoolField
+    encodings: Array<Encoding>
+    examples: Array<Example>
+    extendsNode: Array<DomainElement>
     id: string
+    isExternalLink: BoolField
+    position: Range
     schema: Shape
     schemaMediaType: StrField
-    position: Range
-    encodings: Array<Encoding>
-    extendsNode: Array<DomainElement>
+
+    annotations(): Annotations
 
     constructor()
 
-    annotations(): Annotations
+    graph(): Graph
+
+    linkCopy(): Payload
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withEncoding(encoding: Array<Encoding>): this
 
     withEncoding(name: string): Encoding
 
     withEncodings(encoding: Array<Encoding>): this
 
-    withName(name: string): this
-
-    withScalarSchema(name: string): ScalarShape
-
     withExample(name: string): Example
 
     withExamples(examples: Array<Example>): this
 
-    withObjectSchema(name: string): NodeShape
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
-    withSchema(schema: Shape): this
-
-    graph(): Graph
+    withId(id: string): this
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
     withMediaType(mediaType: string): this
 
-    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+    withName(name: string): this
 
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+    withObjectSchema(name: string): NodeShape
+
+    withScalarSchema(name: string): ScalarShape
+
+    withSchema(schema: Shape): this
 
     withSchemaMediaType(mediaType: string): this
-
-    withEncoding(encoding: Array<Encoding>): this
-
-    withId(id: string): this
 
 
   }
@@ -2590,6 +2770,7 @@ declare module 'amf-client-js' {
     static readonly AML: ProfileName
     static readonly PAYLOAD: ProfileName
     static readonly GRPC: ProfileName
+    static readonly GRAPHQL: ProfileName
 
   }
   export class OAuth2Settings extends Settings  {
@@ -2604,7 +2785,9 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShapeOperation implements DomainElement  {
+  export class ShapeOperation extends AbstractOperation  {
+    request: ShapeRequest
+    response: ShapeResponse
     name: StrField
     customDomainProperties: Array<DomainExtension>
     isExternalLink: BoolField
@@ -2627,6 +2810,13 @@ declare module 'amf-client-js' {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withId(id: string): this
+
+    // @ts-ignore
+    withRequest(request: ShapeRequest): this
+
+    withResponse(name: string): ShapeResponse
+
+    withResponses(responses: Array<ShapeResponse>): this
 
 
   }
@@ -2897,9 +3087,10 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShapeResponse implements DomainElement  {
+  export class ShapeResponse implements AbstractResponse  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
+    payload: ShapePayload
     isExternalLink: BoolField
     id: string
     position: Range
@@ -2912,6 +3103,8 @@ declare module 'amf-client-js' {
     withName(name: string): this
 
     graph(): Graph
+
+    withPayload(payload: ShapePayload): ShapePayload
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
@@ -3486,38 +3679,61 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Request extends Message  {
-    required: BoolField
+  export class Request extends Message implements AbstractRequest  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    queryString: Shape
+    isExternalLink: BoolField
+    id: string
+    uriParameters: Array<Parameter>
+    position: Range
     queryParameters: Array<Parameter>
     headers: Array<Parameter>
-    queryString: Shape
-    uriParameters: Array<Parameter>
+    required: BoolField
     cookieParameters: Array<Parameter>
+    extendsNode: Array<DomainElement>
 
     constructor()
 
-    withRequired(required: boolean): this
-
-    withQueryParameters(parameters: Array<Parameter>): this
-
-    withHeaders(headers: Array<Parameter>): this
-
-    withQueryString(queryString: Shape): this
-
-    withUriParameters(uriParameters: Array<Parameter>): this
-
-    withCookieParameters(cookieParameters: Array<Parameter>): this
-
-    withQueryParameter(name: string): Parameter
-
-    withHeader(name: string): Parameter
-
-    withUriParameter(name: string): Parameter
-
-    withCookieParameter(name: string): Parameter
+    graph(): Graph
 
     linkCopy(): Request
 
+    withCookieParameter(name: string): Parameter
+
+    withCookieParameters(cookieParameters: Array<Parameter>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withHeader(name: string): Parameter
+
+    withHeaders(headers: Array<Parameter>): this
+
+    withId(id: string): this
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withName(name: string): this
+
+    withQueryParameter(name: string): Parameter
+
+    withQueryParameters(parameters: Array<Parameter>): this
+
+    withQueryString(queryString: Shape): this
+
+    withRequired(required: boolean): this
+
+    withUriParameter(name: string): Parameter
+
+    withUriParameters(uriParameters: Array<Parameter>): this
+
+    withPayload(): Payload
+
+    withPayload(mediaType: string): Payload
+
+    withPayload(mediaType: undefined | string): Payload
 
   }
   export class CreativeWork implements DomainElement  {
@@ -3552,12 +3768,13 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShapeRequest implements DomainElement  {
+  export class ShapeRequest implements AbstractRequest  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
     isExternalLink: BoolField
     id: string
     position: Range
+    queryParameters: Array<ShapeParameter>
     extendsNode: Array<DomainElement>
 
     constructor()
@@ -3565,6 +3782,10 @@ declare module 'amf-client-js' {
     annotations(): Annotations
 
     withName(name: string): this
+
+    withQueryParameter(name: string): ShapeParameter
+
+    withQueryParameters(parameters: Array<ShapeParameter>): this
 
     graph(): Graph
 
@@ -3607,74 +3828,73 @@ declare module 'amf-client-js' {
     constructor(msj: string)
 
   }
-  export class Parameter implements DomainElement  {
-    name: StrField
+  export class Parameter extends AbstractParameter  {
+    allowEmptyValue: BoolField
+    allowReserved: BoolField
     binding: StrField
     customDomainProperties: Array<DomainExtension>
-    examples: Array<Example>
-    style: StrField
-    description: StrField
-    payloads: Array<Payload>
     deprecated: BoolField
-    allowReserved: BoolField
-    isExternalLink: BoolField
-    id: string
-    schema: Shape
+    description: StrField
+    examples: Array<Example>
     explode: BoolField
+    extendsNode: Array<DomainElement>
+    id: string
+    isExternalLink: BoolField
+    name: StrField
     parameterName: StrField
+    payloads: Array<Payload>
     position: Range
     required: BoolField
-    allowEmptyValue: BoolField
-    extendsNode: Array<DomainElement>
-
-    constructor()
+    schema: Shape
+    style: StrField
 
     annotations(): Annotations
 
-    withPayloads(payloads: Array<Payload>): this
-
-    withExplode(explode: boolean): this
-
-    withName(name: string): this
-
-    withScalarSchema(name: string): ScalarShape
-
-    withExample(name: string): Example
-
-    withDescription(description: string): this
-
-    withStyle(style: string): this
-
-    withAllowEmptyValue(allowEmptyValue: boolean): this
-
-    withPayload(mediaType: string): Payload
-
-    withExamples(examples: Array<Example>): this
-
-    withObjectSchema(name: string): NodeShape
-
-    withSchema(schema: Shape): this
+    constructor()
 
     graph(): Graph
 
-    withIsExternalLink(isExternalLink: boolean): DomainElement
-
-    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+    withAllowEmptyValue(allowEmptyValue: boolean): this
 
     withAllowReserved(allowReserved: boolean): this
 
-    withRequired(required: boolean): this
-
-    withId(id: string): this
-
-    withParameterName(name: string): this
-
     withBinding(binding: string): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withDeprecated(deprecated: boolean): this
 
+    withDescription(description: string): this
+
+    withExample(name: string): Example
+
+    withExamples(examples: Array<Example>): this
+
+    withExplode(explode: boolean): this
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withId(id: string): this
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withName(name: string): this
+
+    withObjectSchema(name: string): NodeShape
+
+    withParameterName(name: string): this
+
+    withPayload(mediaType: string): Payload
+
+    withPayloads(payloads: Array<Payload>): this
+
+    withRequired(required: boolean): this
+
+    withScalarSchema(name: string): ScalarShape
+
+    withSchema(schema: Shape): this
+
+    withStyle(style: string): this
 
   }
   export class DocumentationItem extends Fragment  {
@@ -3870,6 +4090,7 @@ declare module 'amf-client-js' {
   }
   export class NodeShape extends AnyShape  {
     isAbstract: BoolField
+    isInputOnly: BoolField
     minProperties: IntField
     maxProperties: IntField
     closed: BoolField
@@ -3891,6 +4112,8 @@ declare module 'amf-client-js' {
     annotations(): Annotations
 
     withIsAbstract(isAbstract: boolean): this
+
+    withIsInputOnly(isInputOnly: boolean): this
 
     withMinProperties(min: number): this
 
@@ -4817,6 +5040,8 @@ declare module 'amf-client-js' {
 
     objectRange(): Array<StrField>
 
+    withMandatory(mandatory: boolean): PropertyMapping
+
     withPattern(pattern: string): PropertyMapping
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
@@ -4838,6 +5063,8 @@ declare module 'amf-client-js' {
     nodePropertyMapping(): StrField
 
     typeDiscriminatorName(): StrField
+
+    mandatory(): BoolField
 
     name(): StrField
 
@@ -5205,7 +5432,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Operation implements DomainElement, Linkable  {
+  export class Operation extends AbstractOperation implements Linkable  {
     method: StrField
     name: StrField
     customDomainProperties: Array<DomainExtension>
@@ -5221,6 +5448,7 @@ declare module 'amf-client-js' {
     servers: Array<Server>
     schemes: Array<StrField>
     isLink: boolean
+    response: Response
     isExternalLink: BoolField
     id: string
     contentType: Array<StrField>
@@ -5632,7 +5860,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShapeParameter implements DomainElement  {
+  export class ShapeParameter extends AbstractParameter  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
     isExternalLink: BoolField
@@ -5887,7 +6115,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShapePayload implements DomainElement  {
+  export class ShapePayload extends AbstractPayload  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
     isExternalLink: BoolField
@@ -5910,6 +6138,8 @@ declare module 'amf-client-js' {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withId(id: string): this
+
+    linkCopy(): ShapePayload
 
 
   }

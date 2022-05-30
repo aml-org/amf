@@ -7,8 +7,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Channel bindings model class.
+/** Channel bindings model class.
   */
 @JSExportAll
 case class ChannelBindings(override private[amf] val _internal: InternalChannelBindings)

@@ -48,14 +48,16 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       // i have to check results in order to check warnings. If you pass none, and you are expeting some warnings, you should use the file assertion to check the warnings messages.
     }
 
-  protected def validate(api: String,
-                         golden: Option[String] = None,
-                         profile: ProfileName = defaultProfile,
-                         profileFile: Option[String] = None,
-                         overridedHint: Option[Hint] = None,
-                         directory: String = basePath,
-                         configOverride: Option[AMFConfiguration] = None,
-                         hideValidationResultsIfParseNotConforms: Boolean = true): Future[Assertion]= {
+  protected def validate(
+      api: String,
+      golden: Option[String] = None,
+      profile: ProfileName = defaultProfile,
+      profileFile: Option[String] = None,
+      overridedHint: Option[Hint] = None,
+      directory: String = basePath,
+      configOverride: Option[AMFConfiguration] = None,
+      hideValidationResultsIfParseNotConforms: Boolean = true
+  ): Future[Assertion] = {
     val initialConfig = configOverride.getOrElse(APIConfiguration.API())
     val finalHint     = overridedHint.getOrElse(hint)
     for {
@@ -94,10 +96,12 @@ trait MultiPlatformReportGenTest extends AMFValidationReportGenTest {
 
 trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
-  protected def checkReport(api: String,
-                            golden: Option[String] = None,
-                            profile: ProfileName = defaultProfile,
-                            profileFile: Option[String] = None): Future[Assertion] = {
+  protected def checkReport(
+      api: String,
+      golden: Option[String] = None,
+      profile: ProfileName = defaultProfile,
+      profileFile: Option[String] = None
+  ): Future[Assertion] = {
     val errorHandler = DefaultErrorHandler()
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
@@ -126,9 +130,11 @@ trait ValidModelTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = "file://amf-cli/shared/src/test/resources/validations/reports/"
 
-  protected def checkValid(api: String,
-                           profile: ProfileName = Raml10Profile,
-                           configOverride: Option[AMFConfiguration] = None): Future[Assertion] =
+  protected def checkValid(
+      api: String,
+      profile: ProfileName = Raml10Profile,
+      configOverride: Option[AMFConfiguration] = None
+  ): Future[Assertion] =
     super.validate(api, None, profile, None, configOverride = configOverride)
 
 }

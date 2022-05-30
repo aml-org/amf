@@ -4,9 +4,7 @@ import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, Op
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Shape
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{
-  KafkaOperationBinding => InternalKafkaOperationBinding
-}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaOperationBinding => InternalKafkaOperationBinding}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

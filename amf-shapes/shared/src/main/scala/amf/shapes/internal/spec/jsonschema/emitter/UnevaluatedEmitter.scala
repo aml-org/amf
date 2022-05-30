@@ -18,19 +18,23 @@ import org.yaml.model.YDocument
 case class UnevaluatedInfo(key: String, booleanField: Field, schemaField: Field)
 
 object UnevaluatedEmitter {
-  val unevaluatedPropertiesInfo: UnevaluatedInfo = UnevaluatedInfo("unevaluatedProperties",
-                                                                   NodeShapeModel.UnevaluatedProperties,
-                                                                   NodeShapeModel.UnevaluatedPropertiesSchema)
+  val unevaluatedPropertiesInfo: UnevaluatedInfo = UnevaluatedInfo(
+    "unevaluatedProperties",
+    NodeShapeModel.UnevaluatedProperties,
+    NodeShapeModel.UnevaluatedPropertiesSchema
+  )
   val unevaluatedItemsInfo: UnevaluatedInfo =
     UnevaluatedInfo("unevaluatedItems", ArrayShapeModel.UnevaluatedItems, ArrayShapeModel.UnevaluatedItemsSchema)
 }
 
-class UnevaluatedEmitter(private val shape: AnyShape,
-                         private val emissionInfo: UnevaluatedInfo,
-                         ordering: SpecOrdering,
-                         references: Seq[BaseUnit],
-                         pointer: Seq[String] = Nil,
-                         schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+class UnevaluatedEmitter(
+    private val shape: AnyShape,
+    private val emissionInfo: UnevaluatedInfo,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
   private val fs                                              = shape.fields

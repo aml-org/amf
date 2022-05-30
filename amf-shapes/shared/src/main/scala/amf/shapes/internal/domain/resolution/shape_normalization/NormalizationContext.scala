@@ -7,10 +7,12 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 
-private[resolution] class NormalizationContext(final val errorHandler: AMFErrorHandler,
-                                               final val keepEditingInfo: Boolean,
-                                               final val profile: ProfileName,
-                                               val cache: NormalizationCache = NormalizationCache()) {
+private[resolution] class NormalizationContext(
+    final val errorHandler: AMFErrorHandler,
+    final val keepEditingInfo: Boolean,
+    final val profile: ProfileName,
+    val cache: NormalizationCache = NormalizationCache()
+) {
 
   val isRaml08: Boolean                        = profile.equals(Raml08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)

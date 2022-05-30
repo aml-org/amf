@@ -13,9 +13,9 @@ import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}
 
-case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = property.fields

@@ -4,9 +4,8 @@ import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.CoreValidations.ExceededMaxYamlReferences
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 
-/**
-  * Lazy iterator implementation for traversing all nested nodes starting from a provided YNode.
-  * Alias counter is used to avoid excessive use of anchor references which may lead to never ending processing
+/** Lazy iterator implementation for traversing all nested nodes starting from a provided YNode. Alias counter is used
+  * to avoid excessive use of anchor references which may lead to never ending processing
   */
 class YNodeIterator private (var buffer: List[YNode], refsCounter: AliasCounter)(implicit ctx: WebApiContext)
     extends Iterator[YNode] {

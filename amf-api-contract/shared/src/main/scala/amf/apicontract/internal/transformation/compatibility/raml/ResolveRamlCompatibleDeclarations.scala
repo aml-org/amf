@@ -11,15 +11,17 @@ import amf.core.internal.transform.stages.selectors.{LinkSelector, MetaModelSele
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 
 object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit =
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit =
     new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model, configuration)
 }
 
 private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandler) {
-  val domainSelector
-    : Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
+  val domainSelector: Selector =
+    ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
 
   def resolve[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
     val result = model
@@ -33,9 +35,11 @@ private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandle
     result
   }
 
-  private def transformation(e: DomainElement,
-                             isCycle: Boolean,
-                             configuration: AMFGraphConfiguration): Option[DomainElement] = {
+  private def transformation(
+      e: DomainElement,
+      isCycle: Boolean,
+      configuration: AMFGraphConfiguration
+  ): Option[DomainElement] = {
     val referenceResolution =
       new ReferenceResolution(errorHandler, customDomainElementTransformation = customDomainElementTransformation)
     referenceResolution.transform(e, conditions = Seq(ASSERT_DIFFERENT), configuration)

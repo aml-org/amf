@@ -9,8 +9,7 @@ import amf.core.internal.metamodel.Type.{Array, Bool}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.operations.AbstractRequestModel
 
-/**
-  * Request metaModel.
+/** Request metaModel.
   */
 object RequestModel extends AbstractRequestModel with MessageModel {
 
@@ -20,14 +19,18 @@ object RequestModel extends AbstractRequestModel with MessageModel {
     ModelDoc(ModelVocabularies.ApiContract, "parameter", "Parameters associated to the communication model")
   )
 
-  val Required: Field = Field(Bool,
-                       ApiContract + "required",
-                       ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
+  val Required: Field = Field(
+    Bool,
+    ApiContract + "required",
+    ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required")
+  )
 
   val CookieParameters: Field =
-    Field(Array(ParameterModel),
-          ApiContract + "cookieParameter",
-          ModelDoc(ModelVocabularies.ApiContract, "cookieParameter", ""))
+    Field(
+      Array(ParameterModel),
+      ApiContract + "cookieParameter",
+      ModelDoc(ModelVocabularies.ApiContract, "cookieParameter", "")
+    )
 
   override val `type`: List[ValueType] = ApiContract + "Request" :: Core + "Request" :: MessageModel.`type`
 

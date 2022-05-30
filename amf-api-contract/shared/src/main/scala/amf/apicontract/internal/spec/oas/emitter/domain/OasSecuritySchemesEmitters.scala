@@ -20,9 +20,9 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
 
-abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val securityTypeMap: Seq[(SecuritySchemeType, SecurityScheme)] =
       securitySchemes.map(s => (OasLikeSecuritySchemeTypeMappings.mapsTo(spec.spec, s.`type`.value()), s))
@@ -37,10 +37,13 @@ abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], 
         key,
         _.obj(
           traverse(
-            ordering.sorted(oasSecurityDefinitions
-              .map(s => emitter(s._2, s._1, ordering))),
+            ordering.sorted(
+              oasSecurityDefinitions
+                .map(s => emitter(s._2, s._1, ordering))
+            ),
             _
-          ))
+          )
+        )
       )
     if (extensionDefinitions.nonEmpty)
       b.entry(
@@ -55,32 +58,36 @@ abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], 
 
   def key: String
 
-  def emitter(securityScheme: SecurityScheme,
-              mappedType: SecuritySchemeType,
-              ordering: SpecOrdering): OasNamedSecuritySchemeEmitter
+  def emitter(
+      securityScheme: SecurityScheme,
+      mappedType: SecuritySchemeType,
+      ordering: SpecOrdering
+  ): OasNamedSecuritySchemeEmitter
 }
 
-class Oas3SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
+class Oas3SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
 
   override def key = "securitySchemes"
   override def emitter(securityScheme: SecurityScheme, mappedType: SecuritySchemeType, ordering: SpecOrdering) =
     Oas3NamedSecuritySchemeEmitter(securityScheme, mappedType, ordering)
 }
 
-class Oas2SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
+class Oas2SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(implicit
+    spec: OasSpecEmitterContext
+) extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
 
   override def key: String = "securityDefinitions"
   override def emitter(securityScheme: SecurityScheme, mappedType: SecuritySchemeType, ordering: SpecOrdering) =
     new OasNamedSecuritySchemeEmitter(securityScheme, mappedType, ordering)
 }
 
-class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                    mappedType: SecuritySchemeType,
-                                    ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+class OasNamedSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    mappedType: SecuritySchemeType,
+    ordering: SpecOrdering
+)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
   override def position(): Position = pos(securityScheme.annotations)
@@ -112,9 +119,11 @@ class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 }
 
-case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                          mappedType: SecuritySchemeType,
-                                          ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+case class Oas3NamedSecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    mappedType: SecuritySchemeType,
+    ordering: SpecOrdering
+)(implicit spec: OasSpecEmitterContext)
     extends OasNamedSecuritySchemeEmitter(securityScheme, mappedType, ordering) {
 
   override protected def emitInline(b: PartBuilder): Unit =
@@ -123,8 +132,8 @@ case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 }
 
 class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: SecuritySchemeType, ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+    implicit spec: OasSpecEmitterContext
+) extends PartEmitter {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
 
@@ -154,9 +163,11 @@ class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: Secur
   }
 }
 
-case class Oas3SecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                     mappedType: SecuritySchemeType,
-                                     ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+case class Oas3SecuritySchemeEmitter(
+    securityScheme: SecurityScheme,
+    mappedType: SecuritySchemeType,
+    ordering: SpecOrdering
+)(implicit spec: OasSpecEmitterContext)
     extends OasSecuritySchemeEmitter(securityScheme, mappedType, ordering) {
   val httpSchemaMappings = Map(
     "Basic Authentication"  -> "basic",

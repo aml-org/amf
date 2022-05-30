@@ -13,10 +13,12 @@ object ValidationsExporter extends ImportUtils {
     val parserSideVals =
       DefaultAMFValidations.severityLevelsOfConstraints.foldLeft(Map[String, Map[String, String]]()) {
         case (accMap, (id, levels)) =>
-          accMap.updated(id, levels.foldLeft(Map[String, String]()) {
-            case (acc, (p, v)) =>
+          accMap.updated(
+            id,
+            levels.foldLeft(Map[String, String]()) { case (acc, (p, v)) =>
               acc.updated(p.profile, v)
-          })
+            }
+          )
       }
 
     DefaultAMFValidations.staticValidations.foreach { validation =>
@@ -29,27 +31,25 @@ object ValidationsExporter extends ImportUtils {
     var validationsAcc                           = Map[String, AMFValidation]()
     var levels: Map[String, Map[String, String]] = Map()
 
-    AMFRawValidations.profileToValidationMap.mapValues(_.validations()).foreach {
-      case (profile, validations) =>
-        validations.foreach { validation =>
-          val id = uri(validation)
-          if (!validations.contains(id)) {
-            validationsAcc = validationsAcc + (id -> validation)
-          }
-          var thisLevel = levels.getOrElse(id, Map())
-          thisLevel = thisLevel + (profile.profile -> validation.severity)
-          levels = levels.updated(id, thisLevel)
+    AMFRawValidations.profileToValidationMap.mapValues(_.validations()).foreach { case (profile, validations) =>
+      validations.foreach { validation =>
+        val id = uri(validation)
+        if (!validations.contains(id)) {
+          validationsAcc = validationsAcc + (id -> validation)
         }
+        var thisLevel = levels.getOrElse(id, Map())
+        thisLevel = thisLevel + (profile.profile -> validation.severity)
+        levels = levels.updated(id, thisLevel)
+      }
     }
 
-    validationsAcc.foreach {
-      case (id, validation) =>
-        val severity: Map[String, String] = levels.getOrElse(id, parserSideVals(id))
-        val levelsString = severity.keys.toSeq.sorted
-          .map(severity)
-          .mkString("\t")
+    validationsAcc.foreach { case (id, validation) =>
+      val severity: Map[String, String] = levels.getOrElse(id, parserSideVals(id))
+      val levelsString = severity.keys.toSeq.sorted
+        .map(severity)
+        .mkString("\t")
 
-        println(s"${uri(validation)}\t${validation.owlClass}\t${validation.owlProperty}\t${validation.message
+      println(s"${uri(validation)}\t${validation.owlClass}\t${validation.owlProperty}\t${validation.message
           .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t$levelsString")
     }
 

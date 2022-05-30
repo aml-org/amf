@@ -24,10 +24,11 @@ class SemanticBaseUnitClient private[amf] (override protected val configuration:
   }
 }
 
-class AMFSemanticSchemaResult(override val baseUnit: Dialect,
-                              val vocabulary: Option[Vocabulary],
-                              override val results: Seq[AMFValidationResult])
-    extends AMFParseResult(baseUnit, results)
+class AMFSemanticSchemaResult(
+    override val baseUnit: Dialect,
+    val vocabulary: Option[Vocabulary],
+    override val results: Seq[AMFValidationResult]
+) extends AMFParseResult(baseUnit, results)
 
 object AMFSemanticSchemaResult {
   def apply(baseUnit: Dialect, vocabulary: Option[Vocabulary], results: Seq[AMFValidationResult]) =

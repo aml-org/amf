@@ -19,7 +19,7 @@ class SYamlCompilerReferenceCollector() extends CompilerReferenceCollector {
     val (url, fragment) = ReferenceFragmentPartition(key)
     collector.get(url) match {
       case Some(reference: Reference) => collector += (url, reference + SYamlRefContainer(kind, node, fragment))
-      case None                       => collector += (url, new Reference(url, Seq(SYamlRefContainer(kind, node, fragment))))
+      case None => collector += (url, new Reference(url, Seq(SYamlRefContainer(kind, node, fragment))))
     }
   }
 
@@ -39,7 +39,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
   private def collect(parsed: ParsedDocument)(implicit errorHandler: AMFErrorHandler): CompilerReferenceCollector = {
     parsed match {
-      case syaml : SyamlParsedDocument =>
+      case syaml: SyamlParsedDocument =>
         val doc = syaml.document
         libraries(doc)
         links(doc)
@@ -77,9 +77,15 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
               entry.value.tagType match {
                 case YType.Map | YType.Seq | YType.Null =>
                   errorHandler
-                    .violation(InvalidExtensionsType, "", s"Expected scalar but found: ${entry.value}", entry.value.location)
+                    .violation(
+                      InvalidExtensionsType,
+                      "",
+                      s"Expected scalar but found: ${entry.value}",
+                      entry.value.location
+                    )
                 case _ => extension(entry) // assume scalar
-            })
+              }
+            )
         }
       case _ =>
     }
@@ -115,7 +121,8 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
                 case YType.Map  => entry.value.as[YMap].entries.foreach(library(_))
                 case YType.Null =>
                 case _ =>
-                  errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value.location)
+                  errorHandler
+                    .violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value.location)
               }
             })
         })
@@ -182,7 +189,8 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node.location)
+      case _ =>
+        errorHandler.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node.location)
     }
   }
 }

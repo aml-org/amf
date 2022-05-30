@@ -28,7 +28,8 @@ case class ExampleByMediaTypeParser(yMapEntry: YMapEntry, parentId: String)(impl
     example.withName(mediaType)
     example.set(ExampleModel.MediaType, mediaType)
     ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))(
-      WebApiShapeParserContextAdapter(ctx))
+      WebApiShapeParserContextAdapter(ctx)
+    )
       .parse()
   }
 }

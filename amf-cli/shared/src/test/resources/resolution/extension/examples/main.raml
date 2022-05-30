@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: main
+baseUri: http://api.com/main
+
+types:
+    User:
+        properties:
+            name: string
+            age?: integer
+        examples:
+            tato:
+                name: tato
+                age: 88
+            pepo:
+                name: pepo
+                weight: 70

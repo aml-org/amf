@@ -14,9 +14,9 @@ import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers, UnionShape}
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
     val values: Seq[Shape] = f.array.values.map(_.asInstanceOf[Shape])
@@ -41,12 +41,14 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
     case s: AnyShape =>
       Raml10TypePartEmitter(s, ordering, None, references = references).emit(b)
     case other =>
-      spec.eh.violation(TransformationValidation,
-                        other.id,
-                        None,
-                        "Cannot emit for type shapes without WebAPI Shape support",
-                        other.position(),
-                        other.location())
+      spec.eh.violation(
+        TransformationValidation,
+        other.id,
+        None,
+        "Cannot emit for type shapes without WebAPI Shape support",
+        other.position(),
+        other.location()
+      )
   }
 
   private def emitDeclared(shape: Shape with ShapeHelpers, b: PartBuilder): Unit =

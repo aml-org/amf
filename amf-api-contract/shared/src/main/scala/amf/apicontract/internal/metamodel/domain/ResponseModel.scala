@@ -10,18 +10,20 @@ import amf.core.internal.metamodel.domain.templates.OptionalField
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.operations.AbstractResponseModel
 
-/**
-  * Response metamodel.
+/** Response metamodel.
   */
 object ResponseModel extends AbstractResponseModel with MessageModel with OptionalField {
-  override val Payload: Field = Field(PayloadModel,
+  override val Payload: Field = Field(
+    PayloadModel,
     ApiContract + "payload",
-    ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
+    ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response")
+  )
 
   val StatusCode: Field = Field(
     Str,
     ApiContract + "statusCode",
-    ModelDoc(ModelVocabularies.ApiContract, "statusCode", "HTTP status code returned by a response"))
+    ModelDoc(ModelVocabularies.ApiContract, "statusCode", "HTTP status code returned by a response")
+  )
 
   val Links: Field = Field(
     Array(TemplatedLinkModel),

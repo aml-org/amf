@@ -19,16 +19,20 @@ class MakeRequiredFieldImplicitForOptionalProperties()
 
   protected var m: Option[BaseUnit] = None
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     m = Some(model)
     model.transform(NodeShapeSelector, transform(_, _, configuration))(errorHandler)
   }
 
-  protected def transform(element: DomainElement,
-                          isCycle: Boolean,
-                          configuration: AMFGraphConfiguration): Option[DomainElement] = {
+  protected def transform(
+      element: DomainElement,
+      isCycle: Boolean,
+      configuration: AMFGraphConfiguration
+  ): Option[DomainElement] = {
     element match {
       case nodeShape: NodeShape => transformer.transform(nodeShape, configuration)
       case other                => Some(other)

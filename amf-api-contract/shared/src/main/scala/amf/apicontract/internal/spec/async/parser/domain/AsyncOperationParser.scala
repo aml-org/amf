@@ -19,15 +19,16 @@ import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model._
 
 object AsyncOperationParser {
-  def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(
-      implicit ctx: AsyncWebApiContext): AsyncOperationParser =
+  def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(implicit
+      ctx: AsyncWebApiContext
+  ): AsyncOperationParser =
     if (isTrait) new AsyncOperationTraitParser(entry, adopt)
     else new AsyncConcreteOperationParser(entry, adopt)
 }
 
 abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeOperationParser(entry, adopt) {
+    override implicit val ctx: AsyncWebApiContext
+) extends OasLikeOperationParser(entry, adopt) {
 
   override def parse(): Operation = {
     val operation = super.parse()
@@ -64,19 +65,18 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
   protected def parseTraits(map: YMap, operation: Operation)
 }
 
-private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    implicit ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, adopt) {
+private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(implicit
+    ctx: AsyncWebApiContext
+) extends AsyncOperationParser(entry, adopt) {
 
   override protected def parseMessages(map: YMap, operation: Operation): Unit = map.key(
     "message",
     messageEntry =>
       AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
-        operation.fields.setWithoutId(msgType.field,
-                                      AmfArray(messages, Annotations(messageEntry.value)),
-                                      Annotations(messageEntry))
-    }
+        operation.fields
+          .setWithoutId(msgType.field, AmfArray(messages, Annotations(messageEntry.value)), Annotations(messageEntry))
+      }
   )
 
   override protected def parseTraits(map: YMap, operation: Operation): Unit =
@@ -86,16 +86,18 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
           AsyncOperationTraitRefParser(node, adopt).parseLinkOrError()
         }
-        operation.fields.setWithoutId(OperationModel.Extends,
-                             AmfArray(traits, Annotations(traitEntry.value)),
-                             Annotations(traitEntry))
+        operation.fields.setWithoutId(
+          OperationModel.Extends,
+          AmfArray(traits, Annotations(traitEntry.value)),
+          Annotations(traitEntry)
+        )
       }
     )
 }
 
 private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, adopt) {
+    override implicit val ctx: AsyncWebApiContext
+) extends AsyncOperationParser(entry, adopt) {
 
   override protected val closedShapeName: String = "operationTrait"
 
@@ -118,7 +120,8 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
 }
 
 case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation, name: Option[String] = None)(
-    implicit val ctx: AsyncWebApiContext) {
+    implicit val ctx: AsyncWebApiContext
+) {
 
   def parseLinkOrError(): Operation = {
     ctx.link(node) match {
@@ -145,7 +148,12 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
   }
 
   private def linkError(url: String, node: YNode): Operation = {
-    ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find operation trait reference $url", node.location)
+    ctx.eh.violation(
+      CoreValidations.UnresolvedReference,
+      "",
+      s"Cannot find operation trait reference $url",
+      node.location
+    )
     val t: ErrorOperationTrait = new ErrorOperationTrait(url, node).link(url, Annotations(node))
     t
 

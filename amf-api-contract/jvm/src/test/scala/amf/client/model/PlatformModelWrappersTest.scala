@@ -4,13 +4,18 @@ import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.ContextMapping
-import amf.shapes.internal.domain.metamodel.{BaseIRIModel, ContextMappingModel, CuriePrefixModel, DefaultVocabularyModel, SemanticContextModel}
+import amf.shapes.internal.domain.metamodel.{
+  BaseIRIModel,
+  ContextMappingModel,
+  CuriePrefixModel,
+  DefaultVocabularyModel,
+  SemanticContextModel
+}
 import org.reflections.Reflections
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.collection.JavaConverters.asScalaSetConverter
-
 
 class PlatformModelWrappersTest extends AnyFunSuite with Matchers with PlatformSecrets {
 
@@ -28,7 +33,7 @@ class PlatformModelWrappersTest extends AnyFunSuite with Matchers with PlatformS
       new Reflections("amf.apicontract.client.scala.model"),
       new Reflections("amf.shapes.client.scala.model"),
       new Reflections("amf.aml.client.scala.model"),
-      new Reflections("amf.core.client.scala.model"),
+      new Reflections("amf.core.client.scala.model")
     )
     val instances = obtainModelInstances(reflections)
     instances.filter(doesntHaveClientWrappers).foreach(callPlatformWrap)
@@ -44,7 +49,8 @@ class PlatformModelWrappersTest extends AnyFunSuite with Matchers with PlatformS
       val classes = dir.getSubTypesOf(classOf[AmfObject]).asScala.toList
       classes.flatMap { clazz =>
         try {
-          val instance = clazz.getMethod("apply")
+          val instance = clazz
+            .getMethod("apply")
             .invoke("") // ignored param as method is static
           Some(instance.asInstanceOf[AmfObject])
         } catch {

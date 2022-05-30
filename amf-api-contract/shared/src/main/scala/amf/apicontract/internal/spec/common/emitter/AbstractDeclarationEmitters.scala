@@ -12,26 +12,31 @@ import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
-/**
-  *
-  */
-case class AbstractDeclarationsEmitter(key: String,
-                                       declarations: Seq[AbstractDeclaration],
-                                       ordering: SpecOrdering,
-                                       references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+/** */
+case class AbstractDeclarationsEmitter(
+    key: String,
+    declarations: Seq[AbstractDeclaration],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(key, _.obj { b =>
-      traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, references))), b)
-    })
+    b.entry(
+      key,
+      _.obj { b =>
+        traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, references))), b)
+      }
+    )
   }
 
   override def position(): Position = declarations.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
-case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
-                                      ordering: SpecOrdering,
-                                      references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+case class AbstractDeclarationEmitter(
+    declaration: AbstractDeclaration,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -58,9 +63,11 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
   override def position(): Position = pos(declaration.annotations)
 }
 
-case class AbstractDeclarationPartEmitter(declaration: AbstractDeclaration,
-                                          ordering: SpecOrdering,
-                                          references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+case class AbstractDeclarationPartEmitter(
+    declaration: AbstractDeclaration,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
   protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)

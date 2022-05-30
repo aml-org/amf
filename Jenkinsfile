@@ -135,7 +135,6 @@ pipeline {
       when {
         anyOf {
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {

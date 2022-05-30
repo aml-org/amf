@@ -12,9 +12,9 @@ import amf.shapes.internal.domain.metamodel.ArrayShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlShapeEmitterContext)
-    extends EntryEmitter {
+case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+    spec: RamlShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     array.items match {
       case webapiArrayItem: AnyShape =>

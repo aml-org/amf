@@ -27,9 +27,8 @@ class DialectWrapper(transformed: TransformationResult, options: SchemaTransform
   }
 
   private def extractExternals(transformed: TransformationResult, location: String): Seq[External] = {
-    transformed.externals.map {
-      case (ns, prefix) =>
-        External().withId(location + "/external/" + prefix).withBase(prefix).withAlias(ns)
+    transformed.externals.map { case (ns, prefix) =>
+      External().withId(location + "/external/" + prefix).withBase(prefix).withAlias(ns)
     }.toList
   }
 

@@ -22,8 +22,7 @@ sealed trait YMapEntryLike {
   def asSequence: YSequence
   def annotations: Annotations
 
-  /**
-    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+  /** Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
     * @return
     */
   def fieldAnnotations: Annotations
@@ -38,8 +37,7 @@ private case class RealYMapEntryLike(e: YMapEntry)(implicit errorHandler: Illega
   override def ast: YPart               = e
   override def annotations: Annotations = Annotations(e)
 
-  /**
-    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+  /** Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
     *
     * @return
     */
@@ -55,8 +53,7 @@ private case class YNodeYMapEntryLike(n: YNode)(implicit errorHandler: IllegalTy
   override def ast: YPart               = n
   override def annotations: Annotations = Annotations(n.value)
 
-  /**
-    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+  /** Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
     *
     * @return
     */
@@ -73,8 +70,7 @@ private case class TextKeyYMapEntryLike(artificialKey: String, n: YNode)(implici
   override def ast: YPart               = n
   override def annotations: Annotations = Annotations(n.value)
 
-  /**
-    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+  /** Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
     *
     * @return
     */
@@ -90,8 +86,7 @@ private case class FakeYMapEntryLike(e: YMapEntry)(implicit errorHandler: Illega
   override def ast: YPart               = if (hasChildren) astWithCorrectLocation else e.value.value
   override def annotations: Annotations = Annotations(e)
 
-  /**
-    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+  /** Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
     *
     * @return
     */

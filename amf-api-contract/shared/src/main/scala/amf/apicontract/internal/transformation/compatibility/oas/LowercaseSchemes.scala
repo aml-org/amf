@@ -24,9 +24,11 @@ class LowercaseSchemes() extends TransformationStep {
     if (s.nonEmpty) element.set(field, s)
   }
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = model match {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val api = d.encodes.asInstanceOf[Api]

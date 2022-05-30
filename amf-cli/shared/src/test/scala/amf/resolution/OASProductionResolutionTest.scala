@@ -2,7 +2,6 @@ package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Oas20TransformationPipeline
-import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -22,26 +21,30 @@ class OASProductionResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("OAS Response parameters resolution", "oas_response_declaration.resolved.%s") { config =>
-    cycle("oas_response_declaration.yaml",
-          config.golden,
-          Oas20YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          directory = completeCyclePath)
+    cycle(
+      "oas_response_declaration.yaml",
+      config.golden,
+      Oas20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      directory = completeCyclePath
+    )
   }
 
   multiGoldenTest("OAS with foward references in definitions", "oas_foward_definitions.resolved.%s") { config =>
-    cycle("oas_foward_definitions.json",
-          config.golden,
-          Oas20JsonHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          directory = completeCyclePath)
+    cycle(
+      "oas_foward_definitions.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      directory = completeCyclePath
+    )
   }
 
   multiGoldenTest("OAS with external fragment reference in upper folder", "api.resolved.%s") { config =>
     cycle(
-      "master/master.json",
+      "main/main.json",
       config.golden,
       Oas20JsonHint,
       target = AmfJsonHint,
@@ -51,40 +54,50 @@ class OASProductionResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("OAS complex example", "api.resolved.%s") { config =>
-    cycle("spec/swagger.json",
-          config.golden,
-          Oas20JsonHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions),
-          directory = basePath + "oas-complex-example/")
+    cycle(
+      "spec/swagger.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      directory = basePath + "oas-complex-example/"
+    )
   }
 
   multiGoldenTest("OAS examples test", "oas-example.json.%s") { config =>
-    cycle("oas-example.json",
-          config.golden,
-          Oas20JsonHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "oas-example.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("OAS multiple examples test", "oas-multiple-example.json.%s") { config =>
-    cycle("oas-multiple-example.json",
-          config.golden,
-          Oas20JsonHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "oas-multiple-example.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("OAS XML payload test", "oas20/xml-payload.json.%s") { config =>
-    cycle("oas20/xml-payload.json",
-          config.golden,
-          Oas20YamlHint,
-          target = AmfJsonHint,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "oas20/xml-payload.json",
+      config.golden,
+      Oas20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  multiGoldenTest("Summary and description from path applied to operations",
-                  "description-applied-to-operations-resolution.%s") { config =>
+  multiGoldenTest(
+    "Summary and description from path applied to operations",
+    "description-applied-to-operations-resolution.%s"
+  ) { config =>
     cycle(
       "description-applied-to-operations.json",
       config.golden,

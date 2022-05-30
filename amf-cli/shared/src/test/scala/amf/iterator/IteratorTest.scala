@@ -53,8 +53,8 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         .collect {
           case scalar: AmfScalar if scalar.annotations.find(classOf[DomainExtensionAnnotation]).isDefined =>
             scalar.annotations
-              .collect[DomainExtensionAnnotation] {
-                case domainAnnotation: DomainExtensionAnnotation => domainAnnotation
+              .collect[DomainExtensionAnnotation] { case domainAnnotation: DomainExtensionAnnotation =>
+                domainAnnotation
               }
               .map(_.extension)
         }
@@ -69,13 +69,11 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
       Raml10YamlHint,
       APIConfiguration.API(),
       None
-    ) map (
-        baseUnit => {
-          val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
-          val elements = iterator.toList
-          assert(elements.size == 352)
-        }
-    )
+    ) map (baseUnit => {
+      val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
+      val elements = iterator.toList
+      assert(elements.size == 352)
+    })
   }
 
   test("Full api with complete iterator using instance collector") {
@@ -84,19 +82,17 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
       Raml10YamlHint,
       APIConfiguration.API(),
       None
-    ) map (
-        baseUnit => {
-          val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
-          val elements = iterator.toList
-          val duplicates = elements
-            .groupBy {
-              case a: AmfObject => a.id
-              case _            => "other"
-            }
-            .filter { case (k, vales) => vales.size > 1 }
-          assert(elements.size == 352)
+    ) map (baseUnit => {
+      val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
+      val elements = iterator.toList
+      val duplicates = elements
+        .groupBy {
+          case a: AmfObject => a.id
+          case _            => "other"
         }
-    )
+        .filter { case (k, vales) => vales.size > 1 }
+      assert(elements.size == 352)
+    })
   }
 
   test("Full api with domain element iterator") {
@@ -105,13 +101,11 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
       Raml10YamlHint,
       APIConfiguration.API(),
       None
-    ) map (
-        baseUnit => {
-          val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
-          val elements = iterator.toList
-          assert(elements.size == 102)
-        }
-    )
+    ) map (baseUnit => {
+      val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
+      val elements = iterator.toList
+      assert(elements.size == 102)
+    })
   }
 
   test("Full api with domain element iterator using instance collector") {
@@ -120,13 +114,11 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
       Raml10YamlHint,
       APIConfiguration.API(),
       None
-    ) map (
-        baseUnit => {
-          val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
-          val elements = iterator.toList
-          assert(elements.size == 102)
-        }
-    )
+    ) map (baseUnit => {
+      val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
+      val elements = iterator.toList
+      assert(elements.size == 102)
+    })
   }
 
   private def buildApi(): Document = {
@@ -139,8 +131,10 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
     parameter.withBinding("file")
 
     val domainExtension = DomainExtension().withName("a domain extension")
-    response.set(DescriptionField.Description,
-                 AmfScalar("a description", Annotations(DomainExtensionAnnotation(domainExtension))))
+    response.set(
+      DescriptionField.Description,
+      AmfScalar("a description", Annotations(DomainExtensionAnnotation(domainExtension)))
+    )
     new Document(Fields(), Annotations()).withEncodes(api)
   }
 

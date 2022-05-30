@@ -23,7 +23,6 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
   private def nameAndAdopt(templateLink: TemplatedLink): TemplatedLink = {
     templateLink
       .setWithoutId(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
-
       .add(Annotations(definitionEntry))
   }
   def parse(): TemplatedLink = {
@@ -40,7 +39,8 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
           .map(templatedLink =>
-            nameAndAdopt(templatedLink.link(AmfScalar(label), annotations, Annotations.synthesized())))
+            nameAndAdopt(templatedLink.link(AmfScalar(label), annotations, Annotations.synthesized()))
+          )
           .getOrElse(remote(fullRef, map))
 
       case Right(_) => buildAndPopulate(map)
@@ -95,10 +95,8 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
             .setWithoutId(IriTemplateMappingModel.TemplateVariable, variable, Annotations(entry.key))
             .setWithoutId(IriTemplateMappingModel.LinkExpression, expression, Annotations(entry.value))
         }
-        templatedLink.fields.setWithoutId(
-                                 TemplatedLinkModel.Mapping,
-                                 AmfArray(parameters, Annotations(entry.value)),
-                                 Annotations(entry))
+        templatedLink.fields
+          .setWithoutId(TemplatedLinkModel.Mapping, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 

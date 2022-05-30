@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.apicontract.client.scala._
-import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
+import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Request, Response}
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.position.{Position, Range}
@@ -36,7 +36,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
 
   def modelAssertion(path: String, pipelineId: String = PipelineId.Default, transform: Boolean = true)(
-      assertion: BaseUnit => Assertion): Future[Assertion] = {
+      assertion: BaseUnit => Assertion
+  ): Future[Assertion] = {
     val parser = APIConfiguration.API().baseUnitClient()
     parser.parse(path) flatMap { parseResult =>
       if (!transform) assertion(parseResult.baseUnit)
@@ -53,7 +54,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   class BaseUnitComponents(isWebApi: Boolean = true) {
-    def getApi(bu: BaseUnit) =
+    def getApi(bu: BaseUnit): Api =
       if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
@@ -367,6 +368,13 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val xmlSchemaAnnotations = components.getFirstRequestPayload(bu).schema.asInstanceOf[SchemaShape].annotations
       xmlSchemaAnnotations.location().isDefined shouldBe true
       xmlSchemaAnnotations.lexical() shouldEqual Range(Position(8, 6), Position(10, 49))
+    }
+  }
+
+  test("W-10758138") {
+    val api = s"$basePath/raml/simple-datatype/datatype.raml"
+    modelAssertion(api, transform = false) { bu =>
+      bu.fields.fields().head.value.annotations.nonEmpty shouldBe true
     }
   }
 }

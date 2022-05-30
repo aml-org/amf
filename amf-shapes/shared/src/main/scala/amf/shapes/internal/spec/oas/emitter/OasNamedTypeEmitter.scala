@@ -9,11 +9,13 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasNamedTypeEmitter(shape: Shape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               pointer: Seq[String] = Nil,
-                               customName: Option[String] = None)(implicit spec: OasLikeShapeEmitterContext)
+case class OasNamedTypeEmitter(
+    shape: Shape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    customName: Option[String] = None
+)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = computeName

@@ -107,9 +107,11 @@ class ValidAsyncModelParserTest extends ValidModelTest {
   }
 
   test("Referencing raml content with $ref without specifying format - async config") {
-    checkValid("raml-data-type-references/ref-without-schema-format.yaml",
-               Async20Profile,
-               Some(AsyncAPIConfiguration.Async20()))
+    checkValid(
+      "raml-data-type-references/ref-without-schema-format.yaml",
+      Async20Profile,
+      Some(AsyncAPIConfiguration.Async20())
+    )
   }
 
   test("Referencing raml content with $ref without specifying format - composite config") {

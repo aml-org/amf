@@ -11,9 +11,9 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiCreativeWorksEmitter(documentation: CreativeWork, ordering: SpecOrdering)(
-    implicit val spec: SpecEmitterContext)
-    extends EntryEmitter {
+class AsyncApiCreativeWorksEmitter(documentation: CreativeWork, ordering: SpecOrdering)(implicit
+    val spec: SpecEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val result = ListBuffer[EntryEmitter]()

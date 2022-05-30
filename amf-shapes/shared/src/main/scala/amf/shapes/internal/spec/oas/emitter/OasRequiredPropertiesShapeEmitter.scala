@@ -9,9 +9,9 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[BaseUnit])(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val requiredProperties = f.array.values.filter {
@@ -22,9 +22,8 @@ case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[Base
       b.entry(
         "required",
         _.list { b =>
-          requiredProperties.foreach {
-            case property: PropertyShape =>
-              TextScalarEmitter(property.name.value(), Annotations()).emit(b)
+          requiredProperties.foreach { case property: PropertyShape =>
+            TextScalarEmitter(property.name.value(), Annotations()).emit(b)
           }
         }
       )

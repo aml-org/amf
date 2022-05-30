@@ -52,9 +52,11 @@ class JsonLdSemanticExtensionsParseTest extends AsyncFunSuite with Matchers {
     assertParsedModel("nested-object-dialect.yaml", "instance-nested-object.raml.jsonld", lookupNestedTagType)
   }
 
-  private def assertParsedModel(dialectPath: String,
-                                jsonLdPath: String,
-                                assertion: Document => Assertion): Future[Assertion] = {
+  private def assertParsedModel(
+      dialectPath: String,
+      jsonLdPath: String,
+      assertion: Document => Assertion
+  ): Future[Assertion] = {
     for {
       model <- parseJsonLd(dialectPath, jsonLdPath)
     } yield {

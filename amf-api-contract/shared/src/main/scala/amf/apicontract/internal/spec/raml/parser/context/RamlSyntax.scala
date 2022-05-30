@@ -366,7 +366,7 @@ object Raml08Syntax extends RamlSyntax {
       "is?",
       "securedBy?",
       "baseUriParameters?"
-    ),
+    )
   )
 }
 
