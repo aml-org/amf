@@ -16,7 +16,8 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       label 'gn-8-16-1'
-      registryCredentialsId 'dockerhub-pro-credentials'
+      registryUrl 'https://ghcr.io'
+      registryCredentialsId 'github-salt'
     }
   }
   environment {
