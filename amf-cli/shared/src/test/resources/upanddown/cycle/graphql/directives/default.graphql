@@ -1,0 +1,13 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String @deprecated(reason: "no reason")
+}
+
+enum ShipType {
+    X_WING @deprecated
+    DRONE,
+    FALCON
+}

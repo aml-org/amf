@@ -424,6 +424,49 @@
                   }
                 ]
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql#/web-api/%2Fquery%2FallConferences/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "null/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `conferences` instead"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated"
+              }
             ]
           },
           {
@@ -3636,6 +3679,49 @@
               {
                 "@value": "country"
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql#/shape/Contact/property/country/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "null/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `location` instead"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated"
+              }
             ]
           }
         ],
@@ -4606,6 +4692,49 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "speakers"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql#/shape/Session/property/speakers/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "null/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `people` instead"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated"
               }
             ]
           }
@@ -8541,6 +8670,75 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Conference"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/shapes#Operation"
+          },
+          {
+            "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/data#Scalar"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated/shape/default-node/property/reason",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-react-finland/api.graphql/directives/#deprecated/shape/default-node/property/reason/scalar/default-scalar",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "reason"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "deprecated"
           }
         ]
       }

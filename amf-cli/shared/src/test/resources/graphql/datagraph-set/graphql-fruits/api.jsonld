@@ -3230,7 +3230,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3249,7 +3249,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3259,7 +3259,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/maxAge",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3268,7 +3268,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3278,7 +3278,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3287,7 +3287,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3311,7 +3311,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/scope",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/scope",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3320,7 +3320,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/scope/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3330,7 +3330,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3339,7 +3339,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/scalar/CacheControlScope",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/scalar/CacheControlScope",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3382,7 +3382,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3395,7 +3395,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3405,7 +3405,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node/property/url",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node/property/url",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3414,7 +3414,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#specifiedBy/shape/default-node/property/url/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node/property/url/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",

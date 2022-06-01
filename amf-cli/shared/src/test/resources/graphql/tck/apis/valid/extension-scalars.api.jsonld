@@ -229,10 +229,28 @@
           {
             "@value": true
           }
+        ],
+        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/directives/#example": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "example"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/scalar/Date/extension/data-node",
+          "@type": [
+            "http://a.ml/vocabularies/data#Object",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/directives/#example"
+          }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#example",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/directives/#example",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -245,7 +263,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#example/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql/directives/#example/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

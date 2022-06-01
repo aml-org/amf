@@ -9,11 +9,11 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
-  var directive: CustomDomainProperty = CustomDomainProperty(toAnnotations(node))
+  val directive: CustomDomainProperty = CustomDomainProperty(toAnnotations(node))
 
   def parse(parentId: String): CustomDomainProperty = {
     parseName()
-    directive.adopted(parentId)
+    directive.adopted(parentId + "/directives/")
     parseArguments()
     parseLocations()
     directive
@@ -36,9 +36,11 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   private def parseArgument(n: Node): PropertyShape = {
     val propertyShape = PropertyShape()
     val name          = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
+    propertyShape.withName(name)
+    propertyShape.adopted(directive.id)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
-    val argumentType = parseType(n, directive.id)
-    propertyShape.withName(name).withRange(argumentType)
+    val argumentType = parseType(n, propertyShape.id, _.adopted(propertyShape.id))
+    propertyShape.withRange(argumentType)
     ScalarValueParser.putDefaultValue(n, propertyShape)
   }
 
@@ -49,7 +51,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         val domainsFromLocation = getDomains(graphqlLocation).toSet
         domains = domainsFromLocation ++: domains
     }
-    directive = directive.withDomain(domains.toSeq)
+    directive.withDomain(domains.toSeq)
   }
 
   private def getDomains(location: Node): Seq[String] = {

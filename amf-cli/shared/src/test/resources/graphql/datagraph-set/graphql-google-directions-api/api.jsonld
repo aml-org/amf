@@ -4809,7 +4809,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -4825,7 +4825,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4835,7 +4835,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/max",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/max",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4844,7 +4844,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/max/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/max/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4854,7 +4854,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/max/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4863,7 +4863,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/max/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4887,7 +4887,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/window",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/window",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4896,7 +4896,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/window/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/window/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4906,7 +4906,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/window/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4915,7 +4915,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/window/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4939,7 +4939,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/message",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/message",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4948,7 +4948,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/message/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/message/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4958,7 +4958,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/message/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4967,7 +4967,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/message/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4991,7 +4991,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/identityArgs",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/identityArgs",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -5000,7 +5000,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/identityArgs/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/identityArgs/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5010,7 +5010,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/identityArgs/array/default-array/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -5019,7 +5019,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper#/array/default-array",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/identityArgs/array/default-array/nullwrapper/array/default-array",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ArrayShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5029,7 +5029,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#items": [
                           {
-                            "@id": "null/nullwrapper#/array/default-array/items/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/identityArgs/array/default-array/nullwrapper/array/default-array/items/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5076,7 +5076,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/arrayLengthField",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/arrayLengthField",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -5085,7 +5085,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#rateLimit/shape/default-node/property/arrayLengthField/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/shape/default-node/property/arrayLengthField/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5095,7 +5095,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/arrayLengthField/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -5104,7 +5104,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#rateLimit/property/arrayLengthField/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5137,7 +5137,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#authentication",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#authentication",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -5156,7 +5156,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#authentication/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#authentication/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5174,7 +5174,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -5193,7 +5193,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5203,7 +5203,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl/shape/default-node/property/maxAge",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -5212,7 +5212,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5222,7 +5222,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -5231,7 +5231,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5255,7 +5255,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl/shape/default-node/property/scope",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/shape/default-node/property/scope",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -5264,7 +5264,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/shape/default-node/property/scope/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -5274,7 +5274,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/scalar/CacheControlScope/link-938467520/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -5283,7 +5283,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/scalar/CacheControlScope/link-938467520/nullwrapper/scalar/CacheControlScope",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-google-directions-api/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/scalar/CacheControlScope",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",

@@ -43813,7 +43813,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -43832,7 +43832,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43842,7 +43842,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/name",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -43851,7 +43851,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/name/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/name/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43861,7 +43861,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/name/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -43870,7 +43870,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/name/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43894,7 +43894,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/direction",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/direction",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -43903,7 +43903,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/direction/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/direction/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43913,7 +43913,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/scalar/_RelationDirections/link-1627477526/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/direction/scalar/_RelationDirections/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -43922,7 +43922,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/scalar/_RelationDirections/link-1627477526/nullwrapper/scalar/_RelationDirections",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/direction/scalar/_RelationDirections/nullwrapper/scalar/_RelationDirections",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43956,7 +43956,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/from",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/from",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -43965,7 +43965,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/from/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/from/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -43975,7 +43975,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/from/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -43984,7 +43984,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/from/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44008,7 +44008,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/to",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/to",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44017,7 +44017,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#relation/shape/default-node/property/to/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/shape/default-node/property/to/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44027,7 +44027,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/to/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44036,7 +44036,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#relation/property/to/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44069,7 +44069,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#cypher",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -44085,7 +44085,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#cypher/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44095,7 +44095,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#cypher/shape/default-node/property/statement",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher/shape/default-node/property/statement",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44104,7 +44104,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#cypher/shape/default-node/property/statement/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher/shape/default-node/property/statement/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44114,7 +44114,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher/property/statement/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44123,7 +44123,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#cypher/property/statement/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44156,7 +44156,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#neo4j_ignore",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#neo4j_ignore",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -44172,7 +44172,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#neo4j_ignore/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#neo4j_ignore/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44190,7 +44190,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -44206,7 +44206,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44216,7 +44216,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/relationship",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/relationship",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44225,7 +44225,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/relationship/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/relationship/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44235,7 +44235,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/relationship/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44244,7 +44244,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/relationship/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44268,7 +44268,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/from",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/from",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44277,7 +44277,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/from/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/from/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44287,7 +44287,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/from/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44296,7 +44296,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/from/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44320,7 +44320,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/to",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/to",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44329,7 +44329,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#MutationMeta/shape/default-node/property/to/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/shape/default-node/property/to/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44339,7 +44339,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/to/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44348,7 +44348,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#MutationMeta/property/to/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44381,7 +44381,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#additionalLabels",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -44394,7 +44394,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#additionalLabels/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44404,7 +44404,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#additionalLabels/shape/default-node/property/labels",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/shape/default-node/property/labels",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -44413,7 +44413,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql#additionalLabels/shape/default-node/property/labels/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/shape/default-node/property/labels/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44423,7 +44423,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/property/labels/array/default-array/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -44432,7 +44432,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper#/array/default-array",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/property/labels/array/default-array/nullwrapper/array/default-array",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ArrayShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -44442,7 +44442,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#items": [
                           {
-                            "@id": "null/nullwrapper#/array/default-array/items/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-countries-v2/api.graphql/directives/#additionalLabels/property/labels/array/default-array/nullwrapper/array/default-array/items/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
