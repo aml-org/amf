@@ -7,6 +7,8 @@ import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 import amf.shapes.internal.domain.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 
 object Locations {
+  // all are TypeSystemDirectiveLocations: https://spec.graphql.org/June2018/#TypeSystemDirectiveLocation
+  // ExecutableDirectiveLocations are not supported
   val locationToDomain: Map[String, Seq[String]] = Map[String, Seq[String]](
     "SCALAR"                 -> Seq(ScalarShapeModel.`type`.head.iri()),
     "OBJECT"                 -> Seq(NodeShapeModel.`type`.head.iri()),

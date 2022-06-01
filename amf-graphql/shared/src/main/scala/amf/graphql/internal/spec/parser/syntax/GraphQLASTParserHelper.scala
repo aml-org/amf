@@ -1,7 +1,7 @@
 package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
-import amf.core.client.scala.vocabulary.Namespace.XsdTypes
+import amf.core.client.scala.model.DataType
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -121,12 +121,12 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
       val scalar = ScalarShape(toAnnotations(t))
       typeName match {
-        case INT     => scalar.withDataType(XsdTypes.xsdInteger.iri())
-        case FLOAT   => scalar.withDataType(XsdTypes.xsdFloat.iri())
-        case STRING  => scalar.withDataType(XsdTypes.xsdString.iri())
-        case BOOLEAN => scalar.withDataType(XsdTypes.xsdBoolean.iri())
+        case INT     => scalar.withDataType(DataType.Integer)
+        case FLOAT   => scalar.withDataType(DataType.Float)
+        case STRING  => scalar.withDataType(DataType.String)
+        case BOOLEAN => scalar.withDataType(DataType.Boolean)
         case ID =>
-          scalar.withDataType(XsdTypes.xsdString.iri())
+          scalar.withDataType(DataType.String)
           scalar.withFormat("ID")
         case _ =>
           astError(errorId, s"Unknown GraphQL scalar type $typeName", toAnnotations(t))

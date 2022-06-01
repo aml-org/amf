@@ -1,7 +1,7 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DomainElement, ScalarNode}
-import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
@@ -11,7 +11,7 @@ import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 
 class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
-  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(Namespace.XsdTypes.xsdString.iri())
+  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.String)
 
   def parse(parentId: String): ScalarShape = {
     parseName()
