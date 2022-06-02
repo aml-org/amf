@@ -72,6 +72,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'publish/W-10671740'
         }
       }
       steps {
@@ -86,6 +87,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'publish/W-10671740'
         }
       }
       steps {
