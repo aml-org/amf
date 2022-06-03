@@ -72,7 +72,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         case _                 => // ignore
       }
 
-      unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
+      unpackNilUnion(parseType(argumentNode, queryParam.id, _.adopted(queryParam.id))) match {
         case NullableShape(true, shape) =>
           val schema = ScalarValueParser.putDefaultValue(ast, shape)
           queryParam.withSchema(schema).withRequired(false)

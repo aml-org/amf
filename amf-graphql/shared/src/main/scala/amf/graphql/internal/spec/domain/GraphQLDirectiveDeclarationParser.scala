@@ -29,7 +29,9 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case argument: Node =>
         parseArgument(argument)
     }
-    val schema = NodeShape().withProperties(properties)
+    val schema = NodeShape()
+    schema.adopted(directive.id)
+    schema.withProperties(properties)
     directive.withSchema(schema)
   }
 

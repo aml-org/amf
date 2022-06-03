@@ -34,7 +34,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
       param.withDescription(cleanDocumentation(desc.value))
     }
 
-    unpackNilUnion(parseType(n, param.id)) match {
+    unpackNilUnion(parseType(n, param.id, _.adopted(param.id))) match {
       case NullableShape(true, shape) =>
         val schema = ScalarValueParser.putDefaultValue(n, shape)
         param.withSchema(schema).withRequired(false)
