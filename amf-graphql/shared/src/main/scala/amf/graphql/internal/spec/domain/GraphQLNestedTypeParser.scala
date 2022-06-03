@@ -19,7 +19,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     if (isInterface) {
       obj.withIsAbstract(true)
     }
-    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse(parentId)
+    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse(obj.id)
     obj
   }
 

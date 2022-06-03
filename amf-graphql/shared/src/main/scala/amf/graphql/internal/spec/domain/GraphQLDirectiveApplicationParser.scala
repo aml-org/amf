@@ -58,6 +58,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   private def parseArguments(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
     // arguments are parsed as the properties of an ObjectNode, which goes in the Extension field in the DomainExtension
     val schema = ObjectNode()
+    schema.adopted(directiveApplication.id)
     collect(directiveNode, Seq(ARGUMENTS, ARGUMENT)).foreach { case argument: Node =>
       parseArgument(argument, schema, directiveApplication)
     }
