@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Request, Response}
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.position.{Position, Range}
 import amf.core.client.common.transform.PipelineId
@@ -371,10 +371,12 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  test("W-10758138") {
+  // W-10758138
+  test("Fragments should have isInferred annotation in Encodes field") {
     val api = s"$basePath/raml/simple-datatype/datatype.raml"
     modelAssertion(api, transform = false) { bu =>
-      bu.fields.fields().head.value.annotations.nonEmpty shouldBe true
+      val encodesField = bu.fields.fields().head.value
+      encodesField.annotations.nonEmpty && encodesField.isInferred shouldBe true
     }
   }
 

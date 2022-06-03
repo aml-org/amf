@@ -144,6 +144,24 @@
               }
             ]
           }
+        ],
+        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "MyDirective"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/extension/data-node",
+          "@type": [
+            "http://a.ml/vocabularies/data#Object",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective"
+          }
         ]
       }
     ],
@@ -172,7 +190,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#MyDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -185,7 +203,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#MyDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

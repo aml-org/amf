@@ -406,6 +406,49 @@
                   }
                 ]
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/web-api/%2Fmutation%2Fconsensus/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/web-api/%2Fmutation%2Fconsensus/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `reference` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           },
           {
@@ -5383,6 +5426,49 @@
                   }
                 ]
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/web-api/%2Fquery%2Fviewer/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/web-api/%2Fquery%2Fviewer/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `Root` directly."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           }
         ]
@@ -7509,6 +7595,49 @@
               {
                 "@value": "genotype"
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/HIVBoundSubtype/property/genotype/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/HIVBoundSubtype/property/genotype/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `subtype` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           },
           {
@@ -7661,6 +7790,49 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "displayGenotypes"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/HIVBoundSubtype/property/displayGenotypes/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/HIVBoundSubtype/property/displayGenotypes/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `displaySubtypes` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -8378,7 +8550,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/PositionCodonReads/codonReads/request/parameter/mutationOnly/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -9252,6 +9424,49 @@
               {
                 "@value": "The best matching genotype."
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/property/bestMatchingGenotype/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/property/bestMatchingGenotype/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `bestMatchingSubtype` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           },
           {
@@ -9502,6 +9717,49 @@
               {
                 "@value": "Formatted text for best matching subtype."
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/property/subtypeText/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/property/subtypeText/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `bestMatchingSubtype { display }` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           }
         ],
@@ -9576,7 +9834,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/subtypesV2/request/parameter/first/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -9782,7 +10040,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/genotypes/request/parameter/first/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -9915,6 +10173,49 @@
                     ]
                   }
                 ]
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/genotypes/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/genotypes/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `subtypesV2` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -10465,7 +10766,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/subtypes/request/parameter/first/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -10598,6 +10899,49 @@
                     ]
                   }
                 ]
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/subtypes/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceAnalysis/subtypes/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `subtypesV2` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -11386,6 +11730,49 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Mutated amino acid(s) that triggered the comment."
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/BoundMutationComment/property/triggeredAAs/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/BoundMutationComment/property/triggeredAAs/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `boundMutation { displayAAs }` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -13324,6 +13711,49 @@
               {
                 "@value": "reference"
               }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/Gene/property/reference/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/Gene/property/reference/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `refSequence` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
+              }
             ]
           },
           {
@@ -13359,6 +13789,49 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "consensus"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/Gene/property/consensus/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/Gene/property/consensus/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `refSequence` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -13730,6 +14203,49 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Type of these comments."
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/CommentsByType/property/mutationType/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/CommentsByType/property/mutationType/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use `commentType` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -16120,7 +16636,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/GeneSequenceReads/internalJsonAllPositionCodonReads/request/parameter/mutationOnly/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -16659,7 +17175,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/GeneSequenceReads/histogram/request/parameter/pcntLowerLimit/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -16724,7 +17240,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/GeneSequenceReads/histogram/request/parameter/pcntUpperLimit/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -16912,7 +17428,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/GeneSequenceReads/histogram/request/parameter/cumulative/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -21643,6 +22159,49 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "version"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/DrugResistance/property/version/extension/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/DrugResistance/property/version/extension/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Use field `algorithm` instead."
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated"
               }
             ]
           },
@@ -29477,7 +30036,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceReadsAnalysis/subtypes/request/parameter/first/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -30160,7 +30719,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceReadsAnalysis/histogram/request/parameter/pcntLowerLimit/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -30225,7 +30784,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceReadsAnalysis/histogram/request/parameter/pcntUpperLimit/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -30413,7 +30972,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql#/shape/SequenceReadsAnalysis/histogram/request/parameter/cumulative/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -30801,6 +31360,75 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "SequenceReadsAnalysis"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/shapes#Operation"
+          },
+          {
+            "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/data#Scalar"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated/shape/default-node/property/reason",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-hivdb/api.graphql/directives/#deprecated/shape/default-node/property/reason/scalar/default-scalar",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "reason"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "deprecated"
           }
         ]
       }

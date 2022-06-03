@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.parser.syntax.{DefaultValueParser, GraphQLASTParserHelper, NullableShape}
+import amf.graphql.internal.spec.parser.syntax.{ScalarValueParser, GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
@@ -46,6 +46,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
       endPoint.withDescription(cleanDocumentation(description.value))
     }
     parseOperation(f, endPoint, fieldName)
+    GraphQLDirectiveApplicationParser(f, endPoint).parse(endPoint.id)
     endPoint
   }
 
@@ -71,19 +72,19 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         case _                 => // ignore
       }
 
-      unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
+      unpackNilUnion(parseType(argumentNode, queryParam.id, _.adopted(queryParam.id))) match {
         case NullableShape(true, shape) =>
-          val schema = DefaultValueParser.putDefaultValue(ast, shape)
+          val schema = ScalarValueParser.putDefaultValue(ast, shape)
           queryParam.withSchema(schema).withRequired(false)
         case NullableShape(false, shape) =>
-          val schema = DefaultValueParser.putDefaultValue(ast, shape)
+          val schema = ScalarValueParser.putDefaultValue(ast, shape)
           queryParam.withSchema(schema).withRequired(true)
       }
     }
 
     val payload                 = op.withResponse().withPayload()
     val adopt: AnyShape => Unit = (shape: AnyShape) => shape.adopted(payload.id)
-    val shape = parseType(f, payload.id, adopt)
+    val shape                   = parseType(f, payload.id, adopt)
     payload.withSchema(shape)
   }
 }

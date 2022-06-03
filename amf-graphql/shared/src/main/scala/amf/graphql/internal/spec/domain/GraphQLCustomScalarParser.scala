@@ -14,6 +14,7 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
     scalar.withDataType(DataType.String)
     parseNameAndFormat()
     scalar.adopted(parentId)
+    GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar).parse(scalar.id)
     scalar
   }
 

@@ -1,8 +1,8 @@
 package amf.graphql.internal.spec.emitter.domain
 
 import amf.core.client.common.position.Position
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.parser.syntax.NullableShape
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -20,11 +20,11 @@ trait GraphQLEmitter {
         shape match {
           case sc: ScalarShape =>
             sc.dataType.value() match {
-              case s if s == XsdTypes.xsdInteger.iri()                                     => INT + "!"
-              case s if s == XsdTypes.xsdFloat.iri()                                       => FLOAT + "!"
-              case s if s == XsdTypes.xsdBoolean.iri()                                     => BOOLEAN + "!"
-              case s if s == XsdTypes.xsdString.iri() && sc.format.option().contains("ID") => ID + "!"
-              case _                                                                       => STRING + "!"
+              case s if s == DataType.Integer                                     => INT + "!"
+              case s if s == DataType.Float                                       => FLOAT + "!"
+              case s if s == DataType.Boolean                                     => BOOLEAN + "!"
+              case s if s == DataType.String && sc.format.option().contains("ID") => ID + "!"
+              case _                                                              => STRING + "!"
             }
           case l: ArrayShape => s"[${typeTarget(l.items.asInstanceOf[AnyShape])}]!"
           case u: UnionShape =>

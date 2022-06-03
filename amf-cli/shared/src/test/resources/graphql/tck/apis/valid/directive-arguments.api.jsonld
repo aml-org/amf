@@ -144,6 +144,49 @@
               }
             ]
           }
+        ],
+        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "MyDirective"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#/web-api/extension/data-node",
+          "@type": [
+            "http://a.ml/vocabularies/data#Object",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#text": [
+            {
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#/web-api/extension/data-node/text",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "Luke Skywalker"
+                }
+              ],
+              "http://www.w3.org/ns/shacl#datatype": [
+                {
+                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "text"
+                }
+              ]
+            }
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective"
+          }
         ]
       }
     ],
@@ -172,7 +215,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#MyDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -185,7 +228,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#MyDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -195,7 +238,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#MyDirective/shape/default-node/property/text",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective/shape/default-node/property/text",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -204,7 +247,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql#MyDirective/shape/default-node/property/text/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective/shape/default-node/property/text/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -214,7 +257,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective/property/text/scalar/default-scalar/nullwrapper/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -223,7 +266,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-arguments.api.graphql/directives/#MyDirective/property/text/scalar/default-scalar/nullwrapper/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
