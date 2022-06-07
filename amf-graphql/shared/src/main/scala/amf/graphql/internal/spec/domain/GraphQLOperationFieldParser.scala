@@ -55,7 +55,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
   private def parseRange(): Unit = {
     val response = operation.withResponse()
     val payload  = ShapePayload().withName("default")
-    payload.adopted(response.id).withSchema(parseType(ast, operation.id))
+    payload.adopted(response.id).withSchema(parseType(ast, operation.id, _.adopted(payload.id)))
     response.withPayload(payload)
   }
 }
