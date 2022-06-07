@@ -69,7 +69,8 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
   }
 
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
-    val flows = entry.value.as[YMap].entries.map(parseFlow(settings.id, _))
+    val flowConfig  = entry.value.as[YMap].entries.filter(!isExtensionField(_))
+    val flows       = flowConfig.map(parseFlow(settings.id, _))
     settings.setWithoutId(OAuth2SettingsModel.Flows, AmfArray(flows, Annotations(entry.value)), Annotations(entry))
   }
 
@@ -86,11 +87,15 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     parseScopes(flow, flowMap)
 
+    AnnotationParser(flow, flowMap)(WebApiShapeParserContextAdapter(ctx)).parse()
+
     OAuth2FlowValidations.validateFlowFields(flow, ctx.eh, flowEntry)
 
     ctx.closedShape(flow, flowMap, flow.flow.value())
     flow
   }
+
+  private def isExtensionField(field: YMapEntry) = field.key.startsWith("x-")
 
   override def vendorSpecificSettingsProducers(): SettingsProducers = Oas3SettingsProducers
 }

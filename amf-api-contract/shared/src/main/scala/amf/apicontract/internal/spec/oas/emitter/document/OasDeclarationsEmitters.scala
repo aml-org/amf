@@ -14,7 +14,7 @@ import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, traverse}
@@ -24,13 +24,17 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.{OasResponseExamplesEmitter, ShapeEmitterContext}
-import amf.shapes.internal.spec.oas.emitter.OasDeclaredShapesEmitter
+import amf.shapes.internal.spec.oas.emitter.{OasDeclaredShapesEmitter, OasOrphanAnnotationsEmitter}
 import org.yaml.model.YDocument.EntryBuilder
-
 import scala.collection.mutable.ListBuffer
 
-case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext
+case class OasDeclarationsEmitter(
+    declares: Seq[DomainElement],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    orphanAnnotations: Seq[DomainExtension] = Seq()
+)(implicit
+    spec: OasSpecEmitterContext
 ) extends PlatformSecrets {
 
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
@@ -89,7 +93,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
         position = pos(annotations)
       )
     }
-    result
+    result ++= OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
   }
 }
 

@@ -87,5 +87,7 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
       }
     )
     map.key("description", ShapeModel.Description in schema)
+
+    AnnotationParser(schema, map)(WebApiShapeParserContextAdapter(ctx)).parse()
   }
 }

@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /path:
+    get:
+      responses:
+        "200":
+          description: A response.
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  x-extension:
+    prop: value
