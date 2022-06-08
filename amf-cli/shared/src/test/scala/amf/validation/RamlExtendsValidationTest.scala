@@ -260,13 +260,12 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Merging optional RAML 0.8 nodes
 
   test("Merging optional nodes in resource types") {
-    validate("/extends/optional-raml08-nodes/rts.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/extends/optional-raml08-nodes/rts.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Merging optional nodes in traits") {
     validate(
       "/extends/optional-raml08-nodes/traits.raml",
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -290,7 +289,6 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   test("Merging security schemes in RAML 0.8") {
     validate(
       "extends/raml08-with-security-schemes-in-trait.raml",
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
