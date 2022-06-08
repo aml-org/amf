@@ -157,9 +157,5 @@ case class Operation(override private[amf] val _internal: InternalOperation)
 
   override def linkCopy(): Operation = _internal.linkCopy()
 
-  override def withResponse(name: String): Response = {
-    val result = buildResponse.withName(name)
-    _internal.withResponses(Seq(result))
-    result
-  }
+  override def withResponse(name: String): Response = { _internal.withResponse(name) }
 }
