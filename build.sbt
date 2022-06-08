@@ -32,6 +32,7 @@ lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch     = sys.env.getOrElse("BRANCH_NAME", "develop")
 
+
 sonarProperties ++= Map(
   "sonar.login"                      -> sonarToken,
   "sonar.projectKey"                 -> "mulesoft.amf",
@@ -40,7 +41,7 @@ sonarProperties ++= Map(
   "sonar.sourceEncoding"             -> "UTF-8",
   "sonar.github.repository"          -> "mulesoft/amf",
   "sonar.branch.name"                -> branch,
-  "sonar.scala.scoverage.reportPaths" -> "amf-cli/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-api-contract/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+  "sonar.scala.scoverage.reportPath" -> "amf-cli/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-api-contract/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
   "sonar.sources"                    -> "amf-cli/shared/src/main/scala,amf-api-contract/shared/src/main/scala",
   "sonar.tests"                      -> "amf-cli/shared/src/test/scala"
 )
