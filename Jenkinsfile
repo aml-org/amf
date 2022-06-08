@@ -41,6 +41,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'chore/sbt-sonar-fix'
         }
       }
       steps {
