@@ -77,7 +77,7 @@ object Main {
     val renderOptions = if (withLexical) {
       RenderOptions().withPrettyPrint.withSourceMaps.withSourceInformation
     } else {
-      RenderOptions().withPrettyPrint
+      RenderOptions().withPrettyPrint.withGovernanceMode
     }
 
     println {
