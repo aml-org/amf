@@ -32,7 +32,7 @@ pipeline {
       steps {
         script {
           lastStage = env.STAGE_NAME
-          sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
+          sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
         }
       }
     }

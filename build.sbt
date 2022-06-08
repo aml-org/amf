@@ -39,9 +39,8 @@ sonarProperties ++= Map(
   "sonar.projectName"                -> "AMF",
   "sonar.projectVersion"             -> versions("amf.apicontract"),
   "sonar.sourceEncoding"             -> "UTF-8",
-  "sonar.github.repository"          -> "mulesoft/amf",
+  "sonar.github.repository"          -> "aml-org/amf",
   "sonar.branch.name"                -> branch,
-  "sonar.scala.coverage.reportPaths" -> "amf-cli/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-api-contract/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
   "sonar.sources"                    -> "amf-cli/shared/src/main/scala,amf-api-contract/shared/src/main/scala",
   "sonar.tests"                      -> "amf-cli/shared/src/test/scala"
 )
