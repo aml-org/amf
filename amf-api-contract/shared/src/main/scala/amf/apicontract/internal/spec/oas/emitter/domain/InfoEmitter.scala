@@ -2,19 +2,25 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.{License, Organization}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
+import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.EntryBuilder
-
 import scala.collection.mutable
 
-case class InfoEmitter(fs: Fields, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext) extends EntryEmitter {
+case class InfoEmitter(fs: Fields, ordering: SpecOrdering, orphanAnnotations: Seq[DomainExtension])(implicit
+    val spec: SpecEmitterContext
+) extends EntryEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+
   override def emit(b: EntryBuilder): Unit = {
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -34,11 +40,14 @@ case class InfoEmitter(fs: Fields, ordering: SpecOrdering)(implicit val spec: Sp
     fs.entry(WebApiModel.Provider)
       .map(f => result += OrganizationEmitter("contact", f.value.value.asInstanceOf[Organization], ordering))
 
+    result ++= extensionEmitters()
     b.entry(
       "info",
       _.obj(traverse(ordering.sorted(result), _))
     )
   }
+
+  private def extensionEmitters(): Seq[EntryEmitter] = OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
 
   override def position(): Position = {
     var result: Position = ZERO

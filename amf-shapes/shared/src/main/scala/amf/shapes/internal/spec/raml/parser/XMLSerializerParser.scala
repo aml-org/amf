@@ -6,6 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.shapes.client.scala.model.domain.XMLSerializer
 import amf.shapes.internal.domain.metamodel.XMLSerializerModel
 import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode}
 
 object XMLSerializerParser {
@@ -60,6 +61,7 @@ case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: S
       }
     )
 
+    AnnotationParser(serializer, map)(ctx).parse()
     ctx.closedShape(serializer, map, "xmlSerialization")
 
     serializer

@@ -1,0 +1,323 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "API",
+      "http://a.ml/vocabularies/apiContract#server": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1"
+        }
+      ],
+      "http://a.ml/vocabularies/core#version": "1.0.0",
+      "http://a.ml/vocabularies/apiContract#endpoint": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#endpoint": "[(6,0)-(16,0)]",
+          "http://a.ml/vocabularies/apiContract#server": "[(16,0)-(25,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api": "[(1,0)-(25,0)]",
+          "http://a.ml/vocabularies/core#name": "[(3,2)-(4,0)]",
+          "http://a.ml/vocabularies/core#version": "[(4,2)-(6,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Server",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#urlTemplate": "https://development.gigantic-server.com/v1",
+      "http://a.ml/vocabularies/core#description": "A server",
+      "http://a.ml/vocabularies/apiContract#variable": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#variable": "[(20,4)-(25,0)]",
+          "http://a.ml/vocabularies/core#urlTemplate": "[(18,4)-(19,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1": "[(18,0)-(25,0)]",
+          "http://a.ml/vocabularies/core#description": "[(19,4)-(20,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/path",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath": "[(7,2)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "variable",
+      "http://a.ml/vocabularies/apiContract#paramName": "variable",
+      "http://a.ml/vocabularies/apiContract#required": true,
+      "http://a.ml/vocabularies/apiContract#binding": "path",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable"
+      },
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/shapes#schema": "true",
+          "http://a.ml/vocabularies/apiContract#required": "true",
+          "http://a.ml/vocabularies/apiContract#paramName": "true",
+          "http://a.ml/vocabularies/apiContract#binding": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/core#name": "[(21,6)-(21,14)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable": "[(21,6)-(25,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "get",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#returns": "[(9,6)-(16,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get": "[(8,4)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "variable",
+      "http://www.w3.org/ns/shacl#defaultValue": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/scalar_1"
+      },
+      "http://www.w3.org/ns/shacl#defaultValueStr": "demo",
+      "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/extension": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/extension"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "http://www.w3.org/ns/shacl#defaultValueStr": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "http://www.w3.org/ns/shacl#defaultValue": "[(22,17)-(22,21)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable": "[(22,0)-(25,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "A response.",
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#payload": "[(12,10)-(16,0)]",
+          "http://a.ml/vocabularies/core#name": "[(10,8)-(10,13)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200": "[(10,8)-(16,0)]",
+          "http://a.ml/vocabularies/core#description": "[(11,10)-(12,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/scalar_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "demo",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/scalar_1": "[(22,17)-(22,21)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "extension",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#prop": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1/prop"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#prop": "[(24,10)-(25,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1": "[(24,0)-(25,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#mediaType": "application/json",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/shapes#schema": "[(14,14)-(16,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson": "[(13,12)-(16,0)]",
+          "http://a.ml/vocabularies/core#mediaType": "[(13,12)-(13,28)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1/prop",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "value",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "prop",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable/customDomainProperties/extension/object_1/prop": "[(24,16)-(24,21)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#closed": false,
+      "http://www.w3.org/ns/shacl#name": "schema",
+      "smaps": {
+        "synthesized-field": {
+          "http://www.w3.org/ns/shacl#closed": "true"
+        },
+        "type-property-lexical-info": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema": "[(15,16)-(15,20)]"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema": "[(14,14)-(16,0)]"
+        },
+        "auto-generated-name": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema": ""
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

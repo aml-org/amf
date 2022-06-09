@@ -13,7 +13,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}
 import amf.core.internal.datanode.DataNodeEmitter
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.parser.domain.{FieldEntry, Value}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -26,7 +26,6 @@ import amf.shapes.internal.spec.common.emitter.{EnumValuesEmitter, ShapeEmitterC
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
-
 import scala.collection.mutable.ListBuffer
 
 case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
@@ -280,7 +279,7 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
       case None => result += MapEntryEmitter("default", "")
     }
 
-    result
+    result ++= AnnotationsEmitter(shape, ordering).emitters
   }
 
   override def position(): Position = pos(variable.annotations)
@@ -308,7 +307,8 @@ private object Servers {
         ShapeModel.DefaultValueString,
         ShapeModel.Values,
         ScalarShapeModel.DataType,
-        ShapeModel.Description
+        ShapeModel.Description,
+        DomainElementModel.CustomDomainProperties
       )
       s.fields.foreach { case (field, _) =>
         if (!variableFields.contains(field)) return false
