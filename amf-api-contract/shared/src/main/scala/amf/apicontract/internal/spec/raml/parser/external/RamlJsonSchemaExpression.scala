@@ -20,9 +20,10 @@ import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SchemaShape,
 import amf.shapes.internal.annotations._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ScalarShapeModel}
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser}
+import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser, QuickFieldParserOps}
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.spec.raml.parser.ExampleParser
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position
@@ -57,49 +58,17 @@ case class RamlJsonSchemaExpression(
     parsed
   }
 
-  private def parseWrappedSchema(origin: ValueAndOrigin, map: YMap) = {
+  private def parseWrappedSchema(origin: ValueAndOrigin, map: YMap): AnyShape = {
     val parsed: AnyShape  = parseWrappedSchema(origin)
-    val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
+    val wrapper: AnyShape = parseSchemaWrapper(map, parsed)
     wrapper.annotations += ExternalSchemaWrapper()
     wrapper
   }
 
-  private def parseSchemaWrapper(map: YMap, parsed: AnyShape, origin: ValueAndOrigin) = {
-    val wrapper = parsed.meta.modelInstance
-    wrapper.annotations ++= Annotations(value)
-    adopt(wrapper)
-    map.key("displayName", (ShapeModel.DisplayName in wrapper).allowingAnnotations)
-    map.key("description", (ShapeModel.Description in wrapper).allowingAnnotations)
-    map.key(
-      "default",
-      entry => {
-        val dataNodeResult =
-          NodeDataNodeParser(entry.value, wrapper.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
-        wrapper.setDefaultStrValue(entry)
-        dataNodeResult.dataNode.foreach { dataNode =>
-          wrapper.setWithoutId(ShapeModel.Default, dataNode, Annotations(entry))
-        }
-      }
-    )
-    parseExamples(wrapper, value.as[YMap])(WebApiShapeParserContextAdapter(ctx))
-    wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
-    val typeEntryAnnotations =
-      map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
-    wrapper.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
-    preResolveDataType(parsed, wrapper)
-    wrapper
-  }
+  private def parseSchemaWrapper(map: YMap, parsed: AnyShape) =
+    SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
 
-  private def preResolveDataType(parsed: AnyShape, wrapper: AnyShape): Unit = {
-    parsed match {
-      case scalarShape: ScalarShape =>
-        val inheritedDataType = scalarShape.dataType.value()
-        wrapper.set(ScalarShapeModel.DataType, inheritedDataType)
-      case _ =>
-    }
-  }
-
-  private def parseWrappedSchema(origin: ValueAndOrigin) = {
+  private def parseWrappedSchema(origin: ValueAndOrigin): AnyShape = {
     val forcedSchemaAdoption = (s: Shape) => {
       adopt(s)
       s.id = s"${s.id}/schema/"
