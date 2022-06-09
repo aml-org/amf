@@ -183,18 +183,22 @@ case class RamlJsonSchemaExpression(
         )(jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/", None)(jsonSchemaContext)
       val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq
-      val shapesMap      = mutable.Map[String, AnyShape]()
-      resolvedShapes.map(s => (s, s.annotations.find(classOf[JSONSchemaId]))).foreach {
-        case (s: AnyShape, Some(a)) if a.id.equals(s.name.value()) =>
-          shapesMap += s.name.value -> s
-        case (s: AnyShape, Some(a)) =>
-          shapesMap += s.name.value() -> s
-          shapesMap += a.id           -> s
-        case (s: AnyShape, None) => shapesMap += s.name.value -> s
-      }
-
-      ctx.declarations.registerExternalLib(path, shapesMap.toMap)
+      registerShapesAsExternalLibrary(path, resolvedShapes)
     }
+  }
+
+  private def registerShapesAsExternalLibrary(path: String, resolvedShapes: Seq[Shape]) = {
+    val shapesMap = mutable.Map[String, AnyShape]()
+    resolvedShapes.map(s => (s, s.annotations.find(classOf[JSONSchemaId]))).foreach {
+      case (s: AnyShape, Some(a)) if a.id.equals(s.name.value()) =>
+        shapesMap += s.name.value -> s
+      case (s: AnyShape, Some(a)) =>
+        shapesMap += s.name.value() -> s
+        shapesMap += a.id           -> s
+      case (s: AnyShape, None) => shapesMap += s.name.value -> s
+    }
+
+    ctx.declarations.registerExternalLib(path, shapesMap.toMap)
   }
 
   private def parseJsonShape(
@@ -287,7 +291,7 @@ case class RamlJsonSchemaExpression(
   protected def toSchemaContext(ctx: WebApiContext, ast: YNode): OasWebApiContext = {
     ast match {
       case inlined: MutRef =>
-        if (inlined.origTag.tagType == YType.Include) {
+        if (isExternalFile(inlined)) {
           // JSON schema file we need to update the context
           val rawPath            = inlined.origValue.asInstanceOf[YScalar].text
           val normalizedFilePath = stripPointsAndFragment(rawPath)
@@ -299,9 +303,9 @@ case class RamlJsonSchemaExpression(
                 ctx
               )
             case _
-                if Option(
-                  ast.value.sourceName
-                ).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
+                if hasLocation(
+                  ast
+                ) => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
               toJsonSchema(ast.value.sourceName, ctx.refs, ctx)
             case _ => toJsonSchema(ctx)
           }
@@ -313,6 +317,14 @@ case class RamlJsonSchemaExpression(
         toJsonSchema(ctx)
     }
   }
+
+  private def hasLocation(ast: YNode) = {
+    Option(
+      ast.value.sourceName
+    ).isDefined
+  }
+
+  private def isExternalFile(inlined: MutRef) = inlined.origTag.tagType == YType.Include
 
   private def stripPointsAndFragment(rawPath: String): String = {
     //    TODO: we need to resolve paths but this conflicts with absolute references to exchange_modules
