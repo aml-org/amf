@@ -287,7 +287,7 @@ case class Raml08TypeParser(
             case XMLSchema(_) =>
               Option(ctx.ramlExternalSchemaParserFactory.createXml(key, value, adopt).parse())
             case JSONSchema(_) =>
-              Option(ctx.ramlExternalSchemaParserFactory.createJson(key, value, adopt).parse())
+              Option(ctx.ramlExternalSchemaParserFactory.createJson(key, value).parse())
             case t if RamlTypeDefMatcher.match08Type(t).isDefined =>
               Option(
                 SimpleTypeParser(name, adopt, YMap.empty, defaultType = RamlTypeDefMatcher.match08Type(t).get).parse()
@@ -573,7 +573,7 @@ sealed abstract class RamlTypeParser(
       case XMLSchemaType =>
         ctx.ramlExternalSchemaParserFactory.createXml(key, node, adopt, parseExample = true).parse()
       case JSONSchemaType =>
-        ctx.ramlExternalSchemaParserFactory.createJson(key, node, adopt, parseExample = true).parse()
+        ctx.ramlExternalSchemaParserFactory.createJson(key, node, parseExample = true).parse()
       case NilUnionType                          => parseNilUnion()
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
@@ -1536,8 +1536,7 @@ sealed abstract class RamlTypeParser(
                   ctx.ramlExternalSchemaParserFactory
                     .createJson(
                       "schema",
-                      entry.value,
-                      jsonSchemaShape => jsonSchemaShape.withId(shape.id + "/jsonSchema")
+                      entry.value
                     )
                     .parse()
                 case _ =>

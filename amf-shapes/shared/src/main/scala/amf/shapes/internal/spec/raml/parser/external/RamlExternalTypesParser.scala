@@ -18,7 +18,6 @@ trait RamlExternalTypesParser
     with RamlTypeEntryParser {
 
   val value: YNode
-  val adopt: Shape => Unit
   val externalType: String
   val shapeCtx: ShapeParserContext
 
@@ -64,7 +63,6 @@ trait RamlExternalTypesParser
 
   private def failSchemaExpressionParser = {
     val shape = SchemaShape()
-    adopt(shape)
     shapeCtx.eh.violation(
       InvalidExternalTypeType,
       shape,

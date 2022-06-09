@@ -92,7 +92,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
 
 trait RamlExternalSchemaExpressionFactory {
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
-  def createJson(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
+  def createJson(key: YNode, value: YNode, parseExample: Boolean = false): RamlExternalTypesParser
 }
 
 object RamlWebApiContextType extends Enumeration {
