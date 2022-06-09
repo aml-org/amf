@@ -13,12 +13,11 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AmfStrings, UriUtils}
-import amf.shapes.internal.annotations._
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SchemaShape, UnresolvedShape}
+import amf.shapes.internal.annotations._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ScalarShapeModel}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser}
