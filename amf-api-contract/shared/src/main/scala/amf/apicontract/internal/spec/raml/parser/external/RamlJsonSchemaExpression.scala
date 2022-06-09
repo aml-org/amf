@@ -177,6 +177,7 @@ case class RamlJsonSchemaExpression(
 
     val s = actualParsing(value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
     cleanGlobalSpace()
+    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
     savePromotedFragmentsFromNestedContext(jsonSchemaContext)
     s
   }
@@ -213,7 +214,6 @@ case class RamlJsonSchemaExpression(
     if (jsonSchemaContext.declarations.promotedFragments.nonEmpty) {
       ctx.declarations.promotedFragments ++= jsonSchemaContext.declarations.promotedFragments
     }
-    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
   }
 
   private def actualParsing(
