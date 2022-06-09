@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.client.common.validation.AmfProfile.profile
 import amf.core.client.common.validation._
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
@@ -40,7 +41,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Raml 0.8 Query Parameter Positive test case") {
-    validate("/08/date-query-parameter-correct.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/08/date-query-parameter-correct.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Ignore empty example") {
@@ -52,7 +53,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Empty payload with example validation") {
-    validate("/08/empty-payload-with-example.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/08/empty-payload-with-example.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Invalid yaml with scalar an map as value") {
@@ -68,7 +69,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test validation of body with only example (default any shape)") {
-    validate("/examples/only-example-body.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/only-example-body.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test seq in seq example") {
@@ -99,7 +100,6 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate(
       "/production/responses-invalid-2.raml",
       golden = Some("production_responses_invalid_2.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -116,7 +116,6 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate(
       "/production/type_problems1.raml",
       golden = Some("type_problems1.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -150,19 +149,19 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Valid type example 1 test") {
-    validate("/examples/validex1.raml", profile = AmfProfile)
+    validate("/examples/validex1.raml")
   }
 
   test("Valid type example 2 test") {
-    validate("/examples/validex2.raml", profile = AmfProfile)
+    validate("/examples/validex2.raml")
   }
 
   test("Test validate trait with quoted string example variable") {
-    validate("/traits/trait-string-quoted-node.raml", profile = AmfProfile)
+    validate("/traits/trait-string-quoted-node.raml")
   }
 
   test("Test properties with special names") {
-    validate("/property-names.raml", profile = AmfProfile)
+    validate("/property-names.raml")
   }
 
   test("Test enum number in string format validation") {
@@ -170,7 +169,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Include twice same json schema and add example in raml 08") {
-    validate("/examples/reuse-json-schema/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/reuse-json-schema/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Date format not SYaml timestamp") {
@@ -195,7 +194,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   // xml example in any shape types are no more candidates, so there is no warning
   test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/unsupported-examples-08.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test json quoted string example") {
@@ -239,11 +238,11 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test double with .00 against integer") {
-    validate("/examples/double-against-integer/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/double-against-integer/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test raml 08 with 2 schemas that contains definitions with same name but different content") {
-    validate("/examples/schemas-with-definition.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/schemas-with-definition.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test union of a type and an array of that type") {

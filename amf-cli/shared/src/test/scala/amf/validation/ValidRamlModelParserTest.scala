@@ -18,7 +18,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("External raml 0.8 fragment") {
-    validate("08/external_fragment_test.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("08/external_fragment_test.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Headers example array validation") {
@@ -47,21 +47,21 @@ class ValidRamlModelParserTest extends ValidModelTest {
 
   // what its testing this? the api is empty
   test("08 Validation") {
-    validate("08/some.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("08/some.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   // this test has not sense for me. What is testing? parameter parsing? validation? it should not be here.
   // delete tck-examples folder
   test("Raml 0.8 Parameter") {
-    validate("/tck-examples/query-parameter.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/tck-examples/query-parameter.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty parameter validation") {
-    validate("/08/empty-param.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/08/empty-param.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty describe by") {
-    validate("security-schemes/empty-described-by.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("security-schemes/empty-described-by.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty uri parameters") {
@@ -69,7 +69,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Date parameter validation") {
-    validate("08/empty-param.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("08/empty-param.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Recursive property") {
@@ -95,7 +95,6 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Test media type with + char in resource type") {
     validate(
       "/resource_types/media-type-resource-type.raml",
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -113,7 +112,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Test different declarations with same name") {
-    validate("/declarations/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/declarations/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test empty usage/uses entries") {
@@ -133,7 +132,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Float validation") {
-    validate("examples/float-validation/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("examples/float-validation/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Multiple example fragments") {
@@ -143,7 +142,6 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Included json schema with ref to himself with file name") {
     validate(
       "shapes/ref-recursive-samefilename/api.raml",
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -169,7 +167,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Valid use of recursive shape in json schemas") {
-    validate("valid-recursive/valid-recursive.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("valid-recursive/valid-recursive.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Nil union with '?' reference to type") {

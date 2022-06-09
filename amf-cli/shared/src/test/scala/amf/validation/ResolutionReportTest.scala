@@ -148,7 +148,7 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Test inner reference inside json schema") {
-    validate("/json-inner-ref/case1/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/json-inner-ref/case1/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test example and jsonschema with same name in diff folder") {

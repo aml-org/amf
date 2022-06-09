@@ -13,7 +13,6 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate(
       "/missing-includes/in-resource-type-def.raml",
       Some("missing-includes/in-resource-type-def.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -22,7 +21,6 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate(
       "/missing-includes/in-trait-def.raml",
       Some("missing-includes/in-trait-def.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -58,26 +56,24 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
   test("Raml overlay with invalid example without overloading type") {
     validate(
       "overlays/overlay-with-inferred-type-invalid-example/overlay.raml",
-      Some("overlay-with-inferred-type-invalid-example.report"),
-      Raml10Profile
+      Some("overlay-with-inferred-type-invalid-example.report")
     )
   }
 
   test("Annotation type with invalid example") {
-    validate("annotation-types-invalid-example.raml", Some("annotation-types-invalid-example.report"), Raml10Profile)
+    validate("annotation-types-invalid-example.raml", Some("annotation-types-invalid-example.report"))
   }
 
   test("nested json schema defined in external fragment") {
     validate(
       "raml/nested-json-schema-external-fragment/api.raml",
       Some("invalid-example-result.report"),
-      Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
 
   test("maximum/minimum validation with 17 digit numbers") {
-    validate("raml/big-number-examples.raml", Some("invalid-big-numbers.report"), Raml10Profile)
+    validate("raml/big-number-examples.raml", Some("invalid-big-numbers.report"))
   }
 
   test("Reffed additional properties in JSON Schema subschema are validated") {

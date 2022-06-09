@@ -11,18 +11,18 @@ class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest wit
   override val hint: Hint          = Async20YamlHint
 
   test("Draft 7 - conditional sub schemas validations") {
-    validate("draft-7-validations.yaml", Some("draft-7-validations.report"), Async20Profile)
+    validate("draft-7-validations.yaml", Some("draft-7-validations.report"))
   }
 
   test("invalid examples defined in variables of server") {
-    validate("invalid-server-variable-examples.yaml", Some("invalid-server-variable-examples.report"), Async20Profile)
+    validate("invalid-server-variable-examples.yaml", Some("invalid-server-variable-examples.report"))
   }
 
   test("Validate message payload examples") {
-    validate("message-payload-invalid-example.yaml", Some("invalid-message-examples.report"), Async20Profile)
+    validate("message-payload-invalid-example.yaml", Some("invalid-message-examples.report"))
   }
 
   test("Validate example defined in message trait") {
-    validate("applied-message-trait-invalid-example.yaml", Some("invalid-example-applied-trait.report"), Async20Profile)
+    validate("applied-message-trait-invalid-example.yaml", Some("invalid-example-applied-trait.report"))
   }
 }

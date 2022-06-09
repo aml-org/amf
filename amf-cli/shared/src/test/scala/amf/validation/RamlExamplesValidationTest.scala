@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Raml08Profile
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
@@ -73,7 +72,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate(
       "examples/invalid-json-schema-version-properties.raml",
       Some("invalid-json-schema-version-properties.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -82,7 +80,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate(
       "08/pattern.raml",
       Some("pattern-08.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -91,7 +88,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate(
       "08/validation_error1.raml",
       Some("validation_error1.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -109,7 +105,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate(
       "/08/date-query-parameter.raml",
       Some("date-query-parameter.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -169,7 +164,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate(
       "/examples/raml-dates/lockUnlockStats.raml",
       Some("raml-dates-lockunlock.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
@@ -252,7 +246,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Nullable example (null disjoint union)") {
-    validate("/examples/nullable-schema/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/examples/nullable-schema/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   // validate enums here?
@@ -337,14 +331,13 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Json Schema Any Of valid example") {
-    validate("/json-schema-anyof/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
+    validate("/json-schema-anyof/api.raml", overridedHint = Some(Raml08YamlHint))
   }
 
   test("Validate included xml examples") {
     validate(
       "/api-with-xml-examples/api.raml",
       Some("api-with-xml-examples.report"),
-      profile = Raml08Profile,
       overridedHint = Some(Raml08YamlHint)
     )
   }
