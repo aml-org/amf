@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.external
 
 import amf.apicontract.internal.spec.common.parser.WebApiContext
+import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.toJsonSchema
 import amf.core.client.scala.parse.document.{ParsedReference, Reference}
@@ -9,7 +10,7 @@ import org.yaml.model.{YNode, YScalar, YType}
 
 object SharedStuff {
 
-  def toSchemaContext(ctx: WebApiContext, ast: YNode): OasWebApiContext = {
+  def toSchemaContext(ctx: WebApiContext, ast: YNode): JsonSchemaWebApiContext = {
     ast match {
       case inlined: MutRef =>
         if (isExternalFile(inlined)) {

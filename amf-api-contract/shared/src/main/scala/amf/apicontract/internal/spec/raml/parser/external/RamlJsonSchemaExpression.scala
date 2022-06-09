@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.external
 
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.raml.parser.external.SharedStuff.toSchemaContext
@@ -163,23 +164,33 @@ case class RamlJsonSchemaExpression(
     val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(WebApiShapeParserContextAdapter(ctx)).getOrElse {
       jsonParser(extLocation, text, valueAST).document().node
     }
-    val schemaEntry       = YMapEntry(key, node)
-    val jsonSchemaContext = getContext(valueAST, schemaEntry)
-    val fullRef           = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
+    val schemaEntry = YMapEntry(key, node)
+    val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
+      val fullRef = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
 
-    val tmpShape: UnresolvedShape =
-      JsonSchemaParsingHelper.createTemporaryShape(
-        shape => {},
-        schemaEntry,
-        WebApiShapeParserContextAdapter(jsonSchemaContext),
-        fullRef
-      )
+      val tmpShape: UnresolvedShape =
+        JsonSchemaParsingHelper.createTemporaryShape(
+          _ => {},
+          schemaEntry,
+          WebApiShapeParserContextAdapter(jsonSchemaContext),
+          fullRef
+        )
 
-    val s = actualParsing(value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
+      val s = actualParsing(value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
+      savePromotedFragmentsFromNestedContext(jsonSchemaContext)
+      s
+    }
+    shape
+  }
+
+  private def withScopedContext[T](valueAST: YNode, schemaEntry: YMapEntry)(
+      block: JsonSchemaWebApiContext => T
+  )(implicit ctx: WebApiContext): T = {
+    val nextContext = getContext(valueAST, schemaEntry)
+    val parsed      = block(nextContext)
     cleanGlobalSpace()
-    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
-    savePromotedFragmentsFromNestedContext(jsonSchemaContext)
-    s
+    nextContext.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+    parsed
   }
 
   private def jsonParser(extLocation: Option[String], text: String, valueAST: YNode): JsonParser = {
