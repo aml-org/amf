@@ -53,7 +53,7 @@ case class RamlJsonSchemaExpression(
   }
 
   private def parseSchema(origin: ValueAndOrigin) = {
-    val parsed = parseJsonFromValueAndOrigin(origin, adopt)
+    val parsed = parseJsonFromValueAndOrigin(origin)
     parsed.annotations += SchemaIsJsonSchema()
     parsed
   }
@@ -69,19 +69,13 @@ case class RamlJsonSchemaExpression(
     SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
 
   private def parseWrappedSchema(origin: ValueAndOrigin): AnyShape = {
-    val forcedSchemaAdoption = (s: Shape) => {
-      adopt(s)
-      s.id = s"${s.id}/schema/"
-    }
-    val parsed = parseJsonFromValueAndOrigin(origin, forcedSchemaAdoption)
+    val parsed = parseJsonFromValueAndOrigin(origin)
     parsed.annotations += SchemaIsJsonSchema()
     parsed.withName("schema")
     parsed
   }
 
-  private def wrapperName(key: YNode) = key.asScalar.map(_.text)
-
-  private def parseJsonFromValueAndOrigin(origin: ValueAndOrigin, adopt: Shape => Unit) = {
+  private def parseJsonFromValueAndOrigin(origin: ValueAndOrigin) = {
     origin.originalUrlText match {
       case Some(url) =>
         parseIncludedSchema(origin, url)
