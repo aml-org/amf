@@ -45,15 +45,23 @@ case class RamlJsonSchemaExpression(
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
-      val parsed: AnyShape  = parseWrappedSchema(origin)
-      val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
-      wrapper.annotations += ExternalSchemaWrapper()
-      wrapper
+      parseWrappedSchema(origin, map)
     case _ =>
-      val parsed = parseJsonFromValueAndOrigin(origin, adopt)
-      parsed.annotations += SchemaIsJsonSchema()
-      parsed
+      parseSchema(origin)
 
+  }
+
+  private def parseSchema(origin: ValueAndOrigin) = {
+    val parsed = parseJsonFromValueAndOrigin(origin, adopt)
+    parsed.annotations += SchemaIsJsonSchema()
+    parsed
+  }
+
+  private def parseWrappedSchema(origin: ValueAndOrigin, map: YMap) = {
+    val parsed: AnyShape  = parseWrappedSchema(origin)
+    val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
+    wrapper.annotations += ExternalSchemaWrapper()
+    wrapper
   }
 
   private def parseSchemaWrapper(map: YMap, parsed: AnyShape, origin: ValueAndOrigin) = {
@@ -107,12 +115,20 @@ case class RamlJsonSchemaExpression(
   private def parseJsonFromValueAndOrigin(origin: ValueAndOrigin, adopt: Shape => Unit) = {
     origin.originalUrlText match {
       case Some(url) =>
-        parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
+        parseIncludedSchema(origin, url)
       case None =>
-        val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, None)
-        shape.annotations += ParsedJSONSchema(origin.text)
-        shape
+        parseInlinedSchema(origin, adopt)
     }
+  }
+
+  private def parseInlinedSchema(origin: ValueAndOrigin, adopt: Shape => Unit) = {
+    val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, None)
+    shape.annotations += ParsedJSONSchema(origin.text)
+    shape
+  }
+
+  private def parseIncludedSchema(origin: ValueAndOrigin, url: String) = {
+    parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
   }
 
   private def parseValueWithUrl(origin: ValueAndOrigin, url: String) = {
