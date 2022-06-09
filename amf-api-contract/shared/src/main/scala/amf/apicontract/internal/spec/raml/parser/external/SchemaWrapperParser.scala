@@ -5,6 +5,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
+import amf.shapes.internal.annotations.ExternalSchemaWrapper
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, QuickFieldParserOps}
@@ -35,6 +36,7 @@ object SchemaWrapperParser extends ExampleParser with QuickFieldParserOps {
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
     wrapper.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(wrapped), Annotations.virtual()), typeEntryAnnotations)
     preResolveDataType(wrapped, wrapper)
+    wrapper.annotations += ExternalSchemaWrapper()
     wrapper
   }
 

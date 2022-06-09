@@ -60,7 +60,6 @@ case class RamlJsonSchemaExpression(
   private def parseWrappedSchema(origin: ValueAndOrigin, map: YMap): AnyShape = {
     val parsed: AnyShape  = parseWrappedSchema(origin)
     val wrapper: AnyShape = parseSchemaWrapper(map, parsed)
-    wrapper.annotations += ExternalSchemaWrapper()
     wrapper
   }
 
