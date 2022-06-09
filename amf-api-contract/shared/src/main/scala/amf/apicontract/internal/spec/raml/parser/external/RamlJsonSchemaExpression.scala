@@ -174,7 +174,6 @@ case class RamlJsonSchemaExpression(
                              else "") // alwarys add / to avoid ask if there is any one before add #
       val schemaEntry       = JsonParserFactory.fromCharsWithSource(text, valueAST.sourceName)(ctx.eh).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
-      jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
 
       document
