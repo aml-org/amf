@@ -80,7 +80,7 @@ case class RamlJsonSchemaExpression(
       case Some(url) =>
         parseIncludedSchema(origin, url)
       case None =>
-        parseInlinedSchema(origin, adopt)
+        parseInlinedSchema(origin, (s) => {})
     }
   }
 

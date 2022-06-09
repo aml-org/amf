@@ -532,6 +532,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/lexical/element_0"
         }
       ],
@@ -625,9 +628,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "app-person.raml"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(10,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,11)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/simple_example_type/api.raml#/declares/shape/AppPerson/source-map/declared-element/element_0",

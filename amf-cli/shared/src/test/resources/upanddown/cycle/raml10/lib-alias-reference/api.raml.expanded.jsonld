@@ -490,7 +490,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person"
@@ -499,6 +499,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,2)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(4,8)]"
                   }
                 ]
               }
