@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Oas30Profile
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
 import org.scalatest.matchers.should.Matchers
 
@@ -163,4 +162,7 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("double-references/valid-ref-to-header-with-ref.yaml", None)
   }
 
+  test("Valid ref to parameter with another ref") {
+    validate("double-references/valid-ref-to-endpoint-with-ref-to-param.yaml", None)
+  }
 }
