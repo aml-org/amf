@@ -11,7 +11,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(): NodeShape = {
-    val name = findName(objTypeNode, "AnonymousNestedType", "", "Missing name for root nested type")
+    val name = findName(objTypeNode, "AnonymousNestedType", "Missing name for root nested type")
     obj.withName(name)
     collectInheritance()
     collectFields()
@@ -39,7 +39,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
       case Some(i: NodeShape) if i.isAbstract.option().getOrElse(false) =>
         i.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case Some(n: NodeShape) =>
-        astError(obj.id, "Error extending non interface type", toAnnotations(t))
+        astError("Error extending non interface type", toAnnotations(t))
         n.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case _ =>
         unresolvedShape(typeName, t)

@@ -52,8 +52,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     val webApi = WebApi()
     webApi.withName(root.location.split("/").last)
     doc.withLocation(root.location).withEncodes(webApi)
-    ctx.rootId = doc.id
-    webApi.withId(webApi.id.replace(webApi.componentId, s"#${webApi.componentId}"))
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
@@ -175,7 +173,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
         case Some(t: Terminal) => t.value
         case _ =>
           astError(
-            webapi.id,
             "Cannot find operation type for top-level schema root operation named type",
             toAnnotations(typeDef)
           )
@@ -189,18 +186,16 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
                 case "query"        => QUERY_TYPE = targetType
                 case "mutation"     => MUTATION_TYPE = targetType
                 case "subscription" => SUBSCRIPTION_TYPE = targetType
-                case v              => astError(webapi.id, s"Unknown root-level operation type $v", toAnnotations(t))
+                case v              => astError(s"Unknown root-level operation type $v", toAnnotations(t))
               }
             case _ =>
               astError(
-                webapi.id,
                 "Cannot find operation type for top-level schema root operation type definition",
                 toAnnotations(n)
               )
           }
         case _ =>
           astError(
-            webapi.id,
             "Cannot find operation type for top-level schema root operation type definition",
             toAnnotations(typeDef)
           )
@@ -208,7 +203,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     }
 
     if (Set(QUERY_TYPE, MUTATION_TYPE, SUBSCRIPTION_TYPE).size != 3) {
-      astError(webapi.id, "Root types cannot have duplicated names", toAnnotations(schemaNode))
+      astError("Root types cannot have duplicated names", toAnnotations(schemaNode))
     }
   }
 

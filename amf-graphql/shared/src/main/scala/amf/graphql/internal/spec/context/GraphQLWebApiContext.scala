@@ -26,8 +26,7 @@ class GraphQLWebApiContext(
     override val refs: Seq[ParsedReference],
     override val options: ParsingOptions,
     private val wrapped: ParserContext,
-    private val ds: Option[WebApiDeclarations] = None,
-    var rootId: String = ""
+    private val ds: Option[WebApiDeclarations] = None
 ) extends WebApiContext(loc, refs, options, wrapped, ds) {
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()

@@ -36,7 +36,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def findName(n: Node, default: String, errorId: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
+  def findName(n: Node, default: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
     val potentialPaths: Seq[Seq[String]] = Stream(
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
@@ -58,7 +58,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case Some(name) =>
         name
       case _ =>
-        astError(errorId, error, toAnnotations(n))
+        astError(error, toAnnotations(n))
         default
     }
   }
@@ -66,21 +66,21 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def searchName(n: Node): Option[String] = pathToTerminal(n, Seq(NAME, NAME_TERMINAL)).map(_.value)
 
   // GraphQL specific helpers
-  def parseType(n: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def parseType(n: Node)(implicit ctx: GraphQLWebApiContext): AnyShape = {
     path(n, Seq(TYPE_)) match {
       case Some(t: Node) =>
         val shape = {
-          if (isScalarType(t)) parseScalarType(t, errorId)
-          else if (isListType(t)) parseListType(t, errorId)
-          else if (isNamedType(t)) parseObjectType(t, errorId)
+          if (isScalarType(t)) parseScalarType(t)
+          else if (isListType(t)) parseListType(t)
+          else if (isNamedType(t)) parseObjectType(t)
           else {
-            astError(errorId, "Unknown input type syntax", toAnnotations(n))
+            astError("Unknown input type syntax", toAnnotations(n))
             AnyShape(toAnnotations(n))
           }
         }
         shape
       case _ =>
-        astError(errorId, "Unknown input type syntax", toAnnotations(n))
+        astError("Unknown input type syntax", toAnnotations(n))
         val shape = AnyShape(toAnnotations(n))
         shape
     }
@@ -110,7 +110,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def isListType(n: Node): Boolean = path(n, Seq(LIST_TYPE)).isDefined
 
-  def parseScalarType(t: Node, errorId: String)(implicit
+  def parseScalarType(t: Node)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
@@ -124,37 +124,37 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
           scalar.withDataType(DataType.String)
           scalar.withFormat("ID")
         case _ =>
-          astError(errorId, s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
+          astError(s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
       }
       scalar
     }
-    maybeNullable(t, errorId, parseFn)
+    maybeNullable(t, parseFn)
   }
 
-  def parseListType(t: Node, errorId: String)(implicit
+  def parseListType(t: Node)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, _) => {
       val array = ArrayShape(toAnnotations(t))
       path(t, Seq(LIST_TYPE)) match {
         case Some(n: Node) =>
-          val range = parseType(n, errorId)
+          val range = parseType(n)
           array.withItems(range)
         case _ =>
-          astError(errorId, s"Unknown listType range", toAnnotations(t))
+          astError(s"Unknown listType range", toAnnotations(t))
       }
       array
     }
     maybeNamedNullable(t, "", parseFn)
   }
 
-  def parseObjectType(t: Node, errorId: String)(implicit
+  def parseObjectType(t: Node)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
       findOrLinkType(typeName, t)
     }
-    maybeNullable(t, errorId, parseFn)
+    maybeNullable(t, parseFn)
   }
 
   def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
@@ -168,10 +168,10 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def maybeNullable(t: Node, errorId: String, parse: (Node, String) => AnyShape)(implicit
+  def maybeNullable(t: Node, parse: (Node, String) => AnyShape)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
-    val typeName = findName(t, "UnknownType", errorId, "Cannot find type name")
+    val typeName = findName(t, "UnknownType", "Cannot find type name")
     maybeNamedNullable(t, typeName, parse)
   }
 
@@ -181,10 +181,9 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     val shape = parse(t, typeName)
     if (isNullable(t)) {
       UnionShape()
-        .withId(shape.id + "/nullwrapper")
         .withAnyOf(
           Seq(
-            NilShape().withId(shape.id + "/nullwrapper/nil"),
+            NilShape(),
             shape
           )
         )

@@ -10,7 +10,7 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWe
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(): NodeShape = {
-    val name = findName(objTypeNode, "AnonymousInputType", "", "Missing name for input type")
+    val name = findName(objTypeNode, "AnonymousInputType", "Missing name for input type")
     obj.withName(name).withIsInputOnly(true)
     collectFields()
     GraphQLDirectiveApplicationParser(objTypeNode, obj).parse()

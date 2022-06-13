@@ -19,7 +19,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseName(): Unit = {
-    val name = findName(node, "AnonymousDirective", "Missing directive name", directive.id)
+    val name = findName(node, "AnonymousDirective", "Missing directive name")
     directive.withName(name)
   }
 
@@ -35,10 +35,10 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
 
   private def parseArgument(n: Node): PropertyShape = {
     val propertyShape = PropertyShape()
-    val name          = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
+    val name          = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
     propertyShape.withName(name)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
-    val argumentType = parseType(n, propertyShape.id)
+    val argumentType = parseType(n)
     propertyShape.withRange(argumentType)
     ScalarValueParser.putDefaultValue(n, propertyShape)
   }

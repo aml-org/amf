@@ -21,7 +21,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseName(): Unit = {
-    val name = findName(enumTypeDef, "AnonymousEnum", "Missing enumeration type name", enum.id)
+    val name = findName(enumTypeDef, "AnonymousEnum", "Missing enumeration type name")
     enum.withName(name)
   }
 

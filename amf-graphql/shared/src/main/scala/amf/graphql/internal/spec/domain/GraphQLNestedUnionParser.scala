@@ -23,7 +23,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebA
           val memberName = t.value
           Some(findOrLinkType(memberName, t))
         case _ =>
-          astError(union.id, "Missing union member", toAnnotations(n))
+          astError("Missing union member", toAnnotations(n))
           None
       }
     }
@@ -33,7 +33,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebA
   }
 
   private def parseName(): Unit = {
-    val name = findName(unionTypeDef, "AnonymousUnion", "Missing union type name", union.id)
+    val name = findName(unionTypeDef, "AnonymousUnion", "Missing union type name")
     union.withName(name)
   }
 }

@@ -27,14 +27,14 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
   }
 
   private def parseArgument(n: Node, request: ShapeRequest) = {
-    val name = findName(n, "AnonymousInputType", request.id, "Missing input type name")
+    val name = findName(n, "AnonymousInputType", "Missing input type name")
 
     val param = request.withQueryParameter(name).withBinding("query")
     findDescription(n).foreach { desc =>
       param.withDescription(cleanDocumentation(desc.value))
     }
 
-    unpackNilUnion(parseType(n, param.id)) match {
+    unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
         val schema = ScalarValueParser.putDefaultValue(n, shape)
         param.withSchema(schema).withRequired(false)
@@ -45,7 +45,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
   }
 
   private def parseName(): Unit = {
-    operation.withName(findName(ast, "AnonymousField", "", "Missing name for field"))
+    operation.withName(findName(ast, "AnonymousField", "Missing name for field"))
   }
 
   private def parseDescription(): Unit = {
@@ -55,7 +55,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
   private def parseRange(): Unit = {
     val response = operation.withResponse()
     val payload  = ShapePayload().withName("default")
-    payload.withSchema(parseType(ast, operation.id))
+    payload.withSchema(parseType(ast))
     response.withPayload(payload)
   }
 }

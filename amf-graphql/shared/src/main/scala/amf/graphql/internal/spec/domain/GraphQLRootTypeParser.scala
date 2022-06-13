@@ -16,7 +16,7 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
 
-  val rootTypeName: String = findName(ast, "AnonymousType", "", "Missing name for root type")
+  val rootTypeName: String = findName(ast, "AnonymousType", "Missing name for root type")
 
   def parse(setterFn: EndPoint => Unit): Seq[EndPoint] = {
     parseFields(ast, setterFn)
@@ -38,7 +38,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
   private def parseField(f: Node, setterFn: EndPoint => Unit) = {
     val endPoint: EndPoint = EndPoint(toAnnotations(f))
-    val fieldName          = findName(f, "AnonymousField", "", "Missing name for root type field")
+    val fieldName          = findName(f, "AnonymousField", "Missing name for root type field")
     val endpointPath       = path(fieldName)
     endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName")
     setterFn(endPoint)
@@ -63,7 +63,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     val request       = op.withRequest()
     collect(f, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argumentNode: Node =>
       val fieldName =
-        findName(argumentNode, "AnonymousArgument", "", s"Missing name for field at root operation $method ")
+        findName(argumentNode, "AnonymousArgument", s"Missing name for field at root operation $method ")
 
       val queryParam = request.withQueryParameter(fieldName).withBinding("query")
 
@@ -72,7 +72,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         case _                 => // ignore
       }
 
-      unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
+      unpackNilUnion(parseType(argumentNode)) match {
         case NullableShape(true, shape) =>
           val schema = ScalarValueParser.putDefaultValue(ast, shape)
           queryParam.withSchema(schema).withRequired(false)
@@ -83,7 +83,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     }
 
     val payload                 = op.withResponse().withPayload()
-    val shape                   = parseType(f, payload.id)
+    val shape                   = parseType(f)
     payload.withSchema(shape)
   }
 }

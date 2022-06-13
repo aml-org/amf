@@ -78,4 +78,8 @@ trait AntlrASTParserHelper {
   def astError(id: String, message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
     ctx.eh.violation(ParserSideValidations.InvalidAst, id, message, annotations)
   }
+
+  def astError(message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
+    ctx.eh.violation(ParserSideValidations.InvalidAst, "", message, annotations)
+  }
 }

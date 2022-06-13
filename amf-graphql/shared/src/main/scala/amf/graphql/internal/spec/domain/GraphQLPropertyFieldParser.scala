@@ -19,7 +19,7 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseName(): Unit = {
-    property.withName(findName(ast, "AnonymousField", "", "Missing name for field"))
+    property.withName(findName(ast, "AnonymousField", "Missing name for field"))
   }
 
   private def parseDescription(): Unit = {
@@ -27,7 +27,7 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseRange(): Unit = {
-    val range = parseType(ast, property.id)
+    val range = parseType(ast)
     unpackNilUnion(range) match {
       case NullableShape(true, shape)  => property.withRange(shape).withMinCount(0)
       case NullableShape(false, shape) => property.withRange(shape).withMinCount(1)

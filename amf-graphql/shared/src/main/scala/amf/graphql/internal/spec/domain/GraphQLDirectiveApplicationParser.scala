@@ -22,8 +22,6 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
       parseName(directive, directiveApplication)
       putDefinedBy(directiveApplication)
       parseArguments(directive, directiveApplication)
-      directiveApplication
-        .withElement(element.id)
       element.withCustomDomainProperty(directiveApplication)
     }
   }
@@ -49,7 +47,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   }
 
   private def parseName(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
-    val name = findName(directiveNode, "AnonymousDirective", "Missing directive name", directiveApplication.id)
+    val name = findName(directiveNode, "AnonymousDirective", "Missing directive name")
     checkDefaultDirective(name)
     directiveApplication.withName(name)
   }
@@ -64,7 +62,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   }
 
   private def parseArgument(n: Node, objectNode: ObjectNode, directiveApplication: DomainExtension): Unit = {
-    val name = findName(n, "AnonymousDirectiveArgument", directiveApplication.id, "Missing argument name")
+    val name = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
     ScalarValueParser.parseValue(n).map(scalarNode => objectNode.addProperty(name, scalarNode, toAnnotations(n)))
   }
 
@@ -75,7 +73,6 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
       case Some(directiveDeclaration) => directiveApplication.setWithoutId(DefinedBy, directiveDeclaration)
       case None =>
         astError(
-          directiveApplication.id,
           s"Directive ${directiveApplication.name} is not declared",
           toAnnotations(node)
         )
