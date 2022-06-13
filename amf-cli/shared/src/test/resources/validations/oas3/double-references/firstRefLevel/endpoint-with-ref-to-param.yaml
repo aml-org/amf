@@ -1,0 +1,27 @@
+get:
+  summary: List all pets
+  operationId: listPets
+  tags:
+    - pets
+  parameters:
+    - $ref: "../secondRefLevel/parameter.yaml"
+  responses:
+    "200":
+      description: A
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                name:
+                  type: string
+                tag:
+                  type: string

@@ -3,39 +3,29 @@ package amf.apicontract.internal.spec.common.parser
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.parse.common.DeclarationContext
 import amf.aml.internal.registries.AMLRegistry
-import amf.aml.internal.semantic.{AnnotationSchemaValidator, SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
+import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
+import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
-import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  AnnotationSchemaMustBeAny,
-  ClosedShapeSpecification,
-  ClosedShapeSpecificationWarning,
-  MissingAnnotationSchema
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.annotations.SourceAST
 import amf.core.internal.datanode.DataNodeParserContext
 import amf.core.internal.parser._
 import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
-import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlAMFErrorHandler}
+import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.utils.{AliasCounter, IdCounter, QName}
-import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.utils.{AliasCounter, QName}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
-import amf.shapes.internal.spec.jsonschema.ref.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
+import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference}
 import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
-
 import scala.collection.mutable
 
 abstract class ExtensionsContext(
@@ -143,20 +133,6 @@ abstract class WebApiContext(
 
   def registerJsonSchema(url: String, shape: AnyShape): Unit =
     globalSpace.update(normalizedJsonPointer(url), shape)
-
-  // TODO this should not have OasWebApiContext as a dependency
-  def parseRemoteOasParameter(fileUrl: String, parentId: String)(implicit
-      ctx: OasWebApiContext
-  ): Option[OasParameter] = {
-    val referenceUrl = getReferenceUrl(fileUrl)
-    obtainFragment(fileUrl) flatMap { fragment =>
-      AstFinder.findAst(fragment, referenceUrl)(WebApiShapeParserContextAdapter(ctx)).map { node =>
-        ctx.factory
-          .parameterParser(YMapEntryLike(node)(new SYamlAMFParserErrorHandler(ctx.eh)), parentId, None, new IdCounter())
-          .parse
-      }
-    }
-  }
 
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(implicit
       ctx: WebApiContext

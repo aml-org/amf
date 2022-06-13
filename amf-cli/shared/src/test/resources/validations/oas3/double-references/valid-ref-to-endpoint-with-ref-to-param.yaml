@@ -8,4 +8,4 @@ servers:
   - url: http://petstore.swagger.io/v1
 paths:
   /pets:
-    $ref: "firstRefLevel/endpoint.yaml"
+    $ref: "firstRefLevel/endpoint-with-ref-to-param.yaml"
