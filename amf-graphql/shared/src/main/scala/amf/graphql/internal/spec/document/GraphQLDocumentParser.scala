@@ -153,13 +153,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       parseCustomScalarTypeDef(customScalarTypeDef)
     }
 
-    // let's parse directive declarations
-    this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, DIRECTIVE_DEFINITION)) foreach {
-      case directiveDef: Node =>
-        parseDirectiveDeclaration(directiveDef)
-    }
-
     // let's parse type extensions
     this
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION, TYPE_EXTENSION)) foreach {
