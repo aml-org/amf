@@ -9,12 +9,12 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
     extends GraphQLASTParserHelper {
   val property: PropertyShape = PropertyShape(toAnnotations(ast))
 
-  def parse(adopt: PropertyShape => Unit): PropertyShape = {
+  def parse(setterFn: PropertyShape => Unit): PropertyShape = {
     parseName()
-    adopt(property)
+    setterFn(property)
     parseDescription()
     parseRange()
-    GraphQLDirectiveApplicationParser(ast, property).parse(property.id)
+    GraphQLDirectiveApplicationParser(ast, property).parse()
     property
   }
 

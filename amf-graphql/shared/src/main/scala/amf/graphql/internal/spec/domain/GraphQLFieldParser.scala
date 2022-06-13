@@ -9,12 +9,12 @@ import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
 case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
 
-  def parse(adopt: Either[PropertyShape, ShapeOperation] => Unit): Unit = {
+  def parse(setterFn: Either[PropertyShape, ShapeOperation] => Unit): Unit = {
     arguments() match {
       case args if args.nonEmpty =>
-        GraphQLOperationFieldParser(ast).parse(operation => adopt(Right(operation)))
+        GraphQLOperationFieldParser(ast).parse(operation => setterFn(Right(operation)))
       case args if args.isEmpty =>
-        GraphQLPropertyFieldParser(ast).parse(property => adopt(Left(property)))
+        GraphQLPropertyFieldParser(ast).parse(property => setterFn(Left(property)))
     }
   }
 

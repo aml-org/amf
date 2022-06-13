@@ -3,23 +3,22 @@ package amf.graphql.internal.spec.domain
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, UnresolvedShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
-  def parse(parentId: String): NodeShape = {
+  def parse(): NodeShape = {
     val name = findName(objTypeNode, "AnonymousNestedType", "", "Missing name for root nested type")
     obj.withName(name)
-    obj.adopted(parentId)
     collectInheritance()
     collectFields()
     if (isInterface) {
       obj.withIsAbstract(true)
     }
-    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse(obj.id)
+    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse()
     obj
   }
 

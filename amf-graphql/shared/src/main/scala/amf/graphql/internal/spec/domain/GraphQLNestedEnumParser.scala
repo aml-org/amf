@@ -13,11 +13,10 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
     extends GraphQLASTParserHelper {
   val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.String)
 
-  def parse(parentId: String): ScalarShape = {
+  def parse(): ScalarShape = {
     parseName()
-    enum.adopted(parentId)
     parseValues()
-    GraphQLDirectiveApplicationParser(enumTypeDef, enum).parse(enum.id)
+    GraphQLDirectiveApplicationParser(enumTypeDef, enum).parse()
     enum
   }
 
@@ -49,7 +48,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
       case Some(n: Node) if hasTerminalChild(n) =>
         val t = n.children.head.asInstanceOf[Terminal]
         val s = ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t)).withName(t.value)
-        Some(s.adopted(enum.id))
+        Some(s)
       case _ => None
     }
   }
@@ -57,5 +56,5 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   private def hasTerminalChild(n: Node) = n.children.head.isInstanceOf[Terminal]
 
   private def parseDirectives(n: Node, element: DomainElement): Unit =
-    GraphQLDirectiveApplicationParser(n, element).parse(element.id)
+    GraphQLDirectiveApplicationParser(n, element).parse()
 }

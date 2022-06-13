@@ -11,9 +11,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     extends GraphQLASTParserHelper {
   val directive: CustomDomainProperty = CustomDomainProperty(toAnnotations(node))
 
-  def parse(parentId: String): CustomDomainProperty = {
+  def parse(): CustomDomainProperty = {
     parseName()
-    directive.adopted(parentId + "/directives/")
     parseArguments()
     parseLocations()
     directive
@@ -30,7 +29,6 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         parseArgument(argument)
     }
     val schema = NodeShape()
-    schema.adopted(directive.id)
     schema.withProperties(properties)
     directive.withSchema(schema)
   }
@@ -39,9 +37,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     val propertyShape = PropertyShape()
     val name          = findName(n, "AnonymousDirectiveArgument", directive.id, "Missing argument name")
     propertyShape.withName(name)
-    propertyShape.adopted(directive.id)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
-    val argumentType = parseType(n, propertyShape.id, _.adopted(propertyShape.id))
+    val argumentType = parseType(n, propertyShape.id)
     propertyShape.withRange(argumentType)
     ScalarValueParser.putDefaultValue(n, propertyShape)
   }

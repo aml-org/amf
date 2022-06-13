@@ -18,10 +18,8 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
       case fieldNode: Node =>
         GraphQLFieldParser(fieldNode).parse {
           case Left(propertyShape: PropertyShape) =>
-            propertyShape.adopted(obj.id)
             obj.withProperties(obj.properties ++ Seq(propertyShape))
           case Right(shapeOperation: ShapeOperation) =>
-            shapeOperation.adopted(obj.id)
             obj.withOperations(obj.operations ++ Seq(shapeOperation))
         }
       case _ => // ignore
