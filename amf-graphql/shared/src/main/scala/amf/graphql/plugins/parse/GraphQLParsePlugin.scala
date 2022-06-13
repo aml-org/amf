@@ -56,5 +56,5 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
     collect(doc.ast.root(), Seq(DEFINITION, TYPE_SYSTEM_DEFINITION)).exists(e => e.name == TYPE_SYSTEM_DEFINITION)
   }
 
-  override def withIdAdoption: Boolean = false // TODO pending analysis and parsing cleanup
+  override def withIdAdoption: Boolean = true // TODO pending analysis and parsing cleanup
 }

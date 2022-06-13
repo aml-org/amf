@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -67,7 +67,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultString",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultString",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultString/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultString/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,7 +107,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultInt",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultInt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -130,7 +130,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultInt/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultInt/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -147,7 +147,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultFloat",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultFloat",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -170,7 +170,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultFloat/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultFloat/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -187,7 +187,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultBoolean",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultBoolean",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -210,7 +210,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultBoolean/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultBoolean/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -227,7 +227,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultID",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultID",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -250,7 +250,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultID/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultID/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -272,7 +272,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/request/parameter/default-binding/testDefaultEnum",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultEnum",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -295,7 +295,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/link--557845951",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/testDefaultEnum/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -305,7 +305,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter"
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -321,7 +321,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -340,7 +340,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -348,7 +348,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -358,7 +358,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -367,7 +367,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -406,7 +406,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -424,7 +424,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -434,7 +434,7 @@
         ],
         "http://a.ml/vocabularies/shapes#supportedOperation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
               "http://a.ml/vocabularies/core#Operation",
@@ -447,7 +447,7 @@
             ],
             "http://a.ml/vocabularies/shapes#expects": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Request",
                   "http://a.ml/vocabularies/core#Request",
@@ -455,7 +455,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#parameter": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultString",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultString",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -478,7 +478,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultString/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultString/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -493,7 +493,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultString/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultString/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -515,7 +515,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultInt",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -538,7 +538,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultInt/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -553,7 +553,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultInt/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -575,7 +575,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultFloat",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -598,7 +598,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultFloat/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -613,7 +613,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultFloat/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -635,7 +635,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultBoolean",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -658,7 +658,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultBoolean/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -673,7 +673,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultBoolean/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -695,7 +695,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultID",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultID",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -718,7 +718,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultID/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultID/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -738,7 +738,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultID/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultID/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -760,7 +760,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/request/parameter/testDefaultEnum",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultEnum",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -783,7 +783,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/link-1360280065",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/expects/request/parameter/parameter/testDefaultEnum/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -793,7 +793,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -809,7 +809,7 @@
             ],
             "http://a.ml/vocabularies/shapes#returns": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/response",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/returns/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
                   "http://a.ml/vocabularies/core#Response",
@@ -822,7 +822,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#payload": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/response/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/returns/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
                       "http://a.ml/vocabularies/core#Payload",
@@ -835,7 +835,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/response/default/union/default-union",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/returns/response/default/union/default-union",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#UnionShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -845,7 +845,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#anyOf": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/response/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/returns/response/default/union/default-union/anyOf/nil/default-nil",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -854,7 +854,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/Spaceship/name/response/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/Spaceship/supportedOperation/name/returns/response/default/union/default-union/anyOf/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -884,7 +884,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -899,7 +899,7 @@
         ],
         "http://a.ml/vocabularies/shapes#supportedOperation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
               "http://a.ml/vocabularies/core#Operation",
@@ -912,7 +912,7 @@
             ],
             "http://a.ml/vocabularies/shapes#expects": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Request",
                   "http://a.ml/vocabularies/core#Request",
@@ -920,7 +920,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#parameter": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultString",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultString",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -943,7 +943,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultString/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultString/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -958,7 +958,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultString/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultString/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -980,7 +980,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultInt",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1003,7 +1003,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultInt/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1018,7 +1018,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultInt/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultInt/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1040,7 +1040,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultFloat",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1063,7 +1063,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultFloat/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1078,7 +1078,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultFloat/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultFloat/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1100,7 +1100,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultBoolean",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1123,7 +1123,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultBoolean/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1138,7 +1138,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultBoolean/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultBoolean/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1160,7 +1160,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultID",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultID",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1183,7 +1183,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultID/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultID/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1203,7 +1203,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultID/scalar/default-scalar/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultID/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1225,7 +1225,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/request/parameter/testDefaultEnum",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultEnum",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1248,7 +1248,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/link--1016561215",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/expects/request/parameter/parameter/testDefaultEnum/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1258,7 +1258,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -1274,7 +1274,7 @@
             ],
             "http://a.ml/vocabularies/shapes#returns": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/response",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/returns/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
                   "http://a.ml/vocabularies/core#Response",
@@ -1287,7 +1287,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#payload": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/response/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/returns/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
                       "http://a.ml/vocabularies/core#Payload",
@@ -1300,7 +1300,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/response/default/union/default-union",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/returns/response/default/union/default-union",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#UnionShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1310,7 +1310,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#anyOf": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/response/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/returns/response/default/union/default-union/anyOf/nil/default-nil",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1319,7 +1319,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/shape/SpaceshipInterface/name/response/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/shape/SpaceshipInterface/supportedOperation/name/returns/response/default/union/default-union/anyOf/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1349,7 +1349,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1369,11 +1369,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/list",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/A",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter/in/A",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1398,7 +1398,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter/B",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter/in/B",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1425,7 +1425,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -1438,7 +1438,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1448,7 +1448,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultString",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultString",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1457,7 +1457,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultString/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultString/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1467,7 +1467,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultString/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultString/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1476,7 +1476,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultString/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultString/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1500,7 +1500,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultString/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultString/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -1520,7 +1520,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultInt",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultInt",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1529,7 +1529,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultInt/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultInt/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1539,7 +1539,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultInt/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultInt/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1548,7 +1548,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultInt/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultInt/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1572,7 +1572,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultInt/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultInt/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -1592,7 +1592,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultFloat",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultFloat",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1601,7 +1601,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultFloat/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultFloat/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1611,7 +1611,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultFloat/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultFloat/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1620,7 +1620,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultFloat/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultFloat/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1644,7 +1644,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultFloat/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultFloat/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -1664,7 +1664,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultBoolean",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultBoolean",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1673,7 +1673,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultBoolean/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultBoolean/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1683,7 +1683,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultBoolean/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultBoolean/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1692,7 +1692,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultBoolean/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultBoolean/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1716,7 +1716,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultBoolean/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultBoolean/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -1736,7 +1736,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultID",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultID",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1745,7 +1745,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultID/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultID/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1755,7 +1755,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultID/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultID/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1764,7 +1764,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultID/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultID/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1793,7 +1793,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultID/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultID/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -1813,7 +1813,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultEnum",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultEnum",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1822,7 +1822,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/shape/default-node/property/testDefaultEnum/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultEnum/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1832,7 +1832,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultEnum/scalar/Letter/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultEnum/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1841,7 +1841,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultEnum/scalar/Letter/nullwrapper/scalar/Letter",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultEnum/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1851,15 +1851,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/scalar/Letter"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/scalar/Letter"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "Letter"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Letter"
                           }
@@ -1875,7 +1870,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql/directives/#MyDirective/property/testDefaultEnum/data-node",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/default-arguments/invalid-default-arguments.graphql#/declares/MyDirective/shape/default-node/property/property/testDefaultEnum/data-node",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",

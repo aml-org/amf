@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -67,7 +67,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/request/parameter/default-binding/name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/expects/request/parameter/parameter/query/name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/request/parameter/default-binding/name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/expects/request/parameter/parameter/query/name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -111,7 +111,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -130,7 +130,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -138,7 +138,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -148,7 +148,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/resp/default/default/shape/Package/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -157,7 +157,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Fpackage/query/resp/default/default/shape/Package/nullwrapper/shape/Package",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Fpackage/supportedOperation/query/Query.package/returns/resp/default/payload/default/union/default-union/anyOf/shape/Package",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -167,7 +167,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -197,7 +197,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -214,7 +214,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -232,7 +232,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -241,7 +241,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/request/parameter/default-binding/name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/expects/request/parameter/parameter/query/name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -264,7 +264,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/request/parameter/default-binding/name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/expects/request/parameter/parameter/query/name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -285,7 +285,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -304,7 +304,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -312,7 +312,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -322,7 +322,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/%2Fquery%2Frepository/query/resp/default/default/unresolved/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -331,7 +331,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/link--128205401",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/web-api/endpoint/%2Fquery%2Frepository/supportedOperation/query/Query.repository/returns/resp/default/payload/default/union/default-union/anyOf/shape/default-node",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -341,7 +341,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -375,7 +375,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -393,7 +393,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -413,11 +413,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope/BUILD",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope/in/BUILD",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -442,7 +442,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope/TEST",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope/in/TEST",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -469,7 +469,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -479,7 +479,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -488,7 +488,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -520,7 +520,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/version",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/version",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -529,7 +529,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/version/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/version/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -561,7 +561,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/revision",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/revision",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -570,7 +570,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/revision/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/revision/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -602,7 +602,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/url",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/url",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -611,7 +611,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/url/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/url/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -643,7 +643,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/property/createdAt",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/createdAt",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -652,7 +652,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/Time/link--621487640",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release/property/property/createdAt/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -662,7 +662,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/Time"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/Time"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -696,7 +696,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -706,7 +706,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -715,7 +715,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -747,7 +747,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/version",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/version",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -756,7 +756,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/version/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/version/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -788,7 +788,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/release",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/release",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -797,7 +797,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/property/release/shape/Release",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/property/property/release/shape/Release",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -807,7 +807,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -841,7 +841,7 @@
         ],
         "http://a.ml/vocabularies/shapes#supportedOperation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
               "http://a.ml/vocabularies/core#Operation",
@@ -859,7 +859,7 @@
             ],
             "http://a.ml/vocabularies/shapes#expects": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/request",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/expects/request",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Request",
                   "http://a.ml/vocabularies/core#Request",
@@ -867,7 +867,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#parameter": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/request/parameter/scope",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/expects/request/parameter/parameter/scope",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -890,7 +890,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope/link-1005519536",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/expects/request/parameter/parameter/scope/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -900,7 +900,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -916,7 +916,7 @@
             ],
             "http://a.ml/vocabularies/shapes#returns": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/response",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
                   "http://a.ml/vocabularies/core#Response",
@@ -929,7 +929,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#payload": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/response/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
                       "http://a.ml/vocabularies/core#Payload",
@@ -942,7 +942,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/response/default/array/default-array",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response/default/array/default-array",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ArrayShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -952,7 +952,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#items": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/dependencyList/response/default/array/default-array/items/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response/default/array/default-array/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -962,7 +962,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/link-1983840108/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response/default/array/default-array/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -971,7 +971,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/link-1983840108/nullwrapper/shape/Dependency",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version/supportedOperation/dependencyList/returns/response/default/array/default-array/union/default-union/anyOf/shape/Dependency",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -981,7 +981,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -1013,7 +1013,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1023,7 +1023,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1032,7 +1032,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1064,7 +1064,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/isMain",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/isMain",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1073,7 +1073,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/isMain/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/isMain/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1105,7 +1105,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/versionList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/versionList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1114,7 +1114,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/versionList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/versionList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1124,7 +1124,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/property/versionList/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/versionList/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1134,7 +1134,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/versionList/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1143,7 +1143,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/link-447869037",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/property/property/versionList/array/default-array/union/default-union/anyOf/shape/default-node",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1153,7 +1153,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -1186,7 +1186,7 @@
         ],
         "http://a.ml/vocabularies/shapes#supportedOperation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
               "http://a.ml/vocabularies/core#Operation",
@@ -1204,7 +1204,7 @@
             ],
             "http://a.ml/vocabularies/shapes#expects": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/request",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/expects/request",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Request",
                   "http://a.ml/vocabularies/core#Request",
@@ -1212,7 +1212,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#parameter": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/request/parameter/version",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/expects/request/parameter/parameter/version",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1235,7 +1235,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/request/parameter/version/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/expects/request/parameter/parameter/version/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1252,7 +1252,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/request/parameter/revision",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/expects/request/parameter/parameter/revision",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -1275,7 +1275,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/request/parameter/revision/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/expects/request/parameter/parameter/revision/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1296,7 +1296,7 @@
             ],
             "http://a.ml/vocabularies/shapes#returns": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/response",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/returns/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
                   "http://a.ml/vocabularies/core#Response",
@@ -1309,7 +1309,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#payload": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/response/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/returns/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
                       "http://a.ml/vocabularies/core#Payload",
@@ -1322,7 +1322,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/response/default/union/default-union",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/returns/response/default/union/default-union",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#UnionShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1332,7 +1332,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#anyOf": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/version/response/default/unresolved/nullwrapper/nil/default-nil",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/returns/response/default/union/default-union/anyOf/nil/default-nil",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1341,7 +1341,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version/link--2021166217",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package/supportedOperation/version/returns/response/default/union/default-union/anyOf/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1351,7 +1351,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Version"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Version"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -1376,7 +1376,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1386,7 +1386,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1395,7 +1395,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1427,7 +1427,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/releaseList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/releaseList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1436,7 +1436,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/releaseList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/releaseList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1446,7 +1446,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/releaseList/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/releaseList/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1456,7 +1456,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/link--408474708/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/releaseList/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1465,7 +1465,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release/link--408474708/nullwrapper/shape/Release",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/releaseList/array/default-array/union/default-union/anyOf/shape/Release",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1475,7 +1475,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Release"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Release"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -1511,7 +1511,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/packageList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/packageList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1520,7 +1520,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/packageList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/packageList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1530,7 +1530,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Repository/property/packageList/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/packageList/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1540,7 +1540,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/link--2134765147/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/packageList/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1549,7 +1549,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package/link--2134765147/nullwrapper/shape/Package",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Repository/property/property/packageList/array/default-array/union/default-union/anyOf/shape/Package",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1559,7 +1559,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Package"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Package"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -1602,7 +1602,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1612,7 +1612,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1621,7 +1621,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1653,7 +1653,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/property/versionRange",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/versionRange",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1662,7 +1662,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/property/versionRange/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/versionRange/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1694,7 +1694,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/shape/Dependency/property/scope",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/scope",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1703,7 +1703,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope/link-513523059",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/shape/Dependency/property/property/scope/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1713,7 +1713,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/DependencyScope"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/DependencyScope"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -1747,7 +1747,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql/scalar/Time",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-melodyrepo/api.graphql#/declares/scalar/Time",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
