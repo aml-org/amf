@@ -1,0 +1,17 @@
+#%RAML 1.0
+
+title: A title
+version: 1.0
+
+types:
+  Person:
+    type: object
+    properties:
+      dni:
+        type: string
+
+/users/{userId}:
+  uriParameters:
+    userId:
+      type: Person
+      description: "A description"
