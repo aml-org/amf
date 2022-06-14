@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -145,13 +145,13 @@
             ]
           }
         ],
-        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective": {
+        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/declares/MyDirective": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "MyDirective"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/extension/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/web-api/customDomainProperties/MyDirective/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -160,7 +160,7 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective"
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/declares/MyDirective"
           }
         ]
       }
@@ -172,7 +172,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -190,7 +190,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/declares/MyDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -203,7 +203,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql/directives/#MyDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-simple.api.graphql#/declares/MyDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

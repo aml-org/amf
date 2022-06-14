@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default/unresolved/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location/link-809342428",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union/anyOf/shape/default-node",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -159,7 +159,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -177,7 +177,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -187,7 +187,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location/property/long",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location/property/property/long",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -196,7 +196,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location/property/long/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location/property/property/long/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -223,7 +223,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location/property/lat",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location/property/property/lat",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -232,7 +232,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location/property/lat/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location/property/property/lat/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -266,7 +266,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location-extension-844863095",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location_1",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -276,7 +276,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location-extension-844863095/property/mapUrl",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location_1/property/property/mapUrl",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -285,7 +285,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/shape/Location-extension-844863095/property/mapUrl/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-objects.api.graphql#/declares/shape/Location_1/property/property/mapUrl/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",

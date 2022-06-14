@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -143,26 +143,26 @@
                 ]
               }
             ],
-            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One": {
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "One"
                 }
               ],
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/extension/data-node",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/customDomainProperties/One/data-node",
               "@type": [
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
                 "http://a.ml/vocabularies/document#DomainElement"
               ]
             },
-            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two": {
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "Two"
                 }
               ],
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/%2Fquery%2Fname/extension/data-node",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/endpoint/%2Fquery%2Fname/customDomainProperties/Two/data-node",
               "@type": [
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
@@ -171,34 +171,34 @@
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One"
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two"
               }
             ]
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "One"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/extension/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/customDomainProperties/One/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
             "http://a.ml/vocabularies/document#DomainElement"
           ]
         },
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "Two"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/extension/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/web-api/customDomainProperties/Two/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -207,10 +207,10 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One"
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two"
           }
         ]
       }
@@ -222,7 +222,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -240,7 +240,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -250,7 +250,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/property/shipType",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/property/property/shipType",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -259,7 +259,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/property/shipType/unresolved",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/property/property/shipType/unresolved",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -278,26 +278,26 @@
                 "@value": "shipType"
               }
             ],
-            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One": {
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "One"
                 }
               ],
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/property/shipType/extension/data-node",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/property/property/shipType/customDomainProperties/One/data-node",
               "@type": [
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
                 "http://a.ml/vocabularies/document#DomainElement"
               ]
             },
-            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two": {
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "Two"
                 }
               ],
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/property/shipType/extension/data-node",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/property/property/shipType/customDomainProperties/Two/data-node",
               "@type": [
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
@@ -306,10 +306,10 @@
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One"
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two"
               }
             ]
           }
@@ -319,26 +319,26 @@
             "@value": "Spaceship"
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "One"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/extension/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/customDomainProperties/One/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
             "http://a.ml/vocabularies/document#DomainElement"
           ]
         },
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "Two"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/shape/Spaceship/extension/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/shape/Spaceship/customDomainProperties/Two/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -347,15 +347,15 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One"
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two"
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -371,7 +371,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#One/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/One/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -389,7 +389,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -405,7 +405,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql/directives/#Two/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/multiple.graphql#/declares/Two/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",

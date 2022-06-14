@@ -51,48 +51,46 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   private def parseWebAPI(): Unit = {
     val webApi = WebApi()
     webApi.withName(root.location.split("/").last)
-    doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
-    ctx.rootId = doc.id
-    webApi.withId(webApi.id.replace(webApi.componentId, s"#${webApi.componentId}"))
+    doc.withLocation(root.location).withEncodes(webApi)
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
-    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse(doc.id)
+    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse()
     ctx.declarations += shape
   }
 
   private def parseInputType(objTypeDef: Node): Unit = {
-    val shape = GraphQLInputTypeParser(objTypeDef).parse(doc.id)
+    val shape = GraphQLInputTypeParser(objTypeDef).parse()
     ctx.declarations += shape
   }
 
   private def parseInterfaceType(objTypeDef: Node): Unit = {
-    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = true).parse(doc.id)
+    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = true).parse()
     ctx.declarations += shape
   }
 
   private def parseUnionType(unionTypeDef: Node): Unit = {
-    val shape: UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse(doc.id)
+    val shape: UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse()
     ctx.declarations += shape
   }
 
   private def parseEnumType(enumTypeDef: Node): Unit = {
-    val enum: ScalarShape = new GraphQLNestedEnumParser(enumTypeDef).parse(doc.id)
+    val enum: ScalarShape = new GraphQLNestedEnumParser(enumTypeDef).parse()
     ctx.declarations += enum
   }
 
   private def parseCustomScalarTypeDef(customScalarTypeDef: Node): Unit = {
-    val scalar: ScalarShape = new GraphQLCustomScalarParser(customScalarTypeDef).parse(doc.id)
+    val scalar: ScalarShape = new GraphQLCustomScalarParser(customScalarTypeDef).parse()
     ctx.declarations += scalar
   }
 
   private def parseDirectiveDeclaration(directiveDef: Node): Unit = {
-    val directive: CustomDomainProperty = GraphQLDirectiveDeclarationParser(directiveDef).parse(doc.id)
+    val directive: CustomDomainProperty = GraphQLDirectiveDeclarationParser(directiveDef).parse()
     ctx.declarations += directive
   }
 
   def parseTypeExtension(typeExtensionDef: Node): Unit = {
-    val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse(doc.id)
+    val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse()
     ctx.declarations += shapeExtension
   }
 
@@ -153,13 +151,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       parseCustomScalarTypeDef(customScalarTypeDef)
     }
 
-    // let's parse directive declarations
-    this
-      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, DIRECTIVE_DEFINITION)) foreach {
-      case directiveDef: Node =>
-        parseDirectiveDeclaration(directiveDef)
-    }
-
     // let's parse type extensions
     this
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION, TYPE_EXTENSION)) foreach {
@@ -169,7 +160,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   private def parseSchemaNode(schemaNode: ASTElement): Unit = {
-    GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse(webapi.id)
+    GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse()
     findDescription(schemaNode) match {
       case Some(terminal: Terminal) => // the description of the schema is set at the API level
         webapi.set(WebApiModel.Description, cleanDocumentation(terminal.value), toAnnotations(terminal))
@@ -182,7 +173,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
         case Some(t: Terminal) => t.value
         case _ =>
           astError(
-            webapi.id,
             "Cannot find operation type for top-level schema root operation named type",
             toAnnotations(typeDef)
           )
@@ -196,18 +186,16 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
                 case "query"        => QUERY_TYPE = targetType
                 case "mutation"     => MUTATION_TYPE = targetType
                 case "subscription" => SUBSCRIPTION_TYPE = targetType
-                case v              => astError(webapi.id, s"Unknown root-level operation type $v", toAnnotations(t))
+                case v              => astError(s"Unknown root-level operation type $v", toAnnotations(t))
               }
             case _ =>
               astError(
-                webapi.id,
                 "Cannot find operation type for top-level schema root operation type definition",
                 toAnnotations(n)
               )
           }
         case _ =>
           astError(
-            webapi.id,
             "Cannot find operation type for top-level schema root operation type definition",
             toAnnotations(typeDef)
           )
@@ -215,13 +203,12 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     }
 
     if (Set(QUERY_TYPE, MUTATION_TYPE, SUBSCRIPTION_TYPE).size != 3) {
-      astError(webapi.id, "Root types cannot have duplicated names", toAnnotations(schemaNode))
+      astError("Root types cannot have duplicated names", toAnnotations(schemaNode))
     }
   }
 
   private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Seq[EndPoint] = {
     GraphQLRootTypeParser(objTypeDef, queryType).parse { ep: EndPoint =>
-      ep.adopted(webapi.id)
       val oldEndpoints = webapi.endPoints
       webapi.withEndPoints(oldEndpoints :+ ep)
     }

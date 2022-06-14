@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -67,7 +67,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -112,7 +112,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/scientific_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/scientific_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -135,7 +135,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/scientific_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/scientific_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -152,7 +152,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/tree_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/tree_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -175,7 +175,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/tree_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/tree_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -192,7 +192,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/fruit_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/fruit_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -215,7 +215,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/fruit_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/fruit_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -232,7 +232,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/family",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/family",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -255,7 +255,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/family/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -272,7 +272,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/origin",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/origin",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -295,7 +295,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/origin/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -312,7 +312,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/description",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/description",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -335,7 +335,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/description/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/description/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -352,7 +352,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/bloom",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/bloom",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -375,7 +375,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/bloom/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/bloom/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -392,7 +392,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/maturation_fruit",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/maturation_fruit",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -415,7 +415,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/maturation_fruit/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/maturation_fruit/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -432,7 +432,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/life_cycle",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/life_cycle",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -455,7 +455,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/life_cycle/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/life_cycle/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -472,7 +472,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/climatic_zone",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/climatic_zone",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -495,7 +495,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/request/parameter/default-binding/climatic_zone/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/expects/request/parameter/parameter/query/climatic_zone/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -516,7 +516,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -535,7 +535,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -543,7 +543,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FaddFruit/post/resp/default/default/shape/Fruits",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FaddFruit/supportedOperation/post/Mutation.addFruit/returns/resp/default/payload/default/shape/Fruits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -553,7 +553,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -581,7 +581,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -598,7 +598,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -616,7 +616,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -625,7 +625,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -648,7 +648,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -670,7 +670,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/scientific_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/scientific_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -693,7 +693,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/scientific_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/scientific_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -710,7 +710,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/tree_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/tree_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -733,7 +733,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/tree_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/tree_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -750,7 +750,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/fruit_name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/fruit_name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -773,7 +773,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/fruit_name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/fruit_name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -790,7 +790,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/family",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/family",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -813,7 +813,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/family/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -830,7 +830,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/origin",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/origin",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -853,7 +853,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/origin/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -870,7 +870,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/description",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/description",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -893,7 +893,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/description/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/description/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -910,7 +910,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/bloom",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/bloom",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -933,7 +933,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/bloom/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/bloom/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -950,7 +950,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/maturation_fruit",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/maturation_fruit",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -973,7 +973,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/maturation_fruit/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/maturation_fruit/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -990,7 +990,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/life_cycle",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/life_cycle",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1013,7 +1013,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/life_cycle/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/life_cycle/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1030,7 +1030,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/climatic_zone",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/climatic_zone",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1053,7 +1053,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/request/parameter/default-binding/climatic_zone/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/expects/request/parameter/parameter/query/climatic_zone/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1074,7 +1074,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1093,7 +1093,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1101,7 +1101,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FupdateFruit/post/resp/default/default/shape/Fruits",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FupdateFruit/supportedOperation/post/Mutation.updateFruit/returns/resp/default/payload/default/shape/Fruits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1111,7 +1111,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -1139,7 +1139,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1156,7 +1156,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1174,7 +1174,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1183,7 +1183,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1206,7 +1206,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1232,7 +1232,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1251,7 +1251,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1259,7 +1259,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fmutation%2FdeleteFruit/post/resp/default/default/shape/Fruits",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fmutation%2FdeleteFruit/supportedOperation/post/Mutation.deleteFruit/returns/resp/default/payload/default/shape/Fruits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1269,7 +1269,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -1297,7 +1297,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1314,7 +1314,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1332,7 +1332,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1341,7 +1341,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1364,7 +1364,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1390,7 +1390,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1409,7 +1409,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1417,7 +1417,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1427,7 +1427,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/shape/Fruit/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1436,7 +1436,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruit/query/resp/default/default/shape/Fruit/nullwrapper/shape/Fruit",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruit/supportedOperation/query/Query.fruit/returns/resp/default/payload/default/union/default-union/anyOf/shape/Fruit",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1446,7 +1446,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -1476,7 +1476,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1493,7 +1493,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1511,7 +1511,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1522,7 +1522,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1541,7 +1541,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1549,7 +1549,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1559,7 +1559,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1568,7 +1568,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1578,7 +1578,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2Ffruits/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1588,7 +1588,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link-2081434932/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1597,7 +1597,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link-2081434932/nullwrapper/shape/Fruits",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2Ffruits/supportedOperation/query/Query.fruits/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Fruits",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1607,7 +1607,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -1641,7 +1641,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1658,7 +1658,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1676,7 +1676,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1685,7 +1685,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request/parameter/default-binding/family",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/expects/request/parameter/parameter/query/family",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1708,7 +1708,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/request/parameter/default-binding/family/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/expects/request/parameter/parameter/query/family/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1729,7 +1729,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1748,7 +1748,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1756,7 +1756,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1766,7 +1766,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1775,7 +1775,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1785,7 +1785,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsFam/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1795,7 +1795,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--329037318/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1804,7 +1804,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--329037318/nullwrapper/shape/Fruits",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsFam/supportedOperation/query/Query.filterFruitsFam/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Fruits",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1814,7 +1814,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -1848,7 +1848,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1865,7 +1865,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1883,7 +1883,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1892,7 +1892,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request/parameter/default-binding/origin",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/expects/request/parameter/parameter/query/origin",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1915,7 +1915,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/request/parameter/default-binding/origin/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/expects/request/parameter/parameter/query/origin/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1936,7 +1936,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1955,7 +1955,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1963,7 +1963,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1973,7 +1973,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1982,7 +1982,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1992,7 +1992,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/%2Fquery%2FfilterFruitsOri/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2002,7 +2002,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--805966792/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -2011,7 +2011,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/link--805966792/nullwrapper/shape/Fruits",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/web-api/endpoint/%2Fquery%2FfilterFruitsOri/supportedOperation/query/Query.filterFruitsOri/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Fruits",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2021,7 +2021,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -2064,7 +2064,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -2082,7 +2082,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2092,7 +2092,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2101,7 +2101,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2133,7 +2133,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/scientific_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/scientific_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2142,7 +2142,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/scientific_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/scientific_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2169,7 +2169,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/tree_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/tree_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2178,7 +2178,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/tree_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/tree_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2205,7 +2205,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/fruit_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/fruit_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2214,7 +2214,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/fruit_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/fruit_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2241,7 +2241,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/family",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/family",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2250,7 +2250,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/family/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/family/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2277,7 +2277,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/origin",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/origin",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2286,7 +2286,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/origin/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/origin/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2313,7 +2313,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/description",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/description",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2322,7 +2322,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/description/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/description/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2349,7 +2349,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/bloom",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/bloom",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2358,7 +2358,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/bloom/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/bloom/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2385,7 +2385,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/maturation_fruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/maturation_fruit",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2394,7 +2394,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/maturation_fruit/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/maturation_fruit/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2421,7 +2421,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/life_cycle",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/life_cycle",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2430,7 +2430,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/life_cycle/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/life_cycle/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2457,7 +2457,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/climatic_zone",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/climatic_zone",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2466,7 +2466,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/climatic_zone/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/climatic_zone/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2493,7 +2493,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/producing_countries",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2502,7 +2502,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/producing_countries/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2512,7 +2512,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruits/property/producing_countries/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/producing_countries/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2522,7 +2522,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1790659731/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/producing_countries/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2531,7 +2531,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1790659731/nullwrapper/shape/countries",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruits/property/property/producing_countries/array/default-array/union/default-union/anyOf/shape/countries",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2541,7 +2541,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/countries"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -2579,7 +2579,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/CacheControlScope",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2599,11 +2599,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/CacheControlScope/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/PUBLIC",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/CacheControlScope/in/PUBLIC",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2628,7 +2628,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope/PRIVATE",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/CacheControlScope/in/PRIVATE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2655,7 +2655,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2665,7 +2665,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2674,7 +2674,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2706,7 +2706,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/scientific_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/scientific_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2715,7 +2715,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/scientific_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/scientific_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2742,7 +2742,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/tree_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/tree_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2751,7 +2751,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/tree_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/tree_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2778,7 +2778,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/fruit_name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/fruit_name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2787,7 +2787,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/fruit_name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/fruit_name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2814,7 +2814,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/family",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/family",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2823,7 +2823,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/family/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/family/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2850,7 +2850,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/origin",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/origin",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2859,7 +2859,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/origin/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/origin/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2886,7 +2886,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/description",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/description",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2895,7 +2895,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/description/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/description/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2922,7 +2922,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/bloom",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/bloom",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2931,7 +2931,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/bloom/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/bloom/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2958,7 +2958,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/maturation_fruit",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/maturation_fruit",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2967,7 +2967,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/maturation_fruit/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/maturation_fruit/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2994,7 +2994,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/life_cycle",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/life_cycle",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3003,7 +3003,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/life_cycle/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/life_cycle/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3030,7 +3030,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/climatic_zone",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/climatic_zone",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3039,7 +3039,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/climatic_zone/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/climatic_zone/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3066,7 +3066,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/producing_countries",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3075,7 +3075,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/producing_countries/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3085,7 +3085,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/Fruit/property/producing_countries/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/producing_countries/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3095,7 +3095,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1801067851/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/producing_countries/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3104,7 +3104,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/link--1801067851/nullwrapper/shape/countries",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/Fruit/property/property/producing_countries/array/default-array/union/default-union/anyOf/shape/countries",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3114,7 +3114,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/countries"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -3152,7 +3152,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/countries",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3162,7 +3162,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/property/country",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/countries/property/property/country",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3171,7 +3171,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/shape/countries/property/country/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/shape/countries/property/property/country/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3205,7 +3205,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/Upload",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/Upload",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3230,7 +3230,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3249,7 +3249,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3259,7 +3259,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3268,7 +3268,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3278,7 +3278,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3287,7 +3287,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/maxAge/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3311,7 +3311,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/scope",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3320,7 +3320,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3330,7 +3330,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3339,7 +3339,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#cacheControl/property/scope/scalar/CacheControlScope/nullwrapper/scalar/CacheControlScope",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3349,15 +3349,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/scalar/CacheControlScope"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/scalar/CacheControlScope"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "CacheControlScope"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "CacheControlScope"
                           }
@@ -3382,7 +3377,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/specifiedBy",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3395,7 +3390,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/specifiedBy/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3405,7 +3400,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node/property/url",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/specifiedBy/shape/default-node/property/property/url",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3414,7 +3409,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql/directives/#specifiedBy/shape/default-node/property/url/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-fruits/api.graphql#/declares/specifiedBy/shape/default-node/property/property/url/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",

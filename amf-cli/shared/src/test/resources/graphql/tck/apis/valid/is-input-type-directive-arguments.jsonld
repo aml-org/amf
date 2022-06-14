@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -154,7 +154,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -172,7 +172,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/shape/InputType",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -182,7 +182,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/shape/InputType/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -191,7 +191,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/shape/InputType/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -230,7 +230,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Enum",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -250,11 +250,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Enum/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Enum/A",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -279,7 +279,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Enum/B",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -306,7 +306,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Pepe",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -331,7 +331,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -344,7 +344,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -354,7 +354,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType/shape/default-node/property/input_",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -363,7 +363,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType/shape/default-node/property/input_/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -373,7 +373,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType/property/input_/shape/InputType/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -382,7 +382,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testInputType/property/input_/shape/InputType/nullwrapper/shape/InputType",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union/anyOf/shape/default-node",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -392,15 +392,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/shape/InputType"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "InputType"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "InputType"
                           }
@@ -425,7 +420,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -438,7 +433,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -448,7 +443,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum/shape/default-node/property/input_",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -457,7 +452,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum/shape/default-node/property/input_/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -467,7 +462,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum/property/input_/scalar/Enum/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -476,7 +471,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testEnum/property/input_/scalar/Enum/nullwrapper/scalar/Enum",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -486,15 +481,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Enum"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "Enum"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Enum"
                           }
@@ -519,7 +509,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -532,7 +522,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -542,7 +532,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar/shape/default-node/property/input_",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -551,7 +541,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar/shape/default-node/property/input_/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -561,7 +551,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar/property/input_/scalar/default-scalar/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -570,7 +560,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testScalar/property/input_/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -603,7 +593,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -616,7 +606,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -626,7 +616,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar/shape/default-node/property/input_",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -635,7 +625,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar/shape/default-node/property/input_/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -645,7 +635,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar/property/input_/scalar/Pepe/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -654,7 +644,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/directives/#testCustomScalar/property/input_/scalar/Pepe/nullwrapper/scalar/Pepe",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -664,15 +654,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql/scalar/Pepe"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "Pepe"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Pepe"
                           }

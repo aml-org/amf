@@ -1,6 +1,7 @@
 package amf.parser
 
 import amf.apicontract.client.scala.RAMLConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.internal.remote.{AmfJsonHint, Raml10YamlHint}
@@ -45,4 +46,15 @@ class Raml10ParserTest extends FunSuiteCycleTests with Matchers {
       shapes.size shouldBe 5
     }
   }
+
+  test("Final ID adoption on annotations") {
+    cycle(
+      "annotations/api.raml",
+      "annotations/api.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd)
+    )
+  }
+
 }

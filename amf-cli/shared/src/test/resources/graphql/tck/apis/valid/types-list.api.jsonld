@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/%2Fquery%2Fnames/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -135,7 +135,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "null/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -144,7 +144,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "null/nullwrapper/scalar/default-scalar",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/scalar/default-scalar",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#ScalarShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -187,7 +187,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-list.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
