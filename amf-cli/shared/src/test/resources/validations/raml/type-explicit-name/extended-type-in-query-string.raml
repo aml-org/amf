@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: A title
+
+types:
+  paging:
+    properties:
+      start?: number
+      page-size?: number
+
+/endPoint:
+  get:
+    queryString:
+      type: paging
+      description: "A description"
