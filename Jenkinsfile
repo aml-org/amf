@@ -153,9 +153,6 @@ pipeline {
           echo "Starting TCKutor $TCKUTOR_JOB"
           build job: TCKUTOR_JOB, wait: false
 
-          echo "Starting Amf Examples $EXAMPLES_JOB"
-          build job: 'application/AMF/amf-examples/snapshot', wait: false
-
           echo "Starting Amf Interface Tests $INTERFACES_JOB"
           build job: INTERFACES_JOB, wait: false
 
