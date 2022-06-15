@@ -1,11 +1,19 @@
 #!groovy
 @Library('amf-jenkins-library') _
 
+import groovy.transform.Field
+
 def SLACK_CHANNEL = '#amf-jenkins'
 def PRODUCT_NAME = "AMF"
 def lastStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
+@Field TCKUTOR_JOB = "application/AMF/amfTCKutor/master"
+@Field INTERFACES_JOB = "application/AMF/amf-interface-tests/master"
+@Field METADATA_JOB = "application/AMF/amf-metadata/develop"
+@Field API_QUERY_JOB = "API-Query-new/api-query-amf-integration/master"
+@Field APB_JOB = "APB/apb/develop"
+@Field EXAMPLES_JOB = "application/AMF/examples/master"
 
 pipeline {
   options {
@@ -141,23 +149,28 @@ pipeline {
       steps {
         script {
           lastStage = env.STAGE_NAME
-          echo "Starting TCKutor Applications/AMF/amfTCKutor/master"
-          build job: 'application/AMF/amfTCKutor/master', wait: false
 
-          echo "Starting Amf Examples Applications/AMF/amfexamples/master"
+          echo "Starting TCKutor $TCKUTOR_JOB"
+          build job: TCKUTOR_JOB, wait: false
+
+          echo "Starting Amf Examples $EXAMPLES_JOB"
           build job: 'application/AMF/amf-examples/snapshot', wait: false
 
-          echo "Starting Amf Interface Tests Applications/AMF/amfinterfacetests/master"
-          build job: 'application/AMF/amf-interface-tests/master', wait: false
+          echo "Starting Amf Interface Tests $INTERFACES_JOB"
+          build job: INTERFACES_JOB, wait: false
 
-          if (env.BRANCH_NAME == 'develop') {
-            build job: "application/AMF/amf-metadata/${env.BRANCH_NAME}", wait: false
-          } else {
-            echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
-          }
+          echo "Starting $METADATA_JOB"
+          build job: METADATA_JOB, wait: false
+
+          echo "Starting $APB_JOB"
+          build job: APB_JOB, wait: false
+
+          echo "Starting $EXAMPLES_JOB"
+          build job: EXAMPLES_JOB, wait: false
+
           def newAmfVersion = sbtArtifactVersion("apiContractJVM")
-          echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
-          build job: "API-Query-new/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
+          echo "Starting ApiQuery hook $API_QUERY_JOB with amf version: ${newAmfVersion}"
+          build job: API_QUERY_JOB, wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
         }
       }
     }
@@ -174,7 +187,7 @@ pipeline {
     }
     success {
       script {
-        echo "SUCCESSFULL BUILD"
+        echo "SUCCESSFUL BUILD"
         if (isMaster()) {
           sendSuccessfulSlackMessage(SLACK_CHANNEL, PRODUCT_NAME)
         } else {
