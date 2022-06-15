@@ -182,79 +182,6 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date",
-        "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#format": [
-          {
-            "@value": "Date"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "Date"
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date_1",
-        "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#format": [
-          {
-            "@value": "Date"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "Date"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#isExtension": [
-          {
-            "@value": true
-          }
-        ],
-        "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/example": {
-          "http://a.ml/vocabularies/core#extensionName": [
-            {
-              "@value": "example"
-            }
-          ],
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date_1/customDomainProperties/example/data-node",
-          "@type": [
-            "http://a.ml/vocabularies/data#Object",
-            "http://a.ml/vocabularies/data#Node",
-            "http://a.ml/vocabularies/document#DomainElement"
-          ]
-        },
-        "http://a.ml/vocabularies/document#customDomainProperties": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/example"
-          }
-        ]
-      },
-      {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/example",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
@@ -282,6 +209,101 @@
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "example"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Date"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#and": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date/and/scalar/Date",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#format": [
+              {
+                "@value": "Date"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Date"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date/and/scalar/Date_1",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#format": [
+              {
+                "@value": "Date"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Date"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#isExtension": [
+              {
+                "@value": true
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/example": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "example"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date/and/scalar/Date_1/customDomainProperties/example/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/example"
+              }
+            ]
           }
         ]
       }

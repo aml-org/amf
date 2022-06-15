@@ -200,266 +200,288 @@
             "@value": "Planet"
           }
         ],
-        "http://www.w3.org/ns/shacl#in": [
+        "http://www.w3.org/ns/shacl#or": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/list",
-            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
-            "http://www.w3.org/2000/01/rdf-schema#_1": [
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/MERCURY",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "MERCURY"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "MERCURY"
-                  }
-                ]
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
             ],
-            "http://www.w3.org/2000/01/rdf-schema#_2": [
+            "http://www.w3.org/ns/shacl#name": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/VENUS",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "VENUS"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "VENUS"
-                  }
-                ]
+                "@value": "Planet"
               }
             ],
-            "http://www.w3.org/2000/01/rdf-schema#_3": [
+            "http://www.w3.org/ns/shacl#in": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/EARTH",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/list",
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@value": "EARTH"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/MERCURY",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "MERCURY"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "MERCURY"
+                      }
+                    ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#datatype": [
+                "http://www.w3.org/2000/01/rdf-schema#_2": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/VENUS",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "VENUS"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "VENUS"
+                      }
+                    ]
                   }
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://www.w3.org/2000/01/rdf-schema#_3": [
                   {
-                    "@value": "EARTH"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/2000/01/rdf-schema#_4": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/MARS",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "MARS"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "MARS"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/2000/01/rdf-schema#_5": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/JUPITER",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "JUPITER"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/EARTH",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "EARTH"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "EARTH"
+                      }
+                    ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#datatype": [
+                "http://www.w3.org/2000/01/rdf-schema#_4": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/MARS",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "MARS"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "MARS"
+                      }
+                    ]
                   }
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://www.w3.org/2000/01/rdf-schema#_5": [
                   {
-                    "@value": "JUPITER"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/2000/01/rdf-schema#_6": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/SATURN",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "SATURN"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "SATURN"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/2000/01/rdf-schema#_7": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/URANUS",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "URANUS"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/JUPITER",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "JUPITER"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "JUPITER"
+                      }
+                    ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#datatype": [
+                "http://www.w3.org/2000/01/rdf-schema#_6": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/SATURN",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "SATURN"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "SATURN"
+                      }
+                    ]
                   }
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://www.w3.org/2000/01/rdf-schema#_7": [
                   {
-                    "@value": "URANUS"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/URANUS",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "URANUS"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "URANUS"
+                      }
+                    ]
                   }
-                ]
-              }
-            ],
-            "http://www.w3.org/2000/01/rdf-schema#_8": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/NEPTUNE",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/data#value": [
+                "http://www.w3.org/2000/01/rdf-schema#_8": [
                   {
-                    "@value": "NEPTUNE"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "NEPTUNE"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet/in/NEPTUNE",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "NEPTUNE"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "NEPTUNE"
+                      }
+                    ]
                   }
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1",
-        "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
+          },
           {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "Planet"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#in": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1/list",
-            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
-            "http://www.w3.org/2000/01/rdf-schema#_1": [
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet_1",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1/in/PLUTO",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Planet"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#in": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet_1/list",
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@value": "PLUTO"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "PLUTO"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/or/scalar/Planet_1/in/PLUTO",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "PLUTO"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "PLUTO"
+                      }
+                    ]
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/shapes#isExtension": [
+              {
+                "@value": true
+              }
             ]
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#isExtension": [
-          {
-            "@value": true
           }
         ]
       }
