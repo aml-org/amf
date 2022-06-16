@@ -1928,6 +1928,7 @@ declare module 'amf-client-js' {
     isAmfJsonLdSerialization: boolean
     definedBaseUrl: undefined | string
     getMaxYamlReferences: undefined | number
+    getMaxJSONComplexity: undefined | number
 
     constructor()
 
@@ -1941,6 +1942,7 @@ declare module 'amf-client-js' {
 
     setMaxYamlReferences(value: number): ParsingOptions
 
+    setMaxJSONComplexity(value: number): ParsingOptions
 
   }
   export class Response extends Message implements AbstractResponse {
