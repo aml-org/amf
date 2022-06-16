@@ -10,13 +10,16 @@ object SemanticJsonSchemaValidations extends Validations {
   override val specification: String = (Namespace.Shapes + "SemanticJsonSchema").iri()
   override val namespace: Namespace  = AmfParser
 
-  val UnknownTransformedMappingType =
+  val UnknownTransformedMappingType: ValidationSpecification =
     validation("unknown-transformed-mapping-type", "Unknown transformed mapping type")
-  val UnsupportedConstraint = validation("unknown-constraint", "Unsupported constraint")
+  val UnsupportedConstraint: ValidationSpecification = validation("unknown-constraint", "Unsupported constraint")
+  val ExceededMaxCombiningComplexity: ValidationSpecification =
+    validation("combining-complexity", "The JSON Schema is too complex")
 
   override val validations: List[ValidationSpecification] = List(
     UnknownTransformedMappingType,
-    UnsupportedConstraint
+    UnsupportedConstraint,
+    ExceededMaxCombiningComplexity
   )
   override val levels: Map[String, Map[ProfileName, String]] = Map.empty
 }
