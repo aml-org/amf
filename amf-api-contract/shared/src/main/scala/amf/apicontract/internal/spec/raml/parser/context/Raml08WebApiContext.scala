@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
+import amf.apicontract.internal.spec.common.parser.{IgnoreCriteria}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml08, Spec}
@@ -17,11 +18,11 @@ class Raml08WebApiContext(
     options: ParsingOptions = ParsingOptions()
 ) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
-  override val spec: Spec                      = Raml08
-  override val syntax: SpecSyntax              = Raml08Syntax
+  override def spec: Spec                      = Raml08
+  override def syntax: SpecSyntax              = Raml08Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
     new Raml08WebApiContext(loc, refs, wrapped, Some(declarations), options = options)
 
-  override protected def supportsAnnotations: Boolean = false
+  override def ignoreCriteria: IgnoreCriteria = Raml08IgnoreCriteria
 }

@@ -17,8 +17,8 @@ class Async20WebApiContext(
     options: ParsingOptions = ParsingOptions()
 ) extends AsyncWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
   override val factory: Async20VersionFactory = Async20VersionFactory()(this)
-  override val spec: Spec                     = AsyncApi20
-  override val syntax: SpecSyntax             = Async20Syntax
+  override def spec: Spec                     = AsyncApi20
+  override def syntax: SpecSyntax             = Async20Syntax
 
   override def makeCopy(): Async20WebApiContext =
     new Async20WebApiContext(rootContextDocument, refs, this, Some(declarations), operationIds, options)

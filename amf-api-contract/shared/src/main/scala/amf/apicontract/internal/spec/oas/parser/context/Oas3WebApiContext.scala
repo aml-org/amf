@@ -15,8 +15,8 @@ class Oas3WebApiContext(
     options: ParsingOptions = ParsingOptions()
 ) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
-  override val spec: Spec                  = Oas30
-  override val syntax: SpecSyntax          = Oas3Syntax
+  override def spec: Spec                  = Oas30
+  override def syntax: SpecSyntax          = Oas3Syntax
 
   override val defaultSchemaVersion: SchemaVersion = OAS30SchemaVersion.apply(SchemaPosition.Other)
 

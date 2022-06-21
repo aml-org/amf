@@ -1,8 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
-import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
-import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext}
+import amf.apicontract.internal.spec.common.parser.{IgnoreCriteria, ParsingHelpers, WebApiContext}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
@@ -10,11 +9,11 @@ import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.raml.parser.TypeInfo
-import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YScalar, YType}
+import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -84,28 +83,7 @@ abstract class RamlWebApiContext(
     }
   }
 
-  protected def supportsAnnotations = true
-
-  override def ignore(shape: String, property: String): Boolean = {
-    def isAnnotation = supportsAnnotations && property.startsWith("(") && property.endsWith(")")
-
-    def isAllowedNestedEndpoint = {
-      val shapesIgnoringNestedEndpoints = "webApi" :: "endPoint" :: Nil
-      property.startsWith("/") && shapesIgnoringNestedEndpoints.contains(shape)
-    }
-
-    def reportedByOtherConstraint = {
-      val nestedEndpointsConstraintShapes = "resourceType" :: Nil
-      property.startsWith("/") && nestedEndpointsConstraintShapes.contains(shape)
-    }
-
-    def isAllowedParameter = {
-      val shapesWithParameters = "resourceType" :: "trait" :: Nil
-      property.matches("<<.+>>") && shapesWithParameters.contains(shape)
-    }
-
-    isAnnotation || isAllowedNestedEndpoint || isAllowedParameter || reportedByOtherConstraint
-  }
+  override def ignoreCriteria: IgnoreCriteria = Raml10IgnoreCriteria
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
@@ -133,7 +111,7 @@ abstract class RamlWebApiContext(
           val acc: Seq[YMapEntry] = Seq.empty
           ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
             val key: String = entry.key.as[YScalar].text
-            if (ignore(shapeType, key)) {
+            if (ignoreCriteria.shouldIgnore(shapeType, key)) {
               results
             } else if (!totalProperties(key)) {
               results ++ Seq(entry)
@@ -179,8 +157,8 @@ class PayloadContext(
     new PayloadContext(loc, refs, wrapped, Some(declarations), options = options)
   }
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
-  override val syntax: SpecSyntax = new SpecSyntax {
+  override def syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val spec: Spec = Spec.PAYLOAD
+  override def spec: Spec = Spec.PAYLOAD
 }

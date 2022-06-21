@@ -7,6 +7,7 @@ import amf.apicontract.internal.spec.common.OasLikeWebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecVersionFactory
 import amf.apicontract.internal.spec.common.parser.{
   IgnoreAnnotationSchemaValidatorBuilder,
+  IgnoreCriteria,
   ParsingHelpers,
   WebApiContext,
   WebApiShapeParserContextAdapter
@@ -95,11 +96,7 @@ abstract class OasLikeWebApiContext(
     case _                    => true
   }
 
-  val shapesThatDontPermitRef = List("paths", "operation")
-
-  override def ignore(shape: String, property: String): Boolean =
-    property.startsWith("x-") || (property == "$ref" && !shapesThatDontPermitRef.contains(shape)) || (property
-      .startsWith("/") && shape == "paths")
+  override def ignoreCriteria: IgnoreCriteria = OasLikeIgnoreCriteria
 
   /** Used for accumulating operation ids. returns true if id was not present, and false if operation being added is
     * already present.
