@@ -17,6 +17,7 @@ import amf.shapes.internal.annotations._
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper
+import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
@@ -114,28 +115,40 @@ case class RamlJsonSchemaExpression(
   private def parseValueWithUrl(origin: ValueAndOrigin, url: String) = {
     val (basePath, localPath) = ReferenceFragmentPartition(url)
     val normalizedLocalPath   = localPath.map(_.stripPrefix("/definitions/"))
-    normalizedLocalPath
-      .flatMap(ctx.declarations.findInExternalsLibs(basePath, _))
-      .orElse(ctx.declarations.findInExternals(basePath)) match {
+    findInExternals(basePath, normalizedLocalPath) match {
       case Some(s) =>
-        val shape = s.copyShape().withName(key.as[String])
-        ctx.declarations.fragments
-          .get(basePath)
-          .foreach(e =>
-            shape.callAfterAdoption { () =>
-              shape.withReference(e.encoded.id + localPath.getOrElse(""))
-            }
-          )
-        if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
-          // We remove the examples declared in the previous endpoint for this inlined shape , see previous comment about the edge case
-          shape.fields.remove(AnyShapeModel.Examples.value.iri())
-        }
-        shape
-      case _ if normalizedLocalPath.isDefined => // oas lib
+        copyExternalShape(basePath, s, localPath)
+      case _ if isInnerSchema(normalizedLocalPath) => // oas lib
         parseOasLib(origin, basePath, localPath, normalizedLocalPath)
       case _ =>
         parseFragment(origin, basePath)
     }
+  }
+
+  private def isInnerSchema(normalizedLocalPath: Option[String]) = {
+    normalizedLocalPath.isDefined
+  }
+
+  private def findInExternals(basePath: String, normalizedLocalPath: Option[String]) = {
+    normalizedLocalPath
+      .flatMap(ctx.declarations.findInExternalsLibs(basePath, _))
+      .orElse(ctx.declarations.findInExternals(basePath))
+  }
+
+  private def copyExternalShape(basePath: String, s: AnyShape, localPath: Option[String]) = {
+    val shape = s.copyShape().withName(key.as[String])
+    ctx.declarations.fragments
+      .get(basePath)
+      .foreach(e =>
+        shape.callAfterAdoption { () =>
+          shape.withReference(e.encoded.id + localPath.getOrElse(""))
+        }
+      )
+    if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
+      // We remove the examples declared in the previous endpoint for this inlined shape , see previous comment about the edge case
+      shape.fields.remove(AnyShapeModel.Examples.value.iri())
+    }
+    shape
   }
 
   private def parseOasLib(
@@ -189,9 +202,7 @@ case class RamlJsonSchemaExpression(
       extLocation: Option[String]
   ): AnyShape = {
 
-    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(shapeCtx).getOrElse {
-      jsonParser(extLocation, text, valueAST).document().node
-    }
+    val node: YNode = parseAst(text, valueAST, extLocation)
     val schemaEntry = YMapEntry(key, node)
     val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
       val jsonSchemaShapeContext = WebApiShapeParserContextAdapter(jsonSchemaContext)
@@ -213,6 +224,13 @@ case class RamlJsonSchemaExpression(
     shape
   }
 
+  private def parseAst(text: String, valueAST: YNode, extLocation: Option[String]) = {
+    val node = searchForAlreadyParsedNodeInFragments(valueAST)(shapeCtx).getOrElse {
+      jsonParser(text, valueAST, extLocation).document().node
+    }
+    node
+  }
+
   private def jsonParser(text: String, valueAST: YNode): JsonParser = {
     JsonParserFactory.fromCharsWithSource(
       text,
@@ -220,7 +238,7 @@ case class RamlJsonSchemaExpression(
       Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
     )(ctx.eh)
   }
-  private def jsonParser(extLocation: Option[String], text: String, valueAST: YNode): JsonParser = {
+  private def jsonParser(text: String, valueAST: YNode, extLocation: Option[String]): JsonParser = {
     val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
     url
       .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
