@@ -4,6 +4,7 @@ import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapePa
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaExpression.{errorShape, withScopedContext}
 import amf.apicontract.internal.spec.raml.parser.external.SharedStuff.toSchemaContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.client.scala.parse.document._
@@ -18,11 +19,44 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
+import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
+
+object RamlJsonSchemaExpression {
+  def withScopedContext[T](valueAST: YNode, schemaEntry: YMapEntry)(
+      block: JsonSchemaWebApiContext => T
+  )(implicit ctx: WebApiContext): T = {
+    val nextContext = getContext(valueAST, schemaEntry)
+    val parsed      = block(nextContext)
+    cleanGlobalSpace(nextContext)            // this works because globalSpace is mutable everywhere
+    nextContext.removeLocalJsonSchemaContext // we reset the JSON schema context after parsing
+    parsed
+  }
+
+  private def getContext(valueAST: YNode, schemaEntry: YMapEntry)(implicit ctx: WebApiContext) = {
+    // we set the local schema entry to be able to resolve local $refs
+    ctx.setJsonSchemaAST(schemaEntry.value)
+    toSchemaContext(ctx, valueAST)
+  }
+
+  /** Clean from globalSpace the local references
+    */
+  private def cleanGlobalSpace(ctx: WebApiContext): Unit = {
+    ctx.globalSpace.foreach { e =>
+      val refPath = e._1.split("#").headOption.getOrElse("")
+      if (refPath == ctx.getLocalJsonSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
+    }
+  }
+
+  def errorShape(value: YNode)(implicit ctx: WebApiContext) = {
+    val shape = SchemaShape()
+    ctx.eh.violation(UnableToParseJsonSchema, shape, "Cannot parse JSON Schema", value.location)
+    shape
+  }
+}
 
 case class RamlJsonSchemaExpression(
     key: YNode,
@@ -69,14 +103,8 @@ case class RamlJsonSchemaExpression(
       case Some(url) =>
         parseIncludedSchema(origin, url)
       case None =>
-        parseInlinedSchema(origin)
+        InlineJsonSchemaParser.parse(key, value, origin)
     }
-  }
-
-  private def parseInlinedSchema(origin: ValueAndOrigin) = {
-    val shape = parseJsonShape(origin.text, key, origin.valueAST, value, None)
-    shape.annotations += ParsedJSONSchema(origin.text)
-    shape
   }
 
   private def parseIncludedSchema(origin: ValueAndOrigin, url: String) = {
@@ -161,64 +189,42 @@ case class RamlJsonSchemaExpression(
       extLocation: Option[String]
   ): AnyShape = {
 
-    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(WebApiShapeParserContextAdapter(ctx)).getOrElse {
+    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(shapeCtx).getOrElse {
       jsonParser(extLocation, text, valueAST).document().node
     }
     val schemaEntry = YMapEntry(key, node)
     val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
+      val jsonSchemaShapeContext = WebApiShapeParserContextAdapter(jsonSchemaContext)
+
       val fullRef = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
 
       val tmpShape: UnresolvedShape =
         JsonSchemaParsingHelper.createTemporaryShape(
           _ => {},
           schemaEntry,
-          WebApiShapeParserContextAdapter(jsonSchemaContext),
+          jsonSchemaShapeContext,
           fullRef
         )
 
-      val s = actualParsing(value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
+      val s = actualParsing(value, schemaEntry, jsonSchemaShapeContext, fullRef, tmpShape)
       savePromotedFragmentsFromNestedContext(jsonSchemaContext)
       s
     }
     shape
   }
 
-  private def withScopedContext[T](valueAST: YNode, schemaEntry: YMapEntry)(
-      block: JsonSchemaWebApiContext => T
-  )(implicit ctx: WebApiContext): T = {
-    val nextContext = getContext(valueAST, schemaEntry)
-    val parsed      = block(nextContext)
-    cleanGlobalSpace(nextContext)            // this works because globalSpace is mutable everywhere
-    nextContext.removeLocalJsonSchemaContext // we reset the JSON schema context after parsing
-    parsed
+  private def jsonParser(text: String, valueAST: YNode): JsonParser = {
+    JsonParserFactory.fromCharsWithSource(
+      text,
+      valueAST.value.sourceName,
+      Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
+    )(ctx.eh)
   }
-
   private def jsonParser(extLocation: Option[String], text: String, valueAST: YNode): JsonParser = {
     val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
     url
       .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
-      .getOrElse(
-        JsonParserFactory.fromCharsWithSource(
-          text,
-          valueAST.value.sourceName,
-          Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
-        )(ctx.eh)
-      )
-  }
-
-  private def getContext(valueAST: YNode, schemaEntry: YMapEntry) = {
-    // we set the local schema entry to be able to resolve local $refs
-    ctx.setJsonSchemaAST(schemaEntry.value)
-    toSchemaContext(ctx, valueAST)
-  }
-
-  /** Clean from globalSpace the local references
-    */
-  private def cleanGlobalSpace(ctx: WebApiContext): Unit = {
-    ctx.globalSpace.foreach { e =>
-      val refPath = e._1.split("#").headOption.getOrElse("")
-      if (refPath == ctx.getLocalJsonSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
-    }
+      .getOrElse(jsonParser(text, valueAST))
   }
 
   private def savePromotedFragmentsFromNestedContext(jsonSchemaContext: OasWebApiContext): Unit = {
@@ -230,13 +236,11 @@ case class RamlJsonSchemaExpression(
   private def actualParsing(
       value: YNode,
       schemaEntry: YMapEntry,
-      jsonSchemaContext: OasWebApiContext,
+      jsonSchemaContext: ShapeParserContext,
       fullRef: String,
       tmpShape: UnresolvedShape
   ) = {
-    OasTypeParser(schemaEntry, s => {}, ctx.computeJsonSchemaVersion(schemaEntry.value))(
-      (WebApiShapeParserContextAdapter(jsonSchemaContext))
-    )
+    OasTypeParser(schemaEntry, _ => {}, ctx.computeJsonSchemaVersion(schemaEntry.value))(jsonSchemaContext)
       .parse() match {
       case Some(sh) =>
         ctx.futureDeclarations.resolveRef(fullRef, sh)
@@ -244,10 +248,7 @@ case class RamlJsonSchemaExpression(
         tmpShape.resolve(sh) // useless?
         if (sh.isLink) sh.effectiveLinkTarget().asInstanceOf[AnyShape]
         else sh
-      case None =>
-        val shape = SchemaShape()
-        ctx.eh.violation(UnableToParseJsonSchema, shape, "Cannot parse JSON Schema", value.location)
-        shape
+      case None => errorShape(value)
     }
   }
 

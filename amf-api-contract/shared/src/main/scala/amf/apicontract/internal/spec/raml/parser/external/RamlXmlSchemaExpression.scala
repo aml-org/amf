@@ -14,7 +14,7 @@ import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
-import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
+import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
 import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
 import org.yaml.model._
 

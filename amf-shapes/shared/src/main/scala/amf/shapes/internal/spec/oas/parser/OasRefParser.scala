@@ -209,9 +209,9 @@ class OasRefParser(
       fullRef: String,
       jsonSchemaShape: AnyShape
   ): Option[AnyShape] = {
-    val promotedShape = ctx.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+    ctx.promoteExternalToDataTypeFragment(text, fullRef, jsonSchemaShape)
     Some(
-      promotedShape
+      jsonSchemaShape
         .link(AmfScalar(text), Annotations(ast) += ExternalFragmentRef(ref), Annotations.synthesized())
         .asInstanceOf[AnyShape]
         .withName(name, nameAnnotations)

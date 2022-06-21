@@ -11,6 +11,13 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.Inv
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 
+case class ValueAndOrigin(
+    text: String,
+    valueAST: YNode,
+    originalUrlText: Option[String],
+    errorShape: Option[AnyShape] = None
+)
+
 trait RamlExternalTypesParser
     extends QuickFieldParserOps
     with ExampleParser
@@ -36,13 +43,6 @@ trait RamlExternalTypesParser
     case (_, wac: ShapeParserContext) => wac.nodeRefIds.get(node)
     case _                            => None
   }
-
-  protected case class ValueAndOrigin(
-      text: String,
-      valueAST: YNode,
-      originalUrlText: Option[String],
-      errorShape: Option[AnyShape] = None
-  )
 
   protected def buildTextAndOrigin(): ValueAndOrigin = {
     value.tagType match {

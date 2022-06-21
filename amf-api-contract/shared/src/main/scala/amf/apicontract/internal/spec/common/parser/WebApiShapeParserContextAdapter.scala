@@ -128,8 +128,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     case _                          => throw new Exception("Parser - Can only be used from RAML!")
   }
 
-  override def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape =
-    ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, shape)
+  override def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit =
+    ctx.declarations.promoteExternalToDataTypeFragment(text, fullRef, shape)
 
   override def parseRemoteJSONPath(ref: String): Option[AnyShape] = ctx match {
     case oasCtx: OasLikeWebApiContext => oasCtx.parseRemoteJSONPath(ref)

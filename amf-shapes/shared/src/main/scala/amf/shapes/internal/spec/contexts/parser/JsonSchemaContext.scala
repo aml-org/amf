@@ -195,7 +195,7 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
   override def ramlContextType: RamlWebApiContextType =
     throw new Exception("Parser - Can only be used from JSON Schema")
 
-  override def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape =
+  override def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit =
     throw new Exception("Parser - Can only be used from JSON Schema")
 
   override def findDocumentations(
