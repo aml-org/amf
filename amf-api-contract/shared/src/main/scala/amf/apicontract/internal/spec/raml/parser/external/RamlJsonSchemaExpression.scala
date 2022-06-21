@@ -102,17 +102,13 @@ case class RamlJsonSchemaExpression(
   private def parseJsonFromValueAndOrigin(origin: ValueAndOrigin) = {
     origin.originalUrlText match {
       case Some(url) =>
-        parseIncludedSchema(origin, url)
+        parseIncludedSchema(origin, url).add(ExternalReferenceUrl(url))
       case None =>
         InlineJsonSchemaParser.parse(key, value, origin)
     }
   }
 
   private def parseIncludedSchema(origin: ValueAndOrigin, url: String) = {
-    parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
-  }
-
-  private def parseValueWithUrl(origin: ValueAndOrigin, url: String) = {
     val (basePath, localPath) = ReferenceFragmentPartition(url)
     val normalizedLocalPath   = localPath.map(_.stripPrefix("/definitions/"))
     findInExternals(basePath, normalizedLocalPath) match {
@@ -125,9 +121,7 @@ case class RamlJsonSchemaExpression(
     }
   }
 
-  private def isInnerSchema(normalizedLocalPath: Option[String]) = {
-    normalizedLocalPath.isDefined
-  }
+  private def isInnerSchema(normalizedLocalPath: Option[String]) = normalizedLocalPath.isDefined
 
   private def findInExternals(basePath: String, normalizedLocalPath: Option[String]) = {
     normalizedLocalPath
