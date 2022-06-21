@@ -188,8 +188,8 @@ case class RamlJsonSchemaExpression(
   )(implicit ctx: WebApiContext): T = {
     val nextContext = getContext(valueAST, schemaEntry)
     val parsed      = block(nextContext)
-    cleanGlobalSpace(nextContext)             // this works because globalSpace is mutable everywhere
-    nextContext.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+    cleanGlobalSpace(nextContext)            // this works because globalSpace is mutable everywhere
+    nextContext.removeLocalJsonSchemaContext // we reset the JSON schema context after parsing
     parsed
   }
 
@@ -217,7 +217,7 @@ case class RamlJsonSchemaExpression(
   private def cleanGlobalSpace(ctx: WebApiContext): Unit = {
     ctx.globalSpace.foreach { e =>
       val refPath = e._1.split("#").headOption.getOrElse("")
-      if (refPath == ctx.localJSONSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
+      if (refPath == ctx.getLocalJsonSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
     }
   }
 

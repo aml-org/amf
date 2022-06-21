@@ -6,7 +6,10 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  ClosedShapeSpecification,
+  ClosedShapeSpecificationWarning
+}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -75,9 +78,9 @@ abstract class WebApiContext(
     with ParseErrorHandler
     with IllegalTypeHandler {
 
-  val syamleh                                                            = new SyamlAMFErrorHandler(wrapped.config.eh)
-  override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
-  override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
+  private val syamlEh                                                    = new SyamlAMFErrorHandler(wrapped.config.eh)
+  override def handle[T](error: YError, defaultValue: T): T              = syamlEh.handle(error, defaultValue)
+  override def handle(location: SourceLocation, e: SyamlException): Unit = syamlEh.handle(location, e)
 
   override val defaultSchemaVersion: SchemaVersion = JSONSchemaDraft4SchemaVersion
 
@@ -90,7 +93,10 @@ abstract class WebApiContext(
     DeclaredAnnotationSchemaValidatorBuilder
   )
 
-  var localJSONSchemaContext: Option[YNode] = wrapped match {
+  def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
+  def removeLocalJsonSchemaContext: Unit       = localJSONSchemaContext = None
+
+  private var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
     case _                  => None
   }
@@ -100,7 +106,11 @@ abstract class WebApiContext(
     case _                  => None
   }
 
-  var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(WebApiShapeParserContextAdapter(this))
+  def getJsonSchemaRefGuide: JsonSchemaRefGuide                     = jsonSchemaRefGuide
+  protected def setJsonSchemaRefGuide(refGuide: JsonSchemaRefGuide) = jsonSchemaRefGuide = refGuide
+
+  protected var jsonSchemaRefGuide: JsonSchemaRefGuide =
+    JsonSchemaRefGuide(loc, refs)(WebApiShapeParserContextAdapter(this))
 
   var indexCache: mutable.Map[String, AstIndex] = mutable.Map[String, AstIndex]()
 
@@ -134,29 +144,8 @@ abstract class WebApiContext(
   def registerJsonSchema(url: String, shape: AnyShape): Unit =
     globalSpace.update(normalizedJsonPointer(url), shape)
 
-  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(implicit
-      ctx: WebApiContext
-  ): Option[YNode] = {
+  def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
-  }
-
-  private def obtainFragment(fileUrl: String): Option[Fragment] = {
-    val baseFileUrl = fileUrl.split("#").head
-    refs
-      .filter(r => r.unit.location().isDefined)
-      .filter(_.unit.location().get == baseFileUrl) collectFirst {
-      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
-        ref.unit.asInstanceOf[ExternalFragment]
-      case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
-        ref.unit.asInstanceOf[RecursiveUnit]
-    }
-  }
-
-  private def getReferenceUrl(fileUrl: String): Option[String] = {
-    fileUrl.split("#") match {
-      case s: Array[String] if s.size > 1 => Some(s.last)
-      case _                              => None
-    }
   }
 
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)

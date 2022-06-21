@@ -144,7 +144,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     ctx.declarations.findDocumentations(key, scope, error)
 
   override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
-    ctx.obtainRemoteYNode(ref, refAnnotations)(ctx)
+    ctx.obtainRemoteYNode(ref)(ctx)
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
     ctx.declarations.findAnnotation(key, scope)
@@ -231,7 +231,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def setJsonSchemaAST(value: YNode): Unit = ctx.setJsonSchemaAST(value)
 
-  override def jsonSchemaRefGuide: JsonSchemaRefGuide = ctx.jsonSchemaRefGuide
+  override def jsonSchemaRefGuide: JsonSchemaRefGuide = ctx.getJsonSchemaRefGuide
 
   override def validateRefFormatWithError(ref: String): Boolean = ctx.validateRefFormatWithError(ref)
 }
