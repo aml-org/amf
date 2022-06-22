@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.external.json
 
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
 import amf.shapes.internal.annotations.ExternalSchemaWrapper
