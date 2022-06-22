@@ -28,9 +28,7 @@ object InlineJsonSchemaParser {
     val schemaEntry = YMapEntry(key, node)
     val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
       val jsonSchemaShapeContext = WebApiShapeParserContextAdapter(jsonSchemaContext)
-
-      val s = actualParsing(value, schemaEntry, jsonSchemaShapeContext)
-      s
+      parse(value, schemaEntry, jsonSchemaShapeContext)
     }
     shape
   }
@@ -43,7 +41,7 @@ object InlineJsonSchemaParser {
     )(ctx.eh)
   }
 
-  private def actualParsing(value: YNode, schemaEntry: YMapEntry, jsonSchemaContext: ShapeParserContext)(implicit
+  private def parse(value: YNode, schemaEntry: YMapEntry, jsonSchemaContext: ShapeParserContext)(implicit
       ctx: WebApiContext
   ) = {
     OasTypeParser(schemaEntry, _ => {}, ctx.computeJsonSchemaVersion(schemaEntry.value))(jsonSchemaContext)
