@@ -9,8 +9,6 @@ import amf.shapes.client.scala.model.domain._
 import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 import org.mulesoft.lexer.SourceLocation
 
-import scala.collection.mutable
-
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
@@ -44,14 +42,10 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       Seq(NAME)
     )
 
-    val maybeName = potentialPaths.map { p =>
-      path(n, p)
-    } collectFirst {
+    val maybeName = potentialPaths.map(path(n, _)) collectFirst {
       case Some(t: Terminal) => t.value
-      case Some(n: Node) =>
-        n.children match {
-          case mutable.Buffer(onlyChild: Terminal) => onlyChild.value
-        }
+      case Some(n: Node) if n.children.size == 1 && n.children.head.isInstanceOf[Terminal] =>
+        n.children.head.asInstanceOf[Terminal].value
     }
 
     maybeName match {
@@ -175,8 +169,8 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     maybeNamedNullable(t, typeName, parse)
   }
 
-  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(
-      implicit ctx: GraphQLWebApiContext
+  def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(implicit
+      ctx: GraphQLWebApiContext
   ): AnyShape = {
     val shape = parse(t, typeName)
     if (isNullable(t)) {
