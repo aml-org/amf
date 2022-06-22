@@ -3,8 +3,6 @@ package amf.apicontract.internal.spec.raml.parser.external.json
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
-import amf.core.internal.parser.domain.JsonParserFactory
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ParsedJSONSchema
@@ -13,15 +11,16 @@ import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAl
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
-import org.mulesoft.lexer.Position
 import org.yaml.model.{YMapEntry, YNode}
-import org.yaml.parser.JsonParser
 
-class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebApiContext) {
+class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebApiContext)
+    extends JsonParsing
+    with ScopedJsonContext
+    with ErrorShapeCreation {
 
   private val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
 
-  def parse(origin: ValueAndOrigin, basePath: String) = {
+  def parse(origin: ValueAndOrigin, basePath: String): AnyShape = {
     val shape = parseJsonShape(origin.text, key, origin.valueAST, ast, origin.originalUrlText)
     ctx.declarations.fragments
       .get(basePath)
@@ -70,22 +69,8 @@ class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebAp
 
   private def parseAst(text: String, valueAST: YNode, extLocation: Option[String]) = {
     searchForAlreadyParsedNodeInFragments(valueAST)(shapeCtx).getOrElse {
-      jsonParser(text, valueAST, extLocation).document().node
+      getJsonParserFor(text, valueAST, extLocation).document().node
     }
-  }
-
-  private def jsonParser(text: String, valueAST: YNode): JsonParser = {
-    JsonParserFactory.fromCharsWithSource(
-      text,
-      valueAST.value.sourceName,
-      Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
-    )(ctx.eh)
-  }
-  private def jsonParser(text: String, valueAST: YNode, extLocation: Option[String]): JsonParser = {
-    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
-    url
-      .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
-      .getOrElse(jsonParser(text, valueAST))
   }
 
   private def propagatePromotedFragments(jsonSchemaContext: OasWebApiContext): Unit = {

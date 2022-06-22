@@ -7,7 +7,7 @@ import amf.core.client.scala.parse.document.{ParsedReference, Reference}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar, YType}
 
-object SharedStuff {
+object JsonSchemaContextAdapter {
 
   def toSchemaContext(ctx: WebApiContext, ast: YNode): JsonSchemaWebApiContext = {
     ast match {

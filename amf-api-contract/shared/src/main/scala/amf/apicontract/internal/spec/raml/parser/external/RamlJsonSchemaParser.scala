@@ -1,64 +1,18 @@
 package amf.apicontract.internal.spec.raml.parser.external
 
-import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
-import amf.apicontract.internal.spec.raml.parser.external.json.SharedStuff.toSchemaContext
-import amf.apicontract.internal.spec.raml.parser.external.json.{IncludedJsonSchemaParser, InlineJsonSchemaParser, SchemaWrapperParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
-import amf.core.client.scala.parse.document._
-import amf.core.internal.annotations.ExternalFragmentRef
-import amf.core.internal.parser.domain.JsonParserFactory
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.utils.UriUtils
-import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape, UnresolvedShape}
-import amf.shapes.internal.annotations._
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper
-import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments
-import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
-import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
-import org.mulesoft.lexer.Position
-import org.yaml.model._
-import org.yaml.parser.JsonParser
-
-object RamlJsonSchemaParser {
-  def withScopedContext[T](valueAST: YNode, schemaEntry: YMapEntry)(
-      block: JsonSchemaWebApiContext => T
-  )(implicit ctx: WebApiContext): T = {
-    val nextContext = getContext(valueAST, schemaEntry)
-    val parsed      = block(nextContext)
-    cleanGlobalSpace(nextContext)            // this works because globalSpace is mutable everywhere
-    nextContext.removeLocalJsonSchemaContext // we reset the JSON schema context after parsing
-    parsed
-  }
-
-  private def getContext(valueAST: YNode, schemaEntry: YMapEntry)(implicit ctx: WebApiContext) = {
-    // we set the local schema entry to be able to resolve local $refs
-    ctx.setJsonSchemaAST(schemaEntry.value)
-    toSchemaContext(ctx, valueAST)
-  }
-
-  /** Clean from globalSpace the local references
-    */
-  private def cleanGlobalSpace(ctx: WebApiContext): Unit = {
-    ctx.globalSpace.foreach { e =>
-      val refPath = e._1.split("#").headOption.getOrElse("")
-      if (refPath == ctx.getLocalJsonSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
-    }
-  }
-
-  def errorShape(value: YNode)(implicit ctx: WebApiContext) = {
-    val shape = SchemaShape()
-    ctx.eh.violation(UnableToParseJsonSchema, shape, "Cannot parse JSON Schema", value.location)
-    shape
-  }
+import amf.apicontract.internal.spec.raml.parser.external.json.{
+  IncludedJsonSchemaParser,
+  InlineJsonSchemaParser,
+  SchemaWrapperParser
 }
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations._
+import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
+import org.yaml.model._
 
 case class RamlJsonSchemaParser(
     key: YNode,

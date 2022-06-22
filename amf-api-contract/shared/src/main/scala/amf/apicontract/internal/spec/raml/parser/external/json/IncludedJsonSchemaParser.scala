@@ -1,25 +1,11 @@
 package amf.apicontract.internal.spec.raml.parser.external.json
 
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
-import amf.core.internal.annotations.ExternalFragmentRef
-import amf.core.internal.parser.domain.JsonParserFactory
-import amf.core.internal.utils.UriUtils
-import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
-import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments
-import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
-import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
-import org.mulesoft.lexer.Position
-import org.yaml.model.{YMapEntry, YNode}
-import org.yaml.parser.JsonParser
+import org.yaml.model.YNode
 
 case class IncludedJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebApiContext) {
 
