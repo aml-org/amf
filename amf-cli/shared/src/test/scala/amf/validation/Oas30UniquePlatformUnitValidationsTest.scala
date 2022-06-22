@@ -75,11 +75,11 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Nested callback external refs") {
-    validate("nested-libraries/nested-callbacks/api.json", None)
+    validate("nested-libraries/nested-callbacks/api.json")
   }
 
   test("Nested request external refs") {
-    validate("nested-libraries/nested-requests/api.json", None)
+    validate("nested-libraries/nested-requests/api.json")
   }
 
   test("Validate invalid parameter defined in request body link") {
@@ -87,7 +87,7 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Nested yaml refs") {
-    validate("nested-yaml-refs/api.yaml", None)
+    validate("nested-yaml-refs/api.yaml")
   }
 
   test("Invalid status code without quotes") {
@@ -99,7 +99,7 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Implicit timestamp invalid yaml tags") {
-    validate("implicit-timestamp-yaml-tags.yaml", None)
+    validate("implicit-timestamp-yaml-tags.yaml")
   }
 
   test("Explicit timestamp invalid yaml tags") {
@@ -139,30 +139,30 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Valid oas3 with inlined ref to schema with nullable") {
-    validate("ref-nullable/ref-nullable-inlined.yaml", None)
+    validate("ref-nullable/ref-nullable-inlined.yaml")
   }
 
   test("Valid oas3 with external ref to schema with nullable") {
-    validate("ref-nullable/ref-nullable-external.yaml", None)
+    validate("ref-nullable/ref-nullable-external.yaml")
   }
 
   test("Valid oas3 with ref to external unknown schema") {
-    validate("ref-schema/ref-unknown-schema.json", None)
+    validate("ref-schema/ref-unknown-schema.json")
   }
 
   test("Valid oas3 with ref to external versioned schema") {
-    validate("ref-schema/ref-version-schema.json", None)
+    validate("ref-schema/ref-version-schema.json")
   }
 
   test("Valid ref to endpoint with another ref") {
-    validate("double-references/valid-ref-to-endpoint-with-ref.yaml", None)
+    validate("double-references/valid-ref-to-endpoint-with-ref.yaml")
   }
 
   test("Valid ref to header with another ref") {
-    validate("double-references/valid-ref-to-header-with-ref.yaml", None)
+    validate("double-references/valid-ref-to-header-with-ref.yaml")
   }
 
   test("Valid ref to parameter with another ref") {
-    validate("double-references/valid-ref-to-endpoint-with-ref-to-param.yaml", None)
+    validate("double-references/valid-ref-to-endpoint-with-ref-to-param.yaml")
   }
 }
