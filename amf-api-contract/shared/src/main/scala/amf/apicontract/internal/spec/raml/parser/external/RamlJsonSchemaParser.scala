@@ -4,8 +4,9 @@ import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapePa
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaExpression.{errorShape, withScopedContext}
-import amf.apicontract.internal.spec.raml.parser.external.SharedStuff.toSchemaContext
+import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
+import amf.apicontract.internal.spec.raml.parser.external.json.SharedStuff.toSchemaContext
+import amf.apicontract.internal.spec.raml.parser.external.json.{IncludedJsonSchemaParser, InlineJsonSchemaParser, SchemaWrapperParser}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.ExternalFragmentRef
@@ -26,7 +27,7 @@ import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
-object RamlJsonSchemaExpression {
+object RamlJsonSchemaParser {
   def withScopedContext[T](valueAST: YNode, schemaEntry: YMapEntry)(
       block: JsonSchemaWebApiContext => T
   )(implicit ctx: WebApiContext): T = {
@@ -59,7 +60,7 @@ object RamlJsonSchemaExpression {
   }
 }
 
-case class RamlJsonSchemaExpression(
+case class RamlJsonSchemaParser(
     key: YNode,
     override val value: YNode,
     parseExample: Boolean = false
@@ -77,25 +78,25 @@ case class RamlJsonSchemaExpression(
 
   }
 
-  private def parseSchema(origin: ValueAndOrigin) = {
-    val parsed = parseJsonSchema(origin)
-    parsed.annotations += SchemaIsJsonSchema()
-    parsed
-  }
-
   private def parseWrappedSchema(origin: ValueAndOrigin, map: YMap): AnyShape = {
     val parsed: AnyShape  = parseWrappedSchema(origin)
     val wrapper: AnyShape = parseSchemaWrapper(map, parsed)
     wrapper
   }
 
-  private def parseSchemaWrapper(map: YMap, parsed: AnyShape) =
-    SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
-
   private def parseWrappedSchema(origin: ValueAndOrigin): AnyShape = {
     val parsed = parseJsonSchema(origin)
     parsed.annotations += SchemaIsJsonSchema()
     parsed.withName("schema")
+    parsed
+  }
+
+  private def parseSchemaWrapper(map: YMap, parsed: AnyShape) =
+    SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
+
+  private def parseSchema(origin: ValueAndOrigin) = {
+    val parsed = parseJsonSchema(origin)
+    parsed.annotations += SchemaIsJsonSchema()
     parsed
   }
 

@@ -1,7 +1,7 @@
-package amf.apicontract.internal.spec.raml.parser.external
+package amf.apicontract.internal.spec.raml.parser.external.json
 
 import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaExpression.{errorShape, withScopedContext}
+import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
 import amf.core.internal.parser.domain.JsonParserFactory
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.ParsedJSONSchema

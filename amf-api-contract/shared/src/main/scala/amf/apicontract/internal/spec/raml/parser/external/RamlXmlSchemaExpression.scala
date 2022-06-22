@@ -23,7 +23,7 @@ case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWe
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =
     RamlXmlSchemaExpression(key, value, adopt, parseExample)
   def createJson(key: YNode, value: YNode, parseExample: Boolean = false) =
-    RamlJsonSchemaExpression(key, value, parseExample)
+    RamlJsonSchemaParser(key, value, parseExample)
 }
 
 case class RamlXmlSchemaExpression(

@@ -1,8 +1,8 @@
-package amf.apicontract.internal.spec.raml.parser.external
+package amf.apicontract.internal.spec.raml.parser.external.json
 
 import amf.apicontract.internal.spec.oas.parser.document.Draft4JsonSchemaDeclarationsParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.SharedStuff.toSchemaContext
+import SharedStuff.toSchemaContext
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.JsonParserFactory
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler

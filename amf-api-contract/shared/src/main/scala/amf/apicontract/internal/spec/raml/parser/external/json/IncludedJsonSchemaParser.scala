@@ -1,9 +1,9 @@
-package amf.apicontract.internal.spec.raml.parser.external
+package amf.apicontract.internal.spec.raml.parser.external.json
 
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaExpression.{errorShape, withScopedContext}
+import amf.apicontract.internal.spec.raml.parser.external.RamlJsonSchemaParser.{errorShape, withScopedContext}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
 import amf.core.internal.annotations.ExternalFragmentRef
