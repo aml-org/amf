@@ -28,7 +28,7 @@ case class RamlJsonSchemaParser(
     case map: YMap if parseExample =>
       parseWrappedSchema(origin, map)
     case _ =>
-      parseSchema(origin)
+      parseJsonSchema(origin)
 
   }
 
@@ -40,7 +40,6 @@ case class RamlJsonSchemaParser(
 
   private def parseWrappedSchema(origin: ValueAndOrigin): AnyShape = {
     val parsed = parseJsonSchema(origin)
-    parsed.annotations += SchemaIsJsonSchema()
     parsed.withName("schema")
     parsed
   }
@@ -48,19 +47,15 @@ case class RamlJsonSchemaParser(
   private def parseSchemaWrapper(map: YMap, parsed: AnyShape) =
     SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
 
-  private def parseSchema(origin: ValueAndOrigin) = {
-    val parsed = parseJsonSchema(origin)
-    parsed.annotations += SchemaIsJsonSchema()
-    parsed
-  }
-
   private def parseJsonSchema(origin: ValueAndOrigin) = {
-    origin.originalUrlText match {
+    val parsed = origin.originalUrlText match {
       case Some(url) =>
         IncludedJsonSchemaParser(key, value).parse(origin, url).add(ExternalReferenceUrl(url))
       case None =>
         InlineJsonSchemaParser.parse(key, value, origin)
     }
+    parsed.annotations += SchemaIsJsonSchema()
+    parsed
   }
 
   override val externalType: String = "JSON"
