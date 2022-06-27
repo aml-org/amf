@@ -99,6 +99,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
     spec match {
       case Raml10.id | Raml08.id => ramlLinks(part)
       case Oas20.id | Oas30.id   => oasLinks(part)
+      case JsonSchema.id         => oasLinks(part)
       case AsyncApi20.id =>
         oasLinks(part)
         ramlLinks(part)

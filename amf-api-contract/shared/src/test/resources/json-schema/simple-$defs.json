@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "Family Group",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/Person"
+  },
+  "minItems": 1,
+  "$defs": {
+    "Person": {
+      "type": "object",
+      "properties": {
+        "name":{
+          "type": "string",
+          "minLength": 3
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0,
+          "multipleOf": 1
+        }
+      }
+    }
+  }
+}

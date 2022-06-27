@@ -6,13 +6,13 @@ import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
-import amf.core.internal.transform.stages.{SourceInformationStage, UrlShortenerStage}
+import amf.core.internal.transform.stages.{ReferenceResolutionStage, SourceInformationStage, UrlShortenerStage}
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
     extends TransformationPipeline() {
 
-  protected def references = new WebApiReferenceResolutionStage(keepEditingInfo = true)
+  protected def references: ReferenceResolutionStage = new WebApiReferenceResolutionStage(keepEditingInfo = true)
   protected def url: Option[UrlShortenerStage] =
     if (urlShortening) Some(new UrlShortenerStage()) else None
 

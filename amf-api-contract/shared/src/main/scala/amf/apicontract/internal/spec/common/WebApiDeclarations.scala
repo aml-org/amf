@@ -29,7 +29,6 @@ import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.QName
-import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
@@ -658,6 +657,32 @@ object AsyncWebApiDeclarations {
 
     // TODO ASYNC complete this
     declarations.securitySchemes = d.securitySchemes
+    declarations
+  }
+}
+
+class JsonSchemaDeclarations(
+    override val asts: Map[String, YNode],
+    override val alias: Option[String],
+    override val errorHandler: AMFErrorHandler,
+    override val futureDeclarations: FutureDeclarations
+) extends OasWebApiDeclarations(
+      asts,
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations
+    ) {}
+
+object JsonSchemaDeclarations {
+  def apply(d: WebApiDeclarations): JsonSchemaDeclarations = {
+    val declarations = new JsonSchemaDeclarations(
+      Map(),
+      d.alias,
+      errorHandler = d.errorHandler,
+      futureDeclarations = d.futureDeclarations
+    )
+
+    declarations.shapes = d.shapes // Currently we will only support schema declarations
     declarations
   }
 }
