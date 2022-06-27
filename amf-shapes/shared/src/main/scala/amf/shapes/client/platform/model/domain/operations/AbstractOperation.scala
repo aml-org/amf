@@ -6,7 +6,6 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.operations.{AbstractOperation => InternalAbstractOperation}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
-import javax.xml.ws.soap.AddressingFeature.Responses
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
