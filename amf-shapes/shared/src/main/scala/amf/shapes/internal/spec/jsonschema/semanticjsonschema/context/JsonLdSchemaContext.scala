@@ -94,6 +94,8 @@ abstract class JsonLdSchemaContext(ctx: ParserContext, settings: SpecSettings)
 
   override def toOas: ShapeParserContext = this
 
+  override def parsingOptions: ParsingOptions = ctx.parsingOptions
+
   override def findExample(key: String, scope: SearchScope.Scope): Option[Example] = None
 
   override def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit]): Option[AnyShape] = None
@@ -143,6 +145,8 @@ abstract class JsonLdSchemaContext(ctx: ParserContext, settings: SpecSettings)
 
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
+
+  override def addDeclaredShape(shape: Shape): Unit = {}
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
 

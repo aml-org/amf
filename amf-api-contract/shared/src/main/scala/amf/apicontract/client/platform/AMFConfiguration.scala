@@ -6,6 +6,7 @@ import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.client.scala.{
   APIConfiguration => InternalAPIConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  JsonSchemaConfiguration => InternalJsonSchemaDocumentConfiguration,
   OASConfiguration => InternalOASConfiguration,
   RAMLConfiguration => InternalRAMLConfiguration,
   WebAPIConfiguration => InternalWebAPIConfiguration
@@ -198,6 +199,17 @@ object WebAPIConfiguration {
 @JSExportTopLevel("AsyncAPIConfiguration")
 object AsyncAPIConfiguration {
   def Async20(): AMFConfiguration = InternalAsyncAPIConfiguration.Async20()
+}
+
+/** common configuration with all configurations needed for AsyncApi like:
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
+  */
+@JSExportAll
+@JSExportTopLevel("JsonSchemaConfiguration")
+object JsonSchemaConfiguration {
+  def JsonSchema(): AMFConfiguration = InternalJsonSchemaDocumentConfiguration.JsonSchema()
 }
 
 /** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration]] configurations */

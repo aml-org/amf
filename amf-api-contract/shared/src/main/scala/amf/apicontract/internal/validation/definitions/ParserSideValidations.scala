@@ -409,17 +409,22 @@ object ParserSideValidations extends Validations {
 
   val DuplicatedArgument = validation(
     id = "duplicated-argument",
-    message= "Cannot exist two or more arguments with same name"
+    message = "Cannot exist two or more arguments with same name"
   )
 
   val DuplicatedDeclaration = validation(
     id = "duplicated-declaration",
-    message= "Cannot exist two or more declarations with same name"
+    message = "Cannot exist two or more declarations with same name"
   )
 
   val DuplicatedDirectiveApplication = validation(
     id = "duplicated-directive-application",
-    message= "Directive can only be applied once per location"
+    message = "Directive can only be applied once per location"
+  )
+
+  val MandatorySchema = validation(
+    "mandatory-schema-key",
+    "$schema entry is mandatory for JSON Schema fragments"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
@@ -507,6 +512,7 @@ object ParserSideValidations extends Validations {
     DuplicatedField,
     DuplicatedArgument,
     DuplicatedDeclaration,
-    DuplicatedDirectiveApplication
+    DuplicatedDirectiveApplication,
+    MandatorySchema
   )
 }
