@@ -1,6 +1,5 @@
 package amf.shapes.client.platform.model.domain.operations
 
-import amf.core.internal.convert.CoreClientConverters
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation => InternalShapeOperation}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
@@ -15,6 +14,8 @@ case class ShapeOperation(override private[amf] val _internal: InternalShapeOper
   override def request: RequestType = _internal.request
 
   override def response: ResponseType = _internal.responses.head
+
+  def responses: ClientList[ShapeResponse] = _internal.responses.asClient
 
   override private[amf] def buildResponse: ResponseType = _internal.buildResponse
 
