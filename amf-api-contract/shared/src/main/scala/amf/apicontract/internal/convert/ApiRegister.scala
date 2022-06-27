@@ -29,7 +29,12 @@ import amf.apicontract.client.scala.model.document.{
 }
 import amf.apicontract.client.scala.model.{document, domain}
 import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ExtensionModel, OverlayModel}
+import amf.apicontract.internal.metamodel.document.{
+  APIContractProcessingDataModel,
+  ExtensionModel,
+  JsonSchemaDocumentModel,
+  OverlayModel
+}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api._
 import amf.apicontract.internal.metamodel.domain.bindings._
@@ -255,6 +260,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(APIContractProcessingDataModel) {
       case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)
+    }
+    platform.registerWrapper(JsonSchemaDocumentModel) {
+      case s: amf.apicontract.client.scala.model.document.JsonSchemaDocument => JsonSchemaDocument(s)
     }
   }
 

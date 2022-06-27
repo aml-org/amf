@@ -1,7 +1,12 @@
 package amf.apicontract.internal.entities
 
 import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ExtensionModel, OverlayModel}
+import amf.apicontract.internal.metamodel.document.{
+  APIContractProcessingDataModel,
+  ExtensionModel,
+  JsonSchemaDocumentModel,
+  OverlayModel
+}
 import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 
@@ -17,7 +22,8 @@ private[amf] object FragmentEntities extends Entities {
     TraitFragmentModel,
     AnnotationTypeDeclarationFragmentModel,
     SecuritySchemeFragmentModel,
-    APIContractProcessingDataModel
+    APIContractProcessingDataModel,
+    JsonSchemaDocumentModel
   )
 
 }

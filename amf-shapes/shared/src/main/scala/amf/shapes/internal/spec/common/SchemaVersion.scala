@@ -36,6 +36,15 @@ object SchemaVersion {
     case JSONSchemaDraft7SchemaVersion      => ClientJSONSchemaVersions.Draft07
     case _                                  => ClientJSONSchemaVersions.Draft04
   }
+
+  def unapply(url: String): JSONSchemaVersion = url match {
+    case JSONSchemaDraft3SchemaVersion.url      => JSONSchemaDraft3SchemaVersion
+    case JSONSchemaDraft4SchemaVersion.url      => JSONSchemaDraft4SchemaVersion
+    case JSONSchemaDraft6SchemaVersion.url      => JSONSchemaDraft6SchemaVersion
+    case JSONSchemaDraft7SchemaVersion.url      => JSONSchemaDraft7SchemaVersion
+    case JSONSchemaDraft201909SchemaVersion.url => JSONSchemaDraft201909SchemaVersion
+    case _                                      => JSONSchemaUnspecifiedVersion
+  }
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~ RAML ~~~~~~~~~~~~~~~~~~~~~~~~

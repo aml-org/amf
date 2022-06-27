@@ -36,6 +36,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
 
   def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder
 
+  def parsingOptions: ParsingOptions
   def toOasNext: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]
   def rootContextDocument: String
@@ -71,6 +72,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
       error: Option[String => Unit] = None
   ): Option[CreativeWork]
 
+  def addDeclaredShape(shape: Shape): Unit
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
   def addNodeRefIds(ids: mutable.Map[YNode, String])
   def nodeRefIds: mutable.Map[YNode, String]

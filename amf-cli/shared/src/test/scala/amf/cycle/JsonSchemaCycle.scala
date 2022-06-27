@@ -10,7 +10,7 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.testing.HintProvider
@@ -267,8 +267,8 @@ case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val config    = EmptyRenderConfiguration(UnhandledErrorHandler, options)
     val shape     = fragment.encodes
-    val emitter   = JsonSchemaEmitter(shape, Seq(shape), renderConfig = config, errorHandler = UnhandledErrorHandler)
-    val goldenDoc = emitter.emitDocument()
+    val emitter   = JsonSchemaEmitter(renderConfig = config)
+    val goldenDoc = emitter.emit(shape)
     JsonRender.render(goldenDoc)
   }
 }

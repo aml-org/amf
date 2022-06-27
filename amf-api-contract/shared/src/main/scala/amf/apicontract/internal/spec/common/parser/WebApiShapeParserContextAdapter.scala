@@ -41,6 +41,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = ctx.extensionsFacadeBuilder
 
+  override def parsingOptions: ParsingOptions = ctx.parsingOptions
+
   override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = ctx match {
     case ramlCtx: RamlWebApiContext => ramlCtx.closedRamlTypeShape(shape, ast, shapeType, typeInfo)
     case _                          => throw new Exception("Parser - not in RAML!")
@@ -142,6 +144,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
       error: Option[String => Unit]
   ): Option[CreativeWork] =
     ctx.declarations.findDocumentations(key, scope, error)
+
+  def addDeclaredShape(shape: Shape): Unit = ctx.declarations += shape
 
   override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
     ctx.obtainRemoteYNode(ref)(ctx)
