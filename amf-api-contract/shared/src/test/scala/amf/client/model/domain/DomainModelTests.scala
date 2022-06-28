@@ -1,15 +1,21 @@
 package amf.client.model.domain
 
-import amf.apicontract.client.platform.model.domain.api.WebApi
-import amf.apicontract.client.platform.model.domain.Operation
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
-import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
-import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.client.platform.model.domain._
+import amf.apicontract.client.platform.model.domain.api.WebApi
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
+import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.client.scala.model.domain
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.shapes.client.platform.model.domain._
+import amf.shapes.client.platform.model.domain.operations._
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -17,12 +23,12 @@ import org.scalatest.matchers.should.Matchers
 //noinspection ZeroIndexToHead
 class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
-  val s                                    = "test string"
+  val s: String                            = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient
-  val shape                                = new AnyShape()
-  val parameters                           = Seq(new Parameter()._internal)
-  val settings                             = new Settings()
-  val creativeWork                         = new CreativeWork()
+  val shape: AnyShape                      = new AnyShape()
+  val parameters: Seq[domain.Parameter]    = Seq(new Parameter()._internal)
+  val settings: Settings                   = new Settings()
+  val creativeWork: CreativeWork           = new CreativeWork()
 
   override protected def beforeAll(): Unit = {
     APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
@@ -252,6 +258,7 @@ class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll 
       .withName(s)
       .withDescription(s)
       .withVariables(creativeWork)
+      .withDocumentation(creativeWork)
     tag.name.value() shouldBe s
     tag.description.value() shouldBe s
     tag.documentation._internal shouldBe creativeWork._internal
@@ -346,6 +353,31 @@ class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll 
     operation.isAbstract.value() shouldBe false
     operation.bindings._internal shouldBe operationBindings._internal
     operation.operationId.value() shouldBe s
+  }
+
+  test("test ShapeRequest") {
+    val request     = new ShapeRequest()
+    val queryParams = Seq(new ShapeParameter()._internal).asClient
+    request.withQueryParameters(queryParams)
+    request.queryParameters.asInternal shouldBe queryParams.asInternal
+  }
+
+  test("test ShapeResponse") {
+    val response = new ShapeResponse()
+    val payload  = new ShapePayload()
+    response.withPayload(payload)
+    response.payload._internal shouldBe payload._internal
+  }
+
+  test("test ShapeOperation") {
+    val request = new ShapeRequest()
+    val shapeOperation = new ShapeOperation()
+      .withRequest(request)
+    val responses = Seq(shapeOperation.withResponse("responseName")._internal)
+    shapeOperation.withResponses(responses.asClient)
+
+    shapeOperation.request._internal shouldBe request._internal
+    shapeOperation.responses.asInternal.head shouldBe responses.head
   }
 
   test("test EndPoint") {

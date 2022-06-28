@@ -33,6 +33,8 @@ abstract class AbstractOperation(override private[amf] val _internal: InternalAb
 
   def response: ResponseType
 
+  def responses: ClientList[ResponseType]
+
   private[amf] def buildResponse: ResponseType
 
   private[amf] def buildRequest: RequestType
