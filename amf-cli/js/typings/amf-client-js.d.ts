@@ -120,6 +120,8 @@ declare module 'amf-client-js' {
     ifShape: Shape
     elseShape: Shape
     thenShape: Shape
+    isExtension: BoolField
+    hasExplicitName: boolean
 
     annotations(): Annotations
 
@@ -162,6 +164,8 @@ declare module 'amf-client-js' {
     withElse(elseShape: Shape): this
 
     withThen(thenShape: Shape): this
+
+    withIsExtension(value: boolean): this
 
 
   }
@@ -744,6 +748,7 @@ declare module 'amf-client-js' {
 
     parseSemanticSchemaContent(content: string): Promise<AMFSemanticSchemaResult>
 
+
   }
   export interface ValidationResult  {
     readonly keyword: string
@@ -808,6 +813,7 @@ declare module 'amf-client-js' {
     displayName: StrField
     name: StrField
     customDomainProperties: Array<DomainExtension>
+    isExtension: BoolField
     xone: Array<Shape>
     readOnly: BoolField
     description: StrField
@@ -817,6 +823,7 @@ declare module 'amf-client-js' {
     or: Array<Shape>
     elseShape: Shape
     linkTarget: undefined | DomainElement
+    hasExplicitName: boolean
     isLink: boolean
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
@@ -848,6 +855,8 @@ declare module 'amf-client-js' {
     withDescription(description: string): this
 
     withIf(ifShape: Shape): this
+
+    withIsExtension(value: boolean): this
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
@@ -1492,6 +1501,8 @@ declare module 'amf-client-js' {
 
     withPayloads(payloads: Array<Payload>): this
 
+    withPayload(): Payload
+
     linkCopy(): Message
 
     withAbstract(isAbstract: boolean): this
@@ -1503,6 +1514,8 @@ declare module 'amf-client-js' {
     withTitle(title: string): this
 
     withBindings(bindings: MessageBindings): this
+
+    withPayload(mediaType: string): Payload
 
     withExamples(examples: Array<Example>): this
 
@@ -1525,6 +1538,8 @@ declare module 'amf-client-js' {
     link<T>(): T
 
     withLinkTarget(target: undefined): this
+
+    withPayload(mediaType: undefined | string): Payload
 
     withDisplayName(displayName: string): this
 
@@ -1928,6 +1943,7 @@ declare module 'amf-client-js' {
     isAmfJsonLdSerialization: boolean
     definedBaseUrl: undefined | string
     getMaxYamlReferences: undefined | number
+    getMaxJSONComplexity: undefined | number
 
     constructor()
 
@@ -1940,6 +1956,8 @@ declare module 'amf-client-js' {
     withoutBaseUnitUrl(): ParsingOptions
 
     setMaxYamlReferences(value: number): ParsingOptions
+
+    setMaxJSONComplexity(value: number): ParsingOptions
 
 
   }
@@ -1962,6 +1980,9 @@ declare module 'amf-client-js' {
     withHeaders(headers: Array<Parameter>): this
 
     withStatusCode(statusCode: string): this
+
+    // @ts-ignore
+    linkCopy(): Response
 
     withName(name: string): this
 
@@ -1988,9 +2009,6 @@ declare module 'amf-client-js' {
     withId(id: string): this
 
     withHeader(name: string): Parameter
-
-    // @ts-ignore
-    linkCopy(): Response
 
 
   }
@@ -2160,6 +2178,7 @@ declare module 'amf-client-js' {
     name: StrField
     serializationOrder: IntField
     customDomainProperties: Array<DomainExtension>
+    isExtension: BoolField
     path: StrField
     xone: Array<Shape>
     readOnly: BoolField
@@ -2170,6 +2189,7 @@ declare module 'amf-client-js' {
     elseShape: Shape
     linkTarget: undefined | DomainElement
     maxCount: IntField
+    hasExplicitName: boolean
     isLink: boolean
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
@@ -2212,6 +2232,8 @@ declare module 'amf-client-js' {
     withMaxCount(max: number): this
 
     withIf(ifShape: Shape): this
+
+    withIsExtension(value: boolean): this
 
     withSerializationOrder(order: number): this
 
@@ -3931,6 +3953,7 @@ declare module 'amf-client-js' {
     displayName: StrField
     name: StrField
     customDomainProperties: Array<DomainExtension>
+    isExtension: BoolField
     examples: Array<Example>
     xone: Array<Shape>
     readOnly: BoolField
@@ -3942,6 +3965,7 @@ declare module 'amf-client-js' {
     or: Array<Shape>
     elseShape: Shape
     linkTarget: undefined | DomainElement
+    hasExplicitName: boolean
     isLink: boolean
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
@@ -3978,6 +4002,8 @@ declare module 'amf-client-js' {
     trackedExample(trackId: string): undefined | Example
 
     withIf(ifShape: Shape): this
+
+    withIsExtension(value: boolean): this
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
@@ -5979,6 +6005,7 @@ declare module 'amf-client-js' {
 
   }
   export class RenderOptions  {
+    withGovernanceMode: RenderOptions
     isWithDocumentation: boolean
     isWithCompactedEmission: boolean
     schemaVersion: JSONSchemaVersion
@@ -5989,6 +6016,7 @@ declare module 'amf-client-js' {
     isPrettyPrint: boolean
     isEmitNodeIds: boolean
     isRawFieldEmission: boolean
+    isGovernanceMode: boolean
 
     constructor()
 

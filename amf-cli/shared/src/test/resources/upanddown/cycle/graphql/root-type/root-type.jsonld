@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid/query",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid/supportedOperation/query/Starship.id",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid/supportedOperation/query/Starship.id/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid/supportedOperation/query/Starship.id/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid/supportedOperation/query/Starship.id/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fid/query/resp/default/default/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fid/supportedOperation/query/Starship.id/returns/resp/default/payload/default/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -129,7 +129,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -146,7 +146,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Starship.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -164,7 +164,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Starship.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -175,7 +175,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Starship.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -194,7 +194,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Starship.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -202,7 +202,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Starship.name/returns/resp/default/payload/default/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -239,7 +239,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/root-type/root-type.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],

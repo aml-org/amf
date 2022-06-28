@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/%2Fquery%2Fplanet/query/resp/default/default/unresolved/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/link-413542847",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/web-api/endpoint/%2Fquery%2Fplanet/supportedOperation/query/Query.planet/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,7 +125,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -159,7 +159,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -177,7 +177,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -197,11 +197,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/MERCURY",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/MERCURY",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -226,7 +226,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/VENUS",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/VENUS",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -251,7 +251,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/EARTH",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/EARTH",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -276,7 +276,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_4": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/MARS",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/MARS",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -301,7 +301,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_5": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/JUPITER",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/JUPITER",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -326,7 +326,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_6": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/SATURN",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/SATURN",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -351,7 +351,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_7": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/URANUS",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/URANUS",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -376,7 +376,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_8": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql/scalar/Planet/NEPTUNE",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet/in/NEPTUNE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -399,6 +399,62 @@
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Planet"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#in": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1/list",
+            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+            "http://www.w3.org/2000/01/rdf-schema#_1": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-enum.api.graphql#/declares/scalar/Planet_1/in/PLUTO",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "PLUTO"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "PLUTO"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#isExtension": [
+          {
+            "@value": true
           }
         ]
       }

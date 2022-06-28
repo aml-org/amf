@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -67,7 +67,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request/parameter/default-binding/name",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/name",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request/parameter/default-binding/name/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/name/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,7 +107,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request/parameter/default-binding/country",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/country",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -130,7 +130,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request/parameter/default-binding/country/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/country/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -147,7 +147,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/request/parameter/default-binding/config",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/config",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -170,7 +170,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput/link--1688170735",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/expects/request/parameter/parameter/query/config/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -180,7 +180,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -196,7 +196,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -215,7 +215,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -223,7 +223,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -233,7 +233,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/resp/default/default/shape/City/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -242,7 +242,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityByName/query/resp/default/default/shape/City/nullwrapper/shape/City",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityByName/supportedOperation/query/Query.getCityByName/returns/resp/default/payload/default/union/default-union/anyOf/shape/City",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -252,7 +252,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -282,7 +282,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -299,7 +299,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -317,7 +317,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -326,7 +326,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -349,7 +349,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/request/parameter/default-binding/id/array/default-array",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request/parameter/parameter/query/id/array/default-array",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -359,7 +359,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/request/parameter/default-binding/id/array/default-array/items/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request/parameter/parameter/query/id/array/default-array/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -378,7 +378,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/request/parameter/default-binding/config",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request/parameter/parameter/query/config",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -401,7 +401,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput/link-74691669",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/expects/request/parameter/parameter/query/config/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -411,7 +411,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -427,7 +427,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -446,7 +446,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -454,7 +454,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -464,7 +464,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -473,7 +473,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -483,7 +483,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/%2Fquery%2FgetCityById/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -493,7 +493,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/link-1476200010/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -502,7 +502,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/link-1476200010/nullwrapper/shape/City",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/web-api/endpoint/%2Fquery%2FgetCityById/supportedOperation/query/Query.getCityById/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/City",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -512,7 +512,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -555,7 +555,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -573,7 +573,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -583,7 +583,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind/property/speed",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind/property/property/speed",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -592,7 +592,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind/property/speed/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind/property/property/speed/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -619,7 +619,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind/property/deg",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind/property/property/deg",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -628,7 +628,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind/property/deg/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind/property/property/deg/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -662,7 +662,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -672,7 +672,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates/property/lon",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates/property/property/lon",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -681,7 +681,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates/property/lon/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates/property/property/lon/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -708,7 +708,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates/property/lat",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates/property/property/lat",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -717,7 +717,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates/property/lat/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates/property/property/lat/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -751,7 +751,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/CacheControlScope",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -771,11 +771,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/CacheControlScope/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope/PUBLIC",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/CacheControlScope/in/PUBLIC",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -800,7 +800,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope/PRIVATE",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/CacheControlScope/in/PRIVATE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -827,7 +827,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Upload",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Upload",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -852,7 +852,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -872,11 +872,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/af",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/af",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -901,7 +901,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/al",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/al",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -926,7 +926,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ar",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -951,7 +951,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_4": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/az",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/az",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -976,7 +976,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_5": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/bg",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/bg",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1001,7 +1001,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_6": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ca",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ca",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1026,7 +1026,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_7": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/cz",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/cz",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1051,7 +1051,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_8": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/da",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/da",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1076,7 +1076,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_9": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/de",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/de",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1101,7 +1101,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_10": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/el",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/el",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1126,7 +1126,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_11": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/en",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/en",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1151,7 +1151,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_12": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/eu",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/eu",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1176,7 +1176,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_13": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/fa",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/fa",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1201,7 +1201,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_14": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/fi",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/fi",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1226,7 +1226,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_15": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/fr",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/fr",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1251,7 +1251,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_16": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/gl",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/gl",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1276,7 +1276,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_17": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/he",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/he",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1301,7 +1301,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_18": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/hi",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/hi",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1326,7 +1326,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_19": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/hr",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/hr",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1351,7 +1351,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_20": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/hu",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/hu",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1376,7 +1376,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_21": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/id",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/id",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1401,7 +1401,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_22": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/it",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/it",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1426,7 +1426,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_23": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ja",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ja",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1451,7 +1451,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_24": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/kr",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/kr",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1476,7 +1476,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_25": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/la",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/la",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1501,7 +1501,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_26": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/lt",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/lt",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1526,7 +1526,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_27": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/mk",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/mk",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1551,7 +1551,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_28": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/no",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/no",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1576,7 +1576,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_29": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/nl",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/nl",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1601,7 +1601,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_30": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/pl",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/pl",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1626,7 +1626,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_31": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/pt",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/pt",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1651,7 +1651,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_32": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/pt_br",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/pt_br",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1676,7 +1676,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_33": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ro",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ro",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1701,7 +1701,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_34": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ru",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ru",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1726,7 +1726,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_35": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/sv",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/sv",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1751,7 +1751,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_36": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/se",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/se",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1776,7 +1776,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_37": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/sk",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/sk",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1801,7 +1801,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_38": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/sl",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/sl",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1826,7 +1826,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_39": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/sp",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/sp",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1851,7 +1851,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_40": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/es",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/es",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1876,7 +1876,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_41": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/sr",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/sr",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1901,7 +1901,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_42": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/th",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/th",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1926,7 +1926,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_43": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/tr",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/tr",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1951,7 +1951,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_44": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/ua",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/ua",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -1976,7 +1976,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_45": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/uk",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/uk",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2001,7 +2001,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_46": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/vi",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/vi",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2026,7 +2026,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_47": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/zh_cn",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/zh_cn",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2051,7 +2051,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_48": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/zh_tw",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/zh_tw",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2076,7 +2076,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_49": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/zu",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language/in/zu",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2103,7 +2103,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2113,7 +2113,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2122,7 +2122,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2154,7 +2154,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2163,7 +2163,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2190,7 +2190,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/country",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/country",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2199,7 +2199,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/country/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/country/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2226,7 +2226,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/coord",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/coord",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2235,7 +2235,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates/link--847606014",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/coord/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2245,7 +2245,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Coordinates"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Coordinates"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2267,7 +2267,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/City/property/weather",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/weather",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2276,7 +2276,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/link--1821776965",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/City/property/property/weather/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2286,7 +2286,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2315,7 +2315,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2325,7 +2325,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/summary",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/summary",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2334,7 +2334,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/summary/shape/Summary",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/summary/shape/Summary",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2344,7 +2344,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2371,7 +2371,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/temperature",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/temperature",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2380,7 +2380,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/temperature/shape/Temperature",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/temperature/shape/Temperature",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2390,7 +2390,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2417,7 +2417,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/wind",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/wind",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2426,7 +2426,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind/link--1047264963",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/wind/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2436,7 +2436,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Wind"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Wind"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2458,7 +2458,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/clouds",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/clouds",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2467,7 +2467,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/clouds/shape/Clouds",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/clouds/shape/Clouds",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2477,7 +2477,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2504,7 +2504,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/timestamp",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/timestamp",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2513,7 +2513,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Weather/property/timestamp/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Weather/property/property/timestamp/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2547,7 +2547,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2557,7 +2557,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput/property/units",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput/property/property/units",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2566,7 +2566,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit/link--329471477",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput/property/property/units/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2576,7 +2576,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2598,7 +2598,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/ConfigInput/property/lang",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput/property/property/lang",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2607,7 +2607,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language/link-978338623",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/ConfigInput/property/property/lang/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2617,7 +2617,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Language"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Language"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2651,7 +2651,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2671,11 +2671,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit/metric",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit/in/metric",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2700,7 +2700,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit/imperial",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit/in/imperial",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2725,7 +2725,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/Unit/kelvin",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/Unit/in/kelvin",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -2752,7 +2752,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2762,7 +2762,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/actual",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/actual",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2771,7 +2771,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/actual/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/actual/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2798,7 +2798,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/feelsLike",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/feelsLike",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2807,7 +2807,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/feelsLike/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/feelsLike/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2834,7 +2834,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/min",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/min",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2843,7 +2843,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/min/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/min/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2870,7 +2870,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/max",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/max",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2879,7 +2879,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Temperature/property/max/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Temperature/property/property/max/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2913,7 +2913,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2923,7 +2923,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/title",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/title",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2932,7 +2932,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/title/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/title/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2959,7 +2959,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/description",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/description",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2968,7 +2968,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/description/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/description/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2995,7 +2995,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/icon",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/icon",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3004,7 +3004,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Summary/property/icon/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Summary/property/property/icon/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3038,7 +3038,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3048,7 +3048,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/all",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/all",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3057,7 +3057,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/all/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/all/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3084,7 +3084,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/visibility",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/visibility",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3093,7 +3093,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/visibility/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/visibility/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3120,7 +3120,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/humidity",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/humidity",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3129,7 +3129,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/shape/Clouds/property/humidity/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/shape/Clouds/property/property/humidity/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3163,7 +3163,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3182,7 +3182,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3192,7 +3192,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl/shape/default-node/property/maxAge",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3201,7 +3201,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3211,7 +3211,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3220,7 +3220,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3244,7 +3244,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl/shape/default-node/property/scope",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3253,7 +3253,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3263,7 +3263,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3272,7 +3272,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/scalar/CacheControlScope",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3282,15 +3282,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql/scalar/CacheControlScope"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/scalar/CacheControlScope"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "CacheControlScope"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "CacheControlScope"
                           }
@@ -3315,7 +3310,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#specifiedBy",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/specifiedBy",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -3328,7 +3323,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#specifiedBy/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/specifiedBy/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3338,7 +3333,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#specifiedBy/shape/default-node/property/url",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/specifiedBy/shape/default-node/property/property/url",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -3347,7 +3342,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#specifiedBy/shape/default-node/property/url/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-weather/api.graphql#/declares/specifiedBy/shape/default-node/property/property/url/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",

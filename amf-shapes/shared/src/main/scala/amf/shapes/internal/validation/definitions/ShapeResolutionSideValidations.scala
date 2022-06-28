@@ -12,15 +12,18 @@ object ShapeResolutionSideValidations extends Validations {
   override val specification: String = RESOLUTION_SIDE_VALIDATION
   override val namespace: Namespace  = AmfResolution
 
-  val InvalidTypeInheritanceWarningSpecification = validation(
+  val InvalidTypeInheritanceWarningSpecification: ValidationSpecification = validation(
     "invalid-type-inheritance-warning",
     "Invalid inheritance relationship"
   )
 
-  val InvalidTypeInheritanceErrorSpecification = validation(
+  val InvalidTypeInheritanceErrorSpecification: ValidationSpecification = validation(
     "invalid-type-inheritance",
     "Invalid inheritance relationship"
   )
+
+  val InvalidTypeExtensionSpecification: ValidationSpecification =
+    validation("invalid-type-extension", "Invalid type extension relationship")
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidTypeInheritanceWarningSpecification.id -> all(WARNING)

@@ -1,13 +1,9 @@
 package amf.client.model.domain
 
 import amf.apicontract.client.platform.model.domain.api.WebApi
+import amf.apicontract.client.platform.model.domain.Operation
 import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
-import amf.apicontract.client.platform.model.domain.bindings.{
-  ChannelBindings,
-  MessageBindings,
-  OperationBindings,
-  ServerBindings
-}
+import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.client.platform.model.domain._
 import amf.apicontract.client.scala.APIConfiguration
@@ -18,6 +14,7 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+//noinspection ZeroIndexToHead
 class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
@@ -516,5 +513,19 @@ class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll 
     org.url.value() shouldBe s
     org.name.value() shouldBe s
     org.email.value() shouldBe s
+  }
+
+  test("test 200 response in operation") {
+    val operation = new Operation()
+    operation.withResponse("200")
+    operation.responses.asInternal(0).statusCode.value() shouldBe "200"
+  }
+
+  test("test 200 & 201 responses in operation") {
+    val operation = new Operation()
+    operation.withResponse("200")
+    operation.withResponse("201")
+    operation.responses.asInternal(0).statusCode.value() shouldBe "200"
+    operation.responses.asInternal(1).statusCode.value() shouldBe "201"
   }
 }

@@ -10,15 +10,15 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
     extends GraphQLASTParserHelper {
   val scalar: ScalarShape = ScalarShape(toAnnotations(customScalarTypeDef))
 
-  def parse(parentId: String): ScalarShape = {
+  def parse(): ScalarShape = {
     scalar.withDataType(DataType.String)
     parseNameAndFormat()
-    scalar.adopted(parentId)
+    GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar).parse()
     scalar
   }
 
   private def parseNameAndFormat(): Unit = {
-    val name = findName(customScalarTypeDef, "AnonymousScalar", "Missing scalar type name", scalar.id)
+    val name = findName(customScalarTypeDef, "AnonymousScalar", "Missing scalar type name")
     scalar.withName(name)
     scalar.withFormat(name)
   }

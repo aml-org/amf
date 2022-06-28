@@ -43,7 +43,11 @@ trait ImportUtils {
 
 object DefaultAMFValidations extends ImportUtils {
 
-  def buildProfileFrom(profile: ProfileName, profileValidations: ProfileValidations): ValidationProfile = {
+  def buildProfileFrom(
+      profile: ProfileName,
+      profileValidations: ProfileValidations,
+      withStaticValidations: Boolean = true
+  ): ValidationProfile = {
     val validations          = profileValidations.validations()
     val violationValidations = parseRawValidations(validations.filter(_.severity == SeverityLevels.VIOLATION))
     val infoValidations      = parseRawValidations(validations.filter(_.severity == SeverityLevels.INFO))
@@ -59,10 +63,13 @@ object DefaultAMFValidations extends ImportUtils {
       .set(warningParserSideValidations ++ warningValidations.map(_.name), SeverityLevels.WARNING)
       .set(violationParserSideValidations ++ violationValidations.map(_.name), SeverityLevels.VIOLATION)
 
+    var finalValidations = infoValidations ++ warningValidations ++ violationValidations
+    if (withStaticValidations) finalValidations ++= staticValidations
+
     ValidationProfile(
       name = profile,
       baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
-      validations = infoValidations ++ warningValidations ++ violationValidations ++ staticValidations,
+      validations = finalValidations,
       severities = severityMapping
     )
   }

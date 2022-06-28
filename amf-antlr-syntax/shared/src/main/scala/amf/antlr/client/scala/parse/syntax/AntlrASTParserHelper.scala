@@ -50,6 +50,13 @@ trait AntlrASTParserHelper {
     }
   }
 
+  def pathToNonTerminal(node: Node, names: Seq[String]): Option[Node] = {
+    path(node, names) match {
+      case Some(node: Node) => Some(node)
+      case _                => None
+    }
+  }
+
   def withNode[T](element: ASTElement)(f: Node => T)(implicit ctx: ParserContext): T = element match {
     case node: Node => f(node)
     case _          => throw new Exception(s"Unexpected AST terminal token $element")
@@ -70,5 +77,9 @@ trait AntlrASTParserHelper {
 
   def astError(id: String, message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
     ctx.eh.violation(ParserSideValidations.InvalidAst, id, message, annotations)
+  }
+
+  def astError(message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
+    ctx.eh.violation(ParserSideValidations.InvalidAst, "", message, annotations)
   }
 }

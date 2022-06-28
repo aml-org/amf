@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "title": "Something",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "b": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "c": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "d": {
+            "const": "condition"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "d": {
+            "@context": {
+              "@characteristics": [
+                "config:sensitive"
+              ]
+            },
+            "type": "string"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "d": {
+            "@context": {
+              "@characteristics": [
+                "config:dataweaveExpression"
+              ]
+            },
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "f": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

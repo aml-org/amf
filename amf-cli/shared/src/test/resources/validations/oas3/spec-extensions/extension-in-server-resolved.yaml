@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+paths:
+  /path:
+    get:
+      responses:
+        "200":
+          description: A response.
+          content:
+            application/json:
+              schema:
+                type: object
+servers:
+  -
+    url: https://development.gigantic-server.com/v1
+    description: A server
+    variables:
+      variable:
+        default: demo
+        x-extension:
+          prop: value

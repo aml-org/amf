@@ -1,0 +1,14 @@
+schema @One @Two {
+    query: Query
+}
+
+type Query {
+    name: String @One @Two
+}
+
+type Spaceship @One @Two {
+    shipType: ShipType @One @Two
+}
+
+directive @One on SCHEMA | OBJECT
+directive @Two on SCHEMA | OBJECT

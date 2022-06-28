@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /path:
+    get:
+      responses:
+        "200":
+          description: A response.
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    objectSchema:
+      xml:
+        name: a
+        attribute: false
+        wrapped: false
+        namespace: http://example.com/schema/sample
+        prefix: sample
+        x-extension:
+          prop: value

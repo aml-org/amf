@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -154,7 +154,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -172,7 +172,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -182,7 +182,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -191,7 +191,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -223,7 +223,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -232,7 +232,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -261,7 +261,7 @@
         ],
         "http://a.ml/vocabularies/shapes#supportedOperation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
               "http://a.ml/vocabularies/core#Operation",
@@ -274,7 +274,7 @@
             ],
             "http://a.ml/vocabularies/shapes#expects": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Request",
                   "http://a.ml/vocabularies/core#Request",
@@ -282,7 +282,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#parameter": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request/parameter/unit",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/unit",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -305,7 +305,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit/link-262064357",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/unit/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -315,7 +315,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/scalar/Unit"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -327,7 +327,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request/parameter/scientificNotation",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/scientificNotation",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
                       "http://a.ml/vocabularies/core#Parameter",
@@ -350,7 +350,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request/parameter/scientificNotation/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/scientificNotation/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -365,7 +365,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#defaultValue": [
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar/data-node",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/scientificNotation/scalar/default-scalar/data-node",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -391,7 +391,7 @@
             ],
             "http://a.ml/vocabularies/shapes#returns": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/response",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/returns/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
                   "http://a.ml/vocabularies/core#Response",
@@ -404,7 +404,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#payload": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/response/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/returns/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
                       "http://a.ml/vocabularies/core#Payload",
@@ -417,7 +417,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/response/default/union/default-union",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/returns/response/default/union/default-union",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#UnionShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -427,7 +427,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#anyOf": [
                           {
-                            "@id": "null/nullwrapper/nil/default-nil",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/returns/response/default/union/default-union/anyOf/nil/default-nil",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -436,7 +436,7 @@
                             ]
                           },
                           {
-                            "@id": "null/nullwrapper/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/returns/response/default/union/default-union/anyOf/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -466,7 +466,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/scalar/Unit",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -486,11 +486,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/scalar/Unit/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit/METER",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/scalar/Unit/in/METER",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -515,7 +515,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql/scalar/Unit/FOOT",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/scalar/Unit/in/FOOT",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",

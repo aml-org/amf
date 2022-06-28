@@ -9,11 +9,11 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLWe
     extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
-  def parse(parentId: String): NodeShape = {
-    val name = findName(objTypeNode, "AnonymousInputType", "", "Missing name for input type")
-    obj.withName(name).withIsInputOnly(true).adopted(parentId)
-    obj.adopted(parentId)
+  def parse(): NodeShape = {
+    val name = findName(objTypeNode, "AnonymousInputType", "Missing name for input type")
+    obj.withName(name).withIsInputOnly(true)
     collectFields()
+    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse()
     obj
   }
 

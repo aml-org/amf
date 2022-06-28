@@ -1,18 +1,11 @@
 package amf.apicontract.internal.validation.model
 
 import amf.apicontract.internal.validation.model.AMFRawValidations._
-import amf.apicontract.internal.validation.model.ApiValidationProfiles.{
-  AmfValidationProfile,
-  Async20ValidationProfile,
-  Oas20ValidationProfile,
-  Oas30ValidationProfile,
-  Raml08ValidationProfile,
-  Raml10ValidationProfile
-}
+import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.model.DefaultAMFValidations.buildProfileFrom
 import amf.core.client.common.validation._
 import amf.core.internal.validation.EffectiveValidations
-import amf.core.internal.validation.core.ValidationProfile
+import amf.core.internal.validation.core.{SeverityMapping, ValidationProfile}
 
 object ApiValidationProfiles {
 
@@ -23,7 +16,11 @@ object ApiValidationProfiles {
   val Oas30ValidationProfile: ValidationProfile = buildProfileFrom(Oas30Profile, Oas30Validations)
 
   val Async20ValidationProfile: ValidationProfile = buildProfileFrom(Async20Profile, Async20Validations)
-  val AmfValidationProfile: ValidationProfile     = buildProfileFrom(AmfProfile, AmfValidations)
+
+  val GraphQLValidationProfile: ValidationProfile =
+    buildProfileFrom(GraphQLProfile, GraphQLValidations, withStaticValidations = false)
+
+  val AmfValidationProfile: ValidationProfile = buildProfileFrom(AmfProfile, AmfValidations)
 
   protected val apiProfiles: Map[ProfileName, ValidationProfile] = Map(
     Raml08ValidationProfile.name  -> Raml08ValidationProfile,
@@ -31,6 +28,7 @@ object ApiValidationProfiles {
     Oas20ValidationProfile.name   -> Oas20ValidationProfile,
     Oas30ValidationProfile.name   -> Oas30ValidationProfile,
     Async20ValidationProfile.name -> Async20ValidationProfile,
+    GraphQLValidationProfile.name -> GraphQLValidationProfile,
     AmfValidationProfile.name     -> AmfValidationProfile
   )
 
@@ -44,7 +42,9 @@ object ApiEffectiveValidations {
   val Oas20EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Oas20ValidationProfile)
   val Oas30EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Oas30ValidationProfile)
 
-  val Async20EffectiveValidations: EffectiveValidations =
-    EffectiveValidations().someEffective(Async20ValidationProfile)
+  val Async20EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Async20ValidationProfile)
+
+  val GraphQLEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(GraphQLValidationProfile)
+
   val AmfEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(AmfValidationProfile)
 }

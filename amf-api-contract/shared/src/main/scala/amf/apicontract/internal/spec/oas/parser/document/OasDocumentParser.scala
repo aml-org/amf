@@ -284,6 +284,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node)
 
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
+    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("info")
 
     ctx.factory.serversParser(map, api).parse()
 

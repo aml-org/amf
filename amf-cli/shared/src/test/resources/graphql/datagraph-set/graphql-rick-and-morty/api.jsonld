@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -45,7 +45,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -63,7 +63,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -72,7 +72,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -95,7 +95,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -121,7 +121,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -140,7 +140,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -148,7 +148,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -158,7 +158,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/resp/default/default/shape/Character/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -167,7 +167,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacter/query/resp/default/default/shape/Character/nullwrapper/shape/Character",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacter/supportedOperation/query/Query.character/returns/resp/default/payload/default/union/default-union/anyOf/shape/Character",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -177,7 +177,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -207,7 +207,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -229,7 +229,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -247,7 +247,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -256,7 +256,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/request/parameter/default-binding/page",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/expects/request/parameter/parameter/query/page",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -279,7 +279,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/request/parameter/default-binding/page/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/expects/request/parameter/parameter/query/page/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -296,7 +296,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/request/parameter/default-binding/filter",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/expects/request/parameter/parameter/query/filter",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -319,7 +319,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/link-692855096",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/expects/request/parameter/parameter/query/filter/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -329,7 +329,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -345,7 +345,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -364,7 +364,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -372,7 +372,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -382,7 +382,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/resp/default/default/shape/Characters/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -391,7 +391,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fcharacters/query/resp/default/default/shape/Characters/nullwrapper/shape/Characters",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fcharacters/supportedOperation/query/Query.characters/returns/resp/default/payload/default/union/default-union/anyOf/shape/Characters",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -401,7 +401,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -431,7 +431,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -453,7 +453,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -471,7 +471,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -480,7 +480,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/request/parameter/default-binding/ids",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/expects/request/parameter/parameter/query/ids",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -503,7 +503,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/request/parameter/default-binding/ids/array/default-array",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/expects/request/parameter/parameter/query/ids/array/default-array",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -513,7 +513,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/request/parameter/default-binding/ids/array/default-array/items/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/expects/request/parameter/parameter/query/ids/array/default-array/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -541,7 +541,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -560,7 +560,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -568,7 +568,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -578,7 +578,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -587,7 +587,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -597,7 +597,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FcharactersByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -607,7 +607,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link--1452920432/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -616,7 +616,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link--1452920432/nullwrapper/shape/Character",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FcharactersByIds/supportedOperation/query/Query.charactersByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Character",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -626,7 +626,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -660,7 +660,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -682,7 +682,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -700,7 +700,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -709,7 +709,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -732,7 +732,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -758,7 +758,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -777,7 +777,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -785,7 +785,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -795,7 +795,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default/shape/Location/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -804,7 +804,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocation/query/resp/default/default/shape/Location/nullwrapper/shape/Location",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocation/supportedOperation/query/Query.location/returns/resp/default/payload/default/union/default-union/anyOf/shape/Location",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -814,7 +814,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -844,7 +844,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -866,7 +866,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -884,7 +884,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -893,7 +893,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/request/parameter/default-binding/page",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/expects/request/parameter/parameter/query/page",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -916,7 +916,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/request/parameter/default-binding/page/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/expects/request/parameter/parameter/query/page/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -933,7 +933,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/request/parameter/default-binding/filter",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/expects/request/parameter/parameter/query/filter",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -956,7 +956,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/link-987709524",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/expects/request/parameter/parameter/query/filter/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -966,7 +966,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -982,7 +982,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1001,7 +1001,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1009,7 +1009,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1019,7 +1019,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/resp/default/default/shape/Locations/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1028,7 +1028,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Flocations/query/resp/default/default/shape/Locations/nullwrapper/shape/Locations",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Flocations/supportedOperation/query/Query.locations/returns/resp/default/payload/default/union/default-union/anyOf/shape/Locations",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1038,7 +1038,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -1068,7 +1068,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1090,7 +1090,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1108,7 +1108,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1117,7 +1117,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/request/parameter/default-binding/ids",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/expects/request/parameter/parameter/query/ids",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1140,7 +1140,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/request/parameter/default-binding/ids/array/default-array",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/expects/request/parameter/parameter/query/ids/array/default-array",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1150,7 +1150,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/request/parameter/default-binding/ids/array/default-array/items/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/expects/request/parameter/parameter/query/ids/array/default-array/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1178,7 +1178,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1197,7 +1197,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1205,7 +1205,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1215,7 +1215,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1224,7 +1224,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1234,7 +1234,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FlocationsByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1244,7 +1244,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link-1901060220/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1253,7 +1253,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link-1901060220/nullwrapper/shape/Location",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FlocationsByIds/supportedOperation/query/Query.locationsByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Location",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1263,7 +1263,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -1297,7 +1297,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1319,7 +1319,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1337,7 +1337,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1346,7 +1346,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/request/parameter/default-binding/id",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/expects/request/parameter/parameter/query/id",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1369,7 +1369,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/request/parameter/default-binding/id/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/expects/request/parameter/parameter/query/id/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1395,7 +1395,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1414,7 +1414,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1422,7 +1422,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1432,7 +1432,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/resp/default/default/shape/Episode/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1441,7 +1441,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisode/query/resp/default/default/shape/Episode/nullwrapper/shape/Episode",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisode/supportedOperation/query/Query.episode/returns/resp/default/payload/default/union/default-union/anyOf/shape/Episode",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1451,7 +1451,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -1481,7 +1481,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1503,7 +1503,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1521,7 +1521,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1530,7 +1530,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/request/parameter/default-binding/page",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/expects/request/parameter/parameter/query/page",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1553,7 +1553,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/request/parameter/default-binding/page/scalar/default-scalar",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/expects/request/parameter/parameter/query/page/scalar/default-scalar",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1570,7 +1570,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/request/parameter/default-binding/filter",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/expects/request/parameter/parameter/query/filter",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1593,7 +1593,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode/link--1932267158",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/expects/request/parameter/parameter/query/filter/shape/default-node",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1603,7 +1603,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode"
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -1619,7 +1619,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1638,7 +1638,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1646,7 +1646,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1656,7 +1656,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/resp/default/default/shape/Episodes/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1665,7 +1665,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2Fepisodes/query/resp/default/default/shape/Episodes/nullwrapper/shape/Episodes",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2Fepisodes/supportedOperation/query/Query.episodes/returns/resp/default/payload/default/union/default-union/anyOf/shape/Episodes",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1675,7 +1675,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes"
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -1705,7 +1705,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1727,7 +1727,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -1745,7 +1745,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -1754,7 +1754,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/request/parameter/default-binding/ids",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/expects/request/parameter/parameter/query/ids",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -1777,7 +1777,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/request/parameter/default-binding/ids/array/default-array",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/expects/request/parameter/parameter/query/ids/array/default-array",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1787,7 +1787,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/request/parameter/default-binding/ids/array/default-array/items/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/expects/request/parameter/parameter/query/ids/array/default-array/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1815,7 +1815,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -1834,7 +1834,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -1842,7 +1842,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1852,7 +1852,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default/default/array/default-array/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1861,7 +1861,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1871,7 +1871,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/%2Fquery%2FepisodesByIds/query/resp/default/default/array/default-array/nullwrapper/array/default-array/items/union/default-union",
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#UnionShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1881,7 +1881,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/link--2050341854/nullwrapper/nil/default-nil",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1890,7 +1890,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/link--2050341854/nullwrapper/shape/Episode",
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/web-api/endpoint/%2Fquery%2FepisodesByIds/supportedOperation/query/Query.episodesByIds/returns/resp/default/payload/default/union/default-union/anyOf/array/default-array/union/default-union/anyOf/shape/Episode",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1900,7 +1900,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode"
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document#link-label": [
@@ -1943,7 +1943,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -1961,7 +1961,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1971,7 +1971,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1980,7 +1980,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2017,7 +2017,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2026,7 +2026,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2058,7 +2058,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/type_",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/type_",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2067,7 +2067,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/type_/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/type_/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2099,7 +2099,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/dimension",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/dimension",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2108,7 +2108,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/dimension/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/dimension/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2140,7 +2140,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/residents",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/residents",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2149,7 +2149,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/residents/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/residents/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2159,7 +2159,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/residents/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/residents/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2169,7 +2169,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link-45151632/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/residents/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2178,7 +2178,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link-45151632/nullwrapper/shape/Character",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/residents/array/default-array/union/default-union/anyOf/shape/Character",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2188,7 +2188,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -2224,7 +2224,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/created",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/created",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2233,7 +2233,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/property/created/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location/property/property/created/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2272,7 +2272,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2282,7 +2282,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2291,7 +2291,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2318,7 +2318,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/type_",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/type_",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2327,7 +2327,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/type_/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/type_/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2354,7 +2354,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/dimension",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/dimension",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2363,7 +2363,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterLocation/property/dimension/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterLocation/property/property/dimension/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2402,7 +2402,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2412,7 +2412,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes/property/info",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/info",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2421,7 +2421,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/link-88035349",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/info/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2431,7 +2431,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2453,7 +2453,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes/property/results",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/results",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2462,7 +2462,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes/property/results/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/results/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2472,7 +2472,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episodes/property/results/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/results/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2482,7 +2482,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/link--1271688360/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/results/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2491,7 +2491,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/link--1271688360/nullwrapper/shape/Episode",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episodes/property/property/results/array/default-array/union/default-union/anyOf/shape/Episode",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2501,7 +2501,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -2539,7 +2539,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2549,7 +2549,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters/property/info",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/info",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2558,7 +2558,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/link-1532388117",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/info/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2568,7 +2568,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -2590,7 +2590,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters/property/results",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/results",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2599,7 +2599,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters/property/results/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/results/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2609,7 +2609,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Characters/property/results/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/results/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2619,7 +2619,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link-839219276/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/results/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2628,7 +2628,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link-839219276/nullwrapper/shape/Character",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Characters/property/property/results/array/default-array/union/default-union/anyOf/shape/Character",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2638,7 +2638,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -2676,7 +2676,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2686,7 +2686,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2695,7 +2695,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2732,7 +2732,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2741,7 +2741,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2773,7 +2773,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/air_date",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/air_date",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2782,7 +2782,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/air_date/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/air_date/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2814,7 +2814,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/episode",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/episode",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2823,7 +2823,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/episode/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/episode/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2855,7 +2855,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/characters",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/characters",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2864,7 +2864,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/characters/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/characters/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2874,7 +2874,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/characters/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/characters/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2884,7 +2884,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link--1200115450/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/characters/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2893,7 +2893,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/link--1200115450/nullwrapper/shape/Character",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/characters/array/default-array/union/default-union/anyOf/shape/Character",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2903,7 +2903,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -2939,7 +2939,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/created",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/created",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2948,7 +2948,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/property/created/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode/property/property/created/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2987,7 +2987,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/CacheControlScope",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3007,11 +3007,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope/list",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/CacheControlScope/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope/PUBLIC",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/CacheControlScope/in/PUBLIC",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -3036,7 +3036,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope/PRIVATE",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/CacheControlScope/in/PRIVATE",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -3063,7 +3063,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3073,7 +3073,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/count",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/count",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3082,7 +3082,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/count/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/count/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3114,7 +3114,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/pages",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/pages",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3123,7 +3123,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/pages/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/pages/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3155,7 +3155,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/next",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/next",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3164,7 +3164,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/next/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/next/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3196,7 +3196,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/prev",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/prev",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3205,7 +3205,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info/property/prev/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info/property/property/prev/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3244,7 +3244,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/Upload",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/Upload",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3269,7 +3269,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3279,7 +3279,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3288,7 +3288,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/id/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/id/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3325,7 +3325,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3334,7 +3334,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3366,7 +3366,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/status",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/status",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3375,7 +3375,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/status/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/status/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3407,7 +3407,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/species",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/species",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3416,7 +3416,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/species/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/species/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3448,7 +3448,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/type_",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/type_",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3457,7 +3457,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/type_/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/type_/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3489,7 +3489,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/gender",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/gender",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3498,7 +3498,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/gender/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/gender/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3530,7 +3530,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/origin",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/origin",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3539,7 +3539,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link--1178974960",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/origin/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3549,7 +3549,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -3576,7 +3576,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/location",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/location",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3585,7 +3585,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link--1908696882",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/location/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3595,7 +3595,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -3622,7 +3622,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/image",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/image",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3631,7 +3631,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/image/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/image/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3663,7 +3663,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/episode",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/episode",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3672,7 +3672,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/episode/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/episode/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3682,7 +3682,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/episode/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/episode/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3692,7 +3692,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/episode/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -3701,7 +3701,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode/link-1563868184",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/episode/array/default-array/union/default-union/anyOf/shape/default-node",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3711,7 +3711,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Episode"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Episode"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -3742,7 +3742,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/created",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/created",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3751,7 +3751,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Character/property/created/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Character/property/property/created/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3790,7 +3790,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3800,7 +3800,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3809,7 +3809,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3836,7 +3836,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/status",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/status",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3845,7 +3845,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/status/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/status/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3872,7 +3872,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/species",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/species",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3881,7 +3881,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/species/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/species/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3908,7 +3908,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/type_",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/type_",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3917,7 +3917,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/type_/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/type_/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3944,7 +3944,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/gender",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/gender",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -3953,7 +3953,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterCharacter/property/gender/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterCharacter/property/property/gender/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3992,7 +3992,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4002,7 +4002,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -4011,7 +4011,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4038,7 +4038,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode/property/episode",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode/property/property/episode",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -4047,7 +4047,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/FilterEpisode/property/episode/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/FilterEpisode/property/property/episode/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4086,7 +4086,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4096,7 +4096,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations/property/info",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/info",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -4105,7 +4105,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations/property/info/shape/Info",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/info/shape/Info",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4115,7 +4115,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Info"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Info"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -4142,7 +4142,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations/property/results",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/results",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -4151,7 +4151,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations/property/results/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/results/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4161,7 +4161,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Locations/property/results/array/default-array/items/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/results/array/default-array/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4171,7 +4171,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link-1733867644/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/results/array/default-array/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4180,7 +4180,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location/link-1733867644/nullwrapper/shape/Location",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Locations/property/property/results/array/default-array/union/default-union/anyOf/shape/Location",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4190,7 +4190,7 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/shape/Location"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/shape/Location"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
@@ -4228,7 +4228,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -4247,7 +4247,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4257,7 +4257,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl/shape/default-node/property/maxAge",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4266,7 +4266,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl/shape/default-node/property/maxAge/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4276,7 +4276,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "null/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4285,7 +4285,7 @@
                         ]
                       },
                       {
-                        "@id": "null/nullwrapper/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/maxAge/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4309,7 +4309,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl/shape/default-node/property/scope",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4318,7 +4318,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#cacheControl/shape/default-node/property/scope/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4328,7 +4328,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -4337,7 +4337,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope/link-1997562944/nullwrapper/scalar/CacheControlScope",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/cacheControl/shape/default-node/property/property/scope/union/default-union/anyOf/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4347,15 +4347,10 @@
                         ],
                         "http://a.ml/vocabularies/document#link-target": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql/scalar/CacheControlScope"
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-rick-and-morty/api.graphql#/declares/scalar/CacheControlScope"
                           }
                         ],
                         "http://a.ml/vocabularies/document#link-label": [
-                          {
-                            "@value": "CacheControlScope"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "CacheControlScope"
                           }

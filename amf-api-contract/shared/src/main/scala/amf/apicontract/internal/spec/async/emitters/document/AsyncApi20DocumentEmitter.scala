@@ -4,11 +4,7 @@ import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterContext
-import amf.apicontract.internal.spec.async.emitters.domain.{
-  AsyncApiCreativeWorksEmitter,
-  AsyncApiEndpointsEmitter,
-  AsyncApiServersEmitter
-}
+import amf.apicontract.internal.spec.async.emitters.domain.{AsyncApiCreativeWorksEmitter, AsyncApiEndpointsEmitter, AsyncApiServersEmitter}
 import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
@@ -20,9 +16,9 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.CreativeWork
+import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
-
 import scala.collection.mutable
 
 class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncSpecEmitterContext) {
@@ -85,7 +81,13 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
 
       fs.entry(WebApiModel.Identifier).foreach(f => result += ValueEmitter("id", f))
 
-      result += InfoEmitter(fs, ordering)
+      val orphanAnnotationsFromInfo =
+        api.customDomainProperties.filter(customProp => {
+          val hasOrphanAnnotation = customProp.extension.annotations.contains(classOf[OrphanOasExtension])
+          hasOrphanAnnotation && customProp.extension.annotations.find(classOf[OrphanOasExtension]).get.value == "info"
+        })
+
+      result += InfoEmitter(fs, ordering, orphanAnnotationsFromInfo)
 
       fs.entry(WebApiModel.Servers)
         .map(f => result += new AsyncApiServersEmitter(f, ordering))

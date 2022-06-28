@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/scalar/default-scalar/nullwrapper/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -154,7 +154,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -172,7 +172,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -182,7 +182,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type/property/recursion",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type/property/property/recursion",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -191,7 +191,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type/link--2126958435",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type/property/property/recursion/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -201,7 +201,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -223,7 +223,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type/property/recursionList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type/property/property/recursionList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -232,7 +232,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type/property/recursionList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type/property/property/recursionList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -242,7 +242,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type/link--2079954157",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type/property/property/recursionList/array/default-array/shape/default-node",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -252,7 +252,7 @@
                     ],
                     "http://a.ml/vocabularies/document#link-target": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Type"
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Type"
                       }
                     ],
                     "http://a.ml/vocabularies/document#link-label": [
@@ -283,7 +283,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -293,7 +293,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input/property/recursion",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input/property/property/recursion",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -302,7 +302,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input/link--206307477",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input/property/property/recursion/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -312,7 +312,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -334,7 +334,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input/property/recursionList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input/property/property/recursionList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -343,7 +343,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input/property/recursionList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input/property/property/recursionList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -353,7 +353,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input/link--159302238",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input/property/property/recursionList/array/default-array/shape/default-node",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -363,7 +363,7 @@
                     ],
                     "http://a.ml/vocabularies/document#link-target": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Input"
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Input"
                       }
                     ],
                     "http://a.ml/vocabularies/document#link-label": [
@@ -399,7 +399,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -414,7 +414,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface/property/recursion",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface/property/property/recursion",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -423,7 +423,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface/link-1708307216",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface/property/property/recursion/shape/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -433,7 +433,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface"
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -455,7 +455,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface/property/recursionList",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface/property/property/recursionList",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -464,7 +464,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface/property/recursionList/array/default-array",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface/property/property/recursionList/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -474,7 +474,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface/link-1755316299",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface/property/property/recursionList/array/default-array/shape/default-node",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -484,7 +484,7 @@
                     ],
                     "http://a.ml/vocabularies/document#link-target": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/shape/Interface"
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/recursion.api.graphql#/declares/shape/Interface"
                       }
                     ],
                     "http://a.ml/vocabularies/document#link-label": [

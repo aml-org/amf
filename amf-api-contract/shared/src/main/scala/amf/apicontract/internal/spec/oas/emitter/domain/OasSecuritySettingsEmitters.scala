@@ -201,6 +201,9 @@ private case class Oas3OAuthFlowsEmitter(
 
 private case class Oas3OAuthFlowEmitter(flow: OAuth2Flow, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+
   override def emit(b: EntryBuilder): Unit = {
     val fs = flow.fields
 
@@ -223,6 +226,7 @@ private case class Oas3OAuthFlowEmitter(flow: OAuth2Flow, ordering: SpecOrdering
           fs.entry(OAuth2FlowModel.Scopes)
             .foreach(f => builders += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
 
+          builders ++= AnnotationsEmitter(flow, ordering).emitters
           traverse(ordering.sorted(builders), mapBuilder)
         }
       }

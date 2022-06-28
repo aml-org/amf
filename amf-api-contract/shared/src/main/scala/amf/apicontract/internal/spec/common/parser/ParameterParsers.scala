@@ -5,7 +5,7 @@ import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.{OasParameter, Parameters}
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.oas.parser.context.{OasSpecVersionFactory, OasWebApiContext}
 import amf.apicontract.internal.spec.oas.parser.domain.OasContentsParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.{OasDefinitions, toOas}
@@ -18,25 +18,17 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
-import amf.core.internal.utils.{AmfStrings, IdCounter, UriUtils}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.core.internal.validation.core.ValidationSpecification
+import amf.shapes.client.scala.model.domain.{AnyShape, Example, FileShape, NodeShape}
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
-import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.client.scala.model.domain.{AnyShape, Example, FileShape, NodeShape}
-import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesParser, YMapEntryLike}
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.spec.raml.parser.{
-  Raml08TypeParser,
-  Raml10TypeParser,
-  RamlTypeSyntax,
-  StringDefaultType,
-  TypeInfo
-}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
-
+import amf.shapes.internal.spec.raml.parser._
+import org.yaml.model._
 import scala.language.postfixOps
 
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
@@ -272,7 +264,7 @@ case class Oas2ParameterParser(
     parentId: String,
     nameNode: Option[YNode],
     nameGenerator: IdCounter
-)(implicit ctx: WebApiContext)
+)(implicit ctx: OasWebApiContext)
     extends OasParameterParser {
 
   protected val map: YMap = entryOrNode.asMap
@@ -598,15 +590,11 @@ case class Oas2ParameterParser(
               Some(ref)
             )
           case None =>
-            val fullRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, refUrl)
-            ctx.parseRemoteOasParameter(fullRef, parentId)(toOas(ctx)) match {
-              case Some(oasParameter) =>
-                for {
-                  param <- oasParameter.parameter
-                  name  <- nameNode.map(ScalarNode(_).text())
-                } yield {
-                  param.setWithoutId(ParameterModel.Name, name)
-                }
+            ctx.navigateToRemoteYNode(refUrl) match {
+              case Some(result) =>
+                val node         = YMapEntryLike(result.remoteNode)
+                val newCtx       = result.context
+                val oasParameter = newCtx.factory.parameterParser(node, parentId, nameNode, nameGenerator).parse
                 oasParameter.domainElement.add(ExternalReferenceUrl(refUrl))
                 oasParameter
               case _ =>
@@ -631,7 +619,7 @@ class Oas3ParameterParser(
     parentId: String,
     nameNode: Option[YNode],
     nameGenerator: IdCounter
-)(implicit ctx: WebApiContext)
+)(implicit ctx: OasWebApiContext)
     extends Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator) {
 
   override def parse(): OasParameter = {

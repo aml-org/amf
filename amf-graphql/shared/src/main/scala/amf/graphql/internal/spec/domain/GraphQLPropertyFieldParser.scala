@@ -7,18 +7,19 @@ import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
-  val property = PropertyShape(toAnnotations(ast))
+  val property: PropertyShape = PropertyShape(toAnnotations(ast))
 
-  def parse(adopt: PropertyShape => Unit): PropertyShape = {
+  def parse(setterFn: PropertyShape => Unit): PropertyShape = {
     parseName()
-    adopt(property)
+    setterFn(property)
     parseDescription()
     parseRange()
+    GraphQLDirectiveApplicationParser(ast, property).parse()
     property
   }
 
   private def parseName(): Unit = {
-    property.withName(findName(ast, "AnonymousField", "", "Missing name for field"))
+    property.withName(findName(ast, "AnonymousField", "Missing name for field"))
   }
 
   private def parseDescription(): Unit = {
@@ -26,7 +27,7 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseRange(): Unit = {
-    val range = parseType(ast, property.id)
+    val range = parseType(ast)
     unpackNilUnion(range) match {
       case NullableShape(true, shape)  => property.withRange(shape).withMinCount(0)
       case NullableShape(false, shape) => property.withRange(shape).withMinCount(1)

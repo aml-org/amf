@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Request, Response}
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.position.{Position, Range}
 import amf.core.client.common.transform.PipelineId
@@ -371,10 +371,28 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  test("W-10758138") {
+  // W-10758138
+  test("Fragments should have isInferred annotation in Encodes field") {
     val api = s"$basePath/raml/simple-datatype/datatype.raml"
     modelAssertion(api, transform = false) { bu =>
-      bu.fields.fields().head.value.annotations.nonEmpty shouldBe true
+      val encodesField = bu.fields.fields().head.value
+      encodesField.annotations.nonEmpty && encodesField.isInferred shouldBe true
+    }
+  }
+
+  // W-11210133
+  test("semex and normal annotations should have the same lexical") {
+    val api = s"$basePath/oas3/annotations/semantic.yaml"
+    ramlConfig.withDialect(s"$basePath/raml/semantic-extensions/dialect.yaml") flatMap { config =>
+      val client = config.baseUnitClient()
+      client.parse(s"$basePath/raml/semantic-extensions/api.raml") map { parseResult =>
+        println(parseResult.toString())
+        val bu          = parseResult.baseUnit
+        val annotations = bu.asInstanceOf[Document].declares.last.customDomainProperties
+        val lexicals    = annotations map (_.annotations.lexical())
+        // both lexicals should start in column 4
+        lexicals map (_.start.column) exists (_ != 4) shouldBe false
+      }
     }
   }
 }

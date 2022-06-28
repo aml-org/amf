@@ -51,8 +51,6 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   protected def validate(
       api: String,
       golden: Option[String] = None,
-      profile: ProfileName = defaultProfile,
-      profileFile: Option[String] = None,
       overridedHint: Option[Hint] = None,
       directory: String = basePath,
       configOverride: Option[AMFConfiguration] = None,
@@ -99,8 +97,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
   protected def checkReport(
       api: String,
       golden: Option[String] = None,
-      profile: ProfileName = defaultProfile,
-      profileFile: Option[String] = None
+      profile: ProfileName = defaultProfile
   ): Future[Assertion] = {
     val errorHandler = DefaultErrorHandler()
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
@@ -135,6 +132,6 @@ trait ValidModelTest extends MultiPlatformReportGenTest {
       profile: ProfileName = Raml10Profile,
       configOverride: Option[AMFConfiguration] = None
   ): Future[Assertion] =
-    super.validate(api, None, profile, None, configOverride = configOverride)
+    super.validate(api, configOverride = configOverride)
 
 }
