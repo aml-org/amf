@@ -32,8 +32,14 @@ case class Tag(override private[amf] val _internal: InternalTag) extends DomainE
     this
   }
 
-  /** Set host property of this Server. */
+  /** Set documentation. */
   def withVariables(documentation: CreativeWork): this.type = {
+    _internal.withDocumentation(documentation)
+    this
+  }
+
+  /** Set documentation. */
+  def withDocumentation(documentation: CreativeWork): this.type = {
     _internal.withDocumentation(documentation)
     this
   }
