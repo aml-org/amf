@@ -1,6 +1,7 @@
 package amf.apicontract.internal.plugins
 
 import amf.apicontract.internal.spec.common.reference.JsonRefsReferenceHandler
+import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.common.{LowPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
@@ -16,26 +17,34 @@ import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
 
-case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false)
-    extends DomainParsingFallback {
+case class ApiContractFallbackPlugin(
+    strict: Boolean = true,
+    skipValidations: Boolean = false,
+    validationSeverity: String = SeverityLevels.WARNING
+) extends DomainParsingFallback {
 
   override def chooseFallback(root: Root, availablePlugins: Seq[AMFParsePlugin], isRoot: Boolean): AMFParsePlugin = {
     if (strict && isRoot) throw UnsupportedDomainForDocumentException(root.location)
     root.parsed match {
-      case parsed: SyamlParsedDocument if !root.raw.isXml => ApiContractDomainFallbackPlugin(parsed, isRoot)
+      case parsed: SyamlParsedDocument if !root.raw.isXml =>
+        ApiContractDomainFallbackPlugin(parsed, validationSeverity, isRoot)
       case _ => ExternalFragmentDomainFallback(strict).chooseFallback(root, availablePlugins, isRoot)
     }
   }
 
-  def plugin(parsed: SyamlParsedDocument): ApiContractDomainFallbackPlugin = ApiContractDomainFallbackPlugin(parsed)
+  def plugin(parsed: SyamlParsedDocument): ApiContractDomainFallbackPlugin =
+    ApiContractDomainFallbackPlugin(parsed, validationSeverity)
 
-  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument, isRoot: Boolean = false)
-      extends AMFParsePlugin {
+  case class ApiContractDomainFallbackPlugin(
+      parsed: SyamlParsedDocument,
+      validationSeverity: String,
+      isRoot: Boolean = false
+  ) extends AMFParsePlugin {
     override def spec: Spec = JSONRefs
 
     override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
     override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-      throwUserFriendlyWarnings(document, ctx)
+      throwUserFriendlyValidations(document, ctx)
       val result =
         ExternalDomainElement(Annotations(parsed.document))
           .withId(document.location + "#/")
@@ -52,18 +61,31 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
       fragment
     }
 
-    private def throwUserFriendlyWarnings(document: Root, ctx: ParserContext) = {
-      if (isRoot)
-        ctx.eh.warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
-      else if (!skipWarnings) {
+    private def throwUserFriendlyValidations(document: Root, ctx: ParserContext): Unit = {
+      if (isRoot) {
+        validationSeverity match {
+          case SeverityLevels.WARNING =>
+            ctx.eh
+              .warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
+          case SeverityLevels.VIOLATION =>
+            ctx.eh.violation(
+                CouldntGuessRoot,
+                "",
+                None,
+                s"Couldn't guess spec for root file",
+                None,
+                Some(document.location)
+            )
+        }
+      } else if (!skipValidations) {
         pluginThatMatches(document, ctx.config.sortedReferenceParsePlugins).foreach { spec =>
           ctx.eh.warning(
-            CantReferenceSpecInFileTree,
-            "",
-            None,
-            s"Document identified as ${spec.id} is of different spec from root",
-            None,
-            Some(document.location)
+              CantReferenceSpecInFileTree,
+              "",
+              None,
+              s"Document identified as ${spec.id} is of different spec from root",
+              None,
+              Some(document.location)
           )
         }
       }
@@ -76,8 +98,8 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
     override val priority: PluginPriority = LowPriority
 
     override def mediaTypes: Seq[String] = Seq(
-      `application/json`,
-      `application/yaml`
+        `application/json`,
+        `application/yaml`
     )
 
     override def applies(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
