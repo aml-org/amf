@@ -61,7 +61,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
       case Oas20Header | Oas30Header =>
-        Some(ApiContractFallbackPlugin(false, skipWarnings = true).plugin(parsed).parse(root, ctx))
+        Some(ApiContractFallbackPlugin(false, skipValidations = true).plugin(parsed).parse(root, ctx))
       case _ => None
     }).getOrElse {
       val fragment = ExternalFragment()
