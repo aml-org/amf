@@ -6,7 +6,10 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  ClosedShapeSpecification,
+  ClosedShapeSpecificationWarning
+}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -75,22 +78,28 @@ abstract class WebApiContext(
     with ParseErrorHandler
     with IllegalTypeHandler {
 
-  val syamleh                                                            = new SyamlAMFErrorHandler(wrapped.config.eh)
-  override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
-  override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
+  private val syamlEh                                                    = new SyamlAMFErrorHandler(wrapped.config.eh)
+  override def handle[T](error: YError, defaultValue: T): T              = syamlEh.handle(error, defaultValue)
+  override def handle(location: SourceLocation, e: SyamlException): Unit = syamlEh.handle(location, e)
 
   override val defaultSchemaVersion: SchemaVersion = JSONSchemaDraft4SchemaVersion
 
   def validateRefFormatWithError(ref: String): Boolean = true
 
-  val syntax: SpecSyntax
-  val spec: Spec
+  def syntax: SpecSyntax
+  def spec: Spec
+  def ignoreCriteria: IgnoreCriteria
+
+  protected val closedShapeValidator: ClosedShapeValidator = DefaultClosedShapeValidator(ignoreCriteria, spec, syntax)
 
   val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder(
     DeclaredAnnotationSchemaValidatorBuilder
   )
 
-  var localJSONSchemaContext: Option[YNode] = wrapped match {
+  def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
+  def removeLocalJsonSchemaContext: Unit       = localJSONSchemaContext = None
+
+  private var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
     case _                  => None
   }
@@ -100,9 +109,13 @@ abstract class WebApiContext(
     case _                  => None
   }
 
-  var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(WebApiShapeParserContextAdapter(this))
+  def getJsonSchemaRefGuide: JsonSchemaRefGuide                           = jsonSchemaRefGuide
+  protected def setJsonSchemaRefGuide(refGuide: JsonSchemaRefGuide): Unit = jsonSchemaRefGuide = refGuide
 
-  var indexCache: mutable.Map[String, AstIndex] = mutable.Map[String, AstIndex]()
+  protected var jsonSchemaRefGuide: JsonSchemaRefGuide =
+    JsonSchemaRefGuide(loc, refs)(WebApiShapeParserContextAdapter(this))
+
+  var indexCache: Map[String, AstIndex] = Map[String, AstIndex]()
 
   def setJsonSchemaAST(value: YNode): Unit = {
     val location = value.sourceName
@@ -113,10 +126,10 @@ abstract class WebApiContext(
           AstIndexBuilder.buildAst(value, AliasCounter(options.getMaxYamlReferences), computeJsonSchemaVersion(value))(
             WebApiShapeParserContextAdapter(this)
           )
-        indexCache.put(location, result)
         result
       }
     )
+    indexCache = indexCache + (location -> index)
     jsonSchemaIndex = Some(index)
   }
 
@@ -134,29 +147,8 @@ abstract class WebApiContext(
   def registerJsonSchema(url: String, shape: AnyShape): Unit =
     globalSpace.update(normalizedJsonPointer(url), shape)
 
-  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(implicit
-      ctx: WebApiContext
-  ): Option[YNode] = {
+  def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
-  }
-
-  private def obtainFragment(fileUrl: String): Option[Fragment] = {
-    val baseFileUrl = fileUrl.split("#").head
-    refs
-      .filter(r => r.unit.location().isDefined)
-      .filter(_.unit.location().get == baseFileUrl) collectFirst {
-      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
-        ref.unit.asInstanceOf[ExternalFragment]
-      case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
-        ref.unit.asInstanceOf[RecursiveUnit]
-    }
-  }
-
-  private def getReferenceUrl(fileUrl: String): Option[String] = {
-    fileUrl.split("#") match {
-      case s: Array[String] if s.size > 1 => Some(s.last)
-      case _                              => None
-    }
   }
 
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)
@@ -176,39 +168,14 @@ abstract class WebApiContext(
   }
 
   def link(node: YNode): Either[String, YNode]
-  protected def ignore(shape: String, property: String): Boolean
   def autoGeneratedAnnotation(s: Shape): Unit
 
   /** Validate closed shape. */
-  def closedShape(node: AmfObject, ast: YMap, shape: String): Unit = closedShape(node, ast, shape, syntax)
-
-  protected def closedShape(node: AmfObject, ast: YMap, shape: String, syntax: SpecSyntax): Unit =
-    syntax.nodes.get(shape) match {
-      case Some(properties) =>
-        ast.entries.foreach { entry =>
-          val key: String = getEntryKey(entry)
-          if (!ignore(shape, key) && !properties(key)) {
-            throwClosedShapeError(node, s"Property '$key' not supported in a $spec $shape node", entry)
-          }
-        }
-      case None => nextValidation(node, shape, ast)
-    }
+  def closedShape(node: AmfObject, ast: YMap, shape: String): Unit = closedShapeValidator.evaluate(node, ast, shape)
 
   def getEntryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
-
-  protected def nextValidation(node: AmfObject, shape: String, ast: YMap): Unit =
-    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $spec", ast)
-
-  protected def throwClosedShapeError(
-      node: AmfObject,
-      message: String,
-      entry: YPart,
-      isWarning: Boolean = false
-  ): Unit =
-    if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry.location)
-    else eh.violation(ClosedShapeSpecification, node, message, entry.location)
 
   case class WebApiSemanticExtensionsFacadeBuilder(annotationSchemaValidatorBuilder: AnnotationSchemaValidatorBuilder)
       extends SemanticExtensionsFacadeBuilder {

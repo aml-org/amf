@@ -128,8 +128,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     case _                          => throw new Exception("Parser - Can only be used from RAML!")
   }
 
-  override def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape =
-    ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, shape)
+  override def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit =
+    ctx.declarations.promoteExternalToDataTypeFragment(text, fullRef, shape)
 
   override def parseRemoteJSONPath(ref: String): Option[AnyShape] = ctx match {
     case oasCtx: OasLikeWebApiContext => oasCtx.parseRemoteJSONPath(ref)
@@ -144,7 +144,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     ctx.declarations.findDocumentations(key, scope, error)
 
   override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
-    ctx.obtainRemoteYNode(ref, refAnnotations)(ctx)
+    ctx.obtainRemoteYNode(ref)(ctx)
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
     ctx.declarations.findAnnotation(key, scope)
@@ -231,7 +231,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def setJsonSchemaAST(value: YNode): Unit = ctx.setJsonSchemaAST(value)
 
-  override def jsonSchemaRefGuide: JsonSchemaRefGuide = ctx.jsonSchemaRefGuide
+  override def jsonSchemaRefGuide: JsonSchemaRefGuide = ctx.getJsonSchemaRefGuide
 
   override def validateRefFormatWithError(ref: String): Boolean = ctx.validateRefFormatWithError(ref)
 }

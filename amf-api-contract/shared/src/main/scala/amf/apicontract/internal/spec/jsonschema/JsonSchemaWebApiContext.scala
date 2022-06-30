@@ -24,8 +24,8 @@ class JsonSchemaWebApiContext(
 ) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
-  override val syntax: SpecSyntax             = Oas3Syntax
-  override val spec: Spec                     = JsonSchema
+  override def syntax: SpecSyntax             = Oas3Syntax
+  override def spec: Spec                     = JsonSchema
   override val linkTypes: Boolean = wrapped match {
     case _: RamlWebApiContext => false
     case _: OasWebApiContext  => true // definitions tag

@@ -122,7 +122,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
   def parseDeclarations(root: Root, map: YMap, parentObj: AmfObject): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent + "/types", Some(this))
+    parseTypeDeclarations(map, Some(this))
     parseAnnotationTypeDeclarations(map, parent)
     AbstractDeclarationsParser(
       "resourceTypes".asOasExtension,

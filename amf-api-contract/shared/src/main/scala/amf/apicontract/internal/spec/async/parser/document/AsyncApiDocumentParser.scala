@@ -142,7 +142,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
       parseSecuritySchemeDeclarations(componentsMap, parent + "/securitySchemes")
       parseCorrelationIdDeclarations(componentsMap, parent + "/correlationIds")
-      super.parseTypeDeclarations(componentsMap, parent + "/types", Some(this))
+      super.parseTypeDeclarations(componentsMap, Some(this))
       parseParameterDeclarations(componentsMap, parent + "/parameters")
 
       parseMessageBindingsDeclarations(componentsMap, parent + "/messageBindings")

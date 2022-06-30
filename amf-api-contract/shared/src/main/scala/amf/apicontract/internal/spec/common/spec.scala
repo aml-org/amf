@@ -129,7 +129,7 @@ package object spec {
     result
   }
 
-  def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
+  def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): JsonSchemaWebApiContext = {
     val result = new JsonSchemaWebApiContext(
       root,
       refs,

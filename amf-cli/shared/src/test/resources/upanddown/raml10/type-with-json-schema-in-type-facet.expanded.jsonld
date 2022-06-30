@@ -600,7 +600,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#inherits"
@@ -613,15 +613,15 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/core#description"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,4)-(6,0)]"
+                    "@value": "[(4,4)-(21,17)]"
                   }
                 ]
               },
@@ -639,15 +639,28 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,4)-(21,17)]"
+                    "@value": "[(5,4)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declares/shape/A/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(4,3)]"
                   }
                 ]
               }

@@ -323,7 +323,7 @@ case class NodeDataNodeParser(
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         jsonText = Some(scalar.text)
         Some(
-          ExternalFragmentHelper.searchNodeInFragments(node).getOrElse {
+          ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments(node).getOrElse {
             jsonParser(scalar, errorHandler).document().node
           }
         )

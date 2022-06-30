@@ -63,7 +63,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def isOas3Syntax: Boolean
   def isOas2Syntax: Boolean
   def ramlContextType: RamlWebApiContextType
-  def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape
+  def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit
   def parseRemoteJSONPath(ref: String): Option[AnyShape]
   def findDocumentations(
       key: String,
@@ -92,7 +92,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
 
 trait RamlExternalSchemaExpressionFactory {
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
-  def createJson(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
+  def createJson(key: YNode, value: YNode, parseExample: Boolean = false): RamlExternalTypesParser
 }
 
 object RamlWebApiContextType extends Enumeration {

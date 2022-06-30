@@ -422,16 +422,15 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             }
             val parser = Raml10TypeParser(
               entry,
-              shape => {
+              _ => {}
+            )(WebApiShapeParserContextAdapter(ctx))
+            parser.parse() match {
+              case Some(shape) =>
                 shape.setWithoutId(
                   ShapeModel.Name,
                   AmfScalar(typeName, Annotations(entry.key.value)),
                   Annotations(entry.key)
                 )
-              }
-            )(WebApiShapeParserContextAdapter(ctx))
-            parser.parse() match {
-              case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>

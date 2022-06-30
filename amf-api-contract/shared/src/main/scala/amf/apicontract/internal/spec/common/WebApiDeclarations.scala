@@ -70,7 +70,7 @@ class WebApiDeclarations(
     var shapeExtensions: Map[String, Seq[Shape]] = Map() // we can have 0+ shape extensions with the same name
 ) extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
-  def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
+  def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit = {
     fragments.get(text) match {
       case Some(fragmentRef) =>
         promotedFragments :+= DataTypeFragment()
@@ -82,7 +82,6 @@ class WebApiDeclarations(
         promotedFragments :+= DataTypeFragment().withId(fullRef).withLocation(fullRef).withEncodes(shape)
         fragments += (text -> FragmentRef(shape, None))
     }
-    shape
   }
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {

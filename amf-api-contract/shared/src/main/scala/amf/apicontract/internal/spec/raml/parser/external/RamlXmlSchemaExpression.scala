@@ -14,7 +14,7 @@ import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
-import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
+import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
 import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
 import org.yaml.model._
 
@@ -22,14 +22,14 @@ case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWe
     extends RamlExternalSchemaExpressionFactory {
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =
     RamlXmlSchemaExpression(key, value, adopt, parseExample)
-  def createJson(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =
-    RamlJsonSchemaExpression(key, value, adopt, parseExample)
+  def createJson(key: YNode, value: YNode, parseExample: Boolean = false) =
+    RamlJsonSchemaParser(key, value, parseExample)
 }
 
 case class RamlXmlSchemaExpression(
     key: YNode,
     override val value: YNode,
-    override val adopt: Shape => Unit,
+    adopt: Shape => Unit,
     parseExample: Boolean = false
 )(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
