@@ -7,6 +7,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
+import amf.core.io.FileAssertionTest
 import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
 import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail

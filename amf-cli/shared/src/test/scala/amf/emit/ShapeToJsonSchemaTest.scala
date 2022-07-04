@@ -9,7 +9,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion

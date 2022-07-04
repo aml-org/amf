@@ -2,7 +2,7 @@ package amf.cycle
 
 import amf.apicontract.client.scala.OASConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
 import org.scalatest.funsuite.AsyncFunSuite
 

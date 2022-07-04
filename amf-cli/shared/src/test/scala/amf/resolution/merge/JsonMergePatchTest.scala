@@ -21,8 +21,9 @@ import amf.core.internal.parser._
 import amf.core.internal.remote.AmfJsonHint
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
+import amf.core.io.FileAssertionTest
 import amf.emit.AMFRenderer
-import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.io.MultiJsonldAsyncFunSuite
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.mulesoft.common.io.Fs
 import org.scalatest.Assertion
