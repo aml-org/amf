@@ -7,7 +7,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.testing.ConfigProvider
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite

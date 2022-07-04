@@ -3,7 +3,7 @@ package amf.semanticjsonschema
 import amf.aml.client.scala.AMLDialectResult
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.UnsupportedConstraint
 import org.scalatest.Assertion

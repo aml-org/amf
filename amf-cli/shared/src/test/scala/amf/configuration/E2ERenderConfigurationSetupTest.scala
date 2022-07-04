@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Mimes._
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 
 import scala.concurrent.ExecutionContext
 

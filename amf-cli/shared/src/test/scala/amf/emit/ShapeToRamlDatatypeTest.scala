@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.RamlShapeRenderer.toRamlDatatype
 import org.scalatest.Assertion

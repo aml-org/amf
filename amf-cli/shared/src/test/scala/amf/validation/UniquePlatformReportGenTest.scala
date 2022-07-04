@@ -8,7 +8,7 @@ import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
@@ -30,14 +30,12 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     case _      => AmfProfile
   }
 
-  protected def generate(report: AMFValidationReport): String = {
-    report.toString
-  }
+  protected def generate(report: AMFValidationReport): String = report.toString
 
-  protected def handleReport(report: AMFValidationReport, golden: Option[String]): Future[Assertion] =
-    golden match {
-      case Some(_) =>
-        writeTemporaryFile(golden.get)(generate(report)).flatMap(assertDifferences(_, reportsPath + golden.get))
+  protected def handleReport(report: AMFValidationReport, maybeGolden: Option[String]): Future[Assertion] =
+    maybeGolden match {
+      case Some(golden) =>
+        writeTemporaryFile(golden)(generate(report)).flatMap(assertDifferences(_, reportsPath + golden))
       case None =>
         Future.successful({
           if (!report.conforms) fail("Report not conforms:\n" + report.toString)

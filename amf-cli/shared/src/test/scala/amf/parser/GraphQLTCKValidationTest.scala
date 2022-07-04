@@ -5,7 +5,7 @@ import amf.core.client.common.validation.GraphQLProfile
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 
