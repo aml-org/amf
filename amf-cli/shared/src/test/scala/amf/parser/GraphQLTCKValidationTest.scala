@@ -20,9 +20,19 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
   }
 
   // Test invalid APIs
-  fs.syncFile(s"$apisPath/invalid").list.filter(_.endsWith(".graphql")).foreach { api =>
-    ignore(s"GraphQL TCK > Apis > Invalid > $api: should not conform") { assertReport(s"$apisPath/invalid/$api") }
-  }
+  fs.syncFile(s"$apisPath/invalid")
+    .list
+    .groupBy(apiName)
+    .values
+    .collect {
+      case toValidate if toValidate.length > 1 =>
+        apiName(toValidate.head) // contains the API and it's report, thus should be validated
+    }
+    .foreach { api =>
+      test(s"GraphQL TCK > Apis > Invalid > $api: should not conform") {
+        assertReport(s"$apisPath/invalid/$api.graphql")
+      }
+    }
 
   def assertConforms(api: String): Future[Assertion] = {
     val client = GraphQLConfiguration.GraphQL().baseUnitClient()
@@ -53,5 +63,7 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
       assertion
     }
   }
+
+  private def apiName(api: String): String = api.split('.').dropRight(1).mkString(".")
 
 }
