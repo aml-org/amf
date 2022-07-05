@@ -1,15 +1,13 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
-import amf.apicontract.internal.spec.common.parser.WebApiContext
-import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.apicontract.internal.spec.spec.toJsonSchema
 import amf.core.client.scala.parse.document.{ParsedReference, Reference}
+import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar, YType}
 
 object JsonSchemaContextAdapter {
 
-  def toSchemaContext(ctx: WebApiContext, ast: YNode): JsonSchemaWebApiContext = {
+  def toSchemaContext(ctx: ShapeParserContext, ast: YNode): ShapeParserContext = {
     ast match {
       case inlined: MutRef =>
         if (isExternalFile(inlined)) {
@@ -18,24 +16,23 @@ object JsonSchemaContextAdapter {
           val normalizedFilePath = stripPointsAndFragment(rawPath)
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(normalizedFilePath))) match {
             case Some(ref) =>
-              toJsonSchema(
+              ctx.asJsonSchema(
                 ref.unit.location().get,
-                ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
-                ctx
+                ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None))
               )
             case _
                 if hasLocation(
                   ast
                 ) => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
-              toJsonSchema(ast.value.sourceName, ctx.refs, ctx)
-            case _ => toJsonSchema(ctx)
+              ctx.asJsonSchema(ast.value.sourceName, ctx.refs)
+            case _ => ctx.asJsonSchema()
           }
         } else {
           // Inlined we don't need to update the context for ths JSON schema file
-          toJsonSchema(ctx)
+          ctx.asJsonSchema()
         }
       case _ =>
-        toJsonSchema(ctx)
+        ctx.asJsonSchema()
     }
   }
 

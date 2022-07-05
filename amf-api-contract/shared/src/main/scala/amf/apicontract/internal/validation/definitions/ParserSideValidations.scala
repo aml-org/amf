@@ -151,11 +151,6 @@ object ParserSideValidations extends Validations {
     "Invalid operation type"
   )
 
-  val InvalidXmlSchemaType = validation(
-    "invalid-xml-schema-type",
-    "Invalid xml schema type"
-  )
-
   val InvalidJsonSchemaExpression = validation(
     "invalid-json-schema-expression",
     "Invalid json schema expression"
@@ -251,19 +246,9 @@ object ParserSideValidations extends Validations {
     "Invalid parameter type"
   )
 
-  val UnableToParseShape = validation(
-    "unable-to-parse-shape",
-    "Unable to parse shape"
-  )
-
   val InvalidAst = validation(
     "invalid-ast",
     "Failed semantic validation for parsed AST"
-  )
-
-  val JsonSchemaFragmentNotFound = validation(
-    "json-schema-fragment-not-found",
-    "Json schema fragment not found"
   )
 
   val UnresolvedParameter = validation(
@@ -509,9 +494,7 @@ object ParserSideValidations extends Validations {
     OasInvalidParameterBinding,
     InvalidAbstractDeclarationType,
     NullAbstractDeclaration,
-    JsonSchemaFragmentNotFound,
     InvalidJsonSchemaExpression,
-    InvalidXmlSchemaType,
     UnresolvedParameter,
     ParameterNameRequired,
     RequestBodyContentRequired,
@@ -529,7 +512,6 @@ object ParserSideValidations extends Validations {
     InvalidBasePath,
     InvalidParameterType,
     InvalidEndpointType,
-    UnableToParseShape,
     InvalidAnnotationType,
     InvalidTypesType,
     SchemasDeprecated,

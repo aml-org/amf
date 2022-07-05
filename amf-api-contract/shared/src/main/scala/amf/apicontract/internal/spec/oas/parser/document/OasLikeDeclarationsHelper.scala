@@ -1,19 +1,13 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
-import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
+import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnableToParseShape
-import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement, Shape}
-import amf.core.internal.annotations.DeclaredElement
-import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.YScalarYRead
-import amf.core.internal.parser.YMapOps
-import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import org.yaml.model.{YMap, YScalar}
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.common.parser.TypeDeclarationParser
+import org.yaml.model.YMap
 
 object Draft4JsonSchemaDeclarationsParser extends OasLikeDeclarationsHelper {
   override protected val definitionsKey: String = "definitions"
@@ -28,30 +22,8 @@ trait OasLikeDeclarationsHelper {
   def parseTypeDeclarations(map: YMap, declarationKeysHolder: Option[DeclarationKeyCollector])(implicit
       ctx: OasLikeWebApiContext
   ): List[AnyShape] = {
-    map.key(definitionsKey).toList.flatMap { entry =>
-      declarationKeysHolder.foreach(_.addDeclarationKey(DeclarationKey(entry)))
-      entry.value
-        .as[YMap]
-        .entries
-        .flatMap(e => {
-          val typeName = e.key.as[YScalar].text
-          OasTypeParser
-            .buildDeclarationParser(
-              e,
-              shape => {
-                shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              }
-            )(WebApiShapeParserContextAdapter(ctx))
-            .parse() match {
-            case Some(shape) =>
-              ctx.declarations += shape.add(DeclaredElement())
-              Some(shape)
-            case None =>
-              ctx.eh.violation(UnableToParseShape, NodeShape().id, s"Error parsing shape at $typeName", e.location)
-              None
-          }
-        })
-    }
+    val shapeCtx = WebApiShapeParserContextAdapter(ctx)
+    TypeDeclarationParser.parseTypeDeclarations(map, definitionsKey, declarationKeysHolder)(shapeCtx)
   }
 
   def validateNames()(implicit ctx: OasLikeWebApiContext): Unit = {

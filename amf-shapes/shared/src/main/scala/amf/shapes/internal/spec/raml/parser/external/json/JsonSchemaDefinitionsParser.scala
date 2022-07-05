@@ -1,10 +1,10 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.JsonSchemaFragmentNotFound
 import org.yaml.model.YNode
 
 object JsonSchemaDefinitionsParser {
@@ -15,9 +15,9 @@ object JsonSchemaDefinitionsParser {
       basePath: String,
       localPath: Option[String],
       normalizedLocalPath: Option[String]
-  )(implicit ctx: RamlWebApiContext): AnyShape = {
+  )(implicit ctx: ShapeParserContext): AnyShape = {
     RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, basePath).parse()
-    val shape = ctx.declarations.findInExternalsLibs(basePath, normalizedLocalPath.get) match {
+    val shape = ctx.findInExternalsLibs(basePath, normalizedLocalPath.get) match {
       case Some(s) =>
         s.copyShape().withName(key.as[String])
       case _ =>
@@ -31,7 +31,7 @@ object JsonSchemaDefinitionsParser {
         empty
 
     }
-    ctx.declarations.fragments
+    ctx.fragments
       .get(basePath)
       .foreach(e =>
         shape.callAfterAdoption { () =>

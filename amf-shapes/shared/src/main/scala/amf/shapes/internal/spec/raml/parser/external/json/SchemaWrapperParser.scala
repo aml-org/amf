@@ -1,4 +1,4 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.metamodel.domain.ShapeModel

@@ -37,6 +37,7 @@ import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
+import amf.shapes.internal.spec.raml.parser.external.RamlExternalParserFactory
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
@@ -286,9 +287,9 @@ case class Raml08TypeParser(
         case _ =>
           value.as[YScalar].text match {
             case XMLSchema(_) =>
-              Option(ctx.ramlExternalSchemaParserFactory.createXml(key, value, adopt).parse())
+              Option(RamlExternalParserFactory.createXml(key, value, adopt).parse())
             case JSONSchema(_) =>
-              Option(ctx.ramlExternalSchemaParserFactory.createJson(key, value).parse())
+              Option(RamlExternalParserFactory.createJson(key, value).parse())
             case t if RamlTypeDefMatcher.match08Type(t).isDefined =>
               Option(
                 SimpleTypeParser(name, adopt, YMap.empty, defaultType = RamlTypeDefMatcher.match08Type(t).get).parse()
@@ -572,9 +573,9 @@ sealed abstract class RamlTypeParser(
     val info: Option[TypeDef] = RamlTypeDetection(node, "", parseFormat(node), defaultType)
     val result = info.map {
       case XMLSchemaType =>
-        ctx.ramlExternalSchemaParserFactory.createXml(key, node, adopt, parseExample = true).parse()
+        RamlExternalParserFactory.createXml(key, node, adopt, parseExample = true).parse()
       case JSONSchemaType =>
-        ctx.ramlExternalSchemaParserFactory.createJson(key, node, parseExample = true).parse()
+        RamlExternalParserFactory.createJson(key, node, parseExample = true).parse()
       case NilUnionType                          => parseNilUnion()
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
@@ -1497,7 +1498,7 @@ sealed abstract class RamlTypeParser(
 
         case YType.Str if XMLSchema.unapply(entry.value).isDefined =>
           val parsed =
-            ctx.ramlExternalSchemaParserFactory
+            RamlExternalParserFactory
               .createXml("schema", entry.value, xmlSchemaShape => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
               .parse()
           checkSchemaInheritance(shape, Seq(parsed), entry.range)
@@ -1534,7 +1535,7 @@ sealed abstract class RamlTypeParser(
                     "Inheritance from JSON Schema",
                     entry.value.location
                   )
-                  ctx.ramlExternalSchemaParserFactory
+                  RamlExternalParserFactory
                     .createJson(
                       "schema",
                       entry.value

@@ -1,28 +1,19 @@
-package amf.apicontract.internal.spec.raml.parser.external
+package amf.shapes.internal.spec.raml.parser.external
 
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.spec.raml.parser.external.json.{
-  IncludedJsonSchemaParser,
-  InlineJsonSchemaParser,
-  SchemaWrapperParser
-}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations._
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.raml.parser.external.{RamlExternalTypesParser, ValueAndOrigin}
+import amf.shapes.internal.spec.raml.parser.external.json.{IncludedJsonSchemaParser, InlineJsonSchemaParser, SchemaWrapperParser}
 import org.yaml.model._
 
 case class RamlJsonSchemaParser(
     key: YNode,
     override val value: YNode,
     parseExample: Boolean = false
-)(implicit val ctx: RamlWebApiContext)
+)(implicit val ctx: ShapeParserContext)
     extends RamlExternalTypesParser
     with PlatformSecrets {
-
-  override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
@@ -45,7 +36,7 @@ case class RamlJsonSchemaParser(
   }
 
   private def parseSchemaWrapper(map: YMap, parsed: AnyShape) =
-    SchemaWrapperParser.parse(map, parsed, key, value)(shapeCtx)
+    SchemaWrapperParser.parse(map, parsed, key, value)
 
   private def parseJsonSchema(origin: ValueAndOrigin) = {
     val parsed = origin.originalUrlText match {

@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.context
 
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
@@ -12,7 +13,7 @@ import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
-import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
+import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.jsonschema.ref.AstIndex
@@ -38,7 +39,30 @@ object JsonLdSchemaContext {
           options: ParsingOptions
       ): ShapeParserContext =
         JsonLdSchemaContext(ctx, schemaVersion)
+
+      override def addDeclaredShape(shape: Shape): Unit = Unit
+
+      override def promotedFragments: Seq[Fragment] = Seq.empty
+
+      override def registerExternalRef(external: (String, AnyShape)): Unit = Unit
+
+      override def addPromotedFragments(fragments: Seq[Fragment]): Unit = Unit
+
+      override def findInExternalsLibs(lib: String, name: String): Option[AnyShape] = None
+
+      override def findInExternals(url: String): Option[AnyShape] = None
+
+      override def removeLocalJsonSchemaContext: Unit = Unit
+
+      override def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
+
+      override def asJsonSchema(): ShapeParserContext = this
+
+      override def asJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext = this
+
+      override def registerExternalLib(url: String, content: Map[String, AnyShape]): Unit = Unit
     }
+
   }
 
   def apply(ctx: ParserContext): ShapeParserContext = this.apply(ctx, None)
@@ -137,9 +161,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
   override def libraries: Map[String, Declarations] = Map()
 
   override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    throw new Exception("Parser - Cann called only from JSON Schema")
-
-  override def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory =
     throw new Exception("Parser - Cann called only from JSON Schema")
 
   override def validateRefFormatWithError(ref: String): Boolean = true

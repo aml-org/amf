@@ -3,8 +3,9 @@ package amf.shapes.internal.spec
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
-import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, UnresolvedComponents}
 import amf.core.internal.datanode.DataNodeParserContext
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
@@ -34,8 +35,16 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
+  def addDeclaredShape(shape: Shape): Unit
   def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder
-
+  def promotedFragments: Seq[Fragment]
+  def registerExternalRef(external: (String, AnyShape)): Unit
+  def addPromotedFragments(fragments: Seq[Fragment]): Unit
+  def findInExternalsLibs(lib: String, name: String): Option[AnyShape]
+  def findInExternals(url: String): Option[AnyShape]
+  def removeLocalJsonSchemaContext: Unit
+  def globalSpace: mutable.Map[String, Any]
+  def getLocalJsonSchemaContext: Option[YNode]
   def toOasNext: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]
   def rootContextDocument: String
@@ -78,7 +87,6 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def raml08createContextFromRaml: ShapeParserContext
   def libraries: Map[String, Declarations]
   def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
-  def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory
   def getInheritedDeclarations: Option[Declarations]
   def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion
@@ -88,11 +96,9 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   // Implement copy and return new context
   def getSemanticContext: Option[SemanticContext]            = semanticContext
   def withSemanticContext(sc: Option[SemanticContext]): Unit = semanticContext = sc
-}
-
-trait RamlExternalSchemaExpressionFactory {
-  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
-  def createJson(key: YNode, value: YNode, parseExample: Boolean = false): RamlExternalTypesParser
+  def asJsonSchema(): ShapeParserContext
+  def asJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext
+  def registerExternalLib(url: String, content: Map[String, AnyShape]): Unit
 }
 
 object RamlWebApiContextType extends Enumeration {

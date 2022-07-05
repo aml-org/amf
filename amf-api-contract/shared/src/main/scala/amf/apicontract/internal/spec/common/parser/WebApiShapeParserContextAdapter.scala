@@ -1,35 +1,28 @@
 package amf.apicontract.internal.spec.common.parser
 
-import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
+import amf.aml.internal.semantic.SemanticExtensionsFacadeBuilder
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.apicontract.internal.spec.oas.parser.context.{
-  Oas2Syntax,
-  Oas2WebApiContext,
-  Oas3Syntax,
-  Oas3WebApiContext,
-  OasLikeWebApiContext
-}
+import amf.apicontract.internal.spec.oas.parser.context._
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
-import amf.apicontract.internal.spec.raml.parser.external.DefaultRamlExternalSchemaExpressionFactory
-import amf.apicontract.internal.spec.spec.{toOas, toOasDeclarations}
+import amf.apicontract.internal.spec.spec.{toJsonSchema, toOas, toOasDeclarations}
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.model.domain.{AmfObject, Shape}
+import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain._
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
-import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
@@ -38,6 +31,43 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
   override def spec: Spec = ctx.spec
 
   override def syntax: SpecSyntax = ctx.syntax
+
+  override def addDeclaredShape(shape: Shape): Unit = ctx.declarations += shape
+
+  override def promotedFragments: Seq[Fragment] = ctx.declarations.promotedFragments
+
+  override def registerExternalRef(external: (String, AnyShape)): Unit = ctx match {
+    case ramlCtx: RamlWebApiContext => ramlCtx.declarations.registerExternalRef(external)
+    case _                          => throw new Exception("Parser - not in RAML!")
+  }
+
+  override def addPromotedFragments(fragments: Seq[Fragment]): Unit = ctx.declarations.promotedFragments ++= fragments
+
+  override def findInExternalsLibs(lib: String, name: String): Option[AnyShape] = ctx match {
+    case ramlCtx: RamlWebApiContext => ramlCtx.declarations.findInExternalsLibs(lib, name)
+    case _                          => throw new Exception("Parser - not in RAML!")
+  }
+
+  override def findInExternals(url: String): Option[AnyShape] = ctx match {
+    case ramlCtx: RamlWebApiContext => ramlCtx.declarations.findInExternals(url)
+    case _                          => throw new Exception("Parser - not in RAML!")
+  }
+
+  override def removeLocalJsonSchemaContext: Unit = ctx.removeLocalJsonSchemaContext
+
+  override def globalSpace: mutable.Map[String, Any] = ctx.globalSpace
+
+  override def getLocalJsonSchemaContext: Option[YNode] = ctx.getLocalJsonSchemaContext
+
+  override def asJsonSchema(): ShapeParserContext = WebApiShapeParserContextAdapter(toJsonSchema(ctx))
+
+  override def asJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext =
+    WebApiShapeParserContextAdapter(toJsonSchema(root, refs, ctx))
+
+  override def registerExternalLib(url: String, content: Map[String, AnyShape]): Unit = ctx match {
+    case ramlCtx: RamlWebApiContext => ramlCtx.declarations.registerExternalLib(url, content)
+    case _                          => throw new Exception("Parser - not in RAML!")
+  }
 
   override def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = ctx.extensionsFacadeBuilder
 
@@ -191,11 +221,6 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser = ctx match {
     case ramlCtx: RamlWebApiContext => ramlCtx.factory.typeParser
-    case _                          => throw new Exception("Parser - Can be called only from RAML!")
-  }
-
-  override def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory = ctx match {
-    case ramlCtx: RamlWebApiContext => DefaultRamlExternalSchemaExpressionFactory()(ramlCtx)
     case _                          => throw new Exception("Parser - Can be called only from RAML!")
   }
 

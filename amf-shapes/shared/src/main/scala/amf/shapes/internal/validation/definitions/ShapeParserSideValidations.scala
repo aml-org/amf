@@ -317,6 +317,21 @@ object ShapeParserSideValidations extends Validations {
     "Pattern property may be ignored if format already defines a standard pattern"
   )
 
+  val InvalidXmlSchemaType = validation(
+    "invalid-xml-schema-type",
+    "Invalid xml schema type"
+  )
+
+  val UnableToParseShape = validation(
+    "unable-to-parse-shape",
+    "Unable to parse shape"
+  )
+
+  val JsonSchemaFragmentNotFound = validation(
+    "json-schema-fragment-not-found",
+    "Json schema fragment not found"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -350,6 +365,9 @@ object ShapeParserSideValidations extends Validations {
     InvalidContextNode,
     InvalidCharacteristicsNode,
     InvalidPrefixReference,
-    InvalidIri
+    InvalidIri,
+    InvalidXmlSchemaType,
+    UnableToParseShape,
+    JsonSchemaFragmentNotFound
   )
 }

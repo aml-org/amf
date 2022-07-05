@@ -43,7 +43,8 @@ import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryPars
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   ExclusiveSchemasType,
   InvalidFragmentType,
-  InvalidTypeDefinition
+  InvalidTypeDefinition,
+  UnableToParseShape
 }
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
