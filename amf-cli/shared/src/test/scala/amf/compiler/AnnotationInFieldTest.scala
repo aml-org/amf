@@ -5,7 +5,6 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.ResourceType
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.apicontract.client.scala.transform.AbstractElementTransformer
-import amf.core.client.common.position.{Position, Range}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
@@ -15,6 +14,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
+import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -88,7 +88,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val properties: Seq[PropertyShape] = document.declares.head.asInstanceOf[NodeShape].properties
       assertRange(
         properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-        new Range(Position(7, 8), Position(7, 9))
+        PositionRange((7, 8), (7, 9))
       )
       assertRange(
         properties
@@ -100,7 +100,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(9, 8), Position(9, 9))
+        PositionRange((9, 8), (9, 9))
       )
       assertRange(
         properties
@@ -112,7 +112,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(11, 8), Position(11, 9))
+        PositionRange((11, 8), (11, 9))
       )
       assertRange(
         properties
@@ -124,7 +124,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(14, 8), Position(14, 9))
+        PositionRange((14, 8), (14, 9))
       )
       succeed
     }
@@ -142,7 +142,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assertRange(
         properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-        new Range(Position(8, 6), Position(8, 7))
+        PositionRange((8, 6), (8, 7))
       )
       assertRange(
         properties
@@ -154,7 +154,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(9, 6), Position(9, 7))
+        PositionRange((9, 6), (9, 7))
       )
       assertRange(
         properties
@@ -166,7 +166,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(11, 6), Position(11, 7))
+        PositionRange((11, 6), (11, 7))
       )
       assertRange(
         properties
@@ -178,7 +178,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new Range(Position(12, 6), Position(12, 7))
+        PositionRange((12, 6), (12, 7))
       )
 
       succeed
@@ -198,8 +198,8 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
         document.declares.head.asInstanceOf[ResourceType],
         defaultConfig
       )
-      assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, Range((6, 2), (9, 12)))
-      assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, Range((6, 2), (6, 5)))
+      assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, PositionRange((6, 2), (9, 12)))
+      assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, PositionRange((6, 2), (6, 5)))
       succeed
     }
   }
@@ -212,7 +212,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.json")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
+      assert(targets.head._2 == List(PositionRange((6, 14), (6, 28))))
       succeed
     }
   }
@@ -225,7 +225,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.raml")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
+      assert(targets.head._2 == List(PositionRange((6, 14), (6, 28))))
       succeed
     }
   }
@@ -241,11 +241,11 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference-1.yaml")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 30))))
+      assert(targets.head._2 == List(PositionRange((6, 14), (6, 30))))
 
       assert(reftargets.size == 1)
       assert(reftargets.head._1 == s"${uri}reference.json")
-      assert(reftargets.head._2 == List(Range(Position(1, 15), Position(1, 29))))
+      assert(reftargets.head._2 == List(PositionRange((1, 15), (1, 29))))
 
       succeed
     }
@@ -260,9 +260,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}example.json")
-      assert(
-        targets.head._2 == List(Range(Position(9, 22), Position(9, 34)), Range(Position(21, 30), Position(21, 42)))
-      )
+      assert(targets.head._2 == List(PositionRange((9, 22), (9, 34)), PositionRange((21, 30), (21, 42))))
 
       succeed
     }
@@ -311,7 +309,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  private def assertRange(actual: Range, expected: Range) = {
+  private def assertRange(actual: PositionRange, expected: PositionRange) = {
     assert(actual.start.line == expected.start.line)
     assert(actual.start.column == expected.start.column)
     assert(actual.end.line == expected.end.line)

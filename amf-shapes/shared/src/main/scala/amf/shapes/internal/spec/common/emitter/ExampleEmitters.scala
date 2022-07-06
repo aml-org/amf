@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.datanode.DataNodeEmitter
@@ -19,6 +18,7 @@ import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument._
 import org.yaml.model._
 import org.yaml.parser.YamlParser

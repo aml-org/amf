@@ -13,7 +13,6 @@ import amf.apicontract.internal.spec.oas.parser.domain.{Oas30CallbackParser, Str
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.toOas
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidOperationType
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -97,7 +96,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key(
       "is",
       (e: YMapEntry) => {
-        operation.annotations += OperationTraitEntry(Range(e.range))
+        operation.annotations += OperationTraitEntry(e.range)
         (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional(e)
       }
     )

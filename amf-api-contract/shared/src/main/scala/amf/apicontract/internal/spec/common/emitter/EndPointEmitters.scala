@@ -6,7 +6,7 @@ import amf.apicontract.internal.spec.oas.emitter.domain.Raml10PayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
 import amf.apicontract.internal.spec.spec.toOas
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.SynthesizedField

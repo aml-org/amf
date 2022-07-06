@@ -12,7 +12,7 @@ import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain._
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.DomainExtension

@@ -6,7 +6,7 @@ import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IDENTIFIER, KEY_TYPE, MAP_NAME}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
-import org.mulesoft.antlrast.ast.{ASTElement, Node}
+import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyMap: PropertyShape = PropertyShape(toAnnotations(ast))
@@ -17,9 +17,12 @@ case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends Grp
     propertyMap
   }
 
-  def parseName(adopt: PropertyShape => Unit): Unit = withName(ast, MAP_NAME, propertyMap, { _ => adopt(propertyMap) })
+  def parseName(adopt: PropertyShape => Unit): Unit =
+    withName(ast, MAP_NAME, propertyMap, { _ =>
+      adopt(propertyMap)
+    })
 
-  def parseFieldName(field: ASTElement): String = {
+  def parseFieldName(field: ASTNode): String = {
     path(field, Seq(MAP_NAME, IDENTIFIER)) match {
       case Some(f) =>
         withOptTerminal(f) {

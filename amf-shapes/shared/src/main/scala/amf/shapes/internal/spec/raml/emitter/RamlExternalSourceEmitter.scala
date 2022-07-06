@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{pos, raw}

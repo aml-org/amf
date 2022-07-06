@@ -4,8 +4,8 @@ import amf.apicontract.client.scala.model.domain.TemplatedLink
 import amf.apicontract.internal.metamodel.domain.TemplatedLinkModel
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, OasServerEmitter}
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters._

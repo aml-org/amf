@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering

@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
-import org.mulesoft.antlrast.ast.{ASTElement, Node}
+import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val webApi = WebApi()
@@ -34,7 +34,7 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
   def parseName(): Option[(String, Annotations)] = {
     path(ast, Seq(PACKAGE_STATEMENT)) match {
       case Some(n: Node) =>
-        val ids: Seq[String] = collect(n, Seq(FULL_IDENTIFIER, IDENTIFIER)).map { element: ASTElement =>
+        val ids: Seq[String] = collect(n, Seq(FULL_IDENTIFIER, IDENTIFIER)).map { element: ASTNode =>
           withOptTerminal(element) {
             case Some(packageId) =>
               packageId.value

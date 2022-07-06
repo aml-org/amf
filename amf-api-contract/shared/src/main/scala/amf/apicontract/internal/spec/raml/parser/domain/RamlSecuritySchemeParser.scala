@@ -14,7 +14,6 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   InvalidSecuritySchemeDescribedByType,
   MissingSecuritySchemeErrorSpecification
 }
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.internal.parser.YMapOps
@@ -68,7 +67,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
                 scheme,
                 Some(SecuritySchemeModel.Type.value.iri()),
                 "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
-                Some(LexicalInformation(Range(map.range))),
+                Some(LexicalInformation(map.range)),
                 Some(ctx.rootContextDocument)
               )
             }

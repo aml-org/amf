@@ -1,17 +1,15 @@
 package amf.shapes.internal.spec.common.parser
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.errorhandling.WarningOnlyHandler
-import amf.core.internal.parser.domain.{Annotations, ScalarNode, _}
+import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.annotations.{ExternalReferenceUrl, ParsedJSONExample}
-import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
+import amf.shapes.internal.annotations.{ExternalReferenceUrl, ParsedJSONExample}
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
@@ -24,7 +22,7 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   InvalidFragmentType
 }
 import amf.shapes.internal.vocabulary.VocabularyMappings
-import org.mulesoft.lexer.Position
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
@@ -354,7 +352,7 @@ case class NodeDataNodeParser(
     val dataNode = exampleNode.map { ex =>
       val dataNode = DataNodeParser(ex).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
-      dataNode.annotations += LexicalInformation(Range(ex.value.range))
+      dataNode.annotations += LexicalInformation(ex.value.range)
       ann.foreach { a =>
         dataNode.annotations += a
       }

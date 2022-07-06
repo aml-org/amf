@@ -5,7 +5,7 @@ import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextA
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.domain.OasSecuritySchemeEmitter
 import amf.apicontract.internal.spec.oas.{OasHeader, OasLikeSecuritySchemeTypeMappings}
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{Fragment, Module}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration

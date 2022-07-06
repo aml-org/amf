@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.external.json
 
 import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.core.internal.parser.domain.JsonParserFactory
-import org.mulesoft.lexer.Position
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YNode
 import org.yaml.parser.JsonParser
 

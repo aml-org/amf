@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters._

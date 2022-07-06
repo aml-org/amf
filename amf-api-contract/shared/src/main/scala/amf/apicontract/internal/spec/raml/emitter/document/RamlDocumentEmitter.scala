@@ -13,14 +13,14 @@ import amf.apicontract.internal.spec.raml.emitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.{NamedPropertyTypeEmitter, RamlSecuritySchemesEmitters}
 import amf.apicontract.internal.spec.spec.toOas
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Module}
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST}
+import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST, SourceYPart}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{Raml10, Spec}
@@ -425,7 +425,7 @@ case class CommentEmitter(element: AmfElement, message: String) extends PartEmit
     b += YNode.Empty
     b.comment(message)
     if (element != null) {
-      element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+      element.annotations.find(classOf[SourceYPart]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
     }
   }
 

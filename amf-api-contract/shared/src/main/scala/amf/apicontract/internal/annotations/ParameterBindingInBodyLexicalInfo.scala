@@ -1,9 +1,11 @@
 package amf.apicontract.internal.annotations
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
+import org.mulesoft.common.client.lexical.PositionRange
 
-case class ParameterBindingInBodyLexicalInfo(range: Range) extends SerializableAnnotation with PerpetualAnnotation {
+case class ParameterBindingInBodyLexicalInfo(range: PositionRange)
+    extends SerializableAnnotation
+    with PerpetualAnnotation {
   override val name: String = "parameter-binding-in-body-lexical-info"
 
   override val value: String = range.toString
@@ -11,5 +13,5 @@ case class ParameterBindingInBodyLexicalInfo(range: Range) extends SerializableA
 
 object ParameterBindingInBodyLexicalInfo extends AnnotationGraphLoader {
   override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
-    Some(ParameterBindingInBodyLexicalInfo(Range.apply(value)))
+    Some(ParameterBindingInBodyLexicalInfo(PositionRange(value)))
 }

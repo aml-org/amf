@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.oas.parser
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
@@ -25,10 +24,9 @@ import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
-import amf.shapes.internal.spec.{SemanticContextParser, ShapeParserContext}
 import amf.shapes.internal.spec.common.TypeDef._
-import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common._
+import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.jsonschema.parser.{
   ContentParser,
   Draft2019ShapeDependenciesParser,
@@ -37,6 +35,7 @@ import amf.shapes.internal.spec.jsonschema.parser.{
 }
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
+import amf.shapes.internal.spec.{SemanticContextParser, ShapeParserContext}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import org.yaml.model._
 
@@ -103,7 +102,7 @@ case class InlineOasTypeParser(
     map.key("nullable") match {
       case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
         val union = UnionShape().withName(name, nameAnnotations).withId(parsed.id + "/nilUnion")
-        parsed.annotations += NilUnion(Range(nullableEntry.key.range).toString())
+        parsed.annotations += NilUnion(nullableEntry.key.range.toString())
         union.withAnyOf(
           Seq(
             parsed,
@@ -1082,7 +1081,7 @@ case class InlineOasTypeParser(
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(entry.key.range)))
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(entry.key.range))
 
       // Logical constraints
       OrConstraintParser(map, shape).parse()

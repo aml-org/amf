@@ -7,7 +7,7 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.ScalarShape
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
+import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
@@ -43,7 +43,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
     valueFrom(valueNode, Seq(ENUM_VALUE, NAME))
       .orElse(valueFrom(valueNode, Seq(ENUM_VALUE, NAME, KEYWORD)))
 
-  private def valueFrom(element: ASTElement, pathToValue: Seq[String]): Option[ScalarNode] = {
+  private def valueFrom(element: ASTNode, pathToValue: Seq[String]): Option[ScalarNode] = {
     path(element, pathToValue) match {
       case Some(n: Node) if hasTerminalChild(n) =>
         val t = n.children.head.asInstanceOf[Terminal]

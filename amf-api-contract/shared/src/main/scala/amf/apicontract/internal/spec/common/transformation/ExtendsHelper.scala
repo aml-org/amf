@@ -137,7 +137,7 @@ case class ExtendsHelper(
                 name,
                 YType.Str,
                 rtAnnotations
-                  .find(classOf[SourceAST])
+                  .find(classOf[SourceYPart])
                   .map(_.ast)
                   .collectFirst({ case e: YMapEntry => Annotations(e.key) })
                   .getOrElse(rtAnnotations)

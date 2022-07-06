@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.apicontract.internal.spec.common.emitter.SingleValueArrayEmitter
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}

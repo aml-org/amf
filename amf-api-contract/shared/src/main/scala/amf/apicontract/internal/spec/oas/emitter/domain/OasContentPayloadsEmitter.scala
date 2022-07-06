@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, sourceOr, traverse}

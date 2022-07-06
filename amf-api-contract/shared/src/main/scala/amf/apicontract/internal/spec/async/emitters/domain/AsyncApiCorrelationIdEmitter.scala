@@ -5,8 +5,8 @@ import amf.apicontract.internal.metamodel.domain.CorrelationIdModel
 import amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}

@@ -1,7 +1,7 @@
 package amf.apicontract.internal.plugins
 
 import amf.apicontract.internal.spec.common.emitter.DomainElementEmitterFactory
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.{ParsedDocument, SyamlParsedDocument}

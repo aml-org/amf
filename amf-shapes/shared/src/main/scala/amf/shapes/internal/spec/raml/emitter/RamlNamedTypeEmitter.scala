@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.metamodel.Field
@@ -8,11 +7,11 @@ import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.TransformationValidation
-import amf.shapes.client.scala.model.domain.ShapeHelpers
 import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers}
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 /** */

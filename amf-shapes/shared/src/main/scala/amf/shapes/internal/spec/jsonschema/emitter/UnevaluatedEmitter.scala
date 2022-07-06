@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.{ExplicitField, SynthesizedField}
@@ -13,6 +12,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.oas.emitter.OasEntryShapeEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 
 case class UnevaluatedInfo(key: String, booleanField: Field, schemaField: Field)

@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
@@ -8,6 +7,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.domain.metamodel.XMLSerializerModel
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

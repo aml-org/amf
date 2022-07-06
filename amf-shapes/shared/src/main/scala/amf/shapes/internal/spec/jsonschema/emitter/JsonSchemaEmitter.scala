@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
@@ -21,6 +20,7 @@ import amf.shapes.internal.spec.common.{
   SchemaVersion
 }
 import amf.shapes.internal.spec.oas.emitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 

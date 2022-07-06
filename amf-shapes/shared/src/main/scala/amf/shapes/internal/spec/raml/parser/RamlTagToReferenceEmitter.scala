@@ -1,12 +1,12 @@
 package amf.shapes.internal.spec.raml.parser
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.{BaseUnit, Fragment}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.render.BaseEmitters.{pos, raw}
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.{ShapeEmitterContext, TagToReferenceEmitter}
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
 
 case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUnit])(implicit

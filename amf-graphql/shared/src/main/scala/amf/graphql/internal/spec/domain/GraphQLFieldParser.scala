@@ -5,7 +5,7 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION}
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
-import org.mulesoft.antlrast.ast.{ASTElement, Node}
+import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
 
@@ -18,6 +18,6 @@ case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
     }
   }
 
-  private def arguments(): Seq[ASTElement] = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION))
+  private def arguments(): Seq[ASTNode] = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION))
 
 }

@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.oas.emitter.compact
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.internal.annotations.{DeclaredElement, ResolvedInheritance}

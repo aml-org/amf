@@ -1,12 +1,12 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.spec.common.emitter.{ExampleDataNodePartEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.oas.emitter.OasLikeExampleEmitters
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer

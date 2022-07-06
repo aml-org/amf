@@ -11,7 +11,6 @@ import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.{OasDefinitions, toOas}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -28,7 +27,9 @@ import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesPars
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser._
+import org.mulesoft.common.client.lexical.PositionRange
 import org.yaml.model._
+
 import scala.language.postfixOps
 
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
@@ -286,7 +287,7 @@ case class Oas2ParameterParser(
             map
               .key("name")
               .map(e => {
-                Annotations(e) += ParameterNameForPayload(ScalarNode(e.value).text().value.toString, Range(e.range))
+                Annotations(e) += ParameterNameForPayload(ScalarNode(e.value).text().value.toString, e.range)
               })
               .getOrElse(Annotations.inferred())
           )
@@ -308,9 +309,9 @@ case class Oas2ParameterParser(
   private def buildFromBinding(in: String, bindingEntry: Option[YMapEntry]): OasParameter = {
     in match {
       case "body" =>
-        OasParameter(parseBodyPayload(bindingEntry.map(a => Range(a.range))), Some(entryOrNode.ast))
+        OasParameter(parseBodyPayload(bindingEntry.map(a => a.range)), Some(entryOrNode.ast))
       case "formData" =>
-        OasParameter(parseFormDataPayload(bindingEntry.map(a => Range(a.range))), Some(entryOrNode.ast))
+        OasParameter(parseFormDataPayload(bindingEntry.map(a => a.range)), Some(entryOrNode.ast))
       case "query" | "header" | "path" =>
         OasParameter(parseCommonParam(in), Some(entryOrNode.ast))
       case _ =>
@@ -458,7 +459,7 @@ case class Oas2ParameterParser(
       )
   }
 
-  private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
+  private def parseFormDataPayload(bindingRange: Option[PositionRange]): Payload = {
     val payload = commonPayload(bindingRange)
     ctx.closedShape(payload, map, "parameter")
     parseType(
@@ -491,7 +492,7 @@ case class Oas2ParameterParser(
     payload
   }
 
-  private def commonPayload(bindingRange: Option[Range]): Payload = {
+  private def commonPayload(bindingRange: Option[PositionRange]): Payload = {
     val payload = Payload(entryOrNode.ast)
     setName(payload)
     if (payload.name.option().isEmpty)
@@ -500,7 +501,7 @@ case class Oas2ParameterParser(
       "required",
       entry => {
         val req: Boolean = entry.value.as[Boolean]
-        payload.annotations += RequiredParamPayload(req, Range(entry.range))
+        payload.annotations += RequiredParamPayload(req, entry.range)
       }
     )
     map.key("description", PayloadModel.Description in payload)
@@ -508,7 +509,7 @@ case class Oas2ParameterParser(
     payload
   }
 
-  private def parseBodyPayload(bindingRange: Option[Range]): Payload = {
+  private def parseBodyPayload(bindingRange: Option[PositionRange]): Payload = {
     val payload: Payload = commonPayload(bindingRange)
     ctx.closedShape(payload, map, "bodyParameter")
 

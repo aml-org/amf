@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.model.domain.security.{
 }
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel
 import amf.apicontract.internal.spec.raml.emitter.domain.RamlSecuritySettingsValuesEmitters
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
 import amf.core.internal.annotations.{NullSecurity, SingleValueArray}
 import amf.core.internal.parser.domain.FieldEntry

@@ -1,7 +1,7 @@
 package amf.grpc.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext

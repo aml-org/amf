@@ -1,7 +1,7 @@
 package amf.spec
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.internal.render.SpecOrdering.Lexical
 import amf.core.internal.render.emitters.Emitter
 import org.scalatest.funsuite.AnyFunSuite
