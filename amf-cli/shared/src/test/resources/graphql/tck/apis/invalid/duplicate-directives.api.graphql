@@ -1,0 +1,11 @@
+schema @duplicated {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+directive @duplicated on SCHEMA
+
+directive @duplicated on SCHEMA

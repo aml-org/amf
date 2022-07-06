@@ -6,7 +6,9 @@ import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
 import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
@@ -59,37 +61,37 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
 
   private def parseNestedType(objTypeDef: Node): Unit = {
     val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse()
-    ctx.declarations += shape
+    addToDeclarations(shape)
   }
 
   private def parseInputType(objTypeDef: Node): Unit = {
     val shape = GraphQLInputTypeParser(objTypeDef).parse()
-    ctx.declarations += shape
+    addToDeclarations(shape)
   }
 
   private def parseInterfaceType(objTypeDef: Node): Unit = {
     val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = true).parse()
-    ctx.declarations += shape
+    addToDeclarations(shape)
   }
 
   private def parseUnionType(unionTypeDef: Node): Unit = {
     val shape: UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse()
-    ctx.declarations += shape
+    addToDeclarations(shape)
   }
 
   private def parseEnumType(enumTypeDef: Node): Unit = {
     val enum: ScalarShape = new GraphQLNestedEnumParser(enumTypeDef).parse()
-    ctx.declarations += enum
+    addToDeclarations(enum)
   }
 
   private def parseCustomScalarTypeDef(customScalarTypeDef: Node): Unit = {
     val scalar: ScalarShape = new GraphQLCustomScalarParser(customScalarTypeDef).parse()
-    ctx.declarations += scalar
+    addToDeclarations(scalar)
   }
 
   private def parseDirectiveDeclaration(directiveDef: Node): Unit = {
     val directive: CustomDomainProperty = GraphQLDirectiveDeclarationParser(directiveDef).parse()
-    ctx.declarations += directive
+    addToDeclarations(directive)
   }
 
   def parseTypeExtension(typeExtensionDef: Node): Unit = {
@@ -225,4 +227,31 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       case _                           => None
     }
   }
+
+  private def addToDeclarations(declaration: NamedDomainElement): Unit = {
+    declaration match {
+      case _: CustomDomainProperty => checkDeclarationIsUnique(declaration, ctx.declarations.annotations, "directives")
+      case _                       => checkDeclarationIsUnique(declaration, ctx.declarations.shapes, "types")
+    }
+    ctx.declarations += declaration
+  }
+
+  private def checkDeclarationIsUnique(
+      declaration: NamedDomainElement,
+      declarations: Map[String, NamedDomainElement],
+      kind: String
+  ): Unit = {
+    val declarationName = declaration.name.value()
+
+    if (declarationIsDuplicated(declarations, declarationName)) {
+      ctx.eh.violation(
+        DuplicatedDeclaration,
+        declaration,
+        s"Cannot exist two or more $kind with name '$declarationName'",
+        declaration.annotations
+      )
+    }
+  }
+  private def declarationIsDuplicated(declarations: Map[String, NamedDomainElement], declarationName: String) =
+    declarations.exists(_._1 == declarationName)
 }

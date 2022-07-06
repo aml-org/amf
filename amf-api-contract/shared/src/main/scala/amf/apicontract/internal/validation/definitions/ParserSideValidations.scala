@@ -447,6 +447,11 @@ object ParserSideValidations extends Validations {
     message= "Cannot exist two or more arguments with same name"
   )
 
+  val DuplicatedDeclaration = validation(
+    id = "duplicated-declaration",
+    message= "Cannot exist two or more declarations with same name"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -548,6 +553,7 @@ object ParserSideValidations extends Validations {
     MissingAnnotationSchema,
     AnnotationSchemaMustBeAny,
     DuplicatedField,
-    DuplicatedArgument
+    DuplicatedArgument,
+    DuplicatedDeclaration
   )
 }
