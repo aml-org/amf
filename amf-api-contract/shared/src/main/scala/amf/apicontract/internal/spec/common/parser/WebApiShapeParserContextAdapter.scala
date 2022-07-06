@@ -219,11 +219,6 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def libraries: Map[String, Declarations] = ctx.declarations.libraries
 
-  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser = ctx match {
-    case ramlCtx: RamlWebApiContext => ramlCtx.factory.typeParser
-    case _                          => throw new Exception("Parser - Can be called only from RAML!")
-  }
-
   override def getInheritedDeclarations: Option[OasWebApiDeclarations] = ctx match {
     case ramlContext: Raml08WebApiContext => Some(toOasDeclarations(ramlContext.declarations))
     case _                                => None

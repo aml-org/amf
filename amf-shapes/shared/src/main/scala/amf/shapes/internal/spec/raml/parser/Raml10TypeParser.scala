@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser
 
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.{Shape, _}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Shapes
@@ -41,8 +41,8 @@ import amf.shapes.internal.spec.raml.parser.external.RamlExternalParserFactory
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
-import org.mulesoft.common.client.lexical.PositionRange
 import org.yaml.model._
+import org.yaml.model.{YMapEntry, _}
 
 import scala.language.postfixOps
 
@@ -161,9 +161,22 @@ case class Raml10TypeParser(
       typeInfo: TypeInfo,
       defaultType: DefaultType
     ) {
-  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    Raml10TypeParser.apply
+  override def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml10TypeParser(entry, name, adopt, isAnnotation, default)
 
+  override def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml10TypeParser(entry, adopt, TypeInfo(isAnnotation = isAnnotation), default)
 }
 
 object Raml08TypeParser {
@@ -245,8 +258,22 @@ case class Raml08TypeParser(
     Option(Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)), node.as[YSequence], ast).parse())
   }
 
-  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    Raml08TypeParser.apply
+  override def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml08TypeParser(entry, name, adopt, isAnnotation, default)
+
+  override def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml08TypeParser(entry, adopt, isAnnotation, default)
 
   case class Raml08ReferenceParser(text: String, node: YNode, name: String)(implicit ctx: ShapeParserContext) {
     def parse(): Some[AnyShape] = {
@@ -557,7 +584,19 @@ sealed abstract class RamlTypeParser(
 
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations.inferred())
 
-  def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
+  protected def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser
+  protected def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser
 
   def parseDefaultType(defaultType: DefaultType): Shape = {
     val defaultShape = defaultType.typeDef match {
@@ -625,7 +664,7 @@ sealed abstract class RamlTypeParser(
       case s: YScalar =>
         val toParse = YMapEntry(YNode(""), YNode(s.text.stripSuffix("?")))
         val parsed =
-          ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+          typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
         union.setWithoutId(
           UnionShapeModel.AnyOf,
           AmfArray(
@@ -1612,8 +1651,7 @@ sealed abstract class RamlTypeParser(
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        ctx
-          .typeParser(entry, s => Unit, true, defaultType)
+        typeParser(entry, s => Unit, true, defaultType)
           .parse()
           .foreach { parsed =>
             shape.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, parsed, Annotations(entry))

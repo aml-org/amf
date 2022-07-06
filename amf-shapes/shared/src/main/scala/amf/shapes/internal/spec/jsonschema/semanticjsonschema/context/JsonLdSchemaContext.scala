@@ -160,9 +160,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def libraries: Map[String, Declarations] = Map()
 
-  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    throw new Exception("Parser - Cann called only from JSON Schema")
-
   override def validateRefFormatWithError(ref: String): Boolean = true
 
   override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion

@@ -86,7 +86,6 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def raml10createContextFromRaml: ShapeParserContext
   def raml08createContextFromRaml: ShapeParserContext
   def libraries: Map[String, Declarations]
-  def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
   def getInheritedDeclarations: Option[Declarations]
   def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion
