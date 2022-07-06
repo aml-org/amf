@@ -311,16 +311,6 @@ object ParserSideValidations extends Validations {
     "Invalid module type"
   )
 
-  val ClosedShapeSpecification = validation(
-    "closed-shape",
-    "Invalid property for node"
-  )
-
-  val ClosedShapeSpecificationWarning = validation(
-    "closed-shape-warning",
-    "Invalid property for node"
-  )
-
   val UnexpectedReference = validation(
     "unexpected-reference",
     "Unexpected reference"
@@ -464,7 +454,6 @@ object ParserSideValidations extends Validations {
     InvalidDirectiveApplication.id               -> all(VIOLATION),
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
-    ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
     HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
@@ -535,8 +524,6 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    ClosedShapeSpecification,
-    ClosedShapeSpecificationWarning,
     MissingAnnotationSchema,
     AnnotationSchemaMustBeAny,
     DuplicatedField,

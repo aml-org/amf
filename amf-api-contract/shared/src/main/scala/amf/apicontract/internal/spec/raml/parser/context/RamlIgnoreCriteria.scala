@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
-import amf.apicontract.internal.spec.common.parser.IgnoreCriteria
+import amf.shapes.internal.spec.common.parser.IgnoreCriteria
 
 trait RamlIgnoreCriteria extends IgnoreCriteria {
 

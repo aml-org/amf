@@ -1,11 +1,14 @@
 package amf.error
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnresolvedShape}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
 import org.mulesoft.common.client.lexical.PositionRange
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  ClosedShapeSpecification,
+  MissingRequiredUserDefinedFacet
+}
 
 class Raml10ParserErrorTest extends RamlParserErrorTest {
 

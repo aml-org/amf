@@ -15,7 +15,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion}
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{IgnoreAllCriteria, IgnoreCriteria, SpecSyntax}
 import amf.shapes.internal.spec.jsonschema.ref.AstIndex
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
@@ -32,6 +32,8 @@ object JsonLdSchemaContext {
       override def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder =
         (name: String) => SemanticExtensionsFacade.apply(name, ctx.config)
       override val defaultSchemaVersion: JSONSchemaVersion = schemaVersion.getOrElse(defaultSchemaVersion)
+
+      override def ignoreCriteria: IgnoreCriteria = IgnoreAllCriteria
 
       override def makeJsonSchemaContextForParsing(
           url: String,
@@ -73,9 +75,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
   override def spec: Spec = JsonSchemaDialect
 
   override def syntax: SpecSyntax = JsonSchemaSyntax
-
-  override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit =
-    throw new Exception("Parser - not in RAML!")
 
   override def rootContextDocument: String = ctx.rootContextDocument
 

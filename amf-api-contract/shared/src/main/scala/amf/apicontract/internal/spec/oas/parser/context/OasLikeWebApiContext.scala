@@ -7,7 +7,6 @@ import amf.apicontract.internal.spec.common.OasLikeWebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecVersionFactory
 import amf.apicontract.internal.spec.common.parser.{
   IgnoreAnnotationSchemaValidatorBuilder,
-  IgnoreCriteria,
   ParsingHelpers,
   WebApiContext,
   WebApiShapeParserContextAdapter
@@ -25,6 +24,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.YMapOps
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.common.parser.IgnoreCriteria
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 

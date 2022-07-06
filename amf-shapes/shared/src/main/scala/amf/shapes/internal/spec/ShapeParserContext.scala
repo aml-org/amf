@@ -14,7 +14,7 @@ import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example, SemanticContext}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
@@ -35,6 +35,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
+  def ignoreCriteria: IgnoreCriteria
   def addDeclaredShape(shape: Shape): Unit
   def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder
   def promotedFragments: Seq[Fragment]
@@ -54,7 +55,6 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def loc: String
   def spec: Spec
   def syntax: SpecSyntax
-  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
   def shapes: Map[String, Shape]
   def closedShape(node: AmfObject, ast: YMap, shape: String): Unit
   def registerJsonSchema(url: String, shape: AnyShape)

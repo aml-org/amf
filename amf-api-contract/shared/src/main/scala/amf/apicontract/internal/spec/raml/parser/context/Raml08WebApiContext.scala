@@ -1,13 +1,12 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
-import amf.apicontract.internal.spec.common.parser.{IgnoreCriteria}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml08, Spec}
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSyntax}
 
 class Raml08WebApiContext(
     loc: String,

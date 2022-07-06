@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.apicontract.internal.spec.common.parser.IgnoreCriteria
+import amf.shapes.internal.spec.common.parser.IgnoreCriteria
 
 object OasLikeIgnoreCriteria extends IgnoreCriteria {
 

@@ -1,10 +1,11 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.apicontract.internal.spec.common.parser.{ClosedShapeValidator, CustomSyntax, IgnoreCriteria, SpecNode}
+import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote.Spec
+import amf.shapes.internal.spec.common.parser.{ClosedShapeValidator, IgnoreCriteria}
 import org.yaml.model.{YMap, YPart}
 
 case class SecuritySchemeClosedShapeValidator(

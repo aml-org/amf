@@ -6,10 +6,6 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  ClosedShapeSpecification,
-  ClosedShapeSpecificationWarning
-}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -23,12 +19,19 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, QName}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{
+  ClosedShapeValidator,
+  DefaultClosedShapeValidator,
+  IgnoreCriteria,
+  SpecSyntax,
+  YMapEntryLike
+}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.jsonschema.ref.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model._
+
 import scala.collection.mutable
 
 abstract class ExtensionsContext(

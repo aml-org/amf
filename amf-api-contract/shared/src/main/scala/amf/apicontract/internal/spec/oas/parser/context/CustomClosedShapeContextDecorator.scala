@@ -1,17 +1,17 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.apicontract.internal.spec.common.parser.{
-  ClosedShapeValidator,
-  CustomSyntax,
-  DefaultClosedShapeValidator,
-  IgnoreCriteria,
-  SpecNode,
-  UnknownShapeValidator
-}
+import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser
+import amf.shapes.internal.spec.common.parser.{
+  ClosedShapeValidator,
+  DefaultClosedShapeValidator,
+  IgnoreCriteria,
+  SpecSyntax,
+  UnknownShapeValidator
+}
 import org.yaml.model.{YMap, YNode, YPart}
 
 class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: CustomSyntax)
@@ -27,7 +27,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
   override def spec: Spec                     = decorated.spec
   override def ignoreCriteria: IgnoreCriteria = decorated.ignoreCriteria
 
-  override protected val closedShapeValidator: ClosedShapeValidator = DefaultClosedShapeValidator(
+  override protected val closedShapeValidator: ClosedShapeValidator = parser.DefaultClosedShapeValidator(
     ignoreCriteria,
     spec,
     syntax,

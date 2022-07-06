@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.remote.{Oas, Raml}
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.raml.parser.TypeInfo
+import amf.shapes.internal.spec.raml.parser.{ClosedRamlTypeShape, TypeInfo}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   MissingRequiredUserDefinedFacet,
   UnableToParseShapeExtensions,
@@ -70,7 +70,7 @@ case class ShapeExtensionParser(
 
       val extensionsNames = inheritedDefinitions.flatMap(_.name.option())
       val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
-      ctx.closedRamlTypeShape(shape, m, syntax, typeInfo)
+      ClosedRamlTypeShape.eval(shape, m, syntax, typeInfo)(ctx)
       validateCustomFacetDefinitions(syntax)
     }
 

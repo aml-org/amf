@@ -20,7 +20,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
@@ -31,6 +31,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
   override def spec: Spec = ctx.spec
 
   override def syntax: SpecSyntax = ctx.syntax
+
+  override def ignoreCriteria: IgnoreCriteria = ctx.ignoreCriteria
 
   override def addDeclaredShape(shape: Shape): Unit = ctx.declarations += shape
 
@@ -70,11 +72,6 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
   }
 
   override def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = ctx.extensionsFacadeBuilder
-
-  override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = ctx match {
-    case ramlCtx: RamlWebApiContext => ramlCtx.closedRamlTypeShape(shape, ast, shapeType, typeInfo)
-    case _                          => throw new Exception("Parser - not in RAML!")
-  }
 
   override def rootContextDocument: String = ctx.rootContextDocument
 

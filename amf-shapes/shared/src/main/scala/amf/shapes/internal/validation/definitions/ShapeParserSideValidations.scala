@@ -332,6 +332,16 @@ object ShapeParserSideValidations extends Validations {
     "Json schema fragment not found"
   )
 
+  val ClosedShapeSpecification = validation(
+    "closed-shape",
+    "Invalid property for node"
+  )
+
+  val ClosedShapeSpecificationWarning = validation(
+    "closed-shape-warning",
+    "Invalid property for node"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -350,6 +360,7 @@ object ShapeParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
+    ClosedShapeSpecificationWarning.id        -> all(WARNING),
     SchemaDeprecated.id                       -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id         -> all(WARNING),
     MissingDiscriminatorProperty.id           -> all(VIOLATION),
@@ -368,6 +379,8 @@ object ShapeParserSideValidations extends Validations {
     InvalidIri,
     InvalidXmlSchemaType,
     UnableToParseShape,
-    JsonSchemaFragmentNotFound
+    JsonSchemaFragmentNotFound,
+    ClosedShapeSpecification,
+    ClosedShapeSpecificationWarning
   )
 }

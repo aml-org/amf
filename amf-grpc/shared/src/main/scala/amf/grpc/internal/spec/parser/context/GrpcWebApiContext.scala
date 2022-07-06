@@ -3,17 +3,12 @@ package amf.grpc.internal.spec.parser.context
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecVersionFactory
-import amf.apicontract.internal.spec.common.parser.{
-  DontIgnoreCriteria,
-  IgnoreCriteria,
-  SecuritySchemeParser,
-  WebApiContext
-}
+import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser, WebApiContext}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Grpc, Spec}
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{DontIgnoreCriteria, IgnoreCriteria, SpecSyntax}
 import org.yaml.model.{YNode, YPart}
 
 object GrpcVersionFactory extends SpecVersionFactory {
