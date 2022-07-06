@@ -1,6 +1,6 @@
 package amf.graphql.client.scala
 
-import amf.antlr.internal.plugins.syntax.AntlrSyntaxRenderPlugin
+import amf.antlr.internal.plugins.syntax.{AntlrSyntaxRenderPlugin, GraphQLFederationSyntaxParsePlugin}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLFederationEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
@@ -15,7 +15,7 @@ object GraphQLFederationConfiguration extends APIConfigurationBuilder {
         List(
           // TODO: replace with federation specific plugins
 //          GraphQLParsePlugin,
-//          GraphQLSyntaxParsePlugin,
+          GraphQLFederationSyntaxParsePlugin,
 //          GraphQLRenderPlugin,
           AntlrSyntaxRenderPlugin,
           ShaclModelValidationPlugin(ProfileNames.GRAPHQL_FEDERATION)
