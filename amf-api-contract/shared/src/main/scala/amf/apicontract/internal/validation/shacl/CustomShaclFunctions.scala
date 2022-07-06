@@ -11,19 +11,20 @@ import amf.apicontract.internal.metamodel.domain.security.{
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.core.client.scala.model.domain._
-import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
-import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.utils.RegexConverter
-import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.operations.ShapeParameter
+import amf.shapes.client.scala.model.domain.{AnyShape, FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
-import amf.validation.internal.shacl.custom.CustomShaclValidator
+import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunction,
   CustomShaclFunctions,
   ValidationInfo
 }
-
 import java.util.regex.Pattern
 
 object CustomShaclFunctions {
@@ -353,6 +354,19 @@ object CustomShaclFunctions {
           }
         }
       }
+    },
+    new CustomShaclFunction {
+      override val name: String = "invalidIntrospectionName"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        element match {
+          case d: CustomDomainProperty =>
+            if (hasIntrospectionName(d)) validate(Some(ValidationInfo(CustomDomainPropertyModel.Name)))
+          case t: Shape => if (hasIntrospectionName(t)) validate(Some(ValidationInfo(AnyShapeModel.Name)))
+          case n: NamedDomainElement =>
+            if (hasIntrospectionName(n)) validate(Some(ValidationInfo(NameFieldSchema.Name)))
+          case _ => // ignore
+        }
+      }
     }
   )
 
@@ -395,4 +409,7 @@ object CustomShaclFunctions {
     !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
 
   private def isRequiredProperty(shape: PropertyShape) = shape.minCount.option().contains(1)
+
+  private def hasIntrospectionName(element: NamedDomainElement): Boolean =
+    element.name.nonNull && element.name.value().startsWith("__")
 }
