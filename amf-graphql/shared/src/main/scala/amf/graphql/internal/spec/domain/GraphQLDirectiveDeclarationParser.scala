@@ -1,10 +1,12 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations, ScalarValueParser}
+import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
@@ -16,6 +18,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   def parse(): CustomDomainProperty = {
     parseName()
     parseArguments()
+    checkArgumentsAreUnique()
     parseLocations()
     directive
   }
@@ -79,4 +82,12 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case _ => // ignore
     }
   }
+
+  private def checkArgumentsAreUnique()(implicit ctx: GraphQLWebApiContext): Unit = {
+    val arguments = directive.schema.asInstanceOf[NodeShape].properties
+    checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
+  }
+
+  private def duplicatedArgumentMsg(argumentName: String): String =
+    s"Cannot exist two or more arguments with name '$argumentName'"
 }
