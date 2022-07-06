@@ -437,6 +437,11 @@ object ParserSideValidations extends Validations {
     "The location of the directive is invalid"
   )
 
+  val DuplicatedField = validation(
+    id = "duplicated-field",
+    message = "Cannot exist two or more fields with same name"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -459,6 +464,7 @@ object ParserSideValidations extends Validations {
     InvalidDirectiveApplication.id               -> all(VIOLATION),
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
+    DuplicatedField.id                           -> all(VIOLATION),
     ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
@@ -536,6 +542,7 @@ object ParserSideValidations extends Validations {
     ClosedShapeSpecification,
     ClosedShapeSpecificationWarning,
     MissingAnnotationSchema,
-    AnnotationSchemaMustBeAny
+    AnnotationSchemaMustBeAny,
+    DuplicatedField
   )
 }

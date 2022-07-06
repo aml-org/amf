@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-interface.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
+  Message: Cannot exist two or more fields with name 'surname'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-interface.api.graphql#/declares/shape/HasName_1/property/property/surname
+  Property: 
+  Range: [(19,4)-(19,13)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
+  Message: Cannot exist two or more fields with name 'surname'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-interface.api.graphql#/declares/shape/HasName_1/property/property/surname_2
+  Property: 
+  Range: [(20,4)-(20,13)]
+  Location: 

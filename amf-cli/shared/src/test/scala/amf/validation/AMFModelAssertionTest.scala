@@ -386,7 +386,6 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     ramlConfig.withDialect(s"$basePath/raml/semantic-extensions/dialect.yaml") flatMap { config =>
       val client = config.baseUnitClient()
       client.parse(s"$basePath/raml/semantic-extensions/api.raml") map { parseResult =>
-        println(parseResult.toString())
         val bu          = parseResult.baseUnit
         val annotations = bu.asInstanceOf[Document].declares.last.customDomainProperties
         val lexicals    = annotations map (_.annotations.lexical())

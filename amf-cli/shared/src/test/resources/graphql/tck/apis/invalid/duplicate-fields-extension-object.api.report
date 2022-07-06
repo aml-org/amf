@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
+  Message: Cannot exist two or more fields with name 'mapUrl'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location_1/property/property/mapUrl
+  Property: 
+  Range: [(15,4)-(15,12)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
+  Message: Cannot exist two or more fields with name 'mapUrl'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location_1/property/property/mapUrl_2
+  Property: 
+  Range: [(16,4)-(16,12)]
+  Location: 
