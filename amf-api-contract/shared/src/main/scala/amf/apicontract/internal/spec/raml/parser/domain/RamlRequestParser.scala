@@ -26,7 +26,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     map.key(
       "queryString",
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => Unit)(WebApiShapeParserContextAdapter(ctx))
+        Raml10TypeParser(queryEntry, shape => Unit)
           .parse()
           .map(q => {
             val finalRequest = request.getOrCreate

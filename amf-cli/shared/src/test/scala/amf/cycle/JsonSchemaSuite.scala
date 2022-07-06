@@ -3,7 +3,6 @@ package amf.cycle
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.ParsingOptions
@@ -51,8 +50,8 @@ trait JsonSchemaSuite {
     unit
   }
 
-  private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext = {
-    val ctx = new JsonSchemaWebApiContext(
+  private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext =
+    new JsonSchemaWebApiContext(
       location,
       Seq(),
       ParserContext(config = LimitedParseConfig(eh, AMLRegistry.empty)),
@@ -60,6 +59,5 @@ trait JsonSchemaSuite {
       options,
       JSONSchemaDraft7SchemaVersion
     )
-    WebApiShapeParserContextAdapter(ctx)
-  }
+
 }

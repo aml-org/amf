@@ -5,28 +5,19 @@ import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.OasLikeWebApiDeclarations
 import amf.apicontract.internal.spec.common.emitter.SpecVersionFactory
-import amf.apicontract.internal.spec.common.parser.{
-  IgnoreAnnotationSchemaValidatorBuilder,
-  ParsingHelpers,
-  WebApiContext,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext}
 import amf.apicontract.internal.spec.oas.parser.domain.{
   OasLikeEndpointParser,
   OasLikeOperationParser,
   OasLikeSecuritySettingsParser,
   OasLikeServerVariableParser
 }
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.parser.YMapOps
-import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.common.parser.IgnoreCriteria
-import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import amf.shapes.internal.spec.common.parser.{IgnoreAnnotationSchemaValidatorBuilder, IgnoreCriteria, SpecSettings}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -45,8 +36,9 @@ abstract class OasLikeWebApiContext(
     options: ParsingOptions,
     private val wrapped: ParserContext,
     private val ds: Option[OasLikeWebApiDeclarations] = None,
-    private val operationIds: mutable.Set[String] = mutable.HashSet()
-) extends WebApiContext(loc, refs, options, wrapped, ds) {
+    private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    val specSettings: SpecSettings
+) extends WebApiContext(loc, refs, options, wrapped, ds, specSettings = specSettings) {
 
   val factory: OasLikeSpecVersionFactory
 
@@ -58,11 +50,6 @@ abstract class OasLikeWebApiContext(
     copy
   }
 
-  def isMainFileContext: Boolean = loc == jsonSchemaRefGuide.currentLoc
-
-  override val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder(
-    IgnoreAnnotationSchemaValidatorBuilder
-  )
   override val declarations: OasLikeWebApiDeclarations =
     ds.getOrElse(
       new OasLikeWebApiDeclarations(
@@ -78,23 +65,6 @@ abstract class OasLikeWebApiContext(
         futureDeclarations = futureDeclarations
       )
     )
-
-  override def link(node: YNode): Either[String, YNode] = {
-    node.to[YMap] match {
-      case Right(map) =>
-        val ref: Option[String] = map.key("$ref").flatMap(v => v.value.asOption[YScalar]).map(_.text)
-        ref match {
-          case Some(url) => Left(url)
-          case None      => Right(node)
-        }
-      case _ => Right(node)
-    }
-  }
-
-  val linkTypes: Boolean = wrapped match {
-    case _: RamlWebApiContext => false
-    case _                    => true
-  }
 
   override def ignoreCriteria: IgnoreCriteria = OasLikeIgnoreCriteria
 
@@ -112,13 +82,6 @@ abstract class OasLikeWebApiContext(
       val newCtx = ctx.makeCopyWithJsonPointerContext().moveToReference(node.location.sourceName).asInstanceOf[T]
       rootNode.foreach(newCtx.setJsonSchemaAST)
       RemoteNodeNavigation(node, newCtx)
-    }
-  }
-
-  def parseRemoteJSONPath(ref: String): Option[AnyShape] = {
-    jsonSchemaRefGuide.withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
-      val newCtx = makeCopyWithJsonPointerContext().moveToReference(fragment.location().get)
-      new JsonSchemaParser().parse(fragment, referenceUrl)(WebApiShapeParserContextAdapter(newCtx))
     }
   }
 

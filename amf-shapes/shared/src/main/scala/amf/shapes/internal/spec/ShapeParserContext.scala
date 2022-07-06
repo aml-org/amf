@@ -23,14 +23,15 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class ShapeParserContext(eh: AMFErrorHandler)
-    extends ErrorHandlingContext()(eh)
+trait ShapeParserContext
+    extends ErrorHandlingContext
     with ParseErrorHandler
     with IllegalTypeHandler
     with DataNodeParserContext
     with UnresolvedComponents {
 
-  val syamleh                                                            = new SyamlAMFErrorHandler(eh)
+  def eh: AMFErrorHandler
+  def syamleh                                                            = new SyamlAMFErrorHandler(eh)
   private var semanticContext: Option[SemanticContext]                   = None
   override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
@@ -46,7 +47,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def removeLocalJsonSchemaContext: Unit
   def globalSpace: mutable.Map[String, Any]
   def getLocalJsonSchemaContext: Option[YNode]
-  def toOasNext: ShapeParserContext
+  def toOas: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]
   def rootContextDocument: String
   def futureDeclarations: FutureDeclarations
@@ -71,7 +72,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def isRamlContext: Boolean
   def isOas3Syntax: Boolean
   def isOas2Syntax: Boolean
-  def ramlContextType: RamlWebApiContextType
+  def ramlContextType: Option[RamlWebApiContextType]
   def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit
   def parseRemoteJSONPath(ref: String): Option[AnyShape]
   def findDocumentations(
@@ -83,20 +84,20 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
   def addNodeRefIds(ids: mutable.Map[YNode, String])
   def nodeRefIds: mutable.Map[YNode, String]
-  def raml10createContextFromRaml: ShapeParserContext
-  def raml08createContextFromRaml: ShapeParserContext
+  def toRaml10: ShapeParserContext
+  def toRaml08: ShapeParserContext
   def libraries: Map[String, Declarations]
   def getInheritedDeclarations: Option[Declarations]
   def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion
   def setJsonSchemaAST(value: YNode): Unit
   def jsonSchemaRefGuide: JsonSchemaRefGuide
-  def validateRefFormatWithError(ref: String): Boolean
+  def validateRefFormatWithError(ref: String): Boolean = true
   // Implement copy and return new context
   def getSemanticContext: Option[SemanticContext]            = semanticContext
   def withSemanticContext(sc: Option[SemanticContext]): Unit = semanticContext = sc
-  def asJsonSchema(): ShapeParserContext
-  def asJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext
+  def toJsonSchema(): ShapeParserContext
+  def toJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext
   def registerExternalLib(url: String, content: Map[String, AnyShape]): Unit
 }
 

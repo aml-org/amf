@@ -4,11 +4,7 @@ import amf.apicontract.client.scala.model.domain.{Operation, Response}
 import amf.apicontract.internal.annotations.OperationTraitEntry
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.metamodel.domain.OperationModel.Method
-import amf.apicontract.internal.spec.common.parser.{
-  RamlSecurityRequirementParser,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{RamlSecurityRequirementParser, SpecParserOps}
 import amf.apicontract.internal.spec.oas.parser.domain.{Oas30CallbackParser, StringTagsParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.toOas
@@ -78,9 +74,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
     map.key(
       "externalDocs".asRamlAnnotation,
-      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
-        WebApiShapeParserContextAdapter(ctx)
-      ))
+      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id))
     )
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
@@ -177,7 +171,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       map,
       if (isTrait) List(VocabularyMappings.`trait`)
       else List(VocabularyMappings.operation)
-    )(WebApiShapeParserContextAdapter(ctx)).parse()
+    ).parse()
 
     operation
   }

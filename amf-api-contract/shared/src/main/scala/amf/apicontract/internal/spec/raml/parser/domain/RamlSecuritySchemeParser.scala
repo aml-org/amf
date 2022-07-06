@@ -3,11 +3,7 @@ package amf.apicontract.internal.spec.raml.parser.domain
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.common.parser.{
-  RamlParametersParser,
-  SecuritySchemeParser,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{RamlParametersParser, SecuritySchemeParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   CrossSecurityWarningSpecification,
@@ -81,7 +77,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
 
         map.key("settings", SecuritySchemeModel.Settings in scheme using RamlSecuritySettingsParser.parse(scheme))
 
-        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme))(WebApiShapeParserContextAdapter(ctx))
+        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme))
           .parse()
 
         scheme
@@ -165,7 +161,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             value.key(
               "queryString",
               queryEntry => {
-                Raml10TypeParser(queryEntry, shape => Unit)(WebApiShapeParserContextAdapter(ctx))
+                Raml10TypeParser(queryEntry, shape => Unit)
                   .parse()
                   .foreach(s => scheme.withQueryString(tracking(s, scheme)))
               }
@@ -195,7 +191,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                 )
               }
             )
-            AnnotationParser(scheme, value)(WebApiShapeParserContextAdapter(ctx)).parse()
+            AnnotationParser(scheme, value).parse()
           case YType.Null =>
           case _ =>
             ctx.eh.violation(

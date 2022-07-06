@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.License
 import amf.apicontract.internal.metamodel.domain.LicenseModel
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext}
 import amf.apicontract.internal.spec.spec.toOas
 import amf.core.internal.parser.YMapOps
 import amf.shapes.internal.spec.common.parser.AnnotationParser
@@ -24,7 +24,7 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
     map.key("url", LicenseModel.Url in license)
     map.key("name", LicenseModel.Name in license)
 
-    AnnotationParser(license, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(license, map).parse()
 
     ctx.closedShape(license, map, "license")
 

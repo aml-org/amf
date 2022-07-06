@@ -16,7 +16,7 @@ object JsonSchemaContextAdapter {
           val normalizedFilePath = stripPointsAndFragment(rawPath)
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(normalizedFilePath))) match {
             case Some(ref) =>
-              ctx.asJsonSchema(
+              ctx.toJsonSchema(
                 ref.unit.location().get,
                 ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None))
               )
@@ -24,15 +24,15 @@ object JsonSchemaContextAdapter {
                 if hasLocation(
                   ast
                 ) => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
-              ctx.asJsonSchema(ast.value.sourceName, ctx.refs)
-            case _ => ctx.asJsonSchema()
+              ctx.toJsonSchema(ast.value.sourceName, ctx.refs)
+            case _ => ctx.toJsonSchema()
           }
         } else {
           // Inlined we don't need to update the context for ths JSON schema file
-          ctx.asJsonSchema()
+          ctx.toJsonSchema()
         }
       case _ =>
-        ctx.asJsonSchema()
+        ctx.toJsonSchema()
     }
   }
 

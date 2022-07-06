@@ -20,12 +20,16 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       decorated.refs,
       decorated.options,
       decorated,
-      Some(decorated.declarations)
+      Some(decorated.declarations),
+      specSettings = decorated.specSettings
     ) {
 
   override def syntax: SpecSyntax             = decorated.syntax
   override def spec: Spec                     = decorated.spec
   override def ignoreCriteria: IgnoreCriteria = decorated.ignoreCriteria
+
+  override def closedShape(node: AmfObject, ast: YMap, shape: String): Unit =
+    closedShapeValidator.evaluate(node, ast, shape)(syamleh)
 
   override protected val closedShapeValidator: ClosedShapeValidator = parser.DefaultClosedShapeValidator(
     ignoreCriteria,

@@ -2,7 +2,6 @@ package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.spec.common.WebApiDeclarations
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -58,7 +57,7 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
-    case _                   => OasTypeParser(entry, adopt, version)(WebApiShapeParserContextAdapter(ctx)).parse()
+    case _                   => OasTypeParser(entry, adopt, version).parse()
   }
 }
 
@@ -79,8 +78,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
     val context = toRaml(ctx)
     context.declarations.shapes = Map.empty
     val result =
-      Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(WebApiShapeParserContextAdapter(context))
-        .parse()
+      Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(context).parse()
     context.futureDeclarations.resolve()
     result
   }
@@ -110,7 +108,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
     val values = refValue.split("#/types/").toList
     values match {
       case Seq(libUrl, typeName) =>
-        val library = ctx.declarations.libraries.get(libUrl).collect { case d: WebApiDeclarations => d }
+        val library = ctx.declarations.libs.get(libUrl).collect { case d: WebApiDeclarations => d }
         val shape   = library.flatMap(_.shapes.get(typeName))
         shape.map(linkAndAdopt(_, refValue))
       case _ => None

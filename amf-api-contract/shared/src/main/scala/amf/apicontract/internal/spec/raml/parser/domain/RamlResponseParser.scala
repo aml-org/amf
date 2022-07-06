@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.raml.parser.domain
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Response}
 import amf.apicontract.internal.annotations.EmptyPayload
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
-import amf.apicontract.internal.spec.common.parser.{RamlHeaderParser, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{RamlHeaderParser, SpecParserOps}
 import amf.apicontract.internal.spec.oas.parser.domain.ExamplesByMediaTypeParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -26,7 +26,7 @@ case class Raml10ResponseParser(entry: YMapEntry, adopt: Response => Unit, parse
 ) extends RamlResponseParser(entry, adopt, parseOptional) {
 
   override def parseMap(response: Response, map: YMap): Unit = {
-    AnnotationParser(response, map, List(VocabularyMappings.response))(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(response, map, List(VocabularyMappings.response)).parse()
   }
 
   override def supportsOptionalResponses: Boolean = false

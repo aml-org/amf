@@ -9,7 +9,7 @@ import amf.apicontract.internal.spec.async.parser.bindings.AsyncMessageBindingsP
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
@@ -138,9 +138,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     map.key(
       "externalDocs",
-      MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id)(
-        WebApiShapeParserContextAdapter(ctx)
-      ))
+      MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id))
     )
     map.key(
       "tags",
@@ -197,7 +195,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       val bindings: MessageBindings = AsyncMessageBindingsParser(YMapEntryLike(entry.value)).parse()
       message.setWithoutId(MessageModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(message, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
+      AnnotationParser(message, map).parseOrphanNode("bindings")
     }
 
     parseTraits(map, message)
@@ -206,7 +204,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       parsePayload(map, message)
 
     ctx.closedShape(message, map, "message")
-    AnnotationParser(message, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(message, map).parse()
     message
   }
 
@@ -261,7 +259,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   private def parseExample(n: YMapEntry, name: String): Example = {
     val node = n.value
     val exa  = Example(node).withName(name)
-    ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions)(WebApiShapeParserContextAdapter(ctx)).parse()
+    ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions).parse()
   }
 }
 

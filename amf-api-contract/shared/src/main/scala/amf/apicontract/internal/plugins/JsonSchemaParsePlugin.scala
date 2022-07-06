@@ -2,7 +2,6 @@ package amf.apicontract.internal.plugins
 
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.ParsingOptions
@@ -28,7 +27,7 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     val newCtx = context(document.location, document.references, ctx.parsingOptions, ctx)
     val parsed =
-      new JsonSchemaParser().parse(document, WebApiShapeParserContextAdapter(newCtx), ctx.parsingOptions)
+      new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
     wrapInDataTypeFragment(document, parsed)
   }
 

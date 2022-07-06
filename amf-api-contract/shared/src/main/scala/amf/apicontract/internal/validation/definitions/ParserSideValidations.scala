@@ -392,16 +392,6 @@ object ParserSideValidations extends Validations {
     "Message header must be of type object"
   )
 
-  val MissingAnnotationSchema = validation(
-    "missing-annotation-schema",
-    "Annotations must have a declared a schema even if there are extensions"
-  )
-
-  val AnnotationSchemaMustBeAny = validation(
-    "annotation-schema-must-be-any",
-    "Annotation schema must be any for api-extensions override"
-  )
-
   val InvalidDirectiveApplication = validation(
     "invalid-directive-application",
     "Directive should not be applied in current location"
@@ -456,17 +446,7 @@ object ParserSideValidations extends Validations {
     InvalidPayload.id                            -> all(VIOLATION),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
-    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
-    MissingAnnotationSchema.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      GrpcProfile   -> VIOLATION
-    ), // TODO: Add graphqlProfile
-    AnnotationSchemaMustBeAny.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      GrpcProfile   -> VIOLATION
-    ) // TODO: Add graphqlProfile
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -524,8 +504,6 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    MissingAnnotationSchema,
-    AnnotationSchemaMustBeAny,
     DuplicatedField,
     DuplicatedArgument,
     DuplicatedDeclaration,

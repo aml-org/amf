@@ -3,11 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.document
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
-import amf.apicontract.internal.spec.common.parser.{
-  AbstractDeclarationParser,
-  ReferencesParser,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, ReferencesParser}
 import amf.apicontract.internal.spec.oas.OasHeader
 import amf.apicontract.internal.spec.oas.OasHeader._
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
@@ -34,7 +30,7 @@ import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader] = None)(implicit
     val ctx: OasWebApiContext
-) extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
+) extends OasSpecParser()
     with PlatformSecrets {
 
   def parseFragment(): BaseUnit = {
@@ -92,7 +88,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
       val item = DocumentationItemFragment()
 
-      item.withEncodes(OasLikeCreativeWorkParser(map, item.id)(WebApiShapeParserContextAdapter(ctx)).parse())
+      item.withEncodes(OasLikeCreativeWorkParser(map, item.id).parse())
 
       item
     }
@@ -117,7 +113,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
           "type",
           (shape: Shape) => shape.withId(root.location + "#/shape"),
           OAS20SchemaVersion(SchemaPosition.Schema)
-        )(WebApiShapeParserContextAdapter(ctx))
+        )
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -193,9 +189,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       }
 
       namedExample.withEncodes(
-        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true))(
-          WebApiShapeParserContextAdapter(ctx)
-        ).parse()
+        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse()
       )
     }
   }

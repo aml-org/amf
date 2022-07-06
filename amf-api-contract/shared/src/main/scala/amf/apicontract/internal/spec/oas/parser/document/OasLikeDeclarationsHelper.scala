@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKeyCollector
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.NamedDomainElement
@@ -22,8 +21,7 @@ trait OasLikeDeclarationsHelper {
   def parseTypeDeclarations(map: YMap, declarationKeysHolder: Option[DeclarationKeyCollector])(implicit
       ctx: OasLikeWebApiContext
   ): List[AnyShape] = {
-    val shapeCtx = WebApiShapeParserContextAdapter(ctx)
-    TypeDeclarationParser.parseTypeDeclarations(map, definitionsKey, declarationKeysHolder)(shapeCtx)
+    TypeDeclarationParser.parseTypeDeclarations(map, definitionsKey, declarationKeysHolder)
   }
 
   def validateNames()(implicit ctx: OasLikeWebApiContext): Unit = {

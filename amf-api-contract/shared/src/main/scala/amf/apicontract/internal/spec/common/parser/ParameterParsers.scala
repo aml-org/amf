@@ -90,13 +90,11 @@ case class Raml10ParameterParser(
         map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
         map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
         map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
-        Raml10TypeParser(entry, shape => shape.withName("schema"), TypeInfo(isPropertyOrParameter = true))(
-          WebApiShapeParserContextAdapter(ctx)
-        )
+        Raml10TypeParser(entry, shape => shape.withName("schema"), TypeInfo(isPropertyOrParameter = true))
           .parse()
           .foreach(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
 
-        AnnotationParser(parameter, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+        AnnotationParser(parameter, map).parse()
 
         parameter
       case _ =>
@@ -109,7 +107,7 @@ case class Raml10ParameterParser(
             Raml10TypeParser(
               entry,
               shape => shape.withName("schema")
-            )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
+            ).parse().foreach { schema =>
               tracking(schema, parameter).annotations += SynthesizedField()
               parameter.setWithoutId(ParameterModel.Schema, schema, Annotations(entry))
             }
@@ -129,7 +127,7 @@ case class Raml10ParameterParser(
                   shape => shape.withName("schema", Annotations(SynthesizedField())),
                   TypeInfo(isPropertyOrParameter = true),
                   StringDefaultType
-                )(WebApiShapeParserContextAdapter(ctx))
+                )
                   .parse() match {
                   case Some(schema) =>
                     parameter.setWithoutId(ParameterModel.Schema, tracking(schema, parameter), Annotations(entry))
@@ -210,7 +208,7 @@ case class Raml08ParameterParser(
         Raml10TypeParser(
           entry,
           shape => shape.withName("schema")
-        )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
+        ).parse().foreach { schema =>
           tracking(schema, parameter).annotations += SynthesizedField()
           parameter.setWithoutId(ParameterModel.Schema, schema, Annotations(entry))
         }
@@ -221,7 +219,7 @@ case class Raml08ParameterParser(
           (s: Shape) => s.withName(nameNode.text().toString),
           isAnnotation = false,
           StringDefaultType
-        )(WebApiShapeParserContextAdapter(ctx))
+        )
           .parse()
           .foreach(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
     }
@@ -385,7 +383,7 @@ case class Oas2ParameterParser(
           map,
           shape => shape.withName("schema"),
           OAS20SchemaVersion(SchemaPosition.Parameter)
-        )(WebApiShapeParserContextAdapter(ctx).toOasNext)
+        )(ctx.toOas)
           .parse()
           .map { schema =>
             parameter.setWithoutId(ParameterModel.Schema, schema, Annotations(map))
@@ -419,7 +417,7 @@ case class Oas2ParameterParser(
     map.key("required", (ParameterModel.Required in parameter).explicit)
 
     ctx.closedShape(parameter, map, "parameter")
-    AnnotationParser(parameter, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(parameter, map).parse()
     parameter
   }
 
@@ -472,7 +470,7 @@ case class Oas2ParameterParser(
           map,
           shape => setName(shape).asInstanceOf[Shape],
           OAS20SchemaVersion(SchemaPosition.Parameter)
-        )((WebApiShapeParserContextAdapter(ctx)).toOasNext)
+        )(ctx.toOas)
           .parse()
           .map { schema =>
             payload.setWithoutId(PayloadModel.Schema, tracking(schema, payload), Annotations(map))
@@ -505,7 +503,7 @@ case class Oas2ParameterParser(
       }
     )
     map.key("description", PayloadModel.Description in payload)
-    AnnotationParser(payload, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(payload, map).parse()
     payload
   }
 
@@ -520,9 +518,7 @@ case class Oas2ParameterParser(
     map.key("schema") match {
       case Some(entry) =>
         // i don't need to set param need in here. Its necessary only for form data, because of the properties
-        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape])(
-          WebApiShapeParserContextAdapter(ctx).toOasNext
-        )
+        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape])
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)
@@ -661,7 +657,7 @@ class Oas3ParameterParser(
       "schema",
       entry => {
         OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape], OAS30SchemaVersion(SchemaPosition.Schema))(
-          WebApiShapeParserContextAdapter(ctx).toOasNext
+          ctx.toOas
         )
           .parse()
           .map { schema =>
@@ -677,7 +673,7 @@ class Oas3ParameterParser(
         .map(entry => param.setWithoutId(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
         .getOrElse(param.setWithoutId(PayloadModel.Examples, AmfArray(examples)))
 
-    OasExamplesParser(map, param)(WebApiShapeParserContextAdapter(ctx)).parse()
+    OasExamplesParser(map, param).parse()
   }
 
   private def parseContent(param: Parameter): Unit = {

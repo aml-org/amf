@@ -2,11 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.internal.spec.common.parser.{
-  AbstractDeclarationParser,
-  ReferencesParserAnnotations,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, ReferencesParserAnnotations}
 import amf.apicontract.internal.spec.raml.RamlFragment
 import amf.apicontract.internal.spec.raml.RamlFragmentHeader._
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
@@ -22,7 +18,6 @@ import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{RamlCreativeWorkParser, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
-import amf.shapes.internal.vocabulary.VocabularyMappings.shape
 import org.yaml.model.{YMap, YScalar}
 
 /** */
@@ -100,7 +95,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
 
       item.setWithoutId(
         FragmentModel.Encodes,
-        RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse(),
+        RamlCreativeWorkParser(map).parse(),
         Annotations.inferred()
       )
     }
@@ -115,7 +110,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
         "type",
         (shape: Shape) => shape.withId(root.location + "#/shape"), // TODO: this is being ignored
         StringDefaultType
-      )(WebApiShapeParserContextAdapter(ctx))
+      )
         .parse()
         .foreach(dataType.setWithoutId(FragmentModel.Encodes, _, Annotations.inferred()))
 

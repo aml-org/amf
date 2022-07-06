@@ -106,7 +106,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
 
     // TODO ASYNC parameter parser missing here. Is the same that OAS? Then need to extract to OasLikeParameter parser
 
-    AnnotationParser(endpoint, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(endpoint, map).parse()
 
     endpoint
 
@@ -284,7 +284,7 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       val bindings = AsyncChannelBindingsParser(YMapEntryLike(entry.value)).parse()
       endpoint.setWithoutId(EndPointModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(endpoint, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
+      AnnotationParser(endpoint, map).parseOrphanNode("bindings")
     }
 
     map.key("description", EndPointModel.Description in endpoint)

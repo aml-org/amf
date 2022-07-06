@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.internal.spec.common.parser.{ReferencesParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.ReferencesParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
 import amf.core.client.scala.model.document.Module
@@ -37,7 +37,7 @@ case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: R
         module
           .setWithoutId(ModuleModel.References, AmfArray(references.baseUnitReferences()), Annotations.synthesized())
 
-      AnnotationParser(module, rootMap, targetsFor(LIBRARY))(WebApiShapeParserContextAdapter(ctx)).parse()
+      AnnotationParser(module, rootMap, targetsFor(LIBRARY)).parse()
     }
 
     ctx.futureDeclarations.resolve()

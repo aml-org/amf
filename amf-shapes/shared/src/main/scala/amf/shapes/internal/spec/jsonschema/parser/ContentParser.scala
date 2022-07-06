@@ -45,7 +45,7 @@ private[this] case class ContentSchemaParser(adopt: Shape => Unit, version: Sche
     extends EntryParser[ScalarShape] {
   override def parse(node: ScalarShape, map: YMap)(implicit ctx: ShapeParserContext): Unit = {
     map.key("contentSchema").foreach { entry =>
-      OasTypeParser(entry, adopt, version)(ctx.toOasNext).parse().foreach { s =>
+      OasTypeParser(entry, adopt, version)(ctx.toOas).parse().foreach { s =>
         node.set(ScalarShapeModel.Schema, s, Annotations(entry))
       }
     }

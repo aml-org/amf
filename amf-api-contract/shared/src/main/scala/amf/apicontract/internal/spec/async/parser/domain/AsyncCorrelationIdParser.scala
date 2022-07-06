@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.CorrelationId
 import amf.apicontract.internal.metamodel.domain.CorrelationIdModel
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorCorrelationId
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
@@ -73,7 +73,7 @@ sealed case class CorrelationIdPopulator(map: YMap, correlationId: CorrelationId
     map.key("description", CorrelationIdModel.Description in correlationId)
     map.key("location", CorrelationIdModel.Location in correlationId)
 
-    AnnotationParser(correlationId, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(correlationId, map).parse()
     ctx.closedShape(correlationId, map, "correlationId")
     correlationId
   }

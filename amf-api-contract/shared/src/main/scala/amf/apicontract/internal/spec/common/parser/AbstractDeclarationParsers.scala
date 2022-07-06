@@ -102,7 +102,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
             value
         }
         val dataNode =
-          DataNodeParser(filteredNode, variables)(WebApiShapeParserContextAdapter(ctx)).parse()
+          DataNodeParser(filteredNode, variables).parse()
         declaration.setWithoutId(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
 
         variables.ifNonEmpty(p =>

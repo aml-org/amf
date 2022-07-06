@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.AbstractDeclarationParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   InvalidAbstractDeclarationType,
@@ -141,9 +141,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
         )
       }
 
-      Raml08TypeParser(entry, shape => shape.withName(entry.key), isAnnotation = false, StringDefaultType)(
-        WebApiShapeParserContextAdapter(ctx)
-      )
+      Raml08TypeParser(entry, shape => shape.withName(entry.key), isAnnotation = false, StringDefaultType)
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())

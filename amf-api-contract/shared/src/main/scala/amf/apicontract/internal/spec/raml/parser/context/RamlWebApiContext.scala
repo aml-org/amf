@@ -9,8 +9,8 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
-import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSyntax}
+import amf.shapes.internal.spec.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, Raml08Settings, Raml10Settings, SpecSettings, SpecSyntax}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -21,12 +21,19 @@ abstract class RamlWebApiContext(
     options: ParsingOptions,
     val wrapped: ParserContext,
     private val ds: Option[RamlWebApiDeclarations] = None,
-    var contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT
-) extends WebApiContext(loc, refs, options, wrapped, ds)
+    val specSettings: SpecSettings
+) extends WebApiContext(loc, refs, options, wrapped, ds, specSettings = specSettings)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean                                     = false
   val operationContexts: mutable.Map[AmfObject, RamlWebApiContext] = mutable.Map()
+
+  def contextType: RamlWebApiContextType = specSettings.ramlContextType.getOrElse(DEFAULT)
+  def setContextType(contextType: RamlWebApiContextType) = specSettings match {
+    case settings: Raml10Settings => settings.setRamlContextType(contextType)
+    case settings: Raml08Settings => settings.setRamlContextType(contextType)
+    case _                        => // ignore
+  }
 
   def mergeOperationContext(operation: AmfObject): Unit = {
     val contextOption = operationContexts.get(operation)
@@ -62,7 +69,7 @@ abstract class RamlWebApiContext(
       declarations
     } else {
       val nextLibrary = path.head
-      declarations.libraries.get(nextLibrary) match {
+      declarations.libs.get(nextLibrary) match {
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
         case _ =>
@@ -71,19 +78,6 @@ abstract class RamlWebApiContext(
       }
     }
   }
-
-  override def link(node: YNode): Either[String, YNode] = {
-    implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
-
-    node match {
-      case _ if isInclude(node) => Left(node.as[YScalar].text)
-      case _                    => Right(node)
-    }
-  }
-
-  override def ignoreCriteria: IgnoreCriteria = Raml10IgnoreCriteria
-
-  private def isInclude(node: YNode) = node.tagType == YType.Include
 
   val factory: RamlSpecVersionFactory
 
@@ -97,7 +91,14 @@ class PayloadContext(
     private val ds: Option[RamlWebApiDeclarations] = None,
     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
     options: ParsingOptions = ParsingOptions()
-) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType = contextType) {
+) extends RamlWebApiContext(
+      loc,
+      refs,
+      options,
+      wrapped,
+      ds,
+      new Raml10Settings(Raml10Syntax, contextType)
+    ) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
     new PayloadContext(loc, refs, wrapped, Some(declarations), options = options)
   }

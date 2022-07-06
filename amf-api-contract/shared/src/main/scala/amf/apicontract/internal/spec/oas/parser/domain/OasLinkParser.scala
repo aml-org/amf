@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.TemplatedLink
 import amf.apicontract.internal.metamodel.domain.TemplatedLinkModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorLink
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ExclusiveLinkTargetError
@@ -102,7 +102,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
 
     map.key("requestBody", TemplatedLinkModel.RequestBody in templatedLink)
 
-    AnnotationParser(templatedLink, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(templatedLink, map).parse()
 
     ctx.closedShape(templatedLink, map, "link")
 

@@ -7,7 +7,6 @@ import amf.apicontract.internal.spec.async.Subscribe
 import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
 import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -217,7 +216,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       document
         .as[YMap]
         .key("node")
-        .map(entry => DataNodeParser(entry.value)(WebApiShapeParserContextAdapter(getBogusParserCtx)).parse())
+        .map(entry => DataNodeParser(entry.value)(getBogusParserCtx).parse())
         .get
     }
 

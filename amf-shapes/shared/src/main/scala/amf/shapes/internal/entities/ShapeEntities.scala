@@ -3,6 +3,8 @@ package amf.shapes.internal.entities
 import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
+import amf.shapes.client.scala.model.document.DataTypeFragment
+import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
 import amf.shapes.internal.domain.metamodel.{operations, _}
 import amf.shapes.internal.domain.metamodel.operations.{
   AbstractOperationModel,
@@ -53,6 +55,7 @@ private[amf] object ShapeEntities extends Entities {
     AbstractParameterModel,
     AbstractPayloadModel,
     AbstractRequestModel,
-    AbstractResponseModel
+    AbstractResponseModel,
+    DataTypeFragmentModel
   )
 }

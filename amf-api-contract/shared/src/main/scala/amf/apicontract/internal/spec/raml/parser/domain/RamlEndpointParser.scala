@@ -5,12 +5,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry, ParentEndPoint}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{
-  OasParametersParser,
-  RamlSecurityRequirementParser,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{OasParametersParser, RamlSecurityRequirementParser, SpecParserOps}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.spec
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
@@ -117,7 +112,7 @@ abstract class RamlEndpointParser(
       map,
       if (isResourceType) List(VocabularyMappings.resourceType)
       else List(VocabularyMappings.endpoint)
-    )(WebApiShapeParserContextAdapter(ctx)).parse()
+    ).parse()
 
     parseNestedEndPoints(endpoint, map, isResourceType)
   }
@@ -271,9 +266,11 @@ abstract class RamlEndpointParser(
       "type",
       entry => {
         endpoint.annotations += EndPointResourceTypeEntry(entry.range)
-        val declaration = ParametrizedDeclarationParser(entry.value,
-                                                        (name: String) => ParametrizedResourceType().withName(name),
-                                                        ctx.declarations.findResourceTypeOrError(entry.value))
+        val declaration = ParametrizedDeclarationParser(
+          entry.value,
+          (name: String) => ParametrizedResourceType().withName(name),
+          ctx.declarations.findResourceTypeOrError(entry.value)
+        )
           .parse()
         endpoint.setWithoutId(
           EndPointModel.Extends,

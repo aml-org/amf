@@ -3,8 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.context
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{Oas30, Spec}
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.Oas3Settings
 import amf.shapes.internal.spec.common.{OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 
 class Oas3WebApiContext(
@@ -13,10 +12,8 @@ class Oas3WebApiContext(
     private val wrapped: ParserContext,
     private val ds: Option[OasWebApiDeclarations] = None,
     options: ParsingOptions = ParsingOptions()
-) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
+) extends OasWebApiContext(loc, refs, options, wrapped, ds, Oas3Settings(Oas3Syntax)) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
-  override def spec: Spec                  = Oas30
-  override def syntax: SpecSyntax          = Oas3Syntax
 
   override val defaultSchemaVersion: SchemaVersion = OAS30SchemaVersion.apply(SchemaPosition.Other)
 

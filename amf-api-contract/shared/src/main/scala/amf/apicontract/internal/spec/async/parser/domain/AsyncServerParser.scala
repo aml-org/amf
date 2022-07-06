@@ -6,7 +6,7 @@ import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncServerBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.OasLikeSecurityRequirementParser
 import amf.apicontract.internal.spec.oas.parser.domain.OasLikeServerParser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
@@ -41,7 +41,7 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
       val bindings = AsyncServerBindingsParser(YMapEntryLike(entry.value)).parse()
       server.setWithoutId(ServerModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
+      AnnotationParser(server, map).parseOrphanNode("bindings")
     }
 
     map.key(

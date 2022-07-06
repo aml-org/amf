@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.context
 
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
@@ -58,9 +59,9 @@ object JsonLdSchemaContext {
 
       override def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
 
-      override def asJsonSchema(): ShapeParserContext = this
+      override def toJsonSchema(): ShapeParserContext = this
 
-      override def asJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext = this
+      override def toJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext = this
 
       override def registerExternalLib(url: String, content: Map[String, AnyShape]): Unit = Unit
     }
@@ -70,7 +71,9 @@ object JsonLdSchemaContext {
   def apply(ctx: ParserContext): ShapeParserContext = this.apply(ctx, None)
 }
 
-abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContext(ctx.eh) with JsonSchemaLikeContext {
+abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContext with JsonSchemaLikeContext {
+
+  override val eh: AMFErrorHandler = ctx.eh
 
   override def spec: Spec = JsonSchemaDialect
 
@@ -84,7 +87,7 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def fragments: Map[String, FragmentRef] = Map()
 
-  override def toOasNext: ShapeParserContext = this
+  override def toOas: ShapeParserContext = this
 
   override def findExample(key: String, scope: SearchScope.Scope): Option[Example] = None
 
@@ -126,8 +129,7 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def isOas2Syntax: Boolean = false
 
-  override def ramlContextType: RamlWebApiContextType =
-    throw new Exception("Parser - Can only be used from JSON Schema")
+  override def ramlContextType: Option[RamlWebApiContextType] = None
 
   override def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit =
     throw new Exception("Parser - Can only be used from JSON Schema")
@@ -153,9 +155,9 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def nodeRefIds: mutable.Map[YNode, String] = mutable.Map()
 
-  override def raml10createContextFromRaml: ShapeParserContext = this
+  override def toRaml10: ShapeParserContext = this
 
-  override def raml08createContextFromRaml: ShapeParserContext = this
+  override def toRaml08: ShapeParserContext = this
 
   override def libraries: Map[String, Declarations] = Map()
 

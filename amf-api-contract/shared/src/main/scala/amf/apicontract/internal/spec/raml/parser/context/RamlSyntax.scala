@@ -1,23 +1,10 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{Raml08ShapeSyntax, Raml10ShapeSyntax, SpecSyntax}
 
 object Raml10Syntax extends RamlSyntax {
 
-  private val shapeFacets = Set(
-    "type",
-    "default",
-    "schema",
-    "example",
-    "examples",
-    "displayName",
-    "description",
-    "facets",
-    "xml",
-    "enum"
-  )
-
-  override val nodes: Map[String, Set[String]] = commonNodes ++ Map(
+  override val nodes: Map[String, Set[String]] = commonNodes ++ Raml10ShapeSyntax.nodes ++ Map(
     "webApi" -> Set(
       "title",
       "description",
@@ -37,63 +24,6 @@ object Raml10Syntax extends RamlSyntax {
       "usage",
       "extends",
       "uses"
-    ),
-    "shape"    -> shapeFacets,
-    "anyShape" -> shapeFacets,
-    "schemaShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "required"
-    ),
-    "unionShape" -> (shapeFacets + "anyOf"),
-    "nodeShape" -> (shapeFacets ++ Set(
-      "properties",
-      "minProperties",
-      "maxProperties",
-      "discriminator",
-      "discriminatorValue",
-      "additionalProperties"
-    )),
-    "arrayShape" -> (shapeFacets ++ Set(
-      "uniqueItems",
-      "items",
-      "minItems",
-      "maxItems"
-    )),
-    "stringScalarShape" -> (shapeFacets ++ Set(
-      "pattern",
-      "minLength",
-      "maxLength"
-    )),
-    "numberScalarShape" -> (shapeFacets ++ Set(
-      "minimum",
-      "maximum",
-      "format",
-      "multipleOf"
-    )),
-    "dateScalarShape" -> (shapeFacets + "format"),
-    "fileShape" -> (shapeFacets ++ Set(
-      "fileTypes",
-      "minLength",
-      "maxLength"
-    )),
-    "example" -> Set(
-      "displayName",
-      "description",
-      "value",
-      "strict"
-    ),
-    "xmlSerialization" -> Set(
-      "attribute",
-      "wrapped",
-      "name",
-      "namespace",
-      "prefix"
     ),
     "endPoint" -> Set(
       "displayName",
@@ -175,14 +105,6 @@ object Raml10Syntax extends RamlSyntax {
       "securedBy",
       "usage"
     ),
-    "annotation" -> Set(
-      "displayName",
-      "description",
-      "allowedTargets"
-    ),
-    "property" -> Set(
-      "required"
-    ),
     "module" -> Set(
       "uses",
       "usage",
@@ -197,7 +119,8 @@ object Raml10Syntax extends RamlSyntax {
 }
 
 object Raml08Syntax extends RamlSyntax {
-  override val nodes: Map[String, Set[String]] = commonNodes ++ Map(
+
+  override val nodes: Map[String, Set[String]] = commonNodes ++ Raml08ShapeSyntax.nodes ++ Map(
     "webApi" -> Set(
       "title",
       "description",
@@ -212,66 +135,6 @@ object Raml08Syntax extends RamlSyntax {
       "resourceTypes",
       "securitySchemes",
       "securedBy"
-    ),
-    "shape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "enum",
-      "required",
-      "repeat"
-    ),
-    "stringScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "enum",
-      "repeat",
-      "pattern",
-      "minLength",
-      "maxLength",
-      "required"
-    ),
-    "dateScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "enum",
-      "required",
-      "repeat",
-      "format"
-    ),
-    "numberScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "enum",
-      "required",
-      "repeat",
-      "minimum",
-      "maximum",
-      "format",
-      "multipleOf"
     ),
     "endPoint" -> Set(
       "displayName",

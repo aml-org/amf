@@ -7,11 +7,7 @@ import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel
 }
-import amf.apicontract.internal.spec.common.parser.{
-  Oas3SettingsProducers,
-  SettingsProducers,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{Oas3SettingsProducers, SettingsProducers}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
@@ -63,14 +59,14 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       entry => parseDynamicSettings(entry.value.as[YMap], settings, "authorizationGrants")
     )
 
-    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("flows")
+    AnnotationParser(settings, map).parseOrphanNode("flows")
 
     settings
   }
 
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
-    val flowConfig  = entry.value.as[YMap].entries.filter(!isExtensionField(_))
-    val flows       = flowConfig.map(parseFlow(settings.id, _))
+    val flowConfig = entry.value.as[YMap].entries.filter(!isExtensionField(_))
+    val flows      = flowConfig.map(parseFlow(settings.id, _))
     settings.setWithoutId(OAuth2SettingsModel.Flows, AmfArray(flows, Annotations(entry.value)), Annotations(entry))
   }
 
@@ -87,7 +83,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     parseScopes(flow, flowMap)
 
-    AnnotationParser(flow, flowMap)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(flow, flowMap).parse()
 
     OAuth2FlowValidations.validateFlowFields(flow, ctx.eh, flowEntry)
 

@@ -1,12 +1,10 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.shapes.internal.spec.common.parser.SpecSyntax
-
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{Oas2ShapeSyntax, Oas3ShapeSyntax, SpecSyntax}
 
 object Oas3Syntax extends SpecSyntax {
-  override val nodes: Map[String, Set[String]] = Map(
-    "paths" -> Set(),
+  override val nodes: Map[String, Set[String]] = Oas3ShapeSyntax.nodes ++ Map(
+    "paths" -> Set.empty[String],
     "webApi" -> Set(
       "openapi",
       "info",
@@ -44,13 +42,6 @@ object Oas3Syntax extends SpecSyntax {
     "license" -> Set(
       "name",
       "url"
-    ),
-    "xmlSerialization" -> Set(
-      "attribute",
-      "wrapped",
-      "name",
-      "namespace",
-      "prefix"
     ),
     "pathItem" -> Set(
       "get",
@@ -103,12 +94,6 @@ object Oas3Syntax extends SpecSyntax {
     "externalDoc" -> Set(
       "url",
       "description"
-    ),
-    "example" -> Set(
-      "summary",
-      "description",
-      "value",
-      "externalValue"
     ),
     "parameter" -> Set(
       "name",
@@ -193,56 +178,6 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "externalDocs"
     ),
-    "discriminator" -> Set(
-      "propertyName",
-      "mapping"
-    ),
-    "schema" -> Set(
-      "$ref",
-      "$schema",
-      "format",
-      "title",
-      "description",
-      "maximum",
-      "exclusiveMaximum",
-      "minimum",
-      "exclusiveMinimum",
-      "maxLength",
-      "minLength",
-      "nullable",
-      "pattern",
-      "maxItems",
-      "minItems",
-      "uniqueItems",
-      "maxProperties",
-      "minProperties",
-      "required",
-      "enum",
-      "type",
-      "items",
-      "additionalItems",
-      "collectionFormat",
-      "allOf",
-      "properties",
-      "additionalProperties",
-      "discriminator",
-      "readOnly",
-      "writeOnly",
-      "xml",
-      "deprecated",
-      "externalDocs",
-      "allOf",
-      "anyOf",
-      "oneOf",
-      "not",
-      "dependencies",
-      "multipleOf",
-      "default",
-      "example",
-      "id",
-      "name",
-      "patternProperties"
-    ),
     "securityScheme" -> Set(
       "type",
       "description",
@@ -279,8 +214,9 @@ object Oas3Syntax extends SpecSyntax {
 
 object Oas2Syntax extends SpecSyntax {
 
-  override val nodes: Map[String, Set[String]] = Map(
-    "paths" -> Set(), // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
+  override val nodes: Map[String, Set[String]] = Oas2ShapeSyntax.nodes ++ Map(
+    "paths" -> Set
+      .empty[String], // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
     "webApi" -> Set(
       "swagger",
       "info",
@@ -314,13 +250,6 @@ object Oas2Syntax extends SpecSyntax {
     "license" -> Set(
       "name",
       "url"
-    ),
-    "xmlSerialization" -> Set(
-      "attribute",
-      "wrapped",
-      "name",
-      "namespace",
-      "prefix"
     ),
     "server" -> Set(
       "url",
@@ -363,32 +292,6 @@ object Oas2Syntax extends SpecSyntax {
       "url",
       "description"
     ),
-    "parameter" -> Set(
-      "name",
-      "in",
-      "description",
-      "required",
-      "type",
-      "format",
-      "allowEmptyValue",
-      "items",
-      "collectionFormat",
-      "default",
-      "maximum",
-      "exclusiveMaximum",
-      "minimum",
-      "exclusiveMinimum",
-      "maxLength",
-      "minLength",
-      "pattern",
-      "maxItems",
-      "minItems",
-      "uniqueItems",
-      "enum",
-      "multipleOf",
-      "deprecated",
-      "example"
-    ),
     "bodyParameter" -> Set(
       "name",
       "in",
@@ -425,48 +328,6 @@ object Oas2Syntax extends SpecSyntax {
       "name",
       "description",
       "externalDocs"
-    ),
-    "schema" -> Set(
-      "$ref",
-      "$schema",
-      "format",
-      "title",
-      "description",
-      "maximum",
-      "exclusiveMaximum",
-      "minimum",
-      "exclusiveMinimum",
-      "maxLength",
-      "minLength",
-      "pattern",
-      "maxItems",
-      "minItems",
-      "uniqueItems",
-      "maxProperties",
-      "minProperties",
-      "required",
-      "enum",
-      "type",
-      "items",
-      "additionalItems",
-      "collectionFormat",
-      "allOf",
-      "properties",
-      "additionalProperties",
-      "discriminator",
-      "readOnly",
-      "xml",
-      "externalDocs",
-      "allOf",
-      "anyOf",
-      "not",
-      "dependencies",
-      "multipleOf",
-      "default",
-      "example",
-      "id",
-      "name",
-      "patternProperties"
     ),
     "securityScheme" -> Set(
       "type",

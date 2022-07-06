@@ -41,6 +41,7 @@ import amf.shapes.internal.spec.raml.parser.external.RamlExternalParserFactory
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
+import org.mulesoft.common.client.lexical.PositionRange
 import org.yaml.model._
 import org.yaml.model.{YMapEntry, _}
 
@@ -65,7 +66,7 @@ object Raml10TypeParser {
       typeInfo: TypeInfo = TypeInfo(),
       defaultType: DefaultType = StringDefaultType
   )(implicit ctx: ShapeParserContext): Raml10TypeParser = {
-    val context = ctx.raml10createContextFromRaml
+    val context = ctx.toRaml10
     context.addNodeRefIds(ctx.nodeRefIds)
     new Raml10TypeParser(YMapEntryLike(entry), entry.key, adopt, typeInfo, defaultType)(context)
   }
@@ -184,13 +185,13 @@ object Raml08TypeParser {
       ctx: ShapeParserContext
   ): Raml08TypeParser =
     new Raml08TypeParser(YMapEntryLike(node), name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      ctx.raml08createContextFromRaml
+      ctx.toRaml08
     )
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, isAnnotation: Boolean, defaultType: DefaultType)(implicit
       ctx: ShapeParserContext
   ): Raml08TypeParser = {
-    val context = ctx.raml08createContextFromRaml
+    val context = ctx.toRaml08
     context.addNodeRefIds(ctx.nodeRefIds)
     new Raml08TypeParser(YMapEntryLike(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
       context
@@ -205,7 +206,7 @@ object Raml08TypeParser {
       defaultType: DefaultType
   )(implicit ctx: ShapeParserContext): Raml08TypeParser =
     new Raml08TypeParser(entryOrNode, name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      ctx.raml08createContextFromRaml
+      ctx.toRaml08
     )
 }
 
@@ -1716,7 +1717,7 @@ sealed abstract class RamlTypeParser(
         "dependencies".asRamlAnnotation,
         entry => {
           Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, JSONSchemaDraft4SchemaVersion)(
-            ctx.toOasNext
+            ctx.toOas
           ).parse()
         }
       )

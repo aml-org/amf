@@ -2,12 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security.{OAuth2FlowModel, OAuth2SettingsModel}
-import amf.apicontract.internal.spec.common.parser.{
-  Oas2SettingsProducers,
-  SettingsProducers,
-  WebApiContext,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{Oas2SettingsProducers, SettingsProducers, WebApiContext}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.annotations.VirtualElement
 import amf.core.internal.parser.YMapOps
@@ -73,7 +68,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       }
     )
 
-    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("scopes")
+    AnnotationParser(settings, map).parseOrphanNode("scopes")
 
     flow.option.foreach { f =>
       settings.setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred())

@@ -12,7 +12,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{JsonSchema, Spec}
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.{JsonSchemaSettings, SpecSyntax}
 
 class JsonSchemaWebApiContext(
     loc: String,
@@ -21,11 +21,16 @@ class JsonSchemaWebApiContext(
     private val ds: Option[OasWebApiDeclarations],
     options: ParsingOptions = ParsingOptions(),
     override val defaultSchemaVersion: SchemaVersion
-) extends OasWebApiContext(loc, refs, options, wrapped, ds) {
+) extends OasWebApiContext(
+      loc,
+      refs,
+      options,
+      wrapped,
+      ds,
+      specSettings = JsonSchemaSettings(Oas3Syntax, defaultSchemaVersion)
+    ) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
-  override def syntax: SpecSyntax             = Oas3Syntax
-  override def spec: Spec                     = JsonSchema
   override val linkTypes: Boolean = wrapped match {
     case _: RamlWebApiContext => false
     case _: OasWebApiContext  => true // definitions tag
