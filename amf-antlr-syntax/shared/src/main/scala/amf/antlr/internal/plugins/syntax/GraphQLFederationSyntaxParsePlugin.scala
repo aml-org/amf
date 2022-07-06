@@ -21,7 +21,7 @@ object GraphQLFederationSyntaxParsePlugin extends AMFSyntaxParsePlugin {
 
   override val id: String = "graphql-federation-parse"
 
-  override def applies(element: CharSequence): Boolean = element.toString.trim.contains("@key(fields:")
+  override def applies(element: CharSequence): Boolean = true
 
   override def priority: PluginPriority = HighPriority
 

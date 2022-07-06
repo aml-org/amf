@@ -21,14 +21,7 @@ object GraphQLSyntaxParsePlugin extends AMFSyntaxParsePlugin {
 
   override val id: String = "graphql-parse"
 
-  override def applies(element: CharSequence): Boolean = {
-    val text = element.toString.trim
-
-    text.contains("schema {") ||
-    text.contains("type Query {") ||
-    text.contains("type Mutation {") ||
-    text.contains("type Subscription {")
-  }
+  override def applies(element: CharSequence): Boolean = true
 
   override def priority: PluginPriority = HighPriority
 
