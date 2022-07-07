@@ -34,6 +34,11 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
       }
     }
 
+  // Test singular API
+  test("GraphQL TCK > Apis > Invalid > wrong-directive-location") {
+    assertReport(s"$apisPath/invalid/wrong-directive-target.api.graphql")
+  }
+
   def assertConforms(api: String): Future[Assertion] = {
     val client = GraphQLConfiguration.GraphQL().baseUnitClient()
     for {

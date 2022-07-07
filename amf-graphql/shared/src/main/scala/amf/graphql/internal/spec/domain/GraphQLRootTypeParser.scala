@@ -1,16 +1,15 @@
 package amf.graphql.internal.spec.domain
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Request}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.parser.syntax.{ScalarValueParser, GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
   FIELD_DEFINITION,
   INPUT_VALUE_DEFINITION
 }
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
@@ -61,29 +60,37 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
     val op: Operation = endPoint.withOperation(method).withName(operationId).withOperationId(operationId)
     val request       = op.withRequest()
-    collect(f, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argumentNode: Node =>
-      val fieldName =
-        findName(argumentNode, "AnonymousArgument", s"Missing name for field at root operation $method ")
+    parseArguments(f, request, method)
+    val payload = op.withResponse().withPayload()
+    val shape   = parseType(f)
+    payload.withSchema(shape)
+  }
 
-      val queryParam = request.withQueryParameter(fieldName).withBinding("query")
+  private def parseArguments(n: Node, request: Request, method: String): Unit = {
+    collect(n, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
+      parseArgument(request, method, argument)
+    }
+  }
 
-      findDescription(argumentNode) match {
-        case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
-        case _                 => // ignore
-      }
+  private def parseArgument(request: Request, method: String, argument: Node): Unit = {
+    val fieldName =
+      findName(argument, "AnonymousArgument", s"Missing name for field at root operation $method")
 
-      unpackNilUnion(parseType(argumentNode)) match {
-        case NullableShape(true, shape) =>
-          val schema = ScalarValueParser.putDefaultValue(ast, shape)
-          queryParam.withSchema(schema).withRequired(false)
-        case NullableShape(false, shape) =>
-          val schema = ScalarValueParser.putDefaultValue(ast, shape)
-          queryParam.withSchema(schema).withRequired(true)
-      }
+    val queryParam = request.withQueryParameter(fieldName).withBinding("query")
+
+    findDescription(argument) match {
+      case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
+      case _                 => // ignore
     }
 
-    val payload                 = op.withResponse().withPayload()
-    val shape                   = parseType(f)
-    payload.withSchema(shape)
+    unpackNilUnion(parseType(argument)) match {
+      case NullableShape(true, shape) =>
+        val schema = ScalarValueParser.putDefaultValue(ast, shape)
+        queryParam.withSchema(schema).withRequired(false)
+      case NullableShape(false, shape) =>
+        val schema = ScalarValueParser.putDefaultValue(ast, shape)
+        queryParam.withSchema(schema).withRequired(true)
+    }
+    GraphQLDirectiveApplicationParser(argument, queryParam).parse()
   }
 }
