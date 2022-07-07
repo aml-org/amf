@@ -7,12 +7,13 @@ import amf.graphql.client.scala.GraphQLConfiguration
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
-
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
   val tckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
   val apisPath: String = s"$tckPath/apis"
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   // Test valid APIs
   fs.syncFile(s"$apisPath/valid").list.foreach { api =>
