@@ -2,8 +2,14 @@ schema @MyDirective {
     query: Query
 }
 
-type Query @MyDirective {
-    name: String
+type Query {
+    name: String @MyDirective
+}
+
+scalar MyScalar @MyDirective
+
+type MyObject @MyDirective {
+    myField(myArgument: String @MyDirective): String! @MyDirective
 }
 
 directive @MyDirective on SCALAR

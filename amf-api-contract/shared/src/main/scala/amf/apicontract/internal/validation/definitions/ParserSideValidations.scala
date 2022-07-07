@@ -1,14 +1,7 @@
 package amf.apicontract.internal.validation.definitions
 
 import amf.core.client.common.validation.SeverityLevels.{VIOLATION, WARNING}
-import amf.core.client.common.validation.{
-  Async20Profile,
-  GrpcProfile,
-  Oas20Profile,
-  ProfileName,
-  Raml08Profile,
-  Raml10Profile
-}
+import amf.core.client.common.validation._
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.AmfParser
 import amf.core.internal.validation.Validations
@@ -434,6 +427,16 @@ object ParserSideValidations extends Validations {
     "Annotation schema must be any for api-extensions override"
   )
 
+  val InvalidDirectiveApplication = validation(
+    "invalid-directive-application",
+    "Directive should not be applied in current location"
+  )
+
+  val InvalidDirectiveLocation = validation(
+    "invalid-directive-location",
+    "The location of the directive is invalid"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -453,6 +456,8 @@ object ParserSideValidations extends Validations {
     invalidExampleFieldWarning.id                -> all(WARNING), // TODO: should be violation
     OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
+    InvalidDirectiveApplication.id               -> all(VIOLATION),
+    InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
     ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
@@ -510,6 +515,8 @@ object ParserSideValidations extends Validations {
     SchemasDeprecated,
     InvalidDocumentationType,
     InvalidAllowedTargetsType,
+    InvalidDirectiveApplication,
+    InvalidDirectiveLocation,
     InvalidExtensionsType,
     ModuleNotFound,
     UnexpectedReference,

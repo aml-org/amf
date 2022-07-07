@@ -1,5 +1,6 @@
 package amf.graphql.internal.spec.domain
 
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
@@ -18,31 +19,12 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
 
   def parse(): Unit = {
     getDirectiveNodes map { directive =>
-      val directiveApplication = DomainExtension(toAnnotations(node))
+      val directiveApplication = DomainExtension(toAnnotations(directive))
       parseName(directive, directiveApplication)
       putDefinedBy(directiveApplication)
+      checkLocation(directiveApplication, element)
       parseArguments(directive, directiveApplication)
       element.withCustomDomainProperty(directiveApplication)
-    }
-  }
-
-  private def checkDefaultDirective(name: String): Unit = {
-    // if a default directive has been used, first add it to declarations
-    // 'skip' and 'include' default directives are operation directives, not schema directives, so we don't support them
-    name match {
-      case "deprecated" if !isDeclared(name) =>
-        val directive = CustomDomainProperty(inferred())
-        directive.withName(name, inferred())
-        directive.withDomain(Seq("FIELD_DEFINITION", "ENUM_VALUE").flatMap(locationToDomain))
-        val schema = NodeShape()
-        val scalar = ScalarShape(inferred()).withDataType(DataType.String)
-        val argument = PropertyShape()
-          .withName("reason")
-          .withRange(scalar)
-        schema.withProperties(Seq(argument))
-        directive.withSchema(schema)
-        ctx.declarations += directive
-      case _ => // ignore
     }
   }
 
@@ -76,6 +58,40 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
           s"Directive ${directiveApplication.name} is not declared",
           toAnnotations(node)
         )
+    }
+  }
+
+  private def checkLocation(directiveApplication: DomainExtension, element: DomainElement): Unit = {
+    val validDomains   = directiveApplication.definedBy.domain.map(_.toString)
+    val currentDomains = element.meta.typeIris // maybe head?
+    if (!currentDomains.exists(validDomains.contains))
+      ctx.eh.violation(
+        ParserSideValidations.InvalidDirectiveApplication,
+        directiveApplication,
+        None,
+        s"Directive ${directiveApplication.name.value()} cannot be applied here",
+        directiveApplication.position(),
+        directiveApplication.location()
+      )
+  }
+
+  private def checkDefaultDirective(name: String): Unit = {
+    // if a default directive has been used, first add it to declarations
+    // 'skip' and 'include' default directives are operation directives, not schema directives, so we don't support them
+    name match {
+      case "deprecated" if !isDeclared(name) =>
+        val directive = CustomDomainProperty(inferred())
+        directive.withName(name, inferred())
+        directive.withDomain(Seq("FIELD_DEFINITION", "ENUM_VALUE").flatMap(locationToDomain))
+        val schema = NodeShape()
+        val scalar = ScalarShape(inferred()).withDataType(DataType.String)
+        val argument = PropertyShape()
+          .withName("reason")
+          .withRange(scalar)
+        schema.withProperties(Seq(argument))
+        directive.withSchema(schema)
+        ctx.declarations += directive
+      case _ => // ignore
     }
   }
 
