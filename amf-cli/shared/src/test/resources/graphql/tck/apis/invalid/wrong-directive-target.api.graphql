@@ -2,8 +2,12 @@ schema @MyDirective {
     query: Query
 }
 
-type Query @MyDirective {
-    name: String
+type Query {
+    name(surname: String @MyDirective): String @MyDirective
 }
 
-directive @MyDirective on SOMETHING
+type Spaceship {
+    name(surname: String @MyDirective): String @MyDirective
+}
+
+directive @MyDirective on SOMETHING | SCHEMA | ARGUMENT_DEFINITION | FIELD_DEFINITION

@@ -7,12 +7,13 @@ import amf.graphql.client.scala.GraphQLConfiguration
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
-
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
   val tckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
   val apisPath: String = s"$tckPath/apis"
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   // Test valid APIs
   fs.syncFile(s"$apisPath/valid").list.foreach { api =>
@@ -20,8 +21,23 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
   }
 
   // Test invalid APIs
-  fs.syncFile(s"$apisPath/invalid").list.filter(_.endsWith(".graphql")).foreach { api =>
-    ignore(s"GraphQL TCK > Apis > Invalid > $api: should not conform") { assertReport(s"$apisPath/invalid/$api") }
+  fs.syncFile(s"$apisPath/invalid")
+    .list
+    .groupBy(apiName)
+    .values
+    .collect {
+      case toValidate if toValidate.length > 1 =>
+        apiName(toValidate.head) // contains the API and it's report, thus should be validated
+    }
+    .foreach { api =>
+      test(s"GraphQL TCK > Apis > Invalid > $api: should not conform") {
+        assertReport(s"$apisPath/invalid/$api.graphql")
+      }
+    }
+
+  // Test singular API
+  test("GraphQL TCK > Apis > Invalid > wrong-directive-location") {
+    assertReport(s"$apisPath/invalid/wrong-directive-target.api.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {
@@ -53,5 +69,7 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
       assertion
     }
   }
+
+  private def apiName(api: String): String = api.split('.').dropRight(1).mkString(".")
 
 }

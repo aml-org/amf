@@ -1,11 +1,13 @@
 package amf.graphql.internal.spec.domain
 
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{ScalarValueParser, GraphQLASTParserHelper, Locations}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations, ScalarValueParser}
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.mulesoft.antlrast.ast.{Node, Terminal}
+import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
+import org.mulesoft.common.client.lexical.ASTElement
 
 case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLWebApiContext)
     extends GraphQLASTParserHelper {
@@ -45,10 +47,17 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
 
   private def parseLocations(): Unit = {
     var domains = Set[String]()
-    collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION, TYPE_SYSTEM_DIRECTIVE_LOCATION)).foreach {
-      case graphqlLocation: Node =>
-        val domainsFromLocation = getDomains(graphqlLocation).toSet
-        domains = domainsFromLocation ++: domains
+    collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION)).foreach { n =>
+      path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION)) match {
+        case Some(graphqlLocation: Node) =>
+          val domainsFromLocation = getDomains(graphqlLocation).toSet
+          domains = domainsFromLocation ++: domains
+        case _ =>
+          n match {
+            case n: Node => checkErrorNode(n.children.toList)
+            case _       => // ignore
+          }
+      }
     }
     directive.withDomain(domains.toSeq)
   }
@@ -56,5 +65,18 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   private def getDomains(location: Node): Seq[String] = {
     val locationName: String = location.children.head.asInstanceOf[Terminal].value
     Locations.locationToDomain.getOrElse(locationName, Seq())
+  }
+
+  private def checkErrorNode(children: Seq[ASTElement]): Unit = {
+    children.foreach {
+      case errorNode: Error =>
+        ctx.eh.violation(
+          ParserSideValidations.InvalidDirectiveLocation,
+          directive,
+          s"Directive location ${errorNode.message} is invalid",
+          directive.annotations
+        )
+      case _ => // ignore
+    }
   }
 }
