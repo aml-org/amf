@@ -442,6 +442,11 @@ object ParserSideValidations extends Validations {
     message = "Cannot exist two or more fields with same name"
   )
 
+  val DuplicatedArgument = validation(
+    id = "duplicated-argument",
+    message= "Cannot exist two or more arguments with same name"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -464,7 +469,6 @@ object ParserSideValidations extends Validations {
     InvalidDirectiveApplication.id               -> all(VIOLATION),
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
-    DuplicatedField.id                           -> all(VIOLATION),
     ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
@@ -543,6 +547,7 @@ object ParserSideValidations extends Validations {
     ClosedShapeSpecificationWarning,
     MissingAnnotationSchema,
     AnnotationSchemaMustBeAny,
-    DuplicatedField
+    DuplicatedField,
+    DuplicatedArgument
   )
 }
