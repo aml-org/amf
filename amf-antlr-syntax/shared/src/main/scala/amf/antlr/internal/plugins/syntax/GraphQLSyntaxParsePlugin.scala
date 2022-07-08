@@ -1,7 +1,7 @@
 package amf.antlr.internal.plugins.syntax
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
-import amf.core.client.common.{HighPriority, PluginPriority}
+import amf.core.client.common.{LowPriority, PluginPriority}
 import amf.core.client.scala.parse.AMFSyntaxParsePlugin
 import amf.core.client.scala.parse.document.{ParsedDocument, ParserContext}
 import amf.core.internal.remote.Mimes.`application/graphql`
@@ -23,7 +23,7 @@ object GraphQLSyntaxParsePlugin extends AMFSyntaxParsePlugin {
 
   override def applies(element: CharSequence): Boolean = true
 
-  override def priority: PluginPriority = HighPriority
+  override def priority: PluginPriority = LowPriority
 
   override def mainMediaType: String = `application/graphql`
 }

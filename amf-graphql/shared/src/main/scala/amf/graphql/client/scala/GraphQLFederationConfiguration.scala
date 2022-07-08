@@ -1,6 +1,10 @@
 package amf.graphql.client.scala
 
-import amf.antlr.internal.plugins.syntax.{AntlrSyntaxRenderPlugin, GraphQLFederationSyntaxParsePlugin}
+import amf.antlr.internal.plugins.syntax.{
+  AntlrSyntaxRenderPlugin,
+  GraphQLFederationSyntaxParsePlugin,
+  SyamlForJsonLDSyntaxParsePlugin
+}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLFederationEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
@@ -29,5 +33,6 @@ object GraphQLFederationConfiguration extends APIConfigurationBuilder {
         )
       )
       .withValidationProfile(GraphQLFederationValidationProfile, GraphQLFederationEffectiveValidations)
+      .withPlugin(SyamlForJsonLDSyntaxParsePlugin) // override SYAML
   }
 }
