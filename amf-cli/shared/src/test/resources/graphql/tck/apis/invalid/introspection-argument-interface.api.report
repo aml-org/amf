@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-argument-interface.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
+  Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-argument-interface.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/__unit
+  Property: http://a.ml/vocabularies/core#name
+  Range: [(1,0)-(1,0)]
+  Location: 
