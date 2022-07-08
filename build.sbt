@@ -154,7 +154,7 @@ lazy val apiContractJS =
 
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
 lazy val antlrv4JSRef  = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJS")
-val antlrv4Version = "0.4.0-SNAPSHOT"
+val antlrv4Version = versions("antlrv4Version")
 lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast" % antlrv4Version
 lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs0.6" % antlrv4Version
 
