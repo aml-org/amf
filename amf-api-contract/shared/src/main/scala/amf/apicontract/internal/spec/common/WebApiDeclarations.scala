@@ -44,8 +44,6 @@ class WebApiDeclarations(
     val futureDeclarations: FutureDeclarations
 ) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations) {
 
-  def libs: Map[String, WebApiDeclarations]             = _libs
-  private var _libs: Map[String, WebApiDeclarations]    = Map()
   var resourceTypes: Map[String, ResourceType]          = Map()
   var parameters: Map[String, Parameter]                = Map()
   var payloads: Map[String, Payload]                    = Map()
@@ -69,20 +67,15 @@ class WebApiDeclarations(
 
   override def addLibrary(alias: String, declarations: Declarations): Unit = {
     libraries = libraries + (alias -> declarations)
-    declarations match {
-      case webapi: WebApiDeclarations => _libs = libs + (alias -> webapi)
-      case _                          => // ignore
-    }
   }
 
-  def setLibraries(libraries: Map[String, WebApiDeclarations]): Unit = {
+  def setLibraries(libraries: Map[String, Declarations]): Unit = {
     this.libraries = libraries
-    _libs = libraries
   }
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
-    libs.foreach { case (k, s) => merged.addLibrary(k, s) }
-    other.libs.foreach { case (k, s) => merged.addLibrary(k, s) }
+    libraries.foreach { case (k, s) => merged.addLibrary(k, s) }
+    other.libraries.foreach { case (k, s) => merged.addLibrary(k, s) }
     fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
     other.fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
     shapes.foreach { case (k, s) => merged.shapes += (k -> s) }
@@ -115,7 +108,7 @@ class WebApiDeclarations(
   override def copy(): WebApiDeclarations = {
     val next =
       super.copy(new WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations))
-    _libs.foreach(entry => next.addLibrary(entry._1, entry._2))
+    libraries.foreach(entry => next.addLibrary(entry._1, entry._2))
     next.resourceTypes = resourceTypes
     next.parameters = parameters
     next.payloads = payloads
@@ -219,7 +212,7 @@ class WebApiDeclarations(
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): WebApiDeclarations = {
-    libs.get(alias) match {
+    libraries.get(alias) match {
       case Some(lib: WebApiDeclarations) => lib
       case _ =>
         val result = new WebApiDeclarations(
@@ -313,7 +306,9 @@ class WebApiDeclarations(
   def findDialect(key: String): Option[Dialect] = {
     val fqn = QName(key)
     if (fqn.isQualified) {
-      val maybeDeclarations: Option[WebApiDeclarations] = libs.get(fqn.qualification)
+      val maybeDeclarations: Option[WebApiDeclarations] = libraries
+        .get(fqn.qualification)
+        .collect { case decl: WebApiDeclarations => decl }
       maybeDeclarations.flatMap(_.findDialect(fqn.name))
     } else extensions.get(key)
   }
@@ -398,7 +393,7 @@ class WebApiDeclarations(
     }
 
   def nonEmpty: Boolean = {
-    libs.nonEmpty || fragments.nonEmpty || shapes.nonEmpty || annotations.nonEmpty || resourceTypes.nonEmpty ||
+    libraries.nonEmpty || fragments.nonEmpty || shapes.nonEmpty || annotations.nonEmpty || resourceTypes.nonEmpty ||
     parameters.nonEmpty || payloads.nonEmpty || traits.nonEmpty || securitySchemes.nonEmpty || responses.nonEmpty
   }
 }
@@ -625,7 +620,7 @@ object OasWebApiDeclarations {
       errorHandler = d.errorHandler,
       futureDeclarations = d.futureDeclarations
     )
-    declarations.setLibraries(d.libs)
+    declarations.setLibraries(d.libraries)
     declarations.fragments = d.fragments
     declarations.shapes = d.shapes
     declarations.annotations = d.annotations
@@ -717,7 +712,7 @@ object RamlWebApiDeclarations {
       errorHandler = d.errorHandler,
       futureDeclarations = d.futureDeclarations
     )
-    declarations.setLibraries(d.libs)
+    declarations.setLibraries(d.libraries)
     declarations.fragments = d.fragments
     declarations.shapes = d.shapes
     declarations.annotations = d.annotations

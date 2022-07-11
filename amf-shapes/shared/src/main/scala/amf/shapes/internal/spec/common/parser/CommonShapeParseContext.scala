@@ -94,7 +94,7 @@ class CommonShapeParseContext(
       location, {
         val result =
           AstIndexBuilder.buildAst(value, AliasCounter(options.getMaxYamlReferences), computeJsonSchemaVersion(value))(
-            (this)
+            this
           )
         result
       }

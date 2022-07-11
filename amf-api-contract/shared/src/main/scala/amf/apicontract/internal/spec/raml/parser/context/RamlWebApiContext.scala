@@ -69,7 +69,7 @@ abstract class RamlWebApiContext(
       declarations
     } else {
       val nextLibrary = path.head
-      declarations.libs.get(nextLibrary) match {
+      declarations.libraries.get(nextLibrary) match {
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
         case _ =>

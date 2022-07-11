@@ -108,7 +108,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
     val values = refValue.split("#/types/").toList
     values match {
       case Seq(libUrl, typeName) =>
-        val library = ctx.declarations.libs.get(libUrl).collect { case d: WebApiDeclarations => d }
+        val library = ctx.declarations.libraries.get(libUrl).collect { case d: WebApiDeclarations => d }
         val shape   = library.flatMap(_.shapes.get(typeName))
         shape.map(linkAndAdopt(_, refValue))
       case _ => None
