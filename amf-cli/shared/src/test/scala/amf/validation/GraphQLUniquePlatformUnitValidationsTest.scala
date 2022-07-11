@@ -15,4 +15,8 @@ class GraphQLUniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Can parse API with missing EOF") {
     validate("sudden-eof.graphql", Some("sudden-eof.report"), configOverride = Some(config))
   }
+
+  test("validate types in default values") {
+    validate("invalid-default-value.graphql", Some("invalid-default-value.report"), configOverride = Some(config))
+  }
 }

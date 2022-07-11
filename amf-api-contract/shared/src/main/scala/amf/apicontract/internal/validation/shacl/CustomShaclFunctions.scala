@@ -11,25 +11,40 @@ import amf.apicontract.internal.metamodel.domain.security.{
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.core.client.scala.model.domain._
-import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.utils.RegexConverter
-import amf.shapes.client.scala.model.domain.operations.ShapeParameter
-import amf.shapes.client.scala.model.domain.{AnyShape, FileShape, IriTemplateMapping, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunction,
   CustomShaclFunctions,
   ValidationInfo
 }
+
 import java.util.regex.Pattern
 
 object CustomShaclFunctions {
 
   val listOfFunctions: List[CustomShaclFunction] = List(
+    new CustomShaclFunction {
+      override val name: String = "GraphQLArgumentDefaultValueTypeValidation"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val node              = element.asInstanceOf[NodeShape]
+        val validationResults = GraphQLArgumentValidator.validateDefaultValues(node)
+        validationResults.foreach(info => validate(Some(info)))
+      }
+    },
+    new CustomShaclFunction {
+      override val name: String = "GraphQLDirectiveApplicationTypeValidation"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val directive         = GraphQLAppliedDirective(element.asInstanceOf[DomainExtension])
+        val validationResults = GraphQLArgumentValidator.validateDirectiveApplicationTypes(directive)
+        validationResults.foreach(info => validate(Some(info)))
+      }
+    },
     new CustomShaclFunction {
       override val name: String = "pathParameterRequiredProperty"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {

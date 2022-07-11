@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type
+  Message: Default value of property text must be of type http://www.w3.org/2001/XMLSchema#string
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value.graphql#/declares/MyDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#datatype
+  Range: 
+  Location: 
