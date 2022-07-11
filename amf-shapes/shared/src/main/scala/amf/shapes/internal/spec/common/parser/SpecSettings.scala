@@ -4,7 +4,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec.OAS30
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion
 import org.yaml.model.YNode
 

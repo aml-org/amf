@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.shapes.client.scala.model.domain.SchemaShape
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model.YNode
 

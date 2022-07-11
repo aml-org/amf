@@ -2,9 +2,8 @@ package amf.shapes.internal.spec.jsonschema.ref
 
 import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.CoreValidations.ExceededMaxYamlReferences
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common._
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.jsonschema.ref
 import org.yaml.model._
 

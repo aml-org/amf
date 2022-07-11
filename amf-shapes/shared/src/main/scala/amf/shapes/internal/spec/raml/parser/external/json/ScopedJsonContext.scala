@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.raml.parser.external.json
 
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.external.json.JsonSchemaContextAdapter.toSchemaContext
 import org.yaml.model.{YMapEntry, YNode}
 

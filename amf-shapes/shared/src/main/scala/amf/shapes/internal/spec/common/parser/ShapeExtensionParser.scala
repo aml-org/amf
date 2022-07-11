@@ -6,7 +6,6 @@ import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.remote.{Oas, Raml}
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.{ClosedRamlTypeShape, TypeInfo}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   MissingRequiredUserDefinedFacet,

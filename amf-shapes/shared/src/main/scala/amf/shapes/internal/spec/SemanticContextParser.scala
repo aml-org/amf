@@ -19,6 +19,7 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
 import org.mulesoft.common.net.UriValidator
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YType}
 import amf.core.internal.parser._
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 
 case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: ShapeParserContext) {
 

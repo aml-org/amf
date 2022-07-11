@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.core.client.scala.parse.document.{ParsedReference, Reference}
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar, YType}
 

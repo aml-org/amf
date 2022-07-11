@@ -15,7 +15,7 @@ import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
-import amf.shapes.internal.spec.{RamlWebApiContextType, ShapeParserContext}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,

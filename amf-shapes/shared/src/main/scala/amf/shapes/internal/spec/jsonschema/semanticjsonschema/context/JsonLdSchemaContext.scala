@@ -13,10 +13,17 @@ import amf.core.internal.remote.{JsonSchemaDialect, Spec}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion}
-import amf.shapes.internal.spec.common.parser.{IgnoreAllCriteria, IgnoreCriteria, SpecSyntax}
+import amf.shapes.internal.spec.common.parser.{
+  IgnoreAllCriteria,
+  IgnoreCriteria,
+  ShapeDeclarations,
+  ShapeParserContext,
+  SpecSettings,
+  SpecSyntax
+}
+import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
 import amf.shapes.internal.spec.jsonschema.ref.AstIndex
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
@@ -25,11 +32,10 @@ import scala.collection.mutable
 
 object JsonLdSchemaContext {
   def apply(ctx: ParserContext, schemaVersion: Option[JSONSchemaVersion]): ShapeParserContext = {
-    new JsonLdSchemaContext(ctx) {
-      override var jsonSchemaIndex: Option[AstIndex]         = None
-      override var globalSpace: mutable.Map[String, Any]     = mutable.Map()
-      override var localJSONSchemaContext: Option[YNode]     = None
-      override var indexCache: mutable.Map[String, AstIndex] = mutable.Map()
+    new JsonLdSchemaContext(
+      ctx,
+      JsonSchemaSettings(JsonSchemaSyntax, schemaVersion.getOrElse(JSONSchemaDraft4SchemaVersion))
+    ) {
       override def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder =
         (name: String) => SemanticExtensionsFacade.apply(name, ctx.config)
       override val defaultSchemaVersion: JSONSchemaVersion = schemaVersion.getOrElse(defaultSchemaVersion)
@@ -57,8 +63,6 @@ object JsonLdSchemaContext {
 
       override def removeLocalJsonSchemaContext: Unit = Unit
 
-      override def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
-
       override def toJsonSchema(): ShapeParserContext = this
 
       override def toJsonSchema(root: String, refs: Seq[ParsedReference]): ShapeParserContext = this
@@ -71,17 +75,18 @@ object JsonLdSchemaContext {
   def apply(ctx: ParserContext): ShapeParserContext = this.apply(ctx, None)
 }
 
-abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContext with JsonSchemaLikeContext {
+abstract class JsonLdSchemaContext(ctx: ParserContext, settings: SpecSettings)
+    extends ShapeParserContext(
+      ctx.rootContextDocument,
+      ctx.refs,
+      ctx.parsingOptions,
+      ctx,
+      None,
+      mutable.Map.empty,
+      settings
+    ) {
 
   override val eh: AMFErrorHandler = ctx.eh
-
-  override def spec: Spec = JsonSchemaDialect
-
-  override def syntax: SpecSyntax = JsonSchemaSyntax
-
-  override def rootContextDocument: String = ctx.rootContextDocument
-
-  override def refs: Seq[ParsedReference] = ctx.refs
 
   override def getMaxYamlReferences: Option[Int] = None
 
@@ -91,11 +96,7 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def findExample(key: String, scope: SearchScope.Scope): Option[Example] = None
 
-  override def futureDeclarations: FutureDeclarations = ctx.futureDeclarations
-
   override def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit]): Option[AnyShape] = None
-
-  override def loc: String = ctx.rootContextDocument
 
   override def shapes: Map[String, Shape] = Map()
 
@@ -140,7 +141,7 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
       error: Option[String => Unit]
   ): Option[CreativeWork] = None
 
-  override def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
+  def obtainRemoteYNode(ref: String, refAnnotations: Annotations): Option[YNode] =
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
@@ -152,8 +153,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
     ctx.violation(violationId, node, message)
 
   override def addNodeRefIds(ids: mutable.Map[YNode, String]): Unit = {}
-
-  override def nodeRefIds: mutable.Map[YNode, String] = mutable.Map()
 
   override def toRaml10: ShapeParserContext = this
 
@@ -167,6 +166,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext) extends ShapeParserContex
 
   override def parseRemoteJSONPath(ref: String): Option[AnyShape] = None
 
-  override def getInheritedDeclarations: Option[Declarations] = None
+  override def getInheritedDeclarations: Option[ShapeDeclarations] = None
 
 }

@@ -7,7 +7,6 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseShape
 import org.yaml.model.{YMap, YScalar}

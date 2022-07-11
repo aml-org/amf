@@ -11,7 +11,7 @@ import amf.core.internal.metamodel.document.ModuleModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.RamlWebApiContextType.LIBRARY
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.LIBRARY
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.YMap
 

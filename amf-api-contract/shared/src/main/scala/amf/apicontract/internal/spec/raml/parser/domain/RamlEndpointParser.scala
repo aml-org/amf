@@ -23,8 +23,8 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.shapes.client.scala.model.domain.ScalarShape
-import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 

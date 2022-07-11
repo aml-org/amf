@@ -22,7 +22,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import org.yaml.model._
 
 import scala.collection.mutable

@@ -11,8 +11,8 @@ import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, Sya
 import amf.core.internal.parser.{LimitedParseConfig, Root}
 import amf.core.internal.remote.{Oas20, Platform}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import org.yaml.parser.JsonParser
 

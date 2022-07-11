@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.raml.parser.external.json
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
 import org.yaml.model.YNode
 

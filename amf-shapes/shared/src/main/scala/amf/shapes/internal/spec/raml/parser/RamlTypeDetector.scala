@@ -20,6 +20,7 @@ import amf.shapes.internal.domain.parser.TypeDefXsdMapping._
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema, isWellKnownType, matchWellKnownType}
 import amf.shapes.internal.spec._
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._

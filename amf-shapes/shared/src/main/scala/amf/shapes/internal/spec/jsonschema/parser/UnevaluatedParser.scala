@@ -8,9 +8,8 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   InvalidUnevaluatedItemsType,

@@ -4,7 +4,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec.ASYNC20
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.parser.{OasLikeIgnoreCriteria, OasLink}
@@ -23,7 +23,7 @@ case class Async2Settings(syntax: SpecSyntax) extends SpecSettings {
   override val annotationValidatorBuilder: AnnotationSchemaValidatorBuilder = IgnoreAnnotationSchemaValidatorBuilder
 
   override def shouldLinkTypes(parent: ParserContext) = parent match {
-    case ctx: CommonShapeParseContext if ctx.isRamlContext => false
-    case _                                                 => true
+    case ctx: ShapeParserContext if ctx.isRamlContext => false
+    case _                                            => true
   }
 }

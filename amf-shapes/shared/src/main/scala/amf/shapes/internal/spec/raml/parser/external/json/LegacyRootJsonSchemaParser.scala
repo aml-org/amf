@@ -3,8 +3,8 @@ package amf.shapes.internal.spec.raml.parser.external.json
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ParsedJSONSchema
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin

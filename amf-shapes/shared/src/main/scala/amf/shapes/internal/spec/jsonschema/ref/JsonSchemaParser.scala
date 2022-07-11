@@ -11,9 +11,8 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes.`application/json`
 import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaVersion
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.jsonschema.ref.AstFinder.getPointedAstOrNode
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.createRootFrom
 import amf.shapes.internal.spec.oas.parser.OasTypeParser

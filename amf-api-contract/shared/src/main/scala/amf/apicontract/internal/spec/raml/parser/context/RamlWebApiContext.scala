@@ -8,10 +8,9 @@ import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
 import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSettings, SpecSyntax}
-import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml10Settings}
+import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml10Settings, RamlWebApiContextType}
 import org.yaml.model._
 
 import scala.collection.mutable

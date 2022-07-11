@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser
 
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{Shape, _}
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Shapes
@@ -21,7 +21,7 @@ import amf.core.internal.annotations.{
 import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{Annotations, ScalarNode => ParserScalarNode, _}
+import amf.core.internal.parser.domain.{ScalarNode => ParserScalarNode, _}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Raml08
 import amf.core.internal.utils.{AmfStrings, IdCounter}
@@ -38,7 +38,7 @@ import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalParserFactory
-import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
+import amf.shapes.internal.spec.{RamlTypeDefMatcher, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.mulesoft.common.client.lexical.PositionRange

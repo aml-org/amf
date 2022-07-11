@@ -10,13 +10,14 @@ import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
-import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, ShapeParserContext}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model._
 
 object RamlExternalParserFactory {
-  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false)(implicit ctx: ShapeParserContext) =
+  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false)(implicit
+      ctx: ShapeParserContext
+  ) =
     RamlXmlSchemaExpression(key, value, adopt, parseExample)
   def createJson(key: YNode, value: YNode, parseExample: Boolean = false)(implicit ctx: ShapeParserContext) =
     RamlJsonSchemaParser(key, value, parseExample)
@@ -30,7 +31,7 @@ case class RamlXmlSchemaExpression(
 )(implicit val ctx: ShapeParserContext)
     extends RamlExternalTypesParser {
 
-  private val shapeAst                      = YMapEntry(key, value)
+  private val shapeAst = YMapEntry(key, value)
 
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val parsed = value.tagType match {

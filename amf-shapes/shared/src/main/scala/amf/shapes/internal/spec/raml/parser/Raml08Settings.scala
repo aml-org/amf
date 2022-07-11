@@ -2,8 +2,7 @@ package amf.shapes.internal.spec.raml.parser
 
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import org.yaml.model.YNode

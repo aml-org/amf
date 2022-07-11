@@ -36,16 +36,16 @@ import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{
   AnnotationParser,
   OasLikeCreativeWorkParser,
   RamlCreativeWorkParser,
+  ShapeParserContext,
   YMapEntryLike
 }
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
-import org.yaml.model.{YMapEntry, YNode, _}
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

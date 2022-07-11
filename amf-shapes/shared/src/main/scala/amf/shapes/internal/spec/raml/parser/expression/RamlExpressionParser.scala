@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.annotations.ParsedFromTypeExpression
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import org.mulesoft.common.client.lexical.Position
 import org.yaml.model._
 

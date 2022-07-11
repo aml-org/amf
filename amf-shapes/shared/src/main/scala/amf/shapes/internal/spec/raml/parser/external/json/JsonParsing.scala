@@ -1,8 +1,8 @@
 package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.core.internal.parser.domain.JsonParserFactory
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import org.mulesoft.common.client.lexical.Position
-import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode
 import org.yaml.parser.JsonParser
 

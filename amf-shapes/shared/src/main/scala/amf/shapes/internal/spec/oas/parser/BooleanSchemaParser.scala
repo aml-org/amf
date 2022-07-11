@@ -4,9 +4,8 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.BooleanSchema
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.{JSONSchemaDraft6SchemaVersion, SchemaVersion}
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidBooleanSchemaForSchemaVersion
 import org.yaml.model.YNode
 import org.yaml.model.YNodeLike.toBoolean

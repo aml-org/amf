@@ -3,8 +3,8 @@ package amf.shapes.internal.spec.raml.parser
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSyntax}
-import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, ShapeParserContext}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, ShapeParserContext, SpecSyntax}
+import amf.shapes.internal.spec.RamlShapeTypeBeautifier
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YScalar}
 

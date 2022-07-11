@@ -6,8 +6,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel.{Encoding, MediaType}
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.YMap

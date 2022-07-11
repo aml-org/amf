@@ -37,9 +37,14 @@ import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
-import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, RamlCreativeWorkParser, RamlScalarNode, YMapEntryLike}
-import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryParser, RamlTypeSyntax, StringDefaultType}
+import amf.shapes.internal.spec.raml.parser.{
+  Raml10TypeParser,
+  RamlTypeEntryParser,
+  RamlTypeSyntax,
+  RamlWebApiContextType,
+  StringDefaultType
+}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   ExclusiveSchemasType,
   InvalidFragmentType,

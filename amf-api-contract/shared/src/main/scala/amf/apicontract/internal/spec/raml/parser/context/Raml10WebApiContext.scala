@@ -4,12 +4,11 @@ import amf.apicontract.internal.spec.common.{ExtensionWebApiDeclarations, RamlWe
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml10, Spec}
-import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.mulesoft.common.client.lexical.SourceLocation
 import amf.shapes.internal.spec.common.parser.SpecSyntax
-import amf.shapes.internal.spec.raml.parser.Raml10Settings
+import amf.shapes.internal.spec.raml.parser.{Raml10Settings, RamlWebApiContextType}
 import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
 class Raml10WebApiContext(

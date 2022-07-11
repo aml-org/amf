@@ -14,9 +14,9 @@ import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
-import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 

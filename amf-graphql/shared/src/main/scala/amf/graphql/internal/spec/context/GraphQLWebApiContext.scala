@@ -9,7 +9,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.{GraphQL, Grpc, Spec}
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.{
   AnnotationSchemaValidatorBuilder,

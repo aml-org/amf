@@ -3,8 +3,12 @@ package amf.shapes.internal.spec.raml.parser.external
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations._
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.raml.parser.external.json.{IncludedJsonSchemaParser, InlineJsonSchemaParser, SchemaWrapperParser}
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
+import amf.shapes.internal.spec.raml.parser.external.json.{
+  IncludedJsonSchemaParser,
+  InlineJsonSchemaParser,
+  SchemaWrapperParser
+}
 import org.yaml.model._
 
 case class RamlJsonSchemaParser(

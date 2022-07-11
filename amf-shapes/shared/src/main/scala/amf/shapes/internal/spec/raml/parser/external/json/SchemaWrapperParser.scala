@@ -7,8 +7,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
 import amf.shapes.internal.annotations.ExternalSchemaWrapper
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, QuickFieldParserOps}
+import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.raml.parser.ExampleParser
 import org.yaml.model.{YMap, YNode}
 
