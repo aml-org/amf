@@ -4,8 +4,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.createRootFrom
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model.YNode

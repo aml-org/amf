@@ -3,11 +3,7 @@ package amf.apicontract.internal.spec.async.parser.domain
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.common.parser.{
-  Async2SettingsProducers,
-  SettingsProducers,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{Async2SettingsProducers, SettingsProducers}
 import amf.apicontract.internal.spec.oas.parser.domain.{OAuth2FlowValidations, OasLikeSecuritySettingsParser}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
@@ -88,7 +84,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
       entry => parseDynamicSettings(entry.value.as[YMap], settings, "authorizationGrants")
     )
 
-    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("flows")
+    AnnotationParser(settings, map).parseOrphanNode("flows")
 
     settings
   }

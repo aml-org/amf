@@ -8,8 +8,8 @@ import amf.core.internal.parser.domain._
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 import org.yaml.model.{YMap, YMapEntry, YPart, YType}

@@ -6,7 +6,6 @@ import amf.apicontract.internal.spec.async.AsyncHelper
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncOperationBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationTrait
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeOperationParser, OasLikeTagsParser}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
@@ -46,7 +45,7 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
       val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value)).parse()
       operation.setWithoutId(OperationModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
+      AnnotationParser(operation, map).parseOrphanNode("bindings")
     }
 
     parseMessages(map, operation)

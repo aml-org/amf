@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.emitter.document
 
 import amf.apicontract.client.scala.model.document._
+import amf.shapes.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext

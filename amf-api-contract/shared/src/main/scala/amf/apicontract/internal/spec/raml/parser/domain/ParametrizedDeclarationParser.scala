@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.raml.parser.domain
 
-import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidAbstractDeclarationType
 import amf.core.client.scala.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -45,7 +45,7 @@ case class ParametrizedDeclarationParser(
               .entries
               .zipWithIndex
               .map { case (variableEntry, index) =>
-                val node = DataNodeParser(variableEntry.value)(WebApiShapeParserContextAdapter(ctx)).parse()
+                val node = DataNodeParser(variableEntry.value).parse()
                 VariableValue(variableEntry)
                   .withName(variableEntry.key)
                   .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))

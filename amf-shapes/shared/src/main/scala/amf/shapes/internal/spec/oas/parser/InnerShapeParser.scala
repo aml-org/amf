@@ -4,9 +4,8 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import org.yaml.model.{YMap, YScalar}
 
 case class InnerShapeParser(

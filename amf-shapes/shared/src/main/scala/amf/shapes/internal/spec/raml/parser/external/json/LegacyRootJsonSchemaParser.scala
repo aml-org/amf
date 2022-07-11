@@ -1,31 +1,26 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ParsedJSONSchema
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.ExternalFragmentHelper.searchForAlreadyParsedNodeInFragments
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
 import org.yaml.model.{YMapEntry, YNode}
 
-class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebApiContext)
+class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: ShapeParserContext)
     extends JsonParsing
     with ScopedJsonContext
     with ErrorShapeCreation {
 
-  private val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
-
   def parse(origin: ValueAndOrigin, basePath: String): AnyShape = {
     val shape = parseJsonShape(origin.text, key, origin.valueAST, ast, origin.originalUrlText)
-    ctx.declarations.fragments
+    ctx.fragments
       .get(basePath)
       .foreach(e => shape.callAfterAdoption(() => shape.withReference(e.encoded.id)))
-    ctx.declarations.registerExternalRef(basePath, shape)
+    ctx.registerExternalRef(basePath, shape)
     shape.annotations += ParsedJSONSchema(origin.text.trim)
     shape
   }
@@ -41,13 +36,11 @@ class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebAp
     val node: YNode = parseAst(text, valueAST, extLocation)
     val schemaEntry = YMapEntry(key, node)
     val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
-      val jsonSchemaShapeContext = WebApiShapeParserContextAdapter(jsonSchemaContext)
-
       val fullRef = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
 
-      val tmpShape: UnresolvedShape = initializedUnresolved(schemaEntry, jsonSchemaShapeContext, fullRef)
+      val tmpShape: UnresolvedShape = initializedUnresolved(schemaEntry, jsonSchemaContext, fullRef)
 
-      val parsed = parse(value, schemaEntry, jsonSchemaShapeContext, fullRef, tmpShape)
+      val parsed = parse(value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
       propagatePromotedFragments(jsonSchemaContext)
       parsed
     }
@@ -56,7 +49,7 @@ class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebAp
 
   private def initializedUnresolved(
       schemaEntry: YMapEntry,
-      jsonSchemaShapeContext: WebApiShapeParserContextAdapter,
+      jsonSchemaShapeContext: ShapeParserContext,
       fullRef: String
   ) = {
     JsonSchemaParsingHelper.createTemporaryShape(
@@ -68,14 +61,14 @@ class LegacyRootJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebAp
   }
 
   private def parseAst(text: String, valueAST: YNode, extLocation: Option[String]) = {
-    searchForAlreadyParsedNodeInFragments(valueAST)(shapeCtx).getOrElse {
+    searchForAlreadyParsedNodeInFragments(valueAST).getOrElse {
       getJsonParserFor(text, valueAST, extLocation).document().node
     }
   }
 
-  private def propagatePromotedFragments(jsonSchemaContext: OasWebApiContext): Unit = {
-    if (jsonSchemaContext.declarations.promotedFragments.nonEmpty) {
-      ctx.declarations.promotedFragments ++= jsonSchemaContext.declarations.promotedFragments
+  private def propagatePromotedFragments(jsonSchemaContext: ShapeParserContext): Unit = {
+    if (jsonSchemaContext.promotedFragments.nonEmpty) {
+      ctx.addPromotedFragments(jsonSchemaContext.promotedFragments)
     }
   }
 

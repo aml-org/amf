@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.oas
 
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 
 object OasShapeDefinitions extends OasShapeDefinitions
 

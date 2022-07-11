@@ -1,18 +1,16 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
-import amf.apicontract.internal.spec.common.parser.{IgnoreCriteria, ParsingHelpers, WebApiContext}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
+import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
-import amf.shapes.internal.spec.common.parser.SpecSyntax
-import amf.shapes.internal.spec.raml.parser.TypeInfo
-import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSettings, SpecSyntax}
+import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml10Settings, RamlWebApiContextType}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -23,12 +21,19 @@ abstract class RamlWebApiContext(
     options: ParsingOptions,
     val wrapped: ParserContext,
     private val ds: Option[RamlWebApiDeclarations] = None,
-    var contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT
-) extends WebApiContext(loc, refs, options, wrapped, ds)
+    val specSettings: SpecSettings
+) extends WebApiContext(loc, refs, options, wrapped, ds, specSettings = specSettings)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean                                     = false
   val operationContexts: mutable.Map[AmfObject, RamlWebApiContext] = mutable.Map()
+
+  def contextType: RamlWebApiContextType = specSettings.ramlContextType.getOrElse(DEFAULT)
+  def setContextType(contextType: RamlWebApiContextType) = specSettings match {
+    case settings: Raml10Settings => settings.setRamlContextType(contextType)
+    case settings: Raml08Settings => settings.setRamlContextType(contextType)
+    case _                        => // ignore
+  }
 
   def mergeOperationContext(operation: AmfObject): Unit = {
     val contextOption = operationContexts.get(operation)
@@ -74,73 +79,7 @@ abstract class RamlWebApiContext(
     }
   }
 
-  override def link(node: YNode): Either[String, YNode] = {
-    implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
-
-    node match {
-      case _ if isInclude(node) => Left(node.as[YScalar].text)
-      case _                    => Right(node)
-    }
-  }
-
-  override def ignoreCriteria: IgnoreCriteria = Raml10IgnoreCriteria
-
-  private def isInclude(node: YNode) = node.tagType == YType.Include
-
   val factory: RamlSpecVersionFactory
-
-  /** raml types nodes are different from other shapes because they can have 'custom facets' essentially, client defined
-    * constraints expressed as additional properties syntactically in the type definition. The problem is that they
-    * cannot be recognised just looking into the AST as we do with annotations, so we need to first, compute them, and
-    * then, add them as additional valid properties to the set of properties that can be defined in the AST node
-    */
-  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = {
-
-    implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
-
-    val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
-    val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)
-
-    syntax.nodes.get(shapeType) match {
-      case Some(props) =>
-        var initialProperties = props
-        if (typeInfo.isAnnotation) initialProperties ++= syntax.nodes("annotation")
-        if (typeInfo.isPropertyOrParameter) initialProperties ++= syntax.nodes("property")
-        val allResults: Seq[Seq[YMapEntry]] = facets.map { propertiesMap =>
-          val totalProperties     = initialProperties ++ propertiesMap.keys.toSet
-          val acc: Seq[YMapEntry] = Seq.empty
-          ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
-            val key: String = entry.key.as[YScalar].text
-            if (ignoreCriteria.shouldIgnore(shapeType, key)) {
-              results
-            } else if (!totalProperties(key)) {
-              results ++ Seq(entry)
-            } else {
-              results
-            }
-          }
-        }
-        allResults.find(_.nonEmpty) match {
-          case None => // at least we found a solution, this is a valid shape
-          case Some(errors: Seq[YMapEntry]) =>
-            val subject = if (errors.size > 1) "Properties" else "Property"
-            eh.violation(
-              ClosedShapeSpecification,
-              shape,
-              s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $spec $shapeLabel node",
-              errors.head.location
-            ) // pointing only to the first failed error
-        }
-
-      case None =>
-        eh.violation(
-          ClosedShapeSpecification,
-          shape.id,
-          s"Cannot validate unknown node type $shapeType for $spec",
-          shape.annotations
-        )
-    }
-  }
 
   override def autoGeneratedAnnotation(s: Shape): Unit = ParsingHelpers.ramlAutoGeneratedAnnotation(s)
 }
@@ -152,7 +91,14 @@ class PayloadContext(
     private val ds: Option[RamlWebApiDeclarations] = None,
     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
     options: ParsingOptions = ParsingOptions()
-) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType = contextType) {
+) extends RamlWebApiContext(
+      loc,
+      refs,
+      options,
+      wrapped,
+      ds,
+      new Raml10Settings(Raml10Syntax, contextType)
+    ) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
     new PayloadContext(loc, refs, wrapped, Some(declarations), options = options)
   }

@@ -36,16 +36,16 @@ import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{
   AnnotationParser,
   OasLikeCreativeWorkParser,
   RamlCreativeWorkParser,
+  ShapeParserContext,
   YMapEntryLike
 }
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
-import org.yaml.model.{YMapEntry, YNode, _}
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -53,7 +53,7 @@ import scala.collection.mutable.ListBuffer
 /** Oas spec parser
   */
 abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiContext)
-    extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
+    extends OasSpecParser()
     with OasLikeDeclarationsHelper {
 
   def parseExtension(): Extension = {
@@ -284,7 +284,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node)
 
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
-    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("info")
+    AnnotationParser(api, map).parseOrphanNode("info")
 
     ctx.factory.serversParser(map, api).parse()
 
@@ -309,7 +309,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
       "externalDocs",
       entry => {
         documentations.append(
-          (OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse(), entry)
+          (OasLikeCreativeWorkParser(entry.value, api.id).parse(), entry)
         )
       }
     )
@@ -337,8 +337,8 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
       case None        => ctx.eh.violation(MandatoryPathsProperty, api, "'paths' is mandatory in OAS spec")
     }
 
-    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("paths")
+    AnnotationParser(api, map).parse()
+    AnnotationParser(api, map).parseOrphanNode("paths")
 
     ctx.closedShape(api, map, "webApi")
 

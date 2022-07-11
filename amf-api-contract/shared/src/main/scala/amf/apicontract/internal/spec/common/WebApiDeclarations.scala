@@ -33,70 +33,53 @@ import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
+import amf.shapes.internal.spec.common.parser.ShapeDeclarations
 import org.yaml.model.{YNode, YPart}
 
 /** Declarations object.
   */
 class WebApiDeclarations(
-    val alias: Option[String],
-    var libs: Map[String, WebApiDeclarations] =
-      Map(), // TODO: sync this with libraries, is confusing and we end having tw different maps (one of them is not being filled)
-    var frags: Map[String, FragmentRef] = Map(),
-    var shapes: Map[String, Shape] = Map(),
-    var anns: Map[String, CustomDomainProperty] = Map(),
-    var resourceTypes: Map[String, ResourceType] = Map(),
-    var parameters: Map[String, Parameter] = Map(),
-    var payloads: Map[String, Payload] = Map(),
-    var traits: Map[String, Trait] = Map(),
-    var securitySchemes: Map[String, SecurityScheme] = Map(),
-    var responses: Map[String, Response] = Map(),
-    var examples: Map[String, Example] = Map(),
-    var requests: Map[String, Request] = Map(),
-    var headers: Map[String, Parameter] = Map(),
-    var links: Map[String, TemplatedLink] = Map(),
-    var correlationIds: Map[String, CorrelationId] = Map(),
-    var callbacks: Map[String, List[Callback]] = Map(),
-    var messages: Map[String, Message] = Map(),
-    var messageBindings: Map[String, MessageBindings] = Map(),
-    var operationBindings: Map[String, OperationBindings] = Map(),
-    var channelBindings: Map[String, ChannelBindings] = Map(),
-    var serverBindings: Map[String, ServerBindings] = Map(),
-    var operationTraits: Map[String, Operation] = Map(),
-    var messageTraits: Map[String, Message] = Map(),
+    alias: Option[String],
     val errorHandler: AMFErrorHandler,
-    val futureDeclarations: FutureDeclarations,
-    var others: Map[String, BaseUnit] = Map(),
-    var extensions: Map[String, Dialect] = Map(),
-    var shapeExtensions: Map[String, Seq[Shape]] = Map() // we can have 0+ shape extensions with the same name
-) extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
+    val futureDeclarations: FutureDeclarations
+) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations) {
 
-  def promoteExternalToDataTypeFragment(text: String, fullRef: String, shape: Shape): Unit = {
-    fragments.get(text) match {
-      case Some(fragmentRef) =>
-        promotedFragments :+= DataTypeFragment()
-          .withId(fragmentRef.location.getOrElse(fullRef))
-          .withLocation(fragmentRef.location.getOrElse(fullRef))
-          .withEncodes(shape)
-        fragments += (text -> FragmentRef(shape, fragmentRef.location))
-      case _ =>
-        promotedFragments :+= DataTypeFragment().withId(fullRef).withLocation(fullRef).withEncodes(shape)
-        fragments += (text -> FragmentRef(shape, None))
-    }
+  var resourceTypes: Map[String, ResourceType]          = Map()
+  var parameters: Map[String, Parameter]                = Map()
+  var payloads: Map[String, Payload]                    = Map()
+  var traits: Map[String, Trait]                        = Map()
+  var securitySchemes: Map[String, SecurityScheme]      = Map()
+  var responses: Map[String, Response]                  = Map()
+  var requests: Map[String, Request]                    = Map()
+  var headers: Map[String, Parameter]                   = Map()
+  var links: Map[String, TemplatedLink]                 = Map()
+  var correlationIds: Map[String, CorrelationId]        = Map()
+  var callbacks: Map[String, List[Callback]]            = Map()
+  var messages: Map[String, Message]                    = Map()
+  var messageBindings: Map[String, MessageBindings]     = Map()
+  var operationBindings: Map[String, OperationBindings] = Map()
+  var channelBindings: Map[String, ChannelBindings]     = Map()
+  var serverBindings: Map[String, ServerBindings]       = Map()
+  var operationTraits: Map[String, Operation]           = Map()
+  var messageTraits: Map[String, Message]               = Map()
+  var others: Map[String, BaseUnit]                     = Map()
+  var shapeExtensions: Map[String, Seq[Shape]]          = Map() // we can have 0+ shape extensions with the same name
+
+  override def addLibrary(alias: String, declarations: Declarations): Unit = {
+    libraries = libraries + (alias -> declarations)
+  }
+
+  def setLibraries(libraries: Map[String, Declarations]): Unit = {
+    this.libraries = libraries
   }
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
-    libs.foreach { case (k, s) => merged.libs += (k -> s) }
-    other.libs.foreach { case (k, s) => merged.libs += (k -> s) }
-    frags.foreach { case (k, s) => merged.frags += (k -> s) }
-    other.frags.foreach { case (k, s) => merged.frags += (k -> s) }
-    libraries.foreach { case (k, s) => merged.libraries += (k -> s) }
-    other.libraries.foreach { case (k, s) => merged.libraries += (k -> s) }
+    libraries.foreach { case (k, s) => merged.addLibrary(k, s) }
+    other.libraries.foreach { case (k, s) => merged.addLibrary(k, s) }
     fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
     other.fragments.foreach { case (k, s) => merged.fragments += (k -> s) }
     shapes.foreach { case (k, s) => merged.shapes += (k -> s) }
     other.shapes.foreach { case (k, s) => merged.shapes += (k -> s) }
-    anns.foreach { case (k, s) => merged.anns += (k -> s) }
-    other.anns.foreach { case (k, s) => merged.anns += (k -> s) }
     annotations.foreach { case (k, s) => merged.annotations += (k -> s) }
     other.annotations.foreach { case (k, s) => merged.annotations += (k -> s) }
     resourceTypes.foreach { case (k, s) => merged.resourceTypes += (k -> s) }
@@ -122,20 +105,37 @@ class WebApiDeclarations(
     merged
   }
 
-  protected def addSchema(s: Shape): Unit = {
-    futureDeclarations.resolveRef(aliased(s.name.value()), s)
-    shapes = shapes + (s.name.value() -> s)
+  override def copy(): WebApiDeclarations = {
+    val next =
+      super.copy(new WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations))
+    libraries.foreach(entry => next.addLibrary(entry._1, entry._2))
+    next.resourceTypes = resourceTypes
+    next.parameters = parameters
+    next.payloads = payloads
+    next.traits = traits
+    next.securitySchemes = securitySchemes
+    next.responses = responses
+    next.requests = requests
+    next.headers = headers
+    next.links = links
+    next.correlationIds = correlationIds
+    next.callbacks = callbacks
+    next.messages = messages
+    next.messageBindings = messageBindings
+    next.operationBindings = operationBindings
+    next.channelBindings = channelBindings
+    next.serverBindings = serverBindings
+    next.operationTraits = operationTraits
+    next.messageTraits = next.messageTraits
+    next.others = others
+    next.shapeExtensions = shapeExtensions
+    next
   }
 
   protected def addSchemaExtension(s: Shape): Unit = {
     // we should not resolve declarations because schema extensions are non-referenciable
     val newSeq = shapeExtensions.getOrElse(s.name.value(), Nil) :+ s
     shapeExtensions += (s.name.value() -> newSeq)
-  }
-
-  def +=(extension: Map[String, Dialect]): WebApiDeclarations = {
-    extensions = extensions ++ extension
-    this
   }
 
   override def +=(element: DomainElement): WebApiDeclarations = {
@@ -147,8 +147,6 @@ class WebApiDeclarations(
         traits = traits + (t.name.value() -> t)
       case s: Shape if s.isExtension.value() =>
         addSchemaExtension(s)
-      case s: Shape =>
-        addSchema(s)
       case h: Parameter if h.annotations.contains(classOf[DeclaredHeader]) =>
         headers = headers + (h.name.value() -> h)
       case p: Parameter =>
@@ -159,8 +157,6 @@ class WebApiDeclarations(
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
       case re: Response =>
         responses = responses + (re.name.value() -> re)
-      case ex: Example =>
-        examples = examples + (ex.name.value() -> ex)
       case rq: Request =>
         requests = requests + (rq.name.value() -> rq)
       case l: TemplatedLink =>
@@ -190,11 +186,6 @@ class WebApiDeclarations(
       case _ => super.+=(element)
     }
     this
-  }
-
-  def aliased(name: String): String = alias match {
-    case Some(prefix) => s"$prefix.$name"
-    case None         => name
   }
 
   /** Find domain element with the same name. */
@@ -229,7 +220,7 @@ class WebApiDeclarations(
           errorHandler = errorHandler,
           futureDeclarations = EmptyFutureDeclarations()
         )
-        libraries = libraries + (alias -> result)
+        addLibrary(alias, result)
         result
     }
   }
@@ -260,11 +251,6 @@ class WebApiDeclarations(
   def findRequestBody(key: String, scope: SearchScope.Scope): Option[Request] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect { case r: Request =>
       r
-    }
-
-  def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].examples, scope) collect { case e: Example =>
-      e
     }
 
   def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
@@ -320,7 +306,9 @@ class WebApiDeclarations(
   def findDialect(key: String): Option[Dialect] = {
     val fqn = QName(key)
     if (fqn.isQualified) {
-      val maybeDeclarations: Option[WebApiDeclarations] = libs.get(fqn.qualification)
+      val maybeDeclarations: Option[WebApiDeclarations] = libraries
+        .get(fqn.qualification)
+        .collect { case decl: WebApiDeclarations => decl }
       maybeDeclarations.flatMap(_.findDialect(fqn.name))
     } else extensions.get(key)
   }
@@ -355,21 +343,6 @@ class WebApiDeclarations(
       case _ => None
     }
 
-  def findDocumentations(
-      key: String,
-      scope: SearchScope.Scope,
-      error: Option[String => Unit] = None
-  ): Option[CreativeWork] =
-    findForType(key, Map.empty, scope) match {
-      case Some(u: CreativeWork) => Some(u)
-      case Some(other) if scope == SearchScope.Fragments =>
-        error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DocumentationItem")
-        )
-        None
-      case _ => None
-    }
-
   def findTraitOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Trait = findTrait(key, scope) match {
     case Some(result) => result
     case _ =>
@@ -383,17 +356,6 @@ class WebApiDeclarations(
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
           _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type Trait")
-        )
-        None
-      case _ => None
-    }
-
-  def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) match {
-      case Some(anyShape: AnyShape) => Some(anyShape)
-      case Some(other) if scope == SearchScope.Fragments =>
-        error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DataType")
         )
         None
       case _ => None
@@ -430,24 +392,8 @@ class WebApiDeclarations(
         ErrorResponse(key, ast)
     }
 
-  def findNamedExampleOrError(ast: YPart)(key: String): Example = findNamedExample(key) match {
-    case Some(result) => result
-    case _ =>
-      error(s"NamedExample '$key' not found", ast.location)
-      ErrorNamedExample(key, ast)
-  }
-
-  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example] =
-    fragments.get(key).map(_.encoded) match {
-      case Some(e: Example) => Some(e)
-      case Some(_) =>
-        error.foreach(_(s"Fragment defined in $key does not conform to the expected type NamedExample"))
-        None
-      case _ => None
-    }
-
   def nonEmpty: Boolean = {
-    libs.nonEmpty || frags.nonEmpty || shapes.nonEmpty || anns.nonEmpty || resourceTypes.nonEmpty ||
+    libraries.nonEmpty || fragments.nonEmpty || shapes.nonEmpty || annotations.nonEmpty || resourceTypes.nonEmpty ||
     parameters.nonEmpty || payloads.nonEmpty || traits.nonEmpty || securitySchemes.nonEmpty || responses.nonEmpty
   }
 }
@@ -674,10 +620,10 @@ object OasWebApiDeclarations {
       errorHandler = d.errorHandler,
       futureDeclarations = d.futureDeclarations
     )
-    declarations.libs = d.libs
-    declarations.frags = d.frags
+    declarations.setLibraries(d.libraries)
+    declarations.fragments = d.fragments
     declarations.shapes = d.shapes
-    declarations.anns = d.anns
+    declarations.annotations = d.annotations
     declarations.resourceTypes = d.resourceTypes
     declarations.parameters = d.parameters
     declarations.payloads = d.payloads
@@ -717,26 +663,10 @@ object AsyncWebApiDeclarations {
 }
 
 class RamlWebApiDeclarations(
-    var externalShapes: Map[String, AnyShape] = Map(),
-    var externalLibs: Map[String, Map[String, AnyShape]] = Map(),
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
     override val futureDeclarations: FutureDeclarations
 ) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
-
-  def registerExternalRef(external: (String, AnyShape)): WebApiDeclarations = { // particular case for jsonschema # fragment
-    externalShapes = externalShapes + (external._1 -> external._2)
-    this
-  }
-
-  def registerExternalLib(url: String, content: Map[String, AnyShape]): WebApiDeclarations = { // particular case for jsonschema # fragment
-    externalLibs = externalLibs + (url -> content)
-    this
-  }
-
-  def findInExternals(url: String): Option[AnyShape] = externalShapes.get(url)
-
-  def findInExternalsLibs(lib: String, name: String): Option[AnyShape] = externalLibs.get(lib).flatMap(_.get(name))
 
   def existsExternalAlias(lib: String): Boolean = externalLibs.contains(lib)
 
@@ -757,13 +687,11 @@ class RamlWebApiDeclarations(
 }
 
 class ExtensionWebApiDeclarations(
-    externalShapes: Map[String, AnyShape] = Map(),
-    externalLibs: Map[String, Map[String, AnyShape]] = Map(),
     parentDeclarations: RamlWebApiDeclarations,
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
     override val futureDeclarations: FutureDeclarations
-) extends RamlWebApiDeclarations(externalShapes, externalLibs, alias, errorHandler, futureDeclarations) {
+) extends RamlWebApiDeclarations(alias, errorHandler, futureDeclarations) {
 
   override def findForType(
       key: String,
@@ -780,17 +708,14 @@ class ExtensionWebApiDeclarations(
 object RamlWebApiDeclarations {
   def apply(d: WebApiDeclarations): RamlWebApiDeclarations = {
     val declarations = new RamlWebApiDeclarations(
-      Map(),
-      Map(),
       d.alias,
       errorHandler = d.errorHandler,
       futureDeclarations = d.futureDeclarations
     )
-    declarations.libs = d.libs
-    declarations.frags = d.frags
+    declarations.setLibraries(d.libraries)
     declarations.fragments = d.fragments
     declarations.shapes = d.shapes
-    declarations.anns = d.anns
+    declarations.annotations = d.annotations
     declarations.resourceTypes = d.resourceTypes
     declarations.parameters = d.parameters
     declarations.payloads = d.payloads

@@ -4,10 +4,11 @@ import amf.apicontract.internal.spec.common.{ExtensionWebApiDeclarations, RamlWe
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml10, Spec}
-import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.mulesoft.common.client.lexical.SourceLocation
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.raml.parser.{Raml10Settings, RamlWebApiContextType}
 import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
 class Raml10WebApiContext(
@@ -17,10 +18,8 @@ class Raml10WebApiContext(
     private val ds: Option[RamlWebApiDeclarations] = None,
     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
     options: ParsingOptions = ParsingOptions()
-) extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
+) extends RamlWebApiContext(loc, refs, options, wrapped, ds, new Raml10Settings(Raml10Syntax, contextType)) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
-  override def spec: Spec                      = Raml10
-  override def syntax: SpecSyntax              = Raml10Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
     new Raml10WebApiContext(loc, refs, wrapped, Some(declarations), options = options)
@@ -41,8 +40,6 @@ class ExtensionLikeWebApiContext(
     ds match {
       case Some(dec) =>
         new ExtensionWebApiDeclarations(
-          dec.externalShapes,
-          dec.externalLibs,
           parentDeclarations,
           dec.alias,
           dec.errorHandler,

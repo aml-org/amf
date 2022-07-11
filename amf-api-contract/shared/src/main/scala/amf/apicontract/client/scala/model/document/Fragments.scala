@@ -1,13 +1,12 @@
 package amf.apicontract.client.scala.model.document
 
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
+import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
 import amf.core.client.scala.model.document.Fragment
-import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.client.scala.model.domain.security.SecurityScheme
-import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
+import amf.shapes.client.scala.model.document.{DataTypeFragment => ShapeDataTypeFragment}
 
 case class DocumentationItemFragment(fields: Fields, annotations: Annotations) extends Fragment {
   override def encodes: CreativeWork = super.encodes.asInstanceOf[CreativeWork]
@@ -16,12 +15,8 @@ case class DocumentationItemFragment(fields: Fields, annotations: Annotations) e
   override def meta: DocumentationItemFragmentModel.type = DocumentationItemFragmentModel
 }
 
-case class DataTypeFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: Shape = super.encodes.asInstanceOf[Shape]
-
-  /** Meta data for the document */
-  override def meta: DataTypeFragmentModel.type = DataTypeFragmentModel
-}
+case class DataTypeFragment(override val fields: Fields, override val annotations: Annotations)
+    extends ShapeDataTypeFragment(fields, annotations)
 
 case class NamedExampleFragment(fields: Fields, annotations: Annotations) extends Fragment {
   override def encodes: Example = super.encodes.asInstanceOf[Example]

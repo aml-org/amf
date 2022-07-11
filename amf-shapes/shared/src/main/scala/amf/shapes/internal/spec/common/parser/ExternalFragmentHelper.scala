@@ -2,7 +2,6 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.ExternalDomainElement
-import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar}
 

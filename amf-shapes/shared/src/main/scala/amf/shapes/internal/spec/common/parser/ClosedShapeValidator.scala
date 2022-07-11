@@ -1,17 +1,17 @@
-package amf.apicontract.internal.spec.common.parser
+package amf.shapes.internal.spec.common.parser
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  ClosedShapeSpecification,
-  ClosedShapeSpecificationWarning
-}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model.{YMap, YMapEntry, YPart, YScalar}
 
 trait IgnoreCriteria {
   def shouldIgnore(shape: String, property: String): Boolean
+}
+
+object IgnoreAllCriteria extends IgnoreCriteria {
+  override def shouldIgnore(shape: String, property: String): Boolean = true
 }
 
 object DontIgnoreCriteria extends IgnoreCriteria {

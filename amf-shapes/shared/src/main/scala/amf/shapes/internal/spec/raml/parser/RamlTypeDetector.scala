@@ -20,6 +20,7 @@ import amf.shapes.internal.domain.parser.TypeDefXsdMapping._
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema, isWellKnownType, matchWellKnownType}
 import amf.shapes.internal.spec._
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
@@ -62,11 +63,11 @@ case class RamlTypeDetector(
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
-        case t if isRamlVariable(t) && ctx.ramlContextType == RamlWebApiContextType.DEFAULT =>
+        case t if isRamlVariable(t) && ctx.ramlContextType.contains(RamlWebApiContextType.DEFAULT) =>
           throwInvalidAbstractDeclarationError(node, t)
           None
-        case t if isRamlVariable(t) && ctx.ramlContextType != RamlWebApiContextType.DEFAULT => None
-//        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(ExternalSchemaWrapper)
+        case t if isRamlVariable(t) && !ctx.ramlContextType.contains(RamlWebApiContextType.DEFAULT) => None
+
         case XMLSchema(_)                               => Some(XMLSchemaType)
         case JSONSchema(_)                              => Some(JSONSchemaType)
         case RamlTypeDefMatcher.TypeExpression(text)    => parseAndMatchTypeExpression(node, text)

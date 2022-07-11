@@ -6,6 +6,7 @@ import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.scala.model
+import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.metamodel.operations._
 

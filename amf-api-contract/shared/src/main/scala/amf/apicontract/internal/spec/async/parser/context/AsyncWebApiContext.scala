@@ -6,6 +6,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Mal
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.shapes.internal.spec.common.parser.SpecSettings
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 
 import scala.collection.mutable
@@ -16,8 +17,9 @@ abstract class AsyncWebApiContext(
     options: ParsingOptions,
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
-    private val operationIds: mutable.Set[String] = mutable.HashSet()
-) extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds) {
+    private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    specSettings: SpecSettings
+) extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds, specSettings = specSettings) {
 
   override val factory: AsyncSpecVersionFactory
 

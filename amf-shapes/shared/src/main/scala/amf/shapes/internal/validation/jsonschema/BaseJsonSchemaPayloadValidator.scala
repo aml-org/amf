@@ -246,8 +246,10 @@ abstract class BaseJsonSchemaPayloadValidator(
       errorHandler: AMFErrorHandler,
       maxYamlRefs: Option[Int]
   ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
-    new ErrorHandlingContext()(errorHandler) with DataNodeParserContext with IllegalTypeHandler {
-      val syamleh = new SYamlAMFParserErrorHandler(errorHandler)
+    new ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler {
+
+      override implicit val eh: AMFErrorHandler = errorHandler
+      val syamleh                               = new SYamlAMFParserErrorHandler(errorHandler)
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
         eh.violation(violationId, node, message, "")
       override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =

@@ -46,6 +46,7 @@ import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
 
 /** Shared WebApi registrations. */
 private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {

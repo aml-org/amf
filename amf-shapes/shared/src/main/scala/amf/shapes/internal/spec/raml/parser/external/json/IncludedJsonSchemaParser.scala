@@ -1,13 +1,13 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
 import org.yaml.model.YNode
 
-case class IncludedJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWebApiContext) {
+case class IncludedJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: ShapeParserContext) {
 
   def parse(origin: ValueAndOrigin, url: String) = {
     val (basePath, localPath) = ReferenceFragmentPartition(url)
@@ -24,15 +24,15 @@ case class IncludedJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: RamlWe
 
   private def findInExternals(basePath: String, normalizedLocalPath: Option[String]) = {
     normalizedLocalPath
-      .flatMap(ctx.declarations.findInExternalsLibs(basePath, _))
-      .orElse(ctx.declarations.findInExternals(basePath))
+      .flatMap(ctx.findInExternalsLibs(basePath, _))
+      .orElse(ctx.findInExternals(basePath))
   }
 
   private def isInnerSchema(normalizedLocalPath: Option[String]) = normalizedLocalPath.isDefined
 
   private def copyExternalShape(basePath: String, s: AnyShape, localPath: Option[String]) = {
     val shape = s.copyShape().withName(key.as[String])
-    ctx.declarations.fragments
+    ctx.fragments
       .get(basePath)
       .foreach(e =>
         shape.callAfterAdoption { () =>

@@ -2,7 +2,6 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.{Parameter, Server}
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, ServerModel}
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -36,7 +35,7 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
       val variables = entry.value.as[YMap].entries.map(ctx.factory.serverVariableParser(_, server.id).parse())
       server.setWithoutId(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
-    AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(server, map).parse()
     ctx.closedShape(server, map, "server")
     server
   }
@@ -51,10 +50,8 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
   }
 }
 
-class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: OasLikeWebApiContext)
+class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val ctx: OasLikeWebApiContext)
     extends QuickFieldParserOps {
-
-  private implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
 
   def parse(): Parameter = {
 
@@ -72,7 +69,6 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
 
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
     ctx.closedShape(variable, map, "serverVariable")
-    implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
     val schema = variable
       .withScalarSchema(entry.key)
       .add(Annotations(map))
@@ -88,6 +84,6 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
     )
     map.key("description", ShapeModel.Description in schema)
 
-    AnnotationParser(schema, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(schema, map).parse()
   }
 }

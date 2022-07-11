@@ -2,7 +2,6 @@ package amf.shapes.internal.spec.jsonschema.ref
 
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.internal.spec.async.parser.context.Async20WebApiContext
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
@@ -170,13 +169,13 @@ trait IndexHelper extends PlatformSecrets {
   def obtainIndex(pathToFile: String, version: JSONSchemaVersion): AstIndex = {
     val content = platform.fs.syncFile(pathToFile).read()
     val doc     = JsonParser(content).document()
-    val ctx =
+    implicit val ctx =
       new Async20WebApiContext(
         "loc",
         Seq(),
         ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty))
       )
-    AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(WebApiShapeParserContextAdapter(ctx))
+    AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)
   }
 }
 

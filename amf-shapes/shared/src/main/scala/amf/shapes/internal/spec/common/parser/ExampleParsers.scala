@@ -15,7 +15,7 @@ import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
-import amf.shapes.internal.spec.{RamlWebApiContextType, ShapeParserContext}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,
@@ -127,7 +127,7 @@ case class RamlMultipleExampleParser(
             case YType.Null => // ignore
             case YType.Str
                 if node.toString().matches("<<.*>>") && ctx.isRamlContext
-                  && ctx.ramlContextType != RamlWebApiContextType.DEFAULT => // Ignore
+                  && !ctx.ramlContextType.contains(RamlWebApiContextType.DEFAULT) => // Ignore
             case _ =>
               ctx.eh.violation(
                 ExamplesMustBeAMap,

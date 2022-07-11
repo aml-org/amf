@@ -6,7 +6,6 @@ import amf.core.internal.remote.{Oas, Raml}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnexpectedVendor
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model.{YMap, YNode}

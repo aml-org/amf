@@ -10,8 +10,8 @@ import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchemaDialect, Mimes, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft201909SchemaVersion
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.ExceededMaxCombiningComplexity

@@ -8,7 +8,6 @@ import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
-import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YScalar, YSequence, YType}
 import org.yaml.render.YamlRender

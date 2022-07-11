@@ -5,11 +5,7 @@ import amf.apicontract.client.scala.model.domain.{Operation, Request, Response}
 import amf.apicontract.internal.metamodel.domain.OperationModel.Method
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{OperationModel, ResponseModel}
-import amf.apicontract.internal.spec.common.parser.{
-  OasLikeSecurityRequirementParser,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, SpecParserOps}
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasLikeWebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
@@ -55,13 +51,11 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     map.key("summary", OperationModel.Summary in operation)
     map.key(
       "externalDocs",
-      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
-        WebApiShapeParserContextAdapter(ctx)
-      ))
+      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id))
     )
 
-    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
-    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(operation, map).parseOrphanNode("responses")
+    AnnotationParser(operation, map).parse()
 
     operation
   }

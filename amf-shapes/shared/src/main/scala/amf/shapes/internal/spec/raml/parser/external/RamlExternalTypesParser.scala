@@ -4,8 +4,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.YNodeLikeOps
 import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.raml.parser.{ExampleParser, RamlTypeEntryParser, RamlTypeSyntax}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidExternalTypeType
 import org.yaml.model.YNode.MutRef
@@ -26,7 +25,7 @@ trait RamlExternalTypesParser
 
   val value: YNode
   val externalType: String
-  val shapeCtx: ShapeParserContext
+  val ctx: ShapeParserContext
 
   def parseValue(origin: ValueAndOrigin): AnyShape
 
@@ -38,7 +37,7 @@ trait RamlExternalTypesParser
     }
   }
 
-  protected def getOrigin(node: YNode): Option[String] = (node, shapeCtx) match {
+  protected def getOrigin(node: YNode): Option[String] = (node, ctx) match {
     case (ref: MutRef, _)             => Some(ref.origValue.toString)
     case (_, wac: ShapeParserContext) => wac.nodeRefIds.get(node)
     case _                            => None
@@ -63,7 +62,7 @@ trait RamlExternalTypesParser
 
   private def failSchemaExpressionParser = {
     val shape = SchemaShape()
-    shapeCtx.eh.violation(
+    ctx.eh.violation(
       InvalidExternalTypeType,
       shape,
       s"Cannot parse $externalType Schema expression out of a non string value",

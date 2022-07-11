@@ -12,9 +12,9 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations, SearchScope}
-import amf.core.internal.parser.{YMapOps, _}
+import amf.core.internal.parser._
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
-import amf.core.internal.utils.{IdCounter, _}
+import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
@@ -35,7 +35,7 @@ import amf.shapes.internal.spec.jsonschema.parser.{
 }
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
-import amf.shapes.internal.spec.{SemanticContextParser, ShapeParserContext}
+import amf.shapes.internal.spec.SemanticContextParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import org.yaml.model._
 
@@ -289,7 +289,7 @@ case class InlineOasTypeParser(
   private def parseUnionType(): UnionShape = UnionShapeParser(entryOrNode, name).parse()
 
   def parseSemanticContext(shape: AnyShape): Option[SemanticContext] =
-    SemanticContextParser(entryOrNode.asMap, shape).parse()
+    SemanticContextParser(entryOrNode.asMap, shape)(ctx).parse()
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {

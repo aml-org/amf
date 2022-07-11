@@ -11,8 +11,7 @@ import amf.shapes.internal.domain.metamodel.{
   PropertyDependenciesModel,
   SchemaDependenciesModel
 }
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{SingleArrayNode, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, SingleArrayNode, YMapEntryLike}
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model._

@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
 import amf.shapes.client.scala.model.domain.UnresolvedShape
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import org.yaml.model.{YNode, YPart}
 
 private[expression] sealed trait UnresolvedRegister {

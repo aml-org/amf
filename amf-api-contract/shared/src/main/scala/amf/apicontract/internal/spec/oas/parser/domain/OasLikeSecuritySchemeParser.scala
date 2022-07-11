@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorSecurityScheme
-import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser}
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.raml.parser.domain.RamlDescribedByParser
 import amf.apicontract.internal.spec.spec.toRaml
@@ -48,7 +48,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
             scheme.setWithoutId(SecuritySchemeModel.Settings, settings, Annotations(map))
           }
 
-        AnnotationParser(scheme, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+        AnnotationParser(scheme, map).parse()
         closedShape(scheme, map, "securityScheme")
         scheme
     }

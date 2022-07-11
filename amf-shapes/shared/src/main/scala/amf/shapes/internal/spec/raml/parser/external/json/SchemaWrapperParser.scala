@@ -1,4 +1,4 @@
-package amf.apicontract.internal.spec.raml.parser.external.json
+package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -7,8 +7,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
 import amf.shapes.internal.annotations.ExternalSchemaWrapper
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, QuickFieldParserOps}
+import amf.shapes.internal.spec.common.parser.{NodeDataNodeParser, QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.raml.parser.ExampleParser
 import org.yaml.model.{YMap, YNode}
 

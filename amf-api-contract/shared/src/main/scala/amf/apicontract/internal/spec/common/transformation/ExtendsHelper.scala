@@ -22,7 +22,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -78,7 +78,7 @@ case class ExtendsHelper(
           ctx.declarations += e._2
         }
         ctxForTrait.nodeRefIds ++= ctx.nodeRefIds
-        ctxForTrait.contextType = RamlWebApiContextType.TRAIT
+        ctxForTrait.setContextType(RamlWebApiContextType.TRAIT)
         val id = extensionId + "/applied"
         val operation = ctxForTrait.factory
           .operationParser(entry, id, true)
@@ -183,7 +183,7 @@ case class ExtendsHelper(
         ctx.declarations += e._2
       }
       ctxForResourceType.nodeRefIds ++= ctx.nodeRefIds
-      ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
+      ctxForResourceType.setContextType(RamlWebApiContextType.RESOURCE_TYPE)
       ctxForResourceType.factory
         .endPointParser(entry, _ => EndPoint(), None, collector, true)
         .parse()
@@ -271,7 +271,7 @@ case class ExtendsHelper(
             m.declares.foreach { declaration =>
               extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
-            ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+            ctx.declarations.addLibrary(alias, nestedCtx.declarations)
           case _ => // Ignore
         }
       case _: Fragment => // Trait or RT, nothing to do

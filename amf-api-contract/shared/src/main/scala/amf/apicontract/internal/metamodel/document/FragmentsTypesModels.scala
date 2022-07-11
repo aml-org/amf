@@ -25,21 +25,6 @@ object FragmentsTypesModels {
     )
   }
 
-  object DataTypeFragmentModel extends FragmentModel {
-
-    override val fields: List[Field] = FragmentModel.fields
-
-    override val `type`: List[ValueType] = List(Shapes + "DataTypeFragment") ++ FragmentModel.`type`
-
-    override def modelInstance: AmfObject = DataTypeFragment()
-
-    override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Shapes,
-      "DataTypeFragment",
-      "Fragment encoding a RAML data type"
-    )
-  }
-
   object NamedExampleFragmentModel extends FragmentModel {
 
     override val fields: List[Field] = FragmentModel.fields

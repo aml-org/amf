@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
@@ -51,7 +51,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
       inferAsUriParameter(param)
     }
 
-    AnnotationParser(param, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(param, map).parse()
     ctx.closedShape(param, map, "parameter")
     param
   }
@@ -64,9 +64,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)(
-          WebApiShapeParserContextAdapter(ctx)
-        )
+        OasTypeParser(entry, shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)
           .parse()
           .foreach { schema =>
             param.setWithoutId(ParameterModel.Schema, schema, Annotations(entry))

@@ -317,6 +317,41 @@ object ShapeParserSideValidations extends Validations {
     "Pattern property may be ignored if format already defines a standard pattern"
   )
 
+  val InvalidXmlSchemaType = validation(
+    "invalid-xml-schema-type",
+    "Invalid xml schema type"
+  )
+
+  val UnableToParseShape = validation(
+    "unable-to-parse-shape",
+    "Unable to parse shape"
+  )
+
+  val JsonSchemaFragmentNotFound = validation(
+    "json-schema-fragment-not-found",
+    "Json schema fragment not found"
+  )
+
+  val ClosedShapeSpecification = validation(
+    "closed-shape",
+    "Invalid property for node"
+  )
+
+  val ClosedShapeSpecificationWarning = validation(
+    "closed-shape-warning",
+    "Invalid property for node"
+  )
+
+  val MissingAnnotationSchema = validation(
+    "missing-annotation-schema",
+    "Annotations must have a declared a schema even if there are extensions"
+  )
+
+  val AnnotationSchemaMustBeAny = validation(
+    "annotation-schema-must-be-any",
+    "Annotation schema must be any for api-extensions override"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -335,10 +370,21 @@ object ShapeParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
+    ClosedShapeSpecificationWarning.id        -> all(WARNING),
     SchemaDeprecated.id                       -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id         -> all(WARNING),
     MissingDiscriminatorProperty.id           -> all(VIOLATION),
-    InvalidRequiredBooleanForSchemaVersion.id -> all(WARNING) // TODO: should be violation
+    InvalidRequiredBooleanForSchemaVersion.id -> all(WARNING), // TODO: should be violation
+    MissingAnnotationSchema.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      GrpcProfile   -> VIOLATION
+    ), // TODO: Add graphqlProfile
+    AnnotationSchemaMustBeAny.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      GrpcProfile   -> VIOLATION
+    ) // TODO: Add graphqlProfile
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -350,6 +396,11 @@ object ShapeParserSideValidations extends Validations {
     InvalidContextNode,
     InvalidCharacteristicsNode,
     InvalidPrefixReference,
-    InvalidIri
+    InvalidIri,
+    InvalidXmlSchemaType,
+    UnableToParseShape,
+    JsonSchemaFragmentNotFound,
+    ClosedShapeSpecification,
+    ClosedShapeSpecificationWarning
   )
 }

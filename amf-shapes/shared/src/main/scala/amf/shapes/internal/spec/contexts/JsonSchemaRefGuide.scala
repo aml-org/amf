@@ -4,8 +4,8 @@ import amf.core.client.scala.model.document.{ExternalFragment, Fragment, Recursi
 import amf.core.client.scala.parse.document.ParsedReference
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.UriUtils
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.getYNodeFrom
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.AstFinder
 import org.yaml.model.YNode
 

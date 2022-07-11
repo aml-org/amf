@@ -151,11 +151,6 @@ object ParserSideValidations extends Validations {
     "Invalid operation type"
   )
 
-  val InvalidXmlSchemaType = validation(
-    "invalid-xml-schema-type",
-    "Invalid xml schema type"
-  )
-
   val InvalidJsonSchemaExpression = validation(
     "invalid-json-schema-expression",
     "Invalid json schema expression"
@@ -251,19 +246,9 @@ object ParserSideValidations extends Validations {
     "Invalid parameter type"
   )
 
-  val UnableToParseShape = validation(
-    "unable-to-parse-shape",
-    "Unable to parse shape"
-  )
-
   val InvalidAst = validation(
     "invalid-ast",
     "Failed semantic validation for parsed AST"
-  )
-
-  val JsonSchemaFragmentNotFound = validation(
-    "json-schema-fragment-not-found",
-    "Json schema fragment not found"
   )
 
   val UnresolvedParameter = validation(
@@ -324,16 +309,6 @@ object ParserSideValidations extends Validations {
   val InvalidModuleType = validation(
     "invalid-module-type",
     "Invalid module type"
-  )
-
-  val ClosedShapeSpecification = validation(
-    "closed-shape",
-    "Invalid property for node"
-  )
-
-  val ClosedShapeSpecificationWarning = validation(
-    "closed-shape-warning",
-    "Invalid property for node"
   )
 
   val UnexpectedReference = validation(
@@ -417,16 +392,6 @@ object ParserSideValidations extends Validations {
     "Message header must be of type object"
   )
 
-  val MissingAnnotationSchema = validation(
-    "missing-annotation-schema",
-    "Annotations must have a declared a schema even if there are extensions"
-  )
-
-  val AnnotationSchemaMustBeAny = validation(
-    "annotation-schema-must-be-any",
-    "Annotation schema must be any for api-extensions override"
-  )
-
   val InvalidDirectiveApplication = validation(
     "invalid-directive-application",
     "Directive should not be applied in current location"
@@ -479,20 +444,9 @@ object ParserSideValidations extends Validations {
     InvalidDirectiveApplication.id               -> all(VIOLATION),
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
-    ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
-    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
-    MissingAnnotationSchema.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      GrpcProfile   -> VIOLATION
-    ), // TODO: Add graphqlProfile
-    AnnotationSchemaMustBeAny.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      GrpcProfile   -> VIOLATION
-    ) // TODO: Add graphqlProfile
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -509,9 +463,7 @@ object ParserSideValidations extends Validations {
     OasInvalidParameterBinding,
     InvalidAbstractDeclarationType,
     NullAbstractDeclaration,
-    JsonSchemaFragmentNotFound,
     InvalidJsonSchemaExpression,
-    InvalidXmlSchemaType,
     UnresolvedParameter,
     ParameterNameRequired,
     RequestBodyContentRequired,
@@ -529,7 +481,6 @@ object ParserSideValidations extends Validations {
     InvalidBasePath,
     InvalidParameterType,
     InvalidEndpointType,
-    UnableToParseShape,
     InvalidAnnotationType,
     InvalidTypesType,
     SchemasDeprecated,
@@ -553,10 +504,6 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    ClosedShapeSpecification,
-    ClosedShapeSpecificationWarning,
-    MissingAnnotationSchema,
-    AnnotationSchemaMustBeAny,
     DuplicatedField,
     DuplicatedArgument,
     DuplicatedDeclaration,
