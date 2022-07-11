@@ -1,5 +1,6 @@
 package amf.parser
 
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.GraphQLProfile
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
@@ -7,6 +8,7 @@ import amf.graphql.client.scala.GraphQLConfiguration
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
@@ -44,7 +46,7 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     val client = GraphQLConfiguration.GraphQL().baseUnitClient()
     for {
       parsing        <- client.parse(s"file://$api")
-      transformation <- Future.successful(client.transform(parsing.baseUnit))
+      transformation <- Future.successful(client.transform(parsing.baseUnit, PipelineId.Cache))
       validation     <- client.validate(transformation.baseUnit)
     } yield {
       assert(parsing.conforms && transformation.conforms && validation.conforms)
@@ -57,7 +59,7 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     val report = api.replace(".graphql", ".report")
     for {
       parsing        <- client.parse(apiUri)
-      transformation <- Future.successful(client.transform(parsing.baseUnit))
+      transformation <- Future.successful(client.transform(parsing.baseUnit, PipelineId.Cache))
       validation     <- client.validate(transformation.baseUnit)
       actualFile <- {
         val combinedResults = parsing.results ++ transformation.results ++ validation.results
