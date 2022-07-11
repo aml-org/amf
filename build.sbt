@@ -49,7 +49,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
     "org.mule.common" %%% "scala-common-test" % "0.0.10" % Test,
-    "org.slf4j" % "slf4j-nop" % "1.7.32" % Test
+    "org.slf4j" % "slf4j-nop" % "1.7.36" % Test
   ),
   Test / logBuffered := false
 )
@@ -83,7 +83,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
-    libraryDependencies += "org.json"                          % "json"                   % "20211205",
+    libraryDependencies += "org.json"                          % "json"                   % "20220320",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
@@ -280,7 +280,6 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"      % scalaJSVersion % "provided",
     libraryDependencies += "org.reflections"        % "reflections"         % "0.10.2",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0",
     Compile / mainClass := Some("amf.cli.client.Main"),
     Compile / packageBin / packageOptions += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions",
