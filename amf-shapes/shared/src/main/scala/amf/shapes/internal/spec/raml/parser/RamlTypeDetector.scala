@@ -62,11 +62,11 @@ case class RamlTypeDetector(
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
-        case t if isRamlVariable(t) && ctx.ramlContextType == RamlWebApiContextType.DEFAULT =>
+        case t if isRamlVariable(t) && ctx.ramlContextType.contains(RamlWebApiContextType.DEFAULT) =>
           throwInvalidAbstractDeclarationError(node, t)
           None
-        case t if isRamlVariable(t) && ctx.ramlContextType != RamlWebApiContextType.DEFAULT => None
-//        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(ExternalSchemaWrapper)
+        case t if isRamlVariable(t) && !ctx.ramlContextType.contains(RamlWebApiContextType.DEFAULT) => None
+
         case XMLSchema(_)                               => Some(XMLSchemaType)
         case JSONSchema(_)                              => Some(JSONSchemaType)
         case RamlTypeDefMatcher.TypeExpression(text)    => parseAndMatchTypeExpression(node, text)
