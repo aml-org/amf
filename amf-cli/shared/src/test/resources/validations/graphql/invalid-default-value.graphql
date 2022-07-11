@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+directive @MyDirective(text: String = true) on SCHEMA

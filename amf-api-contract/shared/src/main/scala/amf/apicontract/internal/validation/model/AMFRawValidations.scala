@@ -1546,13 +1546,26 @@ object AMFRawValidations {
   }
 
   object GraphQLValidations extends ProfileValidations {
-    private lazy val result  = Seq(
+    private lazy val result = Seq(
       AMFValidation(
-      message = "Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system",
-      owlClass = doc("DomainElement"),
-      owlProperty = sh("name"),
-      constraint = shape("invalidIntrospectionName")
-    ))
+        message = "Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system",
+        owlClass = doc("DomainElement"),
+        owlProperty = sh("name"),
+        constraint = shape("invalidIntrospectionName")
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-extension-argument-type"),
+        owlClass = apiContract("DomainExtension"),
+        owlProperty = apiContract("extensionName"),
+        constraint = shape("GraphQLDirectiveApplicationTypeValidation")
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-default-value-type"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("GraphQLArgumentDefaultValueTypeValidation")
+      )
+    )
     override def validations(): Seq[AMFValidation] = result
   }
 
