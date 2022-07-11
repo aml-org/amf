@@ -5,9 +5,11 @@ import amf.core.internal.convert.UniqueInitializer
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain._
+import amf.shapes.client.platform.model.domain.federation._
 import amf.shapes.client.scala.model
 import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.federation._
 import amf.shapes.internal.domain.metamodel.operations._
 
 /** Shared WebApi registrations. */
@@ -95,6 +97,15 @@ private[amf] object ShapesRegister extends UniqueInitializer with PlatformSecret
     platform.registerWrapper(ShapeParameterModel) {
       case s: amf.shapes.client.scala.model.domain.operations.ShapeParameter =>
         amf.shapes.client.platform.model.domain.operations.ShapeParameter(s)
+    }
+    platform.registerWrapper(KeyModel) {
+      case s: amf.shapes.client.scala.model.domain.federation.Key => Key(s)
+    }
+    platform.registerWrapper(PropertyKeyMappingModel) {
+      case s: amf.shapes.client.scala.model.domain.federation.PropertyKeyMapping => PropertyKeyMapping(s)
+    }
+    platform.registerWrapper(ExternalPropertyShapeModel) {
+      case s: amf.shapes.client.scala.model.domain.federation.ExternalPropertyShape => ExternalPropertyShape(s)
     }
   }
 

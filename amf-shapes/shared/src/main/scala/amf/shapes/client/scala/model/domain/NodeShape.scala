@@ -5,9 +5,10 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.model.domain.federation.ExternalPropertyShape
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
+import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.NodeShapeModel._
-import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NodeShapeModel}
 import org.yaml.model.YPart
 
 /** Node shape.
@@ -25,15 +26,17 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def discriminatorMapping: Seq[IriTemplateMapping] = fields.field(DiscriminatorMapping)
   def discriminatorValueMapping: Seq[DiscriminatorValueMapping] =
     fields.field(NodeShapeModel.DiscriminatorValueMapping)
-  def properties: Seq[PropertyShape]              = fields.field(Properties)
-  def operations: Seq[ShapeOperation]             = fields.field(Operations)
-  def dependencies: Seq[PropertyDependencies]     = fields.field(Dependencies)
-  def schemaDependencies: Seq[SchemaDependencies] = fields.field(NodeShapeModel.SchemaDependencies)
-  def additionalPropertiesSchema: Shape           = fields.field(AdditionalPropertiesSchema)
-  def additionalPropertiesKeySchema: Shape        = fields.field(AdditionalPropertiesKeySchema)
-  def propertyNames: Shape                        = fields.field(PropertyNames)
-  def unevaluatedProperties: Boolean              = fields.field(UnevaluatedProperties)
-  def unevaluatedPropertiesSchema: Shape          = fields.field(UnevaluatedPropertiesSchema)
+  def properties: Seq[PropertyShape]                 = fields.field(Properties)
+  def operations: Seq[ShapeOperation]                = fields.field(Operations)
+  def dependencies: Seq[PropertyDependencies]        = fields.field(Dependencies)
+  def schemaDependencies: Seq[SchemaDependencies]    = fields.field(NodeShapeModel.SchemaDependencies)
+  def additionalPropertiesSchema: Shape              = fields.field(AdditionalPropertiesSchema)
+  def additionalPropertiesKeySchema: Shape           = fields.field(AdditionalPropertiesKeySchema)
+  def propertyNames: Shape                           = fields.field(PropertyNames)
+  def unevaluatedProperties: Boolean                 = fields.field(UnevaluatedProperties)
+  def unevaluatedPropertiesSchema: Shape             = fields.field(UnevaluatedPropertiesSchema)
+  def keys: Seq[federation.Key]                      = fields.field(Keys)
+  def externalProperties: Seq[ExternalPropertyShape] = fields.field(ExternalProperties)
 
   def withIsAbstract(isAbstract: Boolean): this.type                         = set(IsAbstract, isAbstract)
   def withIsInputOnly(isInputOnly: Boolean): this.type                       = set(InputOnly, isInputOnly)
@@ -55,6 +58,11 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def withPropertyNames(shape: Shape): this.type                 = set(PropertyNames, shape)
   def withAdditionalPropertiesSchema(shape: Shape): this.type    = set(AdditionalPropertiesSchema, shape)
   def withAdditionalPropertiesKeySchema(shape: Shape): this.type = set(AdditionalPropertiesKeySchema, shape)
+
+  def withKeys(keys: Seq[federation.Key]): this.type = setArray(Keys, keys)
+
+  def withExternalProperties(externalProperties: Seq[ExternalPropertyShape]): this.type =
+    setArray(ExternalProperties, externalProperties)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()
@@ -118,7 +126,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
 
   override def linkCopy(): NodeShape = NodeShape().withId(id)
 
-  override val meta: AnyShapeModel = NodeShapeModel
+  override val meta: NodeShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =

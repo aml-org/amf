@@ -1,13 +1,14 @@
 package amf.shapes.internal.domain.metamodel.operations
 
-import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{Core, Federation, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.domain.federation.{HasShapeFederationMetadataModel, ShapeFederationMetadataModel}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 
-object ShapeOperationModel extends AbstractOperationModel {
+object ShapeOperationModel extends AbstractOperationModel with HasShapeFederationMetadataModel {
 
   override val key: Field = Name
 
@@ -35,7 +36,8 @@ object ShapeOperationModel extends AbstractOperationModel {
     Name,
     Description,
     Request,
-    Responses
+    Responses,
+    FederationMetadata
   ) ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

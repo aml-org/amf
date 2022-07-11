@@ -1,13 +1,13 @@
 package amf.shapes.internal.domain.metamodel
 
-import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Shacl, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{Federation, Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.metamodel.federation.{ExternalPropertyShapeModel, KeyModel}
 import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 
 /** Node shape metaModel.
@@ -134,7 +134,27 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     )
   )
 
-  val specificFields = List(
+  val Keys: Field = Field(
+    Array(KeyModel),
+    Federation + "keys",
+    ModelDoc(
+      ModelVocabularies.Federation,
+      "keys",
+      "Keys of this Node Shape in the federated graph"
+    )
+  )
+
+  val ExternalProperties: Field = Field(
+    Array(ExternalPropertyShapeModel),
+    Federation + "externalProperty",
+    ModelDoc(
+      ModelVocabularies.Federation,
+      "externalProperty",
+      "Properties imported from external graphs"
+    )
+  )
+
+  val specificFields: List[Field] = List(
     IsAbstract,
     MinProperties,
     MaxProperties,
@@ -152,15 +172,16 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     UnevaluatedProperties,
     UnevaluatedPropertiesSchema,
     Operations,
-    InputOnly
+    InputOnly,
+    Keys,
+    ExternalProperties,
   )
 
-  override val fields: List[Field] =
-    specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ AnyShapeModel.`type`
 
-  override def modelInstance: AnyShape = NodeShape()
+  override def modelInstance: NodeShape = NodeShape()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,

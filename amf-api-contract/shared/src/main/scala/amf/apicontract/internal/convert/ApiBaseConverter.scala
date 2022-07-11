@@ -20,6 +20,7 @@ import amf.apicontract.client.scala.model.domain.{
   Tag,
   TemplatedLink
 }
+import amf.apicontract.client.scala.model.domain.federation._
 import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091ChannelBinding,
   Amqp091ChannelExchange,
@@ -118,6 +119,8 @@ trait ApiBaseConverter
     with AMFDocumentResultConverter
     with AMFLibraryResultConverter
     with APIContractProcessingDataConverter
+    with OperationFederationMetadataConverter
+    with ParameterKeyMappingConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -568,5 +571,19 @@ trait APIContractProcessingDataConverter extends PlatformSecrets {
       extends BidirectionalMatcher[APIContractProcessingData, document.APIContractProcessingData] {
     override def asClient(from: APIContractProcessingData): document.APIContractProcessingData   = platform.wrap(from)
     override def asInternal(from: document.APIContractProcessingData): APIContractProcessingData = from._internal
+  }
+}
+
+trait OperationFederationMetadataConverter extends PlatformSecrets {
+  implicit object OperationFederationMetadataMatcher extends BidirectionalMatcher[OperationFederationMetadata, domain.federation.OperationFederationMetadata] {
+    override def asClient(from: OperationFederationMetadata): domain.federation.OperationFederationMetadata   = platform.wrap[domain.federation.OperationFederationMetadata](from)
+    override def asInternal(from: domain.federation.OperationFederationMetadata): OperationFederationMetadata = from._internal
+  }
+}
+
+trait ParameterKeyMappingConverter extends PlatformSecrets {
+  implicit object ParameterKeyMappingMatcher extends BidirectionalMatcher[ParameterKeyMapping, domain.federation.ParameterKeyMapping] {
+    override def asClient(from: ParameterKeyMapping): domain.federation.ParameterKeyMapping   = platform.wrap[domain.federation.ParameterKeyMapping](from)
+    override def asInternal(from: domain.federation.ParameterKeyMapping): ParameterKeyMapping = from._internal
   }
 }

@@ -1,6 +1,7 @@
 package amf.apicontract.client.scala.model.domain
 
 import amf.apicontract.client.scala.model.domain.bindings.OperationBindings
+import amf.apicontract.client.scala.model.domain.federation.OperationFederationMetadata
 import amf.apicontract.client.scala.model.domain.templates.ParametrizedTrait
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.metamodel.domain.OperationModel.{Request => OperationRequest, _}
@@ -33,19 +34,20 @@ case class Operation(fields: Fields, annotations: Annotations)
   def deprecated: BoolField     = fields.field(Deprecated)
   def summary: StrField         = fields.field(Summary)
   // TODO: should return Option has field can be null
-  def documentation: CreativeWork       = fields.field(Documentation)
-  def schemes: Seq[StrField]            = fields.field(Schemes)
-  def accepts: Seq[StrField]            = fields.field(Accepts)
-  def contentType: Seq[StrField]        = fields.field(ContentType)
-  override def request: Request         = requests.headOption.orNull
-  def requests: Seq[Request]            = fields.field(OperationRequest)
-  override def responses: Seq[Response] = fields.field(Responses)
-  def tags: Seq[Tag]                    = fields.field(Tags)
-  def callbacks: Seq[Callback]          = fields.field(Callbacks)
-  def servers: Seq[Server]              = fields.field(Servers)
-  def isAbstract: BoolField             = fields.field(IsAbstract)
-  def bindings: OperationBindings       = fields.field(Bindings)
-  def operationId: StrField             = fields.field(OperationId)
+  def documentation: CreativeWork                     = fields.field(Documentation)
+  def schemes: Seq[StrField]                          = fields.field(Schemes)
+  def accepts: Seq[StrField]                          = fields.field(Accepts)
+  def contentType: Seq[StrField]                      = fields.field(ContentType)
+  override def request: Request                       = requests.headOption.orNull
+  def requests: Seq[Request]                          = fields.field(OperationRequest)
+  override def responses: Seq[Response]               = fields.field(Responses)
+  def tags: Seq[Tag]                                  = fields.field(Tags)
+  def callbacks: Seq[Callback]                        = fields.field(Callbacks)
+  def servers: Seq[Server]                            = fields.field(Servers)
+  def isAbstract: BoolField                           = fields.field(IsAbstract)
+  def bindings: OperationBindings                     = fields.field(Bindings)
+  def operationId: StrField                           = fields.field(OperationId)
+  def federationMetadata: OperationFederationMetadata = fields.field(FederationMetadata)
 
   override def documentations: Seq[CreativeWork] = Seq(documentation)
 
@@ -67,6 +69,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withAbstract(abs: Boolean): this.type                       = set(IsAbstract, abs)
   def withBindings(bindings: OperationBindings): this.type        = set(Bindings, bindings)
   def withOperationId(operationId: String): this.type             = set(OperationId, operationId)
+  def withFederationMetadata(federationMetadata: OperationFederationMetadata): this.type =
+    set(FederationMetadata, federationMetadata)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
   def removeName(): fields.type      = fields.removeField(OperationModel.Name)
