@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
-import amf.shapes.internal.spec.common.parser.{Raml08ShapeSyntax, Raml10ShapeSyntax, SpecSyntax}
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.raml.parser.{Raml08ShapeSyntax, Raml10ShapeSyntax}
 
 object Raml10Syntax extends RamlSyntax {
 

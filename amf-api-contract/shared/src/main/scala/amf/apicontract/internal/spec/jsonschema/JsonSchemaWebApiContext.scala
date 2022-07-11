@@ -12,7 +12,9 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{JsonSchema, Spec}
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.parser.{JsonSchemaSettings, SpecSyntax}
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.jsonschema.parser
+import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
 
 class JsonSchemaWebApiContext(
     loc: String,
@@ -27,7 +29,7 @@ class JsonSchemaWebApiContext(
       options,
       wrapped,
       ds,
-      specSettings = JsonSchemaSettings(Oas3Syntax, defaultSchemaVersion)
+      specSettings = parser.JsonSchemaSettings(Oas3Syntax, defaultSchemaVersion)
     ) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)

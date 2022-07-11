@@ -10,7 +10,8 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
-import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, Raml08Settings, Raml10Settings, SpecSettings, SpecSyntax}
+import amf.shapes.internal.spec.common.parser.{IgnoreCriteria, SpecSettings, SpecSyntax}
+import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml10Settings}
 import org.yaml.model._
 
 import scala.collection.mutable

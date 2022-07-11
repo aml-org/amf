@@ -22,7 +22,11 @@ import amf.shapes.internal.spec.RamlWebApiContextType.{DEFAULT, RamlWebApiContex
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
+import amf.shapes.internal.spec.jsonschema.parser
+import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
 import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference, JsonSchemaParser}
+import amf.shapes.internal.spec.oas.parser.{Oas2Settings, Oas2ShapeSyntax, Oas3Settings, Oas3ShapeSyntax}
+import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml08ShapeSyntax, Raml10Settings, Raml10ShapeSyntax}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   AnnotationSchemaMustBeAny,
   MissingAnnotationSchema
@@ -203,7 +207,7 @@ class CommonShapeParseContext(
       this,
       Some(declarations.copy()),
       nodeRefIds,
-      JsonSchemaSettings(Oas3ShapeSyntax, settings.defaultSchemaVersion)
+      parser.JsonSchemaSettings(Oas3ShapeSyntax, settings.defaultSchemaVersion)
     )
     next.indexCache = this.indexCache
     next

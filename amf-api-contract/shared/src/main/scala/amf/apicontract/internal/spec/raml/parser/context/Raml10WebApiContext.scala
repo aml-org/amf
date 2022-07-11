@@ -8,7 +8,8 @@ import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.mulesoft.common.client.lexical.SourceLocation
-import amf.shapes.internal.spec.common.parser.{Raml10Settings, SpecSyntax}
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.raml.parser.Raml10Settings
 import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
 class Raml10WebApiContext(
