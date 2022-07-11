@@ -1,0 +1,46 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-types.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 5
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-declaration
+  Message: Cannot exist two or more types with name 'Person'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-types.api.graphql#/declares/scalar/Person
+  Property: 
+  Range: [(21,0)-(21,7)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-declaration
+  Message: Cannot exist two or more types with name 'Person'
+  Severity: Violation
+  Target: null
+  Property: 
+  Range: [(23,0)-(23,22)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-declaration
+  Message: Cannot exist two or more types with name 'Person'
+  Severity: Violation
+  Target: null
+  Property: 
+  Range: [(25,0)-(27,0)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-declaration
+  Message: Cannot exist two or more types with name 'Person'
+  Severity: Violation
+  Target: null
+  Property: 
+  Range: [(29,0)-(33,0)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-declaration
+  Message: Cannot exist two or more types with name 'Person'
+  Severity: Violation
+  Target: null
+  Property: 
+  Range: [(35,0)-(37,0)]
+  Location: 

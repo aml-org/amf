@@ -1,10 +1,10 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedField
-import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
+import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 import org.mulesoft.antlrast.ast.Node
@@ -31,19 +31,9 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
 
   private def checkFieldsAreUnique(implicit ctx: GraphQLWebApiContext): Unit = {
     val fields = obj.properties ++ obj.operations
-    fields.foreach(field => {
-      val fieldName = field.name.value()
-      if (fieldIsDuplicated(fieldName, fields))
-        ctx.eh.violation(
-          DuplicatedField,
-          field,
-          s"Cannot exist two or more fields with name '$fieldName'",
-          field.annotations
-        )
-    })
+    checkDuplicates(fields, DuplicatedField, duplicatedFieldMsg)
   }
 
-  private def fieldIsDuplicated(fieldName: String, fields: Seq[NamedDomainElement]) =
-    fields.count(_.name.value() == fieldName) > 1
-
+  private def duplicatedFieldMsg(fieldName: String): String =
+    s"Cannot exist two or more fields with name '$fieldName'"
 }

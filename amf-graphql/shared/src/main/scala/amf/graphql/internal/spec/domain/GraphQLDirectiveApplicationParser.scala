@@ -1,6 +1,7 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedDirectiveApplication, DuplicatedField}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
@@ -11,6 +12,7 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.Locations.locationToDomain
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, DIRECTIVE, DIRECTIVES}
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, ScalarValueParser}
+import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
@@ -26,8 +28,8 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
       parseArguments(directive, directiveApplication)
       element.withCustomDomainProperty(directiveApplication)
     }
+    checkApplicationsAreUnique
   }
-
   private def parseName(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
     val name = findName(directiveNode, "AnonymousDirective", "Missing directive name")
     checkDefaultDirective(name)
@@ -98,4 +100,10 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   private def isDeclared(directiveName: String): Boolean =
     ctx.findAnnotation(directiveName, SearchScope.All).isDefined
 
+  private def checkApplicationsAreUnique(): Unit = {
+    checkDuplicates(element.customDomainProperties, DuplicatedDirectiveApplication, duplicatedApplicationMsg)
+  }
+
+  private def duplicatedApplicationMsg(directiveName: String): String =
+    s"Directive '$directiveName' can only be applied once per location"
 }

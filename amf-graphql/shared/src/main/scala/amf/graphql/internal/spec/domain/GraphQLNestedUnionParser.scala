@@ -13,6 +13,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebA
   def parse(): UnionShape = {
     parseName()
     parseMembers()
+    GraphQLDirectiveApplicationParser(unionTypeDef, union).parse()
     union
   }
 
