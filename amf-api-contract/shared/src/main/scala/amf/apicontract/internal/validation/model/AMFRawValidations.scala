@@ -1583,6 +1583,12 @@ object AMFRawValidations {
         owlClass = sh("NodeShape"),
         owlProperty = shape("inherits"),
         constraint = shape("duplicatedInterfaceImplementations")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-enum-values"),
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("values"),
+        constraint = shape("duplicatedEnumValues")
       )
     )
     override def validations(): Seq[AMFValidation] = result

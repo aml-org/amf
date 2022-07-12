@@ -437,6 +437,22 @@ object CustomShaclFunctions {
           case _ => // ignore
         }
       }
+    },
+    new CustomShaclFunction {
+      override val name: String = "duplicatedEnumValues"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        element match {
+          case s: ScalarShape =>
+            val enumValues = s.values
+            checkDuplicates(
+              enumValues,
+              validate,
+              ScalarShapeModel.Values,
+              { name: String => s"Each enum value must be unique, '$name' it's not" }
+            )
+          case _ => // ignore
+        }
+      }
     }
   )
 
