@@ -17,7 +17,7 @@ class JsonSchemaDocumentEmitter(document: JsonSchemaDocument)(implicit val ctx: 
     val declarations = document.declares.toList
     val ordering     = SpecOrdering.ordering(JsonSchema, document.sourceSpec)
     val version = document.schemaVersion.option().flatMap(JsonSchemaEntry(_)).getOrElse(JSONSchemaUnspecifiedVersion)
-    new JsonSchemaEmitter(ordering, ctx.config)(ctx.eh).docLikeEmitter(baseShape, baseShape :: declarations, version)
+    new JsonSchemaEmitter(ordering, ctx.config)(ctx.eh).docLikeEmitter(baseShape, declarations, version)
 
   }
 
