@@ -10,7 +10,7 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.testing.HintProvider

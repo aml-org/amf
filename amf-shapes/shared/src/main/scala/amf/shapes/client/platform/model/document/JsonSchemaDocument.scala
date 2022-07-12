@@ -1,8 +1,8 @@
-package amf.apicontract.client.platform.model.document
+package amf.shapes.client.platform.model.document
 
-import amf.apicontract.client.scala.model.document.{JsonSchemaDocument => InternalJsonSchemaDocument}
 import amf.core.client.platform.model.document.Document
 import amf.core.client.scala.model.StrField
+import amf.shapes.client.scala.model.document.{JsonSchemaDocument => InternalJsonSchemaDocument}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

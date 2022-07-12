@@ -1,11 +1,11 @@
-package amf.apicontract.client.scala.model.document
+package amf.shapes.client.scala.model.document
 
-import amf.apicontract.internal.metamodel.document.JsonSchemaDocumentModel
-import amf.apicontract.internal.metamodel.document.JsonSchemaDocumentModel.SchemaVersion
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
+import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel.SchemaVersion
 
 class JsonSchemaDocument(override val fields: Fields, override val annotations: Annotations)
     extends Document(fields, annotations) {

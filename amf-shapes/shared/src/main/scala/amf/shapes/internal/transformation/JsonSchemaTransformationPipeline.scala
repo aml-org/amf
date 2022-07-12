@@ -1,14 +1,9 @@
-package amf.apicontract.internal.transformation
+package amf.shapes.internal.transformation
 
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.common.validation.Async20Profile
+import amf.core.client.common.validation.JsonSchemaProfile
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
-import amf.core.internal.transform.stages.{
-  CleanReferencesStage,
-  ExternalSourceRemovalStage,
-  ReferenceResolutionStage,
-  SourceInformationStage
-}
+import amf.core.internal.transform.stages.{CleanReferencesStage, ExternalSourceRemovalStage, ReferenceResolutionStage, SourceInformationStage}
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class JsonSchemaTransformationPipeline private(override val name: String) extends TransformationPipeline() {
@@ -18,7 +13,7 @@ class JsonSchemaTransformationPipeline private(override val name: String) extend
     Seq(
       references,
       new ExternalSourceRemovalStage,
-      new ShapeNormalizationStage(Async20Profile, keepEditingInfo = false),
+      new ShapeNormalizationStage(JsonSchemaProfile, keepEditingInfo = false),
       new CleanReferencesStage(),
       SourceInformationStage
     )

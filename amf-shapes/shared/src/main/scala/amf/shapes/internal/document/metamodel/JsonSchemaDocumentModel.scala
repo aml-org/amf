@@ -1,13 +1,13 @@
-package amf.apicontract.internal.metamodel.document
+package amf.shapes.internal.document.metamodel
 
-import amf.apicontract.client.scala.model.document.JsonSchemaDocument
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.Document
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
-import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel}
+import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 
 /** JSON Schema Fragment metamodel
   *

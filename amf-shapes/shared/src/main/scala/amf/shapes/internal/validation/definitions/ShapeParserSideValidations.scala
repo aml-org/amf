@@ -352,6 +352,16 @@ object ShapeParserSideValidations extends Validations {
     "Annotation schema must be any for api-extensions override"
   )
 
+  val UnknownSchemaDraft = validation(
+    "unknown-schema-draft",
+    "Unknown JSON Schema draft version provided"
+  )
+
+  val MandatorySchema = validation(
+    "mandatory-schema-key",
+    "$schema entry is mandatory for JSON Schema fragments"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -401,6 +411,8 @@ object ShapeParserSideValidations extends Validations {
     UnableToParseShape,
     JsonSchemaFragmentNotFound,
     ClosedShapeSpecification,
-    ClosedShapeSpecificationWarning
+    ClosedShapeSpecificationWarning,
+    MandatorySchema,
+    UnknownSchemaDraft
   )
 }

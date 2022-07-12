@@ -422,11 +422,6 @@ object ParserSideValidations extends Validations {
     message = "Directive can only be applied once per location"
   )
 
-  val MandatorySchema = validation(
-    "mandatory-schema-key",
-    "$schema entry is mandatory for JSON Schema fragments"
-  )
-
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -512,7 +507,6 @@ object ParserSideValidations extends Validations {
     DuplicatedField,
     DuplicatedArgument,
     DuplicatedDeclaration,
-    DuplicatedDirectiveApplication,
-    MandatorySchema
+    DuplicatedDirectiveApplication
   )
 }
