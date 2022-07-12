@@ -97,12 +97,12 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
 
 lazy val shapesJVM =
   shapes.jvm.in(file("./amf-shapes/jvm"))
-    .sourceDependency(amlJVMRef % "compile->compile;test->test", amlLibJVM % "compile->compile;test->test")
+    .sourceDependency(amlJVMRef, amlLibJVM)
 
 lazy val shapesJS =
   shapes.js
     .in(file("./amf-shapes/js"))
-    .sourceDependency(amlJSRef % "compile->compile;test->test", amlLibJS % "compile->compile;test->test")
+    .sourceDependency(amlJSRef, amlLibJS)
 
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
@@ -122,7 +122,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
     buildInfoKeys := Seq[BuildInfoKey](apiContractModelVersion),
     buildInfoPackage := "amf.apicontract.internal.unsafe"
   ))
-  .dependsOn(shapes % "compile->compile;test->test")
+  .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
     libraryDependencies += "org.reflections"                   % "reflections"            % "0.10.2" % Test,
@@ -204,7 +204,7 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-grpc"))
   .settings(commonSettings)
-  .dependsOn(apiContract % "compile->compile;test->test", antlr)
+  .dependsOn(apiContract, antlr)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-grpc-javadoc.jar",
@@ -240,7 +240,7 @@ lazy val graphql = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-graphql"))
   .settings(commonSettings)
-  .dependsOn(apiContract % "compile->compile;test->test", antlr)
+  .dependsOn(apiContract, antlr)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-graphql-javadoc.jar",
@@ -271,7 +271,7 @@ lazy val graphqlJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc % "compile->compile;test->test",graphql % "compile->compile;test->test")
+  .dependsOn(grpc,graphql)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -365,5 +365,3 @@ ThisBuild / libraryDependencies ++= Seq(
   compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.11")),
   "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.11")
 )
-
-cliJVM / Compile / run / mainClass := Some("amf.cli.internal.App")

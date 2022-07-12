@@ -10,7 +10,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.{Hint, Mimes, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.testing.ConfigProvider
 import org.scalatest.Assertion

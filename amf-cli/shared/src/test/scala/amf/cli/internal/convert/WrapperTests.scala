@@ -36,8 +36,7 @@ import amf.core.internal.convert.CoreClientConverters.{ClientFuture, _}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote._
 import amf.core.internal.resource.{ClientResourceLoaderAdapter, StringResourceLoader}
-import amf.core.io.FileAssertionTest
-import amf.io.MultiJsonldAsyncFunSuite
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer

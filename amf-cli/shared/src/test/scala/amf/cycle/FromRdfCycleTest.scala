@@ -3,7 +3,7 @@ package amf.cycle
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
 import amf.rdf.internal.unsafe.RdfPlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach

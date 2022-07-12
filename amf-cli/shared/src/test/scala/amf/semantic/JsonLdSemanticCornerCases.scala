@@ -9,7 +9,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type._
 import amf.core.internal.remote.Mimes
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 

@@ -7,7 +7,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, AmlHint, Hint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import org.scalatest.{Assertion, Succeeded}
 import org.scalatest.funsuite.AsyncFunSuite

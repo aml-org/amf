@@ -8,7 +8,7 @@ import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 

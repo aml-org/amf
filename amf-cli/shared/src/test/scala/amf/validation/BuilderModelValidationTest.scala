@@ -9,7 +9,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.spec.payload.PayloadRenderPlugin
 import org.mulesoft.common.test.Diff

@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
 import amf.resolution.ResolutionCapabilities
 import amf.testing.ConfigProvider.configFor

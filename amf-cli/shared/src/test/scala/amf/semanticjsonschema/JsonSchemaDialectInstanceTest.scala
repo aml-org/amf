@@ -6,7 +6,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Mimes
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.{Assertion, Succeeded}

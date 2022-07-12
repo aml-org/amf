@@ -3,7 +3,7 @@ package amf.event
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEvent}
 import amf.core.client.scala.config.{AMFEvent, GroupedEvent}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.matchers.should.Matchers
 

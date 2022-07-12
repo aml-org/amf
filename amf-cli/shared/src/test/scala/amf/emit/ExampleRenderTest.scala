@@ -9,7 +9,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes._
-import amf.core.io.FileAssertionTest
+import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
 import org.scalatest.funsuite.AsyncFunSuite
