@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-members-union.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-union-members
+  Message: Union must have at most one member with name 'Dog'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-members-union.api.graphql#/declares/union/SearchResult
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(9,0)-(12,0)]
+  Location: 
