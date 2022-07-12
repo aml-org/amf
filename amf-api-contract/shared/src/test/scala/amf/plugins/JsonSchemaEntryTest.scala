@@ -1,7 +1,7 @@
 package amf.plugins
 
-import amf.apicontract.internal.spec.jsonschema.{JsonSchemaEntry, JsonSchemaParsePlugin}
-import org.scalatest.funsuite.{AnyFunSuite, AsyncFunSuite}
+import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
+import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
 class JsonSchemaEntryTest extends AsyncFunSuite with Matchers {

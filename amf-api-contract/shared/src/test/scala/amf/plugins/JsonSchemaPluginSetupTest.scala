@@ -1,13 +1,13 @@
 package amf.plugins
 
-import amf.apicontract.client.scala.JsonSchemaConfiguration
-import amf.apicontract.client.scala.model.document.JsonSchemaDocument
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
-import amf.core.client.scala.model.document.{Document, ExternalFragment}
+import amf.core.client.scala.model.document.Document
 import amf.core.internal.remote.Spec
 import amf.core.io.FileAssertionTest
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite

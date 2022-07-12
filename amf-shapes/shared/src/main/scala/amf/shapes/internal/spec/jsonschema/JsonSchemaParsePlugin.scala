@@ -1,23 +1,24 @@
-package amf.apicontract.internal.spec.jsonschema
+package amf.shapes.internal.spec.jsonschema
 
-import amf.apicontract.internal.plugins.SpecAwareParsePlugin
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.common.reference.ApiReferenceHandler
-import amf.apicontract.internal.spec.jsonschema.parser.document.JsonSchemaDocumentParser
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchema, Mimes, Spec}
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaUnspecifiedVersion
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
+import amf.shapes.internal.spec.common.reference.JsonRefsReferenceHandler
+import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
+import amf.shapes.internal.spec.jsonschema.parser.document.JsonSchemaDocumentParser
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonSchemaSyntax
 
-object JsonSchemaParsePlugin extends SpecAwareParsePlugin {
+object JsonSchemaParsePlugin extends AMFParsePlugin {
 
   override def spec: Spec = JsonSchema
 
-  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new ApiReferenceHandler(id)
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
   override def allowRecursiveReferences: Boolean = true
 
@@ -31,19 +32,16 @@ object JsonSchemaParsePlugin extends SpecAwareParsePlugin {
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     val newCtx = createContext(document, ctx)
-    restrictCrossSpecReferences(document, newCtx.eh)
     JsonSchemaDocumentParser(document)(newCtx).parse()
   }
 
   private def createContext(document: Root, ctx: ParserContext): ShapeParserContext = {
-    val context = new JsonSchemaWebApiContext(
+    new ShapeParserContext(
       document.location,
       document.references,
-      ctx,
-      None,
       options = ctx.parsingOptions,
-      defaultSchemaVersion = JSONSchemaUnspecifiedVersion
+      ctx,
+      settings = JsonSchemaSettings(JsonSchemaSyntax, JSONSchemaUnspecifiedVersion)
     )
-    WebApiShapeParserContextAdapter(context)
   }
 }

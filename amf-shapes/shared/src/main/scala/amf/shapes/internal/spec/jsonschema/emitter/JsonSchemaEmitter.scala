@@ -20,6 +20,7 @@ import amf.shapes.internal.spec.common.{
   SchemaVersion
 }
 import amf.shapes.internal.spec.oas.emitter
+import amf.shapes.internal.spec.oas.emitter.OasTypeEmitter
 import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -47,11 +48,23 @@ case class JsonSchemaEmitter(ordering: SpecOrdering, renderConfig: RenderConfigu
       declarations,
       context
     )
-    YDocument(b => {
-      b.obj { b =>
-        traverse(emitters, b)
-      }
-    })
+
+    generateYDocument(emitters)
+  }
+
+  def docLikeEmitter(
+      root: Shape,
+      declarations: Seq[DomainElement],
+      schemaVersion: JSONSchemaVersion
+  ): YDocument = {
+    val context            = createContextWith(schemaVersion)
+    val draftEntryEmitter  = JsonSchemaEntryEmitter(schemaVersion)
+    val rootEmitter        = OasTypeEmitter(root, ordering, references = Nil)(context).entries()
+    val declarationEmitter = sortedTypeEntries(declarations, context)
+
+    val emitters = Seq(draftEntryEmitter) ++ rootEmitter ++ declarationEmitter
+
+    generateYDocument(emitters)
   }
 
   def emit(root: Shape): YDocument = emit(root, Seq(root))
@@ -63,6 +76,14 @@ case class JsonSchemaEmitter(ordering: SpecOrdering, renderConfig: RenderConfigu
   ): Seq[EntryEmitter] = {
     val context = createContextWith(schemaVersion)
     jsonSchemaRefEntry(root, context) :: sortedTypeEntries(declarations, context)
+  }
+
+  private def generateYDocument(emitters: Seq[EntryEmitter]): YDocument = {
+    YDocument(b => {
+      b.obj { b =>
+        traverse(emitters, b)
+      }
+    })
   }
 
   private def createContextWith(schemaVersion: JSONSchemaVersion) = {

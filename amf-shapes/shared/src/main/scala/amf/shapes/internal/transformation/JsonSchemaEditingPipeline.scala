@@ -1,4 +1,4 @@
-package amf.apicontract.internal.transformation
+package amf.shapes.internal.transformation
 
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.ProfileNames.JSONSCHEMA

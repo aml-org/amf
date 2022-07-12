@@ -1,21 +1,20 @@
-package amf.apicontract.internal.spec.jsonschema
+package amf.shapes.internal.spec.jsonschema
 
-import amf.apicontract.client.scala.model.document.JsonSchemaDocument
-import amf.apicontract.internal.plugins.ApiRenderPlugin
-import amf.apicontract.internal.spec.jsonschema.emitter.context.JsonSchemaDocumentEmitterContext
-import amf.apicontract.internal.spec.jsonschema.emitter.document.JsonSchemaDocumentEmitter
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo}
+import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo, SYAMLBasedRenderPlugin}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Spec
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.emitter.JsonSchemaShapeEmitterContext
+import amf.shapes.internal.spec.jsonschema.emitter.document.JsonSchemaDocumentEmitter
 import org.yaml.model.YDocument
 
-object JsonSchemaRenderPlugin extends ApiRenderPlugin {
+object JsonSchemaRenderPlugin extends SYAMLBasedRenderPlugin {
 
-  override def spec: Spec = Spec.JSONSCHEMA
+  override val id: String = Spec.JSONSCHEMA.id
 
   override def priority: PluginPriority = NormalPriority
 
@@ -35,20 +34,25 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
   ): Option[YDocument] = {
     unit match {
       case document: JsonSchemaDocument => Some(emitDocument(renderConfig, errorHandler, document))
-      case _ => None
+      case _                            => None
     }
   }
 
-  private def emitDocument(renderConfig: RenderConfiguration, errorHandler: AMFErrorHandler, document: JsonSchemaDocument) = {
-    new JsonSchemaDocumentEmitter(document)(specContext(renderConfig, document.schemaVersion.value(), errorHandler)).emit()
+  private def emitDocument(
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler,
+      document: JsonSchemaDocument
+  ) = {
+    new JsonSchemaDocumentEmitter(document)(specContext(renderConfig, document.schemaVersion.value(), errorHandler))
+      .emit()
   }
 
   private def specContext(
       renderConfig: RenderConfiguration,
       schemaVersion: String,
       errorHandler: AMFErrorHandler
-  ): JsonSchemaDocumentEmitterContext = {
+  ): JsonSchemaShapeEmitterContext = {
     val schema = SchemaVersion.unapply(schemaVersion)
-    new JsonSchemaDocumentEmitterContext(errorHandler, renderConfig, schema)
+    new JsonSchemaShapeEmitterContext(errorHandler, schema, renderConfig)
   }
 }

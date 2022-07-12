@@ -8,7 +8,6 @@ import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
-import amf.apicontract.internal.spec.jsonschema.{JsonSchemaParsePlugin, JsonSchemaRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
@@ -275,29 +274,6 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
           Async20TransformationPipeline(),
           Async20EditingPipeline(),
           Async20CachePipeline()
-        )
-      )
-}
-
-/** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for AsyncApi like:
-  *   - Validation rules
-  *   - Parse and emit plugins
-  *   - Transformation Pipelines
-  */
-object JsonSchemaConfiguration extends APIConfigurationBuilder {
-  def JsonSchema(): AMFConfiguration =
-    common()
-      .withPlugins(
-        List(
-          JsonSchemaParsePlugin,
-          JsonSchemaRenderPlugin
-        )
-      )
-      .withTransformationPipelines(
-        List(
-          JsonSchemaTransformationPipeline(),
-          JsonSchemaEditingPipeline(),
-          JsonSchemaCachePipeline()
         )
       )
 }

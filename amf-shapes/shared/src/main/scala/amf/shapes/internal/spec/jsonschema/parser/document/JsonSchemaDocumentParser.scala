@@ -1,27 +1,24 @@
-package amf.apicontract.internal.spec.jsonschema.parser.document
+package amf.shapes.internal.spec.jsonschema.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKeyCollector
-import amf.apicontract.client.scala.model.document.{APIContractProcessingData, JsonSchemaDocument}
-import amf.apicontract.internal.metamodel.document.JsonSchemaDocumentModel
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.jsonschema.{JsonSchemaEntry, JsonSchemaWebApiContext}
-import amf.apicontract.internal.spec.oas.parser.document.OasLikeTypeDeclarationParser.parseTypeDeclarations
-import amf.apicontract.internal.spec.oas.parser.document.{OasLikeDeclarationsHelper, OasLikeTypeDeclarationParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.MandatorySchema
+import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
+import amf.shapes.internal.spec.common.parser.TypeDeclarationParser.parseTypeDeclarations
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext}
 import amf.shapes.internal.spec.common.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion,
-  SchemaVersion
+  JSONSchemaVersion
 }
+import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MandatorySchema, UnknownSchemaDraft}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserContext)
@@ -33,7 +30,7 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
   def parse(): JsonSchemaDocument = {
 
     val document = JsonSchemaDocument()
-    document.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.JSONSCHEMA))
+    document.withLocation(root.location).withProcessingData(BaseUnitProcessingData().withSourceSpec(Spec.JSONSCHEMA))
 
     val (schemaVersion, _) = setSchemaVersion(document)
 
@@ -49,26 +46,33 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
 
   private def setSchemaVersion(document: JsonSchemaDocument): (JSONSchemaVersion, JsonSchemaDocument) = {
     val schemaEntry: Option[YMapEntry]   = map.key("$schema")
-    val schemaVersion: JSONSchemaVersion = computeSchemaVersion(document, schemaEntry)
+    val schemaVersion: JSONSchemaVersion = processSchemaEntry(document, schemaEntry)
 
-    if (schemaEntry.isDefined) {
-      schemaEntry.map { entry =>
-        document.set(
-          JsonSchemaDocumentModel.SchemaVersion,
-          AmfScalar(schemaVersion.url, Annotations(entry.value)),
-          Annotations(entry)
-        )
-      }
+    schemaEntry.map { entry =>
+      document.set(
+        JsonSchemaDocumentModel.SchemaVersion,
+        AmfScalar(schemaVersion.url, Annotations(entry.value)),
+        Annotations(entry)
+      )
     }
+
     (schemaVersion, document)
   }
 
-  private def computeSchemaVersion(document: JsonSchemaDocument, schemaEntry: Option[YMapEntry]) = {
-    schemaEntry
-      .flatMap(entry => JsonSchemaEntry(entry.value.as[YScalar].text)) match {
-      case Some(version) => version
+  private def processSchemaEntry(document: JsonSchemaDocument, schemaEntry: Option[YMapEntry]): JSONSchemaVersion = {
+    schemaEntry match {
+      case Some(entry) => computeSchemaVersion(document, entry)
       case None =>
         ctx.eh.violation(MandatorySchema, document, MandatorySchema.message)
+        JSONSchemaUnspecifiedVersion
+    }
+  }
+
+  private def computeSchemaVersion(document: JsonSchemaDocument, schemaEntry: YMapEntry) = {
+    JsonSchemaEntry(schemaEntry.value.as[YScalar].text) match {
+      case Some(version) => version
+      case None =>
+        ctx.eh.violation(UnknownSchemaDraft, document, UnknownSchemaDraft.message)
         JSONSchemaUnspecifiedVersion
     }
   }
