@@ -1564,6 +1564,13 @@ object AMFRawValidations {
         owlClass = sh("NodeShape"),
         owlProperty = sh("PropertyShape"),
         constraint = shape("GraphQLArgumentDefaultValueTypeValidation")
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-union-members"),
+        message = "All union members must be Object type",
+        owlClass = shape("UnionShape"),
+        owlProperty = shape("anyOf"),
+        constraint = shape("unionInvalidMembers")
       )
     )
     override def validations(): Seq[AMFValidation] = result
