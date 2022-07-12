@@ -1577,6 +1577,12 @@ object AMFRawValidations {
         owlClass = shape("UnionShape"),
         owlProperty = shape("anyOf"),
         constraint = shape("duplicatedUnionMembers")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-interface-implementations"),
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("inherits"),
+        constraint = shape("duplicatedInterfaceImplementations")
       )
     )
     override def validations(): Seq[AMFValidation] = result

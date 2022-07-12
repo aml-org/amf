@@ -3,7 +3,11 @@ package amf.apicontract.internal.validation.shacl
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
-import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
+import amf.apicontract.internal.metamodel.domain.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  SecuritySchemeModel
+}
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.core.client.scala.model.domain._
@@ -15,7 +19,11 @@ import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel,
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, CustomShaclFunctions, ValidationInfo}
+import amf.validation.internal.shacl.custom.CustomShaclValidator.{
+  CustomShaclFunction,
+  CustomShaclFunctions,
+  ValidationInfo
+}
 import java.util.regex.Pattern
 
 object CustomShaclFunctions {
@@ -408,6 +416,23 @@ object CustomShaclFunctions {
               validate,
               UnionShapeModel.AnyOf,
               { name: String => s"Union must have at most one member with name '$name'" }
+            )
+          case _ => // ignore
+        }
+      }
+    },
+    new CustomShaclFunction {
+      override val name: String = "duplicatedInterfaceImplementations"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        element match {
+          case shape: NodeShape =>
+            val typeName   = shape.name.option().getOrElse("unnamedType")
+            val interfaces = shape.inherits
+            checkDuplicates(
+              interfaces,
+              validate,
+              NodeShapeModel.Inherits,
+              { name: String => s"$typeName cannot implement interface '$name' more than once" }
             )
           case _ => // ignore
         }
