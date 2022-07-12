@@ -312,6 +312,26 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-double.api.graphql#/declares/shape/HasName"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "HasName"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-double.api.graphql#/declares/shape/Person/inherits/shape/default-node_1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-double.api.graphql#/declares/shape/HasId"
               }
             ],
