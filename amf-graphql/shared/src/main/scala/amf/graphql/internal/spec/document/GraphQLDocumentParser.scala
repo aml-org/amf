@@ -50,7 +50,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
-
   }
 
   private def parseWebAPI(ast: AST): Unit = {
@@ -138,12 +137,6 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       parseInterfaceType(objTypeDef)
     }
 
-    // let's parse unions
-    this
-      .collect(node, typeDefinitionPath :+ UNION_TYPE_DEFINITION) foreach { case unionTypeDef: Node =>
-      parseUnionType(unionTypeDef)
-    }
-
     // let's parse enums
     this
       .collect(node, typeDefinitionPath :+ ENUM_TYPE_DEFINITION) foreach { case enumTypeDef: Node =>
@@ -161,6 +154,12 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION, TYPE_EXTENSION)) foreach {
       case typeExtensionDef: Node =>
         parseTypeExtension(typeExtensionDef)
+    }
+
+    // let's parse unions
+    this
+      .collect(node, typeDefinitionPath :+ UNION_TYPE_DEFINITION) foreach { case unionTypeDef: Node =>
+      parseUnionType(unionTypeDef)
     }
   }
 

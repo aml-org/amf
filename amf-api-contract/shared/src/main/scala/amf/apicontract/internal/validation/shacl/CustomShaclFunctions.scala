@@ -16,7 +16,7 @@ import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.utils.RegexConverter
-import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunction,
@@ -29,6 +29,28 @@ import java.util.regex.Pattern
 object CustomShaclFunctions {
 
   val listOfFunctions: List[CustomShaclFunction] = List(
+    new CustomShaclFunction {
+      override val name: String = "unionInvalidMembers"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val union = element.asInstanceOf[UnionShape]
+        if (union.name.nonNull) {
+          val members = union.anyOf
+          val invalidMembers = members.filter {
+            case n: NodeShape if n.isAbstract.value() => true  // interfaces
+            case any if !any.isInstanceOf[NodeShape]  => true  // not an Object
+            case _                                    => false // an Object
+          }
+          val validationResults = invalidMembers.map { elem =>
+            ValidationInfo(
+              UnionShapeModel.AnyOf,
+              Some(s"All union members must be Object type, ${elem.name.value()} it's not"),
+              Some(elem.annotations)
+            )
+          }
+          validationResults.foreach(info => validate(Some(info)))
+        }
+      }
+    },
     new CustomShaclFunction {
       override val name: String = "GraphQLArgumentDefaultValueTypeValidation"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {

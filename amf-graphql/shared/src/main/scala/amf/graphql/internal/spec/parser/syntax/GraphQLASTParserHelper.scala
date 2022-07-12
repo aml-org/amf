@@ -156,6 +156,8 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
         s.link(typeName, toAnnotations(t)).asInstanceOf[ScalarShape].withName(typeName, toAnnotations(t))
       case Some(s: NodeShape) =>
         s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
+      case Some(s: UnionShape) =>
+        s.link(typeName, toAnnotations(t)).asInstanceOf[UnionShape].withName(typeName, toAnnotations(t))
       case _ =>
         unresolvedShape(typeName, t)
     }
