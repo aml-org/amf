@@ -409,17 +409,17 @@ object ParserSideValidations extends Validations {
 
   val DuplicatedArgument = validation(
     id = "duplicated-argument",
-    message= "Cannot exist two or more arguments with same name"
+    message = "Cannot exist two or more arguments with same name"
   )
 
   val DuplicatedDeclaration = validation(
     id = "duplicated-declaration",
-    message= "Cannot exist two or more declarations with same name"
+    message = "Cannot exist two or more declarations with same name"
   )
 
   val DuplicatedDirectiveApplication = validation(
     id = "duplicated-directive-application",
-    message= "Directive can only be applied once per location"
+    message = "Directive can only be applied once per location"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(

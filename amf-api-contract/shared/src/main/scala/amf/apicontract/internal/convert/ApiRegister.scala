@@ -45,8 +45,10 @@ import amf.core.internal.convert.UniqueInitializer
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.platform.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model
 import amf.shapes.internal.convert.ShapesRegister
-import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
+import amf.shapes.internal.document.metamodel.{DataTypeFragmentModel, JsonSchemaDocumentModel}
 
 /** Shared WebApi registrations. */
 private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
@@ -256,6 +258,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(APIContractProcessingDataModel) {
       case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)
+    }
+    platform.registerWrapper(JsonSchemaDocumentModel) { case s: model.document.JsonSchemaDocument =>
+      JsonSchemaDocument(s)
     }
   }
 
