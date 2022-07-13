@@ -105,18 +105,14 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       parseDirectiveDeclaration(directiveDef)
     }
 
-    // look for schema definition
+    // let's parse schema
     this.collect(node, typeSystemDefinitionPath :+ SCHEMA_DEFINITION).toList match {
       case head :: Nil => parseSchemaNode(head)
       case _           => // ignore TODO violation
     }
 
-    // no schema node, let's look for the default top-level types (query, subscription, mutation)
-    this
-      .collect(
-        node,
-        typeDefinitionPath :+ OBJECT_TYPE_DEFINITION
-      ) foreach { case objTypeDef: Node =>
+    // let's parse types
+    this.collect(node, typeDefinitionPath :+ OBJECT_TYPE_DEFINITION) foreach { case objTypeDef: Node =>
       searchName(objTypeDef) match {
         case Some(typeName) =>
           val rootTypeOption = getRootType(typeName)
