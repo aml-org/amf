@@ -1,14 +1,11 @@
 package amf.graphql.internal.spec.domain
 
-import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.internal.parser.domain.Annotations
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val property: PropertyShape = PropertyShape(toAnnotations(ast))
 

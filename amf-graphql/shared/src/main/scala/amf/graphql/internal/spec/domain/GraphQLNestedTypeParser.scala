@@ -1,13 +1,14 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.internal.parser.domain.SearchScope
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext)
-    extends GraphQLCommonTypeParser {
+class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit
+    val ctx: GraphQLBaseWebApiContext
+) extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(): NodeShape = {

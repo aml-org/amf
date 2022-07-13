@@ -1,14 +1,14 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
 
@@ -65,7 +65,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     response.withPayload(payload)
   }
 
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLWebApiContext): Unit = {
+  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
     val arguments = operation.request.queryParameters
     checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
   }

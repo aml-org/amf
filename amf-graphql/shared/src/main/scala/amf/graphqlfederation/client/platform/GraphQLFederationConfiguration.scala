@@ -1,8 +1,7 @@
-package amf.graphql.client.platform
+package amf.graphqlfederation.client.platform
 
 import amf.apicontract.client.platform.AMFConfiguration
-import amf.graphql.client.scala.{GraphQLFederationConfiguration => InternalGraphQLFederationConfiguration}
-
+import amf.graphqlfederation.client.scala.{GraphQLFederationConfiguration => InternalGraphQLFederationConfiguration}
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll

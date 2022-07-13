@@ -8,7 +8,7 @@ import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
 import amf.core.internal.parser.domain.Annotations.inferred
 import amf.core.internal.parser.domain.SearchScope
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.Locations.locationToDomain
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, DIRECTIVE, DIRECTIVES}
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, ScalarValueParser}
@@ -16,7 +16,7 @@ import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.chec
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
 
   def parse(): Unit = {

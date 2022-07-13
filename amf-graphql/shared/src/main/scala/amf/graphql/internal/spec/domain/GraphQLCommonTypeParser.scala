@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedField
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.NodeShape
@@ -14,7 +14,7 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
   val obj: NodeShape
 
   protected def collectFieldsFromPath(objTypeNode: Node, fieldsAstPath: Seq[String])(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): Unit = {
     collect(objTypeNode, fieldsAstPath).foreach {
       case fieldNode: Node =>
@@ -29,7 +29,7 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
     checkFieldsAreUnique
   }
 
-  private def checkFieldsAreUnique(implicit ctx: GraphQLWebApiContext): Unit = {
+  private def checkFieldsAreUnique(implicit ctx: GraphQLBaseWebApiContext): Unit = {
     val fields = obj.properties ++ obj.operations
     checkDuplicates(fields, DuplicatedField, duplicatedFieldMsg)
   }

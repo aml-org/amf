@@ -1,14 +1,14 @@
 package amf.graphql.internal.spec.domain
 
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{NAME, NAMED_TYPE, UNION_MEMBER_TYPES}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{AnyShape, UnionShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebApiContext)
+class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
-  val union = UnionShape(toAnnotations(unionTypeDef))
+  val union: UnionShape = UnionShape(toAnnotations(unionTypeDef))
 
   def parse(): UnionShape = {
     parseName()
