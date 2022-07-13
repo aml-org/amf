@@ -27,4 +27,10 @@ object JsonSchemaDocumentModel extends DocumentModel {
   override val fields: List[Field] = SchemaVersion :: DocumentModel.fields
 
   override def modelInstance: AmfObject = JsonSchemaDocument()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.AmlDoc,
+    "JsonSchemaDocument",
+    "A Document that represents a JSON Schema Fragment"
+  )
 }
