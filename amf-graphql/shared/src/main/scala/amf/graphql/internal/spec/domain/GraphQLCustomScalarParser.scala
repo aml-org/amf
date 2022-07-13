@@ -18,8 +18,8 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
   }
 
   private def parseNameAndFormat(): Unit = {
-    val name = findName(customScalarTypeDef, "AnonymousScalar", "Missing scalar type name")
-    scalar.withName(name)
+    val (name, annotations) = findName(customScalarTypeDef, "AnonymousScalar", "Missing scalar type name")
+    scalar.withName(name, annotations)
     scalar.withFormat(name)
   }
 

@@ -24,8 +24,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseName(): Unit = {
-    val name = findName(node, "AnonymousDirective", "Missing directive name")
-    directive.withName(name)
+    val (name, annotations) = findName(node, "AnonymousDirective", "Missing directive name")
+    directive.withName(name, annotations)
   }
 
   private def parseArguments(): Unit = {
@@ -39,9 +39,9 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseArgument(n: Node): PropertyShape = {
-    val propertyShape = PropertyShape()
-    val name          = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
-    propertyShape.withName(name)
+    val propertyShape       = PropertyShape(toAnnotations(n))
+    val (name, annotations) = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
+    propertyShape.withName(name, annotations)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
     val argumentType = parseType(n)
     propertyShape.withRange(argumentType)

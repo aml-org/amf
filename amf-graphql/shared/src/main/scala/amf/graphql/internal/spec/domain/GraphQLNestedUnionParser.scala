@@ -34,7 +34,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLWebA
   }
 
   private def parseName(): Unit = {
-    val name = findName(unionTypeDef, "AnonymousUnion", "Missing union type name")
-    union.withName(name)
+    val (name, annotations) = findName(unionTypeDef, "AnonymousUnion", "Missing union type name")
+    union.withName(name, annotations)
   }
 }

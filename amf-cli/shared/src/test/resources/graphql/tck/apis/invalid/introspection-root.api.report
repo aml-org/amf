@@ -8,14 +8,6 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
   Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-root.api.graphql#/web-api/endpoint/%2Fquery%2F__string
-  Property: http://a.ml/vocabularies/core#name
-  Range: [(1,0)-(1,0)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
-  Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
-  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-root.api.graphql#/web-api/endpoint/%2Fquery%2F__string/supportedOperation/query/__Query.__string
   Property: http://a.ml/vocabularies/core#name
   Range: [(1,0)-(1,0)]
@@ -24,7 +16,15 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
   Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
   Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-root.api.graphql#/web-api/endpoint/%2Fquery%2F__string
+  Property: http://a.ml/vocabularies/core#name
+  Range: [(6,4)-(6,12)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
+  Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/introspection-root.api.graphql#/web-api/endpoint/%2Fquery%2F__string/supportedOperation/query/__Query.__string/expects/request/parameter/parameter/query/__arg
   Property: http://a.ml/vocabularies/core#name
-  Range: [(1,0)-(1,0)]
+  Range: [(6,13)-(6,18)]
   Location: 

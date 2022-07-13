@@ -1,6 +1,9 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.Annotations
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import org.mulesoft.antlrast.ast.Node
@@ -18,7 +21,8 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseName(): Unit = {
-    property.withName(findName(ast, "AnonymousField", "Missing name for field"))
+    val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
+    property.withName(name, annotations)
   }
 
   private def parseDescription(): Unit = {
