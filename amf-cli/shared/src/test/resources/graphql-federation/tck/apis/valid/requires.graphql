@@ -1,0 +1,5 @@
+type Person @key(fields: "name") {
+    name: String
+    birthday: Int @external
+    age: Int @requires(fields: "birthday")
+}
