@@ -23,9 +23,9 @@ trait PlatformConfigurationTest extends ConfigurationSetupTest {
     Spec.GRPC
   )
   protected val acceptedWebApiSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10, Spec.OAS20, Spec.OAS30)
-  protected val acceptedApiSpecs: Set[Spec]    = acceptedWebApiSpecs + Spec.ASYNC20
-  protected val acceptedOasSpecs: Set[Spec]    = Set(Spec.OAS20, Spec.OAS30)
-  protected val acceptedRamlSpecs: Set[Spec]   = Set(Spec.RAML08, Spec.RAML10)
+  protected val acceptedApiSpecs: Set[Spec]  = acceptedWebApiSpecs + Spec.ASYNC20 + Spec.JSONSCHEMA // Necessary for APB
+  protected val acceptedOasSpecs: Set[Spec]  = Set(Spec.OAS20, Spec.OAS30)
+  protected val acceptedRamlSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10)
 
   acceptedWebApiSpecs.foreach { spec =>
     test(s"Config from ${spec.id} is constructed from WebAPIConfiguration") {

@@ -34,12 +34,13 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
-import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.registries.{AMFRegistry, PluginsRegistry}
 import amf.core.internal.remote.Spec
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
@@ -290,11 +291,12 @@ object APIConfiguration extends APIConfigurationBuilder {
       .withTransformationPipelines(unsupportedTransformationsSet(name))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
-    case Spec.RAML08  => RAMLConfiguration.RAML08()
-    case Spec.RAML10  => RAMLConfiguration.RAML10()
-    case Spec.OAS20   => OASConfiguration.OAS20()
-    case Spec.OAS30   => OASConfiguration.OAS30()
-    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case Spec.RAML08     => RAMLConfiguration.RAML08()
+    case Spec.RAML10     => RAMLConfiguration.RAML10()
+    case Spec.OAS20      => OASConfiguration.OAS20()
+    case Spec.OAS30      => OASConfiguration.OAS30()
+    case Spec.ASYNC20    => AsyncAPIConfiguration.Async20()
+    case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>
       throw UnrecognizedSpecException(
         s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.ASYNC20.id}"
@@ -473,4 +475,29 @@ class AMFConfiguration private[amf] (
       options: AMFOptions
   ): AMFConfiguration =
     new AMFConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
+}
+
+object ConfigurationAdapter extends APIConfigurationBuilder {
+  def adapt(baseConfiguration: ShapesConfiguration): AMFConfiguration = {
+    val pluginsRegistry: PluginsRegistry = baseConfiguration.registry.getPluginsRegistry
+    val configuration = common()
+      .withPlugins(
+        pluginsRegistry.elementRenderPlugins ++
+          pluginsRegistry.renderPlugins ++
+          pluginsRegistry.syntaxRenderPlugins ++
+          pluginsRegistry.syntaxParsePlugins ++
+          pluginsRegistry.referenceParsePlugins ++
+          pluginsRegistry.payloadPlugins ++
+          pluginsRegistry.validatePlugins ++
+          pluginsRegistry.rootParsePlugins
+      )
+      .withTransformationPipelines(
+        baseConfiguration.registry.getTransformationPipelines.values.toList
+      )
+      .withFallback(pluginsRegistry.domainParsingFallback)
+
+    baseConfiguration.registry.getConstraintsRules.values.foldLeft(configuration) { (acc, curr) =>
+      acc.withValidationProfile(curr)
+    }
+  }
 }
