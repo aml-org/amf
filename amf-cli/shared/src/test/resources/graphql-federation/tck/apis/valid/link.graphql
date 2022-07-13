@@ -1,0 +1,6 @@
+# this header should be included in every file in reality
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable", "@inaccessible", "@external", "@override", "@requires", "@provides"])
+
+type Person @shareable {
+    name: String
+}
