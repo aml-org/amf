@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.{ExternalDirectiveParser, ShapeFederationMetadataParser}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -18,6 +18,7 @@ case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWe
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
       ShapeFederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      ExternalDirectiveParser(ast, property).parse()
     }
     GraphQLDirectiveApplicationParser(ast, property).parse()
   }
