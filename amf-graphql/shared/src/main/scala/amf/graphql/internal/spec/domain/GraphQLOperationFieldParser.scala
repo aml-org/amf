@@ -5,7 +5,7 @@ import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
+import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
@@ -24,15 +24,15 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
   private def parseArguments(): Unit = {
     val request = operation.withRequest()
-    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
-      parseArgument(argument, request)
+    val arguments = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
+      parseArgument(argument)
     }
+    if (arguments.nonEmpty) request.withQueryParameters(arguments)
   }
 
-  private def parseArgument(n: Node, request: ShapeRequest): Unit = {
-    val name = findName(n, "AnonymousInputType", "Missing input type name")
-
-    val queryParam = request.withQueryParameter(name).withBinding("query")
+  private def parseArgument(n: Node): ShapeParameter = {
+    val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
+    val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
     findDescription(n).foreach { desc =>
       queryParam.withDescription(cleanDocumentation(desc.value))
     }
@@ -46,10 +46,12 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
         queryParam.withSchema(schema).withRequired(true)
     }
     GraphQLDirectiveApplicationParser(n, queryParam).parse()
+    queryParam
   }
 
   private def parseName(): Unit = {
-    operation.withName(findName(ast, "AnonymousField", "Missing name for field"))
+    val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
+    operation.withName(name, annotations)
   }
 
   private def parseDescription(): Unit = {

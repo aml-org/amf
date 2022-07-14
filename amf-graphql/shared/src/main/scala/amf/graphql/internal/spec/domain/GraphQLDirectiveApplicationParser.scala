@@ -1,7 +1,7 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedDirectiveApplication, DuplicatedField}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDirectiveApplication
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
@@ -28,12 +28,12 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
       parseArguments(directive, directiveApplication)
       element.withCustomDomainProperty(directiveApplication)
     }
-    checkApplicationsAreUnique
+    checkApplicationsAreUnique()
   }
   private def parseName(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
-    val name = findName(directiveNode, "AnonymousDirective", "Missing directive name")
+    val (name, annotations) = findName(directiveNode, "AnonymousDirective", "Missing directive name")
     checkDefaultDirective(name)
-    directiveApplication.withName(name)
+    directiveApplication.withName(name, annotations)
   }
 
   private def parseArguments(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
@@ -46,7 +46,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
   }
 
   private def parseArgument(n: Node, objectNode: ObjectNode, directiveApplication: DomainExtension): Unit = {
-    val name = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
+    val (name, _) = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
     ScalarValueParser.parseValue(n).map(scalarNode => objectNode.addProperty(name, scalarNode, toAnnotations(n)))
   }
 

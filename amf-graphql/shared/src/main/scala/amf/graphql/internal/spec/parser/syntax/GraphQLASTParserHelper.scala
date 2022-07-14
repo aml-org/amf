@@ -2,12 +2,11 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.internal.parser.domain.SearchScope
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain._
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
-import org.mulesoft.common.client.lexical.ASTElement
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
@@ -33,7 +32,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def findName(n: Node, default: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
+  def findName(n: Node, default: String, error: String)(implicit ctx: GraphQLWebApiContext): (String, Annotations) = {
     val potentialPaths: Seq[Seq[String]] = Stream(
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
@@ -41,18 +40,19 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       Seq(NAME)
     )
 
-    val maybeName = potentialPaths.map(path(n, _)) collectFirst {
-      case Some(t: Terminal) => t.value
+    val effectivePath = potentialPaths.map(path(n, _)) collectFirst {
+      case Some(t: Terminal) => t
       case Some(n: Node) if n.children.size == 1 && n.children.head.isInstanceOf[Terminal] =>
-        n.children.head.asInstanceOf[Terminal].value
+        n.children.head.asInstanceOf[Terminal]
     }
+    val maybeName = effectivePath.map(_.value)
 
     maybeName match {
       case Some(name) =>
-        name
+        (name, toAnnotations(effectivePath.get))
       case _ =>
         astError(error, toAnnotations(n))
-        default
+        (default, Annotations())
     }
   }
 
@@ -166,7 +166,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def maybeNullable(t: Node, parse: (Node, String) => AnyShape)(implicit
       ctx: GraphQLWebApiContext
   ): AnyShape = {
-    val typeName = findName(t, "UnknownType", "Cannot find type name")
+    val (typeName, _) = findName(t, "UnknownType", "Cannot find type name")
     maybeNamedNullable(t, typeName, parse)
   }
 
