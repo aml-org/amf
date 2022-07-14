@@ -5,6 +5,7 @@ import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
+import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
@@ -19,6 +20,9 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseArguments()
     checkArgumentsAreUnique()
     parseRange()
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     GraphQLDirectiveApplicationParser(ast, operation).parse()
   }
 
@@ -37,6 +41,9 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
       queryParam.withDescription(cleanDocumentation(desc.value))
     }
 
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
         val schema = ScalarValueParser.putDefaultValue(n, shape)

@@ -16,15 +16,14 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
   protected def collectFieldsFromPath(objTypeNode: Node, fieldsAstPath: Seq[String])(implicit
       ctx: GraphQLBaseWebApiContext
   ): Unit = {
-    collect(objTypeNode, fieldsAstPath).foreach {
-      case fieldNode: Node =>
-        GraphQLFieldParser(fieldNode).parse {
-          case Left(propertyShape: PropertyShape) =>
-            obj.withProperties(obj.properties ++ Seq(propertyShape))
-          case Right(shapeOperation: ShapeOperation) =>
-            obj.withOperations(obj.operations ++ Seq(shapeOperation))
-        }
-      case _ => // ignore
+    collectNodes(objTypeNode, fieldsAstPath).foreach { fieldNode =>
+      GraphQLFieldParser(fieldNode).parse {
+        case Left(propertyShape: PropertyShape) =>
+          obj.withProperties(obj.properties ++ Seq(propertyShape))
+        case Right(shapeOperation: ShapeOperation) =>
+          obj.withOperations(obj.operations ++ Seq(shapeOperation))
+      }
+
     }
     checkFieldsAreUnique
   }

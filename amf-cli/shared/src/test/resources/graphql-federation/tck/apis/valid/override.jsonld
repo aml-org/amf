@@ -91,6 +91,21 @@
               {
                 "@value": "name"
               }
+            ],
+            "http://a.ml/vocabularies/federation#federationMetadata": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/override.graphql#/declares/shape/Person/property/property/name/federation-metadata",
+                "@type": [
+                  "http://a.ml/vocabularies/federation#ShapeFederationMetadata",
+                  "http://a.ml/vocabularies/federation#FederationMetadata",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/federation#overrideFrom": [
+                  {
+                    "@value": "SubgraphA"
+                  }
+                ]
+              }
             ]
           }
         ],

@@ -6,6 +6,7 @@ import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
@@ -16,6 +17,9 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
   def parse(): ScalarShape = {
     parseName()
     parseValues()
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE)).parse()
+    }
     GraphQLDirectiveApplicationParser(enumTypeDef, enum).parse()
     enum
   }
@@ -31,13 +35,15 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
         val values = collect(valuesNode, Seq(ENUM_VALUE_DEFINITION)) map { case valueDefNode: Node =>
           getEnumValue(valueDefNode) match {
             case Some(value: ScalarNode) =>
-              parseDirectives(valueDefNode, value)
-              value
-            case None => ScalarNode()
-          }
+              inFederation { implicit fCtx =>
+              ShapeFederationMetadataParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE ,ENUM_VALUE_FEDERATION_DIRECTIVE)).parse()
+            }
+            parseDirectives(valueDefNode, value)
+            value
+          case None => ScalarNode()
         }
-        enum.withValues(values)
-      case _ => enum.withValues(Seq())
+      }
+      enum.withValues(values)case _ => enum.withValues(Seq())
     }
   }
 

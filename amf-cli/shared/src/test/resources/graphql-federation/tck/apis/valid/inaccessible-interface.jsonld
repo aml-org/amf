@@ -103,6 +103,21 @@
           {
             "@value": "Person"
           }
+        ],
+        "http://a.ml/vocabularies/federation#federationMetadata": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-interface.graphql#/declares/shape/Person/federation-metadata",
+            "@type": [
+              "http://a.ml/vocabularies/federation#ShapeFederationMetadata",
+              "http://a.ml/vocabularies/federation#FederationMetadata",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/federation#inaccessible": [
+              {
+                "@value": true
+              }
+            ]
+          }
         ]
       }
     ]

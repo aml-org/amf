@@ -38,7 +38,10 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
       Seq(NAME, KEYWORD),
-      Seq(NAME)
+      Seq(NAME),
+      Seq(NAME_F, NAME_TERMINAL_F),
+      Seq(NAME_F, KEYWORD_F),
+      Seq(NAME_F)
     )
 
     val effectivePath = potentialPaths.map(path(n, _)) collectFirst {
@@ -200,5 +203,12 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     shape.withContext(ctx)
     shape.unresolved(typeName, Nil, Some(element.location))
     shape
+  }
+
+  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+    ctx match {
+      case fedCtx: GraphQLFederationWebApiContext => fn(fedCtx)
+      case _                                      => // nothing
+    }
   }
 }
