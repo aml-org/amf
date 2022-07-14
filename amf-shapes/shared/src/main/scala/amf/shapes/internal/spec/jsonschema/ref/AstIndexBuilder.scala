@@ -23,7 +23,7 @@ object AstIndexBuilder {
 
   private def getBaseUri(ctx: ShapeParserContext): Option[URI] =
     try {
-      Some(new URI(ctx.jsonSchemaRefGuide.currentLoc))
+      Some(new URI(ctx.getJsonSchemaRefGuide.currentLoc))
     } catch {
       case _: Throwable => None
     }

@@ -14,24 +14,22 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
 ) extends PlatformSecrets {
 
   def obtainRemoteYNode(ref: String): Option[YNode] = {
-    withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
+    findJsonReferenceFragment(ref) flatMap { case (fragment, referenceUrl) =>
       AstFinder.findAst(fragment, referenceUrl)
     }
   }
 
   def getRootYNode(ref: String): Option[YNode] = {
-    withFragmentAndInFileReference(ref) { (fragment, _) =>
-      Some(getYNodeFrom(fragment, context.eh))
+    findJsonReferenceFragment(ref) map { case (fragment, _) =>
+      getYNodeFrom(fragment, context.eh)
     }
   }
 
-  def withFragmentAndInFileReference[T](ref: String)(action: (Fragment, Option[String]) => Option[T]): Option[T] = {
+  def findJsonReferenceFragment(ref: String): Option[(Fragment, Option[String])] = {
     if (!context.validateRefFormatWithError(ref)) return None
     val fileUrl      = getFileUrl(ref)
     val referenceUrl = getReferenceUrl(fileUrl)
-    obtainFragmentFromFullRef(fileUrl) flatMap { fragment =>
-      action(fragment, referenceUrl)
-    }
+    obtainFragmentFromFullRef(fileUrl) map (fragment => (fragment, referenceUrl))
   }
 
   def getFileUrl(ref: String): String = UriUtils.resolveRelativeTo(currentLoc, ref)
