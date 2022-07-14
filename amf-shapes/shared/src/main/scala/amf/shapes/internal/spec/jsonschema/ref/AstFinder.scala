@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.jsonschema.ref
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.model.document.{BaseUnit, Fragment}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
@@ -11,7 +11,7 @@ import org.yaml.model.YNode
 
 object AstFinder {
 
-  def findAst(inputFragment: Fragment, pointer: Option[String])(implicit ctx: ShapeParserContext): Option[YNode] = {
+  def findAst(inputFragment: BaseUnit, pointer: Option[String])(implicit ctx: ShapeParserContext): Option[YNode] = {
     val doc = createRootFrom(inputFragment, pointer, ctx.eh)
     findAst(doc, ctx)
   }

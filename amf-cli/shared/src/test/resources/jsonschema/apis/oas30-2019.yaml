@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: Api that uses Json Schema Document
+  version: "1.0"
+paths:
+  /something:
+    get:
+      description: something
+      responses:
+        "200":
+          description: something else
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/simple-2019.json#/$defs/Person

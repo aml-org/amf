@@ -2,11 +2,14 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.parser.domain.{Declarations, FragmentRef, FutureDeclarations, SearchScope}
 import amf.shapes.client.scala.model.document.DataTypeFragment
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
+import amf.shapes.internal.spec.jsonschema.parser.document.NameExtraction
+import amf.shapes.internal.spec.jsonschema.ref.JsonReference
 import org.yaml.model.YPart
 
 object ShapeDeclarations {
@@ -21,11 +24,12 @@ class ShapeDeclarations(
     futureDeclarations: FutureDeclarations
 ) extends Declarations(Map.empty, Map.empty, Map.empty, errorHandler, futureDeclarations) {
 
-  var shapes: Map[String, Shape]                       = Map()
-  var extensions: Map[String, Dialect]                 = Map.empty
-  var examples: Map[String, Example]                   = Map.empty
-  var externalShapes: Map[String, AnyShape]            = Map()
-  var externalLibs: Map[String, Map[String, AnyShape]] = Map()
+  var shapes: Map[String, Shape]                                  = Map()
+  var extensions: Map[String, Dialect]                            = Map.empty
+  var examples: Map[String, Example]                              = Map.empty
+  var externalShapes: Map[String, AnyShape]                       = Map()
+  var externalLibs: Map[String, Map[String, AnyShape]]            = Map()
+  var documentFragments: Map[String, (Shape, Map[String, Shape])] = Map()
 
   def registerExternalRef(external: (String, AnyShape)): ShapeDeclarations = { // particular case for jsonschema # fragment
     externalShapes = externalShapes + (external._1 -> external._2)
@@ -91,6 +95,12 @@ class ShapeDeclarations(
       case _ => None
     }
 
+  def findDeclaredTypeInDocFragment(doc: String, name: String): Option[Shape] = {
+    documentFragments.get(doc).flatMap { case (_, declared) =>
+      declared.get(name)
+    }
+  }
+
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
     findForType(key, _.asInstanceOf[ShapeDeclarations].shapes, scope) match {
       case Some(anyShape: AnyShape) => Some(anyShape)
@@ -109,6 +119,11 @@ class ShapeDeclarations(
 
   def +=(extension: Map[String, Dialect]): ShapeDeclarations = {
     extensions = extensions ++ extension
+    this
+  }
+
+  def +=(doc: (String, (Shape, Map[String, Shape]))): this.type = {
+    documentFragments += doc
     this
   }
 

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-ref-to-nowhere-2019-api.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unable-to-parse-json-schema
+  Message: Cannot find path $defs/Unknown in JSON schema file://amf-cli/shared/src/test/resources/jsonschema/schemas/simple.json
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/jsonschema/schemas/simple.json#/$defs/Unknown
+  Property: 
+  Range: [(1,0)-(16,1)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/schemas/simple.json

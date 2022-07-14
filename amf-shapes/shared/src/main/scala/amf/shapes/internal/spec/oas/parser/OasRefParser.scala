@@ -166,7 +166,7 @@ class OasRefParser(
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
-        parseRemoteSchema(ref, fullUrl) match {
+        parseRemoteSchema(ref, fullUrl, Annotations(e.value)) match {
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
@@ -219,7 +219,7 @@ class OasRefParser(
     )
   }
 
-  private def parseRemoteSchema(ref: String, fullUrl: String): Option[AnyShape] = {
-    RemoteJsonSchemaParser.parse(ref, fullUrl)
+  private def parseRemoteSchema(ref: String, fullUrl: String, linkAnnotations: Annotations): Option[AnyShape] = {
+    RemoteJsonSchemaParser.parse(ref, fullUrl, linkAnnotations)
   }
 }

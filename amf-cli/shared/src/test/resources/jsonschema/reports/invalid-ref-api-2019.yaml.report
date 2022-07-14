@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-ref-api-2019.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference '../schemas/simple-2019.json#/$defs/Person/properties/name'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-ref-api-2019.yaml#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/unresolved
+  Property: 
+  Range: [(13,12)-(14,0)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-ref-api-2019.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-json-schema-reference
+  Message: uriFragment '/$defs/Person/properties/name' must be in the format of '#/definitions/<name>' or '#/$defs/<name>'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(13,18)-(13,75)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-ref-api-2019.yaml

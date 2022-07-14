@@ -47,7 +47,7 @@ class ShapeParserContext(
   override def eh: AMFErrorHandler                     = wrapped.eh
   def syamleh                                          = new SyamlAMFErrorHandler(eh)
   val defaultSchemaVersion: SchemaVersion              = settings.defaultSchemaVersion
-  protected var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
+  protected var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, None, refs)(this)
   def getJsonSchemaRefGuide: JsonSchemaRefGuide        = jsonSchemaRefGuide
 
   private var semanticContext: Option[SemanticContext] = None
@@ -73,6 +73,10 @@ class ShapeParserContext(
   def addPromotedFragments(fragments: Seq[Fragment]): Unit = declarations.promotedFragments ++= fragments
   def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
     declarations.findExample(key, scope)
+
+  def findDeclaredTypeInDocFragment(doc: String, name: String): Option[Shape] = {
+    declarations.findDeclaredTypeInDocFragment(doc, name)
+  }
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
     declarations.findType(key, scope, error)
   def shapes: Map[String, Shape] = declarations.shapes
@@ -175,6 +179,7 @@ class ShapeParserContext(
       JsonSchemaSettings(Oas3ShapeSyntax, settings.defaultSchemaVersion)
     )
     schemaContext.indexCache = indexCache
+    schemaContext.jsonSchemaRefGuide = jsonSchemaRefGuide
     schemaContext
   }
 
@@ -275,7 +280,7 @@ class ShapeParserContext(
     new ShapeParserContext(loc, refs, options, this, Some(declarations.copy()), nodeRefIds, settings)
   }
 
-  private def moveToReference(loc: String): this.type = {
+  protected def moveToReference(loc: String): this.type = {
     jsonSchemaRefGuide = jsonSchemaRefGuide.changeJsonSchemaSearchDestination(loc)
     this
   }
