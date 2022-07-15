@@ -44,6 +44,7 @@ import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
+import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
 
 import scala.concurrent.Future
 
@@ -284,6 +285,9 @@ object APIConfiguration extends APIConfigurationBuilder {
 
   private val name = "API"
 
+  def APIWithJsonSchema(): AMFConfiguration = API()
+    .withRootParsePlugin(JsonSchemaParsePlugin)
+
   def API(): AMFConfiguration =
     WebAPIConfiguration
       .WebAPI()
@@ -366,6 +370,9 @@ class AMFConfiguration private[amf] (
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withRootParsePlugin(amfParsePlugin: AMFParsePlugin): AMFConfiguration =
+    super._withRootParsePlugin(amfParsePlugin)
 
   override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMFConfiguration =
     super._withReferenceParsePlugin(amfPlugin)

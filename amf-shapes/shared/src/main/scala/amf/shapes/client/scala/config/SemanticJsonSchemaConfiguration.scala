@@ -3,6 +3,7 @@ package amf.shapes.client.scala.config
 import amf.aml.client.scala.AMLConfigurationState
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -106,6 +107,9 @@ class SemanticJsonSchemaConfiguration private[amf] (
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): SemanticJsonSchemaConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withRootParsePlugin(amfParsePlugin: AMFParsePlugin): SemanticJsonSchemaConfiguration =
+    super._withRootParsePlugin(amfParsePlugin)
 
   override def withReferenceParsePlugin(plugin: AMFParsePlugin): ShapesConfiguration =
     super._withReferenceParsePlugin(plugin)
