@@ -77,6 +77,13 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate("raml/reffed-additional-properties/api.raml", Some("reffed-additional-properties.report"))
   }
 
+  test("invalid example in union with members of the same type with enums") {
+    validate(
+      "raml/invalid-example-in-union-with-members-with-enums.raml",
+      Some("invalid-example-in-union-with-members-with-enums.report")
+    )
+  }
+
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/multi-plat-model/"
 
