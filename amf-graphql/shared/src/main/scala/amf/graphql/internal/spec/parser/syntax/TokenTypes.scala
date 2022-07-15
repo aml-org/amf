@@ -71,12 +71,16 @@ object TokenTypes {
   val STRING_TERMINAL                = "STRING"
 
   // Federation
-  val FIELD_SET                         = "fieldSet"
-  val FIELD_SET_COMPONENT               = "fieldSetComponent"
-  val NAME_F                            = "name_f"
-  val NAME_TERMINAL_F                   = "NAME_F"
-  val KEYWORD_F                         = "keyword_f"
-  val NESTED_FIELD_SET                  = "nestedFieldSet"
+  val FIELD_SET           = "fieldSet"
+  val FIELD_SET_COMPONENT = "fieldSetComponent"
+  val NAME_F              = "name_f"
+  val NAME_TERMINAL_F     = "NAME_F"
+  val KEYWORD_F           = "keyword_f"
+  val NESTED_FIELD_SET    = "nestedFieldSet"
+  val RESOLVABLE_KEYWORD  = "RESOLVABLE_KEYWORD"
+  val BOOLEAN_VALUE_F     = "booleanValue_f"
+  val FALSE_F             = "FALSE_F"
+  val TRUE_F              = "TRUE_F"
 
   // Directives & federation directives
   val ENUM_DIRECTIVE                    = "enumDirective"

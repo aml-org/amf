@@ -21,7 +21,8 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node, Terminal}
 
-case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWebApiContext) extends GraphQLASTParserHelper {
+case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWebApiContext)
+    extends GraphQLASTParserHelper {
 
   // default values, can be changed through a schema declaration
   var QUERY_TYPE        = "Query"
@@ -43,6 +44,9 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       case _ => // nil
     }
     ctx.declarations.futureDeclarations.resolve()
+    inFederation { implicit fCtx =>
+      fCtx.linkingActions.executeAll()
+    }
     doc
       .withDeclares(
         ctx.declarations.shapes.values.toList ++

@@ -212,6 +212,192 @@
             ]
           }
         ],
+        "http://a.ml/vocabularies/federation#keys": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key",
+            "@type": [
+              "http://a.ml/vocabularies/federation#Key",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/federation#keyComponents": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key/keyComponents/property-shape-path",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#PropertyShapePath",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#path": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key/keyComponents/property-shape-path/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key/keyComponents/property-shape-path/path/property/default-property",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/property/property/id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "id"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1",
+            "@type": [
+              "http://a.ml/vocabularies/federation#Key",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/federation#keyComponents": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#PropertyShapePath",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#path": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path/path/property/default-property",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/property/property/name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "name"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path_3",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#PropertyShapePath",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#path": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path_3/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_1/keyComponents/property-shape-path_3/path/property/default-property",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/property/property/surname"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "surname"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_2",
+            "@type": [
+              "http://a.ml/vocabularies/federation#Key",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/federation#keyComponents": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_2/keyComponents/property-shape-path",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#PropertyShapePath",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#path": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_2/keyComponents/property-shape-path/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_2/keyComponents/property-shape-path/path/property/default-property",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/property/property/recoveryCode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "recoveryCode"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/2000/01/rdf-schema#_2": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/User/keys/key_2/keyComponents/property-shape-path/path/property/default-property_4",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/key-type-complex.graphql#/declares/shape/RecoveryCode/property/property/code"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "code"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "User"
