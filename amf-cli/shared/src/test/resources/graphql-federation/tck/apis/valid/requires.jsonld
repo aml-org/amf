@@ -164,6 +164,42 @@
                 "@value": 0
               }
             ],
+            "http://a.ml/vocabularies/federation#requires": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/requires.graphql#/declares/shape/Person/property/property/age/requires/property-shape-path",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#PropertyShapePath",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#path": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/requires.graphql#/declares/shape/Person/property/property/age/requires/property-shape-path/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/requires.graphql#/declares/shape/Person/property/property/age/requires/property-shape-path/path/property/default-property",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-target": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/requires.graphql#/declares/shape/Person/property/property/birthday"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "birthday"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "age"

@@ -17,7 +17,7 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
       ctx: GraphQLBaseWebApiContext
   ): Unit = {
     collectNodes(objTypeNode, fieldsAstPath).foreach { fieldNode =>
-      GraphQLFieldParser(fieldNode).parse {
+      GraphQLFieldParser(fieldNode, obj).parse {
         case Left(propertyShape: PropertyShape) =>
           obj.withProperties(obj.properties ++ Seq(propertyShape))
         case Right(shapeOperation: ShapeOperation) =>
