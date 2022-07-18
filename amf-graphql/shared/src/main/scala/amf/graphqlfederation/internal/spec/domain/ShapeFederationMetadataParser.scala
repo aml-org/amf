@@ -1,6 +1,7 @@
 package amf.graphqlfederation.internal.spec.domain
 
 import amf.core.client.scala.model.domain.federation.{HasShapeFederationMetadata, ShapeFederationMetadata}
+import amf.core.internal.metamodel.domain.federation.FederationMetadataModel.OverrideFrom
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
@@ -18,9 +19,9 @@ case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMe
   protected def parseOverride(): Unit = {
     pathToNonTerminal(ast, basePath :+ OVERRIDE_DIRECTIVE)
       .map(findName(_, "default-from", "ERR"))
-      .foreach { overrideTarget =>
+      .foreach { case _ @ (overrideTarget, annotations) =>
         in { metadata =>
-          metadata.withOverrideFrom(overrideTarget)
+          metadata.set(OverrideFrom, overrideTarget, annotations)
         }
       }
   }

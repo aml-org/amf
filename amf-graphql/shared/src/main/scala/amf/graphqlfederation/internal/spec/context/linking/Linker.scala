@@ -19,10 +19,10 @@ trait Linker[F[_], S, T <: DomainElement, C <: WebApiContext] {
   def link(source: F[S])(implicit ctx: C): F[T]
 }
 
-/** Produces a link from ${source} and executes a ${callback} with the resulting link
+/** Produces a link from ${source} and executes a ${afterLinking} with the resulting link
   * @param source
   *   source
-  * @param callback
+  * @param afterLinking
   *   callback
   * @tparam F
   *   is an optional wrapper of arity 1 e.g. Seq, List, Set
@@ -33,6 +33,9 @@ trait Linker[F[_], S, T <: DomainElement, C <: WebApiContext] {
   * @tparam C
   *   context
   */
-case class LinkAction[F[_], S, T <: DomainElement, C <: WebApiContext](source: F[S])(callback: F[T] => Unit) {
-  def execute()(implicit linker: Linker[F, S, T, C], ctx: C): Unit = callback(linker.link(source))
+case class LinkEvaluation[F[_], S, T <: DomainElement, C <: WebApiContext](source: F[S])(afterLinking: F[T] => Unit) {
+  def eval()(implicit linker: Linker[F, S, T, C], ctx: C): Unit = {
+    val result = linker.link(source)
+    afterLinking(result)
+  }
 }

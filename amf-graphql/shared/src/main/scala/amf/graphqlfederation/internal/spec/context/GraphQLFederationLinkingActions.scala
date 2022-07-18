@@ -1,22 +1,22 @@
 package amf.graphqlfederation.internal.spec.context
 
 import amf.core.client.scala.model.domain.extensions.PropertyShapePath
-import amf.graphqlfederation.internal.spec.context.linking.LinkAction
+import amf.graphqlfederation.internal.spec.context.linking.LinkEvaluation
 import amf.graphqlfederation.internal.spec.context.linking.fieldset.{
   PropertyShapePathLinker,
-  UnresolvedPropertyShapePath
+  PropertyShapePathExpression
 }
 
 case class GraphQLFederationLinkingActions() {
   implicit private val propertyShapePathLinker: PropertyShapePathLinker = PropertyShapePathLinker()
 
   private var propertyPaths
-      : Seq[LinkAction[Seq, UnresolvedPropertyShapePath, PropertyShapePath, GraphQLFederationWebApiContext]] = Nil
+      : Seq[LinkEvaluation[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext]] = Nil
 
-  def +(a: LinkAction[Seq, UnresolvedPropertyShapePath, PropertyShapePath, GraphQLFederationWebApiContext]): Unit =
+  def +(a: LinkEvaluation[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext]): Unit =
     propertyPaths = propertyPaths :+ a
 
   def executeAll()(implicit ctx: GraphQLFederationWebApiContext): Unit = {
-    propertyPaths.foreach(_.execute())
+    propertyPaths.foreach(_.eval())
   }
 }

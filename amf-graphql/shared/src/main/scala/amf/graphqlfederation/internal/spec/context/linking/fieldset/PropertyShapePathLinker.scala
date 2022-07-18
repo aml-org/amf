@@ -8,21 +8,21 @@ import amf.graphqlfederation.internal.spec.context.linking.Linker
 import amf.shapes.client.scala.model.domain.NodeShape
 
 case class PropertyShapePathLinker()
-    extends Linker[Seq, UnresolvedPropertyShapePath, PropertyShapePath, GraphQLFederationWebApiContext] {
+    extends Linker[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext] {
 
-  override def link(source: Seq[UnresolvedPropertyShapePath])(implicit
-      ctx: GraphQLFederationWebApiContext
+  override def link(source: Seq[PropertyShapePathExpression])(implicit
+                                                              ctx: GraphQLFederationWebApiContext
   ): Seq[PropertyShapePath] = source.map(link)
 
   private def link(
-      source: UnresolvedPropertyShapePath
+      source: PropertyShapePathExpression
   )(implicit ctx: GraphQLFederationWebApiContext): PropertyShapePath = {
     var current = source.root match {
       case n: NodeShape     => n
       case p: PropertyShape => followRange(p)
     }
 
-    val path = source.path.map { propName =>
+    val path = source.expressionComponents.map { case PropertyShapePathExpression.Component(propName, annotations) =>
       current match {
         case n: NodeShape =>
           n.properties.find(_.name.value() == propName) match {
@@ -41,12 +41,12 @@ case class PropertyShapePathLinker()
           ctx.eh.violation(
             UnmatchedFieldInFieldSet,
             source.root,
-            s"Cannot obtain property $propName from type ${current.name.value()} when resolving fieldSet"
+            s"Cannot obtain property $propName from type ${current.name.value()} when resolving fieldSet",
+            annotations
           )
           PropertyShape().withName("error")
       }
     }
-
     PropertyShapePath().withPath(path)
   }
 

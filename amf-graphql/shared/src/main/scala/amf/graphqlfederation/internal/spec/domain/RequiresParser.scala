@@ -4,8 +4,8 @@ import amf.core.client.scala.model.domain.extensions.{PropertyShape, PropertySha
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
-import amf.graphqlfederation.internal.spec.context.linking.LinkAction
-import amf.graphqlfederation.internal.spec.context.linking.fieldset.UnresolvedPropertyShapePath
+import amf.graphqlfederation.internal.spec.context.linking.LinkEvaluation
+import amf.graphqlfederation.internal.spec.context.linking.fieldset.PropertyShapePathExpression
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
@@ -16,7 +16,7 @@ case class RequiresParser(ast: Node, target: PropertyShape, parent: NodeShape)(i
     collectNodes(ast, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE, REQUIRES_DIRECTIVE, FIELD_SET)).foreach { fieldSetAst =>
       val paths = FieldSetParser(parent, fieldSetAst).collect()
       val action =
-        LinkAction[Seq, UnresolvedPropertyShapePath, PropertyShapePath, GraphQLFederationWebApiContext](paths) {
+        LinkEvaluation[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext](paths) {
           resolvedPaths =>
             target.withRequires(resolvedPaths)
         }
