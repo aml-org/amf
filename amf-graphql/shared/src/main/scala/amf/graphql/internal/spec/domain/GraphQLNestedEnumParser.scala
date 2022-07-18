@@ -26,16 +26,18 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseValues(): Unit = {
-    path(enumTypeDef, Seq(ENUM_VALUES_DEFINITION)) map { case valuesNode: Node =>
-      val values = collect(valuesNode, Seq(ENUM_VALUE_DEFINITION)) map { case valueDefNode: Node =>
-        getEnumValue(valueDefNode) match {
-          case Some(value: ScalarNode) =>
-            parseDirectives(valueDefNode, value)
-            value
-          case None => ScalarNode()
+    path(enumTypeDef, Seq(ENUM_VALUES_DEFINITION)) match {
+      case Some(valuesNode: Node) =>
+        val values = collect(valuesNode, Seq(ENUM_VALUE_DEFINITION)) map { case valueDefNode: Node =>
+          getEnumValue(valueDefNode) match {
+            case Some(value: ScalarNode) =>
+              parseDirectives(valueDefNode, value)
+              value
+            case None => ScalarNode()
+          }
         }
-      }
-      enum.withValues(values)
+        enum.withValues(values)
+      case _ => enum.withValues(Seq())
     }
   }
 
