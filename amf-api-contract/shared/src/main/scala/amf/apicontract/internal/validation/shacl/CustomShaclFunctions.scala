@@ -37,6 +37,26 @@ object CustomShaclFunctions {
 
   val listOfFunctions: List[CustomShaclFunction] = List(
     new CustomShaclFunction {
+      override val name: String = "requiredFields"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val obj                         = GraphQLObject(element.asInstanceOf[NodeShape])
+        val fields                      = obj.fields().names
+        val requiredFields: Seq[String] = obj.inherits.flatMap(_.fields().names)
+        requiredFields.foreach { requiredField =>
+          if (!fields.contains(requiredField))
+            validate(
+              Some(
+                ValidationInfo(
+                  NodeShapeModel.Properties,
+                  Some(s"field $requiredField is required in ${obj.name}"),
+                  Some(obj.annotations)
+                )
+              )
+            )
+        }
+      }
+    },
+    new CustomShaclFunction {
       override val name: String = "emptyDefinition"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
         val node               = element.asInstanceOf[NodeShape]

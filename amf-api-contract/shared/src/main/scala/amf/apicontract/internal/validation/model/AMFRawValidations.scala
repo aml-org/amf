@@ -1610,6 +1610,13 @@ object AMFRawValidations {
         owlProperty = sh("PropertyShape"),
         constraint = shape("emptyDefinition"),
         message = "Types definition must have at least one field"
+      ),
+      AMFValidation(
+        uri = amfParser("required-fields"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("requiredFields"),
+        message = "Types definition must have at least one field"
       )
     )
     override def validations(): Seq[AMFValidation] = result
