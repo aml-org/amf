@@ -1589,6 +1589,27 @@ object AMFRawValidations {
         owlClass = shape("ScalarShape"),
         owlProperty = shape("values"),
         constraint = shape("duplicatedEnumValues")
+      ),
+      AMFValidation(
+        uri = amfParser("empty-enum"),
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("values"),
+        constraint = shape("emptyEnum"),
+        message = "Enum definitions must have at least one value"
+      ),
+      AMFValidation(
+        uri = amfParser("empty-union"),
+        owlClass = shape("UnionShape"),
+        owlProperty = shape("AnyOf"),
+        constraint = shape("emptyUnion"),
+        message = "Union definitions must have at least one value"
+      ),
+      AMFValidation(
+        uri = amfParser("empty-definition"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("emptyDefinition"),
+        message = "Types definition must have at least one field"
       )
     )
     override def validations(): Seq[AMFValidation] = result

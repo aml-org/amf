@@ -14,6 +14,7 @@ import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.utils.RegexConverter
@@ -24,16 +25,60 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunctions,
   ValidationInfo
 }
+
 import java.util.regex.Pattern
 
 object CustomShaclFunctions {
 
   val listOfFunctions: List[CustomShaclFunction] = List(
     new CustomShaclFunction {
+      override val name: String = "emptyDefinition"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val node               = element.asInstanceOf[NodeShape]
+        val isInterface        = node.isAbstract.value()
+        val isInput            = node.isInputOnly.value()
+        val isExtensionWrapper = node.and.nonEmpty
+        val isSchema           = node.name.isNullOrEmpty
+        if (node.properties.isEmpty && node.operations.isEmpty) {
+          if (!isExtensionWrapper && !isSchema) {
+            val nodeType =
+              if (isInterface) "Interface"
+              else if (isInput) "Input Type"
+              else "Type"
+            validate(
+              Some(
+                ValidationInfo(
+                  NodeShapeModel.Properties,
+                  Some(s"$nodeType definitions must have at least one field"),
+                  Some(element.annotations)
+                )
+              )
+            )
+          }
+        }
+      }
+    },
+    new CustomShaclFunction {
+      override val name: String = "emptyUnion"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val union     = element.asInstanceOf[UnionShape]
+        val isWrapper = union.name.isNullOrEmpty || union.or.nonEmpty
+        if (!isWrapper && union.anyOf.isEmpty) validate(None)
+      }
+    },
+    new CustomShaclFunction {
+      override val name: String = "emptyEnum"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val enum = element.asInstanceOf[ScalarShape]
+        if (enum.fields.exists(ShapeModel.Values) && enum.values.isEmpty) validate(None)
+      }
+    },
+    new CustomShaclFunction {
       override val name: String = "unionInvalidMembers"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-        val union = element.asInstanceOf[UnionShape]
-        if (union.name.nonNull) {
+        val union     = element.asInstanceOf[UnionShape]
+        val isWrapper = union.name.isNullOrEmpty || union.or.nonEmpty
+        if (!isWrapper) {
           val members = union.anyOf
           val invalidMembers = members.filter {
             case n: NodeShape if n.isAbstract.value() => true  // interfaces
