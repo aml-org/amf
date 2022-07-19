@@ -3,11 +3,16 @@ package amf.shapes.internal.spec.common.parser
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.model.document.{BaseUnit, Fragment}
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
-import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ErrorHandlingContext, ParsedReference, ParserContext}
+import amf.core.client.scala.parse.document.{
+  EmptyFutureDeclarations,
+  ErrorHandlingContext,
+  ParsedReference,
+  ParserContext
+}
 import amf.core.internal.parser.Root
-import amf.core.internal.parser.domain.{Annotations, Declarations, SearchScope}
+import amf.core.internal.parser.domain.{Declarations, SearchScope}
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.{Oas30, Spec}
 import amf.core.internal.utils.{AliasCounter, QName}
@@ -16,7 +21,7 @@ import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.jsonschema.parser
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
-import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference, JsonSchemaParser}
+import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference}
 import amf.shapes.internal.spec.oas.parser.{Oas2Settings, Oas2ShapeSyntax, Oas3Settings, Oas3ShapeSyntax}
 import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
 import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml08ShapeSyntax, Raml10Settings, Raml10ShapeSyntax}
@@ -39,20 +44,21 @@ class ShapeParserContext(
     with ParseErrorHandler
     with IllegalTypeHandler {
 
-  override def eh: AMFErrorHandler           = wrapped.eh
-  def syamleh                                = new SyamlAMFErrorHandler(eh)
-  val defaultSchemaVersion: SchemaVersion    = settings.defaultSchemaVersion
-  var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
+  override def eh: AMFErrorHandler                     = wrapped.eh
+  def syamleh                                          = new SyamlAMFErrorHandler(eh)
+  val defaultSchemaVersion: SchemaVersion              = settings.defaultSchemaVersion
+  protected var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, None, refs)(this)
+  def getJsonSchemaRefGuide: JsonSchemaRefGuide        = jsonSchemaRefGuide
 
-  private var semanticContext: Option[SemanticContext]                   = None
+  private var semanticContext: Option[SemanticContext] = None
   private var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: ShapeParserContext => wac.getLocalJsonSchemaContext
-    case _                            => None
+    case _                       => None
   }
 
   private var jsonSchemaIndex: Option[AstIndex] = wrapped match {
     case wac: ShapeParserContext => wac.jsonSchemaIndex
-    case _                            => None
+    case _                       => None
   }
 
   var indexCache: Map[String, AstIndex] = Map[String, AstIndex]()
@@ -67,6 +73,10 @@ class ShapeParserContext(
   def addPromotedFragments(fragments: Seq[Fragment]): Unit = declarations.promotedFragments ++= fragments
   def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
     declarations.findExample(key, scope)
+
+  def findDeclaredTypeInDocFragment(doc: String, name: String): Option[Shape] = {
+    declarations.findDeclaredTypeInDocFragment(doc, name)
+  }
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
     declarations.findType(key, scope, error)
   def shapes: Map[String, Shape] = declarations.shapes
@@ -76,7 +86,7 @@ class ShapeParserContext(
       error: Option[String => Unit] = None
   ): Option[CreativeWork] = declarations.findDocumentations(key, scope, error)
 
-  def findJsonSchema(url: String): Option[AnyShape] =
+  def findCachedJsonSchema(url: String): Option[AnyShape] =
     globalSpace
       .get(normalizedJsonPointer(url))
       .collect { case shape: AnyShape => shape }
@@ -110,13 +120,6 @@ class ShapeParserContext(
   def removeLocalJsonSchemaContext: Unit = localJSONSchemaContext = None
 
   def getLocalJsonSchemaContext: Option[YNode] = localJSONSchemaContext
-
-  def parseRemoteJSONPath(ref: String): Option[AnyShape] = {
-    jsonSchemaRefGuide.withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
-      val newCtx = makeCopyWithJsonPointerContext().moveToReference(fragment.location().get)
-      new JsonSchemaParser().parse(fragment, referenceUrl)(newCtx)
-    }
-  }
 
   def spec: Spec = settings.spec
 
@@ -176,6 +179,7 @@ class ShapeParserContext(
       JsonSchemaSettings(Oas3ShapeSyntax, settings.defaultSchemaVersion)
     )
     schemaContext.indexCache = indexCache
+    schemaContext.jsonSchemaRefGuide = jsonSchemaRefGuide
     schemaContext
   }
 
@@ -248,6 +252,10 @@ class ShapeParserContext(
   def getSemanticContext: Option[SemanticContext]            = semanticContext
   def withSemanticContext(sc: Option[SemanticContext]): Unit = semanticContext = sc
 
+  def copyForBase(unit: BaseUnit): ShapeParserContext = {
+    makeCopyWithJsonPointerContext().moveToReference(unit.location().get)
+  }
+
   protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/")) url.dropRight(1) else url
 
   private def findJsonPathIn(index: AstIndex, path: String): Option[YMapEntryLike] =
@@ -272,11 +280,10 @@ class ShapeParserContext(
     new ShapeParserContext(loc, refs, options, this, Some(declarations.copy()), nodeRefIds, settings)
   }
 
-  private def moveToReference(loc: String): this.type = {
+  protected def moveToReference(loc: String): this.type = {
     jsonSchemaRefGuide = jsonSchemaRefGuide.changeJsonSchemaSearchDestination(loc)
     this
   }
-
 
   case class DefaultSemanticExtensionsFacadeBuilder(annotationSchemaValidatorBuilder: AnnotationSchemaValidatorBuilder)
       extends SemanticExtensionsFacadeBuilder {

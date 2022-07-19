@@ -8,45 +8,42 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/japanese/oas/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/japanese/oas/"
-  override val hint: Hint          = Oas20YamlHint
 
   test("Documentation server params") {
-    validate("documentation-server-params.json", overridedHint = Some(Oas30JsonHint))
+    validate("documentation-server-params.json")
   }
 
   test("Documentation path and response description") {
     validate(
-      "documentation-path-and-response-description.json",
-      overridedHint = Some(Oas30JsonHint)
+      "documentation-path-and-response-description.json"
     )
   }
 
   test("Documentation path item description") {
-    validate("documentation-path-item-description.json", overridedHint = Some(Oas30JsonHint))
+    validate("documentation-path-item-description.json")
   }
 
   test("Documentation security schemes") {
-    validate("documentation-security-schemes.json", overridedHint = Some(Oas30JsonHint))
+    validate("documentation-security-schemes.json")
   }
 
   test("Facet string pattern valid") {
-    validate("facet-string-pattern-valid.yaml", overridedHint = Some(Oas30YamlHint))
+    validate("facet-string-pattern-valid.yaml")
   }
 
   test("Facet string pattern invalid") {
     validate(
       "facet-string-pattern-invalid.yaml",
-      Some("facet-string-pattern-invalid.report"),
-      overridedHint = Some(Oas30YamlHint)
+      Some("facet-string-pattern-invalid.report")
     )
   }
 
   test("Facet string length valid") {
-    validate("facet-string-length-valid.yaml", overridedHint = Some(Oas30YamlHint))
+    validate("facet-string-length-valid.yaml")
   }
 
   test("Extensions") {
-    validate("extensions.yaml", overridedHint = Some(Oas30YamlHint))
+    validate("extensions.yaml")
   }
 
   test("Security definitions") {
@@ -58,11 +55,11 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("JSON Schema include") {
-    validate("json-schema-include.yaml", overridedHint = Some(Oas30YamlHint))
+    validate("json-schema-include.yaml")
   }
 
   test("Documentation info") {
-    validate("documentation-info.json", overridedHint = Some(Oas30JsonHint))
+    validate("documentation-info.json")
   }
 
   test("Non ASCII header names OAS 2.0") {
@@ -72,8 +69,7 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   test("Non ASCII header names OAS 3.0") {
     validate(
       "non-ascii-headers-oas3.json",
-      Some("non-ascii-headers-oas3.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("non-ascii-headers-oas3.report")
     )
   }
 }

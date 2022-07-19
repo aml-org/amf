@@ -19,5 +19,4 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("ymap-exception/api.yaml", Some("ymap-exception.report"))
   }
 
-  override val hint: Hint = Oas20YamlHint
 }

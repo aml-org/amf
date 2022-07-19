@@ -71,24 +71,21 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Can validate correctly incorrect json schema properties for a certain json schema version") {
     validate(
       "examples/invalid-json-schema-version-properties.raml",
-      Some("invalid-json-schema-version-properties.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("invalid-json-schema-version-properties.report")
     )
   }
 
   test("Param in raml 0.8 api") {
     validate(
       "08/pattern.raml",
-      Some("pattern-08.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("pattern-08.report")
     )
   }
 
   test("Validation error raml 0.8 example 1") {
     validate(
       "08/validation_error1.raml",
-      Some("validation_error1.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("validation_error1.report")
     )
   }
 
@@ -104,8 +101,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Raml 0.8 Query Parameter Negative test case") {
     validate(
       "/08/date-query-parameter.raml",
-      Some("date-query-parameter.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("date-query-parameter.report")
     )
   }
 
@@ -163,8 +159,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("lock-unlock example test (raml dates)") {
     validate(
       "/examples/raml-dates/lockUnlockStats.raml",
-      Some("raml-dates-lockunlock.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("raml-dates-lockunlock.report")
     )
   }
 
@@ -246,7 +241,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Nullable example (null disjoint union)") {
-    validate("/examples/nullable-schema/api.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/nullable-schema/api.raml")
   }
 
   // validate enums here?
@@ -331,16 +326,14 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Json Schema Any Of valid example") {
-    validate("/json-schema-anyof/api.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/json-schema-anyof/api.raml")
   }
 
   test("Validate included xml examples") {
     validate(
       "/api-with-xml-examples/api.raml",
-      Some("api-with-xml-examples.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("api-with-xml-examples.report")
     )
   }
 
-  override val hint: Hint = Raml10YamlHint
 }

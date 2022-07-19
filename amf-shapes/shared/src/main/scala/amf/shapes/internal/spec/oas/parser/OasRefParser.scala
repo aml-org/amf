@@ -10,7 +10,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
-import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
+import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 import org.yaml.model.{YMap, YMapEntry, YPart, YType}
 
@@ -76,7 +76,7 @@ class OasRefParser(
         val resolvedRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, raw)
         (resolvedRef, resolvedRef)
       }
-    ctx.findJsonSchema(rawOrResolvedRef) match {
+    ctx.findCachedJsonSchema(rawOrResolvedRef) match {
       case Some(s) =>
         Some(createLinkToDeclaration(rawOrResolvedRef, s))
       case None if isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext =>
@@ -162,11 +162,11 @@ class OasRefParser(
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullUrl = UriUtils.resolveRelativeTo(ctx.rootContextDocument, ref)
-    ctx.findJsonSchema(fullUrl) match {
+    ctx.findCachedJsonSchema(fullUrl) match {
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
-        parseRemoteSchema(ref, fullUrl) match {
+        parseRemoteSchema(ref, fullUrl, Annotations(e.value)) match {
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
@@ -219,11 +219,7 @@ class OasRefParser(
     )
   }
 
-  private def parseRemoteSchema(ref: String, fullUrl: String): Option[AnyShape] = {
-    ctx.parseRemoteJSONPath(ref).map { shape =>
-      ctx.registerJsonSchema(fullUrl, shape)
-      ctx.futureDeclarations.resolveRef(ref, shape)
-      shape
-    }
+  private def parseRemoteSchema(ref: String, fullUrl: String, linkAnnotations: Annotations): Option[AnyShape] = {
+    RemoteJsonSchemaParser.parse(ref, fullUrl, linkAnnotations)
   }
 }

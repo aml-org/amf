@@ -65,7 +65,7 @@ class ValidOasModelParserTest extends ValidModelTest {
   }
 
   test("Callback definitions") {
-    validate("../upanddown/oas3/one-subscription-multiple-callbacks.json", overridedHint = Some(Oas30JsonHint))
+    validate("../upanddown/oas3/one-subscription-multiple-callbacks.json")
   }
 
   test("Security requirements") {
@@ -89,5 +89,4 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/http-with-hashtag/http-with-hashtag.json")
   }
 
-  override val hint: Hint = Oas20JsonHint
 }

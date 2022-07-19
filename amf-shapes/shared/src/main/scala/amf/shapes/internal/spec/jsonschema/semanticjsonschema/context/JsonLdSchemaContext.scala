@@ -168,8 +168,6 @@ abstract class JsonLdSchemaContext(ctx: ParserContext, settings: SpecSettings)
 
   override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion
 
-  override def parseRemoteJSONPath(ref: String): Option[AnyShape] = None
-
   override def getInheritedDeclarations: Option[ShapeDeclarations] = None
 
 }

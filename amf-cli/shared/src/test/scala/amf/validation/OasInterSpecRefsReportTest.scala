@@ -15,5 +15,4 @@ class OasInterSpecRefsReportTest extends UniquePlatformReportGenTest {
     validate("oas-raml-securityScheme/api.json", Some("oas-raml-securityScheme.report"))
   }
 
-  override val hint: Hint = Oas20JsonHint
 }

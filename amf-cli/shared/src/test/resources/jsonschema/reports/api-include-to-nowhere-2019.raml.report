@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/api-include-to-nowhere-2019.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found
+  Message: could not find json schema fragment /$defs/Unknown in file ../schemas/simple.json
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/jsonschema/apis/api-include-to-nowhere-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/inherits/any/schema
+  Property: 
+  Range: [(9,18)-(9,64)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/api-include-to-nowhere-2019.raml

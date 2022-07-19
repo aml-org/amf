@@ -1,0 +1,710 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.5.0",
+      "doc:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Some API",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/anEndpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api",
+      "sourcemaps:value": "[(2,0)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint",
+      "sourcemaps:value": "[(3,0)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:path",
+      "sourcemaps:value": "[(3,0)-(3,11)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "@type": [
+        "apiContract:Payload",
+        "core:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get",
+      "sourcemaps:value": "[(4,2)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:returns",
+      "sourcemaps:value": "[(5,4)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "application/json",
+      "raml-shapes:inherits": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200",
+      "sourcemaps:value": "[(6,6)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:payload",
+      "sourcemaps:value": "[(7,8)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/references/0/declares/shape/Person"
+        }
+      ],
+      "doc:link-label": "../schemas/simple-2019.json#/$defs/Person",
+      "shacl:name": "schema",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "sourcemaps:value": "[(8,10)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson",
+      "sourcemaps:value": "[(8,27)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/source-map/lexical/element_0",
+      "sourcemaps:element": "raml-shapes:inherits",
+      "sourcemaps:value": "[(9,12)-(10,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/inherits/shape/schema",
+      "sourcemaps:value": "[(9,18)-(9,68)]"
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#/references/0"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/references/0",
+      "@type": [
+        "doc:JsonSchemaDocument",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:schemaVersion": "http://json-schema.org/draft/2019-09/schema#",
+      "doc:encodes": {
+        "@id": "#/references/0/any/schema"
+      },
+      "doc:declares": [
+        {
+          "@id": "#/references/0/declares/shape/Person"
+        }
+      ],
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/references/0/BaseUnitProcessingData"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "core:name": "My Schemas",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/any/schema/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name"
+        },
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age"
+        }
+      ],
+      "shacl:name": "Person",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:sourceSpec": "JSON Schema"
+    },
+    {
+      "@id": "#/references/0/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/any/schema/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/any/schema/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/references/0/any/schema/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#age"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "age",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_1"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/source-map/lexical/element_0",
+      "sourcemaps:element": "doc:schemaVersion",
+      "sourcemaps:value": "[(2,2)-(2,59)]"
+    },
+    {
+      "@id": "#/references/0/any/schema/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/any/schema",
+      "sourcemaps:value": "[(1,0)-(16,1)]"
+    },
+    {
+      "@id": "#/references/0/any/schema/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(3,2)-(3,23)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:name": "age",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:closed",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_2",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(6,6)-(13,7)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:name",
+      "sourcemaps:value": "[(5,4)-(5,12)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person",
+      "sourcemaps:value": "[(5,4)-(14,5)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person",
+      "sourcemaps:value": ""
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/name",
+      "sourcemaps:value": "[(7,8)-(9,9)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/age",
+      "sourcemaps:value": "[(10,8)-(12,9)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/name/scalar/name",
+      "sourcemaps:value": "[(8,10)-(8,16)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/name/scalar/name",
+      "sourcemaps:value": "[(7,8)-(9,9)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(8,10)-(8,26)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/age/scalar/age",
+      "sourcemaps:value": "[(11,10)-(11,16)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml#/references/0/declares/shape/Person/property/property/age/scalar/age",
+      "sourcemaps:value": "[(10,8)-(12,9)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/property/property/age/scalar/age/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(11,10)-(11,27)]"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api-2019.raml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+  }
+}

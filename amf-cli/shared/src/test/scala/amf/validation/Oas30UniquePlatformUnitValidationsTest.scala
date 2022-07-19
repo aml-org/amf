@@ -7,7 +7,6 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas3/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas3/"
   val resolutionPath               = "file://amf-cli/shared/src/test/resources/resolution/"
-  override val hint: Hint          = Oas30YamlHint
 
   test("'Paths' property is required") {
     validate("paths-property.json", Some("paths-property.report"))
@@ -61,8 +60,7 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("invalid query parameter schema") {
     validate(
       "invalid-query-parameter-schema.json",
-      Some("invalid-query-parameter-schema.report"),
-      overridedHint = Some(Oas20JsonHint)
+      Some("invalid-query-parameter-schema.report")
     )
   }
 
@@ -111,11 +109,11 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json", Some("duplicate-keys.report"), overridedHint = Some(Oas30JsonHint))
+    validate("duplicate-keys.json", Some("duplicate-keys.report"))
   }
 
   test("Valid $ref with array indices in pointer") {
-    validate("ref-with-array-indices.json", None, overridedHint = Some(Oas30JsonHint))
+    validate("ref-with-array-indices.json", None)
   }
 
   test("'type' facet of types produces a violation") {

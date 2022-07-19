@@ -362,6 +362,16 @@ object ShapeParserSideValidations extends Validations {
     "$schema entry is mandatory for JSON Schema fragments"
   )
 
+  val JsonSchemaDefinitionNotFound = validation(
+    "json-schema-definition-not-found",
+    "Json schema definition not found"
+  )
+
+  val InvalidJsonSchemaReference = validation(
+    "invalid-json-schema-reference",
+    "Invalid JsonSchema reference"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -413,6 +423,8 @@ object ShapeParserSideValidations extends Validations {
     ClosedShapeSpecification,
     ClosedShapeSpecificationWarning,
     MandatorySchema,
-    UnknownSchemaDraft
+    UnknownSchemaDraft,
+    JsonSchemaDefinitionNotFound,
+    InvalidJsonSchemaReference
   )
 }

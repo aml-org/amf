@@ -14,12 +14,12 @@ import org.yaml.model.{YDocument, YMap, YNode}
 
 object JsonSchemaRootCreator {
 
-  def createRootFrom(inputFragment: Fragment, pointer: Option[String], errorHandler: AMFErrorHandler): Root = {
+  def createRootFrom(inputFragment: BaseUnit, pointer: Option[String], errorHandler: AMFErrorHandler): Root = {
     val encoded: YNode = getYNodeFrom(inputFragment, errorHandler)
     createRoot(inputFragment, pointer, encoded)
   }
 
-  def getYNodeFrom(inputFragment: Fragment, errorHandler: AMFErrorHandler): YNode = {
+  def getYNodeFrom(inputFragment: BaseUnit, errorHandler: AMFErrorHandler): YNode = {
     inputFragment match {
       case fragment: ExternalFragment => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
       case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, errorHandler)
@@ -34,10 +34,10 @@ object JsonSchemaRootCreator {
     }
   }
 
-  private def parsedFragment(inputFragment: Fragment, eh: AMFErrorHandler) =
+  private def parsedFragment(inputFragment: BaseUnit, eh: AMFErrorHandler) =
     parser.JsonYamlParser(inputFragment)(eh).document().node
 
-  private def createRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
+  private def createRoot(inputFragment: BaseUnit, pointer: Option[String], encoded: YNode): Root = {
     Root(
       SyamlParsedDocument(YDocument(encoded)),
       buildJsonReference(inputFragment, pointer),
@@ -48,7 +48,7 @@ object JsonSchemaRootCreator {
     )
   }
 
-  private def buildJsonReference(inputFragment: Fragment, pointer: Option[String]) = {
+  private def buildJsonReference(inputFragment: BaseUnit, pointer: Option[String]) = {
     val url = inputFragment.location().getOrElse(inputFragment.id)
     JsonReference(url, pointer).toString
   }

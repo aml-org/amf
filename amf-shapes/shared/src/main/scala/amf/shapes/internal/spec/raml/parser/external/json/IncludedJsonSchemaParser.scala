@@ -1,9 +1,12 @@
 package amf.shapes.internal.spec.raml.parser.external.json
 
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
+import amf.shapes.internal.spec.contexts.ReferenceFinder
+import amf.shapes.internal.spec.jsonschema.parser.document.JsonSchemaLinker
 import amf.shapes.internal.spec.raml.parser.external.ValueAndOrigin
 import org.yaml.model.YNode
 
@@ -15,11 +18,22 @@ case class IncludedJsonSchemaParser(key: YNode, ast: YNode)(implicit ctx: ShapeP
     findInExternals(basePath, normalizedLocalPath) match {
       case Some(s) =>
         copyExternalShape(basePath, s, localPath)
+      case _ if isIncludeToJsonSchemaDoc(url) =>
+        JsonSchemaLinker.linkShapeIn(url, origin.valueAST).getOrElse(AnyShape())
       case _ if isInnerSchema(normalizedLocalPath) =>
         JsonSchemaDefinitionsParser.parse(key, origin, basePath, localPath, normalizedLocalPath)
       case _ =>
         new LegacyRootJsonSchemaParser(key, ast).parse(origin, basePath)
     }
+  }
+
+  private def isIncludeToJsonSchemaDoc(include: String): Boolean = {
+    ReferenceFinder
+      .findJsonReferencedUnit(include, ctx)
+      .collect { case unit: JsonSchemaDocument =>
+        unit
+      }
+      .isDefined
   }
 
   private def findInExternals(basePath: String, normalizedLocalPath: Option[String]) = {
