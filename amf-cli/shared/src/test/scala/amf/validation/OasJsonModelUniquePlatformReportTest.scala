@@ -97,179 +97,157 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Response status code wildcards") {
     validate(
       "../upanddown/oas3/response-code-wildcards.json",
-      Some("response-code-wildcards.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("response-code-wildcards.report")
     )
   }
 
   test("Response object with no description") {
     validate(
       "../upanddown/oas3/response-no-description.json",
-      Some("response-missing-description.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("response-missing-description.report")
     )
   }
 
   test("Unique name for tags") {
     validate(
       "../upanddown/oas3/unique-name-for-tags.json",
-      Some("unique-name-for-tags.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("unique-name-for-tags.report")
     )
   }
 
   test("Valid format of email address") {
     validate(
       "../upanddown/oas3/invalid-email-address.json",
-      Some("invalid-email-address.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("invalid-email-address.report")
     )
   }
 
   test("Request body must define content field, discriminator must define propertyName") {
     validate(
       "../upanddown/oas3/request-body-and-discriminator-required-fields.json",
-      Some("request-body-and-discriminator-required-fields.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("request-body-and-discriminator-required-fields.report")
     )
   }
 
   test("Mutually exclusive fields in example") {
     validate(
       "../upanddown/oas3/basic-content.json",
-      Some("example-mutually-exclusive-fields.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("example-mutually-exclusive-fields.report")
     )
   }
 
   test("Components must use keys with certain regex") {
     validate(
       "../upanddown/oas3/components/invalid-component-keys.json",
-      Some("components-regex.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("components-regex.report")
     )
   }
 
   test("Parameter must define a schema or content property") {
     validate(
       "../upanddown/oas3/basic-parameters/parameter-schema-and-content.json",
-      Some("param-schema-or-content.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("param-schema-or-content.report")
     )
   }
 
   test("Parameter content must contain only one entry") {
     validate(
       "../upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json",
-      Some("parameter-multiple-content-entries.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("parameter-multiple-content-entries.report")
     )
   }
 
   test("OAS 3 schema object validations") {
     validate(
       "../upanddown/oas3/schema-definitions.json",
-      Some("oas3-schema-validations.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("oas3-schema-validations.report")
     )
   }
 
   test("Templated paths with same hierarchy must not exist") {
     validate(
       "oas3/paths-with-same-hierarchy.json",
-      Some("paths-with-same-hierarchy.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("paths-with-same-hierarchy.report")
     )
   }
 
   test("Fields with mandatory valid URLs") {
-    validate("oas3/invalid-urls.json", Some("invalid-urls.report"), overridedHint = Some(Oas30JsonHint))
+    validate("oas3/invalid-urls.json", Some("invalid-urls.report"))
   }
 
   test("Server variables with missing default field") {
     validate(
       "oas3/server-variable-missing-field.json",
-      Some("server-variable-missing-default-field.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("server-variable-missing-default-field.report")
     )
   }
 
   test("Security requirement object with non empty scopes array") {
     validate(
       "oas3/security-definition-non-empty-scopes.json",
-      Some("security-requirement-non-empty-scopes.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("security-requirement-non-empty-scopes.report")
     )
   }
 
   test("Security schemes validations") {
     validate(
       "oas3/invalid-security-schemes.json",
-      Some("invalid-security-schemes.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("invalid-security-schemes.report")
     )
   }
 
   test("Runtime expression validations") {
     validate(
       "oas3/runtime-expressions.json",
-      Some("runtime-expressions.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("runtime-expressions.report")
     )
   }
 
   test("Unresolved refs defined in components") {
     validate(
       "oas3/unresolved-refs-in-components.json",
-      Some("unresolved-refs-in-components.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("unresolved-refs-in-components.report")
     )
   }
 
   test("Unresolved ref in schema") {
     validate(
       "oas3/unresolved-ref-in-schema.json",
-      Some("unresolved-ref-in-schema.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("unresolved-ref-in-schema.report")
     )
   }
 
   test("Closed shape schema on response node") {
     validate(
       "oas3/schema-on-response-node.json",
-      Some("schema-on-response-node.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("schema-on-response-node.report")
     )
   }
 
   test("Invalid type in operation tags") {
     validate(
       "oas3/invalid-tags-type.json",
-      Some("invalid-tags-type.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("invalid-tags-type.report")
     )
   }
 
   test("Multiple link references") {
-    validate("oas3/multiple-links2.json", overridedHint = Some(Oas30JsonHint))
+    validate("oas3/multiple-links2.json")
   }
 
   test("Multiple link references 2") {
-    validate("oas3/multiple-links3.json", overridedHint = Some(Oas30JsonHint))
+    validate("oas3/multiple-links3.json")
 
   }
 
   test("Closed shape in components, servers, and example") {
     validate(
       "oas3/oas3-closed-shapes.json",
-      Some("oas3-closed-shapes.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("oas3-closed-shapes.report")
     )
   }
 
   test("Json Ref - Invalid path in valid external fragment") {
     validate("oas2/invalid-ref-valid-fragment/api.json", Some("invalid-ref-valid-fragment.report"))
   }
-
-  override val hint: Hint = Oas20JsonHint
 }

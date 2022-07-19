@@ -41,7 +41,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Raml 0.8 Query Parameter Positive test case") {
-    validate("/08/date-query-parameter-correct.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/08/date-query-parameter-correct.raml")
   }
 
   test("Ignore empty example") {
@@ -53,7 +53,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Empty payload with example validation") {
-    validate("/08/empty-payload-with-example.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/08/empty-payload-with-example.raml")
   }
 
   test("Invalid yaml with scalar an map as value") {
@@ -69,7 +69,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test validation of body with only example (default any shape)") {
-    validate("/examples/only-example-body.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/only-example-body.raml")
   }
 
   test("Test seq in seq example") {
@@ -99,8 +99,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test invalid responses api (2)") {
     validate(
       "/production/responses-invalid-2.raml",
-      golden = Some("production_responses_invalid_2.report"),
-      overridedHint = Some(Raml08YamlHint)
+      golden = Some("production_responses_invalid_2.report")
     )
   }
 
@@ -115,8 +114,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test valid api with type problems 1") {
     validate(
       "/production/type_problems1.raml",
-      golden = Some("type_problems1.report"),
-      overridedHint = Some(Raml08YamlHint)
+      golden = Some("type_problems1.report")
     )
   }
 
@@ -169,7 +167,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Include twice same json schema and add example in raml 08") {
-    validate("/examples/reuse-json-schema/api.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/reuse-json-schema/api.raml")
   }
 
   test("Date format not SYaml timestamp") {
@@ -194,7 +192,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   // xml example in any shape types are no more candidates, so there is no warning
   test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/unsupported-examples-08.raml")
   }
 
   test("Test json quoted string example") {
@@ -238,11 +236,11 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test double with .00 against integer") {
-    validate("/examples/double-against-integer/api.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/double-against-integer/api.raml")
   }
 
   test("Test raml 08 with 2 schemas that contains definitions with same name but different content") {
-    validate("/examples/schemas-with-definition.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/examples/schemas-with-definition.raml")
   }
 
   test("Test union of a type and an array of that type") {
@@ -266,5 +264,4 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   }
 
-  override val hint: Hint = Raml10YamlHint
 }

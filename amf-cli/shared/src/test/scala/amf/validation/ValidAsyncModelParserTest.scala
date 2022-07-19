@@ -119,5 +119,5 @@ class ValidAsyncModelParserTest extends ValidModelTest {
   }
 
   override val basePath: String = "file://amf-cli/shared/src/test/resources/validations/async20/"
-  override val hint: Hint       = Async20YamlHint
+
 }

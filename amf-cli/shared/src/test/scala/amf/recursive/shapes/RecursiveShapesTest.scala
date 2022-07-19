@@ -17,9 +17,6 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/recursives/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/recursives/"
-  override val hint: Hint          = Raml10YamlHint
-
-  override protected lazy val defaultProfile: ProfileName = Raml10Profile
 
   private case class RecursiveShapeFixture(api: String, report: String, oasGoldenPath: String)
   private val fixture: Seq[RecursiveShapeFixture] =

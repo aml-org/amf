@@ -5,8 +5,8 @@ import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
-  override val basePath = "file://amf-cli/shared/src/test/resources/validations"
-
+  override val basePath            = "file://amf-cli/shared/src/test/resources/validations"
+  override val hint: Hint          = Raml10YamlHint
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/resolution/"
 
   test("Complex union resolution") {
@@ -148,7 +148,7 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Test inner reference inside json schema") {
-    validate("/json-inner-ref/case1/api.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/json-inner-ref/case1/api.raml")
   }
 
   test("Test example and jsonschema with same name in diff folder") {
@@ -191,5 +191,4 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     )
   }
 
-  override val hint: Hint = Raml10YamlHint
 }

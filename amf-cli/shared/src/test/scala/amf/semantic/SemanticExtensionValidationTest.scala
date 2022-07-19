@@ -18,11 +18,10 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/semantic/validation/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/semantic/validation/reports/"
-  override val hint: Hint          = Raml10YamlHint
 
   test("Validate scalar semantic extensions in RAML 1.0 api") {
     getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
-      validate("api.raml", Some("api.raml.report"), overridedHint = Some(Raml10YamlHint), configOverride = Some(config))
+      validate("api.raml", Some("api.raml.report"), configOverride = Some(config))
     }
   }
 
@@ -31,7 +30,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "api.oas20.yaml",
         Some("api.oas20.report"),
-        overridedHint = Some(Oas20YamlHint),
         configOverride = Some(config)
       )
     }
@@ -42,7 +40,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "api.oas30.yaml",
         Some("api.oas30.report"),
-        overridedHint = Some(Oas30YamlHint),
         configOverride = Some(config)
       )
     }
@@ -53,7 +50,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "api.async.yaml",
         Some("api.async.report"),
-        overridedHint = Some(Async20YamlHint),
         configOverride = Some(config)
       )
     }
@@ -64,7 +60,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "unresolved-link-api.oas30.yaml",
         Some("unresolved-link-api.oas30.report"),
-        overridedHint = Some(Oas30YamlHint),
         configOverride = Some(config.withErrorHandlerProvider(() => DefaultErrorHandler()))
       )
     }
@@ -75,7 +70,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "api-without-schema.raml",
         Some("api-without-schema.raml.report"),
-        overridedHint = Some(Raml10YamlHint),
         configOverride = Some(config)
       )
     }
@@ -86,7 +80,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "api-not-any-schema.raml",
         Some("api-not-any-schema.raml.report"),
-        overridedHint = Some(Raml10YamlHint),
         configOverride = Some(config)
       )
     }
@@ -97,7 +90,6 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
       validate(
         "../api-endpoint-operation.raml",
         None,
-        overridedHint = Some(Raml10YamlHint),
         configOverride = Some(config)
       )
     }

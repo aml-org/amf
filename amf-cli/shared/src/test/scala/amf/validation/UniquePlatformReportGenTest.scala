@@ -20,15 +20,6 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String
   val reportsPath: String
-  val hint: Hint
-
-  protected lazy val defaultProfile: ProfileName = hint.spec match {
-    case Raml10 => Raml10Profile
-    case Raml08 => Raml08Profile
-    case Oas20  => Oas20Profile
-    case Oas30  => Oas30Profile
-    case _      => AmfProfile
-  }
 
   protected def generate(report: AMFValidationReport): String = {
     report.toString
@@ -51,15 +42,13 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   protected def validate(
       api: String,
       golden: Option[String] = None,
-      overridedHint: Option[Hint] = None,
       directory: String = basePath,
       configOverride: Option[AMFConfiguration] = None,
       hideValidationResultsIfParseNotConforms: Boolean = true
   ): Future[Assertion] = {
     val initialConfig = configOverride.getOrElse(APIConfiguration.API())
-    val finalHint     = overridedHint.getOrElse(hint)
     for {
-      parseResult <- parse(directory + api, initialConfig, finalHint)
+      parseResult <- parse(directory + api, initialConfig)
       report <- configOverride
         .getOrElse(configFor(parseResult.sourceSpec))
         .baseUnitClient()
@@ -76,7 +65,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     }
   }
 
-  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint) = {
+  protected def parse(path: String, conf: AMFConfiguration) = {
     val client = conf.baseUnitClient()
     client.parse(path)
   }
@@ -93,6 +82,8 @@ trait MultiPlatformReportGenTest extends AMFValidationReportGenTest {
 }
 
 trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest {
+
+  val hint: Hint
 
   protected def checkReport(
       api: String,
@@ -114,12 +105,12 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     }
   }
 
-  private def profileToHint(profile: ProfileName): Hint = {
-    profile match {
-      case Oas20Profile => Oas20JsonHint
-      case Oas30Profile => Hint(Oas30, Yaml)
-      case _            => Raml10YamlHint
-    }
+  protected def defaultProfile: ProfileName = hint.spec match {
+    case Raml10 => Raml10Profile
+    case Raml08 => Raml08Profile
+    case Oas20  => Oas20Profile
+    case Oas30  => Oas30Profile
+    case _      => AmfProfile
   }
 }
 

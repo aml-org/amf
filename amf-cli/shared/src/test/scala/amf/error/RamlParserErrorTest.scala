@@ -166,7 +166,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       exclusive1Warning => {
         exclusive1Warning.severityLevel should be("Warning")
         exclusive1Warning.message should startWith(
-          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+        )
         exclusive1Warning.position.map(_.range) should be(Some(PositionRange((8, 4), (8, 10))))
       },
       exclusive2 => {
@@ -177,7 +178,8 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       exclusive2Warning => {
         exclusive2Warning.severityLevel should be("Warning")
         exclusive2Warning.message should startWith(
-          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+        )
         exclusive2Warning.position.map(_.range) should be(Some(PositionRange((17, 12), (17, 18))))
 
       }
@@ -536,11 +538,9 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       }
     )
   }
-  override val hint: Hint = Raml10YamlHint
 }
 
 class Raml08ParserErrorTest extends RamlParserErrorTest {
-  override val hint: Hint = Raml08YamlHint
 
   test("Test swap between referenced schema and example") {
     validate(
@@ -621,6 +621,4 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
 
 trait RamlParserErrorTest extends ParserErrorTest {
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/raml/"
-
-  val hint: Hint
 }

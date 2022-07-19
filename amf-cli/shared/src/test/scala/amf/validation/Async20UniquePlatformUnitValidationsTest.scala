@@ -8,7 +8,6 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
-  override val hint: Hint          = Async20YamlHint
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"))
@@ -235,8 +234,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("JSON with duplicate keys") {
     validate(
       "duplicate-keys.json",
-      Some("duplicate-keys.report"),
-      overridedHint = Some(Async20JsonHint)
+      Some("duplicate-keys.report")
     )
   }
 
