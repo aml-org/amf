@@ -42,6 +42,12 @@ class JsonSchemaPluginSetupTest extends AsyncFunSuite with Matchers with FileAss
     }
   }
 
+  test("JsonSchemaParsePlugin plugin isn't called with an invalid draft") {
+    recoverToSucceededIf[UnsupportedDomainForDocumentException] {
+      parse("invalid-draft.json")
+    }
+  }
+
   test("JsonSchemaRenderPlugin renders a JsonSchemaDocument") {
     parse("simple.json")
       .map { parsed =>

@@ -372,6 +372,11 @@ object ShapeParserSideValidations extends Validations {
     "Invalid JsonSchema reference"
   )
 
+  val MultipleDefinitionKey = validation(
+    "multiple-def-key",
+    "Multiple definition keys found in the JSON Schema"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -425,6 +430,7 @@ object ShapeParserSideValidations extends Validations {
     MandatorySchema,
     UnknownSchemaDraft,
     JsonSchemaDefinitionNotFound,
-    InvalidJsonSchemaReference
+    InvalidJsonSchemaReference,
+    MultipleDefinitionKey
   )
 }

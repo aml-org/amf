@@ -77,8 +77,11 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
     }
   }
 
-  private def declarationsKey(version: JSONSchemaVersion) = version match {
-    case JSONSchemaDraft201909SchemaVersion => "$defs"
-    case _                                  => "definitions"
+  private def declarationsKey(version: JSONSchemaVersion): Seq[String] = version match {
+    case JSONSchemaDraft201909SchemaVersion => Seq($defKey, definitionsKey)
+    case _                                  => Seq(definitionsKey)
   }
+
+  final val definitionsKey  = "definitions"
+  final val $defKey: String = "$defs"
 }
