@@ -10,6 +10,11 @@ import amf.apicontract.internal.metamodel.domain.security.{
 }
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
+import amf.apicontract.internal.validation.shacl.graphql.{
+  GraphQLAppliedDirective,
+  GraphQLArgumentValidator,
+  GraphQLObject
+}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
@@ -99,8 +104,8 @@ object CustomShaclFunctions {
     new CustomShaclFunction {
       override val name: String = "GraphQLArgumentDefaultValueTypeValidation"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-        val node              = element.asInstanceOf[NodeShape]
-        val validationResults = GraphQLArgumentValidator.validateDefaultValues(node)
+        val obj               = GraphQLObject(element.asInstanceOf[NodeShape])
+        val validationResults = GraphQLArgumentValidator.validateDefaultValues(obj)
         validationResults.foreach(info => validate(Some(info)))
       }
     },
