@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/schemas/multiple-declarations-key.json
+Profile: 
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#multiple-def-key
+  Message: Multiple definition keys found in the JSON Schema. You should use only one of them: $defs, definitions
+  Severity: Warning
+  Target: 
+  Property: 
+  Range: [(1,0)-(28,1)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/schemas/multiple-declarations-key.json

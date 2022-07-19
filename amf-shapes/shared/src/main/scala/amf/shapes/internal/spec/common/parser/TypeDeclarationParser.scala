@@ -31,7 +31,6 @@ object TypeDeclarationParser {
   ): Unit = {
     val foundDefKeys = definitionsKeys.flatMap(map.key(_))
     if (foundDefKeys.size > 1) { // If there is more than 1 definition key present in the map
-      // TODO add test in the new validation suite
       ctx.eh.warning(
         specification = MultipleDefinitionKey,
         node = "",
