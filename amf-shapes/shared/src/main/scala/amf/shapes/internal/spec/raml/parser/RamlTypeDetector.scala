@@ -94,7 +94,7 @@ case class RamlTypeDetector(
 
   private def isIncludeToJsonSchemaDoc(include: String): Boolean = {
     ReferenceFinder
-      .findJsonReferencedUnit(include, ctx)
+      .findJsonReferencedUnit(include, include, ctx.refs)
       .collect { case unit: JsonSchemaDocument =>
         unit
       }

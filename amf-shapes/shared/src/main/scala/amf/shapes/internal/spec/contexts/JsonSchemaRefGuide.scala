@@ -31,7 +31,7 @@ case class JsonSchemaRefGuide(currentLoc: String, currentUnit: Option[BaseUnit],
     if (!context.validateRefFormatWithError(ref)) return None
     val fileUrl      = getFileUrl(ref, currentLoc)
     val referenceUrl = getJsonReferenceFragment(fileUrl)
-    obtainFragmentFromFullRef(fileUrl) map (fragment => (fragment, referenceUrl))
+    obtainFragmentFromFullRef(fileUrl, ref) map (fragment => (fragment, referenceUrl))
   }
 
   def changeJsonSchemaSearchDestination(loc: String): JsonSchemaRefGuide = {
@@ -43,9 +43,9 @@ case class JsonSchemaRefGuide(currentLoc: String, currentUnit: Option[BaseUnit],
       .getOrElse(this)
   }
 
-  private def obtainFragmentFromFullRef(fileUrl: String): Option[BaseUnit] = {
+  private def obtainFragmentFromFullRef(fileUrl: String, rawRef: String): Option[BaseUnit] = {
     // TODO: the json schema ref guide should not have doubled state. It should get its references from the context maybe ?? Or remove the context
-    ReferenceFinder.findJsonReferencedUnit(fileUrl, references) collectFirst {
+    ReferenceFinder.findJsonReferencedUnit(fileUrl, rawRef, references) collectFirst {
       case unit: JsonSchemaDocument => unit
       case unit: ExternalFragment   => unit
       case unit: RecursiveUnit      => unit
