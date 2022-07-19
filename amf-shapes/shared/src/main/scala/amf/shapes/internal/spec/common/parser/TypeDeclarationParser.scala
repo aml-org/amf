@@ -4,18 +4,50 @@ import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.{YMapOps, _}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseShape
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MultipleDefinitionKey, UnableToParseShape}
 import org.yaml.model.{YMap, YScalar}
-import amf.core.internal.parser._
 
 object TypeDeclarationParser {
 
   def parseTypeDeclarations(map: YMap, definitionsKey: String, declarationKeysHolder: Option[DeclarationKeyCollector])(
       implicit ctx: ShapeParserContext
+  ): List[AnyShape] = parseTypeDeclarations(map, Seq(definitionsKey), declarationKeysHolder)
+
+  def parseTypeDeclarations(
+      map: YMap,
+      definitionsKeys: Seq[String],
+      declarationKeysHolder: Option[DeclarationKeyCollector]
+  )(implicit ctx: ShapeParserContext): List[AnyShape] = {
+    validateMultipleDeclarationKeys(map, definitionsKeys)
+    definitionsKeys.flatMap(defKey => parseDeclarationMap(map, defKey, declarationKeysHolder)).toList
+  }
+
+  private def validateMultipleDeclarationKeys(map: YMap, definitionsKeys: Seq[String])(implicit
+      ctx: ShapeParserContext
+  ): Unit = {
+    val foundDefKeys = definitionsKeys.flatMap(map.key(_))
+    if (foundDefKeys.size > 1) { // If there is more than 1 definition key present in the map
+      // TODO add test in the new validation suite
+      ctx.eh.warning(
+        specification = MultipleDefinitionKey,
+        node = "",
+        message =
+          MultipleDefinitionKey.message + s". You should use only one of them: ${definitionsKeys.mkString(", ")}",
+        location = map.location
+      )
+    }
+  }
+
+  private def parseDeclarationMap(
+      map: YMap,
+      definitionsKey: String,
+      declarationKeysHolder: Option[DeclarationKeyCollector]
+  )(implicit
+      ctx: ShapeParserContext
   ): List[AnyShape] = {
     map.key(definitionsKey).toList.flatMap { entry =>
       declarationKeysHolder.foreach(_.addDeclarationKey(DeclarationKey(entry)))
