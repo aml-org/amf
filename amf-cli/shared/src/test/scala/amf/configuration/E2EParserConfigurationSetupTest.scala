@@ -21,44 +21,60 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
     generateExpectedDocumentParseFixtures(
       "raml10-api.raml",
       Spec.RAML10,
-      List(apiConfig, webApiConfig, ramlConfig, raml10Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, ramlConfig, raml10Config)
     ),
     generateExpectedDocumentParseFixtures(
       "raml08-api.raml",
       Spec.RAML08,
-      List(apiConfig, webApiConfig, ramlConfig, raml08Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, ramlConfig, raml08Config)
     ),
     generateExpectedDocumentParseFixtures(
       "oas20-api.json",
       Spec.OAS20,
-      List(apiConfig, webApiConfig, oasConfig, oas20Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, oasConfig, oas20Config)
     ),
     generateExpectedDocumentParseFixtures(
       "oas20-api.yaml",
       Spec.OAS20,
-      List(apiConfig, webApiConfig, oasConfig, oas20Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, oasConfig, oas20Config)
     ),
     generateExpectedDocumentParseFixtures(
       "oas30-api.json",
       Spec.OAS30,
-      List(apiConfig, webApiConfig, oasConfig, oas30Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, oasConfig, oas30Config)
     ),
     generateExpectedDocumentParseFixtures(
       "oas30-api.yaml",
       Spec.OAS30,
-      List(apiConfig, webApiConfig, oasConfig, oas30Config)
+      List(apiWithJsonSchema, apiConfig, webApiConfig, oasConfig, oas30Config)
     ),
     generateExpectedDocumentParseFixtures(
       "async-api.yaml",
       Spec.ASYNC20,
-      List(apiConfig, async20Config),
+      List(apiWithJsonSchema, apiConfig, async20Config),
       List(webApiConfig)
     ),
     generateExpectedDocumentParseFixtures(
       "async-api.json",
       Spec.ASYNC20,
-      List(apiConfig, async20Config),
+      List(apiWithJsonSchema, apiConfig, async20Config),
       List(webApiConfig)
+    ),
+    generateExpectedDocumentParseFixtures(
+      "jsonSchema.json",
+      Spec.JSONSCHEMA,
+      List(apiWithJsonSchema, jsonSchema),
+      List(
+        apiConfig,
+        webApiConfig,
+        ramlConfig,
+        raml10Config,
+        raml08Config,
+        oas20Config,
+        oas30Config,
+        oasConfig,
+        async20Config
+      )
     ),
     expectExternalFragment("async-api.yaml", Spec.ASYNC20, List(webApiConfig)),
     expectExternalFragment("async-api.json", Spec.ASYNC20, List(webApiConfig))
