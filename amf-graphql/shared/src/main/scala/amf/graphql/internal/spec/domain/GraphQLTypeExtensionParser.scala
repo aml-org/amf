@@ -1,14 +1,14 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.Shape
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
-    val ctx: GraphQLWebApiContext
+    val ctx: GraphQLBaseWebApiContext
 ) extends GraphQLASTParserHelper {
 
   def parse(): Shape = {

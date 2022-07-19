@@ -1,0 +1,3 @@
+input Person @key(fields: "name"){
+    name: String @external
+}

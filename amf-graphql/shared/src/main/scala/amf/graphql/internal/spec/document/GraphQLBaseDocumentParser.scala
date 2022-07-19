@@ -13,15 +13,16 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
-import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain._
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node, Terminal}
 
-case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWebApiContext)
+    extends GraphQLASTParserHelper {
 
   // default values, can be changed through a schema declaration
   var QUERY_TYPE        = "Query"
@@ -43,6 +44,9 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       case _ => // nil
     }
     ctx.declarations.futureDeclarations.resolve()
+    inFederation { implicit fCtx =>
+      fCtx.linkingActions.executeAll()
+    }
     doc
       .withDeclares(
         ctx.declarations.shapes.values.toList ++

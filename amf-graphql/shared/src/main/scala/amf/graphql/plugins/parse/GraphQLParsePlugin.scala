@@ -14,7 +14,7 @@ import amf.core.client.scala.parse.document.{
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{GraphQL, Spec, Syntax}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
-import amf.graphql.internal.spec.document.GraphQLDocumentParser
+import amf.graphql.internal.spec.document.GraphQLBaseDocumentParser
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{DEFINITION, DOCUMENT, TYPE_SYSTEM_DEFINITION}
 import org.mulesoft.antlrast.ast.Node
@@ -23,7 +23,7 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
   override def spec: Spec = GraphQL
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    GraphQLDocumentParser(document)(context(document, ctx)).parseDocument()
+    GraphQLBaseDocumentParser(document)(context(document, ctx)).parseDocument()
   }
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =

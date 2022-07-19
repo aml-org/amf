@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations, ScalarValueParser}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
@@ -11,7 +11,7 @@ import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
 
-case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val directive: CustomDomainProperty = CustomDomainProperty(toAnnotations(node))
 
@@ -83,7 +83,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     }
   }
 
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLWebApiContext): Unit = {
+  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
     val arguments = directive.schema.asInstanceOf[NodeShape].properties
     checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
   }

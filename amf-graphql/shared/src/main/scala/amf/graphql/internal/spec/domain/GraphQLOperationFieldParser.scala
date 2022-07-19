@@ -1,14 +1,15 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
+import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
 
@@ -19,6 +20,9 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     parseArguments()
     checkArgumentsAreUnique()
     parseRange()
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     GraphQLDirectiveApplicationParser(ast, operation).parse()
   }
 
@@ -37,6 +41,9 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
       queryParam.withDescription(cleanDocumentation(desc.value))
     }
 
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
         val schema = ScalarValueParser.putDefaultValue(n, shape)
@@ -65,7 +72,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     response.withPayload(payload)
   }
 
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLWebApiContext): Unit = {
+  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
     val arguments = operation.request.queryParameters
     checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
   }

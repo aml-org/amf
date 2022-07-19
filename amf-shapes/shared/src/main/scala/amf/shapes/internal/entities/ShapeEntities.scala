@@ -5,6 +5,7 @@ import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.shapes.internal.document.metamodel.{DataTypeFragmentModel, JsonSchemaDocumentModel}
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.federation._
 import amf.shapes.internal.domain.metamodel.operations._
 
 private[amf] object ShapeEntities extends Entities {
@@ -45,6 +46,9 @@ private[amf] object ShapeEntities extends Entities {
     AbstractRequestModel,
     AbstractResponseModel,
     DataTypeFragmentModel,
-    JsonSchemaDocumentModel
+    JsonSchemaDocumentModel,
+    ExternalPropertyShapeModel,
+    KeyModel,
+    PropertyKeyMappingModel
   )
 }

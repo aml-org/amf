@@ -1,0 +1,5 @@
+type Person @key(fields: "nameA") @key(fields: "nameB", resolvable: true) @key(fields: "nameC", resolvable: false){
+    nameA: String
+    nameB: String
+    nameC: String
+}

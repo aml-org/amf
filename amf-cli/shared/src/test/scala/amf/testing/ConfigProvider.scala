@@ -2,7 +2,8 @@ package amf.testing
 
 import amf.apicontract.client.scala._
 import amf.core.internal.remote._
-import amf.graphql.client.scala.{GraphQLConfiguration, GraphQLFederationConfiguration}
+import amf.graphql.client.scala.GraphQLConfiguration
+import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import amf.grpc.client.scala.GRPCConfiguration
 
 object ConfigProvider {

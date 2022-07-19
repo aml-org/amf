@@ -1,5 +1,6 @@
 package amf.shapes.client.scala.model.domain.operations
 
+import amf.core.client.scala.model.domain.federation.{HasShapeFederationMetadata, ShapeFederationMetadata}
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
@@ -7,7 +8,7 @@ import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel._
 import org.yaml.model.YPart
 
 case class ShapeParameter(override val fields: Fields, override val annotations: Annotations)
-    extends AbstractParameter(fields, annotations) {
+    extends AbstractParameter(fields, annotations) with HasShapeFederationMetadata {
 
   override private[amf] def buildParameter(ann: Annotations): ShapeParameter = ShapeParameter(ann)
   override def parameterName: StrField                                       = fields.field(ParameterName)
@@ -15,8 +16,8 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
   override def binding: StrField                                             = fields.field(Binding)
   override def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
     set(ParameterName, name, annots)
-  override def withRequired(required: Boolean): this.type = set(Required, required)
-  override def withBinding(binding: String): this.type    = set(Binding, binding)
+  override def withRequired(required: Boolean): this.type                  = set(Required, required)
+  override def withBinding(binding: String): this.type                     = set(Binding, binding)
 
   override def meta: ShapeParameterModel.type = ShapeParameterModel
 }

@@ -25,6 +25,23 @@ trait AntlrASTParserHelper {
     }
   }
 
+  def collectNodes(node: Node, names: Seq[String]): Seq[Node] = {
+    if (names.isEmpty) {
+      Seq(node)
+    } else {
+      val nextName = names.head
+      node match {
+        case n: Node =>
+          find(n, nextName).flatMap {
+            case nested: Node =>
+              collectNodes(nested, names.tail)
+            case t: Terminal => throw new Exception(s"Reached terminal ${t.name} when collecting nodes with path: ${names.mkString(",")}")
+          }
+        case _ => Nil
+      }
+    }
+  }
+
   def path(node: ASTNode, names: Seq[String]): Option[ASTNode] = {
     if (names.isEmpty) {
       Some(node)

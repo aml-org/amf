@@ -70,6 +70,45 @@ object TokenTypes {
   val FLOAT_TERMINAL                 = "FLOAT"
   val STRING_TERMINAL                = "STRING"
 
+  // Federation
+  val FIELD_SET           = "fieldSet"
+  val FIELD_SET_COMPONENT = "fieldSetComponent"
+  val NAME_F              = "name_f"
+  val NAME_TERMINAL_F     = "NAME_F"
+  val KEYWORD_F           = "keyword_f"
+  val NESTED_FIELD_SET    = "nestedFieldSet"
+  val RESOLVABLE_KEYWORD  = "RESOLVABLE_KEYWORD"
+  val BOOLEAN_VALUE_F     = "booleanValue_f"
+  val FALSE_F             = "FALSE_F"
+  val TRUE_F              = "TRUE_F"
+
+  // Directives & federation directives
+  val ENUM_DIRECTIVE                    = "enumDirective"
+  val ENUM_FEDERATION_DIRECTIVE         = "enumFederationDirective"
+  val ENUM_VALUE_DIRECTIVE              = "enumValueDirective"
+  val ENUM_VALUE_FEDERATION_DIRECTIVE   = "enumValueFederationDirective"
+  val EXTERNAL_DIRECTIVE                = "externalDirective"
+  val FIELD_DIRECTIVE                   = "fieldDirective"
+  val FIELD_FEDERATION_DIRECTIVE        = "fieldFederationDirective"
+  val INACCESSIBLE_DIRECTIVE            = "inaccessibleDirective"
+  val INPUT_FIELD_FEDERATION_DIRECTIVE  = "inputFieldFederationDirective"
+  val INPUT_OBJECT_DIRECTIVE            = "inputObjectDirective"
+  val INPUT_OBJECT_FEDERATION_DIRECTIVE = "inputObjectFederationDirective"
+  val INPUT_VALUE_DIRECTIVE             = "inputValueDirective"
+  val INTERFACE_DIRECTIVE               = "interfaceDirective"
+  val INTERFACE_FEDERATION_DIRECTIVE    = "interfaceFederationDirective"
+  val KEY_DIRECTIVE                     = "keyDirective"
+  val OBJECT_DIRECTIVE                  = "objectDirective"
+  val OBJECT_FEDERATION_DIRECTIVE       = "objectFederationDirective"
+  val OVERRIDE_DIRECTIVE                = "overrideDirective"
+  val PROVIDES_DIRECTIVE                = "providesDirective"
+  val REQUIRES_DIRECTIVE                = "requiresDirective"
+  val SCALAR_DIRECTIVE                  = "scalarDirective"
+  val SCALAR_FEDERATION_DIRECTIVE       = "scalarFederationDirective"
+  val SHAREABLE_DIRECTIVE               = "shareableDirective"
+  val UNION_DIRECTIVE                   = "unionDirective"
+  val UNION_FEDERATION_DIRECTIVE        = "unionFederationDirective"
+
   val SCALAR_TYPES: Seq[String] = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
 
   val toDataType: Map[String, String] = Map(

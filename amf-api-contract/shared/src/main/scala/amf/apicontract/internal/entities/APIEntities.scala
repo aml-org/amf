@@ -1,20 +1,15 @@
 package amf.apicontract.internal.entities
 
-import amf.apicontract.internal.metamodel.document.APIContractProcessingDataModel
-import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, BaseApiModel, WebApiModel}
-import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.metamodel.domain.templates.{
-  ParametrizedResourceTypeModel,
-  ParametrizedTraitModel,
-  ResourceTypeModel,
-  TraitModel
-}
 import amf.apicontract.internal.metamodel.domain._
+import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, WebApiModel}
+import amf.apicontract.internal.metamodel.domain.bindings._
+import amf.apicontract.internal.metamodel.domain.federation.{OperationFederationMetadataModel, ParameterKeyMappingModel}
+import amf.apicontract.internal.metamodel.domain.security._
+import amf.apicontract.internal.metamodel.domain.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
-import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
+import amf.shapes.internal.domain.metamodel.federation.{ExternalPropertyShapeModel, KeyModel, PropertyKeyMappingModel}
 import amf.shapes.internal.domain.metamodel.{CreativeWorkModel, DiscriminatorValueMappingModel, IriTemplateMappingModel}
 
 private[amf] object APIEntities extends Entities {
@@ -80,6 +75,11 @@ private[amf] object APIEntities extends Entities {
     Amqp091OperationBindingModel,
     OpenIdConnectSettingsModel,
     HttpSettingsModel,
-    HttpApiKeySettingsModel
+    HttpApiKeySettingsModel,
+    ExternalPropertyShapeModel,
+    KeyModel,
+    OperationFederationMetadataModel,
+    PropertyKeyMappingModel,
+    ParameterKeyMappingModel
   )
 }

@@ -3,43 +3,25 @@ package amf.apicontract.internal.convert
 import amf.apicontract.client.platform.model.document._
 import amf.apicontract.client.platform.model.domain._
 import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
+import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.{MqttMessageBinding, MqttOperationBinding, MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.platform.model.domain.bindings._
+import amf.apicontract.client.platform.model.domain.federation._
 import amf.apicontract.client.platform.model.domain.security._
-import amf.apicontract.client.platform.model.domain.templates.{
-  ParametrizedResourceType,
-  ParametrizedTrait,
-  ResourceType,
-  Trait
-}
-import amf.apicontract.client.scala.model.document.{
-  AnnotationTypeDeclarationFragment,
-  DataTypeFragment,
-  DocumentationItemFragment,
-  NamedExampleFragment
-}
+import amf.apicontract.client.platform.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.apicontract.client.scala.model.document.{AnnotationTypeDeclarationFragment, DataTypeFragment, DocumentationItemFragment, NamedExampleFragment}
 import amf.apicontract.client.scala.model.{document, domain}
 import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
 import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ExtensionModel, OverlayModel}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api._
 import amf.apicontract.internal.metamodel.domain.bindings._
+import amf.apicontract.internal.metamodel.domain.federation.{OperationFederationMetadataModel, ParameterKeyMappingModel}
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.metamodel.domain.templates.{
-  ParametrizedResourceTypeModel,
-  ParametrizedTraitModel,
-  ResourceTypeModel,
-  TraitModel
-}
+import amf.apicontract.internal.metamodel.domain.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 import amf.core.client.platform.model.document.PayloadFragment
 import amf.core.internal.convert.UniqueInitializer
 import amf.core.internal.metamodel.document.PayloadFragmentModel
@@ -261,6 +243,12 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(JsonSchemaDocumentModel) { case s: model.document.JsonSchemaDocument =>
       JsonSchemaDocument(s)
+    }
+    platform.registerWrapper(OperationFederationMetadataModel) {
+      case s: amf.apicontract.client.scala.model.domain.federation.OperationFederationMetadata => OperationFederationMetadata(s)
+    }
+    platform.registerWrapper(ParameterKeyMappingModel) {
+      case s: amf.apicontract.client.scala.model.domain.federation.ParameterKeyMapping => ParameterKeyMapping(s)
     }
   }
 
