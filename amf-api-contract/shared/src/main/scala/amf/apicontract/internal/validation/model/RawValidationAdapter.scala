@@ -1,6 +1,5 @@
 package amf.apicontract.internal.validation.model
 
-import amf.apicontract.internal.validation.model.AMFRawValidations.AMFValidation
 import amf.apicontract.internal.validation.shacl.ComplexShaclCustomValidations
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.validation.core.ShaclSeverityUris.amfToShaclSeverity
@@ -10,6 +9,7 @@ import amf.core.internal.validation.core.{
   PropertyConstraint,
   ValidationSpecification
 }
+import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
 
 object RawValidationAdapter extends ImportUtils {
 

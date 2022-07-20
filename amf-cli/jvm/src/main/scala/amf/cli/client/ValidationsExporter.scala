@@ -1,8 +1,8 @@
 package amf.cli.client
 
-import amf.apicontract.internal.validation.model.AMFRawValidations.AMFValidation
-import amf.apicontract.internal.validation.model.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
+import amf.apicontract.internal.validation.model.{APIRawValidations, DefaultAMFValidations, ImportUtils}
 import amf.core.client.scala.vocabulary.Namespace
+import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
 
 object ValidationsExporter extends ImportUtils {
 
@@ -31,7 +31,7 @@ object ValidationsExporter extends ImportUtils {
     var validationsAcc                           = Map[String, AMFValidation]()
     var levels: Map[String, Map[String, String]] = Map()
 
-    AMFRawValidations.profileToValidationMap.mapValues(_.validations()).foreach { case (profile, validations) =>
+    APIRawValidations.profileToValidationMap.mapValues(_.validations()).foreach { case (profile, validations) =>
       validations.foreach { validation =>
         val id = uri(validation)
         if (!validations.contains(id)) {

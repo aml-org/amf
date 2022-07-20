@@ -18,6 +18,7 @@ object JsonSchemaConfiguration {
           JsonSchemaRenderPlugin
         )
       )
+//      .withValidationProfile(JsonSchemaProfile)
       .withTransformationPipelines(
         List(
           JsonSchemaTransformationPipeline(),

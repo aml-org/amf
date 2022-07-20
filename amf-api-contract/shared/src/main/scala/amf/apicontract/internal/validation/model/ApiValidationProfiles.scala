@@ -1,6 +1,6 @@
 package amf.apicontract.internal.validation.model
 
-import amf.apicontract.internal.validation.model.AMFRawValidations._
+import amf.apicontract.internal.validation.model.APIRawValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.model.DefaultAMFValidations.buildProfileFrom
 import amf.core.client.common.validation._
@@ -48,7 +48,8 @@ object ApiEffectiveValidations {
   val Async20EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Async20ValidationProfile)
 
   val GraphQLEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(GraphQLValidationProfile)
-  val GraphQLFederationEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(GraphQLFederationValidationProfile)
+  val GraphQLFederationEffectiveValidations: EffectiveValidations =
+    EffectiveValidations().someEffective(GraphQLFederationValidationProfile)
 
   val AmfEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(AmfValidationProfile)
 }

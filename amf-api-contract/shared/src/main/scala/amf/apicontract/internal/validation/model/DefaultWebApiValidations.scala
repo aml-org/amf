@@ -3,7 +3,6 @@ package amf.apicontract.internal.validation.model
 import amf.aml.internal.validate.AMFDialectValidations
 import amf.aml.internal.validate.AMFDialectValidations.ConstraintSeverityOverrides
 import amf.apicontract.internal.validation.definitions.{ParserSideValidations, ResolutionSideValidations}
-import amf.apicontract.internal.validation.model.AMFRawValidations.{AMFValidation, ProfileValidations}
 import amf.core.client.common.validation.SeverityLevels.VIOLATION
 import amf.core.client.common.validation.{AmfProfile, ProfileName, ProfileNames, SeverityLevels}
 import amf.core.client.scala.vocabulary.Namespace
@@ -15,6 +14,8 @@ import amf.core.internal.validation.core.{
 }
 import amf.core.internal.validation.{CoreParserValidations, CorePayloadValidations, RenderSideValidations}
 import amf.shapes.internal.validation.definitions.{ShapeParserSideValidations, ShapePayloadValidations}
+import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
+import amf.shapes.internal.validation.model.ProfileValidations
 
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
@@ -109,7 +110,7 @@ object DefaultAMFValidations extends ImportUtils {
   protected def all(lvl: String): Map[ProfileName, String] = ProfileNames.specProfiles.map(_ -> lvl).toMap
 
   def profiles(): List[ValidationProfile] =
-    AMFRawValidations.profileToValidationMap.map { case (profile, profileValidations) =>
+    APIRawValidations.profileToValidationMap.map { case (profile, profileValidations) =>
       buildProfileFrom(profile, profileValidations)
     }.toList
 
