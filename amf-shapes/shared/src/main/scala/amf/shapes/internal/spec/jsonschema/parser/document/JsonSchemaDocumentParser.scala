@@ -8,9 +8,10 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
 import amf.shapes.internal.spec.common.parser.TypeDeclarationParser.parseTypeDeclarations
-import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext}
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.common.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaUnspecifiedVersion,
@@ -18,6 +19,7 @@ import amf.shapes.internal.spec.common.{
 }
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MandatorySchema, UnknownSchemaDraft}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
@@ -34,14 +36,22 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
 
     val (schemaVersion, _) = setSchemaVersion(document)
 
-    val rootSchema = new JsonSchemaParser().parse(root, ctx, ctx.parsingOptions, Some(schemaVersion))
-    document.withEncodes(rootSchema)
     // Parsing declaration schemas from "definitions"
     parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this))
-
     addDeclarationsToModel(document, ctx.shapes.values.toList)
 
+    val rootSchema = parseRootSchema(schemaVersion, "schema")
+    document.withEncodes(rootSchema)
+
+    ctx.futureDeclarations.resolve()
+
     document
+  }
+
+  private def parseRootSchema(schemaVersion: JSONSchemaVersion, name: String) = {
+    OasTypeParser(YMapEntryLike(map), name, _ => {}, schemaVersion)
+      .parse()
+      .getOrElse(AnyShape().withName(name))
   }
 
   private def setSchemaVersion(document: JsonSchemaDocument): (JSONSchemaVersion, JsonSchemaDocument) = {

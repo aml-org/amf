@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos}
 import amf.core.internal.render.emitters.PartEmitter
+import amf.shapes.internal.spec.common.JSONSchemaVersion
 import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendSchemasPrefix
 import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
@@ -29,13 +30,18 @@ trait ShapeReferenceEmitter extends TagToReferenceEmitter {
   def emit(b: PartBuilder): Unit = {
     val lastElementInLinkChain = follow()
     val urlToEmit =
-      if (isDeclaredElement(lastElementInLinkChain)) getRefUrlFor(lastElementInLinkChain) else referenceLabel
+      if (isDeclaredElement(lastElementInLinkChain)) getRefUrlFor(lastElementInLinkChain)(shapeSpec) else referenceLabel
     shapeSpec.ref(b, urlToEmit)
   }
 
-  protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel) = element match {
-    case _: Shape => appendSchemasPrefix(referenceLabel, Some(shapeSpec.spec))
-    case _        => default
+  protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel)(implicit
+      spec: ShapeEmitterContext
+  ) = {
+    val jsonSchemaVersion = Some(spec.schemaVersion).collect { case version: JSONSchemaVersion => version }
+    element match {
+      case _: Shape => appendSchemasPrefix(referenceLabel, Some(shapeSpec.spec), jsonSchemaVersion)
+      case _        => default
+    }
   }
 
   private def isDeclaredElement(element: DomainElement) = element.annotations.contains(classOf[DeclaredElement])
