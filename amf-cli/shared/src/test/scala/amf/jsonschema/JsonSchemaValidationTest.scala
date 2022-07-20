@@ -18,4 +18,21 @@ class JsonSchemaValidationTest extends UniquePlatformReportGenTest {
     )
   }
 
+  test("JSON Schema with schema raw validation violation") {
+    validate(
+      "empty-enum.json",
+      Some("empty-enum.json.report"),
+      configOverride = Some(config)
+    )
+  }
+
+  if (platform.name == "jvm") {
+    test("JSON Schema with payload validation violation") {
+      validate(
+        "invalid-example.json",
+        Some("invalid-example.json.report"),
+        configOverride = Some(config)
+      )
+    }
+  }
 }

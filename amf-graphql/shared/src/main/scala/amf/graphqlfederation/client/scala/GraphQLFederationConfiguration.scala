@@ -8,7 +8,7 @@ import amf.antlr.internal.plugins.syntax.{
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLFederationEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
-import amf.apicontract.internal.validation.shacl.ShaclModelValidationPlugin
+import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
 import amf.core.client.common.validation.ProfileNames
 import amf.graphqlfederation.plugins.parse.GraphQLFederationParsePlugin
 
@@ -23,7 +23,7 @@ object GraphQLFederationConfiguration extends APIConfigurationBuilder {
           GraphQLFederationSyntaxParsePlugin,
 //          GraphQLRenderPlugin,
           AntlrSyntaxRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.GRAPHQL_FEDERATION)
+          APIShaclModelValidationPlugin(ProfileNames.GRAPHQL_FEDERATION)
         )
       )
       .withTransformationPipelines(

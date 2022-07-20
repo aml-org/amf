@@ -19,8 +19,8 @@ import amf.apicontract.internal.transformation.compatibility.{
 }
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
-import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
+import amf.apicontract.internal.validation.payload.APIPayloadValidationPlugin
+import amf.apicontract.internal.validation.shacl.{APIShaclModelValidationPlugin, ViolationModelValidationPlugin}
 import amf.core.client.common.validation.ProfileNames
 import amf.core.client.common.validation.ProfileNames._
 import amf.core.client.scala.AMFGraphConfiguration
@@ -104,8 +104,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml10ParsePlugin,
           Raml10RenderPlugin,
           Raml10ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.RAML10),
-          PayloadValidationPlugin(ProfileNames.RAML10)
+          APIShaclModelValidationPlugin(ProfileNames.RAML10),
+          APIPayloadValidationPlugin(ProfileNames.RAML10)
         )
       )
       .withValidationProfile(Raml10ValidationProfile, Raml10EffectiveValidations)
@@ -124,8 +124,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml08ParsePlugin,
           Raml08RenderPlugin,
           Raml08ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.RAML08),
-          PayloadValidationPlugin(ProfileNames.RAML08)
+          APIShaclModelValidationPlugin(ProfileNames.RAML08),
+          APIPayloadValidationPlugin(ProfileNames.RAML08)
         )
       )
       .withValidationProfile(Raml08ValidationProfile, Raml08EffectiveValidations)
@@ -169,8 +169,8 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas20ParsePlugin,
           Oas20RenderPlugin,
           Oas20ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.OAS20),
-          PayloadValidationPlugin(ProfileNames.OAS20)
+          APIShaclModelValidationPlugin(ProfileNames.OAS20),
+          APIPayloadValidationPlugin(ProfileNames.OAS20)
         )
       )
       .withValidationProfile(Oas20ValidationProfile, Oas20EffectiveValidations)
@@ -190,8 +190,8 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas30ParsePlugin,
           Oas30RenderPlugin,
           Oas30ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.OAS30),
-          PayloadValidationPlugin(ProfileNames.OAS30)
+          APIShaclModelValidationPlugin(ProfileNames.OAS30),
+          APIPayloadValidationPlugin(ProfileNames.OAS30)
         )
       )
       .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
@@ -265,8 +265,8 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
           Async20ParsePlugin,
           Async20RenderPlugin,
           Async20ElementRenderPlugin,
-          ShaclModelValidationPlugin(ASYNC20),
-          PayloadValidationPlugin(ASYNC20)
+          APIShaclModelValidationPlugin(ASYNC20),
+          APIPayloadValidationPlugin(ASYNC20)
         )
       )
       .withReferenceParsePlugin(Raml10ParsePlugin)
@@ -503,8 +503,14 @@ object ConfigurationAdapter extends APIConfigurationBuilder {
       )
       .withFallback(pluginsRegistry.domainParsingFallback)
 
-    baseConfiguration.registry.getConstraintsRules.values.foldLeft(configuration) { (acc, curr) =>
-      acc.withValidationProfile(curr)
+    val baseConstraintsRules     = baseConfiguration.registry.getConstraintsRules
+    val baseEffectiveValidations = baseConfiguration.registry.getEffectiveValidations
+    val validationTuples = baseConstraintsRules.toSeq.flatMap { case (k, vp) =>
+      baseEffectiveValidations.get(k).map(ev => (vp, ev))
+    }
+
+    validationTuples.foldLeft(configuration) { (config, valTuple) =>
+      config.withValidationProfile(valTuple._1, valTuple._2)
     }
   }
 }

@@ -1,34 +1,25 @@
-package amf.apicontract.internal.validation.shacl
+package amf.shapes.internal.validation.shacl
 
 import amf.aml.internal.validate.SemanticExtensionConstraints
-import amf.apicontract.internal.validation.plugin.BaseApiValidationPlugin
 import amf.core.client.common.validation.ProfileName
-import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.ValidationOptions
 import amf.core.internal.validation.ShaclReportAdaptation
+import amf.shapes.internal.validation.plugin.BaseModelValidationPlugin
 import amf.validation.internal.shacl.custom.CustomShaclValidator
 import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
-case class ShaclModelValidationPlugin(profile: ProfileName)
-    extends BaseApiValidationPlugin
-    with ShaclReportAdaptation
-    with SemanticExtensionConstraints {
+trait BaseShaclModelValidationPlugin
+    extends ShaclReportAdaptation
+    with SemanticExtensionConstraints
+    with BaseModelValidationPlugin {
 
-  override val id: String = this.getClass.getSimpleName
+  val profile: ProfileName
 
-  override def priority: PluginPriority = HighPriority
-
-  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
-      executionContext: ExecutionContext
-  ): Future[AMFValidationReport] = {
-    Future(validateWithShacl(unit, options: ValidationOptions))
-  }
-
-  private def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(implicit
+  protected def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(implicit
       executionContext: ExecutionContext
   ): AMFValidationReport = {
 
@@ -40,5 +31,6 @@ case class ShaclModelValidationPlugin(profile: ProfileName)
     adaptToAmfReport(unit, profile, report, validations)
   }
 
-  private val functions: CustomShaclFunctions = CustomShaclFunctions.functions
+  protected val functions: CustomShaclFunctions
+
 }

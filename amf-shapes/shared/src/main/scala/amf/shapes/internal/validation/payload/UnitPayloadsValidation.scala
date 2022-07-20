@@ -1,6 +1,5 @@
-package amf.apicontract.internal.validation.payload
+package amf.shapes.internal.validation.payload
 
-import amf.apicontract.internal.validation.payload.collector.{CollectorsRunner, ValidationCandidateCollector}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{ArrayNode, DataNode, ObjectNode}
@@ -10,6 +9,7 @@ import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
+import amf.shapes.internal.validation.payload.collector.{CollectorsRunner, ValidationCandidateCollector}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -22,7 +22,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
     DataNodeIndex(nodes)
   }
 
-  private def getCandidateNodes = {
+  private def getCandidateNodes: Seq[DataNode] = {
     candidates
       .filter(_.payload.fields.exists(PayloadFragmentModel.Encodes))
       .map(_.payload.encodes) ++ candidates.map(_.shape).distinct.flatMap(_.values)

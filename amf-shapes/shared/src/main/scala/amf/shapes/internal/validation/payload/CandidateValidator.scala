@@ -1,4 +1,4 @@
-package amf.apicontract.internal.validation.payload
+package amf.shapes.internal.validation.payload
 
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
