@@ -19,7 +19,7 @@ trait Linker[F[_], S, T <: DomainElement, C <: WebApiContext] {
   def link(source: F[S])(implicit ctx: C): F[T]
 }
 
-/** Produces a link from ${source} and executes a ${afterLinking} with the resulting link
+/** Produces a link from source and executes a afterLinking with the resulting link
   * @param source
   *   source
   * @param afterLinking
