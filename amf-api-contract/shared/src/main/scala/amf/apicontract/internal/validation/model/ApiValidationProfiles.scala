@@ -1,11 +1,11 @@
 package amf.apicontract.internal.validation.model
 
 import amf.apicontract.internal.validation.model.APIRawValidations._
+import amf.apicontract.internal.validation.model.APIValidationProfileBuilder.buildProfileFrom
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.model.DefaultAMFValidations.buildProfileFrom
 import amf.core.client.common.validation._
 import amf.core.internal.validation.EffectiveValidations
-import amf.core.internal.validation.core.{SeverityMapping, ValidationProfile}
+import amf.core.internal.validation.core.ValidationProfile
 
 object ApiValidationProfiles {
 

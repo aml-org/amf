@@ -1,6 +1,6 @@
 package amf.shapes.internal.validation.model
 
-import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.common.validation.{JsonSchemaProfile, ProfileName, SeverityLevels}
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
@@ -524,6 +524,17 @@ object AMFRawValidations extends CommonValidationDefinitions {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  override val profileToValidationMap: Map[ProfileName, ProfileValidations] = Map(
+    JsonSchemaProfile -> forProfile(JsonSchemaProfile)
+  )
+
+  override def forProfile(p: ProfileName): ProfileValidations = {
+    p match {
+      case JsonSchemaProfile => ShapeValidations
+      case _                 => () => Seq.empty
+    }
+  }
+
 }
 
 trait ProfileValidations {
@@ -545,5 +556,9 @@ trait CommonValidationDefinitions {
   val string: String  = XsdTypes.xsdString.iri()
   val boolean: String = XsdTypes.xsdBoolean.iri()
   val integer: String = XsdTypes.xsdInteger.iri()
+
+  val profileToValidationMap: Map[ProfileName, ProfileValidations]
+
+  protected def forProfile(p: ProfileName): ProfileValidations
 
 }

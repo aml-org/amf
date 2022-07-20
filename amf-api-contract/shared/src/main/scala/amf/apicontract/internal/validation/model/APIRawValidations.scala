@@ -10,10 +10,10 @@ object APIRawValidations extends CommonValidationDefinitions {
 
   // owl
   def apiContract(name: String): ValueType = ValueType(Namespace.ApiContract, name)
-  def doc(name: String): ValueType = ValueType(Namespace.Document, name)
-  def core(name: String): ValueType = ValueType(Namespace.Core, name)
-  def security(name: String): ValueType = ValueType(Namespace.Security, name)
-  def apiBinding(name: String): ValueType = ValueType(Namespace.ApiBinding, name)
+  def doc(name: String): ValueType         = ValueType(Namespace.Document, name)
+  def core(name: String): ValueType        = ValueType(Namespace.Core, name)
+  def security(name: String): ValueType    = ValueType(Namespace.Security, name)
+  def apiBinding(name: String): ValueType  = ValueType(Namespace.ApiBinding, name)
 
   val schemaRequiredInParameter: AMFValidation = AMFValidation(
     owlClass = apiContract(ParameterModel.doc.displayName),
@@ -91,6 +91,10 @@ object APIRawValidations extends CommonValidationDefinitions {
       openApiErrorMessage = "Info object 'termsOfService' must be string"
     )
   )
+
+  //
+  // DO NOT ADD VALIDATIONS OF SHAPES HERE. USE THE SHAPES PROFILES IN `AMFRawValidations`
+  //
 
   trait AmfProfileValidations extends ProfileValidations {
     private lazy val result = AmfShapeValidations.validations() ++ Seq(
@@ -1167,7 +1171,7 @@ object APIRawValidations extends CommonValidationDefinitions {
       )
   }
 
-  val profileToValidationMap: Map[ProfileName, ProfileValidations] = Map(
+  override val profileToValidationMap: Map[ProfileName, ProfileValidations] = Map(
     AmfProfile        -> forProfile(AmfProfile),
     Raml10Profile     -> forProfile(Raml10Profile),
     Raml08Profile     -> forProfile(Raml08Profile),
@@ -1177,7 +1181,7 @@ object APIRawValidations extends CommonValidationDefinitions {
     JsonSchemaProfile -> forProfile(JsonSchemaProfile)
   )
 
-  private def forProfile(p: ProfileName): ProfileValidations = {
+  override def forProfile(p: ProfileName): ProfileValidations = {
     p match {
       case Raml10Profile     => Raml10Validations
       case Raml08Profile     => Raml08Validations

@@ -1,15 +1,10 @@
-package amf.apicontract.internal.validation.model
+package amf.shapes.internal.validation.model
 
-import amf.apicontract.internal.validation.shacl.ComplexShaclCustomValidations
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.validation.core.ShaclSeverityUris.amfToShaclSeverity
-import amf.core.internal.validation.core.{
-  FunctionConstraint,
-  NodeConstraint,
-  PropertyConstraint,
-  ValidationSpecification
-}
+import amf.core.internal.validation.core.{FunctionConstraint, NodeConstraint, PropertyConstraint, ValidationSpecification}
 import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
+import amf.shapes.internal.validation.shacl.ComplexShaclCustomValidations
 
 object RawValidationAdapter extends ImportUtils {
 
@@ -121,5 +116,17 @@ object RawValidationAdapter extends ImportUtils {
 
   private def findComplexShaclConstraint(sh: ValueType): Option[Seq[ValidationSpecification]] = {
     ComplexShaclCustomValidations.defintions.get(sh.name)
+  }
+}
+
+// TODO: erase this. This is kept for legacy reasons as we no longer use JS functions for shacl validations. JS function behaviour is hardcoded in
+// several places and that change is out of the scope of this issue.
+object JsCustomValidations {
+  def apply(name: String): String = {
+    """
+      |function(shape) {
+      |  return true;
+      |}
+      """.stripMargin
   }
 }

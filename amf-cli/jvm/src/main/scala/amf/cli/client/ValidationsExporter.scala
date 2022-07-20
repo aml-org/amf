@@ -1,8 +1,9 @@
 package amf.cli.client
 
-import amf.apicontract.internal.validation.model.{APIRawValidations, DefaultAMFValidations, ImportUtils}
+import amf.apicontract.internal.validation.model.{APIRawValidations, APIValidationProfileBuilder}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
+import amf.shapes.internal.validation.model.ImportUtils
 
 object ValidationsExporter extends ImportUtils {
 
@@ -11,7 +12,7 @@ object ValidationsExporter extends ImportUtils {
 //    AMF.init() // Needed to load all the validations in the platform
 
     val parserSideVals =
-      DefaultAMFValidations.severityLevelsOfConstraints.foldLeft(Map[String, Map[String, String]]()) {
+      APIValidationProfileBuilder.severityLevelsOfConstraints.foldLeft(Map[String, Map[String, String]]()) {
         case (accMap, (id, levels)) =>
           accMap.updated(
             id,
@@ -21,7 +22,7 @@ object ValidationsExporter extends ImportUtils {
           )
       }
 
-    DefaultAMFValidations.staticValidations.foreach { validation =>
+    APIValidationProfileBuilder.staticValidations.foreach { validation =>
       val severity: Map[String, String] = parserSideVals(validation.id)
       val levelsString = severity.keys.toSeq.sorted
         .map(severity)
