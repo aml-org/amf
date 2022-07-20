@@ -10,6 +10,11 @@ import amf.apicontract.internal.metamodel.domain.security.{
 }
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
+import amf.apicontract.internal.validation.shacl.graphql.{
+  GraphQLAppliedDirective,
+  GraphQLArgumentValidator,
+  GraphQLObject
+}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
@@ -31,6 +36,26 @@ import java.util.regex.Pattern
 object CustomShaclFunctions {
 
   val listOfFunctions: List[CustomShaclFunction] = List(
+    new CustomShaclFunction {
+      override val name: String = "requiredFields"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        val obj                         = GraphQLObject(element.asInstanceOf[NodeShape])
+        val fields                      = obj.fields().names
+        val requiredFields: Seq[String] = obj.inherits.flatMap(_.fields().names)
+        requiredFields.foreach { requiredField =>
+          if (!fields.contains(requiredField))
+            validate(
+              Some(
+                ValidationInfo(
+                  NodeShapeModel.Properties,
+                  Some(s"field $requiredField is required in ${obj.name}"),
+                  Some(obj.annotations)
+                )
+              )
+            )
+        }
+      }
+    },
     new CustomShaclFunction {
       override val name: String = "emptyDefinition"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
@@ -99,8 +124,8 @@ object CustomShaclFunctions {
     new CustomShaclFunction {
       override val name: String = "GraphQLArgumentDefaultValueTypeValidation"
       override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-        val node              = element.asInstanceOf[NodeShape]
-        val validationResults = GraphQLArgumentValidator.validateDefaultValues(node)
+        val obj               = GraphQLObject(element.asInstanceOf[NodeShape])
+        val validationResults = GraphQLArgumentValidator.validateDefaultValues(obj)
         validationResults.foreach(info => validate(Some(info)))
       }
     },
