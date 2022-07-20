@@ -1,8 +1,8 @@
 package amf.shapes.client.platform.model.domain.operations
 
 import amf.core.client.platform.model.{Annotations, BoolField, StrField}
-import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement, Shape}
-import amf.shapes.client.platform.model.domain.{ScalarShape, NodeShape}
+import amf.core.client.platform.model.domain.{DataNode, DomainElement, NamedDomainElement, Shape}
+import amf.shapes.client.platform.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.client.scala.model.domain.operations.{AbstractParameter => InternalAbstractParameter}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.convert.ShapeClientConverters._
@@ -20,6 +20,7 @@ abstract class AbstractParameter(override private[amf] val _internal: InternalAb
   def required: BoolField     = _internal.required
   def schema: Shape           = _internal.schema
   def binding: StrField       = _internal.binding
+  def defaultValue: DataNode  = _internal.defaultValue
 
   def withBinding(binding: String): this.type = {
     _internal.withBinding(binding)
@@ -43,6 +44,11 @@ abstract class AbstractParameter(override private[amf] val _internal: InternalAb
 
   def withSchema(schema: Shape): this.type = {
     _internal.withSchema(schema)
+    this
+  }
+
+  def withDefaultValue(defaultValue: DataNode): this.type = {
+    _internal.withDefaultValue(defaultValue)
     this
   }
 

@@ -44,8 +44,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     propertyShape.withName(name, annotations)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
     val argumentType = parseType(n)
+    setDefaultValue(n, propertyShape)
     propertyShape.withRange(argumentType)
-    ScalarValueParser.putDefaultValue(n, propertyShape)
   }
 
   private def parseLocations(): Unit = {

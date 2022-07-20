@@ -2,6 +2,7 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.core.client.scala.model.domain.{ScalarNode, Shape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.shapes.client.scala.model.domain.operations.ShapeParameter
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 abstract class ScalarValueParser(
@@ -64,9 +65,4 @@ object ScalarValueParser {
     .orElse(StringValueParser(n).parseDefault())
     .orElse(BooleanValueParser(n).parseDefault())
     .orElse(EnumValueParser(n).parseDefault())
-
-  def putDefaultValue[T <: Shape](n: Node, shape: T): T = {
-    val defaultValue = parseDefaultValue(n)
-    if (defaultValue.isDefined) shape.withDefault(defaultValue.get) else shape
-  }
 }
