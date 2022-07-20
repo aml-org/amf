@@ -7,20 +7,13 @@ import amf.shapes.internal.spec.common.parser.ShapeParserContext
 
 object ReferenceFinder {
 
-  def findJsonReferencedUnit(url: String, ctx: ShapeParserContext): Option[BaseUnit] = {
-    val fileUrl     = getFileUrl(url, ctx.loc)
+  def findJsonReferencedUnit(fileUrl: String, rawRef: String, references: Seq[ParsedReference]): Option[BaseUnit] = {
     val baseFileUrl = fileUrl.split("#").head
-    ctx.refs
-      .filter(r => r.unit.location().isDefined)
-      .find(_.unit.location().get == baseFileUrl)
-      .map(_.unit)
-  }
-
-  def findJsonReferencedUnit(fileUrl: String, references: Seq[ParsedReference]): Option[BaseUnit] = {
-    val baseFileUrl = fileUrl.split("#").head
+    val baseRawRef  = rawRef.split("#").head
     references
       .filter(r => r.unit.location().isDefined)
-      .find(_.unit.location().get == baseFileUrl)
+      .find(ref => ref.unit.location().get == baseFileUrl)
+      .orElse(references.find(ref => ref.origin.url == baseRawRef))
       .map(_.unit)
   }
 

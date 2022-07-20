@@ -91,7 +91,7 @@ object JsonSchemaLinker {
   }
 
   private def findJsonSchemaDocument(ref: String, ctx: ShapeParserContext) = {
-    ReferenceFinder.findJsonReferencedUnit(ref, ctx).collect { case unit: JsonSchemaDocument =>
+    ReferenceFinder.findJsonReferencedUnit(ref, ref, ctx.refs).collect { case unit: JsonSchemaDocument =>
       unit
     }
   }

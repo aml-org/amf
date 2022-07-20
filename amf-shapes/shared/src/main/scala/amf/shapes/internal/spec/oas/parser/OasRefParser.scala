@@ -5,10 +5,11 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
+import amf.core.internal.remote.JsonSchema
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
-import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
@@ -40,9 +41,15 @@ class OasRefParser(
       }
   }
 
+  private def stripDefinitionPrefix(rawRef: String): String = {
+    if (ctx.spec == JsonSchema && version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+      rawRef.stripPrefix("#/$defs/")
+    } else OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
+  }
+
   private def findDeclarationAndParse(entry: YMapEntry): Option[AnyShape] = {
     val rawRef: String = entry.value
-    val definitionName = OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
+    val definitionName = stripDefinitionPrefix(rawRef)
     ctx.findType(definitionName, SearchScope.All) match {
       case Some(s) =>
         // normal declaration to be used from raml or oas
