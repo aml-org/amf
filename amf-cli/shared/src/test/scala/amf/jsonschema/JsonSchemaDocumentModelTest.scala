@@ -1,7 +1,6 @@
 package amf.jsonschema
 
 import amf.core.client.scala.model.document.Document
-import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.config.JsonSchemaConfiguration.JsonSchema
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.scalatest.funsuite.AsyncFunSuite
