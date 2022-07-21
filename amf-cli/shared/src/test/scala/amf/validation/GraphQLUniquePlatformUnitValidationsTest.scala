@@ -22,4 +22,8 @@ class GraphQLUniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("validate types in default values in parameters") {
     validate("invalid-default-value-parameters.graphql", Some("invalid-default-value-parameters.report"), configOverride = Some(config))
   }
+
+  test("validate enums in default values") {
+    validate("invalid-default-value-enum.graphql", Some("invalid-default-value-enum.report"), configOverride = Some(config))
+  }
 }

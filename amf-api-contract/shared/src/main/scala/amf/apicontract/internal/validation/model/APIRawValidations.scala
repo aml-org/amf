@@ -1086,6 +1086,18 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("GraphQLArgumentDefaultValueTypeValidationParameter")
       ),
       AMFValidation(
+        uri = amfParser("invalid-default-value-in-directive"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("GraphQLArgumentDefaultValueInValidationDirective")
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-default-value-in-parameter"),
+        owlClass = core("Parameter"),
+        owlProperty = core("defaultValue"),
+        constraint = shape("GraphQLArgumentDefaultValueInValidationParameter")
+      ),
+      AMFValidation(
         uri = amfParser("invalid-union-members"),
         message = "All union members must be Object type",
         owlClass = shape("UnionShape"),

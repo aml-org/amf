@@ -25,6 +25,7 @@ import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel,
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCustomShaclFunctions}
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
 
@@ -389,6 +390,32 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val directive         = GraphQLAppliedDirective(element.asInstanceOf[DomainExtension])
           val validationResults = GraphQLArgumentValidator.validateDirectiveApplicationTypes(directive)
+          validationResults.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "GraphQLArgumentDefaultValueInValidationDirective"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val obj = GraphQLObject(element.asInstanceOf[NodeShape])
+          val validationResults = obj.properties.flatMap { prop =>
+            prop.property.range match {
+              case u: UnionShape if u.anyOf.headOption.exists(_.isInstanceOf[NilShape]) =>
+                val realRange = u.anyOf.last
+                GraphQLArgumentValidator.validateIn(prop.default, realRange.values, ShapeModel.Default)
+              case other =>
+                GraphQLArgumentValidator.validateIn(prop.default, other.values, ShapeModel.Default)
+            }
+
+          }
+          validationResults.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "GraphQLArgumentDefaultValueInValidationParameter"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val param = element.asInstanceOf[AbstractParameter]
+          val validationResults =
+            GraphQLArgumentValidator.validateIn(param.defaultValue, param.schema.values, AbstractParameterModel.Default)
           validationResults.foreach(info => validate(Some(info)))
         }
       }
