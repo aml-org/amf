@@ -15,7 +15,11 @@ class GraphQLUniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("sudden-eof.graphql", Some("sudden-eof.report"), configOverride = Some(config))
   }
 
-  test("validate types in default values") {
-    validate("invalid-default-value.graphql", Some("invalid-default-value.report"), configOverride = Some(config))
+  test("validate types in default values in directives") {
+    validate("invalid-default-value-directive.graphql", Some("invalid-default-value-directive.report"), configOverride = Some(config))
+  }
+
+  test("validate types in default values in parameters") {
+    validate("invalid-default-value-parameters.graphql", Some("invalid-default-value-parameters.report"), configOverride = Some(config))
   }
 }

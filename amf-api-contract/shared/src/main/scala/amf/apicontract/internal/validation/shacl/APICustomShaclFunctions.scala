@@ -23,6 +23,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCustomShaclFunctions}
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
@@ -365,6 +366,30 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               )
             case _ => // ignore
           }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "GraphQLArgumentDefaultValueTypeValidationDirective"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val obj               = GraphQLObject(element.asInstanceOf[NodeShape])
+          val validationResults = GraphQLArgumentValidator.validateDefaultValues(obj)
+          validationResults.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "GraphQLArgumentDefaultValueTypeValidationParameter"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val param             = element.asInstanceOf[AbstractParameter]
+          val validationResults = GraphQLArgumentValidator.validateDefaultValues(param)
+          validationResults.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "GraphQLDirectiveApplicationTypeValidation"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val directive         = GraphQLAppliedDirective(element.asInstanceOf[DomainExtension])
+          val validationResults = GraphQLArgumentValidator.validateDirectiveApplicationTypes(directive)
+          validationResults.foreach(info => validate(Some(info)))
         }
       }
     ))
