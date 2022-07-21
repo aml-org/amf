@@ -1,4 +1,4 @@
-package amf.apicontract.internal.validation.payload.collector
+package amf.shapes.internal.validation.payload.collector
 
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
@@ -6,11 +6,10 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate
-import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, Example, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ExampleModel}
 
-object PayloadsInApiCollector extends ValidationCandidateCollector {
+object PayloadsCollector extends ValidationCandidateCollector {
 
   private val anyShapeRestrictions =
     Seq(

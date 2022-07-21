@@ -6,7 +6,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.validation.ValidationConfiguration
 
-trait ModelResolution {
+object APIModelResolution {
 
   def withResolvedModel[T](unit: BaseUnit, profile: ProfileName, conf: ValidationConfiguration)(
       withResolved: (BaseUnit, Option[AMFValidationReport]) => T

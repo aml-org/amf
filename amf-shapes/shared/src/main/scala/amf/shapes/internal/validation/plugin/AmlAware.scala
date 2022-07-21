@@ -1,4 +1,4 @@
-package amf.apicontract.internal.validation.plugin
+package amf.shapes.internal.validation.plugin
 
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, Vocabulary}
 import amf.core.client.scala.model.document.BaseUnit

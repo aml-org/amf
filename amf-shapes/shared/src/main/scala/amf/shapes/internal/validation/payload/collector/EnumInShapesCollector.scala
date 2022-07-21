@@ -1,9 +1,8 @@
-package amf.apicontract.internal.validation.payload.collector
+package amf.shapes.internal.validation.payload.collector
 
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.{`application/json`, `application/xml`}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate

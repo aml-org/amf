@@ -7,6 +7,10 @@ import amf.shapes.internal.transformation.{
   JsonSchemaEditingPipeline,
   JsonSchemaTransformationPipeline
 }
+import amf.shapes.internal.validation.model.ShapeEffectiveValidations.JsonSchemaEffectiveValidations
+import amf.shapes.internal.validation.model.ShapeValidationProfiles.JsonSchemaValidationProfile
+import amf.shapes.internal.validation.payload.JsonSchemaPayloadValidationPlugin
+import amf.shapes.internal.validation.shacl.JsonSchemaShaclModelValidationPlugin
 
 object JsonSchemaConfiguration {
   def JsonSchema(): ShapesConfiguration =
@@ -15,9 +19,12 @@ object JsonSchemaConfiguration {
       .withPlugins(
         List(
           JsonSchemaParsePlugin,
-          JsonSchemaRenderPlugin
+          JsonSchemaRenderPlugin,
+          JsonSchemaPayloadValidationPlugin(),
+          JsonSchemaShaclModelValidationPlugin()
         )
       )
+      .withValidationProfile(JsonSchemaValidationProfile, JsonSchemaEffectiveValidations)
       .withTransformationPipelines(
         List(
           JsonSchemaTransformationPipeline(),

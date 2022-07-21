@@ -1,4 +1,4 @@
-package amf.apicontract.internal.validation.shacl
+package amf.shapes.internal.validation.shacl
 
 import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
 

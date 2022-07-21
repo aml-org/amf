@@ -3,7 +3,6 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.apicontract.internal.spec.payload.PayloadParsePlugin
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
-import amf.apicontract.internal.validation.payload.CandidateValidator
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
@@ -13,6 +12,7 @@ import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
+import amf.shapes.internal.validation.payload.CandidateValidator
 import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
 

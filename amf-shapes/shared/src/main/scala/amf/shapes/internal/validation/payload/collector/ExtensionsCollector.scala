@@ -1,4 +1,4 @@
-package amf.apicontract.internal.validation.payload.collector
+package amf.shapes.internal.validation.payload.collector
 
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
