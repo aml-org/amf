@@ -18,7 +18,6 @@ import amf.shapes.internal.spec.common.{
   JSONSchemaVersion
 }
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
-import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MandatorySchema, UnknownSchemaDraft}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
@@ -36,11 +35,11 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
 
     val (schemaVersion, _) = setSchemaVersion(document)
 
-    // Parsing declaration schemas from "definitions"
-    parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this))
+    // Parsing declaration schemas from "definitions" or "$defs"
+    parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this), Some(document))
     addDeclarationsToModel(document, ctx.shapes.values.toList)
 
-    val rootSchema = parseRootSchema(schemaVersion, "schema")
+    val rootSchema = parseRootSchema(schemaVersion)
     document.withEncodes(rootSchema)
 
     ctx.futureDeclarations.resolve()
@@ -48,7 +47,7 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
     document
   }
 
-  private def parseRootSchema(schemaVersion: JSONSchemaVersion, name: String) = {
+  private def parseRootSchema(schemaVersion: JSONSchemaVersion, name: String = "schema"): AnyShape = {
     OasTypeParser(YMapEntryLike(map), name, _ => {}, schemaVersion)
       .parse()
       .getOrElse(AnyShape().withName(name))

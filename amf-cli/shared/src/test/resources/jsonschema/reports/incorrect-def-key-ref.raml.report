@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/incorrect-def-key-ref.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#incorrect-def-key
+  Message: The definition key present in the ref must be '$defs'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,18)-(9,74)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/incorrect-def-key-ref.raml

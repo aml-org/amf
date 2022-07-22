@@ -1,17 +1,18 @@
 package amf.shapes.internal.spec.jsonschema.parser.document
 
 import amf.core.client.scala.model.document.ExternalFragment
-import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.DocumentDeclarationKey
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaVersion}
 import amf.shapes.internal.spec.contexts.ReferenceFinder
 import amf.shapes.internal.spec.contexts.ReferenceFinder.getJsonReferenceFragment
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  IncorrectDefinitionKey,
   InvalidJsonSchemaReference,
   JsonSchemaDefinitionNotFound
 }
@@ -100,14 +101,28 @@ object JsonSchemaLinker {
       ctx: ShapeParserContext
   ): Either[(ValidationSpecification, String), AnyShape] = {
     // TODO: we suppose we have a valid document entry here
-    val version   = JsonSchemaEntry(document.schemaVersion.value()).get
-    val extractor = nameExtractorFor(version)
-    extractor
-      .extract(uriFragment)
-      .left
-      .map(error => (InvalidJsonSchemaReference, error))
-      .flatMap { name => findShapeWithName(ref, document, name, uriFragment) }
+    val version        = JsonSchemaEntry(document.schemaVersion.value()).get
+    val declarationKey = document.annotations.find(classOf[DocumentDeclarationKey]).map(_.key)
+    val extractor      = nameExtractorFor(version)
+    extractor.extract(uriFragment) match {
+      case Left(error) => Left(InvalidJsonSchemaReference, error)
+      case Right(name) =>
+        validateDeclarationKey(declarationKey, uriFragment) match {
+          case Left(errorTuple) => Left(errorTuple)
+          case Right(_)         => findShapeWithName(ref, document, name, uriFragment)
+        }
+    }
   }
+
+  private def validateDeclarationKey(
+      declarationKey: Option[String],
+      ref: String
+  ): Either[(ValidationSpecification, String), Unit] =
+    declarationKey match {
+      case Some(dk) if !ref.contains(dk) =>
+        Left((IncorrectDefinitionKey, s"The definition key present in the ref must be '$dk'"))
+      case _ => Right(Unit)
+    }
 
   private def findShapeWithName(ref: String, doc: JsonSchemaDocument, name: String, uriFragment: String)(implicit
       ctx: ShapeParserContext

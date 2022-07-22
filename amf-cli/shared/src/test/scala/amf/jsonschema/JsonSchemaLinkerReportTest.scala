@@ -79,4 +79,24 @@ class JsonSchemaLinkerReportTest extends UniquePlatformReportGenTest with JsonSc
       )
     }
   }
+
+  test("invalid - OAS $ref to definitions in draft-2019 document when declarations key is $defs") {
+    withJsonSchema("schemas/simple-2019.json", OAS20()) flatMap { case (config, _) =>
+      validate(
+        "apis/incorrect-def-key-ref.yaml",
+        Some("incorrect-def-key-ref.yaml.report"),
+        configOverride = Some(config)
+      )
+    }
+  }
+
+  test("invalid - RAML $ref to definitions in draft-2019 document when declarations key is $defs") {
+    withJsonSchema("schemas/simple-2019.json", RAML10()) flatMap { case (config, _) =>
+      validate(
+        "apis/incorrect-def-key-ref.raml",
+        Some("incorrect-def-key-ref.raml.report"),
+        configOverride = Some(config)
+      )
+    }
+  }
 }

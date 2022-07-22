@@ -1,0 +1,13 @@
+swagger: "2.0"
+info:
+  title: Api that uses Json Schema Document
+  version: "1.0"
+paths:
+  /something:
+    get:
+      description: something
+      responses:
+        200:
+          description: something else
+          schema:
+            $ref: ../schemas/simple-2019.json#/definitions/Person
