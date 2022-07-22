@@ -2061,6 +2061,59 @@ declare module 'amf-client-js' {
 
 
   }
+
+  export class JsonSchemaDocument implements Document {
+    location: string
+    usage: StrField
+    id: string
+    raw: undefined | string
+    processingData: BaseUnitProcessingData
+    sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
+    modelVersion: StrField
+    encodes: DomainElement
+    declares: Array<DomainElement>
+    schemaVersion: StrField
+
+    constructor()
+    constructor(encoding: DomainElement)
+
+    findByType(typeId: string): Array<DomainElement>
+
+    cloneUnit(): BaseUnit
+
+    withReferences(references: Array<BaseUnit>): this
+
+    withDeclaredElement(declared: DomainElement): this
+
+    withRaw(raw: string): this
+
+    withUsage(usage: string): this
+
+    findById(id: string): undefined | DomainElement
+
+    withLocation(location: string): this
+
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
+
+    withEncodes(encoded: DomainElement): this
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
+    withDeclares(declares: Array<DomainElement>): this
+
+    references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
+
+    withId(id: string): this
+
+
+
+  }
+
   export class Amqp091OperationBinding implements OperationBinding  {
     priority: IntField
     customDomainProperties: Array<DomainExtension>
@@ -2665,6 +2718,9 @@ declare module 'amf-client-js' {
     static fromSpec(spec: Spec): AMFConfiguration
 
 
+  }
+  export class JsonSchemaConfiguration {
+    static JsonSchema(): ShapesConfiguration
   }
   export class Extension extends Document  {
     constructor()
