@@ -82,11 +82,11 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
-        val schema = ScalarValueParser.putDefaultValue(ast, shape)
-        queryParam.withSchema(schema).withRequired(false)
+        setDefaultValue(argument, queryParam)
+        queryParam.withSchema(shape).withRequired(false)
       case NullableShape(false, shape) =>
-        val schema = ScalarValueParser.putDefaultValue(ast, shape)
-        queryParam.withSchema(schema).withRequired(true)
+        setDefaultValue(argument, queryParam)
+        queryParam.withSchema(shape).withRequired(true)
     }
     GraphQLDirectiveApplicationParser(argument, queryParam).parse()
     queryParam

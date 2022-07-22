@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-in-directive
+  Message: Default value of argument must be one of [A,B]
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/MyDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-in-parameter
+  Message: Default value of argument must be one of [A,B]
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/myQueryParam
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(6,37)-(6,38)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-in-parameter
+  Message: Default value of argument must be one of [A,B]
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/shape/MyObject/supportedOperation/name/expects/request/parameter/parameter/myObjParam
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(10,35)-(10,36)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-in-parameter
+  Message: Default value of argument must be one of [A,B]
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/shape/MyInterface/supportedOperation/name/expects/request/parameter/parameter/myIntParam
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(15,35)-(15,36)]
+  Location: 

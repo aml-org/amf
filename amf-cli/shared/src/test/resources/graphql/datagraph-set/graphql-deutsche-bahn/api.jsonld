@@ -1039,6 +1039,26 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/web-api/endpoint/%2Fquery%2Fnearby/supportedOperation/query/Query.nearby/expects/request/parameter/parameter/query/radius/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "10000"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -8896,25 +8916,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/stations/expects/request/parameter/parameter/count/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/stations/expects/request/parameter/parameter/count/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "10"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "10"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -8956,25 +8976,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/stations/expects/request/parameter/parameter/offset/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/stations/expects/request/parameter/parameter/offset/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "0"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9105,25 +9125,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/parkingSpaces/expects/request/parameter/parameter/count/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/parkingSpaces/expects/request/parameter/parameter/count/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "10"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "10"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9165,25 +9185,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/parkingSpaces/expects/request/parameter/parameter/offset/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/parkingSpaces/expects/request/parameter/parameter/offset/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "0"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9314,25 +9334,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/travelCenters/expects/request/parameter/parameter/count/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/travelCenters/expects/request/parameter/parameter/count/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "10"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "10"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9374,25 +9394,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/travelCenters/expects/request/parameter/parameter/offset/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/travelCenters/expects/request/parameter/parameter/offset/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "0"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9523,25 +9543,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/flinksterCars/expects/request/parameter/parameter/count/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/flinksterCars/expects/request/parameter/parameter/count/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "10"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "10"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9583,25 +9603,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/flinksterCars/expects/request/parameter/parameter/offset/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/flinksterCars/expects/request/parameter/parameter/offset/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "0"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9737,25 +9757,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/bikes/expects/request/parameter/parameter/count/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/bikes/expects/request/parameter/parameter/count/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "10"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "10"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9797,25 +9817,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/bikes/expects/request/parameter/parameter/offset/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-deutsche-bahn/api.graphql#/declares/shape/Nearby/supportedOperation/bikes/expects/request/parameter/parameter/offset/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "0"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }

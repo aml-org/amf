@@ -41,7 +41,8 @@ object ShapeParameterModel extends AbstractParameterModel with HasShapeFederatio
       Description,
       Required,
       Schema,
-      FederationMetadata
+      FederationMetadata,
+      Default
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

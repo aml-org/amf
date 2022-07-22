@@ -1,0 +1,16 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name(myQueryParam: Boolean="def-val"): Boolean
+}
+
+type MyObject {
+    name(myObjParam: Boolean="def-val"): Boolean
+}
+
+
+interface MyInterface {
+    name(myIntParam: Boolean="def-val"): Boolean
+}

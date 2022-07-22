@@ -1960,6 +1960,26 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/web-api/endpoint/%2Fquery%2FdocumentaryUnits/supportedOperation/query/Root.documentaryUnits/expects/request/parameter/parameter/query/topLevel/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "false"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -8715,25 +8735,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/DocumentaryUnit/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/DocumentaryUnit/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -9028,25 +9048,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/DocumentaryUnit/supportedOperation/children/expects/request/parameter/parameter/all/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/DocumentaryUnit/supportedOperation/children/expects/request/parameter/parameter/all/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -15024,25 +15044,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/CvocConcept/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/CvocConcept/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -16155,25 +16175,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Repository/supportedOperation/documentaryUnits/expects/request/parameter/parameter/all/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Repository/supportedOperation/documentaryUnits/expects/request/parameter/parameter/all/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -16418,25 +16438,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Repository/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Repository/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -18015,25 +18035,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Described/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Described/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -20569,25 +20589,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/HistoricalAgent/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/HistoricalAgent/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -22926,25 +22946,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Temporal/supportedOperation/description/expects/request/parameter/parameter/at/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-ehri/api.graphql#/declares/shape/Temporal/supportedOperation/description/expects/request/parameter/parameter/at/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }

@@ -2,11 +2,14 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.operations.{AbstractParameter, ShapeParameter}
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
@@ -33,7 +36,9 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def findName(n: Node, default: String, error: String)(implicit ctx: GraphQLBaseWebApiContext): (String, Annotations) = {
+  def findName(n: Node, default: String, error: String)(implicit
+      ctx: GraphQLBaseWebApiContext
+  ): (String, Annotations) = {
     val potentialPaths: Seq[Seq[String]] = Stream(
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
@@ -211,4 +216,12 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case _                                      => // nothing
     }
   }
+
+  def setDefaultValue(n: Node, parameter: AbstractParameter): Unit = {
+    val maybeNode = parseDefaultValue(n)
+    maybeNode.map(value => parameter.withDefaultValue(value))
+  }
+
+  def setDefaultValue(n: Node, shape: Shape): Unit =
+    parseDefaultValue(n).map(value => shape.withDefault(value))
 }

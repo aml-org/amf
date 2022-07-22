@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Doma
 import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{NilShape, NodeShape, ScalarShape, UnionShape}
 
 case class GraphQLObject(node: NodeShape) {
   def name: String                      = node.name.value()

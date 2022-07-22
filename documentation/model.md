@@ -222,6 +222,7 @@ Types:
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/core#required |
  | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
+ | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | http://a.ml/vocabularies/core#defaultValue |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -2140,6 +2141,7 @@ Types:
  | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
  | payload | [[Payload](#payload)] |  | http://a.ml/vocabularies/apiContract#payload |
  | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
+ | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | http://a.ml/vocabularies/core#defaultValue |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -2890,6 +2892,7 @@ Types:
  | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/shapes#required |
  | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
  | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | http://a.ml/vocabularies/federation#federationMetadata |
+ | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | http://a.ml/vocabularies/core#defaultValue |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
