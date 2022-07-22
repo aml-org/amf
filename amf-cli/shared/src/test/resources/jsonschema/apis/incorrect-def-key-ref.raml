@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: Some API
+/anEndpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include ../schemas/simple-2019.json#/definitions/Person
