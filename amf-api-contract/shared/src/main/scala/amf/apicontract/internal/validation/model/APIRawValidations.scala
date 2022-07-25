@@ -1149,6 +1149,20 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("PropertyShape"),
         constraint = shape("requiredFields"),
         message = "Types definition must have at least one field"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-input-type"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("invalidInputType"),
+        message = "Only an Input Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-input-type-in-endpoint"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("invalidInputTypeInEndpoint"),
+        message = "Only an Input Type can be placed here"
       )
     )
     override def validations(): Seq[AMFValidation] = result
