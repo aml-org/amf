@@ -139,27 +139,23 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
   private def oasLinks(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     part match {
-      case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map)
-      case _                                                             => part.children.foreach(c => oasLinks(c))
+      case map: YMap if hasRef(map) => oasInclude(map)
+      case _                        => part.children.foreach(c => oasLinks(c))
     }
   }
 
   private def oasInclude(map: YMap)(implicit errorHandler: AMFErrorHandler): Unit = {
-    val ref = map.entries.head
-    ref.value.tagType match {
+    val ref = map.map("$ref")
+    ref.tagType match {
       case YType.Str =>
-        references += (ref.value
+        references += (ref
           .as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
-      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value.location)
+      case _ =>
+        errorHandler.violation(UnexpectedReference, "", s"Unexpected $$ref with $$ref: $ref", ref.value.location)
     }
   }
 
-  private def isRef(entry: YMapEntry) = {
-    entry.key.value match {
-      case scalar: YScalar => scalar.text == "$ref"
-      case _               => false
-    }
-  }
+  private def hasRef(map: YMap) = map.map.contains("$ref")
 
   private def ramlLinks(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     part match {
