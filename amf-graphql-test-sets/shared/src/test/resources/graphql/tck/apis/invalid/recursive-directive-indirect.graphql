@@ -1,0 +1,14 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+
+input User @invalidExample(arg: {name: "AA"}) {
+    name: String
+}
+
+directive @invalidExample(arg: User) on INPUT_OBJECT

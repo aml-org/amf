@@ -1,0 +1,15 @@
+schema @MyDirective {
+    query: Query
+}
+
+type Query {
+    name: String @MyDirective
+}
+
+scalar MyScalar @MyDirective
+
+type MyObject @MyDirective {
+    myField(myArgument: String @MyDirective): String! @MyDirective
+}
+
+directive @MyDirective on SCALAR

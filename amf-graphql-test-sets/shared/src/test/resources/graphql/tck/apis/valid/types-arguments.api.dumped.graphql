@@ -1,0 +1,13 @@
+type Query {
+
+  name: String
+}
+type Starship {
+  id : ID!
+  name : String!
+  length(unit: Unit,scientificNotation: Boolean): Float
+}
+enum Unit {
+  METER
+  FOOT
+}

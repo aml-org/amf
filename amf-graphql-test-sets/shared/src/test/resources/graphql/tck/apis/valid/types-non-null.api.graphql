@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String!
+    names: [String]!
+    names2: [String!]!
+}

@@ -1,0 +1,28 @@
+schema {
+    mutation: Mutation
+    query: Query
+}
+
+type Query {
+    a: String
+}
+
+interface Test {
+    objectArgument(input_: Object1): String
+    interfaceArgument(input_: Interface): String
+    unionArgument(input_: Union): String
+}
+
+type Object1 {
+    success: Boolean
+}
+
+type Object2 {
+    success: Boolean
+}
+
+interface Interface {
+    name: String
+}
+
+union Union = Object1 | Object2

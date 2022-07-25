@@ -1,9 +1,0 @@
-schema {
-    query: Query
-}
-
-type Query {
-    name: String
-}
-
-directive @MyDirective(__text: String) on SCHEMA

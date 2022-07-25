@@ -1,0 +1,14 @@
+ModelId: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-target.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-location
+  Message: Directive location SOMETHING is invalid
+  Severity: Violation
+  Target: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-target.api.graphql#/declares/MyDirective
+  Property: 
+  Range: [(13,0)-(13,85)]
+  Location: 

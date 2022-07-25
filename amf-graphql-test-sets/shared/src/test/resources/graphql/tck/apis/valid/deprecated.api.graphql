@@ -1,0 +1,12 @@
+schema {
+    query: Query
+}
+
+type Query {
+    person: Person
+}
+
+type Person {
+    name: String
+    firstName: String @deprecated(reason: "Use `name` instead")
+}

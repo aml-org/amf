@@ -1,0 +1,36 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+type RootObject {
+    objectField: Object1
+    interfaceField: Interface
+    unionField: Union
+    scalarField: Scalar
+    enumField: Enum
+}
+
+type Object1 {
+    success: Boolean
+}
+
+type Object2 {
+    success: Boolean
+}
+
+interface Interface {
+    name: String
+}
+
+union Union = Object1 | Object2
+
+scalar Scalar
+
+enum Enum {
+    A
+    B
+}

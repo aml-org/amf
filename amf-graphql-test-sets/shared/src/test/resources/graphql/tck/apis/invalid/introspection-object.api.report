@@ -1,0 +1,14 @@
+ModelId: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/introspection-object.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#DomainElement-name-invalidIntrospectionName
+  Message: Name must not begin with '__' as this is used exclusively by GraphQL’s introspection system
+  Severity: Violation
+  Target: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/introspection-object.api.graphql#/declares/shape/__Person
+  Property: http://www.w3.org/ns/shacl#name
+  Range: [(9,5)-(9,13)]
+  Location: 

@@ -1,0 +1,25 @@
+schema {
+    query: Query
+}
+
+type Query {
+    searchResult: SearchResult
+}
+
+type Object1 {
+    name: String
+}
+
+type Object2 {
+    name: String
+}
+
+union Union = Object1 | Object2
+
+interface Interface {
+    name: String
+}
+
+scalar Scalar
+
+union SearchResult = Scalar | Union | Interface

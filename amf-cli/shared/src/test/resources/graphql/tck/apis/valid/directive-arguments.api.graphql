@@ -1,9 +1,0 @@
-schema @MyDirective(text: "Luke Skywalker") {
-    query: Query
-}
-
-type Query {
-    name: String
-}
-
-directive @MyDirective(text: String) on SCHEMA

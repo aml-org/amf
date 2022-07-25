@@ -262,8 +262,31 @@ lazy val graphqlJVM =
 lazy val graphqlJS =
   graphql.js
     .in(file("./amf-graphql/js"))
-
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+
+lazy val graphqlSets = crossProject(JSPlatform, JVMPlatform)
+  .settings(name := "amf-graphql-test-sets")
+  .in(file("./amf-graphql-test-sets"))
+  .settings(commonSettings)
+  .dependsOn(graphql % "test")
+  .dependsOn(cli % "test -> test")
+  .disablePlugins(SonarPlugin)
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "amf.js",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-graphql-test-sets/js"
+  )
+
+lazy val graphqlSetsJVM =
+  graphql.jvm
+    .sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
+
+
+lazy val graphqlSetsJS =
+  graphql.js
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+    .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
 
 /** **********************************************
   * AMF CLI
@@ -316,7 +339,6 @@ lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm"))
   .sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
 
 lazy val cliJS = cli.js.in(file("./amf-cli/js"))
-
   .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
 
 /** **********************************************

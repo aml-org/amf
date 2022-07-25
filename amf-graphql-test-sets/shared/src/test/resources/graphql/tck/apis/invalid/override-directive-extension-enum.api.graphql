@@ -1,0 +1,24 @@
+schema {
+    query: Query
+}
+
+type Query {
+    planet: Planet
+}
+
+enum Planet @example {
+    MERCURY
+    VENUS
+    EARTH
+    MARS
+    JUPITER
+    SATURN
+    URANUS
+    NEPTUNE
+}
+
+extend enum Planet @example {
+    PLUTO
+}
+
+directive @example on ENUM

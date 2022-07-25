@@ -1,0 +1,19 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+interface Person {
+    name: String
+}
+
+extend interface Person {
+    id: ID
+}
+
+extend interface Person {
+    id: String
+}

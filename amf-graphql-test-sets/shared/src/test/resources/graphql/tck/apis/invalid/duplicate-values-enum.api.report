@@ -1,0 +1,14 @@
+ModelId: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-enum-values
+  Message: Each enum value must be unique, 'URANUS' it's not
+  Severity: Violation
+  Target: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum.api.graphql#/declares/scalar/Planet
+  Property: http://www.w3.org/ns/shacl#in
+  Range: [(10,4)-(10,11)]
+  Location: 

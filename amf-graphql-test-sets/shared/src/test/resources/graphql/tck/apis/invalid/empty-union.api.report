@@ -1,0 +1,14 @@
+ModelId: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/empty-union.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-union
+  Message: Union definitions must have at least one value
+  Severity: Violation
+  Target: file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/invalid/empty-union.api.graphql#/declares/union/SearchResult
+  Property: 
+  Range: [(19,0)-(19,20)]
+  Location: 

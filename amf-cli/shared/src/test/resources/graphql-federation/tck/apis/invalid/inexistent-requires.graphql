@@ -1,4 +1,0 @@
-type Person @key(fields: "name") {
-    name: String
-    age: Int @requires(fields: "birthday")
-}

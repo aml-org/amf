@@ -1,0 +1,33 @@
+schema {
+    query: Query
+}
+type Query {
+    myEnum: MyEnum
+}
+
+enum MyEnum {
+    INPUT
+    TYPE
+    ENUM
+    SCALAR
+    INTERFACE
+    DIRECTIVE
+    EXTEND
+    UNION
+    IMPLEMENTS
+    QUERY
+    MUTATION
+    SUBSCRIPTION
+    SCHEMA
+    FRAGMENT
+    FIELD
+    FRAGMENT_DEFINITION
+    FRAGMENT_SPREAD
+    INLINE_FRAGMENT
+    OBJECT
+    FIELD_DEFINITION
+    ARGUMENT_DEFINITION
+    ENUM_VALUE
+    INPUT_OBJECT
+    INPUT_FIELD_DEFINITION
+}

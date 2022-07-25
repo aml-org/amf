@@ -1,0 +1,16 @@
+schema {
+    mutation: Mutation
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+type Mutation {
+    changeUserStatus(input_: InputType!): String
+}
+
+input InputType {
+    # this is empty
+}

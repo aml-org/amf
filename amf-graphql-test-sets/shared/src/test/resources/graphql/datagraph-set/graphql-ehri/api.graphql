@@ -1,0 +1,1598 @@
+schema {
+  query: Root
+}
+
+"""This directive allows results to be deferred during execution"""
+directive @defer on FIELD
+
+"""An access point representing an item in a controlled vocabulary"""
+type AccessPoint {
+  """The access point's text"""
+  name: String
+
+  """The access point's type"""
+  type_: AccessPointType!
+}
+
+"""Access point types"""
+enum AccessPointType {
+  person
+  family
+  corporateBody
+  subject
+  creator
+  place
+  genre
+}
+
+"""An address"""
+type Address {
+  """Provides information needed to contact members of staff."""
+  contactPerson: String
+
+  """The institution's street address."""
+  street: String
+
+  """The city in which this institution resides."""
+  municipality: String
+
+  """Autonomous community or region"""
+  firstdem: String
+
+  """
+  The ISO639-2 code for the country in which this institution is located.
+  """
+  countryCode: String
+
+  """The institution''s postal code."""
+  postalCode: String
+
+  """Provides the means to contact an institution via email."""
+  email: [String]
+
+  """Provides the means to contact an institution via telephone."""
+  telephone: [String]
+
+  """Provides the means to contact an institution via fax."""
+  fax: [String]
+
+  """The URL of the intitution''s web page."""
+  webpage: [String]
+}
+
+"""A type that can be annotated"""
+interface Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """This item's annotations"""
+  annotations: [Annotation]
+}
+
+"""An annotation"""
+type Annotation implements Entity & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The text of the annotation"""
+  body: String
+
+  """An optional field to which this annotation applies"""
+  field: String
+
+  """The annotation's type"""
+  annotationType: String
+
+  """The name of this annotation's author"""
+  by: String
+
+  """The annotation's target(s)"""
+  targets: [Annotatable]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""
+A connection edge containing an item of type Annotation and a cursor item
+"""
+type AnnotationEdge {
+  node: Annotation
+  cursor: Cursor
+}
+
+"""
+A connection of items of type Annotation with paging information. A connection
+represents a sequence of items which can be paged via a cursor 
+"""
+type annotations {
+  """A list of type: Annotation"""
+  items: [Annotation]
+
+  """A list of edges of type: Annotation"""
+  edges: [AnnotationEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoAnnotation
+}
+
+"""A container for authoritative items such as historical agents"""
+type AuthoritativeSet implements Entity & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The set's local identifier"""
+  identifier: String
+
+  """The set's name"""
+  name: String
+
+  """The item's description"""
+  description: String
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """Item's contained in this vocabulary"""
+  authorities(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): historicalAgents
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""
+A connection edge containing an item of type AuthoritativeSet and a cursor item
+"""
+type AuthoritativeSetEdge {
+  node: AuthoritativeSet
+  cursor: Cursor
+}
+
+"""
+A connection of items of type AuthoritativeSet with paging information. A
+connection represents a sequence of items which can be paged via a cursor 
+"""
+type authoritativeSets {
+  """A list of type: AuthoritativeSet"""
+  items: [AuthoritativeSet]
+
+  """A list of edges of type: AuthoritativeSet"""
+  edges: [AuthoritativeSetEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoAuthoritativeSet
+}
+
+"""Built-in java.math.BigDecimal"""
+scalar BigDecimal
+
+"""
+A connection of items of type CvocConcept with paging information. A connection
+represents a sequence of items which can be paged via a cursor 
+"""
+type concepts {
+  """A list of type: CvocConcept"""
+  items: [CvocConcept]
+
+  """A list of edges of type: CvocConcept"""
+  edges: [CvocConceptEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoCvocConcept
+}
+
+"""
+A connection of items of type Country with paging information. A connection
+represents a sequence of items which can be paged via a cursor 
+"""
+type countries {
+  """A list of type: Country"""
+  items: [Country]
+
+  """A list of edges of type: Country"""
+  edges: [CountryEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoCountry
+}
+
+"""An item representing a country"""
+type Country implements Entity & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The country's ISO639-2 code"""
+  identifier: String
+
+  """The country's English Name"""
+  name: String!
+
+  """Provides a general overview of the country''s history."""
+  history: String
+
+  """Provides a short overview of the archival situation."""
+  situation: String
+
+  """Provides a summary of the relevant available information."""
+  summary: String
+
+  """Provides more extensive details of the data and how it was acquired."""
+  extensive: String
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """Repositories located in the country"""
+  repositories(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): repositories
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""A connection edge containing an item of type Country and a cursor item"""
+type CountryEdge {
+  node: Country
+  cursor: Cursor
+}
+
+"""A connection cursor"""
+scalar Cursor
+
+"""An item representing a concept in a controlled vocabulary"""
+type CvocConcept implements Entity & Described & Linkable & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The concept's local identifier"""
+  identifier: String
+
+  """An item''s uniform resource identifier"""
+  uri: String
+
+  """URLs of related resources"""
+  seeAlso: [String]
+
+  """A geographical latitude reference"""
+  latitude: BigDecimal
+
+  """A geographical longitude reference"""
+  longitude: BigDecimal
+
+  """The item's descriptions"""
+  descriptions: [CvocConceptDescription]
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): CvocConceptDescription
+
+  """Related concepts, as a list"""
+  related: [CvocConcept]
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """Broader concepts, as a list"""
+  broader: [CvocConcept]
+
+  """Narrower concepts, as a list"""
+  narrower: [CvocConcept]
+
+  """The vocabulary"""
+  vocabulary: CvocVocabulary
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""A concept description with a specific language"""
+type CvocConceptDescription implements Description {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+
+  """Access points associated with this description"""
+  accessPoints: [AccessPoint]
+
+  """Alternative non-preferred labels."""
+  altLabel: [String]
+
+  """Alternative non-preferred labels."""
+  hiddenLabel: [String]
+
+  """Supplies an explanation of the intended meaning of a concept."""
+  definition: [String]
+
+  """Provides general documentation on the concept."""
+  note: [String]
+
+  """
+  Documents fine-grained changes to a concept, for the purposes of administration and maintenance.
+  """
+  changeNote: [String]
+
+  """
+  Supplies information that is an aid to administrative housekeeping, such as
+  reminders of editorial work still to be done, or warnings in the event that
+  future editorial changes might be made.
+  """
+  editorialNote: [String]
+
+  """Describes significant changes to the meaning or the form of a concept."""
+  historyNote: [String]
+
+  """
+  Supplies some, possibly partial, information about the intended meaning of a
+  concept, especially as an indication of how the use of a concept is limited in
+  indexing practice.
+  """
+  scopeNote: [String]
+}
+
+"""
+A connection edge containing an item of type CvocConcept and a cursor item
+"""
+type CvocConceptEdge {
+  node: CvocConcept
+  cursor: Cursor
+}
+
+"""A vocabulary"""
+type CvocVocabulary implements Entity & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The vocabulary's local identifier"""
+  identifier: String
+
+  """The vocabulary's name"""
+  name: String
+
+  """The item's description"""
+  description: String
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """Concepts contained in this vocabulary"""
+  concepts(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): concepts
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""
+A connection edge containing an item of type CvocVocabulary and a cursor item
+"""
+type CvocVocabularyEdge {
+  node: CvocVocabulary
+  cursor: Cursor
+}
+
+"""A date period"""
+type DatePeriod {
+  """The start of this period"""
+  startDate: String
+
+  """The end of this period"""
+  endDate: String
+}
+
+"""An item with multi-lingual descriptions"""
+interface Described {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): Description
+
+  """The item's descriptions"""
+  descriptions: [Description]
+
+  """The item's local identifier"""
+  identifier: String
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+}
+
+"""A language-specific item description"""
+interface Description {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+}
+
+"""An archival unit"""
+type DocumentaryUnit implements Entity & Described & Linkable & Annotatable & Temporal {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The item's local identifier"""
+  identifier: String
+
+  """The item's descriptions"""
+  descriptions: [DocumentaryUnitDescription]
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): DocumentaryUnitDescription
+
+  """The unit's repository, if top level"""
+  repository: Repository
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """The unit's child items"""
+  children(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+
+    """Fetch all lower level items, not just those at the next level"""
+    all: Boolean = false
+  ): documentaryUnits
+
+  """The unit's parent item, if applicable"""
+  parent: DocumentaryUnit
+
+  """The unit's parent items, as a list"""
+  ancestors: [DocumentaryUnit]
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Related items"""
+  related: [Relationship]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""An archival description with a specific language"""
+type DocumentaryUnitDescription implements Description & TemporalDescription {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+
+  """Access points associated with this description"""
+  accessPoints: [AccessPoint]
+
+  """Date periods associated with this description"""
+  dates: [DatePeriod]
+
+  """To explain how the description was prepared and by whom."""
+  archivistNote: String
+
+  """
+  Provides information on the history of the unit of description that is
+  significant for its authenticity, integrity and interpretation.
+  """
+  archivalHistory: String
+
+  """To identify the immediate source of acquisition or transfer."""
+  acquisition: String
+
+  """
+  To provide information on any appraisal, destruction and scheduling action.
+  """
+  appraisal: String
+
+  """To inform the user of foreseen additions to the unit of description."""
+  accruals: String
+
+  """
+  Provides an administrative history of, or biographical details on, the creator
+  (or creators) of the unit of description to place the material in context and
+  make it better understood.
+  """
+  biographicalHistory: String
+
+  """
+  To provide information on the legal status or other regulations that restrict or affect access to the unit of description.
+  """
+  conditionsOfAccess: String
+
+  """
+  To identify any restrictions on reproduction of the unit of description.
+  """
+  conditionsOfReproduction: String
+
+  """To indicate when this description was prepared and/or revised."""
+  datesOfDescriptions: String
+
+  """
+  To identify and describe:
+  1. the physical or logical extent and
+  2. the medium of the unit of description.
+  """
+  extentAndMedium: String
+
+  """!IsadG.levelOfDescription.description!"""
+  levelOfDescription: String
+
+  """To identify related units of description."""
+  relatedUnitsOfDescription: String
+
+  """
+  To provide information about any important physical characteristics or
+  technical requirements that affect use of the unit of description.
+  """
+  physicalCharacteristics: String
+
+  """
+  To identify any publications that are about or are based on the use, study, or analysis of the unit of description.
+  """
+  publicationNote: String
+
+  """To identify the protocols on which the description is based."""
+  rulesAndConventions: String
+
+  """
+  Enables users to judge the potential relevance of the unit of description.
+  """
+  scopeAndContent: String
+
+  """
+  Information about materials that are associated by provenance to the described
+  materials but that have been physically separated or removed. Items may be
+  separated for various reasons, including the dispersal of special formats to
+  more appropriate custodial units; the outright destruction of duplicate or
+  nonessential material; and the deliberate or unintentional scattering of fonds
+  among different repositories.
+  """
+  separatedUnitsOfDescription: String
+
+  """
+  To provide information on the internal structure, the order and/or the system
+  of classification of the unit of description.
+  """
+  systemOfArrangement: String
+
+  """To identify any finding aids to the unit of description."""
+  findingAids: [String]
+
+  """To identify the language(s) employed in the unit of description."""
+  languageOfMaterial: [String]
+
+  """
+  To indicate the existence, location, availability and/or destruction of
+  originals where the unit of description consists of copies.
+  """
+  locationOfOriginals: [String]
+
+  """
+  To indicate the existence, location and availability of copies of the unit of description.
+  """
+  locationOfCopies: [String]
+
+  """
+  The physical location or shelf number of the item(s) within their repository
+  or holding institution. (No direct ISAD(G) field equivalent.)
+  """
+  physicalLocation: [String]
+
+  """
+  To provide information that cannot be accommodated in any of the other areas.
+  """
+  notes: [String]
+
+  """To identify the script(s) employed in the unit of description."""
+  scriptOfMaterial: [String]
+
+  """
+  Record notes on sources consulted in preparing the description and who prepared it.
+  """
+  sources: [String]
+
+  """!IsadG.unitDates.description!"""
+  unitDates: [String]
+}
+
+"""
+A connection edge containing an item of type DocumentaryUnit and a cursor item
+"""
+type DocumentaryUnitEdge {
+  node: DocumentaryUnit
+  cursor: Cursor
+}
+
+"""
+A connection of items of type DocumentaryUnit with paging information. A
+connection represents a sequence of items which can be paged via a cursor 
+"""
+type documentaryUnits {
+  """A list of type: DocumentaryUnit"""
+  items: [DocumentaryUnit]
+
+  """A list of edges of type: DocumentaryUnit"""
+  edges: [DocumentaryUnitEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoDocumentaryUnit
+}
+
+"""An entity"""
+interface Entity {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+}
+
+"""An historical agent"""
+type HistoricalAgent implements Entity & Described & Linkable & Annotatable & Temporal {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The historical agent's EHRI identifier"""
+  identifier: String
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): HistoricalAgentDescription
+
+  """The item's descriptions"""
+  descriptions: [HistoricalAgentDescription]
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Related items"""
+  related: [Relationship]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""An historical agent description"""
+type HistoricalAgentDescription implements Description & TemporalDescription {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+
+  """Access points associated with this description"""
+  accessPoints: [AccessPoint]
+
+  """Date periods associated with this description"""
+  dates: [DatePeriod]
+
+  """!Isaar.lastName.description!"""
+  lastName: String
+
+  """!Isaar.firstName.description!"""
+  firstName: String
+
+  """To identify the sources consulted in creating the authority record."""
+  source: String
+
+  """!Isaar.typeOfEntity.description!"""
+  typeOfEntity: String
+
+  """
+  To indicate the dates of existence of the corporate body, person or family.
+  """
+  datesOfExistence: String
+
+  """To provide a concise history of the corporate body, person or family."""
+  biographicalHistory: String
+
+  """To indicate the legal status of a corporate body."""
+  legalStatus: String
+
+  """
+  To describe and/or represent the internal administrative structure(s) of a corporate body or the genealogy of a family.
+  """
+  structure: String
+
+  """
+  To provide significant information on the general social, cultural, economic,
+  political and/or historical context in which the corporate body, person or
+  family operated, lived or was active.
+  """
+  generalContext: String
+
+  """!Isaar.occupation.description!"""
+  occupation: String
+
+  """
+  To indicate any other name(s) for the corporate body, person or family not used elsewhere in the Identity Area.
+  """
+  otherFormsOfName: [String]
+
+  """
+  To indicate the various forms in which the Authorized form of name occurs in other languages or script forms(s).
+  """
+  parallelFormsOfName: [String]
+
+  """
+  To indicate the predominant places and/or jurisdictions where the corporate
+  body, person or family was based, lived or resided or had some other connection.
+  """
+  place: [String]
+
+  """
+  To indicate the functions, occupations and activities performed by the corporate body, person or family.
+  """
+  functions: [String]
+
+  """
+  To indicate the sources of authority for the corporate body, person or family
+  in terms of its powers, functions, responsibilities or sphere of activities,
+  including territorial.
+  """
+  mandates: [String]
+
+  """To indicate the script(s) used to create the authority record."""
+  scripts: [String]
+
+  """!Isaar.sources.description!"""
+  sources: [String]
+}
+
+"""
+A connection edge containing an item of type HistoricalAgent and a cursor item
+"""
+type HistoricalAgentEdge {
+  node: HistoricalAgent
+  cursor: Cursor
+}
+
+"""
+A connection of items of type HistoricalAgent with paging information. A
+connection represents a sequence of items which can be paged via a cursor 
+"""
+type historicalAgents {
+  """A list of type: HistoricalAgent"""
+  items: [HistoricalAgent]
+
+  """A list of edges of type: HistoricalAgent"""
+  edges: [HistoricalAgentEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoHistoricalAgent
+}
+
+"""
+An item representing a connection between two or more other items, incorporating the context of that connection
+"""
+type Link implements Entity & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """Textual information which may add context to this link"""
+  description: String
+
+  """The field to which this link relates"""
+  field: String
+
+  """The link's target items"""
+  targets: [Linkable]
+
+  """An access point which may represent the context of this link"""
+  body: [AccessPoint]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Date periods associated with this description"""
+  dates: [DatePeriod]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""A type that can be linked to other items"""
+interface Linkable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """This item's links"""
+  links: [Link]
+}
+
+"""A connection edge containing an item of type Link and a cursor item"""
+type LinkEdge {
+  node: Link
+  cursor: Cursor
+}
+
+"""
+A connection of items of type Link with paging information. A connection
+represents a sequence of items which can be paged via a cursor 
+"""
+type links {
+  """A list of type: Link"""
+  items: [Link]
+
+  """A list of edges of type: Link"""
+  edges: [LinkEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoLink
+}
+
+type pageInfoAnnotation {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoAuthoritativeSet {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoCountry {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoCvocConcept {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoCvocVocabulary {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoDocumentaryUnit {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoHistoricalAgent {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoLink {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+type pageInfoRepository {
+  """If a previous page of data is available"""
+  hasPreviousPage: Boolean
+
+  """A cursor pointing to the previous page of items"""
+  previousPage: Cursor
+
+  """If another page of data is available"""
+  hasNextPage: Boolean
+
+  """A cursor pointing to the next page of items"""
+  nextPage: Cursor
+}
+
+"""A related item, incorporating both a target and the link context"""
+type Relationship {
+  """The link object providing context for this relationship"""
+  context: Link
+
+  """The related item"""
+  item: Linkable
+}
+
+"""
+A connection of items of type Repository with paging information. A connection
+represents a sequence of items which can be paged via a cursor 
+"""
+type repositories {
+  """A list of type: Repository"""
+  items: [Repository]
+
+  """A list of edges of type: Repository"""
+  edges: [RepositoryEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoRepository
+}
+
+"""A repository or archival institution"""
+type Repository implements Entity & Described & Linkable & Annotatable {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The repository's EHRI identifier"""
+  identifier: String
+
+  """The number of child items this item contains"""
+  itemCount: Int!
+
+  """The repository's top level documentary units"""
+  documentaryUnits(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+
+    """Fetch all lower level items, not just those at the next level"""
+    all: Boolean = false
+  ): documentaryUnits
+
+  """A geographical latitude reference"""
+  latitude: BigDecimal
+
+  """A geographical longitude reference"""
+  longitude: BigDecimal
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): RepositoryDescription
+
+  """The item's descriptions"""
+  descriptions: [RepositoryDescription]
+
+  """The country in which the repository is located"""
+  country: Country
+
+  """This item's links"""
+  links: [Link]
+
+  """This item's annotations"""
+  annotations: [Annotation]
+
+  """Related items"""
+  related: [Relationship]
+
+  """Events describing this item's digital curation"""
+  systemEvents: [SystemEvent]
+}
+
+"""A repository description with a specific language"""
+type RepositoryDescription implements Description {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+
+  """Access points associated with this description"""
+  accessPoints: [AccessPoint]
+
+  """Addresses associated with this repository"""
+  addresses: [Address]
+
+  """!Isdiah.typeOfEntity.description!"""
+  typeOfEntity: String
+
+  """
+  To provide a concise history of the institution with archival holdings.
+  """
+  history: String
+
+  """
+  To provide information about the geographical and cultural context of the institution with archival holdings.
+  """
+  geoculturalContext: String
+
+  """
+  To indicate the sources of authority for the institution with archival
+  holdings in terms of its powers, functions, responsibilities or sphere of
+  activities, including territorial.
+  """
+  mandates: String
+
+  """
+  To represent the current administrative structure of the institution with archival holdings.
+  """
+  administrativeStructure: String
+
+  """
+  To provide information about the records management and collecting policies of the institution with archival holdings.
+  """
+  records: String
+
+  """
+  To provide information about the building(s) of the institution with archival holdings.
+  """
+  buildings: String
+
+  """To provide a profile of the holdings of the institution."""
+  holdings: String
+
+  """
+  To provide a general overview of the published and/or unpublished finding aids
+  and guides prepared by the institution with archival holdings and any other
+  relevant publications.
+  """
+  findingAids: String
+
+  """To provide information on opening times and dates of annual closures."""
+  openingTimes: String
+
+  """
+  To provide information about the conditions, requirements and procedures for access to, and use of institutional services.
+  """
+  conditions: String
+
+  """
+  To provide accessibility information related to the institution with archival holdings and its services.
+  """
+  accessibility: String
+
+  """
+  To describe the research services provided by the institution with archival holdings.
+  """
+  researchServices: String
+
+  """To provide information about reproduction services."""
+  reproductionServices: String
+
+  """
+  To provide information about areas of the institution available for public use.
+  """
+  publicAreas: String
+
+  """
+  To identify the national or international conventions or rules applied in creating the description.
+  """
+  rulesAndConventions: String
+
+  """
+  To indicate the drafting status of the description so that users can understand the current status of the description.
+  """
+  status: String
+
+  """!Isdiah.datesOfDescriptions.description!"""
+  datesOfDescriptions: String
+
+  """
+  To document additional information relating to the creation of and changes to the description.
+  """
+  maintenanceNotes: String
+
+  """
+  To indicate any other name(s) for the institution with archival holdings not used elsewhere in the Identity Area.
+  """
+  otherFormsOfName: [String]
+
+  """
+  To indicate the various forms in which the authorised form of name of an
+  institution with archival holdings occurs in other languages or script form(s).
+  """
+  parallelFormsOfName: [String]
+
+  """
+  To indicate the language(s) used to create the description of the institution with archival holdings.
+  """
+  languages: [String]
+
+  """
+  To indicate the script(s) used to create the description of the institution with archival holdings.
+  """
+  scripts: [String]
+
+  """
+  To indicate the sources consulted in creating the description of the institution with archival holdings.
+  """
+  sources: [String]
+}
+
+"""
+A connection edge containing an item of type Repository and a cursor item
+"""
+type RepositoryEdge {
+  node: Repository
+  cursor: Cursor
+}
+
+type Root {
+  """Fetch a single documentary unit"""
+  DocumentaryUnit(
+    """An item string identifier"""
+    id: ID!
+  ): DocumentaryUnit
+
+  """Fetch a single repository"""
+  Repository(
+    """An item string identifier"""
+    id: ID!
+  ): Repository
+
+  """Fetch a single country"""
+  Country(
+    """An item string identifier"""
+    id: ID!
+  ): Country
+
+  """Fetch a single historical agent"""
+  HistoricalAgent(
+    """An item string identifier"""
+    id: ID!
+  ): HistoricalAgent
+
+  """Fetch a single authority set"""
+  AuthoritativeSet(
+    """An item string identifier"""
+    id: ID!
+  ): AuthoritativeSet
+
+  """Fetch a single concept"""
+  CvocConcept(
+    """An item string identifier"""
+    id: ID!
+  ): CvocConcept
+
+  """Fetch a single vocabulary"""
+  CvocVocabulary(
+    """An item string identifier"""
+    id: ID!
+  ): CvocVocabulary
+
+  """Fetch a single annotation"""
+  Annotation(
+    """An item string identifier"""
+    id: ID!
+  ): Annotation
+
+  """Fetch a single link"""
+  Link(
+    """An item string identifier"""
+    id: ID!
+  ): Link
+
+  """A page of documentary unit items"""
+  documentaryUnits(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+
+    """Fetch only top-level items, not items at all levels"""
+    topLevel: Boolean = false
+  ): documentaryUnits
+
+  """A page of top level documentary unit items"""
+  topLevelDocumentaryUnits(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): documentaryUnits @deprecated(reason: "Use 'topLevel' argument to 'documentaryUnits' field instead")
+
+  """A page of repositories"""
+  repositories(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): repositories
+
+  """A page of historical agents"""
+  historicalAgents(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): historicalAgents
+
+  """A page of country items"""
+  countries(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): countries
+
+  """A page of authoritative set items"""
+  authoritativeSets(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): authoritativeSets
+
+  """A page of concept items"""
+  concepts(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): concepts
+
+  """A page of vocabulary items"""
+  vocabularies(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): vocabularies
+
+  """A page of annotation items"""
+  annotations(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): annotations
+
+  """A page of links"""
+  links(
+    """The number of items to fetch"""
+    first: Int
+
+    """Fetch items after this cursor"""
+    after: Cursor
+
+    """Fetch items from this cursor"""
+    from: Cursor
+  ): links
+}
+
+"""A system event"""
+type SystemEvent {
+  """The time the event occurred"""
+  timestamp: String
+
+  """A log message describing the action that took place"""
+  logMessage: String
+
+  """The type of event occurred"""
+  eventType: String
+}
+
+"""A type with descriptions that have temporal data"""
+interface Temporal {
+  """The item's EHRI id"""
+  id: String!
+
+  """The item's EHRI type"""
+  type_: String!
+
+  """The item's local identifier"""
+  identifier: String
+
+  """
+  Fetch the description at given the given index, or that with the given
+  languageCode and/or identifier code. Since the default index is 1, no
+  arguments will return the first available description
+  """
+  description(
+    """The description's language code"""
+    languageCode: String
+
+    """The description's identifier code"""
+    identifier: String
+
+    """The description's 1-based index index (default: 1)"""
+    at: Int = 1
+  ): TemporalDescription
+
+  """The item's descriptions"""
+  descriptions: [TemporalDescription]
+}
+
+"""A language-specific item description with dates"""
+interface TemporalDescription {
+  """The description's language code"""
+  languageCode: String
+
+  """The description's title"""
+  name: String
+
+  """The description's (optional) identifier"""
+  identifier: String
+
+  """Date periods associated with this description"""
+  dates: [DatePeriod]
+}
+
+"""
+A connection of items of type CvocVocabulary with paging information. A
+connection represents a sequence of items which can be paged via a cursor 
+"""
+type vocabularies {
+  """A list of type: CvocVocabulary"""
+  items: [CvocVocabulary]
+
+  """A list of edges of type: CvocVocabulary"""
+  edges: [CvocVocabularyEdge]
+
+  """Pagination information"""
+  pageInfo: pageInfoCvocVocabulary
+}
+

@@ -1,0 +1,18 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+interface Starship {
+    id: ID!
+    name: String!
+    length(__unit: Unit = METER): Float
+}
+
+enum Unit {
+    METER
+    FOOT
+}

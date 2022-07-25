@@ -1,0 +1,18 @@
+schema {
+    query: Query
+}
+type Query {
+    a: String
+}
+
+type Person {
+    name: String
+}
+
+extend type Person {
+    surname: String
+}
+
+extend type Person {
+    id: ID
+}

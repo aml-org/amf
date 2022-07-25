@@ -1,0 +1,21 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+type Person implements Id1 & Id2 {
+    id: ID!
+    name: String!
+    surname: String!
+}
+
+interface Id1 {
+    id: String!
+}
+
+interface Id2 {
+    id: ID!
+}

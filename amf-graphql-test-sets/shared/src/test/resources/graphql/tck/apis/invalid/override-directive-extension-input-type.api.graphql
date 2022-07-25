@@ -1,0 +1,26 @@
+schema {
+    mutation: Mutation
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+type Mutation {
+    changeUserStatus(input_: InputType!): OutputType
+}
+
+input InputType @example {
+    randomText: String
+}
+
+type OutputType {
+    success: Boolean
+}
+
+extend input InputType @example {
+    anotherRandomText: String
+}
+
+directive @example on INPUT_OBJECT

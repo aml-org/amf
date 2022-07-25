@@ -1,0 +1,59 @@
+"""
+schema documentation
+"""
+schema {
+    query: CustomQuery
+}
+
+type CustomQuery {
+    """
+    Get all the people
+    """
+    allPeople(
+        """
+        Last parameter
+        """
+        last: Int
+    ): [Person!]!
+    allAnimals(animalRequest: AnimalRequest): [Animal]!
+}
+
+input AnimalRequest {
+  kingodm: Kingdom
+}
+
+"""
+type documentation
+"""
+type Mutation {
+    createPerson(name: String!, age: Int!): Person!
+}
+
+type Subscription {
+    newPerson: Person!
+}
+
+type Person {
+    name: String!
+    age: Int!
+    posts(limit: Int, offset: Int): [Post!]!
+}
+
+type Post {
+    title: String!
+    author: Person!
+}
+
+    union LivingThing = Person | Animal
+
+type Animal {
+age: Int!
+paws: Int
+kingdom: Kingdom
+}
+
+enum Kingdom {
+ANIMAL,
+VEGETAL,
+MUSHROOM
+}

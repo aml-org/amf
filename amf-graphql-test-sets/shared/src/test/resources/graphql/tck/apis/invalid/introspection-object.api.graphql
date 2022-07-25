@@ -1,0 +1,11 @@
+schema {
+    query: Query
+}
+
+type Query {
+    person: __Person
+}
+
+type __Person {
+    name: String
+}

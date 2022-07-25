@@ -1,0 +1,7 @@
+schema {
+    query: __Query
+}
+
+type __Query {
+    __string(__arg: String): String
+}

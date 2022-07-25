@@ -1,0 +1,25 @@
+schema @example {
+    query: Query
+}
+
+type Query {
+    person: Person
+}
+
+type Person {
+    name: String
+}
+
+type Mutation {
+    createPerson(person: PersonInput): Person
+}
+
+input PersonInput {
+    name: String
+}
+
+extend schema @example {
+    mutation: Mutation
+}
+
+directive @example on SCHEMA

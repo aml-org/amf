@@ -1,0 +1,8 @@
+schema {
+    query: Starship
+}
+
+type Starship {
+    id: ID!
+    name: String!
+}

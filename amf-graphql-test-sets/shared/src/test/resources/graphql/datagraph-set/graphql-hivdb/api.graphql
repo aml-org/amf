@@ -1,0 +1,1618 @@
+schema {
+  query: Root
+}
+
+type AlgorithmComparison {
+  drugClass: DrugClass
+  drugScores: [ComparableDrugScore]
+}
+
+type AlignedGeneSequence {
+  """Sequence gene and the reference sequence."""
+  gene: Gene
+
+  """
+  The first aligned position (start from 1) in protein relative to the reference sequence.
+  """
+  firstAA: Int
+
+  """
+  The last aligned position (start from 1) in protein relative to the reference sequence.
+  """
+  lastAA: Int
+
+  """
+  The first aligned position (start from 1) in DNA relative to the input sequence.
+  """
+  firstNA: Int
+
+  """
+  The last aligned position (start from 1) in DNA relative to the input sequence.
+  """
+  lastNA: Int
+
+  """
+  The match percentage of input sequence aligned to the reference sequence.
+  """
+  matchPcnt: Float
+
+  """The amino acid size of this sequence without unsequenced region (Ns)."""
+  size: Int
+
+  """Formatted pairwise output of the aligned sequence."""
+  prettyPairwise: PrettyPairwise
+
+  """Aligned DNA sequence without insertions and insertion gaps."""
+  alignedNAs: String
+
+  """
+  Aligned protein sequence without insertions and insertion gaps. Mixtures are represented as "X".
+  """
+  alignedAAs: String
+
+  """
+  (HXB2 numbering) adjusted aligned DNA sequence without insertions and insertion gaps.
+  """
+  adjustedAlignedNAs(
+    """Sequences alignment target strain."""
+    targetStrain: String
+  ): String
+
+  """
+  (HXB2 numbering) adjusted aligned protein sequence without insertions and insertion gaps. Mixtures are represented as "X".
+  """
+  adjustedAlignedAAs(
+    """Sequences alignment target strain."""
+    targetStrain: String
+  ): String
+
+  """All mutations found in the aligned sequence."""
+  mutations(
+    """List of filter options for the mutation set."""
+    filterOptions: [MutationSetFilterOption]
+
+    """
+    List of possible mutation strings that should be included in this query if
+    presented. Gene need to be prepend if the gene is not able to be inferred
+    from the context.
+    """
+    customList: [String]
+  ): [Mutation]
+
+  """All frame shifts found in the aligned sequence."""
+  frameShifts: [FrameShift]
+}
+
+"""ASI algorithm."""
+enum ASIAlgorithm {
+  HIVDB_7_0
+  HIVDB_7_5
+  HIVDB_7_6
+  HIVDB_7_8
+  HIVDB_7_9
+  HIVDB_7_10
+  HIVDB_8_0
+  HIVDB_8_0_1
+  HIVDB_8_1
+  HIVDB_8_1_1
+  HIVDB_8_2
+  HIVDB_8_3
+  HIVDB_8_4
+  HIVDB_8_5
+  HIVDB_8_6
+  HIVDB_8_6_1
+  HIVDB_8_7
+  HIVDB_8_8
+  HIVDB_8_9
+  HIVDB_8_9p1
+  HIVDB_9_0
+  ANRS_26
+  ANRS_27
+  ANRS_27stanford2
+  ANRS_28
+  ANRS_29
+  ANRS_30
+  Rega_9_1
+  Rega_10_0
+}
+
+"""Comment bound to a certain mutation object."""
+type BoundMutationComment {
+  """Unique name of the comment."""
+  name: String
+
+  """Corresponding gene."""
+  gene: Gene
+
+  """Corresponding drug class."""
+  drugClass: DrugClass
+
+  """Mutation type of this comment."""
+  type_: CommentType
+
+  """Comment text."""
+  text: String
+
+  """Mutated amino acid(s) that triggered the comment."""
+  triggeredAAs: String @deprecated(reason: "Use `boundMutation { displayAAs }` instead.")
+
+  """The mutation that bound to this comment."""
+  boundMutation: Mutation
+
+  """Text should be highlighted in the comment."""
+  highlightText: [String]
+}
+
+"""Prevalence data for an input mutation."""
+type BoundMutationPrevalence {
+  """The mutation matched these prevalence data."""
+  boundMutation: Mutation
+
+  """Prevalence data that matched the mutation."""
+  matched: [MutationPrevalenceByAA]
+
+  """Other prevalence data at the mutation position."""
+  others: [MutationPrevalenceByAA]
+}
+
+"""Subtype of certain sequence."""
+type BoundSubtype {
+  """Name of the subtype."""
+  name: Subtype
+
+  """
+  The distance percentage compares to the subtype of given sequence. 0.0 means completely the same.
+  """
+  distancePcnt: Float
+
+  """
+  String of shown subtype and distance percentage. The shown subtype can be in
+  the form of unknown subtype of recombination like "B + C".
+  """
+  display: String
+}
+
+type CommentsByType {
+  """Type of these comments."""
+  mutationType: CommentType @deprecated(reason: "Use `commentType` instead.")
+
+  """Type of these comments."""
+  commentType: CommentType
+
+  """Comments belong to this type."""
+  comments: [BoundMutationComment]
+}
+
+"""Comment type."""
+enum CommentType {
+  Major
+  Accessory
+  NRTI
+  NNRTI
+  Other
+  Dosage
+}
+
+type ComparableDrugScore {
+  """Drug of this score."""
+  drug: Drug
+
+  """The name of algorithm which calculated this score."""
+  algorithm: String
+
+  """One of the three step resistance levels of the drug."""
+  SIR: SIR
+
+  """Readable resistance level defined by the algorithm for the drug."""
+  interpretation: String
+
+  """Text explanation on how this level get calculated."""
+  explanation: String
+}
+
+input CustomASIAlgorithm {
+  """Algorithm name."""
+  name: String
+
+  """ASI XML data."""
+  xml: String
+}
+
+"""Descriptive statistics for a list of values."""
+type DescriptiveStatistics {
+  """The arithmetic mean of the available values."""
+  mean: Float
+
+  """The standard deviation of the available values."""
+  standardDeviation: Float
+
+  """The minimum of the available values."""
+  min: Float
+
+  """The maximum of the available values."""
+  max: Float
+
+  """The number of the available values."""
+  n: Float
+
+  """The sum of the available values."""
+  sum: Float
+
+  """The set of available values."""
+  values: [Float]
+
+  """An estimate for the pth percentile of the stored values."""
+  percentile(
+    """The requested percentile (scaled from 0 - 100)"""
+    p: Float
+  ): Float
+}
+
+"""HIV drug."""
+type Drug {
+  """Name of the drug."""
+  name: DrugEnum
+
+  """Display abbreviation of the drug."""
+  displayAbbr: String
+
+  """Full name of the drug."""
+  fullName: String
+
+  """Drug class the drug belongs to."""
+  drugClass: DrugClass
+}
+
+"""HIV drug class."""
+type DrugClass {
+  """Name of the drug class."""
+  name: DrugClassEnum
+
+  """Full name of the drug class."""
+  fullName: String
+
+  """Drugs of this drug class."""
+  drugs: [Drug]
+
+  """Gene the drug class belongs to."""
+  gene: Gene
+}
+
+enum DrugClassEnum {
+  PI
+  NRTI
+  NNRTI
+  INSTI
+}
+
+enum DrugEnum {
+  ABC
+  ATV
+  AZT
+  BIC
+  CAB
+  D4T
+  DDI
+  DOR
+  DRV
+  DTG
+  EFV
+  ETR
+  EVG
+  FPV
+  FTC
+  IDV
+  LMV
+  LPV
+  NFV
+  NVP
+  RAL
+  RPV
+  SQV
+  TDF
+  TPV
+}
+
+"""Partial score by mutation."""
+type DrugPartialScore {
+  """Score triggering mutations."""
+  mutations: [Mutation]
+
+  """Score number."""
+  score: Float
+}
+
+type DrugResistance {
+  version: DrugResistanceAlgorithm @deprecated(reason: "Use field `algorithm` instead.")
+
+  """Get used drug resistance algorithm."""
+  algorithm: DrugResistanceAlgorithm
+
+  """Gene of the drug resistance report."""
+  gene: Gene
+
+  """List of drug levels and scores."""
+  drugScores(
+    """Specify drug class. Leave this argument empty will return all drugs."""
+    drugClass: DrugClassEnum
+  ): [DrugScore]
+  mutationsByTypes: [MutationsByType]
+  commentsByTypes: [CommentsByType]
+}
+
+"""A drug resistance algorithm."""
+type DrugResistanceAlgorithm {
+  """get key name of this algorithm."""
+  text: String
+
+  """algorithm family and version for display."""
+  display: String
+
+  """algorithm family."""
+  family: String
+
+  """algorithm version."""
+  version: String
+
+  """algorithm target strain."""
+  strain: Strain
+
+  """Publish date of this version."""
+  publishDate: String
+}
+
+type DrugScore {
+  """The drug class."""
+  drugClass: DrugClass
+
+  """The drug."""
+  drug: Drug
+
+  """One of the three step resistance levels of the drug."""
+  SIR: SIR
+
+  """Resistance score of the drug."""
+  score: Float
+
+  """Resistance level (1 - 5) of the drug."""
+  level: Int
+
+  """Readable resistance level of the drug."""
+  text: String
+
+  """List of partial scores that contributed to this total score."""
+  partialScores: [DrugPartialScore]
+}
+
+enum EnumGene {
+  PR
+  RT
+  IN
+}
+
+enum EnumSequenceReadsHistogramAggregatesOption {
+  Codon
+  AminoAcid
+  Position
+}
+
+"""Frame shift (NAs length < 3) found in aligned sequence."""
+type FrameShift {
+  """Gene the frame shift belongs to."""
+  gene: Gene
+
+  """Position of the frame shift."""
+  position: Int
+
+  """The frame shift is an insertion or not."""
+  isInsertion: Boolean
+
+  """The frame shift is a deletion or not."""
+  isDeletion: Boolean
+
+  """DNA size of the frame shift."""
+  size: Int
+
+  """Nucleic acid(s) of the frame shift."""
+  NAs: String
+
+  """Formatted readable text of this frame shift."""
+  text: String
+}
+
+"""HIV genes. Accept PR, RT or IN."""
+type Gene {
+  """Name of the gene (with strain name)."""
+  nameWithStrain: String
+
+  """Name of the gene (without strain name)."""
+  name: EnumGene
+
+  """HIV strain referred by this gene."""
+  strain: Strain
+
+  """Reference sequence of this gene."""
+  refSequence: String
+  reference: String @deprecated(reason: "Use field `refSequence` instead.")
+  consensus: String @deprecated(reason: "Use field `refSequence` instead.")
+
+  """Length of current gene."""
+  length: Int
+
+  """Supported drug classes of current gene."""
+  drugClasses: [DrugClass]
+
+  """Supported mutation types of current gene."""
+  mutationTypes: [MutationType]
+}
+
+type GeneSequenceReads {
+  """Sequence gene and the reference sequence."""
+  gene: Gene
+
+  """
+  The first sequenced position (start from 1) in protein relative to the reference sequence.
+  """
+  firstAA: Int
+
+  """
+  The last sequenced position (start from 1) in protein relative to the reference sequence.
+  """
+  lastAA: Int
+
+  """Position codon reads in this gene sequence."""
+  allPositionCodonReads: [PositionCodonReads]
+
+  """Position codon reads in this gene sequence (json formated)."""
+  internalJsonAllPositionCodonReads(
+    """Exclude codons matched subtype B consensus."""
+    mutationOnly: Boolean = false
+
+    """Exclude codons with proportions higher than specified value (0 - 1)."""
+    maxProportion: Float
+
+    """Exclude codons with proportions lower than specified value (0 - 1)."""
+    minProportion: Float
+  ): String
+
+  """The amino acid size of this sequence including unsequenced region."""
+  size: Int
+
+  """The sequenced positions of this sequence."""
+  numPositions: Int
+
+  """Descriptive statistics of all read depth."""
+  readDepthStats: DescriptiveStatistics
+
+  """Aligned DNA sequence without insertions and insertion gaps."""
+  alignedNAs: String
+
+  """
+  Aligned protein sequence without insertions and insertion gaps. Mixtures are represented as "X".
+  """
+  alignedAAs: String
+
+  """All mutations found in the aligned sequence."""
+  mutations(
+    """List of filter options for the mutation set."""
+    filterOptions: [MutationSetFilterOption]
+
+    """
+    List of possible mutation strings that should be included in this query if
+    presented. Gene need to be prepend if the gene is not able to be inferred
+    from the context.
+    """
+    customList: [String]
+  ): [Mutation]
+
+  """Histogram data for sequence reads."""
+  histogram(
+    """Percent lower limit of filtering codon reads (range: 0-100)."""
+    pcntLowerLimit: Float = 0.001
+
+    """Percent lower limit of filtering codon reads (range: 0-100)."""
+    pcntUpperLimit: Float = 0.2
+
+    """
+    Number of bins wanted in this histogram. (either `numBins` or `binTicks` must be provided)
+    """
+    numBins: Int
+
+    """
+    Bin ticks wanted in this histogram. (either `numBins` or `binTicks` must be provided)
+    """
+    binTicks: [Float] = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2]
+
+    """Generate cumulative histogram data instead."""
+    cumulative: Boolean = true
+
+    """Aggregation option."""
+    aggregatesBy: EnumSequenceReadsHistogramAggregatesOption = Position
+  ): SequenceReadsHistogram
+}
+
+type HIVBoundSubtype {
+  """The display subtype(s) with the distance percent."""
+  display: String
+
+  """The display subtype(s) without the distance percent."""
+  displayWithoutDistance: String
+
+  """
+  The original subtype found by comparison. The value of this field is
+  UNPROCESSED. You probably want to use field `display` for the final result.
+  """
+  subtype: HIVSubtype
+  genotype: HIVSubtype @deprecated(reason: "Use field `subtype` instead.")
+
+  """
+  There are several rules applied for subtype displaying. This field lists
+  subtypes that were used in constructing the final result in `display` and
+  `displayWithoutDistance`.
+  """
+  displaySubtypes: [HIVSubtype]
+  displayGenotypes: [HIVSubtype] @deprecated(reason: "Use field `displaySubtypes` instead.")
+
+  """The first compared/matched NA position in HXB2."""
+  firstNA: Int
+
+  """The last compared/matched NA position in HXB2."""
+  lastNA: Int
+
+  """
+  The distance between bound sequence and coressponding reference. Noted that 0 <= distance <= 1.
+  """
+  distance: Float
+
+  """
+  The distance between bound sequence and coressponding reference. Noted that 0% <= distancePcnt <= 100%.
+  """
+  distancePcnt: String
+
+  """Accession number of the reference being compared."""
+  referenceAccession: String
+
+  """Country where this reference sequence was collected."""
+  referenceCountry: String
+
+  """Year this reference sequence was collected."""
+  referenceYear: Int
+
+  """A full list of HXB2 positions that present with discordance."""
+  discordanceList: [Int]
+}
+
+"""Classification level of genotypes: species, group or subtype."""
+enum HIVClassificationLevel {
+  SPECIES
+  GROUP
+  SUBTYPE
+  CRF
+  SUBSUBTYPE
+}
+
+type HIVSubtype {
+  """
+  Short name of current species, group, or subtype. Also used for indexing internally.
+  """
+  indexName: String
+
+  """Full name of current species, group, or subtype."""
+  displayName: String
+
+  """Classification level of the subtype."""
+  classificationLevel: HIVClassificationLevel
+}
+
+"""Long type"""
+scalar Long
+
+type Mutation {
+  """Mutation gene."""
+  gene: Gene
+
+  """Amino acid reference at this gene sequence position."""
+  reference: String
+  consensus: String @deprecated(reason: "Use field `reference` instead.")
+
+  """Position of the mutation."""
+  position: Int
+
+  """The mutated AA(s) with possibly inserted AA(s)."""
+  displayAAs: String
+
+  """
+  The mutated AA(s) with possibly inserted AA(s). Highly ambiguous mixture is not replaced to X.
+  """
+  AAs: String
+
+  """A list of AAs."""
+  displayAAChars: [String]
+
+  """A list of AAs. Highly ambiguous mixture is not replaced to X."""
+  AAChars: [String]
+
+  """
+  The mutated codon when the mutation is extracting from an aligned sequence.
+  """
+  triplet: String
+
+  """
+  The inserted codon(s) when the mutation is extracting from an aligned sequence.
+  """
+  insertedNAs: String
+
+  """The mutation is an insertion or not."""
+  isInsertion: Boolean
+
+  """The mutation is a deletion or not."""
+  isDeletion: Boolean
+
+  """The mutation is an insertion/deletion, or not."""
+  isIndel: Boolean
+
+  """The mutation is a highly ambiguous mutation or not."""
+  isAmbiguous: Boolean
+
+  """
+  The mutation is a signature APOBEC-mediated G-to-A hypermutation or not.
+  """
+  isApobecMutation: Boolean
+
+  """
+  The mutation is a drug resistance mutation (DRM) might be caused by APOBEC-mediated G-to-A hypermutation or not.
+  """
+  isApobecDRM: Boolean
+
+  """If the mutation is from unsequenced region."""
+  isUnsequenced: Boolean
+
+  """If the mutation is a drug resistance mutation (DRM) or not."""
+  isDRM: Boolean
+
+  """The mutation contains stop codon or not."""
+  hasStop: Boolean
+
+  """The mutation is a low prevalence (unusual) mutation or not."""
+  isUnusual: Boolean
+
+  """The mutation is a Surveillance Drug Resistance Mutation (SDRM) or not."""
+  isSDRM: Boolean
+
+  """
+  Ordered list of mutation type(s). List size can be larger than 1 when the mutation is a mixture.
+  """
+  types: [MutationType]
+
+  """Primary type of the mutation."""
+  primaryType: MutationType
+
+  """Mutation comments."""
+  comments: [BoundMutationComment]
+
+  """Formatted text of the mutation (without gene)."""
+  text: String
+
+  """Formatted short text of the mutation (without gene)."""
+  shortText: String
+}
+
+"""Prevalence data for a single mutation."""
+type MutationPrevalence {
+  """The amino acid at this position."""
+  AA: String
+
+  """Subtype this prevalence belongs to."""
+  subtype: MutationPrevalenceSubtype
+
+  """Total number of naive samples which contain the mutation position."""
+  totalNaive: Int
+
+  """Total number of naive samples which contain the mutation."""
+  frequencyNaive: Int
+
+  """
+  Proportion of certain mutation occured in the naive samples which contain that
+  position. Equals to 100 * frequencyNaive / totalNaive.
+  """
+  percentageNaive: Float
+
+  """Total number of treated samples which contain the mutation position."""
+  totalTreated: Int
+
+  """Total number of treated samples which contain the mutation."""
+  frequencyTreated: Int
+
+  """
+  Proportion of certain mutation occured in the treated samples which contain
+  that position. Equals to 100 * frequencyTreated / totalTreated.
+  """
+  percentageTreated: Float
+}
+
+"""Prevalence data for a single AA (or ins/deletion)."""
+type MutationPrevalenceByAA {
+  """The amino acid."""
+  AA: String
+
+  """Prevalence data of each subtype."""
+  subtypes: [MutationPrevalence]
+}
+
+"""Main subtype that mutation prevalence supported."""
+type MutationPrevalenceSubtype {
+  """Subtype name."""
+  name: String
+
+  """Sbutype statistics by genes."""
+  stats: [MutationPrevalenceSubtypeStat]
+}
+
+"""Statistics data for the subtype."""
+type MutationPrevalenceSubtypeStat {
+  """Gene the statistic belongs to."""
+  gene: Gene
+
+  """Total number of naive samples."""
+  totalNaive: Int
+
+  """Total number of treated samples."""
+  totalTreated: Int
+}
+
+type MutationsAnalysis {
+  """Optional name provided by client to identify this mutation list."""
+  name: String
+
+  """Validation results for the mutation list."""
+  validationResults: [ValidationResult]
+
+  """List of drug resistance results by genes."""
+  drugResistance(
+    """One of the built-in ASI algorithms."""
+    algorithm: ASIAlgorithm = HIVDB_9_0
+  ): [DrugResistance]
+
+  """List of mutation prevalence results."""
+  mutationPrevalences: [BoundMutationPrevalence]
+
+  """List of ASI comparison results."""
+  algorithmComparison(
+    """One or more of the built-in ASI algorithms."""
+    algorithms: [ASIAlgorithm]
+
+    """One or more of custom ASI algorithms."""
+    customAlgorithms: [CustomASIAlgorithm]
+  ): [AlgorithmComparison]
+}
+
+type MutationsByType {
+  """Type of these mutations."""
+  mutationType: MutationType
+
+  """Mutations belong to this type."""
+  mutations: [Mutation]
+}
+
+"""Filter option for mutation set."""
+enum MutationSetFilterOption {
+  """List only mutations which are APOBEC-mediated G-to-A hypermutation."""
+  APOBEC
+
+  """
+  List only drug resistance mutations which are APOBEC-mediated G-to-A hypermutation.
+  """
+  APOBEC_DRM
+
+  """List only mutations which are drug resistance mutation (DRM)."""
+  DRM
+
+  """List all mutations at DRM positions (no need to be DRMs)."""
+  DRP
+
+  """List only mutations which are not drug resistance mutation (DRM)."""
+  notDRM
+
+  """List only mutations which are PI DRM."""
+  PI_DRM
+
+  """List only mutations which are NRTI DRM."""
+  NRTI_DRM
+
+  """List only mutations which are NNRTI DRM."""
+  NNRTI_DRM
+
+  """List only mutations which are INSTI DRM."""
+  INSTI_DRM
+
+  """
+  List only mutations which are surveillance drug resistance mutations (SDRM).
+  """
+  SDRM
+
+  """
+  List only mutations which are not sruveillance drug resistance mutation (SDRM).
+  """
+  notSDRM
+
+  """List only mutations which are PI SDRM."""
+  PI_SDRM
+
+  """List only mutations which are NRTI SDRM."""
+  NRTI_SDRM
+
+  """List only mutations which are NNRTI SDRM."""
+  NNRTI_SDRM
+
+  """List only mutations which are INSTI SDRM."""
+  INSTI_SDRM
+
+  """List only mutations which are treatment-selected mutations (TSM)."""
+  TSM
+
+  """List only mutations which are not treatment-selected mutations (TSM)."""
+  notTSM
+
+  """List only mutations which are PI TSM."""
+  PI_TSM
+
+  """List only mutations which are NRTI TSM."""
+  NRTI_TSM
+
+  """List only mutations which are NNRTI TSM."""
+  NNRTI_TSM
+
+  """List only mutations which are INSTI TSM."""
+  INSTI_TSM
+  GENE_PR
+  GENE_RT
+  GENE_IN
+  TYPE_MAJOR
+  TYPE_ACCESSORY
+  TYPE_NRTI
+  TYPE_NNRTI
+  TYPE_OTHER
+  INSERTION
+  DELETION
+  UNUSUAL
+
+  """List all highly-ambiguous (HBDVN) mutations."""
+  AMBIGUOUS
+
+  """List only mutations with stop codon(s)."""
+  STOPCODON
+
+  """Accept a custom list of mutations and find the intersects."""
+  CUSTOMLIST
+}
+
+"""Mutation type."""
+enum MutationType {
+  NRTI
+  NNRTI
+  Major
+  Accessory
+  Other
+}
+
+"""A single codon reads."""
+type OneCodonReads {
+  """
+  The triplet codon. Insertion should be append to the triplet NAs directly. Deletion should use '-'.
+  """
+  codon: String
+
+  """Number of reads for this codon."""
+  reads: Long
+
+  """The corresponding reference amino acid."""
+  refAminoAcid: String
+
+  """The corresponding amino acid."""
+  aminoAcid: String
+
+  """Codon proportion of current position (0.0 - 1.0)"""
+  proportion: Float
+
+  """Codon prevalence in HIVDB database (0.0 - 1.0)"""
+  codonPercent: Float
+
+  """Amino acid prevalence in HIVDB database (0.0 - 1.0)"""
+  aaPercent: Float
+
+  """The amino acid is the same as the reference (consensus) amino acid."""
+  isReference: Boolean
+
+  """The amino acid is a known drug resistance mutation (DRM)."""
+  isDRM: Boolean
+
+  """The amino acid is an unusual mutation."""
+  isUnusual: Boolean
+
+  """The amino acid is a signature APOBEC-mediated hypermutation."""
+  isApobecMutation: Boolean
+
+  """
+  The amino acid is a drug resistance mutation (DRM) might be caused by APOBEC-mediated G-to-A hypermutation.
+  """
+  isApobecDRM: Boolean
+}
+
+type OneCodonReadsCoverage {
+  """Gene of this record."""
+  gene: Gene
+
+  """Codon position in this gene."""
+  position: Long
+
+  """Total reads of this position."""
+  totalReads: Long
+
+  """This position is trimmed or not."""
+  isTrimmed: Boolean
+}
+
+"""A single codon reads."""
+input OneCodonReadsInput {
+  """
+  The triplet codon. Insertion should be append to the triplet NAs directly. Deletion should use '-'.
+  """
+  codon: String
+
+  """Number of reads for this codon."""
+  reads: Long
+}
+
+"""Codon reads at a single position."""
+type PositionCodonReads {
+  """Gene of this position."""
+  gene: Gene
+
+  """Codon/amino acid position."""
+  position: Int
+
+  """
+  Total reads at this position. The field will be automatically calculated from `allCodonReads` if it's absent.
+  """
+  totalReads: Long
+
+  """All codon reads at this position."""
+  codonReads(
+    """Exclude codons matched subtype B consensus."""
+    mutationOnly: Boolean = false
+
+    """Exclude codons with proportions higher than specified value (0 - 1)."""
+    maxProportion: Float
+
+    """Exclude codons with proportions lower than specified value (0 - 1)."""
+    minProportion: Float
+  ): [OneCodonReads]
+}
+
+"""Codon reads at a single position."""
+input PositionCodonReadsInput {
+  """Gene of this position."""
+  gene: EnumGene
+
+  """Codon/amino acid position."""
+  position: Int
+
+  """
+  Total reads at this position. The field will be automatically calculated from `allCodonReads` if it's absent.
+  """
+  totalReads: Long = -1
+
+  """All codon reads at this position."""
+  allCodonReads: [OneCodonReadsInput]
+}
+
+"""Formatted pairwise result of the aligned sequence."""
+type PrettyPairwise {
+  """Formmated numeric position line."""
+  positionLine: [String]
+
+  """Formmated reference protein sequence line."""
+  refAALine: [String]
+
+  """Formmated aligned DNA sequence line."""
+  alignedNAsLine: [String]
+
+  """Formmated amino acid mutation line."""
+  mutationLine: [String]
+}
+
+type Root {
+  """Current HIVDB algorithm version."""
+  currentVersion: DrugResistanceAlgorithm
+
+  """Current Sierra program version."""
+  currentProgramVersion: SierraVersion
+
+  """Analyze sequences and output results."""
+  sequenceAnalysis(
+    """Sequences to be analyzed."""
+    sequences: [UnalignedSequenceInput]
+  ): [SequenceAnalysis]
+
+  """Analyze sequence reads and output results."""
+  sequenceReadsAnalysis(
+    """Sequence reads to be analyzed."""
+    sequenceReads: [SequenceReadsInput]
+  ): [SequenceReadsAnalysis]
+
+  """
+  Analyze a list of mutations belong to a single sequence and output result.
+  """
+  mutationsAnalysis(
+    """Mutations to be analyzed."""
+    mutations: [String]
+  ): MutationsAnalysis
+
+  """
+  Analyze mutation patterns (multiple lists of mutations) and output result.
+  The output list will be in the same order as the input list.
+  """
+  patternAnalysis(
+    """Lists of mutations to be analyzed."""
+    patterns: [[String]]
+
+    """Optional name for each mutation set. Length must be same to patterns."""
+    patternNames: [String]
+  ): [MutationsAnalysis]
+
+  """List all supported genes."""
+  genes(
+    """Genes to be requested."""
+    names: [EnumGene]
+  ): [Gene]
+
+  """List all supported HIV-1 subtypes by mutation prevalence."""
+  mutationPrevalenceSubtypes: [MutationPrevalenceSubtype]
+
+  """Same as Root. Keep for compatible reason."""
+  viewer: Viewer @deprecated(reason: "Use `Root` directly.")
+}
+
+type SequenceAnalysis {
+  """The original unaligned sequence."""
+  inputSequence: UnalignedSequenceOutput
+
+  """HIV strain of this sequence."""
+  strain: Strain
+
+  """
+  True if the alignment result was based on the reverse complement of input sequence.
+  """
+  isReverseComplement: Boolean
+
+  """Available genes found in the sequence."""
+  availableGenes: [Gene]
+
+  """Validation results for this sequence."""
+  validationResults: [ValidationResult]
+
+  """List of aligned sequence distinguished by genes."""
+  alignedGeneSequences: [AlignedGeneSequence]
+
+  """
+  List of HIV1 groups or subtypes, or HIV species. Sorted by the similarity from most to least.
+  """
+  subtypesV2(
+    """Fetch only the first nth closest subtypes. Default to 2."""
+    first: Int = 2
+  ): [HIVBoundSubtype]
+
+  """The best matching subtype."""
+  bestMatchingSubtype: HIVBoundSubtype
+
+  """
+  List of HIV1 groups or subtypes, or HIV species. Sorted by the similarity from most to least.
+  """
+  genotypes(
+    """Fetch only the first nth closest genotypes. Default to 2."""
+    first: Int = 2
+  ): [HIVBoundSubtype] @deprecated(reason: "Use field `subtypesV2` instead.")
+
+  """The best matching genotype."""
+  bestMatchingGenotype: HIVBoundSubtype @deprecated(reason: "Use field `bestMatchingSubtype` instead.")
+
+  """Mixture pecentage of the sequence. Notes only RYMWKS are counted."""
+  mixturePcnt: Float
+
+  """All mutations found in the aligned sequence."""
+  mutations(
+    """List of filter options for the mutation set."""
+    filterOptions: [MutationSetFilterOption]
+
+    """
+    List of possible mutation strings that should be included in this query if
+    presented. Gene need to be prepend if the gene is not able to be inferred
+    from the context.
+    """
+    customList: [String]
+  ): [Mutation]
+
+  """All frame shifts found in the aligned sequence."""
+  frameShifts: [FrameShift]
+
+  """List of drug resistance results by genes."""
+  drugResistance(
+    """One of the built-in ASI algorithms."""
+    algorithm: ASIAlgorithm = HIVDB_9_0
+  ): [DrugResistance]
+
+  """List of mutation prevalence results."""
+  mutationPrevalences: [BoundMutationPrevalence]
+
+  """
+  List of HIV1 groups or subtypes, or HIV species. Sorted by the similarity from most to least.
+  """
+  subtypes(
+    """Fetch only the first nth closest subtypes. Default to 2."""
+    first: Int = 2
+  ): [BoundSubtype] @deprecated(reason: "Use field `subtypesV2` instead.")
+
+  """Formatted text for best matching subtype."""
+  subtypeText: String @deprecated(reason: "Use field `bestMatchingSubtype { display }` instead.")
+
+  """List of ASI comparison results."""
+  algorithmComparison(
+    """One or more of the built-in ASI algorithms."""
+    algorithms: [ASIAlgorithm]
+
+    """One or more of custom ASI algorithms."""
+    customAlgorithms: [CustomASIAlgorithm]
+  ): [AlgorithmComparison]
+}
+
+type SequenceReadsAnalysis {
+  """Name of this sequence."""
+  name: String
+
+  """Strain of this sequence."""
+  strain: Strain
+
+  """
+  Algorithm suggested minimal prevalence cutoff. This cutoff is looser and may include more problematic mutations.
+  """
+  cutoffSuggestionLooserLimit: Float
+
+  """
+  Algorithm suggested minimal prevalence cutoff. This cutoff is stricter and include less problematic mutations.
+  """
+  cutoffSuggestionStricterLimit: Float
+
+  """Validation results for the sequence reads."""
+  validationResults: [ValidationResult]
+
+  """The minimal prevalence cutoff applied on this sequence."""
+  minPrevalence: Float
+
+  """The minimal codon count cutoff applied on this sequence."""
+  minCodonCount: Long
+
+  """The minimal read depth for each position of the sequence reads."""
+  minReadDepth: Long
+
+  """Available genes found in the sequence reads."""
+  availableGenes: [Gene]
+
+  """List of sequence reads distinguished by genes."""
+  allGeneSequenceReads: [GeneSequenceReads]
+
+  """
+  List of HIV1 groups or subtypes, or HIV species. Sorted by the similarity from most to least.
+  """
+  subtypes(
+    """Fetch only the first nth closest subtypes. Default to 2."""
+    first: Int = 2
+  ): [HIVBoundSubtype]
+
+  """The best matching subtype."""
+  bestMatchingSubtype: HIVBoundSubtype
+
+  """Mixture pecentage of the consensus. Notes only RYMWKS are counted."""
+  mixturePcnt: Float
+
+  """All mutations found in the sequence reads."""
+  mutations(
+    """List of filter options for the mutation set."""
+    filterOptions: [MutationSetFilterOption]
+
+    """
+    List of possible mutation strings that should be included in this query if
+    presented. Gene need to be prepend if the gene is not able to be inferred
+    from the context.
+    """
+    customList: [String]
+  ): [Mutation]
+
+  """List of drug resistance results by genes."""
+  drugResistance(
+    """One of the built-in ASI algorithms."""
+    algorithm: ASIAlgorithm = HIVDB_9_0
+  ): [DrugResistance]
+
+  """Histogram data for sequence reads."""
+  histogram(
+    """Percent lower limit of filtering codon reads (range: 0-100)."""
+    pcntLowerLimit: Float = 0.001
+
+    """Percent lower limit of filtering codon reads (range: 0-100)."""
+    pcntUpperLimit: Float = 0.2
+
+    """
+    Number of bins wanted in this histogram. (either `numBins` or `binTicks` must be provided)
+    """
+    numBins: Int
+
+    """
+    Bin ticks wanted in this histogram. (either `numBins` or `binTicks` must be provided)
+    """
+    binTicks: [Float] = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2]
+
+    """Generate cumulative histogram data instead."""
+    cumulative: Boolean = true
+
+    """Aggregation option."""
+    aggregatesBy: EnumSequenceReadsHistogramAggregatesOption = Position
+  ): SequenceReadsHistogram
+
+  """Histogram data for sequence reads."""
+  histogramByCodonCount(
+    """Codon count cutoffs wanted in this histogram."""
+    codonCountCutoffs: [Long] = [16, 32, 64, 128, 256, 512, 1024, 2048]
+
+    """Aggregation option."""
+    aggregatesBy: EnumSequenceReadsHistogramAggregatesOption = Position
+  ): SequenceReadsHistogramByCodonCount
+
+  """Descriptive statistics of read depth for all positions."""
+  readDepthStats: DescriptiveStatistics
+
+  """Descriptive statistics of read depth for drug resistance positions."""
+  readDepthStatsDRP: DescriptiveStatistics
+
+  """Codon reads coverage."""
+  codonReadsCoverage: [OneCodonReadsCoverage]
+
+  """Position codon reads in this gene sequence (json formated)."""
+  internalJsonCodonReadsCoverage: String
+}
+
+"""Histogram data for sequence reads."""
+type SequenceReadsHistogram {
+  """Usual sites histogram data."""
+  usualSites: [SequenceReadsHistogramBin]
+
+  """Sites with drug resistance mutations histogram data."""
+  drmSites: [SequenceReadsHistogramBin]
+
+  """Unusual sites histogram data."""
+  unusualSites: [SequenceReadsHistogramBin]
+
+  """Unusual & APOBEC sites histogram data."""
+  unusualApobecSites: [SequenceReadsHistogramBin]
+
+  """Unusual & Non-APOBEC sites histogram data."""
+  unusualNonApobecSites: [SequenceReadsHistogramBin]
+
+  """APOBEC sites histogram data."""
+  apobecSites: [SequenceReadsHistogramBin]
+
+  """APOBEC DRM sites histogram data."""
+  apobecDrmSites: [SequenceReadsHistogramBin]
+
+  """Stop codon sites histogram data."""
+  stopCodonSites: [SequenceReadsHistogramBin]
+
+  """Total number of positions."""
+  numPositions: Int
+}
+
+"""A single bin data of the histogram."""
+type SequenceReadsHistogramBin {
+  """Percent start (X axis) of this bin."""
+  percentStart: Float
+
+  """Percent stop (X axis) of this bin."""
+  percentStop: Float
+
+  """Total count (Y axis) of this bin."""
+  count: Int
+}
+
+"""Histogram data for sequence reads."""
+type SequenceReadsHistogramByCodonCount {
+  """Usual sites histogram data."""
+  usualSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Sites with drug resistance mutations histogram data."""
+  drmSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Unusual sites histogram data."""
+  unusualSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Unusual & APOBEC sites histogram data."""
+  unusualApobecSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Unusual & Non-APOBEC sites histogram data."""
+  unusualNonApobecSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """APOBEC sites histogram data."""
+  apobecSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """APOBEC DRM sites histogram data."""
+  apobecDrmSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Stop codon sites histogram data."""
+  stopCodonSites: [SequenceReadsHistogramByCodonCountBin]
+
+  """Total number of positions."""
+  numPositions: Int
+}
+
+"""A single bin data of the histogram."""
+type SequenceReadsHistogramByCodonCountBin {
+  """Codon count cutoff (minimal) of this bin."""
+  cutoff: Long
+
+  """Total count (Y axis) of this bin."""
+  count: Int
+}
+
+input SequenceReadsInput {
+  """
+  An identifiable name for identifying the result from the returning list.
+  """
+  name: String
+
+  """Strain of this sequence, choice: HIV1, HIV2A, HIV2B."""
+  strain: StrainEnum
+
+  """List of all reads belong to this sequence."""
+  allReads: [PositionCodonReadsInput]
+
+  """
+  The minimal prevalence cutoff to apply on each **codon**. Default to zero if
+  this field was left empty or had a negative number specified.
+  """
+  minPrevalence: Float = 0
+
+  """
+  The minimal read count cutoff to apply on each **codon**. Default to zero if
+  this field was left empty or had a negative number specified.
+  """
+  minCodonCount: Long = 0
+
+  """
+  The minal read depth for each **position**. Default to 1000 if this field was
+  left empty or had a negative numberspecified.
+  """
+  minReadDepth: Long = 1000
+}
+
+"""Version of Sierra."""
+type SierraVersion {
+  """Version text."""
+  text: String
+
+  """Publish date of this version."""
+  publishDate: String
+}
+
+"""Three steps of resistance level."""
+enum SIR {
+  """Susceptible level."""
+  S
+
+  """Intermediate level."""
+  I
+
+  """Resistance level."""
+  R
+}
+
+"""HIV strain."""
+type Strain {
+  """Short name of this strain."""
+  name: String
+
+  """Full name of this strain."""
+  display: String
+}
+
+enum StrainEnum {
+  HIV1
+}
+
+"""SubtypeName"""
+enum Subtype {
+  A
+  A2
+  B
+  C
+  D
+  F
+  F2
+  G
+  H
+  J
+  K
+  N
+  O
+  P
+  U
+  X01
+  X02
+  X03
+  X04
+  X05
+  X06
+  X07
+  X08
+  X09
+  X10
+  X11
+  X12
+  X13
+  X14
+  X15
+  X16
+  X17
+  X18
+  X19
+  X20
+  X21
+  X22
+  X23
+  X24
+  X25
+  X26
+  X27
+  X28
+  X29
+  X30
+  X31
+  X32
+  X33
+  X34
+  X35
+  X36
+  X37
+  X38
+  X39
+  X40
+  X41
+  X42
+  X43
+  X44
+  X45
+  X46
+  X47
+  X48
+  X49
+  X50
+  X51
+  X52
+  X53
+  X54
+  X55
+  X56
+  X57
+  X58
+  X59
+  X60
+  X61
+  X62
+  X63
+  X64
+  X65
+  X67
+  X68
+  X69
+  X70
+  X71
+  X72
+  X73
+  X74
+  X77
+  X78
+  X82
+  X83
+  X85
+  X86
+  X87
+}
+
+"""Unaligned sequence Input Type."""
+input UnalignedSequenceInput {
+  """Name of the sequence."""
+  header: String
+
+  """The sequence itself as a string."""
+  sequence: String
+}
+
+"""Unaligned sequence."""
+type UnalignedSequenceOutput {
+  """Name of the sequence."""
+  header: String
+
+  """The sequence itself as a string."""
+  sequence: String
+
+  """Hex MD5 value of the sequence."""
+  MD5: String
+
+  """Hex SHA512 value of the sequence."""
+  SHA512: String
+}
+
+"""Level for validation result."""
+enum ValidationLevel {
+  OK
+  NOTE
+  WARNING
+  SEVERE_WARNING
+  CRITICAL
+}
+
+"""Validation result for sequence or mutation list."""
+type ValidationResult {
+  """The level of this validation result."""
+  level: ValidationLevel
+
+  """Description of this validation result."""
+  message: String
+}
+
+type Viewer {
+  """Current HIVDB algorithm version."""
+  currentVersion: DrugResistanceAlgorithm
+
+  """Current Sierra program version."""
+  currentProgramVersion: SierraVersion
+
+  """Analyze sequences and output results."""
+  sequenceAnalysis(
+    """Sequences to be analyzed."""
+    sequences: [UnalignedSequenceInput]
+  ): [SequenceAnalysis]
+
+  """Analyze sequence reads and output results."""
+  sequenceReadsAnalysis(
+    """Sequence reads to be analyzed."""
+    sequenceReads: [SequenceReadsInput]
+  ): [SequenceReadsAnalysis]
+
+  """
+  Analyze a list of mutations belong to a single sequence and output result.
+  """
+  mutationsAnalysis(
+    """Mutations to be analyzed."""
+    mutations: [String]
+  ): MutationsAnalysis
+
+  """
+  Analyze mutation patterns (multiple lists of mutations) and output result.
+  The output list will be in the same order as the input list.
+  """
+  patternAnalysis(
+    """Lists of mutations to be analyzed."""
+    patterns: [[String]]
+
+    """Optional name for each mutation set. Length must be same to patterns."""
+    patternNames: [String]
+  ): [MutationsAnalysis]
+
+  """List all supported genes."""
+  genes(
+    """Genes to be requested."""
+    names: [EnumGene]
+  ): [Gene]
+
+  """List all supported HIV-1 subtypes by mutation prevalence."""
+  mutationPrevalenceSubtypes: [MutationPrevalenceSubtype]
+}
+

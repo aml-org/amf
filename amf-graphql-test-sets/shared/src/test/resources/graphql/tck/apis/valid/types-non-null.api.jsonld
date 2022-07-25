@@ -1,0 +1,400 @@
+[
+  {
+    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "types-non-null.api.graphql"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/name"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.name"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/names"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.names"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.names"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/expects/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/array/default-array",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#items": [
+                              {
+                                "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/array/default-array/union/default-union",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#UnionShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/shapes#anyOf": [
+                                  {
+                                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/array/default-array/union/default-union/anyOf/nil/default-nil",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#NilShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames/supportedOperation/query/Query.names/returns/resp/default/payload/default/array/default-array/union/default-union/anyOf/scalar/default-scalar",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.names"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/names2"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.names2"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.names2"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2/expects/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2/returns/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2/returns/resp/default/payload/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2/returns/resp/default/payload/default/array/default-array",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#items": [
+                              {
+                                "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/web-api/endpoint/%2Fquery%2Fnames2/supportedOperation/query/Query.names2/returns/resp/default/payload/default/array/default-array/scalar/default-scalar",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.names2"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-graphql-test-sets/shared/src/test/resources/graphql/tck/apis/valid/types-non-null.api.graphql#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.6.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ]
+  }
+]
