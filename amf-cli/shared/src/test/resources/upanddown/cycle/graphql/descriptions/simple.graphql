@@ -1,0 +1,46 @@
+type Query {
+    "Property description"
+    property: String!
+
+    "Operation description"
+    operation("Argument description" arg: String!): String!
+}
+
+"Object description"
+type Object {
+    "Property description"
+    property: String!
+
+    "Operation description"
+    operation("Argument description" arg: String!): String!
+}
+
+"Interface description"
+interface Interface {
+    "Property description"
+    property: String!
+
+    "Operation description"
+    operation("Argument description" arg: String!): String!
+}
+
+"Input object description"
+input InputObject {
+    "Property description"
+    property: String!
+}
+
+"Union description"
+union Union = Object
+
+"Enum description"
+enum Enum {
+    "Enum value description"
+    Value
+}
+
+"Scalar description"
+scalar Scalar
+
+"Directive description"
+directive @Directive on SCHEMA

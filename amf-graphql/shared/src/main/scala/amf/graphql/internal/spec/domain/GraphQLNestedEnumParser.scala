@@ -17,6 +17,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
   def parse(): ScalarShape = {
     parseName()
     parseValues()
+    parseDescription(enumTypeDef, enum, enum.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE)).parse()
     }
