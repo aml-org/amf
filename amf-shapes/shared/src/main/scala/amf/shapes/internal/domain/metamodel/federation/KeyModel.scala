@@ -21,7 +21,8 @@ object KeyModel extends DomainElementModel {
     Field(
       Bool,
       Federation + "isResolvable",
-      ModelDoc(ModelVocabularies.Federation, "isResolvable", "")
+      ModelDoc(ModelVocabularies.Federation, "isResolvable", ""),
+      defaultValue = Some(true)
     )
 
   override def modelInstance: Key = Key()
