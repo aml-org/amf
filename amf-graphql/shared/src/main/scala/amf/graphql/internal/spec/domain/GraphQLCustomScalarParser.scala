@@ -18,6 +18,7 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
     parseDescription(customScalarTypeDef, scalar, scalar.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, SCALAR_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar).parse()
     scalar

@@ -1,0 +1,31 @@
+type Query {
+    property: String! @Directive
+    operation(arg: String! @Directive): String! @Directive
+}
+
+
+type Object @Directive {
+    property: String! @Directive
+    operation(arg: String! @Directive): String! @Directive
+}
+
+
+interface Interface @Directive {
+    property: String! @Directive
+    operation(arg: String! @Directive): String! @Directive
+}
+
+
+input InputObject @Directive {
+    property: String! @Directive
+}
+
+union Union @Directive = Object
+
+enum Enum @Directive {
+    Value @Directive
+}
+
+scalar Scalar @Directive
+
+directive @Directive on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
