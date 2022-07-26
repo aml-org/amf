@@ -16,7 +16,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   def parse(setterFn: ShapeOperation => Unit): Unit = {
     parseName()
     setterFn(operation)
-    parseDescription()
+    parseDescription(ast, operation, operation.meta)
     parseArguments()
     checkArgumentsAreUnique()
     parseRange()
@@ -37,10 +37,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   private def parseArgument(n: Node): ShapeParameter = {
     val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
     val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
-    findDescription(n).foreach { desc =>
-      queryParam.withDescription(cleanDocumentation(desc.value))
-    }
-
+    parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
     }
@@ -59,10 +56,6 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   private def parseName(): Unit = {
     val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
     operation.withName(name, annotations)
-  }
-
-  private def parseDescription(): Unit = {
-    findDescription(ast).map(t => cleanDocumentation(t.value)).foreach(operation.withDescription)
   }
 
   private def parseRange(): Unit = {

@@ -20,6 +20,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     parseArguments()
     checkArgumentsAreUnique()
     parseLocations()
+    parseDescription(node, directive, directive.meta)
     directive
   }
 

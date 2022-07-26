@@ -162,12 +162,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseSchemaNode(schemaNode: ASTNode): Unit = {
     GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse()
-    findDescription(schemaNode) match {
-      case Some(terminal: Terminal) => // the description of the schema is set at the API level
-        webapi.set(WebApiModel.Description, cleanDocumentation(terminal.value), toAnnotations(terminal))
-      case _ => // ignore
-    }
-
+    parseDescription(schemaNode, webapi, webapi.meta)
     // let's setup the names of the top level types
     collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach { case typeDef: Node =>
       val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {

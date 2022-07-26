@@ -14,6 +14,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
   def parse(): UnionShape = {
     parseName()
     parseMembers()
+    parseDescription(unionTypeDef, union, union.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE)).parse()
     }

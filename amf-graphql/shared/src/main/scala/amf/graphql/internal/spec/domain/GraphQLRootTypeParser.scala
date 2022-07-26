@@ -37,9 +37,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     val endpointPath             = path(fieldName)
     endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName", annotations)
     setterFn(endPoint)
-    findDescription(f).foreach { description =>
-      endPoint.set(EndPointModel.Description, cleanDocumentation(description.value), toAnnotations(description))
-    }
+    parseDescription(f, endPoint, endPoint.meta)
     parseOperation(f, endPoint, fieldName)
     GraphQLDirectiveApplicationParser(f, endPoint).parse()
     endPoint
@@ -74,11 +72,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
       findName(argument, "AnonymousArgument", s"Missing name for field at root operation $method")
 
     val queryParam = Parameter(toAnnotations(argument)).withName(fieldName, annotations).withBinding("query")
-
-    findDescription(argument) match {
-      case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
-      case _                 => // ignore
-    }
+    parseDescription(argument, queryParam, queryParam.meta)
 
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
