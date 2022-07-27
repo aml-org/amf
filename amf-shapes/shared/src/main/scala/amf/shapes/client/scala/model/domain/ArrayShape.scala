@@ -35,7 +35,7 @@ case class ArrayShape private[amf] (override val fields: Fields, override val an
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 
-  override val meta: AnyShapeModel = ArrayShapeModel
+  override val meta: ArrayShapeModel.type = ArrayShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ArrayShape.apply

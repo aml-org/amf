@@ -17,7 +17,7 @@ case class UnionShape private[amf] (override val fields: Fields, override val an
 
   override def linkCopy(): AnyShape = UnionShape().withId(id)
 
-  override val meta: AnyShapeModel = UnionShapeModel
+  override val meta: UnionShapeModel.type = UnionShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =
