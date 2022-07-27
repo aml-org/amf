@@ -5,9 +5,9 @@ import amf.core.client.scala.parse.document.{ASTRefContainer, ParserContext, Ref
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.InvalidCrossSpec
-import org.mulesoft.lexer.SourceLocation
+import org.mulesoft.common.client.lexical.SourceLocation
 
-trait CrossSpecRestriction { this: ApiParsePlugin =>
+trait CrossSpecRestriction { this: SpecAwareParsePlugin =>
 
   // TODO: all documents should have a Vendor
   protected def restrictCrossSpecReferences(optionalReferencedSpec: Option[Spec], reference: Reference)(implicit
@@ -24,8 +24,12 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
   }
 
   protected def restrictCrossSpecReferences(document: Root, ctx: ParserContext): Unit = {
+    restrictCrossSpecReferences(document, ctx.eh)
+  }
+
+  protected def restrictCrossSpecReferences(document: Root, eh: AMFErrorHandler): Unit = {
     document.references.foreach { r =>
-      restrictCrossSpecReferences(r.unit.sourceSpec, r.origin)(ctx.eh)
+      restrictCrossSpecReferences(r.unit.sourceSpec, r.origin)(eh)
     }
   }
 

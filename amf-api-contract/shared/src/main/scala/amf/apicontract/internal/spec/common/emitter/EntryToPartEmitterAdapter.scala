@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import org.yaml.model.YDocument
 

@@ -4,12 +4,13 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
+import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
+import org.mulesoft.common.client.lexical.ASTElement
 
 trait AntlrASTParserHelper {
-  def find(node: Node, name: String): Seq[ASTElement] = node.children.filter(_.name == name)
+  def find(node: Node, name: String): Seq[ASTNode] = node.children.filter(_.name == name)
 
-  def collect(node: ASTElement, names: Seq[String]): Seq[ASTElement] = {
+  def collect(node: ASTNode, names: Seq[String]): Seq[ASTNode] = {
     if (names.isEmpty) {
       Seq(node)
     } else {
@@ -24,7 +25,24 @@ trait AntlrASTParserHelper {
     }
   }
 
-  def path(node: ASTElement, names: Seq[String]): Option[ASTElement] = {
+  def collectNodes(node: Node, names: Seq[String]): Seq[Node] = {
+    if (names.isEmpty) {
+      Seq(node)
+    } else {
+      val nextName = names.head
+      node match {
+        case n: Node =>
+          find(n, nextName).flatMap {
+            case nested: Node =>
+              collectNodes(nested, names.tail)
+            case t: Terminal => throw new Exception(s"Reached terminal ${t.name} when collecting nodes with path: ${names.mkString(",")}")
+          }
+        case _ => Nil
+      }
+    }
+  }
+
+  def path(node: ASTNode, names: Seq[String]): Option[ASTNode] = {
     if (names.isEmpty) {
       Some(node)
     } else {
@@ -70,9 +88,9 @@ trait AntlrASTParserHelper {
         f(None)
     }
 
-  def toAnnotations(elem: ASTElement): Annotations = {
-    val lexInfo = LexicalInformation(elem.start.line, elem.start.column, elem.end.line, elem.end.column)
-    Annotations() ++= Set(lexInfo)
+  def toAnnotations(elem: ASTNode): Annotations = {
+    val lexInfo = LexicalInformation(elem.location.range)
+    Annotations(SourceASTElement(elem)) ++= Set(lexInfo)
   }
 
   def astError(id: String, message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {

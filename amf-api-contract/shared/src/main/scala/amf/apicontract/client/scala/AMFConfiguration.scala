@@ -19,8 +19,8 @@ import amf.apicontract.internal.transformation.compatibility.{
 }
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
-import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
+import amf.apicontract.internal.validation.payload.APIPayloadValidationPlugin
+import amf.apicontract.internal.validation.shacl.{APIShaclModelValidationPlugin, ViolationModelValidationPlugin}
 import amf.core.client.common.validation.ProfileNames
 import amf.core.client.common.validation.ProfileNames._
 import amf.core.client.scala.AMFGraphConfiguration
@@ -34,15 +34,17 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
-import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.registries.{AMFRegistry, PluginsRegistry}
 import amf.core.internal.remote.Spec
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
+import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
 
 import scala.concurrent.Future
 
@@ -102,8 +104,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml10ParsePlugin,
           Raml10RenderPlugin,
           Raml10ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.RAML10),
-          PayloadValidationPlugin(ProfileNames.RAML10)
+          APIShaclModelValidationPlugin(ProfileNames.RAML10),
+          APIPayloadValidationPlugin(ProfileNames.RAML10)
         )
       )
       .withValidationProfile(Raml10ValidationProfile, Raml10EffectiveValidations)
@@ -122,8 +124,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml08ParsePlugin,
           Raml08RenderPlugin,
           Raml08ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.RAML08),
-          PayloadValidationPlugin(ProfileNames.RAML08)
+          APIShaclModelValidationPlugin(ProfileNames.RAML08),
+          APIPayloadValidationPlugin(ProfileNames.RAML08)
         )
       )
       .withValidationProfile(Raml08ValidationProfile, Raml08EffectiveValidations)
@@ -167,8 +169,8 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas20ParsePlugin,
           Oas20RenderPlugin,
           Oas20ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.OAS20),
-          PayloadValidationPlugin(ProfileNames.OAS20)
+          APIShaclModelValidationPlugin(ProfileNames.OAS20),
+          APIPayloadValidationPlugin(ProfileNames.OAS20)
         )
       )
       .withValidationProfile(Oas20ValidationProfile, Oas20EffectiveValidations)
@@ -188,8 +190,8 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas30ParsePlugin,
           Oas30RenderPlugin,
           Oas30ElementRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.OAS30),
-          PayloadValidationPlugin(ProfileNames.OAS30)
+          APIShaclModelValidationPlugin(ProfileNames.OAS30),
+          APIPayloadValidationPlugin(ProfileNames.OAS30)
         )
       )
       .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
@@ -263,8 +265,8 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
           Async20ParsePlugin,
           Async20RenderPlugin,
           Async20ElementRenderPlugin,
-          ShaclModelValidationPlugin(ASYNC20),
-          PayloadValidationPlugin(ASYNC20)
+          APIShaclModelValidationPlugin(ASYNC20),
+          APIPayloadValidationPlugin(ASYNC20)
         )
       )
       .withReferenceParsePlugin(Raml10ParsePlugin)
@@ -283,6 +285,9 @@ object APIConfiguration extends APIConfigurationBuilder {
 
   private val name = "API"
 
+  def APIWithJsonSchema(): AMFConfiguration = API()
+    .withRootParsePlugin(JsonSchemaParsePlugin)
+
   def API(): AMFConfiguration =
     WebAPIConfiguration
       .WebAPI()
@@ -290,11 +295,12 @@ object APIConfiguration extends APIConfigurationBuilder {
       .withTransformationPipelines(unsupportedTransformationsSet(name))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
-    case Spec.RAML08  => RAMLConfiguration.RAML08()
-    case Spec.RAML10  => RAMLConfiguration.RAML10()
-    case Spec.OAS20   => OASConfiguration.OAS20()
-    case Spec.OAS30   => OASConfiguration.OAS30()
-    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case Spec.RAML08     => RAMLConfiguration.RAML08()
+    case Spec.RAML10     => RAMLConfiguration.RAML10()
+    case Spec.OAS20      => OASConfiguration.OAS20()
+    case Spec.OAS30      => OASConfiguration.OAS30()
+    case Spec.ASYNC20    => AsyncAPIConfiguration.Async20()
+    case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>
       throw UnrecognizedSpecException(
         s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.ASYNC20.id}"
@@ -364,6 +370,9 @@ class AMFConfiguration private[amf] (
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withRootParsePlugin(amfParsePlugin: AMFParsePlugin): AMFConfiguration =
+    super._withRootParsePlugin(amfParsePlugin)
 
   override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMFConfiguration =
     super._withReferenceParsePlugin(amfPlugin)
@@ -473,4 +482,35 @@ class AMFConfiguration private[amf] (
       options: AMFOptions
   ): AMFConfiguration =
     new AMFConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
+}
+
+object ConfigurationAdapter extends APIConfigurationBuilder {
+  def adapt(baseConfiguration: ShapesConfiguration): AMFConfiguration = {
+    val pluginsRegistry: PluginsRegistry = baseConfiguration.registry.getPluginsRegistry
+    val configuration = common()
+      .withPlugins(
+        pluginsRegistry.elementRenderPlugins ++
+          pluginsRegistry.renderPlugins ++
+          pluginsRegistry.syntaxRenderPlugins ++
+          pluginsRegistry.syntaxParsePlugins ++
+          pluginsRegistry.referenceParsePlugins ++
+          pluginsRegistry.payloadPlugins ++
+          pluginsRegistry.validatePlugins ++
+          pluginsRegistry.rootParsePlugins
+      )
+      .withTransformationPipelines(
+        baseConfiguration.registry.getTransformationPipelines.values.toList
+      )
+      .withFallback(pluginsRegistry.domainParsingFallback)
+
+    val baseConstraintsRules     = baseConfiguration.registry.getConstraintsRules
+    val baseEffectiveValidations = baseConfiguration.registry.getEffectiveValidations
+    val validationTuples = baseConstraintsRules.toSeq.flatMap { case (k, vp) =>
+      baseEffectiveValidations.get(k).map(ev => (vp, ev))
+    }
+
+    validationTuples.foldLeft(configuration) { (config, valTuple) =>
+      config.withValidationProfile(valTuple._1, valTuple._2)
+    }
+  }
 }

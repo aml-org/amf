@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Encoding, Parameter}
 import amf.apicontract.internal.metamodel.domain.EncodingModel
 import amf.apicontract.internal.metamodel.domain.ResponseModel.Headers
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.parse.document.ErrorHandlingContext
@@ -47,7 +47,7 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
         m.key("explode", EncodingModel.Explode in encoding)
         m.key("allowReserved", EncodingModel.AllowReserved in encoding)
 
-        AnnotationParser(encoding, m)(WebApiShapeParserContextAdapter(ctx)).parse()
+        AnnotationParser(encoding, m).parse()
 
         ctx.closedShape(encoding, m, "encoding")
 

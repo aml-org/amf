@@ -1,14 +1,11 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
-import amf.core.client.common.position.Position
-import amf.core.client.scala.model.domain.{AmfArray, Shape}
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.annotations.ParsedFromTypeExpression
-import amf.shapes.client.scala.model.domain.UnionShape
-import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
-import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, UnionShapeModel}
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model._
 
 object RamlExpressionParser {

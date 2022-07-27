@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.5.0",
+      "apiContract:modelVersion": "3.6.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -171,7 +171,8 @@
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
-          "#10": "[(10,11)-(16,0)]"
+          "#10": "[(10,11)-(16,0)]",
+          "shacl:name": "[(10,2)-(10,10)]"
         },
         "inherited-shapes": {
           "#10": "amf://id#35"

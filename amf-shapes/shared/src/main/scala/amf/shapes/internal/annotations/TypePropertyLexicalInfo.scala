@@ -1,9 +1,9 @@
 package amf.shapes.internal.annotations
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
+import org.mulesoft.common.client.lexical.PositionRange
 
-case class TypePropertyLexicalInfo(range: Range) extends SerializableAnnotation with PerpetualAnnotation {
+case class TypePropertyLexicalInfo(range: PositionRange) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "type-property-lexical-info"
 
   override val value: String = range.toString
@@ -11,5 +11,5 @@ case class TypePropertyLexicalInfo(range: Range) extends SerializableAnnotation 
 
 object TypePropertyLexicalInfo extends AnnotationGraphLoader {
   override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
-    Some(TypePropertyLexicalInfo(Range.apply(value)))
+    Some(TypePropertyLexicalInfo(PositionRange(value)))
 }

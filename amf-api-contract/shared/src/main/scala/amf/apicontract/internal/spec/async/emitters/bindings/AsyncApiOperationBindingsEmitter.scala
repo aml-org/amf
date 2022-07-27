@@ -13,7 +13,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering

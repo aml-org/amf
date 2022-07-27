@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.common.emitter.annotations
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.ShapeExtension
 import amf.core.internal.datanode.DataNodeEmitter
@@ -9,6 +8,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 case class FacetsEmitter(element: Shape, ordering: SpecOrdering)(implicit spec: ShapeEmitterContext) {

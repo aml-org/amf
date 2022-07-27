@@ -1,7 +1,7 @@
 package amf.apicontract.internal.annotations
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
+import org.mulesoft.common.client.lexical.PositionRange
 
 case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "form-body-parameter"
@@ -25,7 +25,7 @@ object BodyParameter extends AnnotationGraphLoader {
   }
 }
 
-case class ParameterNameForPayload(paramName: String, range: Range)
+case class ParameterNameForPayload(paramName: String, range: PositionRange)
     extends SerializableAnnotation
     with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
   override val name: String  = "parameter-name-for-payload"
@@ -36,14 +36,14 @@ object ParameterNameForPayload extends AnnotationGraphLoader {
   override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
     value.split("->") match {
       case Array(req, range) =>
-        Some(new ParameterNameForPayload(req, Range.apply(range)))
+        Some(new ParameterNameForPayload(req, PositionRange(range)))
       case _ => None
     }
 
   }
 }
 
-case class RequiredParamPayload(required: Boolean, range: Range)
+case class RequiredParamPayload(required: Boolean, range: PositionRange)
     extends SerializableAnnotation
     with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
   override val name: String  = "required-param-payload"
@@ -55,7 +55,7 @@ object RequiredParamPayload extends AnnotationGraphLoader {
     value.split("->") match {
       case Array(req, range) =>
         val required = if (req.equals("true")) true else false
-        Some(new RequiredParamPayload(required, Range.apply(range)))
+        Some(new RequiredParamPayload(required, PositionRange(range)))
       case _ => None
     }
   }
@@ -79,11 +79,11 @@ case class EmptyPayload() extends Annotation
 
 case class EndPointParameter() extends Annotation
 
-case class EndPointTraitEntry(range: Range) extends Annotation
+case class EndPointTraitEntry(range: PositionRange) extends Annotation
 
-case class EndPointResourceTypeEntry(range: Range) extends Annotation
+case class EndPointResourceTypeEntry(range: PositionRange) extends Annotation
 
-case class OperationTraitEntry(range: Range) extends Annotation
+case class OperationTraitEntry(range: PositionRange) extends Annotation
 
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation

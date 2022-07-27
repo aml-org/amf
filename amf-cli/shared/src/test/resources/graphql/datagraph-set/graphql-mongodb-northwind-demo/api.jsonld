@@ -2709,7 +2709,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.5.0"
+            "@value": "3.6.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -8406,6 +8406,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Category/supportedOperation/productConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -8582,25 +8602,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Category/supportedOperation/productList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Category/supportedOperation/productList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -16431,25 +16451,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Region/supportedOperation/employees/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Region/supportedOperation/employees/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -19704,6 +19724,26 @@
                         "http://a.ml/vocabularies/document#link-label": [
                           {
                             "@value": "SortConnectionProductEnum"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Supplier/supportedOperation/productConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ]
                       }
@@ -33226,6 +33266,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Customer/supportedOperation/orderConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -33402,25 +33462,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Customer/supportedOperation/orderList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Customer/supportedOperation/orderList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -41878,25 +41938,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/categoryList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/categoryList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -42360,25 +42420,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/customerPagination/expects/request/parameter/parameter/perPage/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/customerPagination/expects/request/parameter/parameter/perPage/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "20"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "20"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -42860,6 +42920,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/customerConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -43329,25 +43409,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/employeeList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/employeeList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -43573,25 +43653,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/employeePagination/expects/request/parameter/parameter/perPage/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/employeePagination/expects/request/parameter/parameter/perPage/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "20"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "20"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -44114,25 +44194,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/orderPagination/expects/request/parameter/parameter/perPage/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/orderPagination/expects/request/parameter/parameter/perPage/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "20"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "20"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -44614,6 +44694,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/orderConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -45083,25 +45183,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/productList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/productList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -45327,25 +45427,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/productPagination/expects/request/parameter/parameter/perPage/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/productPagination/expects/request/parameter/parameter/perPage/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "20"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "20"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -45827,6 +45927,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/productConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -46296,25 +46416,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/regionList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/regionList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -46823,25 +46943,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/shipperList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/shipperList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -47499,6 +47619,26 @@
                         "http://a.ml/vocabularies/document#link-label": [
                           {
                             "@value": "SortConnectionSupplierEnum"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Viewer/supportedOperation/supplierConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ]
                       }
@@ -50180,25 +50320,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Employee/supportedOperation/subordinates/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Employee/supportedOperation/subordinates/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -50563,6 +50703,26 @@
                         "http://a.ml/vocabularies/document#link-label": [
                           {
                             "@value": "SortConnectionOrderEnum"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Employee/supportedOperation/orderConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ]
                       }
@@ -51406,6 +51566,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Product/supportedOperation/orderConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -51587,25 +51767,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Product/supportedOperation/orderList/expects/request/parameter/parameter/limit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Product/supportedOperation/orderList/expects/request/parameter/parameter/limit/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "100"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "100"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -56372,6 +56552,26 @@
                         "http://a.ml/vocabularies/document#link-label": [
                           {
                             "@value": "SortConnectionOrderEnum"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-mongodb-northwind-demo/api.graphql#/declares/shape/Shipper/supportedOperation/orderConnection/expects/request/parameter/parameter/sort/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "_ID_DESC"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ]
                       }

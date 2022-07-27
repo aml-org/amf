@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.internal.metamodel.domain.TagModel
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext}
 import amf.apicontract.internal.spec.spec.toOas
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.AmfObject
@@ -29,13 +29,10 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
     map.key("description", TagModel.Description in tag)
     map.key(
       "externalDocs",
-      TagModel.Documentation in tag using (OasLikeCreativeWorkParser.parse(_, tag.id)(
-        WebApiShapeParserContextAdapter(ctx)
-      ))
+      TagModel.Documentation in tag using (OasLikeCreativeWorkParser.parse(_, tag.id))
     )
 
-    AnnotationParser(tag, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-
+    AnnotationParser(tag, map).parse()
     ctx.closedShape(tag, map, "tag")
 
     tag

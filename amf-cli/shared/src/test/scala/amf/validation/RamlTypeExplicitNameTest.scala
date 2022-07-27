@@ -15,7 +15,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class RamlTypeExplicitNameTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath = "file://amf-cli/shared/src/test/resources/validations/raml/type-explicit-name"
-
   def modelAssertion(path: String)(
       assertion: BaseUnit => Assertion
   ): Future[Assertion] = {

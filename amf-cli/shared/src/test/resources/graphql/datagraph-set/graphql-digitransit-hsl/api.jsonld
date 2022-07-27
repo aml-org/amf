@@ -2444,6 +2444,26 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/web-api/endpoint/%2Fquery%2Fnearest/supportedOperation/query/QueryType.nearest/expects/request/parameter/parameter/query/maxDistance/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "2000"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -2482,6 +2502,26 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/web-api/endpoint/%2Fquery%2Fnearest/supportedOperation/query/QueryType.nearest/expects/request/parameter/parameter/query/maxResults/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "20"
+                              }
                             ],
                             "http://www.w3.org/ns/shacl#datatype": [
                               {
@@ -5095,6 +5135,26 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/web-api/endpoint/%2Fquery%2FfuzzyTrip/supportedOperation/query/QueryType.fuzzyTrip/expects/request/parameter/parameter/query/direction/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "-1"
+                              }
                             ],
                             "http://www.w3.org/ns/shacl#datatype": [
                               {
@@ -9132,6 +9192,26 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/web-api/endpoint/%2Fquery%2Fplan/supportedOperation/query/QueryType.plan/expects/request/parameter/parameter/query/numItineraries/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "3"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -10953,6 +11033,26 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/core#defaultValue": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/web-api/endpoint/%2Fquery%2Fplan/supportedOperation/query/QueryType.plan/expects/request/parameter/parameter/query/omitCanceled/data-node",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -11487,7 +11587,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.5.0"
+            "@value": "3.6.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -12709,6 +12809,26 @@
         "http://a.ml/vocabularies/shapes#inherits": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/BikePark/inherits/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Node"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Node"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/BikePark/inherits/shape/default-node_1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -14907,6 +15027,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/startTime/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -14950,25 +15090,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/timeRange/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/timeRange/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "86400"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "86400"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -15015,25 +15155,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/numberOfDepartures/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/numberOfDepartures/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "1"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -15080,25 +15220,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/omitNonPickups/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/omitNonPickups/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -15145,25 +15285,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/omitCanceled/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/supportedOperation/stoptimes/expects/request/parameter/parameter/omitCanceled/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "true"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "true"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -15288,6 +15428,26 @@
         "http://a.ml/vocabularies/shapes#inherits": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/inherits/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Node"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Node"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/DepartureRow/inherits/shape/default-node_2",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -27889,6 +28049,26 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Node"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Node"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/CarPark/inherits/shape/default-node_3",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/PlaceInterface"
               }
             ],
@@ -29924,6 +30104,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/startTime/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -29967,25 +30167,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/timeRange/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/timeRange/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "86400"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "86400"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -30027,25 +30227,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/numberOfDepartures/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/numberOfDepartures/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "2"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "2"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -30092,25 +30292,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/omitNonPickups/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/omitNonPickups/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -30157,25 +30357,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/omitCanceled/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stopTimesForPattern/expects/request/parameter/parameter/omitCanceled/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "true"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "true"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -30584,25 +30784,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForServiceDate/expects/request/parameter/parameter/omitNonPickups/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForServiceDate/expects/request/parameter/parameter/omitNonPickups/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -30649,25 +30849,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForServiceDate/expects/request/parameter/parameter/omitCanceled/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForServiceDate/expects/request/parameter/parameter/omitCanceled/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -30857,6 +31057,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/startTime/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -30900,25 +31120,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/timeRange/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/timeRange/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "86400"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "86400"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -30960,25 +31180,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/numberOfDepartures/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/numberOfDepartures/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "5"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "5"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -31025,25 +31245,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/omitNonPickups/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/omitNonPickups/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -31090,25 +31310,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/omitCanceled/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesForPatterns/expects/request/parameter/parameter/omitCanceled/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "true"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "true"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -31298,6 +31518,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/startTime/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "0"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -31341,25 +31581,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/timeRange/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/timeRange/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "86400"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "86400"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -31401,25 +31641,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/numberOfDepartures/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/numberOfDepartures/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "5"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ]
+                            "@value": "5"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ]
                       }
@@ -31466,25 +31706,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/omitNonPickups/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/omitNonPickups/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -31531,25 +31771,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/omitCanceled/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/supportedOperation/stoptimesWithoutPatterns/expects/request/parameter/parameter/omitCanceled/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "true"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "true"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }
@@ -31674,6 +31914,26 @@
         "http://a.ml/vocabularies/shapes#inherits": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/inherits/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Node"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Node"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Stop/inherits/shape/default-node_4",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -32361,6 +32621,26 @@
         "http://a.ml/vocabularies/shapes#inherits": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/BikeRentalStation/inherits/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/Node"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Node"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/datagraph-set/graphql-digitransit-hsl/api.graphql#/declares/shape/BikeRentalStation/inherits/shape/default-node_5",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -33177,6 +33457,9 @@
           },
           {
             "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
           },
           {
             "@id": "http://a.ml/vocabularies/data#Scalar"

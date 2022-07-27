@@ -3,12 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Request}
 import amf.apicontract.internal.metamodel.domain.RequestModel
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{
-  OasParametersParser,
-  Raml08ParameterParser,
-  RamlParametersParser,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{OasParametersParser, Raml08ParameterParser, RamlParametersParser}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec
 import amf.apicontract.internal.spec.spec.toRaml
@@ -124,7 +119,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
     map.key(
       "queryString".asOasExtension,
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => Unit)(WebApiShapeParserContextAdapter(toRaml(ctx)))
+        Raml10TypeParser(queryEntry, shape => Unit)(toRaml(ctx))
           .parse()
           .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate)))
       }

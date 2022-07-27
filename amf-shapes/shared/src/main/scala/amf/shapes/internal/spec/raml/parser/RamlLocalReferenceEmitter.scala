@@ -1,9 +1,9 @@
 package amf.shapes.internal.spec.raml.parser
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.Linkable
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, raw}
 import amf.core.internal.render.emitters.PartEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
 
 class RamlLocalReferenceEntryEmitter(override val key: String, reference: Linkable)

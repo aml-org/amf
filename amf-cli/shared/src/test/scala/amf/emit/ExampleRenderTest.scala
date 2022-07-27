@@ -2,12 +2,11 @@ package amf.emit
 
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.WebAPIConfiguration
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.SourceAST
+import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
@@ -93,20 +92,18 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
 
   private def findExample(unit: BaseUnit, removeRaw: Boolean): Future[Example] = unit match {
     case _: ExternalFragment =>
-      val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
+      val sourceAst: Option[SourceYPart] = unit.annotations.find(_.isInstanceOf[SourceYPart])
       sourceAst match {
         case Some(a) =>
           val ast = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context =
+          implicit val context =
             new Raml10WebApiContext(
               "",
               Nil,
               ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty))
             )
           val anyShape = AnyShape()
-          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
-            WebApiShapeParserContextAdapter(context)
-          ).parse()
+          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions).parse()
           Future.successful(anyShape.examples.head)
         case None => Future.failed(fail("Not a named example fragment"))
       }

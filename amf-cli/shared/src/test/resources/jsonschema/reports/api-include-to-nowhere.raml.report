@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/api-include-to-nowhere.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#json-schema-definition-not-found
+  Message: Couldn't find schema identified by /definitions/Unknown in file://amf-cli/shared/src/test/resources/jsonschema/schemas/simple.json
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,18)-(9,70)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/api-include-to-nowhere.raml

@@ -160,7 +160,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.5.0"
+            "@value": "3.6.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [
@@ -385,6 +385,26 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/unit/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "METER"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -423,25 +443,25 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#defaultValue": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/scientificNotation/data-node",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://www.w3.org/ns/shacl#defaultValue": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/scientificNotation/scalar/default-scalar/data-node",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "false"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                              }
-                            ]
+                            "@value": "false"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                           }
                         ]
                       }

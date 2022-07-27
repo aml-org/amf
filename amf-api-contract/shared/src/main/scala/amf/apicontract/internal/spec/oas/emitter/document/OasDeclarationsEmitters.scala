@@ -9,8 +9,8 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{
   OasResponseEmitter,
   OasTagToReferenceEmitter
 }
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement

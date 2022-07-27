@@ -1,25 +1,35 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.graphqlfederation.internal.spec.domain.{ExternalDirectiveParser, ProvidesParser, RequiresParser, ShapeFederationMetadataParser}
+import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLPropertyFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val property: PropertyShape = PropertyShape(toAnnotations(ast))
 
-  def parse(setterFn: PropertyShape => Unit): PropertyShape = {
+  def parse(setterFn: PropertyShape => Unit): Unit = {
     parseName()
     setterFn(property)
     parseDescription()
     parseRange()
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+      ShapeFederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      ExternalDirectiveParser(ast, property).parse()
+      ProvidesParser(ast, property).parse()
+      RequiresParser(ast, property, parent).parse()
+    }
     GraphQLDirectiveApplicationParser(ast, property).parse()
-    property
   }
 
   private def parseName(): Unit = {
-    property.withName(findName(ast, "AnonymousField", "Missing name for field"))
+    val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
+    property.withName(name, annotations)
   }
 
   private def parseDescription(): Unit = {

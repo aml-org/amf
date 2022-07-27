@@ -12,8 +12,7 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.common.TypeDef._
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
-import org.mulesoft.lexer.SourceLocation
+import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 trait GrpcASTParserHelper extends AntlrASTParserHelper {
 
@@ -63,9 +62,9 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
 
   }
 
-  def parseFieldNumber(ast: ASTElement)(implicit ctx: GrpcWebApiContext): Option[Int] = {
+  def parseFieldNumber(ast: ASTNode)(implicit ctx: GrpcWebApiContext): Option[Int] = {
     path(ast, Seq(FIELD_NUMBER, INT_LITERAL)) match {
-      case Some(n: ASTElement) =>
+      case Some(n: ASTNode) =>
         withOptTerminal(n) {
           case Some(t) =>
             val order = Integer.parseInt(t.value)
@@ -78,9 +77,9 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def parseFieldRange(ast: ASTElement, field: String = FIELD_TYPE)(implicit ctx: GrpcWebApiContext): Option[Shape] = {
+  def parseFieldRange(ast: ASTNode, field: String = FIELD_TYPE)(implicit ctx: GrpcWebApiContext): Option[Shape] = {
     path(ast, Seq(field)) match {
-      case Some(n: ASTElement) =>
+      case Some(n: ASTNode) =>
         // scalar or object range
         val shape: Option[Shape] = withOptTerminal(n) {
           case Some(t) =>
@@ -103,8 +102,9 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
               case _          => None
             }
           case _ =>
-            path(n, Seq(MESSAGE_TYPE)).flatMap { case messageRef: Node =>
-              Some(parseObjectRange(n, messageRef.source))
+            path(n, Seq(MESSAGE_TYPE)).flatMap {
+              case messageRef: Node =>
+                Some(parseObjectRange(n, messageRef.source))
             }
         }
         // check if array
@@ -120,7 +120,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  protected def parseObjectRange(n: ASTElement, literalReference: String)(implicit ctx: GrpcWebApiContext): AnyShape = {
+  protected def parseObjectRange(n: ASTNode, literalReference: String)(implicit ctx: GrpcWebApiContext): AnyShape = {
     val topLevelAlias      = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
     val externalReference =
@@ -152,16 +152,12 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
       case _ =>
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
         shape.withContext(ctx)
-        shape.unresolved(
-          literalReference,
-          Seq(qualifiedReference) ++ topLevelAlias,
-          Some(new SourceLocation(n.file, 0, 0, n.start.line, n.start.column, n.end.line, n.end.column))
-        )
+        shape.unresolved(literalReference, Seq(qualifiedReference) ++ topLevelAlias, Some(n.location))
         shape
     }
   }
 
-  private def parseScalarRange(n: ASTElement, scalarType: TypeDef, format: Option[String]): ScalarShape = {
+  private def parseScalarRange(n: ASTNode, scalarType: TypeDef, format: Option[String]): ScalarShape = {
     val scalar = ScalarShape(toAnnotations(n)).withDataType(XsdTypeDefMapping.xsd(scalarType))
     format match {
       case Some(format) => scalar.withFormat(format)
@@ -170,7 +166,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     scalar
   }
 
-  private def parseIsRepeated(ast: ASTElement)(implicit grpcWebApiContext: GrpcWebApiContext): Boolean = {
+  private def parseIsRepeated(ast: ASTNode)(implicit grpcWebApiContext: GrpcWebApiContext): Boolean = {
     ast match {
       case node: Node =>
         find(node, REPEATED).headOption match {

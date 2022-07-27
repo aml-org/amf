@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.raml.parser
 
-import amf.core.client.common.position
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -16,12 +15,13 @@ import amf.core.internal.annotations.{
   SourceAST,
   SourceLocation,
   SourceNode,
+  SourceYPart,
   SynthesizedField
 }
 import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{Annotations, ScalarNode => ParserScalarNode, _}
+import amf.core.internal.parser.domain.{ScalarNode => ParserScalarNode, _}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Raml08
 import amf.core.internal.utils.{AmfStrings, IdCounter}
@@ -37,10 +37,13 @@ import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
-import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
+import amf.shapes.internal.spec.raml.parser.external.RamlExternalParserFactory
+import amf.shapes.internal.spec.{RamlTypeDefMatcher, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
+import org.mulesoft.common.client.lexical.PositionRange
 import org.yaml.model._
+import org.yaml.model.{YMapEntry, _}
 
 import scala.language.postfixOps
 
@@ -63,7 +66,7 @@ object Raml10TypeParser {
       typeInfo: TypeInfo = TypeInfo(),
       defaultType: DefaultType = StringDefaultType
   )(implicit ctx: ShapeParserContext): Raml10TypeParser = {
-    val context = ctx.raml10createContextFromRaml
+    val context = ctx.toRaml10
     context.addNodeRefIds(ctx.nodeRefIds)
     new Raml10TypeParser(YMapEntryLike(entry), entry.key, adopt, typeInfo, defaultType)(context)
   }
@@ -159,9 +162,22 @@ case class Raml10TypeParser(
       typeInfo: TypeInfo,
       defaultType: DefaultType
     ) {
-  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    Raml10TypeParser.apply
+  override def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml10TypeParser(entry, name, adopt, isAnnotation, default)
 
+  override def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml10TypeParser(entry, adopt, TypeInfo(isAnnotation = isAnnotation), default)
 }
 
 object Raml08TypeParser {
@@ -169,13 +185,13 @@ object Raml08TypeParser {
       ctx: ShapeParserContext
   ): Raml08TypeParser =
     new Raml08TypeParser(YMapEntryLike(node), name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      ctx.raml08createContextFromRaml
+      ctx.toRaml08
     )
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, isAnnotation: Boolean, defaultType: DefaultType)(implicit
       ctx: ShapeParserContext
   ): Raml08TypeParser = {
-    val context = ctx.raml08createContextFromRaml
+    val context = ctx.toRaml08
     context.addNodeRefIds(ctx.nodeRefIds)
     new Raml08TypeParser(YMapEntryLike(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
       context
@@ -190,7 +206,7 @@ object Raml08TypeParser {
       defaultType: DefaultType
   )(implicit ctx: ShapeParserContext): Raml08TypeParser =
     new Raml08TypeParser(entryOrNode, name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      ctx.raml08createContextFromRaml
+      ctx.toRaml08
     )
 }
 
@@ -243,8 +259,22 @@ case class Raml08TypeParser(
     Option(Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)), node.as[YSequence], ast).parse())
   }
 
-  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    Raml08TypeParser.apply
+  override def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml08TypeParser(entry, name, adopt, isAnnotation, default)
+
+  override def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser =
+    Raml08TypeParser(entry, adopt, isAnnotation, default)
 
   case class Raml08ReferenceParser(text: String, node: YNode, name: String)(implicit ctx: ShapeParserContext) {
     def parse(): Some[AnyShape] = {
@@ -281,13 +311,13 @@ case class Raml08TypeParser(
         case YType.Null =>
           Raml08DefaultTypeParser(defaultType.typeDef, name, value, adopt)
             .parse()
-            .map(s => s.add(SourceAST(value)).add(SourceLocation(value.sourceName)))
+            .map(s => s.add(SourceYPart(value)).add(SourceLocation(value.sourceName)))
         case _ =>
           value.as[YScalar].text match {
             case XMLSchema(_) =>
-              Option(ctx.ramlExternalSchemaParserFactory.createXml(key, value, adopt).parse())
+              Option(RamlExternalParserFactory.createXml(key, value, adopt).parse())
             case JSONSchema(_) =>
-              Option(ctx.ramlExternalSchemaParserFactory.createJson(key, value, adopt).parse())
+              Option(RamlExternalParserFactory.createJson(key, value).parse())
             case t if RamlTypeDefMatcher.match08Type(t).isDefined =>
               Option(
                 SimpleTypeParser(name, adopt, YMap.empty, defaultType = RamlTypeDefMatcher.match08Type(t).get).parse()
@@ -451,7 +481,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
             .withName(name, Annotations())
         )
 
-      map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(position.Range(e.key.range)) })
+      map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(e.key.range) })
 
       adopt(shape)
       parseMap(shape)
@@ -555,7 +585,19 @@ sealed abstract class RamlTypeParser(
 
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations.inferred())
 
-  def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
+  protected def typeParser(
+      entry: YMapEntryLike,
+      name: String,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser
+  protected def typeParser(
+      entry: YMapEntry,
+      adopt: Shape => Unit,
+      isAnnotation: Boolean,
+      default: DefaultType
+  ): RamlTypeParser
 
   def parseDefaultType(defaultType: DefaultType): Shape = {
     val defaultShape = defaultType.typeDef match {
@@ -571,9 +613,9 @@ sealed abstract class RamlTypeParser(
     val info: Option[TypeDef] = RamlTypeDetection(node, "", parseFormat(node), defaultType)
     val result = info.map {
       case XMLSchemaType =>
-        ctx.ramlExternalSchemaParserFactory.createXml(key, node, adopt, parseExample = true).parse()
+        RamlExternalParserFactory.createXml(key, node, adopt, parseExample = true).parse()
       case JSONSchemaType =>
-        ctx.ramlExternalSchemaParserFactory.createJson(key, node, adopt, parseExample = true).parse()
+        RamlExternalParserFactory.createJson(key, node, parseExample = true).parse()
       case NilUnionType                          => parseNilUnion()
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
@@ -623,7 +665,7 @@ sealed abstract class RamlTypeParser(
       case s: YScalar =>
         val toParse = YMapEntry(YNode(""), YNode(s.text.stripSuffix("?")))
         val parsed =
-          ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+          typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
         union.setWithoutId(
           UnionShapeModel.AnyOf,
           AmfArray(
@@ -1287,7 +1329,7 @@ sealed abstract class RamlTypeParser(
         item       <- Raml10TypeParser(itemsEntry, items => Unit, defaultType = defaultType).parse()
       } yield {
         // we check we are not using schemas for items
-        checkSchemaInProperty(Seq(item), shape.location(), position.Range(itemsEntry.range))
+        checkSchemaInProperty(Seq(item), shape.location(), itemsEntry.range)
         shape.setWithoutId(ArrayShapeModel.Items, item, Annotations(itemsEntry))
       }
 
@@ -1377,11 +1419,11 @@ sealed abstract class RamlTypeParser(
     protected def checkSchemaInProperty(
         elements: Seq[AmfElement],
         location: Option[String] = None,
-        entryRange: position.Range
+        entryRange: PositionRange
     ): Unit = {
       elements.foreach { checkForForeignTypeInheritance(_, location, entryRange) }
     }
-    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: position.Range): Unit = {
+    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: PositionRange): Unit = {
       if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
         elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange) }
       }
@@ -1390,7 +1432,7 @@ sealed abstract class RamlTypeParser(
     private def checkForForeignTypeInheritance(
         element: AmfElement,
         location: Option[String],
-        entryRange: position.Range
+        entryRange: PositionRange
     ): Unit = {
       element match {
         case shape: AnyShape if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
@@ -1472,7 +1514,7 @@ sealed abstract class RamlTypeParser(
                 }
             }
           }
-          checkSchemaInheritance(shape, inherits, position.Range(node.range))
+          checkSchemaInheritance(shape, inherits, node.range)
           shape.fields.setWithoutId(
             ShapeModel.Inherits,
             AmfArray(inherits, Annotations(entry.value)),
@@ -1482,7 +1524,7 @@ sealed abstract class RamlTypeParser(
           Raml10TypeParser(entry, s => Unit)
             .parse()
             .foreach { s =>
-              checkSchemaInheritance(shape, Seq(s), position.Range(entry.range))
+              checkSchemaInheritance(shape, Seq(s), entry.range)
               shape.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry))
             }
 
@@ -1490,16 +1532,16 @@ sealed abstract class RamlTypeParser(
           Raml10TypeParser(entry, s => Unit)
             .parse()
             .foreach { s =>
-              checkSchemaInheritance(shape, Seq(s), position.Range(entry.range))
+              checkSchemaInheritance(shape, Seq(s), entry.range)
               shape.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry))
             }
 
         case YType.Str if XMLSchema.unapply(entry.value).isDefined =>
           val parsed =
-            ctx.ramlExternalSchemaParserFactory
+            RamlExternalParserFactory
               .createXml("schema", entry.value, xmlSchemaShape => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
               .parse()
-          checkSchemaInheritance(shape, Seq(parsed), position.Range(entry.range))
+          checkSchemaInheritance(shape, Seq(parsed), entry.range)
           shape.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(entry.value)), Annotations(entry))
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
@@ -1508,7 +1550,7 @@ sealed abstract class RamlTypeParser(
             entry.value,
             shape.id,
             target => {
-              checkSchemaInheritance(shape, Seq(target), position.Range(entry.range))
+              checkSchemaInheritance(shape, Seq(target), entry.range)
               target
                 .link(ParserScalarNode(entry.value), Annotations(entry))
                 .asInstanceOf[AnyShape]
@@ -1533,11 +1575,10 @@ sealed abstract class RamlTypeParser(
                     "Inheritance from JSON Schema",
                     entry.value.location
                   )
-                  ctx.ramlExternalSchemaParserFactory
+                  RamlExternalParserFactory
                     .createJson(
                       "schema",
-                      entry.value,
-                      jsonSchemaShape => jsonSchemaShape.withId(shape.id + "/jsonSchema")
+                      entry.value
                     )
                     .parse()
                 case _ =>
@@ -1611,8 +1652,7 @@ sealed abstract class RamlTypeParser(
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        ctx
-          .typeParser(entry, s => Unit, true, defaultType)
+        typeParser(entry, s => Unit, true, defaultType)
           .parse()
           .foreach { parsed =>
             shape.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, parsed, Annotations(entry))
@@ -1641,7 +1681,7 @@ sealed abstract class RamlTypeParser(
               }
               // We check we are not using schemas in properties
               properties.foreach { prop =>
-                checkSchemaInProperty(Seq(prop.range), prop.location(), position.Range(entry.range))
+                checkSchemaInProperty(Seq(prop.range), prop.location(), entry.range)
               }
 
               shape.discriminator
@@ -1677,7 +1717,7 @@ sealed abstract class RamlTypeParser(
         "dependencies".asRamlAnnotation,
         entry => {
           Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, JSONSchemaDraft4SchemaVersion)(
-            ctx.toOasNext
+            ctx.toOas
           ).parse()
         }
       )
@@ -1885,7 +1925,7 @@ sealed abstract class RamlTypeParser(
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(position.Range(entry.key.range)))
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(entry.key.range))
 
       shape
     }

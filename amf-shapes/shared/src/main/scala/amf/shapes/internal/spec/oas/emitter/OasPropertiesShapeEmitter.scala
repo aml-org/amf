@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -16,8 +16,7 @@ case class OasPropertiesShapeEmitter(
     ordering: SpecOrdering,
     references: Seq[BaseUnit],
     pointer: Seq[String] = Nil,
-    schemaPath: Seq[(String, String)] = Nil
-)(implicit spec: OasLikeShapeEmitterContext)
+    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val properties = f.array.values.partition(_.asInstanceOf[PropertyShape].patternName.option().isDefined)

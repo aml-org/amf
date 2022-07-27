@@ -70,7 +70,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -85,7 +85,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -119,16 +119,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age/source-map/type-property-lexical-info/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age/source-map/type-property-lexical-info/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -140,10 +140,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age/source-map/lexical/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age/source-map/lexical/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -153,7 +153,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/scalar/age/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/scalar/age/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -182,16 +182,16 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/source-map/lexical/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/source-map/lexical/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age"
+                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -201,7 +201,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/age/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/property/property/age/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -220,21 +220,21 @@
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "root"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/auto-generated-name/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -246,10 +246,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -259,7 +259,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#closed"
@@ -274,10 +274,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -289,10 +289,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/parsed-json-schema/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root/source-map/parsed-json-schema/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/root"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -470,7 +470,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.5.0"
+            "@value": "3.6.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [

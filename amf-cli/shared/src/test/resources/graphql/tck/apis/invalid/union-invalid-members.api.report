@@ -1,14 +1,30 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 1
+Number of results: 3
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'Union'
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
+  Message: All union members must be Object type, Interface it's not
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql/union/default-union/unresolved
-  Property: 
-  Range: 
-  Location: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(23,0)-(23,13)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
+  Message: All union members must be Object type, Scalar it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(23,0)-(23,13)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
+  Message: All union members must be Object type, Union it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(23,0)-(23,13)]
+  Location: 

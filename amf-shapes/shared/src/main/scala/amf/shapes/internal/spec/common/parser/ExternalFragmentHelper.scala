@@ -2,13 +2,12 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.ExternalDomainElement
-import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar}
 
 object ExternalFragmentHelper {
 
-  def searchNodeInFragments(contentNode: YNode)(implicit ctx: ShapeParserContext): Option[YNode] = {
+  def searchForAlreadyParsedNodeInFragments(contentNode: YNode)(implicit ctx: ShapeParserContext): Option[YNode] = {
     val nodeLocation: String = locationOfNode(contentNode)
     ctx.fragments.values
       .find(_.location.contains(nodeLocation))

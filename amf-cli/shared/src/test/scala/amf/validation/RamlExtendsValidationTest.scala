@@ -6,7 +6,6 @@ import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/extends/"
-  override val hint: Hint          = Raml10YamlHint
 
   // Closed shape
 
@@ -260,13 +259,12 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Merging optional RAML 0.8 nodes
 
   test("Merging optional nodes in resource types") {
-    validate("/extends/optional-raml08-nodes/rts.raml", overridedHint = Some(Raml08YamlHint))
+    validate("/extends/optional-raml08-nodes/rts.raml")
   }
 
   test("Merging optional nodes in traits") {
     validate(
-      "/extends/optional-raml08-nodes/traits.raml",
-      overridedHint = Some(Raml08YamlHint)
+      "/extends/optional-raml08-nodes/traits.raml"
     )
   }
 
@@ -288,8 +286,7 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Merging security schemes
   test("Merging security schemes in RAML 0.8") {
     validate(
-      "extends/raml08-with-security-schemes-in-trait.raml",
-      overridedHint = Some(Raml08YamlHint)
+      "extends/raml08-with-security-schemes-in-trait.raml"
     )
   }
 
@@ -302,7 +299,6 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
 class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/extends/"
-  override val hint: Hint          = Raml10YamlHint
 
   // Payload merging
 

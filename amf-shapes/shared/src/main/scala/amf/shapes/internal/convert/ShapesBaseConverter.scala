@@ -10,6 +10,7 @@ import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult}
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.federation._
 import amf.shapes.client.scala.model.domain.operations.{
   ShapeOperation,
   ShapeParameter,
@@ -44,6 +45,9 @@ trait ShapesBaseConverter
     with ShapeResponseConverter
     with ShapeParameterConverter
     with ShapePayloadConverter
+    with PropertyKeyMappingConverter
+    with ExternalPropertyShapeConverter
+    with KeyConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -247,5 +251,30 @@ trait ShapePayloadConverter extends PlatformSecrets {
     override def asClient(from: ShapePayload): domain.operations.ShapePayload =
       platform.wrap[domain.operations.ShapePayload](from)
     override def asInternal(from: domain.operations.ShapePayload): ShapePayload = from._internal
+  }
+}
+
+trait PropertyKeyMappingConverter extends PlatformSecrets {
+  implicit object PropertyKeyMappingMatcher
+      extends BidirectionalMatcher[PropertyKeyMapping, domain.federation.PropertyKeyMapping] {
+    override def asClient(from: PropertyKeyMapping): domain.federation.PropertyKeyMapping =
+      platform.wrap[domain.federation.PropertyKeyMapping](from)
+    override def asInternal(from: domain.federation.PropertyKeyMapping): PropertyKeyMapping = from._internal
+  }
+}
+
+trait ExternalPropertyShapeConverter extends PlatformSecrets {
+  implicit object ExternalPropertyShapeMatcher
+      extends BidirectionalMatcher[ExternalPropertyShape, domain.federation.ExternalPropertyShape] {
+    override def asClient(from: ExternalPropertyShape): domain.federation.ExternalPropertyShape =
+      platform.wrap[domain.federation.ExternalPropertyShape](from)
+    override def asInternal(from: domain.federation.ExternalPropertyShape): ExternalPropertyShape = from._internal
+  }
+}
+
+trait KeyConverter extends PlatformSecrets {
+  implicit object KeyMatcher extends BidirectionalMatcher[federation.Key, domain.federation.Key] {
+    override def asClient(from: federation.Key): domain.federation.Key   = platform.wrap[domain.federation.Key](from)
+    override def asInternal(from: domain.federation.Key): federation.Key = from._internal
   }
 }

@@ -10,11 +10,12 @@ import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchemaDialect, Mimes, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft201909SchemaVersion
-import amf.shapes.internal.spec.contexts.parser.JsonSchemaContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.ExceededMaxCombiningComplexity
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonLdSchemaContext
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference.SemanticContextReferenceHandler
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{
   DialectWrapper,
@@ -85,7 +86,7 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
     }
 
   private def context(wrapped: ParserContext): ShapeParserContext =
-    JsonSchemaContext(
+    semanticjsonschema.context.JsonLdSchemaContext(
       wrapped,
       Some(JSONSchemaDraft201909SchemaVersion)
     ) // If $schema key is absent, default schema version is 2019-09

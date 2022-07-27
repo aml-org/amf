@@ -102,6 +102,9 @@ class ShapesConfiguration private[amf] (
 
   override def withFallback(plugin: DomainParsingFallback): ShapesConfiguration = super._withFallback(plugin)
 
+  override def withRootParsePlugin(amfParsePlugin: AMFParsePlugin): ShapesConfiguration =
+    super._withRootParsePlugin(amfParsePlugin)
+
   override def withPlugin(amfPlugin: AMFPlugin[_]): ShapesConfiguration =
     super._withPlugin(amfPlugin)
 

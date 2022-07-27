@@ -86,7 +86,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
         api.setWithoutId(
           WebApiModel.Documentations,
           AmfArray(
-            Seq(OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse()),
+            Seq(OasLikeCreativeWorkParser(entry.value, api.id).parse()),
             Annotations(entry.value)
           ),
           Annotations(entry)
@@ -118,8 +118,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       }
     )
 
-    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("channels")
+    AnnotationParser(api, map).parse()
+    AnnotationParser(api, map).parseOrphanNode("channels")
 
     ctx.closedShape(api, map, "webApi")
     api
@@ -142,7 +142,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
       parseSecuritySchemeDeclarations(componentsMap, parent + "/securitySchemes")
       parseCorrelationIdDeclarations(componentsMap, parent + "/correlationIds")
-      super.parseTypeDeclarations(componentsMap, parent + "/types", Some(this))
+      super.parseTypeDeclarations(componentsMap, Some(this))
       parseParameterDeclarations(componentsMap, parent + "/parameters")
 
       parseMessageBindingsDeclarations(componentsMap, parent + "/messageBindings")

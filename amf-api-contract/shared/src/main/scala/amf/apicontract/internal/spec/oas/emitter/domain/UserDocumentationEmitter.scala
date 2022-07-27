@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering

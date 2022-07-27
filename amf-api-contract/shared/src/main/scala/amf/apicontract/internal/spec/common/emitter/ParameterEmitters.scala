@@ -15,7 +15,7 @@ import amf.apicontract.internal.spec.raml
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
@@ -358,9 +358,11 @@ case class OasParametersEmitter(
   }
 }
 
-case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
-    implicit val spec: OasSpecEmitterContext
-) extends PartEmitter {
+case class ParameterEmitter(parameter: Parameter,
+                            ordering: SpecOrdering,
+                            references: Seq[BaseUnit],
+                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
+    extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 

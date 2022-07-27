@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, raw, traverse}
 import amf.core.internal.render.SpecOrdering
@@ -8,6 +7,7 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 

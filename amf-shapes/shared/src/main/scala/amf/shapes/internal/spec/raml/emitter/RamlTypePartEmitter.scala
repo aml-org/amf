@@ -1,7 +1,5 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.SynthesizedField
@@ -12,6 +10,8 @@ import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 

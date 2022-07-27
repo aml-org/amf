@@ -1,0 +1,83 @@
+package amf.shapes.internal.spec.oas.parser
+
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+
+object Oas2ShapeSyntax extends SpecSyntax {
+  override val nodes: Map[String, Set[String]] = Map(
+    "xmlSerialization" -> Set(
+      "attribute",
+      "wrapped",
+      "name",
+      "namespace",
+      "prefix"
+    ),
+    "schema" -> Set(
+      "$ref",
+      "$schema",
+      "format",
+      "title",
+      "description",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "uniqueItems",
+      "maxProperties",
+      "minProperties",
+      "required",
+      "enum",
+      "type",
+      "items",
+      "additionalItems",
+      "collectionFormat",
+      "allOf",
+      "properties",
+      "additionalProperties",
+      "discriminator",
+      "readOnly",
+      "xml",
+      "externalDocs",
+      "allOf",
+      "anyOf",
+      "not",
+      "dependencies",
+      "multipleOf",
+      "default",
+      "example",
+      "id",
+      "name",
+      "patternProperties"
+    ),
+    "parameter" -> Set(
+      "name",
+      "in",
+      "description",
+      "required",
+      "type",
+      "format",
+      "allowEmptyValue",
+      "items",
+      "collectionFormat",
+      "default",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "uniqueItems",
+      "enum",
+      "multipleOf",
+      "deprecated",
+      "example"
+    )
+  )
+}

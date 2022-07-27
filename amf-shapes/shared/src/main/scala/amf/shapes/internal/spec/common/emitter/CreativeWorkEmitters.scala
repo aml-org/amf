@@ -1,14 +1,14 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.CreativeWork
-import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer

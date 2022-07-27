@@ -20,5 +20,4 @@ class ValidOasYamlModelParserTest extends ValidModelTest {
     checkValid("/recursives/oas/additional-properties.json")
   }
 
-  override val hint: Hint = Oas20YamlHint
 }

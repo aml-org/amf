@@ -16,5 +16,5 @@ class OasRegexMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/multi-plat-model/"
-  override val hint: Hint  = Oas20JsonHint
+
 }

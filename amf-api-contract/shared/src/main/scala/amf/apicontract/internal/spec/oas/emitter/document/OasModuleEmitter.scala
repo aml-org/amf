@@ -5,7 +5,7 @@ import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextA
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.domain.OasSecuritySchemeEmitter
 import amf.apicontract.internal.spec.oas.{OasHeader, OasLikeSecuritySchemeTypeMappings}
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{Fragment, Module}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
@@ -25,6 +25,7 @@ import amf.shapes.internal.spec.common.emitter.{
 import amf.shapes.internal.spec.oas.emitter.{OasSpecEmitter, OasTypeEmitter}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import amf.shapes.client.scala.model.document.{DataTypeFragment => ShapeDataTypeFragment}
 
 /** */
 abstract class OasModuleEmitter(module: Module)(implicit val specCtx: OasSpecEmitterContext) extends OasSpecEmitter {
@@ -69,6 +70,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
+      case dt: ShapeDataTypeFragment             => DataTypeFragmentEmitter(dt, ordering)
       case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(specCtx.eh)
       case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(specCtx.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
@@ -106,7 +108,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
 
-  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
+  case class DataTypeFragmentEmitter(dataType: ShapeDataTypeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
     protected implicit val shapeCtx: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(specCtx)

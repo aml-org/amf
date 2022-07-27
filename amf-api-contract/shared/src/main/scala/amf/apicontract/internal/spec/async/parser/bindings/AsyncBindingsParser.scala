@@ -9,7 +9,7 @@ import amf.core.internal.validation.CoreValidations
 import amf.apicontract.internal.metamodel.domain.bindings.BindingType
 import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
@@ -172,7 +172,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
       "schema",
       shape => shape.withName("schema"),
       JSONSchemaDraft7SchemaVersion
-    )(WebApiShapeParserContextAdapter(ctx))
+    )
       .parse()
       .foreach { shape =>
         binding.setWithoutId(field, shape, Annotations(entry))

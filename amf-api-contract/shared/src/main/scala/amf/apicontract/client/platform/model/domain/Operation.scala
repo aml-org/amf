@@ -1,9 +1,10 @@
 package amf.apicontract.client.platform.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings.OperationBindings
+import amf.apicontract.client.platform.model.domain.federation.OperationFederationMetadata
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.client.scala.model.domain.{Operation => InternalOperation}
-import amf.apicontract.internal.convert.ApiClientConverters.{ClientList, _}
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.Linkable
 import amf.core.client.platform.model.{BoolField, StrField}
 import amf.shapes.client.platform.model.domain.CreativeWork
@@ -25,6 +26,8 @@ case class Operation(override private[amf] val _internal: InternalOperation)
 
   override def response: ResponseType = _internal.responses.head
 
+  override def responses: ClientList[Response] = _internal.responses.asClient
+
   override private[amf] def buildResponse = _internal.buildResponse
 
   override private[amf] def buildRequest = _internal.buildRequest
@@ -37,21 +40,21 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   @JSExportTopLevel("Operation")
   def this() = this(InternalOperation())
 
-  def deprecated: BoolField                     = _internal.deprecated
-  def summary: StrField                         = _internal.summary
-  def documentation: CreativeWork               = _internal.documentation
-  def schemes: ClientList[StrField]             = _internal.schemes.asClient
-  def accepts: ClientList[StrField]             = _internal.accepts.asClient
-  def contentType: ClientList[StrField]         = _internal.contentType.asClient
-  def requests: ClientList[Request]             = _internal.requests.asClient
-  def responses: ClientList[Response]           = _internal.responses.asClient
-  def security: ClientList[SecurityRequirement] = _internal.security.asClient
-  def tags: ClientList[Tag]                     = _internal.tags.asClient
-  def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
-  def servers: ClientList[Server]               = _internal.servers.asClient
-  def isAbstract: BoolField                     = _internal.isAbstract
-  def bindings: OperationBindings               = _internal.bindings
-  def operationId: StrField                     = _internal.operationId
+  def deprecated: BoolField                           = _internal.deprecated
+  def summary: StrField                               = _internal.summary
+  def documentation: CreativeWork                     = _internal.documentation
+  def schemes: ClientList[StrField]                   = _internal.schemes.asClient
+  def accepts: ClientList[StrField]                   = _internal.accepts.asClient
+  def contentType: ClientList[StrField]               = _internal.contentType.asClient
+  def requests: ClientList[Request]                   = _internal.requests.asClient
+  def security: ClientList[SecurityRequirement]       = _internal.security.asClient
+  def tags: ClientList[Tag]                           = _internal.tags.asClient
+  def callbacks: ClientList[Callback]                 = _internal.callbacks.asClient
+  def servers: ClientList[Server]                     = _internal.servers.asClient
+  def isAbstract: BoolField                           = _internal.isAbstract
+  def bindings: OperationBindings                     = _internal.bindings
+  def operationId: StrField                           = _internal.operationId
+  def federationMetadata: OperationFederationMetadata = _internal.federationMetadata
 
   /** Set deprecated property of this Operation. */
   def withDeprecated(deprecated: Boolean): this.type = {
@@ -152,6 +155,11 @@ case class Operation(override private[amf] val _internal: InternalOperation)
 
   def withOperationId(operationId: String): this.type = {
     _internal.withOperationId(operationId)
+    this
+  }
+
+  def withFederationMetadata(federationMetadata: OperationFederationMetadata): this.type = {
+    _internal.withFederationMetadata(federationMetadata)
     this
   }
 

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -160,7 +160,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -188,6 +188,9 @@
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_0"
         }
@@ -270,9 +273,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,8)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/lib-alias-reference/api.raml#/declares/shape/person/source-map/declared-element/element_0",

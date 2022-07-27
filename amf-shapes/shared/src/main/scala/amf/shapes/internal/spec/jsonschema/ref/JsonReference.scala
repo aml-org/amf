@@ -1,6 +1,12 @@
 package amf.shapes.internal.spec.jsonschema.ref
 
 object JsonReference {
+
+  def apply(reference: String): (String, Option[String]) = {
+    val ref = buildReference(reference)
+    (ref.url, ref.fragment)
+  }
+
   def buildReference(reference: String): JsonReference = {
     val parts: Array[String]         = reference.split("#")
     val url: String                  = parts.head

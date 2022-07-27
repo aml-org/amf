@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    date: __Date
+}
+
+scalar __Date

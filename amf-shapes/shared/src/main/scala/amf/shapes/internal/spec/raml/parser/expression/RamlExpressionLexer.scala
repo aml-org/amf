@@ -1,8 +1,8 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
-import amf.core.client.common.position.Position
 import amf.core.internal.annotations.LexicalInformation
 import amf.shapes.internal.spec.raml.parser.expression.Token._
+import org.mulesoft.common.client.lexical.Position
 
 import scala.collection.mutable
 

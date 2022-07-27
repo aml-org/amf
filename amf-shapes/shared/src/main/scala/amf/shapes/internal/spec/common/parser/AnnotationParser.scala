@@ -12,7 +12,6 @@ import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.OrphanOasExtension
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAnnotationTarget

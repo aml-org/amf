@@ -1,7 +1,7 @@
 package amf.shapes.internal.domain.metamodel.operations
 
 import amf.core.client.scala.model.domain.AmfObject
-import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{Core, Shacl, Shapes}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Str}
@@ -20,6 +20,12 @@ trait AbstractParameterModel
     Str,
     Core + "paramName",
     ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri()))
+  )
+
+  val Default: Field = Field(
+    DataNodeModel,
+    Core + "defaultValue",
+    ModelDoc(ExternalModelVocabularies.Shacl, "defaultValue", "Default value parsed for a parameter")
   )
 
   val Binding: Field = Field(
@@ -56,7 +62,8 @@ trait AbstractParameterModel
       Binding,
       Description,
       Required,
-      Schema
+      Schema,
+      Default,
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

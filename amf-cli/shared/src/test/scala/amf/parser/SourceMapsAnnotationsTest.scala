@@ -4,14 +4,14 @@ import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
-import amf.core.internal.annotations.{Inferred, SourceAST, SynthesizedField, VirtualNode}
+import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.spec.raml.parser.expression.ExpressionMember
-import org.mulesoft.lexer.InputRange
+import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 
@@ -120,17 +120,17 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     private def checkAnnotations(a: Annotations): Boolean =
       a.contains(classOf[SourceAST]) || a.find(_.isInstanceOf[VirtualNode]).isDefined
 
-    def range(): Option[InputRange] =
-      fe.value.annotations.find(classOf[SourceAST]).map(_.ast.range)
+    def range(): Option[PositionRange] =
+      fe.value.annotations.find(classOf[SourceYPart]).map(_.ast.range)
   }
 
   implicit class AmfElementIm(e: AmfElement) {
-    def range(): Option[InputRange] =
-      e.annotations.find(classOf[SourceAST]).map(_.ast.range)
+    def range(): Option[PositionRange] =
+      e.annotations.find(classOf[SourceYPart]).map(_.ast.range)
   }
 
-  implicit class InputRangeIm(range: InputRange) {
-    def contains(other: InputRange): Boolean =
+  implicit class PositionRangeImp(range: PositionRange) {
+    def contains(other: PositionRange): Boolean =
       (range.lineFrom < other.lineFrom || (range.lineFrom == other.lineFrom && range.columnFrom <= other.columnFrom)) &&
         (range.lineTo > other.lineTo || (range.lineTo == other.lineTo && range.columnTo >= other.columnTo))
   }
@@ -148,13 +148,13 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   private def missingValue(f: Field, meta: String) =
     s"missing annotations for value of field ${f.value.iri()} at obj type $meta"
 
-  private def rangeNotContained(e: AmfElement, parent: Option[InputRange], self: Option[InputRange]) =
+  private def rangeNotContained(e: AmfElement, parent: Option[PositionRange], self: Option[PositionRange]) =
     s"range is not contained in parent $e [$parent - $self]"
 
-  private def rangeNotContained(f: Field, meta: String, parent: Option[InputRange], self: Option[InputRange]) =
+  private def rangeNotContained(f: Field, meta: String, parent: Option[PositionRange], self: Option[PositionRange]) =
     s"range is not contained in parent [$parent - $self] of field ${f.value.iri()} at obj type $meta"
 
-  case class RangesChecker(lastRange: Option[InputRange], insideSynthetized: Boolean = false) {
+  case class RangesChecker(lastRange: Option[PositionRange], insideSynthetized: Boolean = false) {
     def on(e: AmfElement): RangesChecker =
       if (insideSynthetized) this
       else if (e.annotations.contains(classOf[Inferred])) this

@@ -1,10 +1,9 @@
 package amf.validation
 
 import amf.apicontract.client.scala._
-import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
+import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.internal.metamodel.domain.OperationModel
-import amf.core.client.common.position.{Position, Range}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -12,10 +11,12 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
 import amf.core.internal.annotations.{Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
+import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.internal.annotations.BaseVirtualNode
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
+import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -28,6 +29,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
   val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
   val ro: RenderOptions               = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val graphqlConfig: AMFConfiguration = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
   val ramlConfig: AMFConfiguration    = RAMLConfiguration.RAML10().withRenderOptions(ro)
   val ramlClient: AMFBaseUnitClient   = ramlConfig.baseUnitClient()
   val raml08Config: AMFConfiguration  = RAMLConfiguration.RAML08().withRenderOptions(ro)
@@ -35,11 +37,13 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
 
-  def modelAssertion(path: String, pipelineId: String = PipelineId.Default, transform: Boolean = true)(
-      assertion: BaseUnit => Assertion
-  ): Future[Assertion] = {
-    val parser = APIConfiguration.API().baseUnitClient()
-    parser.parse(path) flatMap { parseResult =>
+  def modelAssertion(
+      path: String,
+      pipelineId: String = PipelineId.Default,
+      transform: Boolean = true,
+      client: AMFBaseUnitClient = APIConfiguration.API().baseUnitClient()
+  )(assertion: BaseUnit => Assertion): Future[Assertion] = {
+    client.parse(path) flatMap { parseResult =>
       if (!transform) assertion(parseResult.baseUnit)
       else {
         val specificClient  = configFor(parseResult.sourceSpec).baseUnitClient()
@@ -357,7 +361,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(api, transform = false) { bu =>
       val declaredXmlSchema = bu.asInstanceOf[Document].declares.head
       declaredXmlSchema.annotations.location().isDefined shouldBe true
-      declaredXmlSchema.annotations.lexical() shouldEqual Range(Position(6, 2), Position(9, 0))
+      declaredXmlSchema.annotations.lexical() shouldEqual PositionRange((6, 2), (9, 0))
     }
   }
 
@@ -367,7 +371,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val components           = new BaseUnitComponents
       val xmlSchemaAnnotations = components.getFirstRequestPayload(bu).schema.asInstanceOf[SchemaShape].annotations
       xmlSchemaAnnotations.location().isDefined shouldBe true
-      xmlSchemaAnnotations.lexical() shouldEqual Range(Position(8, 6), Position(10, 49))
+      xmlSchemaAnnotations.lexical() shouldEqual PositionRange((8, 6), (10, 49))
     }
   }
 
@@ -382,11 +386,9 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
   // W-11210133
   test("semex and normal annotations should have the same lexical") {
-    val api = s"$basePath/oas3/annotations/semantic.yaml"
     ramlConfig.withDialect(s"$basePath/raml/semantic-extensions/dialect.yaml") flatMap { config =>
       val client = config.baseUnitClient()
       client.parse(s"$basePath/raml/semantic-extensions/api.raml") map { parseResult =>
-        println(parseResult.toString())
         val bu          = parseResult.baseUnit
         val annotations = bu.asInstanceOf[Document].declares.last.customDomainProperties
         val lexicals    = annotations map (_.annotations.lexical())

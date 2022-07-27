@@ -1,0 +1,23 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name(myQueryParam: Alternative = C): String
+}
+
+type MyObject {
+    name(myObjParam: Alternative = C): String
+}
+
+
+interface MyInterface {
+    name(myIntParam: Alternative = C): String
+}
+
+directive @MyDirective(text: Alternative = C) on SCHEMA
+
+enum Alternative {
+    A
+    B
+}

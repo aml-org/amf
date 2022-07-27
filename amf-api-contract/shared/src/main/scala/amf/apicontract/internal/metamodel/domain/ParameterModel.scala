@@ -82,7 +82,8 @@ object ParameterModel extends AbstractParameterModel with OptionalField with Exa
       Binding,
       Schema,
       Payloads,
-      Examples
+      Examples,
+      Default
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = Parameter()

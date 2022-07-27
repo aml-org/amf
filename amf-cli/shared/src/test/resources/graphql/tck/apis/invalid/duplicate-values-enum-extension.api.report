@@ -1,4 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum-extension.api.graphql
 Profile: GraphQL
-Conforms: true
-Number of results: 0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-enum-values
+  Message: Each enum value must be unique, 'PLUTO' it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum-extension.api.graphql#/declares/scalar/Planet/or/scalar/Planet_1
+  Property: http://www.w3.org/ns/shacl#in
+  Range: [(21,4)-(21,9)]
+  Location: 

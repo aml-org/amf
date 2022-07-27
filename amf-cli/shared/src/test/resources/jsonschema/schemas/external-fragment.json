@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "My Really Cool External Fragment",
+  "$defs": {
+    "People": {
+      "type": "array",
+      "items": {
+        "$ref": "simple.json#/definitions/Person"
+      }
+    }
+  }
+}

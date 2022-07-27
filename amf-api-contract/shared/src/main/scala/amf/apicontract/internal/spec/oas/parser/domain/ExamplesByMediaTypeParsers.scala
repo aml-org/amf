@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
-import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{WebApiContext}
 import amf.core.internal.parser.YMapOps
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
@@ -27,9 +27,7 @@ case class ExampleByMediaTypeParser(yMapEntry: YMapEntry, parentId: String)(impl
     val mediaType = yMapEntry.key.as[YScalar].text
     example.withName(mediaType)
     example.set(ExampleModel.MediaType, mediaType)
-    ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))(
-      WebApiShapeParserContextAdapter(ctx)
-    )
+    ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))
       .parse()
   }
 }

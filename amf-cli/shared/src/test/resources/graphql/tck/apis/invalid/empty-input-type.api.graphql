@@ -8,13 +8,9 @@ type Query {
 }
 
 type Mutation {
-    changeUserStatus(input_: InputType!): OutputType
+    changeUserStatus(input_: InputType!): String
 }
 
 input InputType {
     # this is empty
-}
-
-type OutputType {
-    success: Boolean
 }

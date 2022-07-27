@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-include-api.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-json-schema-reference
+  Message: uriFragment '/definitions/Person/properties/name' must be in the format of '#/definitions/<name>'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,18)-(9,85)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/apis/invalid-include-api.raml

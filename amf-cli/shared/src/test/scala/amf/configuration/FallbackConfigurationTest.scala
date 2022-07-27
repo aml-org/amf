@@ -6,7 +6,6 @@ import amf.validation.UniquePlatformReportGenTest
 class FallbackConfigurationTest extends UniquePlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/configuration/validation/"
   override val reportsPath: String = "file://amf-cli/shared/src/test/resources/configuration/validation/"
-  override val hint: Hint          = Raml08YamlHint
 
   test("RAML 0.8 api that references RAML 1.0 fragment should have a warning") {
     validate("warning-fallback/api.raml", Some("warning-fallback/warning-fallback.report"))

@@ -1,6 +1,6 @@
 package amf.shapes.client.platform.model.domain.operations
 
-import amf.core.internal.convert.CoreClientConverters
+import amf.core.client.platform.model.domain.federation.ShapeFederationMetadata
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation => InternalShapeOperation}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
@@ -15,6 +15,10 @@ case class ShapeOperation(override private[amf] val _internal: InternalShapeOper
   override def request: RequestType = _internal.request
 
   override def response: ResponseType = _internal.responses.head
+
+  def responses: ClientList[ShapeResponse] = _internal.responses.asClient
+
+  def federationMetadata: ShapeFederationMetadata = _internal.federationMetadata
 
   override private[amf] def buildResponse: ResponseType = _internal.buildResponse
 
@@ -36,6 +40,11 @@ case class ShapeOperation(override private[amf] val _internal: InternalShapeOper
 
   override def withResponses(responses: ClientList[ShapeResponse]): this.type = {
     _internal.withResponses(responses.asInternal)
+    this
+  }
+
+  def withFederationMetadata(metadata: ShapeFederationMetadata): this.type = {
+    _internal.withFederationMetadata(metadata)
     this
   }
 }

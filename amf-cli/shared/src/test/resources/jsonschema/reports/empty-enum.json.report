@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/schemas/empty-enum.json
+Profile: JSON Schema
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-enum
+  Message: Enum in types cannot be empty
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/jsonschema/schemas/empty-enum.json#/declares/shape/Person/property/property/name/scalar/name
+  Property: http://www.w3.org/ns/shacl#in
+  Range: [(9,18)-(9,20)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/schemas/empty-enum.json

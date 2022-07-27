@@ -4,7 +4,14 @@ import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.internal.remote.Spec
-import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser
+import amf.shapes.internal.spec.common.parser.{
+  ClosedShapeValidator,
+  DefaultClosedShapeValidator,
+  IgnoreCriteria,
+  SpecSyntax,
+  UnknownShapeValidator
+}
 import org.yaml.model.{YMap, YNode, YPart}
 
 class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: CustomSyntax)
@@ -13,11 +20,26 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       decorated.refs,
       decorated.options,
       decorated,
-      Some(decorated.declarations)
+      Some(decorated.declarations),
+      specSettings = decorated.specSettings
     ) {
 
-  override val syntax: SpecSyntax = decorated.syntax
-  override val spec: Spec         = decorated.spec
+  override def syntax: SpecSyntax             = decorated.syntax
+  override def spec: Spec                     = decorated.spec
+  override def ignoreCriteria: IgnoreCriteria = decorated.ignoreCriteria
+
+  override def closedShape(node: AmfObject, ast: YMap, shape: String): Unit =
+    closedShapeValidator.evaluate(node, ast, shape)(syamleh)
+
+  override protected val closedShapeValidator: ClosedShapeValidator = parser.DefaultClosedShapeValidator(
+    ignoreCriteria,
+    spec,
+    syntax,
+    createCustomValidator()
+  )
+
+  private def createCustomValidator() =
+    SecuritySchemeClosedShapeValidator(customSyntax, spec, ignoreCriteria, UnknownShapeValidator(spec))
 
   override def link(node: YNode): Either[String, YNode] = decorated.link(node)
 
@@ -26,40 +48,6 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
   override val factory: OasLikeSpecVersionFactory = decorated.factory
 
   override def makeCopy(): OasLikeWebApiContext = decorated.makeCopy()
-
-  override def nextValidation(node: AmfObject, shape: String, ast: YMap): Unit = {
-    if (customSyntax.contains(shape)) {
-      val keys = ast.entries.map(getEntryKey)
-      validateCustomSyntax(node, ast, shape, keys)
-    } else super.nextValidation(node, shape, ast)
-  }
-
-  private def validateCustomSyntax(node: AmfObject, ast: YMap, shape: String, keys: Seq[String]): Unit = {
-    if (customSyntax.contains(shape)) {
-      val SpecNode(requiredFields, possible) = customSyntax(shape)
-
-      // if entries don't contain required fields
-      requiredFields.foreach { field =>
-        if (!keys.contains(field.name)) {
-          val isWarning = field.severity == SeverityLevels.WARNING
-          throwClosedShapeError(node, s"Property '${field.name}' is required in a $spec $shape node", ast, isWarning)
-        }
-      }
-
-      // if invalid fields are present
-      val required = requiredFields.map(_.name)
-      keys.foreach(key => {
-        if (!possible.contains(key) && !required.contains(key) && !ignore(shape, key)) {
-          throwClosedShapeError(
-            node,
-            s"Property '$key' not supported in a $spec $shape node",
-            getAstEntry(ast, key),
-            isWarning = true
-          )
-        }
-      })
-    }
-  }
 
   private def getAstEntry(ast: YMap, entry: String): YPart =
     ast.entries.find(yMapEntry => yMapEntry.key.asScalar.map(_.text).get == entry).get

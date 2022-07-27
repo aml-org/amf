@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft-111125751482/schema",
+  "title": "My Schemas",
+  "definitions": {
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

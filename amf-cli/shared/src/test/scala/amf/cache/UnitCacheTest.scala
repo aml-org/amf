@@ -183,18 +183,6 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  case class CustomUnitCache(references: Seq[CachedReference]) extends UnitCache {
-
-    /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
-    override def fetch(url: String): Future[CachedReference] =
-      references.find(r => r.url == url) match {
-        case Some(value) =>
-          Future.successful { value }
-        case _ =>
-          Future.failed[CachedReference](new ResourceNotFound("Reference not found"))
-      }
-  }
-
   private def createClientWithCache(filesToCache: Seq[String], shouldResolve: Boolean): Future[AMFConfiguration] = {
     val client = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler).baseUnitClient()
     val listOfFutures = filesToCache.map { file =>
@@ -226,4 +214,16 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
       assert(root, report)
     }
   }
+}
+
+case class CustomUnitCache(references: Seq[CachedReference]) extends UnitCache {
+
+  /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
+  override def fetch(url: String): Future[CachedReference] =
+    references.find(r => r.url == url) match {
+      case Some(value) =>
+        Future.successful { value }
+      case _ =>
+        Future.failed[CachedReference](new ResourceNotFound("Reference not found"))
+    }
 }

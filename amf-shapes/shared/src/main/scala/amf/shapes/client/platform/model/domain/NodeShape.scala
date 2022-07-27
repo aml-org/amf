@@ -2,6 +2,7 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
 import amf.core.client.platform.model.domain.{PropertyShape, Shape}
+import amf.shapes.client.platform.model.domain.federation.ExternalPropertyShape
 import amf.shapes.client.scala.model.domain.{NodeShape => InternalNodeShape}
 import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 
@@ -31,6 +32,8 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def propertyNames: Shape                                             = _internal.propertyNames
   def unevaluatedProperties: Boolean                                   = _internal.unevaluatedProperties
   def unevaluatedPropertiesSchema: Shape                               = _internal.unevaluatedPropertiesSchema
+  def keys: ClientList[federation.Key]                                 = _internal.keys.asClient
+  def externalProperties: ClientList[ExternalPropertyShape]            = _internal.externalProperties.asClient
 
   def withIsAbstract(isAbstract: Boolean): this.type = {
     _internal.withIsAbstract(isAbstract)
@@ -107,6 +110,16 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def withInheritsObject(name: String): NodeShape = _internal.withInheritsObject(name)
 
   def withInheritsScalar(name: String): ScalarShape = _internal.withInheritsScalar(name)
+
+  def withKeys(keys: ClientList[federation.Key]): this.type = {
+    _internal.withKeys(keys.asInternal)
+    this
+  }
+
+  def withExternalProperties(externalProperties: ClientList[ExternalPropertyShape]): this.type = {
+    _internal.withExternalProperties(externalProperties.asInternal)
+    this
+  }
 
   override def linkCopy(): NodeShape = _internal.linkCopy()
 }

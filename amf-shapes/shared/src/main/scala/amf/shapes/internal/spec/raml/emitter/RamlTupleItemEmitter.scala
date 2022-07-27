@@ -1,12 +1,12 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
 
 case class RamlTupleItemEmitter(item: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit

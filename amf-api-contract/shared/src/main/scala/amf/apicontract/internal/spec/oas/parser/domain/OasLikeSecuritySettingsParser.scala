@@ -2,12 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.parser.{
-  SettingsProducers,
-  SpecParserOps,
-  WebApiContext,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{SettingsProducers, SpecParserOps, WebApiContext}
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.parser.YMapOps
@@ -21,7 +16,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     extends SpecParserOps {
 
   protected def parseAnnotations(settings: Settings): Settings = {
-    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(settings, map).parse()
     settings.add(Annotations(map))
   }
 
@@ -45,13 +40,11 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
-        WebApiShapeParserContextAdapter(ctx)
-      ).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse("")))).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
 
-    AnnotationParser(scheme, xSettings)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(scheme, xSettings).parse()
 
     settings
   }

@@ -12,16 +12,14 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
   test("Test non existing include in resource type def") {
     validate(
       "/missing-includes/in-resource-type-def.raml",
-      Some("missing-includes/in-resource-type-def.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("missing-includes/in-resource-type-def.report")
     )
   }
 
   test("Test non existing include in trait def") {
     validate(
       "/missing-includes/in-trait-def.raml",
-      Some("missing-includes/in-trait-def.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("missing-includes/in-trait-def.report")
     )
   }
 
@@ -67,8 +65,7 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
   test("nested json schema defined in external fragment") {
     validate(
       "raml/nested-json-schema-external-fragment/api.raml",
-      Some("invalid-example-result.report"),
-      overridedHint = Some(Raml08YamlHint)
+      Some("invalid-example-result.report")
     )
   }
 
@@ -82,5 +79,5 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/multi-plat-model/"
-  override val hint: Hint  = Raml10YamlHint
+
 }

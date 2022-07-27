@@ -1,0 +1,9 @@
+type MemberA {
+    propA: String
+}
+
+type MemberB {
+    propB: String
+}
+
+union MyUnion @inaccessible = MemberA | MemberB

@@ -15,6 +15,16 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
     Some(ParsedJSONSchema(value))
 }
 
+case class DocumentDeclarationKey(key: String) extends EternalSerializedAnnotation {
+  override val name: String  = "document-declaration-key"
+  override val value: String = key
+}
+
+object DocumentDeclarationKey extends AnnotationGraphLoader {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(DocumentDeclarationKey(value))
+}
+
 /** Represents parsed RAML Data Type from any type of RAML document. */
 case class ParsedRamlDatatype(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "parsed-raml-datatype"

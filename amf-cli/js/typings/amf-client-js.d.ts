@@ -121,6 +121,8 @@ declare module 'amf-client-js' {
     elseShape: Shape
     thenShape: Shape
     isExtension: BoolField
+    isStub: BoolField
+    federationMetadata: ShapeFederationMetadata
     hasExplicitName: boolean
 
     annotations(): Annotations
@@ -166,6 +168,10 @@ declare module 'amf-client-js' {
     withThen(thenShape: Shape): this
 
     withIsExtension(value: boolean): this
+
+    withIsStub(value: boolean): this
+
+    withFederationMetadata(metadata: ShapeFederationMetadata): this
 
 
   }
@@ -777,6 +783,7 @@ declare module 'amf-client-js' {
     id: string
     position: Range
     extendsNode: Array<DomainElement>
+    responses: Array<AbstractResponse>
 
     withResponses(responses: Array<AbstractResponse>): this
 
@@ -816,6 +823,7 @@ declare module 'amf-client-js' {
     isExtension: BoolField
     xone: Array<Shape>
     readOnly: BoolField
+    isStub: BoolField
     description: StrField
     fixpoint: StrField
     deprecated: BoolField
@@ -828,6 +836,7 @@ declare module 'amf-client-js' {
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
     thenShape: Shape
+    federationMetadata: ShapeFederationMetadata
     id: string
     ifShape: Shape
     writeOnly: BoolField
@@ -860,6 +869,8 @@ declare module 'amf-client-js' {
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
+    withIsStub(value: boolean): this
+
     graph(): Graph
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
@@ -879,6 +890,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withWriteOnly(writeOnly: boolean): this
+
+    withFederationMetadata(metadata: ShapeFederationMetadata): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
@@ -1253,6 +1266,16 @@ declare module 'amf-client-js' {
 
 
   }
+  export interface KeyMapping extends DomainElement  {
+    source: any
+    target: any
+
+    withSource(source: any): this
+
+    withTarget(target: any): this
+
+
+  }
   export class StrictValidationMode extends ValidationMode  {
   }
   export class AbstractParameter implements DomainElement  {
@@ -1267,7 +1290,10 @@ declare module 'amf-client-js' {
     parameterName: StrField
     position: Range
     required: BoolField
+    defaultValue: DataNode
     extendsNode: Array<DomainElement>
+
+    withDefaultValue(defaultValue: DataNode): this
 
     withName(name: string): this
 
@@ -1713,6 +1739,35 @@ declare module 'amf-client-js' {
 
 
   }
+  export class PropertyKeyMapping implements KeyMapping  {
+    source: PropertyShape
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    target: string
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    annotations(): Annotations
+
+    withSource(source: PropertyShape): this
+
+    withTarget(target: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+
+  }
   export class DialectInstanceProcessingData extends BaseUnitProcessingData  {
     constructor()
 
@@ -2008,7 +2063,10 @@ declare module 'amf-client-js' {
 
     withId(id: string): this
 
-    withHeader(name: string): Parameter
+
+  }
+  export class GraphQLFederationConfiguration  {
+    static GraphQLFederation(): AMFConfiguration
 
 
   }
@@ -2061,6 +2119,59 @@ declare module 'amf-client-js' {
 
 
   }
+
+  export class JsonSchemaDocument implements Document {
+    location: string
+    usage: StrField
+    id: string
+    raw: undefined | string
+    processingData: BaseUnitProcessingData
+    sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
+    modelVersion: StrField
+    encodes: DomainElement
+    declares: Array<DomainElement>
+    schemaVersion: StrField
+
+    constructor()
+    constructor(encoding: DomainElement)
+
+    findByType(typeId: string): Array<DomainElement>
+
+    cloneUnit(): BaseUnit
+
+    withReferences(references: Array<BaseUnit>): this
+
+    withDeclaredElement(declared: DomainElement): this
+
+    withRaw(raw: string): this
+
+    withUsage(usage: string): this
+
+    findById(id: string): undefined | DomainElement
+
+    withLocation(location: string): this
+
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
+
+    withEncodes(encoded: DomainElement): this
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
+    withDeclares(declares: Array<DomainElement>): this
+
+    references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
+
+    withId(id: string): this
+
+
+
+  }
+
   export class Amqp091OperationBinding implements OperationBinding  {
     priority: IntField
     customDomainProperties: Array<DomainExtension>
@@ -2182,7 +2293,9 @@ declare module 'amf-client-js' {
     path: StrField
     xone: Array<Shape>
     readOnly: BoolField
+    isStub: BoolField
     description: StrField
+    provides: Array<PropertyShapePath>
     deprecated: BoolField
     customShapePropertyDefinitions: Array<PropertyShape>
     or: Array<Shape>
@@ -2194,6 +2307,7 @@ declare module 'amf-client-js' {
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
     thenShape: Shape
+    federationMetadata: ShapeFederationMetadata
     id: string
     range: Shape
     ifShape: Shape
@@ -2202,6 +2316,7 @@ declare module 'amf-client-js' {
     not: Shape
     values: Array<DataNode>
     position: Range
+    requires: Array<PropertyShapePath>
     inherits: Array<Shape>
     linkLabel: StrField
     defaultValue: DataNode
@@ -2214,6 +2329,8 @@ declare module 'amf-client-js' {
     annotations(): Annotations
 
     link<T>(label: string): T
+
+    withRequires(requires: Array<PropertyShapePath>): this
 
     withValues(values: Array<DataNode>): this
 
@@ -2239,6 +2356,8 @@ declare module 'amf-client-js' {
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
+    withIsStub(value: boolean): this
+
     graph(): Graph
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
@@ -2259,9 +2378,13 @@ declare module 'amf-client-js' {
 
     withWriteOnly(writeOnly: boolean): this
 
+    withFederationMetadata(metadata: ShapeFederationMetadata): this
+
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     link<T>(): T
+
+    withProvides(provides: Array<PropertyShapePath>): this
 
     withLinkTarget(target: undefined): this
 
@@ -2528,7 +2651,7 @@ declare module 'amf-client-js' {
     position: Range
     location: undefined | string
 
-    constructor(message: string, level: string, targetNode: string, targetProperty: string, validationId: string, position: Range, location: string)
+    constructor(message: string, level: string, targetNode: string, targetProperty: string, validationId: string, range: Range, location: string)
 
   }
   export class MqttOperationBinding implements OperationBinding  {
@@ -2666,6 +2789,9 @@ declare module 'amf-client-js' {
 
 
   }
+  export class JsonSchemaConfiguration {
+    static JsonSchema(): ShapesConfiguration
+  }
   export class Extension extends Document  {
     constructor()
 
@@ -2793,6 +2919,8 @@ declare module 'amf-client-js' {
     static readonly PAYLOAD: ProfileName
     static readonly GRPC: ProfileName
     static readonly GRAPHQL: ProfileName
+    static readonly GRAPHQL_FEDERATION: ProfileName
+    static readonly JSONSCHEMA: ProfileName
 
   }
   export class OAuth2Settings extends Settings  {
@@ -2839,6 +2967,8 @@ declare module 'amf-client-js' {
     withResponse(name: string): ShapeResponse
 
     withResponses(responses: Array<ShapeResponse>): this
+
+    withFederationMetadata(metadata: ShapeFederationMetadata): this
 
 
   }
@@ -3381,10 +3511,65 @@ declare module 'amf-client-js' {
 
 
   }
+  export class Key implements DomainElement  {
+    customDomainProperties: Array<DomainExtension>
+    components: Array<PropertyShapePath>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+    isResolvable: BoolField
+
+    constructor()
+
+    annotations(): Annotations
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withComponents(components: Array<PropertyShapePath>): this
+
+    withResolvable(isResolvable: boolean): this
+
+    withId(id: string): this
+
+
+  }
   export class JsonSchemaShapeRenderer  {
     static toJsonSchema(element: AnyShape, config: AMFGraphConfiguration): string
 
     static buildJsonSchema(element: AnyShape, config: AMFGraphConfiguration): string
+
+
+  }
+  export class PropertyShapePath implements DomainElement  {
+    customDomainProperties: Array<DomainExtension>
+    path: Array<PropertyShape>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    annotations(): Annotations
+
+    withPath(path: Array<PropertyShape>): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
 
 
   }
@@ -3957,6 +4142,7 @@ declare module 'amf-client-js' {
     examples: Array<Example>
     xone: Array<Shape>
     readOnly: BoolField
+    isStub: BoolField
     description: StrField
     documentation: CreativeWork
     deprecated: BoolField
@@ -3970,6 +4156,7 @@ declare module 'amf-client-js' {
     isExternalLink: BoolField
     customShapeProperties: Array<ShapeExtension>
     thenShape: Shape
+    federationMetadata: ShapeFederationMetadata
     id: string
     ifShape: Shape
     writeOnly: BoolField
@@ -4007,6 +4194,8 @@ declare module 'amf-client-js' {
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
+    withIsStub(value: boolean): this
+
     withExamples(examples: Array<Example>): this
 
     graph(): Graph
@@ -4028,6 +4217,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withWriteOnly(writeOnly: boolean): this
+
+    withFederationMetadata(metadata: ShapeFederationMetadata): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
@@ -4132,6 +4323,8 @@ declare module 'amf-client-js' {
     propertyNames: Shape
     unevaluatedProperties: boolean
     unevaluatedPropertiesSchema: Shape
+    keys: undefined
+    externalProperties: Array<ExternalPropertyShape>
 
     constructor()
 
@@ -4176,6 +4369,10 @@ declare module 'amf-client-js' {
     withInheritsObject(name: string): NodeShape
 
     withInheritsScalar(name: string): ScalarShape
+
+    withKeys(keys: undefined): this
+
+    withExternalProperties(externalProperties: Array<ExternalPropertyShape>): this
 
     linkCopy(): NodeShape
 
@@ -4304,6 +4501,8 @@ declare module 'amf-client-js' {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withId(id: string): this
+
+    withDocumentation(documentation: CreativeWork): this
 
 
   }
@@ -4731,6 +4930,10 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ShapeFederationMetadata  {
+    constructor()
+
+  }
   export class CustomDomainProperty implements DomainElement, Linkable  {
     displayName: StrField
     name: StrField
@@ -4782,6 +4985,21 @@ declare module 'amf-client-js' {
     withDisplayName(displayName: string): this
 
     withId(id: string): this
+
+
+  }
+  export class OperationFederationMetadata  {
+    providedEntity: NodeShape
+    federationMethod: StrField
+    keyMappings: Array<ParameterKeyMapping>
+
+    constructor()
+
+    withProvidedEntity(providedEntity: NodeShape): this
+
+    withFederationMethod(federationMethod: string): this
+
+    withKeyMappings(keyMappings: Array<ParameterKeyMapping>): this
 
 
   }
@@ -5474,6 +5692,7 @@ declare module 'amf-client-js' {
     servers: Array<Server>
     schemes: Array<StrField>
     isLink: boolean
+    federationMetadata: OperationFederationMetadata
     response: Response
     isExternalLink: BoolField
     id: string
@@ -5497,6 +5716,8 @@ declare module 'amf-client-js' {
     withSecurity(security: Array<SecurityRequirement>): this
 
     linkCopy(): Operation
+
+    withFederationMetadata(federationMetadata: OperationFederationMetadata): this
 
     withName(name: string): this
 
@@ -6251,6 +6472,35 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ParameterKeyMapping implements KeyMapping  {
+    source: Parameter
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    target: PropertyShapePath
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    annotations(): Annotations
+
+    withTarget(target: PropertyShapePath): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+    withSource(source: Parameter): this
+
+
+  }
   export class WebSocketsChannelBinding implements ChannelBinding  {
     method: StrField
     customDomainProperties: Array<DomainExtension>
@@ -6362,6 +6612,38 @@ declare module 'amf-client-js' {
   }
   export class AMFValidator  {
     static validate(baseUnit: BaseUnit, conf: AMFGraphConfiguration): Promise<AMFValidationReport>
+
+
+  }
+  export class ExternalPropertyShape implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    rangeName: StrField
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+    keyMappings: Array<PropertyKeyMapping>
+
+    constructor()
+
+    annotations(): Annotations
+
+    withName(name: string): this
+
+    withRangeName(rangeName: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withKeyMappings(keyMappings: Array<PropertyKeyMapping>): this
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
 
 
   }
@@ -6489,6 +6771,7 @@ declare module 'amf-client-js' {
     static readonly JSONSCHEMA: Spec
     static readonly GRPC: Spec
     static readonly GRAPHQL: Spec
+    static readonly GRAPHQL_FEDERATION: Spec
     static readonly JSONSCHEMADIALECT: Spec
 
     static apply(name: string): Spec
@@ -6566,29 +6849,6 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Position  {
-    isZero: boolean
-    toString: string
-    line: number
-    column: number
-    static FIRST: Position
-
-    constructor(line: number, column: number)
-
-    lt(o: Position): boolean
-
-    min(other: Position): Position
-
-    max(other: Position): Position
-
-    compareTo(o: Position): number
-
-    static compareTo(o: Position): number
-
-    static apply(lc: undefined): Position
-
-
-  }
   export class TransformationPipelineBuilder  {
     build(): TransformationPipeline
 
@@ -6603,25 +6863,6 @@ declare module 'amf-client-js' {
     static fromPipeline(pipeline: TransformationPipeline): TransformationPipelineBuilder
 
     static fromPipeline(pipelineName: string, conf: AMFGraphConfiguration): undefined | TransformationPipelineBuilder
-
-
-  }
-  export class Range  {
-    toString: string
-    start: Position
-    end: Position
-
-    constructor(start: Position, end: Position)
-
-    extent(other: Range): Range
-
-    contains(other: Range): boolean
-
-    static apply(start: Position, delta: number): Range
-
-    static apply(start: undefined, end: undefined): Range
-
-    static apply(serialized: string): Range
 
 
   }
@@ -6760,6 +7001,68 @@ declare module 'amf-client-js' {
     static predefined(): ShapeValidationConfiguration
 
     static apply(config: AMFGraphConfiguration): ShapeValidationConfiguration
+
+
+  }
+  export class Range  {
+    toString: string
+    readonly lineFrom: number
+    readonly columnFrom: number
+    readonly lineTo: number
+    readonly columnTo: number
+    start: Position
+    end: Position
+    static readonly ZERO: 0
+    static readonly ALL: 0
+
+    constructor(start: Position, end: Position)
+
+    extent(other: Range): Range
+
+    contains(other: Range): boolean
+
+    compareTo(other: Range): number
+
+    static apply(lineFrom: number, columnFrom: number, lineTo: number, columnTo: number): Range
+
+    static apply(start: Position, delta: number): Range
+
+    static apply(start: undefined, end: undefined): Range
+
+    static apply(serialized: string): Range
+
+
+  }
+  export class Position  {
+    isZero: boolean
+    readonly offsetPart: '@'
+    line: number
+    column: number
+    offset: number
+    static readonly ZERO: 0
+    static FIRST: Position
+
+    constructor(line: number, column: number, offset: number)
+
+    lt(o: Position): boolean
+
+    min(other: Position): Position
+
+    max(other: Position): Position
+
+    compare(that: Position): number
+
+    compareTo(o: Position): number
+
+    equals(obj: any): boolean
+
+    hashCode(): number
+
+    static apply(line: number, column: number, offset: number): Position
+
+    static apply(offset: number): Position
+
+    static apply(lc: undefined): Position
 
 
   }

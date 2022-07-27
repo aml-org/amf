@@ -5,12 +5,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry, ParentEndPoint}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{
-  OasParametersParser,
-  RamlSecurityRequirementParser,
-  SpecParserOps,
-  WebApiShapeParserContextAdapter
-}
+import amf.apicontract.internal.spec.common.parser.{OasParametersParser, RamlSecurityRequirementParser, SpecParserOps}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.spec
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
@@ -20,17 +15,16 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   UnusedBaseUriParameter
 }
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.NestedEndpoint
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{DefaultNode, LexicalInformation, VirtualElement}
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.{CompilerConfiguration, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.shapes.client.scala.model.domain.ScalarShape
-import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -118,7 +112,7 @@ abstract class RamlEndpointParser(
       map,
       if (isResourceType) List(VocabularyMappings.resourceType)
       else List(VocabularyMappings.endpoint)
-    )(WebApiShapeParserContextAdapter(ctx)).parse()
+    ).parse()
 
     parseNestedEndPoints(endpoint, map, isResourceType)
   }
@@ -136,7 +130,7 @@ abstract class RamlEndpointParser(
               endpoint,
               None,
               s"Nested endpoint in resourceType: '$nestedEndpointName'",
-              Some(LexicalInformation(Range(entry.key.range))),
+              Some(LexicalInformation(entry.key.range)),
               Some(map.sourceName)
             )
           }
@@ -271,7 +265,7 @@ abstract class RamlEndpointParser(
     map.key(
       "type",
       entry => {
-        endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
+        endpoint.annotations += EndPointResourceTypeEntry(entry.range)
         val declaration = ParametrizedDeclarationParser(
           entry.value,
           (name: String) => ParametrizedResourceType().withName(name),
@@ -292,7 +286,7 @@ abstract class RamlEndpointParser(
     map.key(
       "is",
       (e: YMapEntry) => {
-        endpoint.annotations += EndPointTraitEntry(Range(e.range))
+        endpoint.annotations += EndPointTraitEntry(e.range)
         (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
           .parse(endpoint.withTrait)).allowingSingleValue.optional(e)
       }

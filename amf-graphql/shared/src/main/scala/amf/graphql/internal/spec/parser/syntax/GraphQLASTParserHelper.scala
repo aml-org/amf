@@ -2,12 +2,15 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.internal.parser.domain.SearchScope
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
-import org.mulesoft.lexer.SourceLocation
+import amf.shapes.client.scala.model.domain.operations.{AbstractParameter, ShapeParameter}
+import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
@@ -26,41 +29,46 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case _ => NullableShape(isNullable = false, shape)
     }
   }
-
-  def findDescription(n: ASTElement): Option[Terminal] = {
+  def findDescription(n: ASTNode): Option[Terminal] = {
     collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
       case n: Node => n.children.collectFirst({ case t: Terminal => t })
       case _       => None
     }
   }
 
-  def findName(n: Node, default: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
+  def findName(n: Node, default: String, error: String)(implicit
+      ctx: GraphQLBaseWebApiContext
+  ): (String, Annotations) = {
     val potentialPaths: Seq[Seq[String]] = Stream(
       Seq(NAME, NAME_TERMINAL),
       Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
       Seq(NAME, KEYWORD),
-      Seq(NAME)
+      Seq(NAME),
+      Seq(NAME_F, NAME_TERMINAL_F),
+      Seq(NAME_F, KEYWORD_F),
+      Seq(NAME_F)
     )
 
-    val maybeName = potentialPaths.map(path(n, _)) collectFirst {
-      case Some(t: Terminal) => t.value
+    val effectivePath = potentialPaths.map(path(n, _)) collectFirst {
+      case Some(t: Terminal) => t
       case Some(n: Node) if n.children.size == 1 && n.children.head.isInstanceOf[Terminal] =>
-        n.children.head.asInstanceOf[Terminal].value
+        n.children.head.asInstanceOf[Terminal]
     }
+    val maybeName = effectivePath.map(_.value)
 
     maybeName match {
       case Some(name) =>
-        name
+        (name, toAnnotations(effectivePath.get))
       case _ =>
         astError(error, toAnnotations(n))
-        default
+        (default, Annotations())
     }
   }
 
   def searchName(n: Node): Option[String] = pathToTerminal(n, Seq(NAME, NAME_TERMINAL)).map(_.value)
 
   // GraphQL specific helpers
-  def parseType(n: Node)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def parseType(n: Node)(implicit ctx: GraphQLBaseWebApiContext): AnyShape = {
     path(n, Seq(TYPE_)) match {
       case Some(t: Node) =>
         val shape = {
@@ -82,7 +90,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def isScalarType(n: Node): Boolean = getTypeName(n).exists(SCALAR_TYPES.contains)
 
-  def isEnumType(n: Node)(implicit ctx: GraphQLWebApiContext): Boolean = getTypeName(n).exists { name =>
+  def isEnumType(n: Node)(implicit ctx: GraphQLBaseWebApiContext): Boolean = getTypeName(n).exists { name =>
     ctx.declarations.findType(name, SearchScope.All).exists(_.isInstanceOf[ScalarShape])
   }
 
@@ -105,7 +113,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def isListType(n: Node): Boolean = path(n, Seq(LIST_TYPE)).isDefined
 
   def parseScalarType(t: Node)(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
       val scalar = ScalarShape(toAnnotations(t))
@@ -126,7 +134,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def parseListType(t: Node)(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, _) => {
       val array = ArrayShape(toAnnotations(t))
@@ -143,7 +151,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def parseObjectType(t: Node)(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): AnyShape = {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
       findOrLinkType(typeName, t)
@@ -151,26 +159,28 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     maybeNullable(t, parseFn)
   }
 
-  def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def findOrLinkType(typeName: String, t: ASTNode)(implicit ctx: GraphQLBaseWebApiContext): AnyShape = {
     ctx.declarations.findType(typeName, SearchScope.All) match {
       case Some(s: ScalarShape) =>
         s.link(typeName, toAnnotations(t)).asInstanceOf[ScalarShape].withName(typeName, toAnnotations(t))
       case Some(s: NodeShape) =>
         s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
+      case Some(s: UnionShape) =>
+        s.link(typeName, toAnnotations(t)).asInstanceOf[UnionShape].withName(typeName, toAnnotations(t))
       case _ =>
         unresolvedShape(typeName, t)
     }
   }
 
   def maybeNullable(t: Node, parse: (Node, String) => AnyShape)(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): AnyShape = {
-    val typeName = findName(t, "UnknownType", "Cannot find type name")
+    val (typeName, _) = findName(t, "UnknownType", "Cannot find type name")
     maybeNamedNullable(t, typeName, parse)
   }
 
   def maybeNamedNullable(t: Node, typeName: String, parse: (Node, String) => AnyShape)(implicit
-      ctx: GraphQLWebApiContext
+      ctx: GraphQLBaseWebApiContext
   ): AnyShape = {
     val shape = parse(t, typeName)
     if (isNullable(t)) {
@@ -188,18 +198,30 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def cleanDocumentation(doc: String): String = doc.replaceAll("\"\"\"", "").trim
 
-  def elementSourceLocation(t: ASTElement): SourceLocation =
-    new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)
-
   def trimQuotes(value: String): String = {
     if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)
     else value
   }
 
-  def unresolvedShape(typeName: String, element: ASTElement)(implicit ctx: GraphQLWebApiContext): UnresolvedShape = {
+  def unresolvedShape(typeName: String, element: ASTNode)(implicit ctx: GraphQLBaseWebApiContext): UnresolvedShape = {
     val shape = UnresolvedShape(typeName, toAnnotations(element))
     shape.withContext(ctx)
-    shape.unresolved(typeName, Nil, Some(elementSourceLocation(element)))
+    shape.unresolved(typeName, Nil, Some(element.location))
     shape
   }
+
+  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+    ctx match {
+      case fedCtx: GraphQLFederationWebApiContext => fn(fedCtx)
+      case _                                      => // nothing
+    }
+  }
+
+  def setDefaultValue(n: Node, parameter: AbstractParameter): Unit = {
+    val maybeNode = parseDefaultValue(n)
+    maybeNode.map(value => parameter.withDefaultValue(value))
+  }
+
+  def setDefaultValue(n: Node, shape: Shape): Unit =
+    parseDefaultValue(n).map(value => shape.withDefault(value))
 }

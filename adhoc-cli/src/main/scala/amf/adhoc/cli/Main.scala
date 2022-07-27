@@ -64,6 +64,12 @@ object Main {
     val parsing     = Await.result(parsingFuture, Duration.Inf)
     var baseUnit    = parsing.baseUnit
     val withLexical = args.contains("--with-lexical")
+    val pipeline = if (args.contains("--pipeline")) {
+      val pipelineArgIdx = args.indexOf("--pipeline") + 1
+      args(pipelineArgIdx)
+    } else {
+      PipelineId.Editing
+    }
 
     var transformationConf = APIConfiguration.fromSpec(parsing.sourceSpec)
     parsedExtensions.foreach(e => transformationConf = transformationConf.withExtensions(e))
@@ -71,7 +77,7 @@ object Main {
     val transformation =
       transformationConf
         .baseUnitClient()
-        .transform(parsing.baseUnit, PipelineId.Editing)
+        .transform(parsing.baseUnit, pipeline)
     baseUnit = transformation.baseUnit
 
     val renderOptions = if (withLexical) {

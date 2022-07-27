@@ -19,12 +19,14 @@ abstract class AbstractParameter(override val fields: Fields, override val annot
   def required: BoolField     = fields.field(Required)
   def schema: Shape           = fields.field(Schema)
   def binding: StrField       = fields.field(Binding)
+  def defaultValue: DataNode  = fields.field(Default)
 
   def withBinding(binding: String): this.type                                         = set(Binding, binding)
   def withParameterName(name: String, annots: Annotations = Annotations()): this.type = set(ParameterName, name, annots)
   def withDescription(description: String): this.type                                 = set(Description, description)
   def withRequired(required: Boolean): this.type                                      = set(Required, required)
   def withSchema(schema: Shape): this.type                                            = set(Schema, schema)
+  def withDefaultValue(defaultValue: DataNode): this.type                             = set(Default, defaultValue)
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)

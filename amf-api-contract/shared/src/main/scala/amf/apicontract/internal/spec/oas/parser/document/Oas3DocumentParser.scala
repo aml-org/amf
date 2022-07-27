@@ -6,10 +6,15 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
-import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationsParser, WebApiShapeParserContextAdapter, YamlTagValidator}
+import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationsParser, YamlTagValidator}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.internal.utils._
-import amf.apicontract.internal.spec.oas.parser.domain.{Oas30CallbackParser, Oas30RequestParser, OasHeaderParametersParser, OasLinkParser}
+import amf.apicontract.internal.spec.oas.parser.domain.{
+  Oas30CallbackParser,
+  Oas30RequestParser,
+  OasHeaderParametersParser,
+  OasLinkParser
+}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
@@ -41,7 +46,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       parseExamplesDeclaration(map, parent + "/examples")
       parseLinkDeclarations(map, parent + "/links")
       super.parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-      super.parseTypeDeclarations(map, parent + "/types", Some(this))
+      super.parseTypeDeclarations(map, Some(this))
       parseHeaderDeclarations(map, parent + "/headers")
       super.parseParameterDeclarations(map, parent + "/parameters")
       super.parseResponsesDeclarations("responses", map, parent + "/responses")
@@ -69,7 +74,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       ctx.closedShape(parentObj, map, "components")
       validateNames()
     }
-    AnnotationParser(parentObj, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("components")
+    AnnotationParser(parentObj, map).parseOrphanNode("components")
   }
 
   def parseExamplesDeclaration(map: YMap, parent: String): Unit = {
@@ -77,7 +82,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       "examples",
       e => {
         addDeclarationKey(DeclarationKey(e))
-        Oas3NamedExamplesParser(e, parent)(WebApiShapeParserContextAdapter(ctx))
+        Oas3NamedExamplesParser(e, parent)
           .parse()
           .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
       }

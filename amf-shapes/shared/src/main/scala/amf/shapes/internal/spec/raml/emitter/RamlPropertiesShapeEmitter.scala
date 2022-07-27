@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.raml.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.FieldEntry
@@ -8,6 +7,7 @@ import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit

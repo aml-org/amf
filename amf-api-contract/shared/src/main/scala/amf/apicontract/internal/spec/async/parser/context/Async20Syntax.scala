@@ -1,9 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.context
 
+import amf.shapes.internal.spec.async.parser.Async20ShapeSyntax
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 object Async20Syntax extends SpecSyntax {
-  override val nodes: Map[String, Set[String]] = Map(
+  override val nodes: Map[String, Set[String]] = Async20ShapeSyntax.nodes ++ Map(
     "webApi" -> Set(
       "asyncapi",
       "id",
@@ -126,58 +127,6 @@ object Async20Syntax extends SpecSyntax {
       "groupId",
       "clientId",
       "bindingVersion"
-    ),
-    // Async Schema Object
-    "schema" -> Set(
-      "$ref",
-      "$schema",
-      "$comment",
-      "$id",
-      "format",
-      "title",
-      "description",
-      "maximum",
-      "exclusiveMaximum",
-      "minimum",
-      "exclusiveMinimum",
-      "maxLength",
-      "minLength",
-      "pattern",
-      "maxItems",
-      "minItems",
-      "uniqueItems",
-      "maxProperties",
-      "minProperties",
-      "required",
-      "enum",
-      "type",
-      "items",
-      "additionalItems",
-      "collectionFormat",
-      "allOf",
-      "properties",
-      "additionalProperties",
-      "propertyNames",
-      "discriminator",
-      "readOnly",
-      "writeOnly",
-      "deprecated",
-      "externalDocs",
-      "allOf",
-      "anyOf",
-      "oneOf",
-      "not",
-      "dependencies",
-      "multipleOf",
-      "default",
-      "examples",
-      "if",
-      "then",
-      "else",
-      "const",
-      "contains",
-      "name",
-      "patternProperties"
     ),
     "message" -> Set(
       "headers",

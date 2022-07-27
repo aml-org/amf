@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Organization
 import amf.apicontract.internal.metamodel.domain.OrganizationModel
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext}
 import amf.apicontract.internal.spec.spec.toOas
 import amf.core.internal.parser.YMapOps
 import amf.shapes.internal.spec.common.parser.AnnotationParser
@@ -26,7 +26,7 @@ class OrganizationParser(node: YNode)(implicit ctx: WebApiContext) extends SpecP
     map.key("name", OrganizationModel.Name in organization)
     map.key("email", OrganizationModel.Email in organization)
 
-    AnnotationParser(organization, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(organization, map).parse()
 
     ctx.closedShape(organization, map, "contact")
 

@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.{AmfElement, Linkable}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.Spec

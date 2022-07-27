@@ -10,8 +10,8 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{
   TagsEmitter
 }
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering

@@ -1,6 +1,6 @@
 package amf.grpc.internal.spec.emitter.domain
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
@@ -23,10 +23,11 @@ class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEm
   }
   def emitFields(builder: StringDocBuilder) = {
     builder.list { l =>
-      union.anyOf.foreach { case member: NodeShape =>
-        member.properties.foreach { property =>
-          GrpcFieldEmitter(property, l, ctx).emit()
-        }
+      union.anyOf.foreach {
+        case member: NodeShape =>
+          member.properties.foreach { property =>
+            GrpcFieldEmitter(property, l, ctx).emit()
+          }
       }
     }
   }

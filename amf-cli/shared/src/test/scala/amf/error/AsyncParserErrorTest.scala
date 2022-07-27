@@ -1,6 +1,6 @@
 package amf.error
 
-import amf.core.client.common.position.Range
+import org.mulesoft.common.client.lexical.PositionRange
 
 class AsyncParserErrorTest extends ParserErrorTest {
 
@@ -12,7 +12,7 @@ class AsyncParserErrorTest extends ParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("YAML map expected")
-        violation.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
+        violation.position.map(_.range) should be(Some(PositionRange((8, 14), (8, 27))))
       }
     )
   }
@@ -23,7 +23,7 @@ class AsyncParserErrorTest extends ParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("YAML map expected")
-        violation.position.map(_.range) should be(Some(Range((7, 15), (7, 15))))
+        violation.position.map(_.range) should be(Some(PositionRange((7, 15), (7, 15))))
       }
     )
   }

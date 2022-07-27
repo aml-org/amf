@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -6475,7 +6475,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -6503,7 +6503,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -6531,7 +6531,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -6559,7 +6559,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.5.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.6.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -6589,6 +6589,9 @@
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_0"
         }
@@ -6846,9 +6849,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "AmericanFlight.raml"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(10,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,16)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/declared-element/element_0",

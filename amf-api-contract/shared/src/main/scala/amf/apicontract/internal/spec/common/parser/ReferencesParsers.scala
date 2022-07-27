@@ -5,10 +5,12 @@ import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document._
+import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.validation.CoreValidations.ExpectedModule
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
@@ -22,7 +24,9 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
         d.declares.foreach(library += _)
         collectExtensions(library, d)
       case fragment: Fragment => ctx.declarations += (alias -> fragment)
-      case _                  => // ignore
+      case jsonDoc: JsonSchemaDocument =>
+        ctx.declarations.documentFragments += (alias -> (jsonDoc.encodes -> buildDeclarationMap(jsonDoc)))
+      case _ => // ignore
     }
   }
 
@@ -32,6 +36,10 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
       .foreach { d =>
         library += d.extensionIndex
       }
+  }
+
+  private def buildDeclarationMap(document: JsonSchemaDocument) = {
+    document.declares.map(shape => shape.asInstanceOf[Shape].name.value() -> shape.asInstanceOf[Shape]).toMap
   }
 }
 

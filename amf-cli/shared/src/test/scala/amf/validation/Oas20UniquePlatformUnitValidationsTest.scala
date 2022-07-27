@@ -7,7 +7,6 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas2/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas2/"
-  override val hint: Hint          = Oas20YamlHint
 
   test("missing schema in body parameter") {
     validate("missing-schema-body-parameter.json", Some("missing-schema-body-parameter.report"))
@@ -90,7 +89,7 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json", Some("duplicate-keys.report"), overridedHint = Some(Oas20JsonHint))
+    validate("duplicate-keys.json", Some("duplicate-keys.report"))
   }
 
   test("invalid 'example' field in parameter object") {

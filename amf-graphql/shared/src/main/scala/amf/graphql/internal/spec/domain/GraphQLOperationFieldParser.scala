@@ -1,12 +1,15 @@
 package amf.graphql.internal.spec.domain
 
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{ScalarValueParser, GraphQLASTParserHelper, NullableShape}
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
+import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
+import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
 
@@ -15,37 +18,47 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     setterFn(operation)
     parseDescription()
     parseArguments()
+    checkArgumentsAreUnique()
     parseRange()
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     GraphQLDirectiveApplicationParser(ast, operation).parse()
   }
 
   private def parseArguments(): Unit = {
     val request = operation.withRequest()
-    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
-      parseArgument(argument, request)
+    val arguments = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
+      parseArgument(argument)
     }
+    if (arguments.nonEmpty) request.withQueryParameters(arguments)
   }
 
-  private def parseArgument(n: Node, request: ShapeRequest) = {
-    val name = findName(n, "AnonymousInputType", "Missing input type name")
-
-    val param = request.withQueryParameter(name).withBinding("query")
+  private def parseArgument(n: Node): ShapeParameter = {
+    val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
+    val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
     findDescription(n).foreach { desc =>
-      param.withDescription(cleanDocumentation(desc.value))
+      queryParam.withDescription(cleanDocumentation(desc.value))
     }
 
+    inFederation { implicit fCtx =>
+      ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+    }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
-        val schema = ScalarValueParser.putDefaultValue(n, shape)
-        param.withSchema(schema).withRequired(false)
+        setDefaultValue(n, queryParam)
+        queryParam.withSchema(shape).withRequired(false)
       case NullableShape(false, shape) =>
-        val schema = ScalarValueParser.putDefaultValue(n, shape)
-        param.withSchema(schema).withRequired(true)
+        setDefaultValue(n, queryParam)
+        queryParam.withSchema(shape).withRequired(true)
     }
+    GraphQLDirectiveApplicationParser(n, queryParam).parse()
+    queryParam
   }
 
   private def parseName(): Unit = {
-    operation.withName(findName(ast, "AnonymousField", "Missing name for field"))
+    val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
+    operation.withName(name, annotations)
   }
 
   private def parseDescription(): Unit = {
@@ -58,4 +71,12 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     payload.withSchema(parseType(ast))
     response.withPayload(payload)
   }
+
+  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+    val arguments = operation.request.queryParameters
+    checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
+  }
+
+  private def duplicatedArgumentMsg(argumentName: String): String =
+    s"Cannot exist two or more arguments with name '$argumentName'"
 }

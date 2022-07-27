@@ -6,7 +6,8 @@ import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.document.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.config.RenderOptions
+import amf.shapes.client.scala.model.document.DataTypeFragment
+import amf.shapes.client.scala.model.document.{DataTypeFragment => ShapeDataTypeFragment}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
 import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo}

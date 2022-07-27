@@ -1,4 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-enum.api.graphql
 Profile: GraphQL
-Conforms: true
-Number of results: 0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-enum
+  Message: Enum definitions must have at least one value
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-enum.api.graphql#/declares/scalar/Season
+  Property: 
+  Range: [(9,0)-(9,11)]
+  Location: 

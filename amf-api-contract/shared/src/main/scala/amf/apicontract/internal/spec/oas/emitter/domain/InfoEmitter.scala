@@ -3,8 +3,6 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 import amf.apicontract.client.scala.model.domain.{License, Organization}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Fields
@@ -13,7 +11,10 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
+
 import scala.collection.mutable
 
 case class InfoEmitter(fs: Fields, ordering: SpecOrdering, orphanAnnotations: Seq[DomainExtension])(implicit

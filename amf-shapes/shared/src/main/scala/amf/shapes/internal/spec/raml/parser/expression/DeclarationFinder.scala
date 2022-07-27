@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.raml.parser.expression
 
 import amf.core.internal.parser.domain.SearchScope
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 
 private[expression] sealed trait DeclarationFinder {
   def find(name: String): Option[AnyShape]

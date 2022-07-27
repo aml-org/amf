@@ -93,7 +93,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.5.0"
+            "@value": "3.6.0"
           }
         ],
         "doc:transformed": [
@@ -1212,7 +1212,8 @@
           },
           "lexical": {
             "apiContract:examples": "[(12,4)-(16,0)]",
-            "#10": "[(10,11)-(16,0)]"
+            "#10": "[(10,11)-(16,0)]",
+            "shacl:name": "[(10,2)-(10,10)]"
           },
           "inherited-shapes": {
             "#10": "amf://id#35"

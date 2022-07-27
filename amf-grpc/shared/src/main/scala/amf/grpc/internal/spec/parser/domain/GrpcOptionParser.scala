@@ -8,7 +8,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
-import org.mulesoft.antlrast.ast.{ASTElement, Node}
+import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 import scala.collection.mutable
 
@@ -25,8 +25,9 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   }
 
   def parseName(adopt: DomainExtension => Unit): Unit = {
-    path(ast, Seq(OPTION_NAME)) foreach { case node: Node =>
-      extension.withName(node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source)
+    path(ast, Seq(OPTION_NAME)) foreach {
+      case node: Node =>
+        extension.withName(node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source)
     }
     adopt(extension)
     extension.id = extension.id + extension.name.value().urlEncoded
@@ -84,13 +85,14 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   def parseBlockLiteral(constAst: Node, adopt: DataNode => Unit): ObjectNode = {
     val obj = ObjectNode(toAnnotations(constAst))
     adopt(obj)
-    blockPairs(constAst.children, data => data.adopted(obj.id)).foreach { case (key, value) =>
-      obj.addProperty(key.urlEncoded, value)
+    blockPairs(constAst.children, data => data.adopted(obj.id)).foreach {
+      case (key, value) =>
+        obj.addProperty(key.urlEncoded, value)
     }
     obj
   }
 
-  def blockPairs(nodes: Seq[ASTElement], adopt: DataNode => Unit): Seq[(String, DataNode)] = {
+  def blockPairs(nodes: Seq[ASTNode], adopt: DataNode => Unit): Seq[(String, DataNode)] = {
     val acc: mutable.Buffer[(String, DataNode)] = mutable.Buffer()
     var nextKey: Option[String]                 = None
     nodes.foreach {

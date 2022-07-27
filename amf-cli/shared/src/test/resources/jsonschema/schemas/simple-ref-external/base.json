@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Computer",
+  "type": "object",
+  "properties": {
+    "processor": {
+      "$ref": "referenced.json#/definitions/processor"
+    },
+    "RAM": {
+      "$ref": "referenced.json#/definitions/RAM"
+    }
+  }
+}

@@ -5,3 +5,9 @@ package amf.shapes.internal.spec.common.parser
 trait SpecSyntax {
   val nodes: Map[String, Set[String]]
 }
+
+object SpecSyntax {
+  val empty: SpecSyntax = new SpecSyntax {
+    override val nodes: Map[String, Set[String]] = Map.empty
+  }
+}

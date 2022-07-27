@@ -1,4 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-input-type.api.graphql
 Profile: GraphQL
-Conforms: true
-Number of results: 0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-definition
+  Message: Input Type definitions must have at least one field
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-input-type.api.graphql#/declares/shape/InputType
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(14,0)-(14,15)]
+  Location: 

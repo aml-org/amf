@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.jsonschema.ref
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.exception.UnsupportedParsedDocumentException
-import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.model.document.{BaseUnit, Fragment}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.Root
@@ -11,9 +11,8 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes.`application/json`
 import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaVersion
-import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.jsonschema.ref.AstFinder.getPointedAstOrNode
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.createRootFrom
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
@@ -21,7 +20,7 @@ import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.Una
 
 class JsonSchemaParser {
 
-  def parse(inputFragment: Fragment, pointer: Option[String])(implicit ctx: ShapeParserContext): Option[AnyShape] = {
+  def parse(inputFragment: BaseUnit, pointer: Option[String])(implicit ctx: ShapeParserContext): Option[AnyShape] = {
 
     val doc: Root     = createRootFrom(inputFragment, pointer, ctx.eh)
     val parsingResult = parse(doc, ctx, ParsingOptions())

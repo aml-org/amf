@@ -1,12 +1,15 @@
 package amf.graphql.client.scala
 
-import amf.antlr.internal.plugins.syntax.{AntlrSyntaxParsePlugin, AntlrSyntaxRenderPlugin}
+import amf.antlr.internal.plugins.syntax.{
+  AntlrSyntaxRenderPlugin,
+  GraphQLSyntaxParsePlugin,
+  SyamlForJsonLDSyntaxParsePlugin
+}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.transformation.{GraphQLCachePipeline, GraphQLEditingPipeline}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLValidationProfile
-import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
-import amf.apicontract.internal.validation.shacl.ShaclModelValidationPlugin
+import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
 import amf.core.client.common.validation.ProfileNames
 import amf.graphql.plugins.parse.GraphQLParsePlugin
 import amf.graphql.plugins.render.GraphQLRenderPlugin
@@ -18,10 +21,10 @@ object GraphQLConfiguration extends APIConfigurationBuilder {
       .withPlugins(
         List(
           GraphQLParsePlugin,
-          AntlrSyntaxParsePlugin,
+          GraphQLSyntaxParsePlugin,
           GraphQLRenderPlugin,
           AntlrSyntaxRenderPlugin,
-          ShaclModelValidationPlugin(ProfileNames.GRAPHQL)
+          APIShaclModelValidationPlugin(ProfileNames.GRAPHQL)
         )
       )
       .withTransformationPipelines(
@@ -31,5 +34,6 @@ object GraphQLConfiguration extends APIConfigurationBuilder {
         )
       )
       .withValidationProfile(GraphQLValidationProfile, GraphQLEffectiveValidations)
+      .withPlugin(SyamlForJsonLDSyntaxParsePlugin) // override SYAML
   }
 }

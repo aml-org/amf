@@ -13,10 +13,10 @@ import amf.apicontract.internal.spec.spec.OasDefinitions.{
   appendParameterDefinitionsPrefix,
   appendResponsesDefinitionsPrefix
 }
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos
-import amf.shapes.internal.spec.common.emitter.ShapeReferenceEmitter
+import amf.shapes.internal.spec.common.emitter.{ShapeEmitterContext, ShapeReferenceEmitter}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendOas3ComponentsPrefix
 import amf.shapes.internal.spec.oas.emitter.OasSpecEmitter
 
@@ -26,7 +26,9 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
 
   implicit val shapeSpec = AgnosticShapeEmitterContextAdapter(specContext)
 
-  override protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel) = element match {
+  override protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel)(implicit
+      spec: ShapeEmitterContext
+  ) = element match {
     case _: Parameter                        => appendParameterDefinitionsPrefix(referenceLabel)
     case _: Payload                          => appendParameterDefinitionsPrefix(referenceLabel)
     case _: Response                         => appendResponsesDefinitionsPrefix(referenceLabel)

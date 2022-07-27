@@ -267,8 +267,8 @@ case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val config    = EmptyRenderConfiguration(UnhandledErrorHandler, options)
     val shape     = fragment.encodes
-    val emitter   = JsonSchemaEmitter(shape, Seq(shape), renderConfig = config, errorHandler = UnhandledErrorHandler)
-    val goldenDoc = emitter.emitDocument()
+    val emitter   = JsonSchemaEmitter(renderConfig = config)
+    val goldenDoc = emitter.emit(shape)
     JsonRender.render(goldenDoc)
   }
 }

@@ -4,8 +4,8 @@ import amf.core.client.scala.model.domain.{AmfArray, Shape}
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAndType
 import org.yaml.model.{YMap, YMapEntry, YNode}
 

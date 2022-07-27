@@ -14,24 +14,21 @@ class OasExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Validating examples defined in parameters and media types") {
     validate(
       "oas3/invalid-examples-params-and-media-type.json",
-      Some("invalid-examples-params-and-media-type.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("invalid-examples-params-and-media-type.report")
     )
   }
 
   test("Validating not constraint of schema object") {
     validate(
       "oas3/not-constraint.json",
-      Some("not-constraint.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("not-constraint.report")
     )
   }
 
   test("additionalItems in OAS 3.0 schema") {
     validate(
       "oas3/additional-items.json",
-      Some("oas3-additional-items.report"),
-      overridedHint = Some(Oas30JsonHint)
+      Some("oas3-additional-items.report")
     )
   }
 
@@ -40,8 +37,7 @@ class OasExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Multiple links ref in OAS 3.0") {
-    validate("/oas3/multiple-links.json", None, overridedHint = Some(Oas30JsonHint))
+    validate("/oas3/multiple-links.json", None)
   }
 
-  override val hint: Hint = Oas20JsonHint
 }

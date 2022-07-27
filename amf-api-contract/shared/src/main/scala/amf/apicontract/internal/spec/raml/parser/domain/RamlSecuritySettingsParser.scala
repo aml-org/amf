@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.parser.{SpecField, SpecNode, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{SpecField, SpecNode, SpecParserOps}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   MissingRequiredFieldForGrantType,
@@ -33,7 +33,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
       case _             => dynamicSettings(scheme.withDefaultSettings())
     }
 
-    AnnotationParser(result, map, List(VocabularyMappings.securitySettings))(WebApiShapeParserContextAdapter(ctx))
+    AnnotationParser(result, map, List(VocabularyMappings.securitySettings))
       .parse()
 
     result.add(Annotations(node))
@@ -48,9 +48,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
-        WebApiShapeParserContextAdapter(ctx)
-      ).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse("")))).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
     settings

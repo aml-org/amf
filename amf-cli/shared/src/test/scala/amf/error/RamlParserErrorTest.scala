@@ -1,12 +1,14 @@
 package amf.error
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnresolvedShape}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
+import org.mulesoft.common.client.lexical.PositionRange
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  ClosedShapeSpecification,
+  MissingRequiredUserDefinedFacet
+}
 
 class Raml10ParserErrorTest extends RamlParserErrorTest {
 
@@ -16,22 +18,22 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       invalid => {
         invalid.severityLevel should be("Violation")
         invalid.message should be("Unexpected key 'invalid'. Options are 'value' or annotations \\(.+\\)")
-        invalid.position.map(_.range) should be(Some(Range((3, 4), (3, 11))))
+        invalid.position.map(_.range) should be(Some(PositionRange((3, 4), (3, 11))))
       },
       description => {
         description.severityLevel should be("Violation")
         description.message should be("Expected scalar but found: [invalid]")
-        description.position.map(_.range) should be(Some(Range((4, 13), (4, 24))))
+        description.position.map(_.range) should be(Some(PositionRange((4, 13), (4, 24))))
       },
       protocols => {
         protocols.severityLevel should be("Violation")
         protocols.message should be("Expected scalar but found: {invalid: http}")
-        protocols.position.map(_.range) should be(Some(Range((5, 10), (7, 0))))
+        protocols.position.map(_.range) should be(Some(PositionRange((5, 10), (7, 0))))
       },
       securedBy => { // todo should not be an error after APIMF-483!
         securedBy.severityLevel should be("Violation")
         securedBy.message should be("Security scheme 'oauth' not found in declarations.")
-        securedBy.position.map(_.range) should be(Some(Range((7, 11), (7, 16))))
+        securedBy.position.map(_.range) should be(Some(PositionRange((7, 11), (7, 16))))
       }
     )
   }
@@ -83,17 +85,17 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       artist => {
         artist.severityLevel should be("Violation")
         artist.message should be("Invalid property name")
-        artist.position.map(_.range) should be(Some(Range((44, 10), (44, 12))))
+        artist.position.map(_.range) should be(Some(PositionRange((44, 10), (44, 12))))
       },
       tracks => {
         tracks.severityLevel should be("Violation")
         tracks.message should be("Invalid property name")
-        tracks.position.map(_.range) should be(Some(Range((49, 10), (49, 12))))
+        tracks.position.map(_.range) should be(Some(PositionRange((49, 10), (49, 12))))
       },
       anotherTrack => {
         anotherTrack.severityLevel should be("Violation")
         anotherTrack.message should be("Invalid property name")
-        anotherTrack.position.map(_.range) should be(Some(Range((54, 10), (54, 12))))
+        anotherTrack.position.map(_.range) should be(Some(PositionRange((54, 10), (54, 12))))
       }
     )
   }
@@ -104,7 +106,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       invalidRef => {
         invalidRef.severityLevel should be("Violation")
         invalidRef.message should be("Cannot inline a fragment in a not mutable node")
-        invalidRef.position.map(_.range) should be(Some(Range((3, 8), (3, 17))))
+        invalidRef.position.map(_.range) should be(Some(PositionRange((3, 8), (3, 17))))
       },
       badInclude1 => {
         badInclude1.severityLevel should be("Violation")
@@ -113,12 +115,12 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       invalidModule => {
         invalidModule.severityLevel should be("Violation")
         invalidModule.message should startWith("Expected module but found: ExternalFragment(")
-        invalidModule.position.map(_.range) should be(Some(Range((3, 2), (5, 0))))
+        invalidModule.position.map(_.range) should be(Some(PositionRange((3, 2), (5, 0))))
       },
       unresolvedRef => {
         unresolvedRef.severityLevel should be("Violation")
         unresolvedRef.message should startWith("Unresolved reference 'lib1.B'")
-        unresolvedRef.position.map(_.range) should be(Some(Range((9, 9), (9, 15))))
+        unresolvedRef.position.map(_.range) should be(Some(PositionRange((9, 9), (9, 15))))
       }
     )
   }
@@ -159,26 +161,26 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       exclusive1 => {
         exclusive1.severityLevel should be("Violation")
         exclusive1.message should startWith("'schema' and 'type' properties are mutually exclusive")
-        exclusive1.position.map(_.range) should be(Some(Range((8, 4), (8, 10))))
+        exclusive1.position.map(_.range) should be(Some(PositionRange((8, 4), (8, 10))))
       },
       exclusive1Warning => {
         exclusive1Warning.severityLevel should be("Warning")
         exclusive1Warning.message should startWith(
           "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
         )
-        exclusive1Warning.position.map(_.range) should be(Some(Range((8, 4), (8, 10))))
+        exclusive1Warning.position.map(_.range) should be(Some(PositionRange((8, 4), (8, 10))))
       },
       exclusive2 => {
         exclusive2.severityLevel should be("Violation")
         exclusive2.message should startWith("'schema' and 'type' properties are mutually exclusive")
-        exclusive2.position.map(_.range) should be(Some(Range((17, 12), (17, 18))))
+        exclusive2.position.map(_.range) should be(Some(PositionRange((17, 12), (17, 18))))
       },
       exclusive2Warning => {
         exclusive2Warning.severityLevel should be("Warning")
         exclusive2Warning.message should startWith(
           "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
         )
-        exclusive2Warning.position.map(_.range) should be(Some(Range((17, 12), (17, 18))))
+        exclusive2Warning.position.map(_.range) should be(Some(PositionRange((17, 12), (17, 18))))
 
       }
     )
@@ -236,13 +238,13 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       baseUri => {
         baseUri.severityLevel should be("Violation")
         baseUri.message should startWith("Invalid path template syntax")
-        baseUri.position.map(_.range) should be(Some(Range((4, 23), (6, 0))))
+        baseUri.position.map(_.range) should be(Some(PositionRange((4, 23), (6, 0))))
 
       },
       param => {
         param.severityLevel should be("Violation")
         param.message should startWith("Invalid path template syntax")
-        param.position.map(_.range) should be(Some(Range((3, 9), (3, 38))))
+        param.position.map(_.range) should be(Some(PositionRange((3, 9), (3, 38))))
 
       }
     )
@@ -254,7 +256,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Missing library location")
-        violation.position.map(_.range) should be(Some(Range((4, 2), (4, 14))))
+        violation.position.map(_.range) should be(Some(PositionRange((4, 2), (4, 14))))
       }
     )
   }
@@ -273,7 +275,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("'datetime' cannot be used to name a custom type")
-        violation.position.map(_.range) should be(Some(Range((4, 2), (4, 10))))
+        violation.position.map(_.range) should be(Some(PositionRange((4, 2), (4, 10))))
       }
     )
   }
@@ -284,7 +286,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Property 'typically' not supported in a RAML 1.0 any node")
-        violation.position.map(_.range) should be(Some(Range((10, 12), (15, 30))))
+        violation.position.map(_.range) should be(Some(PositionRange((10, 12), (15, 30))))
       }
     )
   }
@@ -295,7 +297,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Scope 'USER' not found in settings of declared secured by oauth_2_0.")
-        violation.position.map(_.range) should be(Some(Range((15, 45), (15, 49))))
+        violation.position.map(_.range) should be(Some(PositionRange((15, 45), (15, 49))))
       }
     )
   }
@@ -306,7 +308,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Scope 'USER' not found in settings of declared secured by oauth_2_0.")
-        violation.position.map(_.range) should be(Some(Range((9, 45), (9, 49))))
+        violation.position.map(_.range) should be(Some(PositionRange((9, 45), (9, 49))))
       }
     )
   }
@@ -321,12 +323,12 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("'baseUri' not defined and 'baseUriParameters' defined.")
-        violation.position.map(_.range) should be(Some(Range((4, 0), (5, 14))))
+        violation.position.map(_.range) should be(Some(PositionRange((4, 0), (5, 14))))
       },
       warning => {
         warning.severityLevel should be("Warning")
         warning.message should be("Unused base uri parameter some")
-        warning.position.map(_.range) should be(Some(Range((5, 2), (5, 14))))
+        warning.position.map(_.range) should be(Some(PositionRange((5, 2), (5, 14))))
       }
     )
   }
@@ -337,7 +339,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Cannot parse JSON Schema expression out of a non string value")
-        violation.position.map(_.range) should be(Some(Range((7, 23), (10, 62))))
+        violation.position.map(_.range) should be(Some(PositionRange((7, 23), (10, 62))))
       }
     )
   }
@@ -348,7 +350,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       first => {
         first.severityLevel should be("Violation")
         first.message should be("Missing library location")
-        first.position.map(_.range) should be(Some(Range((5, 2), (14, 12))))
+        first.position.map(_.range) should be(Some(PositionRange((5, 2), (14, 12))))
       }
     )
   }
@@ -359,7 +361,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       first => {
         first.severityLevel should be("Violation")
         first.message should be("Property '{alpha2code: }' not supported in a RAML 1.0 webApi node")
-        first.position.map(_.range) should be(Some(Range((7, 0), (9, 14))))
+        first.position.map(_.range) should be(Some(PositionRange((7, 0), (9, 14))))
       }
     )
   }
@@ -370,7 +372,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       error => {
         error.severityLevel should be("Violation")
         error.message should be("Property discriminator forbidden in a node extending a unionShape")
-        error.position.map(_.range) should be(Some(Range((20, 3), (20, 25))))
+        error.position.map(_.range) should be(Some(PositionRange((20, 3), (20, 25))))
       }
     )
   }
@@ -422,7 +424,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       error => {
         error.severityLevel should be("Violation")
         error.message should be("Property 'items' not supported in a RAML 1.0 object node")
-        error.position.map(_.range) should be(Some(Range((14, 4), (14, 16))))
+        error.position.map(_.range) should be(Some(PositionRange((14, 4), (14, 16))))
       }
     )
   }
@@ -439,12 +441,12 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       endPoint => {
         endPoint.severityLevel should be("Warning")
         endPoint.message should be("Unused uri parameter unusedUriParam")
-        endPoint.position.map(_.range) should be(Some(Range((18, 4), (19, 18))))
+        endPoint.position.map(_.range) should be(Some(PositionRange((18, 4), (19, 18))))
       },
       baseUri => {
         baseUri.severityLevel should be("Warning")
         baseUri.message should be("Unused base uri parameter unusedParam")
-        baseUri.position.map(_.range) should be(Some(Range((9, 2), (11, 0))))
+        baseUri.position.map(_.range) should be(Some(PositionRange((9, 2), (11, 0))))
       }
     )
   }
@@ -455,7 +457,7 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       error => {
         error.severityLevel should be("Violation")
         error.message should be("Error node 'x'")
-        error.position.map(_.range) should be(Some(Range((16, 20), (16, 21))))
+        error.position.map(_.range) should be(Some(PositionRange((16, 20), (16, 21))))
       }
     )
   }
@@ -536,11 +538,9 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       }
     )
   }
-  override val hint: Hint = Raml10YamlHint
 }
 
 class Raml08ParserErrorTest extends RamlParserErrorTest {
-  override val hint: Hint = Raml08YamlHint
 
   test("Test swap between referenced schema and example") {
     validate(
@@ -574,7 +574,7 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
       operation => {
         operation.severityLevel should be("Warning")
         operation.message should be("Unused operation uri parameter unusedUriParam")
-        operation.position.map(_.range) should be(Some(Range((9, 6), (10, 20))))
+        operation.position.map(_.range) should be(Some(PositionRange((9, 6), (10, 20))))
       }
     )
   }
@@ -593,12 +593,12 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
       first => {
         first.severityLevel should be("Violation")
         first.message should be("Property 'uses' not supported in a RAML 0.8 webApi node")
-        first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
+        first.position.map(_.range) should be(Some(PositionRange((4, 0), (8, 0))))
       },
       second => {
         second.severityLevel should be("Violation")
         second.message should be("Invalid type def duTypes.storyCollection for RAML 0.8")
-        second.position.map(_.range) should be(Some(Range((14, 18), (14, 41))))
+        second.position.map(_.range) should be(Some(PositionRange((14, 18), (14, 41))))
       }
     )
   }
@@ -613,7 +613,7 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Property 'applicationjson' not supported in a RAML 0.8 shape node")
-        violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
+        violation.position.map(_.range) should be(Some(PositionRange((8, 10), (8, 26))))
       }
     )
   }
@@ -621,6 +621,4 @@ class Raml08ParserErrorTest extends RamlParserErrorTest {
 
 trait RamlParserErrorTest extends ParserErrorTest {
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/raml/"
-
-  val hint: Hint
 }

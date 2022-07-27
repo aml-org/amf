@@ -1,0 +1,14 @@
+schema {
+    query: Query
+}
+
+type Query {
+    season: __Season
+}
+
+enum __Season {
+    SPRING
+    AUTUMN
+    SUMMER
+    WINTER
+}
