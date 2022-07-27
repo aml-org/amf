@@ -15,7 +15,7 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   def parse(setterFn: PropertyShape => Unit): Unit = {
     parseName()
     setterFn(property)
-    parseDescription()
+    parseDescription(ast, property, property.meta)
     parseRange()
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
@@ -30,10 +30,6 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   private def parseName(): Unit = {
     val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
     property.withName(name, annotations)
-  }
-
-  private def parseDescription(): Unit = {
-    findDescription(ast).map(t => cleanDocumentation(t.value)).foreach(property.withDescription)
   }
 
   private def parseRange(): Unit = {

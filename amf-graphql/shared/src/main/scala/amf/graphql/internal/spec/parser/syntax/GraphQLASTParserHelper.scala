@@ -2,7 +2,8 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
@@ -10,6 +11,7 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.{AbstractParameter, ShapeParameter}
+import amf.shapes.internal.domain.metamodel.common.DocumentationField
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
@@ -29,6 +31,13 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case _ => NullableShape(isNullable = false, shape)
     }
   }
+
+  def parseDescription(n: ASTNode, element: DomainElement, model: DescriptionField): Unit = {
+    findDescription(n).foreach { desc =>
+      element.set(model.Description, cleanDocumentation(desc.value), toAnnotations(desc))
+    }
+  }
+
   def findDescription(n: ASTNode): Option[Terminal] = {
     collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
       case n: Node => n.children.collectFirst({ case t: Terminal => t })
@@ -196,7 +205,11 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
-  def cleanDocumentation(doc: String): String = doc.replaceAll("\"\"\"", "").trim
+  def cleanDocumentation(doc: String): String = {
+    val trimmed = doc.replaceAll("\"\"\"", "").trim
+    if (trimmed.startsWith("\"") && trimmed.endsWith("\"")) trimmed.substring(1, trimmed.length - 1)
+    else trimmed
+  }
 
   def trimQuotes(value: String): String = {
     if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)

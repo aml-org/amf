@@ -17,6 +17,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     obj.withName(name, annotations)
     collectInheritance()
     collectFields()
+    parseDescription(objTypeNode, obj, obj.meta)
     if (isInterface) {
       obj.withIsAbstract(true)
       inFederation { implicit fCtx =>

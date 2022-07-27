@@ -121,4 +121,12 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   test("Can parse API with multiple directives in a single element") {
     cycle("directives/multiple.graphql", "directives/multiple.jsonld", GraphQLHint, AmfJsonHint)
   }
+
+  test("Can parse APIs with simple descriptions") {
+    cycle("descriptions/simple.graphql", "descriptions/simple.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps))
+  }
+
+  test("Can parse APIs with block descriptions") {
+    cycle("descriptions/block.graphql", "descriptions/block.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps))
+  }
 }
