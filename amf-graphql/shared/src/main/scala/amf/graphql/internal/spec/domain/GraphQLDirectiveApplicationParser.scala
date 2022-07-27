@@ -16,7 +16,7 @@ import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.chec
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)(implicit val ctx: GraphQLBaseWebApiContext)
+case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement, directivesPath: Seq[String] = Seq(DIRECTIVES, DIRECTIVE))(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
 
   def parse(): Unit = {
@@ -50,7 +50,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement)
     ScalarValueParser.parseValue(n).map(scalarNode => objectNode.addProperty(name, scalarNode, toAnnotations(n)))
   }
 
-  private def getDirectiveNodes: Seq[Node] = collect(node, Seq(DIRECTIVES, DIRECTIVE)).map(_.asInstanceOf[Node])
+  private def getDirectiveNodes: Seq[Node] = collect(node, directivesPath).map(_.asInstanceOf[Node])
 
   private def putDefinedBy(directiveApplication: DomainExtension): Unit = {
     ctx.findAnnotation(directiveApplication.name.value(), SearchScope.All) match {

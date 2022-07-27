@@ -22,11 +22,13 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
       obj.withIsAbstract(true)
       inFederation { implicit fCtx =>
         ShapeFederationMetadataParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE)).parse()
+        GraphQLDirectiveApplicationParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, DIRECTIVE)).parse()
         KeyParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE)).parse()
       }
     }
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, OBJECT_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, DIRECTIVE)).parse()
       KeyParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, OBJECT_FEDERATION_DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(objTypeNode, obj).parse()

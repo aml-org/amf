@@ -20,6 +20,8 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
       ShapeFederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, property, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
       ExternalDirectiveParser(ast, property).parse()
       ProvidesParser(ast, property).parse()
       RequiresParser(ast, property, parent).parse()

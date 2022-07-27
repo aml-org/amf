@@ -22,6 +22,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseRange()
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(ast, operation).parse()
   }
@@ -40,6 +41,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
