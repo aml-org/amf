@@ -1,0 +1,8 @@
+input Continent {
+    country: Country
+}
+
+input Country {
+    continent: Continent
+}
+

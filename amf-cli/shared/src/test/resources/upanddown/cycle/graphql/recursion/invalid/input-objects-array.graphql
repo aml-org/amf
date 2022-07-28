@@ -1,0 +1,14 @@
+input Continent {
+    countries: [Country]
+    countries2: [Country]!
+    countries3: [Country!]
+    countries4: [Country!]!
+}
+
+input Country {
+    continents: [Continent]
+    continents2: [Continent]!
+    continents3: [Continent!]
+    continents4: [Continent!]!
+}
+

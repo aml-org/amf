@@ -1,0 +1,17 @@
+input InputType @InputDirective(argument: null) {
+    prop: String @InputDirective(argument: null)
+}
+
+scalar Scalar @ScalarDirective(argument: "argVal")
+
+enum Enum @EnumDirective(argument: A) {
+    A @EnumDirective(argument: A)
+}
+
+
+directive @InputDirective(argument: InputType) on INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @ScalarDirective(argument: Scalar) on SCALAR
+directive @EnumDirective(argument: Enum) on ENUM | ENUM_VALUE
+
+
+

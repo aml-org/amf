@@ -1,0 +1,8 @@
+type Continent {
+    country: Country
+}
+
+type Country {
+    continent: Continent
+}
+

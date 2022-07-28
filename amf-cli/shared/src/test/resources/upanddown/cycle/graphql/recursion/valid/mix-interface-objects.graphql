@@ -1,0 +1,10 @@
+type Continent {
+    countries: Country
+    countries2: [Country!]!
+}
+
+interface Country {
+    continents: Continent
+    continents2: [Continent!]!
+}
+

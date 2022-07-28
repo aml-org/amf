@@ -1,0 +1,7 @@
+type Continent {
+    countries(filter: [Country]): [Country]
+}
+
+input Country {
+    continent: Continent
+}

@@ -1,0 +1,12 @@
+type Country implements Location {
+    in: Continent
+}
+
+type Continent {
+    contains: [Location]
+}
+
+interface Location {
+    in: Continent
+}
+
