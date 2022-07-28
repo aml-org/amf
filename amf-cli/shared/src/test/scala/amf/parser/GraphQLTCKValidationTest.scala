@@ -38,7 +38,7 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     }
 
   // Test singular API
-  test("GraphQL TCK > Apis > Invalid > wrong-directive-location") {
+  test("union-invalid-members.api.graphql") {
     assertReport(s"$apisPath/invalid/union-invalid-members.api.graphql")
   }
 
