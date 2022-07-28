@@ -1,25 +1,23 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
-import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode}
+import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ScalarNodeModel
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.UnionShape
+import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object GraphQLArgumentValidator {
   def validateInputTypes(obj: GraphQLObject): Seq[ValidationInfo] = {
-    val fields = obj.fields()
-
     // fields arguments can't be output types
-    val operationValidations = fields.operations.flatMap { op =>
+    val operationValidations = obj.operations.flatMap { op =>
       op.parameters.flatMap { param =>
         if (!param.isValidInputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"Argument '${param.name}' must be an input type, ${param.schema.name.value()} it's not",
+            s"Argument '${param.name}' must be an input type, ${getShapeName(param.schema)} it's not",
             param.annotations
           )
         } else {
@@ -29,11 +27,11 @@ object GraphQLArgumentValidator {
     }
 
     // input type fields or directive arguments can't be output types
-    val propertiesValidations = fields.properties.flatMap { prop =>
+    val propertiesValidations = obj.properties.flatMap { prop =>
       if (!prop.isValidInputType) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"${prop.name} must be an input type, ${getPropTypeName(prop)} it's not",
+          s"${prop.name} must be an input type, ${getShapeName(prop.range)} it's not",
           prop.annotations
         )
       } else None
@@ -116,9 +114,10 @@ object GraphQLArgumentValidator {
     }
   }
 
-  private def getPropTypeName(prop: GraphQLProperty): String = prop.range match {
-    case u: UnionShape => GraphQLNullable(u).name
-    case s             => s.name.value()
+  private def getShapeName(shape: Shape): String = shape match {
+    case u: UnionShape   => GraphQLNullable(u).name
+    case arr: ArrayShape => s"a list of ${getShapeName(arr.items)}"
+    case s               => s.name.value()
   }
 
   private def validationInfo(field: Field, message: String, annotations: Annotations): Some[ValidationInfo] = {

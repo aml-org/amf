@@ -10,7 +10,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FobjectArgument
   Property: http://www.w3.org/ns/shacl#property
-  Range: [(7,4)-(7,43)]
+  Range: [(7,19)-(7,34)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type-in-endpoint
@@ -18,7 +18,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FinterfaceArgument
   Property: http://www.w3.org/ns/shacl#property
-  Range: [(8,4)-(8,48)]
+  Range: [(8,22)-(8,39)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type-in-endpoint
@@ -26,5 +26,5 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FunionArgument
   Property: http://www.w3.org/ns/shacl#property
-  Range: [(9,4)-(9,40)]
+  Range: [(9,18)-(9,31)]
   Location: 

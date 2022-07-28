@@ -24,6 +24,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel._
@@ -139,7 +140,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               ValidationInfo(
                 UnionShapeModel.AnyOf,
                 Some(s"All union members must be Object type, ${elem.name.value()} it's not"),
-                Some(elem.annotations)
+                Some(union.annotations)
               )
             }
             validationResults.foreach(info => validate(Some(info)))
@@ -350,7 +351,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 members,
                 validate,
                 UnionShapeModel.AnyOf,
-                { name: String => s"Union must have at most one member with name '$name'" }
+                { name: String => s"Union must have at most one member with name '$name'" },
+                Some(union.annotations)
               )
             case _ => // ignore
           }
@@ -367,7 +369,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 interfaces,
                 validate,
                 NodeShapeModel.Inherits,
-                { name: String => s"$typeName cannot implement interface '$name' more than once" }
+                { name: String => s"$typeName cannot implement interface '$name' more than once" },
+                Some(shape.annotations)
               )
             case _ => // ignore
           }
@@ -383,7 +386,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 enumValues,
                 validate,
                 ScalarShapeModel.Values,
-                { name: String => s"Each enum value must be unique, '$name' it's not" }
+                { name: String => s"Each enum value must be unique, '$name' it's not" },
+                Some(s.annotations)
               )
             case _ => // ignore
           }
@@ -476,12 +480,13 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       s: Seq[NamedDomainElement],
       validate: Option[ValidationInfo] => Unit,
       field: Field,
-      message: String => String
+      message: String => String,
+      annotations: Some[Annotations]
   ): Unit = {
     s.foreach({ elem =>
       val elemName = elem.name.value()
       if (elemName != null && isDuplicated(elemName, s))
-        validate(Some(ValidationInfo(field, Some(message(elemName)), Some(elem.annotations))))
+        validate(Some(ValidationInfo(field, Some(message(elemName)), annotations)))
     })
   }
   private def isDuplicated(elemName: String, s: Seq[NamedDomainElement]) = s.count(_.name.value() == elemName) > 1

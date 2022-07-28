@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Doma
 import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.operations.{AbstractOperation, AbstractParameter}
-import amf.shapes.client.scala.model.domain.{NilShape, NodeShape, ScalarShape, UnionShape}
+import amf.shapes.client.scala.model.domain._
 
 case class GraphQLObject(node: NodeShape) {
   def name: String                      = node.name.value()
@@ -119,9 +119,10 @@ object GraphQLUtils {
 
   def isValidInputType(schema: Shape): Boolean = {
     schema match {
-      case u: UnionShape => GraphQLNullable(u).isValid
-      case n: NodeShape  => GraphQLObject(n).isInput
-      case _             => true
+      case u: UnionShape   => GraphQLNullable(u).isValid
+      case n: NodeShape    => GraphQLObject(n).isInput
+      case arr: ArrayShape => isValidInputType(arr.items)
+      case _               => true
     }
   }
 }

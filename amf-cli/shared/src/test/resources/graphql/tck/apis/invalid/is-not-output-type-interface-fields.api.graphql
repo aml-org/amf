@@ -8,6 +8,7 @@ type Query {
 
 interface Interface {
     inputReturnField: InputType
+    inputReturnFieldList: [InputType]
 }
 
 input InputType {
