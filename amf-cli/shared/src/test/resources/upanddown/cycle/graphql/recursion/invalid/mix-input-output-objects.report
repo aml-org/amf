@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/mix-input-output-objects.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Country cannot be part of cyclic references Continent.countries(filter) > Country.continent > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/mix-input-output-objects.graphql#/declares/shape/Country
+  Property: 
+  Range: [(5,0)-(7,1)]
+  Location: 

@@ -1,0 +1,70 @@
+ModelId: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 8
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Continent cannot be part of cyclic references Continent.countries > Country.continents > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Continent
+  Property: 
+  Range: [(1,0)-(6,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Continent cannot be part of cyclic references Continent.countries > Country.continents2 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Continent
+  Property: 
+  Range: [(1,0)-(6,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Continent cannot be part of cyclic references Continent.countries > Country.continents3 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Continent
+  Property: 
+  Range: [(1,0)-(6,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Continent cannot be part of cyclic references Continent.countries > Country.continents4 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Continent
+  Property: 
+  Range: [(1,0)-(6,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Country cannot be part of cyclic references Continent.countries > Country.continents > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Country
+  Property: 
+  Range: [(8,0)-(13,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Country cannot be part of cyclic references Continent.countries > Country.continents2 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Country
+  Property: 
+  Range: [(8,0)-(13,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Country cannot be part of cyclic references Continent.countries > Country.continents3 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Country
+  Property: 
+  Range: [(8,0)-(13,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type Country cannot be part of cyclic references Continent.countries > Country.continents4 > Continent
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/input-objects-array.graphql#/declares/shape/Country
+  Property: 
+  Range: [(8,0)-(13,1)]
+  Location: 
