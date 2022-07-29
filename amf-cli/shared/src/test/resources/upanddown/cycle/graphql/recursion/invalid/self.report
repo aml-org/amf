@@ -1,0 +1,46 @@
+ModelId: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 5
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type InputObject cannot be part of cyclic references InputObject.prop > InputObject
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql#/declares/shape/InputObject
+  Property: 
+  Range: [(1,0)-(7,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type InputObject cannot be part of cyclic references InputObject.prop2 > InputObject
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql#/declares/shape/InputObject
+  Property: 
+  Range: [(1,0)-(7,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type InputObject cannot be part of cyclic references InputObject.prop3 > InputObject
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql#/declares/shape/InputObject
+  Property: 
+  Range: [(1,0)-(7,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type InputObject cannot be part of cyclic references InputObject.prop4 > InputObject
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql#/declares/shape/InputObject
+  Property: 
+  Range: [(1,0)-(7,1)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Input type InputObject cannot be part of cyclic references InputObject.prop5 > InputObject
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/self.graphql#/declares/shape/InputObject
+  Property: 
+  Range: [(1,0)-(7,1)]
+  Location: 

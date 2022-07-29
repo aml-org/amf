@@ -1,0 +1,15 @@
+type Object {
+    prop: Object
+    prop2: [Object]
+    prop3: [Object!]
+    prop4: [Object]!
+    prop5: [Object!]!
+}
+
+interface Interface {
+    prop: Interface
+    prop2: [Interface]
+    prop3: [Interface!]
+    prop4: [Interface]!
+    prop5: [Interface!]!
+}

@@ -18,7 +18,7 @@ case class TupleShape private[amf] (override val fields: Fields, override val an
 
   override def linkCopy() = TupleShape().withId(id)
 
-  override val meta: AnyShapeModel = TupleShapeModel
+  override val meta: TupleShapeModel.type = TupleShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = TupleShape.apply
