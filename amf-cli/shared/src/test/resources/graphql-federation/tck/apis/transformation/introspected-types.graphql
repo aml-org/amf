@@ -1,0 +1,15 @@
+type Romagnoli {
+    id: ID!
+    name: String!
+    goals: Int!
+}
+
+type Dog @key(fields: "name") {
+    id: ID!
+    name: String
+}
+
+type Cat @key(fields: "name") {
+    id: ID!
+    name: String
+}
