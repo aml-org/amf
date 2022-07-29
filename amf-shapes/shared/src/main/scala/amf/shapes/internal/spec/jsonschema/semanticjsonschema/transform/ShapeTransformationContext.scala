@@ -3,8 +3,14 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 import amf.aml.client.scala.model.domain.NodeMappable
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.aml.internal.render.emitters.common.IdCounter
-import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.{CuriePrefix, SemanticContext}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
+import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.shapes.client.scala.model.domain.{AnyShape, CuriePrefix, SemanticContext}
+import org.mulesoft.common.client.lexical.SourceLocation
+import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
 import scala.collection.mutable
 
@@ -14,8 +20,11 @@ class ShapeTransformationContext(
     val idCounter: IdCounter = new IdCounter,
     val shapeDeclarationNames: mutable.Set[String] = mutable.Set(),
     val semantics: SemanticContext = SemanticContext(),
-    val termsToExtract: mutable.Set[CandidateProperty] = mutable.Set()
-) {
+    val termsToExtract: mutable.Set[CandidateProperty] = mutable.Set(),
+    val eh: AMFErrorHandler
+) extends ErrorHandlingContext
+    with ParseErrorHandler
+    with IllegalTypeHandler {
 
   // when we create it, we update the externals
   updateExternals()
@@ -43,7 +52,8 @@ class ShapeTransformationContext(
       idCounter,
       shapeDeclarationNames,
       semantics.merge(newSemantics).normalize(),
-      termsToExtract
+      termsToExtract,
+      eh
     )
   }
 
@@ -93,14 +103,17 @@ class ShapeTransformationContext(
       parts.dropRight(1).mkString("/") + "/"
     }
   }
+  def updateContext(anyShape: AnyShape): ShapeTransformationContext =
+    anyShape.semanticContext.fold(this)(this.updateSemanticContext)
 }
 
 object ShapeTransformationContext {
-  def apply(options: SchemaTransformerOptions): ShapeTransformationContext = createContext(options)
+  def apply(options: SchemaTransformerOptions, eh: AMFErrorHandler): ShapeTransformationContext =
+    createContext(options, eh = eh)
 
-  private def createContext(options: SchemaTransformerOptions) = {
+  private def createContext(options: SchemaTransformerOptions, eh: AMFErrorHandler) = {
     val semanticContext = SemanticContext().withId("context").withCuries(Seq(auxiliaryVocabCurie(options)))
-    val ctx             = new ShapeTransformationContext(semantics = semanticContext)
+    val ctx             = new ShapeTransformationContext(semantics = semanticContext, eh = eh)
     ctx
   }
 

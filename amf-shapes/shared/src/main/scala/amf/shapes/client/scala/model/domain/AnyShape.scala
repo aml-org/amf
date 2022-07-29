@@ -18,9 +18,9 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
     with ExemplifiedDomainElement {
 
   // TODO: should return Option has field can be null
-  def documentation: CreativeWork     = fields.field(Documentation)
-  def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
-  def comment: StrField               = fields.field(Comment)
+  def documentation: CreativeWork        = fields.field(Documentation)
+  def xmlSerializationkey: XMLSerializer = fields.field(XMLSerialization)
+  def comment: StrField                  = fields.field(Comment)
 
   def withSemanticContext(context: SemanticContext): this.type = set(AnyShapeModel.Semantics, context)
   def semanticContext: Option[SemanticContext]                 = Option(fields.field(AnyShapeModel.Semantics))
@@ -69,14 +69,6 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
       !isConditional &&
       !fields.exists(AnyShapeModel.Inherits)
 
-  protected[amf] def isXOne: Boolean = fields.exists(AnyShapeModel.Xone) && xone.nonEmpty
-  protected[amf] def isOr: Boolean   = fields.exists(AnyShapeModel.Or) && or.nonEmpty
-  protected[amf] def isAnd: Boolean  = fields.exists(AnyShapeModel.And) && and.nonEmpty
-  protected[amf] def isNot: Boolean  = fields.exists(AnyShapeModel.Not)
-  protected[amf] def isConditional: Boolean =
-    fields.exists(AnyShapeModel.If) ||
-      fields.exists(AnyShapeModel.Else) ||
-      fields.exists(AnyShapeModel.Then)
 }
 
 object AnyShape {
