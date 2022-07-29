@@ -288,4 +288,7 @@ object SemanticContext {
 
   def apply(annotations: Annotations): SemanticContext =
     new SemanticContext(Fields(), annotations)
+
+  // TODO native-jsonld: add default with core terms
+  val default: SemacticContext = apply()
 }
