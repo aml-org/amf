@@ -1163,6 +1163,20 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiContract("path"),
         constraint = shape("invalidInputTypeInEndpoint"),
         message = "Only an Input Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-output-type"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("invalidOutputType"),
+        message = "Only an Output Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-output-type-in-endpoint"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("invalidOutputTypeInEndpoint"),
+        message = "Only an Output Type can be placed here"
       )
     )
     override def validations(): Seq[AMFValidation] = result

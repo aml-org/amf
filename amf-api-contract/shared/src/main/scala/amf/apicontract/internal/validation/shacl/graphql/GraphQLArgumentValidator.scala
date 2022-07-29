@@ -4,12 +4,56 @@ import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarN
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ScalarNodeModel
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
+import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object GraphQLArgumentValidator {
+  // https://spec.graphql.org/June2018/#IsOutputType()
+  def validateOutputTypes(obj: GraphQLObject): Seq[ValidationInfo] = {
+    val fields = obj.fields()
+    if (!obj.isInput) {
+      // fields from an output type can return anything except an input type (`input Foo {...})
+      val propertiesValidations = fields.properties.flatMap { prop =>
+        if (!prop.isValidOutputType) {
+          validationInfo(
+            NodeShapeModel.Properties,
+            s"${prop.name} must be an output type, ${getShapeName(prop.range)} it's not",
+            prop.annotations
+          )
+        } else None
+      }
+
+      val operationValidations = obj.operations.flatMap { op =>
+        if (!op.isValidOutputType) {
+          validationInfo(
+            NodeShapeModel.Properties,
+            s"${op.name} must return a valid an output type, ${getShapeName(op.payload.get.schema)} it's not",
+            op.annotations
+          )
+        } else None
+      }
+
+      operationValidations ++ propertiesValidations
+    } else {
+      // fields from an input type can only return valid input types, and this is already validated in validateInputTypes()
+      Seq()
+    }
+  }
+
+  def validateOutputTypes(endpoint: GraphQLEndpoint): Seq[ValidationInfo] = {
+    endpoint.operations.flatMap { op =>
+      if (!op.isValidOutputType) {
+        validationInfo(
+          NodeShapeModel.Properties,
+          s"${op.name} type must be an output type, ${getShapeName(op.payload.get.schema)} it's not",
+          op.annotations
+        )
+      } else None
+    }
+  }
+
   def validateInputTypes(obj: GraphQLObject): Seq[ValidationInfo] = {
     // fields arguments can't be output types
     val operationValidations = obj.operations.flatMap { op =>
@@ -20,9 +64,7 @@ object GraphQLArgumentValidator {
             s"Argument '${param.name}' must be an input type, ${getShapeName(param.schema)} it's not",
             param.annotations
           )
-        } else {
-          None
-        }
+        } else None
       }
     }
 
@@ -38,6 +80,18 @@ object GraphQLArgumentValidator {
     }
 
     operationValidations ++ propertiesValidations
+  }
+
+  def validateInputTypes(endpoint: GraphQLEndpoint): Seq[ValidationInfo] = {
+    endpoint.parameters.flatMap { param =>
+      if (!param.isValidInputType) {
+        validationInfo(
+          NodeShapeModel.Properties,
+          s"${param.name} type must be an input type, ${getShapeName(param.schema)} it's not",
+          param.annotations
+        )
+      } else None
+    }
   }
 
   def validateDirectiveApplicationTypes(directive: GraphQLAppliedDirective): Seq[ValidationInfo] = {
@@ -79,9 +133,7 @@ object GraphQLArgumentValidator {
             s"Default value of argument must be one of [${inScalar.map(_.value.value()).mkString(",")}]",
             value.annotations
           )
-        } else {
-          None
-        }
+        } else None
       case _ => None
     }
   }

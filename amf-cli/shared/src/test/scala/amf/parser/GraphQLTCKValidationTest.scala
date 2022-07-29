@@ -38,8 +38,8 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     }
 
   // Test singular API
-  test("union-invalid-members.api.graphql") {
-    assertReport(s"$apisPath/invalid/union-invalid-members.api.graphql")
+  test("is-not-output-type-query-fields.api.graphql") {
+    assertReport(s"$apisPath/invalid/is-not-output-type-query-fields.api.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {
