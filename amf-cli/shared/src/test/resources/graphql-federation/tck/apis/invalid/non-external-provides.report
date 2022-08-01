@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#provides-external
+  Message: 'name' should be declared as @external to be used in @provides
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/non-external-provides.graphql#/declares/shape/Review/property/property/product
+  Property: http://a.ml/vocabularies/federation#provides
+  Range: [(3,4)-(3,46)]
+  Location: 

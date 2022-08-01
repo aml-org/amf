@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-requires.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#requires-external
+  Message: 'birthday' should be declared as @external to be used in @requires
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/non-external-requires.graphql#/declares/shape/Person/property/property/age
+  Property: http://a.ml/vocabularies/federation#requires
+  Range: [(4,4)-(4,42)]
+  Location: 

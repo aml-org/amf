@@ -1,0 +1,9 @@
+type Person @key(fields: "name") {
+    name: String
+    another: Another
+    age: Int @requires(fields: "another { name }")
+}
+
+type Another {
+    name: String
+}

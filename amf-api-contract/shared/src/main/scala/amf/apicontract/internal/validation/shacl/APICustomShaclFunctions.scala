@@ -18,7 +18,7 @@ import amf.apicontract.internal.validation.shacl.graphql.{
   GraphQLObject
 }
 import amf.core.client.scala.model.domain._
-import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -36,6 +36,40 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
+      new CustomShaclFunction {
+        override val name: String = "requiresExternal"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val prop = element.asInstanceOf[PropertyShape]
+          prop.requires
+            .map(_.path.last) // only the last should be @external
+            .filter(!_.isStub.value())
+            .map(prop =>
+              ValidationInfo(
+                PropertyShapeModel.Requires,
+                Some(s"'${prop.name}' should be declared as @external to be used in @requires"),
+                Some(element.annotations)
+              )
+            )
+            .foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "providesExternal"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val prop = element.asInstanceOf[PropertyShape]
+          prop.provides
+            .map(_.path.last) // only the last should be @external
+            .filter(!_.isStub.value())
+            .map(prop =>
+              ValidationInfo(
+                PropertyShapeModel.Provides,
+                Some(s"'${prop.name}' should be declared as @external to be used in @provides"),
+                Some(element.annotations)
+              )
+            )
+            .foreach(info => validate(Some(info)))
+        }
+      },
       new CustomShaclFunction {
         override val name: String = "invalidOutputTypeInEndpoint"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
