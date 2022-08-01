@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.model.EndpointPath
+import amf.graphql.internal.spec.domain.model.{EndpointPath, OperationMethod}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
@@ -41,11 +41,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
   def parseOperation(f: Node, endPoint: EndPoint, fieldName: String): Unit = {
     val operationId = s"$rootTypeName.$fieldName"
 
-    val method = queryType match {
-      case RootTypes.Query        => "query"
-      case RootTypes.Mutation     => "post"
-      case RootTypes.Subscription => "subscribe"
-    }
+    val method = OperationMethod(queryType)
 
     val op: Operation = endPoint.withOperation(method).withName(operationId).withOperationId(operationId)
     val request       = op.withRequest()
