@@ -1,6 +1,7 @@
 package amf.parser
 
-import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
@@ -10,6 +11,8 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.graphql.client.scala.GraphQLConfiguration
+import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import amf.shapes.internal.spec.raml.parser.expression.ExpressionMember
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
@@ -42,14 +45,24 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("async2.yaml", Async20YamlHint)
   }
 
-  private def build(file: String, hint: Hint): Future[BaseUnit] = {
+  ignore("Test GraphQL annotations") {
+    val graphqlConfig: AMFConfiguration = GraphQLConfiguration.GraphQL()
+    runTest("graphql.graphql", GraphQLHint, Some(graphqlConfig))
+  }
+
+  ignore("Test GraphQLFederation annotations") {
+    val federationConfig: AMFConfiguration = GraphQLFederationConfiguration.GraphQLFederation()
+    runTest("federation.graphql", GraphQLFederationHint, Some(federationConfig))
+  }
+
+  private def build(file: String, hint: Hint, config: Option[AMFConfiguration] = None): Future[BaseUnit] = {
     val url           = s"file://$directory$file"
-    val configuration = APIConfiguration.API()
+    val configuration = config.getOrElse(APIConfiguration.API())
     AMFParser.parse(url, configuration).map(_.baseUnit)
   }
 
-  private def runTest(file: String, hint: Hint): Future[Assertion] =
-    build(file, hint).map { bu =>
+  private def runTest(file: String, hint: Hint, config: Option[AMFConfiguration] = None): Future[Assertion] =
+    build(file, hint, config).map { bu =>
       val strings = checkUnit(bu)
       if (strings.isEmpty) succeed
       else {

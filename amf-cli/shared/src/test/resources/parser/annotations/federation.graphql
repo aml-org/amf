@@ -1,0 +1,31 @@
+type Query {
+    me: User
+}
+
+type User @key(fields: "id") @key(fields: "name surname") @key(fields: "recoveryCode { code }") {
+    id: ID!
+    name: String! @shareable
+    surname: String! @shareable
+    birthday: Date @external
+    age: Int @requires(fields: "birthday")
+    car: Car @provides(fields: "ownerName")
+    inaccessible: Int @inaccessible
+    override: Int @override(from: "subgraphA")
+    recoveryCode: RecoveryCode
+}
+
+type RecoveryCode {
+    code: String
+}
+
+type Car {
+    model: String
+    brand: String
+    ownerName: String @external
+}
+
+type ShareableObject @shareable {
+    name: String
+}
+
+scalar Date

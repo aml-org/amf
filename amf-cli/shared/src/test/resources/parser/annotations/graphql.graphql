@@ -1,0 +1,55 @@
+schema @MyDirective(text: "Luke Skywalker") {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    searchResult: SearchResult
+}
+
+type Mutation {
+    changeUserStatus(input_: InputType!): OutputType
+}
+
+input InputType {
+    randomText: String
+}
+
+type Person implements HasName {
+    name: String
+    surname: String
+}
+
+interface HasName {
+    name: String
+}
+
+extend interface HasName {
+    surname: String
+}
+
+type Dog {
+    name: String!
+    breed: String!
+}
+
+union SearchResult = Person | Dog
+
+directive @MyDirective(text: String) on SCHEMA
+
+enum Planet {
+    MERCURY
+    VENUS
+    EARTH
+    MARS
+    JUPITER
+    SATURN
+    URANUS
+    NEPTUNE
+}
+
+extend enum Planet {
+    PLUTO
+}
+
+scalar Date

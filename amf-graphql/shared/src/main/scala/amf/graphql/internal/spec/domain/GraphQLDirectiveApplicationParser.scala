@@ -6,7 +6,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
-import amf.core.internal.parser.domain.Annotations.inferred
+import amf.core.internal.parser.domain.Annotations.{inferred, virtual}
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.Locations.locationToDomain
@@ -16,7 +16,11 @@ import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.chec
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement, directivesPath: Seq[String] = Seq(DIRECTIVES, DIRECTIVE))(implicit val ctx: GraphQLBaseWebApiContext)
+case class GraphQLDirectiveApplicationParser(
+    node: Node,
+    element: DomainElement,
+    directivesPath: Seq[String] = Seq(DIRECTIVES, DIRECTIVE)
+)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
 
   def parse(): Unit = {
@@ -38,7 +42,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement,
 
   private def parseArguments(directiveNode: Node, directiveApplication: DomainExtension): Unit = {
     // arguments are parsed as the properties of an ObjectNode, which goes in the Extension field in the DomainExtension
-    val schema = ObjectNode()
+    val schema = ObjectNode(virtual())
     collect(directiveNode, Seq(ARGUMENTS, ARGUMENT)).foreach { case argument: Node =>
       parseArgument(argument, schema, directiveApplication)
     }
@@ -54,7 +58,7 @@ case class GraphQLDirectiveApplicationParser(node: Node, element: DomainElement,
 
   private def putDefinedBy(directiveApplication: DomainExtension): Unit = {
     ctx.findAnnotation(directiveApplication.name.value(), SearchScope.All) match {
-      case Some(directiveDeclaration) => directiveApplication.setWithoutId(DefinedBy, directiveDeclaration)
+      case Some(directiveDeclaration) => directiveApplication.setWithoutId(DefinedBy, directiveDeclaration, inferred())
       case None =>
         astError(
           s"Directive ${directiveApplication.name} is not declared",

@@ -1,6 +1,7 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -15,7 +16,7 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
     invokeAppropriateParser()
       .map(_.withIsExtension(true))
       .getOrElse {
-        AnyShape()
+        AnyShape(virtual())
       }
   }
 

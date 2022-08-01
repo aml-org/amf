@@ -4,14 +4,14 @@ import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.operations.{AbstractParameter, ShapeParameter}
-import amf.shapes.internal.domain.metamodel.common.DocumentationField
+import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
@@ -203,9 +203,10 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       UnionShape()
         .withAnyOf(
           Seq(
-            NilShape(),
+            NilShape(virtual()),
             shape
-          )
+          ),
+          synthesized()
         )
     } else {
       shape
@@ -243,5 +244,5 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def setDefaultValue(n: Node, shape: Shape): Unit =
-    parseDefaultValue(n).map(value => shape.withDefault(value))
+    parseDefaultValue(n).map(value => shape.withDefault(value, inferred()))
 }

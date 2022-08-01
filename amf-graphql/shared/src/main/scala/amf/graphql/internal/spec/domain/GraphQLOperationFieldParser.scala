@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
