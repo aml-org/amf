@@ -38,8 +38,8 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     }
 
   // Test singular API
-  test("is-not-output-type-query-fields.api.graphql") {
-    assertReport(s"$apisPath/invalid/is-not-output-type-query-fields.api.graphql")
+  test("directive-argument-missing-value") {
+    assertReport(s"$apisPath/invalid/directive-argument-missing-value.api.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {
