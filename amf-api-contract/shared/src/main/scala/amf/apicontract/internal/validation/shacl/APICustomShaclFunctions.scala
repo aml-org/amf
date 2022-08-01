@@ -37,21 +37,27 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     (ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
       new CustomShaclFunction {
+        override val name: String = "invalidOutputTypeInEndpoint"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val endpoint = GraphQLEndpoint(element.asInstanceOf[EndPoint])
+          val results  = GraphQLArgumentValidator.validateOutputTypes(endpoint)
+          results.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "invalidOutputType"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val obj     = GraphQLObject(element.asInstanceOf[NodeShape])
+          val results = GraphQLArgumentValidator.validateOutputTypes(obj)
+          results.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
         override val name: String = "invalidInputTypeInEndpoint"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val endpoint = GraphQLEndpoint(element.asInstanceOf[EndPoint])
-          endpoint.parameters.foreach { param =>
-            if (!param.isValidInputType)
-              validate(
-                Some(
-                  ValidationInfo(
-                    NodeShapeModel.Properties,
-                    Some(s"${param.name} type must be an input type, ${param.schema.name.value()} it's not"),
-                    Some(param.annotations)
-                  )
-                )
-              )
-          }
+          val results  = GraphQLArgumentValidator.validateInputTypes(endpoint)
+          results.foreach(info => validate(Some(info)))
         }
       },
       new CustomShaclFunction {

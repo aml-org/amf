@@ -3,14 +3,8 @@ schema {
 }
 
 type Query {
-    name: String
-}
-
-interface Interface {
     inputReturnField: InputType
     inputReturnFieldArray: [InputType]
-    inputReturnFieldArrayRequired: [InputType!]
-    inputReturnFieldArrayRequired2: [InputType!]!
 }
 
 input InputType {

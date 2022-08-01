@@ -8,6 +8,9 @@ type Query {
 
 type Object {
     inputReturnField: InputType
+    inputReturnFieldArray: [InputType]
+    inputReturnFieldOperation(arg: String): InputType
+    inputReturnFieldOperationArray(arg: String): [InputType]
 }
 
 input InputType {
