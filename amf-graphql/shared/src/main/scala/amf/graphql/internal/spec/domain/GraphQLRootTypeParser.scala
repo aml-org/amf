@@ -75,7 +75,6 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
     val queryParam = Parameter(toAnnotations(argument)).withName(fieldName, annotations).withBinding("query")
     parseDescription(argument, queryParam, queryParam.meta)
-
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
         setDefaultValue(argument, queryParam)
