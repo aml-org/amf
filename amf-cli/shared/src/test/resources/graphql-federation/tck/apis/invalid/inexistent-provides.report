@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/inexistent-provides.graphql
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unmatched-field-in-field-set
-  Message: Cannot obtain property name from type null when resolving fieldSet
+  Message: Cannot obtain property 'name' from type 'null' when resolving fieldSet
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/inexistent-provides.graphql#/declares/shape/Review/property/property/product
   Property: 

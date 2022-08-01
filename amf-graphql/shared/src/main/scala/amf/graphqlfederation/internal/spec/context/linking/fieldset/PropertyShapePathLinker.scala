@@ -6,6 +6,7 @@ import amf.core.client.scala.model.domain.extensions.{PropertyShape, PropertySha
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.graphqlfederation.internal.spec.context.linking.Linker
 import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 
 case class PropertyShapePathLinker()
     extends Linker[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext] {
@@ -25,15 +26,22 @@ case class PropertyShapePathLinker()
     val path = source.expressionComponents.map { case PropertyShapePathExpression.Component(propName, annotations) =>
       current match {
         case n: NodeShape =>
-          n.properties.find(_.name.value() == propName) match {
-            case Some(matchedProperty) =>
+          (n.properties ++ n.operations).find(_.name.value() == propName) match {
+            case Some(matchedProperty: PropertyShape) =>
               current = followRange(matchedProperty)
               matchedProperty.link(propName)
-            case None =>
+            case Some(_: ShapeOperation) =>
               ctx.eh.violation(
                 UnmatchedFieldInFieldSet,
                 source.root,
-                s"Cannot find property with name $propName when resolving fieldSet"
+                s"Property '$propName' referenced by field set cannot have arguments"
+              )
+              PropertyShape().withName("error")
+            case _ =>
+              ctx.eh.violation(
+                UnmatchedFieldInFieldSet,
+                source.root,
+                s"Cannot find property with name '$propName' when resolving field set"
               )
               PropertyShape().withName("error")
           }
@@ -41,7 +49,7 @@ case class PropertyShapePathLinker()
           ctx.eh.violation(
             UnmatchedFieldInFieldSet,
             source.root,
-            s"Cannot obtain property $propName from type ${current.name.value()} when resolving fieldSet",
+            s"Cannot obtain property '$propName' from type '${current.name.value()}' when resolving fieldSet",
             annotations
           )
           PropertyShape().withName("error")
