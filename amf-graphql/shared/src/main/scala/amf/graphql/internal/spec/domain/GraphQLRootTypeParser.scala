@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
+import amf.graphql.internal.spec.domain.model.EndpointPath
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
@@ -26,18 +27,10 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     }
   }
 
-  private def path(fieldName: String): String = {
-    queryType match {
-      case RootTypes.Query        => s"/query/$fieldName"
-      case RootTypes.Mutation     => s"/mutation/$fieldName"
-      case RootTypes.Subscription => s"/subscription/$fieldName"
-    }
-  }
-
   private def parseField(f: Node) = {
     val endPoint: EndPoint       = EndPoint(toAnnotations(f))
     val (fieldName, annotations) = findName(f, "AnonymousField", "Missing name for root type field")
-    val endpointPath             = path(fieldName)
+    val endpointPath             = EndpointPath(fieldName, queryType)
     endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName", annotations)
     parseDescription(f, endPoint, endPoint.meta)
     parseOperation(f, endPoint, fieldName)
