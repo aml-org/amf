@@ -1,4 +1,4 @@
-package amf.graphql.plugins.render
+package amf.graphql.internal.spec.plugins.render
 
 import amf.core.internal.remote.{GraphQL, Syntax}
 import amf.core.client.common.{NormalPriority, PluginPriority}

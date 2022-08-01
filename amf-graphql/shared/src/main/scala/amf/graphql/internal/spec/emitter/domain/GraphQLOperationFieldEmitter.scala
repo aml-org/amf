@@ -5,7 +5,7 @@ import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.parser.syntax.NullableShape
-import amf.graphql.plugins.parse.GraphQLParsePlugin.unpackNilUnion
+import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin.unpackNilUnion
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 

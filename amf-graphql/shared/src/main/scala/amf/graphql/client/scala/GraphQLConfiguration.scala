@@ -11,8 +11,8 @@ import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQL
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLValidationProfile
 import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
 import amf.core.client.common.validation.ProfileNames
-import amf.graphql.plugins.parse.GraphQLParsePlugin
-import amf.graphql.plugins.render.GraphQLRenderPlugin
+import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin
+import amf.graphql.internal.spec.plugins.render.GraphQLRenderPlugin
 
 object GraphQLConfiguration extends APIConfigurationBuilder {
 
