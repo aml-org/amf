@@ -41,7 +41,7 @@ case class GraphQLProperty(property: PropertyShape) {
   def name: String               = property.name.value()
   def annotations: Annotations   = property.annotations
   def datatype: Option[String]   = GraphQLUtils.datatype(property.range)
-  def default: DataNode          = property.default
+  def default: Option[DataNode]  = Option(property.default)
   def range: Shape               = property.range
   def isValidInputType: Boolean  = GraphQLUtils.isValidInputType(range)
   def isValidOutputType: Boolean = GraphQLUtils.isValidOutputType(range)

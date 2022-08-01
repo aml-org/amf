@@ -3,6 +3,7 @@ package amf.apicontract.internal.validation.shacl.graphql
 import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ScalarNodeModel
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
@@ -94,11 +95,12 @@ object GraphQLArgumentValidator {
     }
   }
 
-  def validateDirectiveApplicationTypes(directive: GraphQLAppliedDirective): Seq[ValidationInfo] = {
+  def validateDirectiveApplication(directive: GraphQLAppliedDirective): Seq[ValidationInfo] = {
     val definedProps: Seq[GraphQLProperty] = directive.definedProps()
     val parsedProps: Seq[ScalarNode]       = directive.parsedProps()
 
-    parsedProps.flatMap { parsedProp =>
+    // validate types
+    val typesValidations = parsedProps.flatMap { parsedProp =>
       val definition = definedProps.find(_.name == parsedProp.name.value())
       definition flatMap { definedProp =>
         val parsedDatatype: String          = parsedProp.dataType.value()
@@ -114,17 +116,30 @@ object GraphQLArgumentValidator {
           }
       }
     }
+
+    // validate missing arguments
+    val missingArguments = definedProps.filter(_.default.isEmpty).flatMap { requiredProp =>
+      if (!parsedProps.exists(_.name.value() == requiredProp.name)) {
+        validationInfo(
+          DomainExtensionModel.DefinedBy,
+          s"Missing required argument ${requiredProp.name}",
+          directive.annotations
+        )
+      } else None
+    }
+
+    typesValidations ++ missingArguments
   }
 
   def validateDefaultValues(node: GraphQLObject): Seq[ValidationInfo] = {
     node.properties.flatMap { prop =>
-      validateDefaultValue(prop.datatype.getOrElse(""), prop.default, prop.property, prop.annotations)
+      validateDefaultValue(prop.datatype.getOrElse(""), prop.default.orNull, prop.property, prop.annotations)
     }
   }
 
-  def validateIn(value: DataNode, in: Seq[DataNode], field: Field): Option[ValidationInfo] = {
+  def validateIn(value: Option[DataNode], in: Seq[DataNode], field: Field): Option[ValidationInfo] = {
     (value, in.headOption) match {
-      case (value: ScalarNode, _ @Some(_: ScalarNode)) =>
+      case (Some(value: ScalarNode), Some(_: ScalarNode)) =>
         val inScalar   = in.asInstanceOf[Seq[ScalarNode]]
         val conformsIn = inScalar.exists(_.value.value() == value.value.value())
         if (!conformsIn) {

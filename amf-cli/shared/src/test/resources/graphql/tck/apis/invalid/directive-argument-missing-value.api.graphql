@@ -6,4 +6,4 @@ type Query {
     name: String
 }
 
-directive @MyDirective(text: String) on SCHEMA
+directive @MyDirective(text: String, optionalText: String = "default") on SCHEMA
