@@ -4,7 +4,12 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, FIELDS_DEFINITION, FIELD_DEFINITION, INPUT_VALUE_DEFINITION}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
+  ARGUMENTS_DEFINITION,
+  FIELDS_DEFINITION,
+  FIELD_DEFINITION,
+  INPUT_VALUE_DEFINITION
+}
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
@@ -13,13 +18,11 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
   val (rootTypeName, rootTypeAnnotations) = findName(ast, "AnonymousType", "Missing name for root type")
 
-  def parse(setterFn: EndPoint => Unit): Seq[EndPoint] = {
-    parseFields(ast, setterFn)
-  }
+  def parse(): Seq[EndPoint] = parseFields(ast)
 
-  private def parseFields(n: Node, setterFn: EndPoint => Unit): Seq[EndPoint] = {
+  private def parseFields(n: Node): Seq[EndPoint] = {
     collect(n, Seq(FIELDS_DEFINITION, FIELD_DEFINITION)).map { case f: Node =>
-      parseField(f, setterFn)
+      parseField(f)
     }
   }
 
@@ -31,12 +34,11 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     }
   }
 
-  private def parseField(f: Node, setterFn: EndPoint => Unit) = {
+  private def parseField(f: Node) = {
     val endPoint: EndPoint       = EndPoint(toAnnotations(f))
     val (fieldName, annotations) = findName(f, "AnonymousField", "Missing name for root type field")
     val endpointPath             = path(fieldName)
     endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName", annotations)
-    setterFn(endPoint)
     parseDescription(f, endPoint, endPoint.meta)
     parseOperation(f, endPoint, fieldName)
     GraphQLDirectiveApplicationParser(f, endPoint).parse()
