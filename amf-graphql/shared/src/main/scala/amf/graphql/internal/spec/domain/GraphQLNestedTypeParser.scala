@@ -21,7 +21,8 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     if (isInterface) {
       obj.withIsAbstract(true)
       inFederation { implicit fCtx =>
-        ShapeFederationMetadataParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE)).parse()
+        ShapeFederationMetadataParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE))
+          .parse()
         GraphQLDirectiveApplicationParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, DIRECTIVE)).parse()
         KeyParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE)).parse()
       }
@@ -49,7 +50,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
   def parseInheritance(t: Terminal): AnyShape = {
     val typeName = t.value
     ctx.declarations.findType(typeName, SearchScope.All) match {
-      case Some(i: NodeShape) if i.isAbstract.option().getOrElse(false) =>
+      case Some(i: NodeShape) if i.isAbstract.value() =>
         i.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case Some(n: NodeShape) =>
         astError("Error extending non interface type", toAnnotations(t))

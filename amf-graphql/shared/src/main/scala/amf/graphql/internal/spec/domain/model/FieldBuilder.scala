@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.Annotations.virtual
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.FieldBuilderInfo._
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -31,7 +32,7 @@ case class FieldBuilder[I <: FieldBuilderInfo](
     description: Option[AmfScalar] = None,
     operationType: RootTypes.Value = RootTypes.Query,
     arguments: List[Parameter] = List.empty,
-    schema: AnyShape = AnyShape()
+    schema: AnyShape = AnyShape(virtual())
 ) {
 
   def withName(name: AmfScalar): FieldBuilder[I with Name] = {

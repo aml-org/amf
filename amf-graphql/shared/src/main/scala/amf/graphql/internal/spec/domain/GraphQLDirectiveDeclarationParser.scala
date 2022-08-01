@@ -3,9 +3,10 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
+import amf.core.internal.parser.domain.Annotations.virtual
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations, ScalarValueParser}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
 import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
@@ -34,7 +35,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case argument: Node =>
         parseArgument(argument)
     }
-    val schema = NodeShape()
+    val schema = NodeShape(virtual())
     schema.withProperties(properties)
     directive.withSchema(schema)
   }

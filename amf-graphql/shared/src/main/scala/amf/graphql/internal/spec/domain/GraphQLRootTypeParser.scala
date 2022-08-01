@@ -1,20 +1,18 @@
 package amf.graphql.internal.spec.domain
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Request}
-import amf.apicontract.internal.metamodel.domain.EndPointModel
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.model.FieldBuilderInfo.Empty
-import amf.graphql.internal.spec.domain.model.{EndpointPath, FieldBuilder, GraphqlArgument, OperationMethod}
+import amf.graphql.internal.spec.domain.model.{FieldBuilder, GraphqlArgument, OperationMethod}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   ARGUMENTS_DEFINITION,
   FIELDS_DEFINITION,
   FIELD_DEFINITION,
   INPUT_VALUE_DEFINITION
 }
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
-import org.mulesoft.antlrast.ast.{Node, Terminal}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {

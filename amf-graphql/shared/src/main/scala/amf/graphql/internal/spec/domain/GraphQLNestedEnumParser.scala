@@ -1,8 +1,9 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{DomainElement, ScalarNode}
+import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
+import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -38,15 +39,20 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
           getEnumValue(valueDefNode) match {
             case Some(value: ScalarNode) =>
               inFederation { implicit fCtx =>
-              ShapeFederationMetadataParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE ,ENUM_VALUE_FEDERATION_DIRECTIVE)).parse()
-              GraphQLDirectiveApplicationParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE ,DIRECTIVE)).parse()
-            }
-            parseDirectives(valueDefNode, value)
-            value
-          case None => ScalarNode()
+                ShapeFederationMetadataParser(
+                  valueDefNode,
+                  value,
+                  Seq(ENUM_VALUE_DIRECTIVE, ENUM_VALUE_FEDERATION_DIRECTIVE)
+                ).parse()
+                GraphQLDirectiveApplicationParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE, DIRECTIVE)).parse()
+              }
+              GraphQLDirectiveApplicationParser(valueDefNode, value).parse()
+              value
+            case None => ScalarNode(virtual())
+          }
         }
-      }
-      enum.withValues(values)case _ => enum.withValues(Seq())
+        enum.withValues(values)
+      case _ => enum.withValues(Seq())
     }
   }
 
@@ -65,7 +71,4 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
   }
 
   private def hasTerminalChild(n: Node) = n.children.head.isInstanceOf[Terminal]
-
-  private def parseDirectives(n: Node, element: DomainElement): Unit =
-    GraphQLDirectiveApplicationParser(n, element).parse()
 }
