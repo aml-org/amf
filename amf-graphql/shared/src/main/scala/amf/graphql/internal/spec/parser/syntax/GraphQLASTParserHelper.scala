@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
@@ -39,6 +39,10 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     findDescription(n).foreach { desc =>
       element.set(model.Description, cleanDocumentation(desc.value), toAnnotations(desc))
     }
+  }
+
+  def parseDescription(n: ASTNode): Option[AmfScalar] = {
+    findDescription(n).map { desc => AmfScalar(cleanDocumentation(desc.value), toAnnotations(desc)) }
   }
 
   def findDescription(n: ASTNode): Option[Terminal] = {

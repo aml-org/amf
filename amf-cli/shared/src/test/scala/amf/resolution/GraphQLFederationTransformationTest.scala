@@ -1,6 +1,7 @@
 package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -62,6 +63,15 @@ class GraphQLFederationTransformationTest extends GraphQLFederationFunSuiteCycle
       directory = basePath.stripPrefix("file://"),
       renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris.withCompactedEmission)
     )
+  }
+
+  test("Introspection should add _entities and _service endpoints to existing") {
+    transformed("introspected-endpoints.graphql").map { doc =>
+      val endpoints = doc.encodes.asInstanceOf[Api].endPoints
+      endpoints should have size 3
+      endpoints.find(_.name.value() == "Query._entities") shouldBe a[Some[_]]
+      endpoints.find(_.name.value() == "Query._service") shouldBe a[Some[_]]
+    }
   }
 
   private def findShapeWithName(shapes: Seq[DomainElement], name: String): Option[DomainElement] = {
