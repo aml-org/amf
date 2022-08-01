@@ -1,9 +1,17 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/inexistent-provides.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 2
+Number of results: 3
 
 Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#provides-external
+  Message: 'error' should be declared as @external to be used in @provides
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/inexistent-provides.graphql#/declares/shape/Review/property/property/product
+  Property: http://a.ml/vocabularies/federation#provides
+  Range: [(3,4)-(3,46)]
+  Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'Product'

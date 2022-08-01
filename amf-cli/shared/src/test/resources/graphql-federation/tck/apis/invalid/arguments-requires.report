@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/arguments-requires.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/arguments-requires.graphql#/declares/shape/Person
   Property: 
   Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#requires-external
+  Message: 'error' should be declared as @external to be used in @requires
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/arguments-requires.graphql#/declares/shape/Person/property/property/age
+  Property: http://a.ml/vocabularies/federation#requires
+  Range: [(4,4)-(4,42)]
   Location: 

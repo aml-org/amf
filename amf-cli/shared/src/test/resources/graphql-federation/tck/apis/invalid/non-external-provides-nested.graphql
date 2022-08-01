@@ -1,0 +1,12 @@
+type Review @key(fields: "id") {
+    id: ID!
+    product: Product @provides(fields: "another { name }")
+}
+
+type Product {
+    another: Another
+}
+
+type Another {
+    name: String
+}

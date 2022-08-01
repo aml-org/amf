@@ -1183,7 +1183,22 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object GraphQLFederationValidations extends ProfileValidations {
-    private lazy val result                        = Seq()
+    private lazy val result                        = Seq(
+      AMFValidation(
+        uri = amfParser("requires-external"),
+        owlClass = sh("PropertyShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("requiresExternal"),
+        message = "Fields in @requires must be declared @external"
+      ),
+      AMFValidation(
+        uri = amfParser("provides-external"),
+        owlClass = sh("PropertyShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("providesExternal"),
+        message = "Fields in @provides must be declared @external"
+      )
+    )
     override def validations(): Seq[AMFValidation] = result
   }
 
