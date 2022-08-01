@@ -2,9 +2,17 @@ package amf.graphql.internal.spec.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Request}
 import amf.apicontract.internal.metamodel.domain.EndPointModel
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, FIELDS_DEFINITION, FIELD_DEFINITION, INPUT_VALUE_DEFINITION}
+import amf.graphql.internal.spec.domain.model.FieldBuilderInfo.Empty
+import amf.graphql.internal.spec.domain.model.{EndpointPath, FieldBuilder, GraphqlArgument, OperationMethod}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
+  ARGUMENTS_DEFINITION,
+  FIELDS_DEFINITION,
+  FIELD_DEFINITION,
+  INPUT_VALUE_DEFINITION
+}
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
@@ -13,67 +21,43 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
   val (rootTypeName, rootTypeAnnotations) = findName(ast, "AnonymousType", "Missing name for root type")
 
-  def parse(setterFn: EndPoint => Unit): Seq[EndPoint] = {
-    parseFields(ast, setterFn)
-  }
+  def parse(): Seq[EndPoint] = parseFields(ast)
 
-  private def parseFields(n: Node, setterFn: EndPoint => Unit): Seq[EndPoint] = {
+  private def parseFields(n: Node): Seq[EndPoint] = {
     collect(n, Seq(FIELDS_DEFINITION, FIELD_DEFINITION)).map { case f: Node =>
-      parseField(f, setterFn)
+      parseField(f)
     }
   }
 
-  private def path(fieldName: String): String = {
-    queryType match {
-      case RootTypes.Query        => s"/query/$fieldName"
-      case RootTypes.Mutation     => s"/mutation/$fieldName"
-      case RootTypes.Subscription => s"/subscription/$fieldName"
-    }
-  }
-
-  private def parseField(f: Node, setterFn: EndPoint => Unit) = {
-    val endPoint: EndPoint       = EndPoint(toAnnotations(f))
+  private def parseField(f: Node) = {
     val (fieldName, annotations) = findName(f, "AnonymousField", "Missing name for root type field")
-    val endpointPath             = path(fieldName)
-    endPoint.withPath(endpointPath).withName(s"$rootTypeName.$fieldName", annotations)
-    setterFn(endPoint)
-    parseDescription(f, endPoint, endPoint.meta)
-    parseOperation(f, endPoint, fieldName)
-    GraphQLDirectiveApplicationParser(f, endPoint).parse()
-    endPoint
-  }
-
-  def parseOperation(f: Node, endPoint: EndPoint, fieldName: String): Unit = {
-    val operationId = s"$rootTypeName.$fieldName"
-
-    val method = queryType match {
-      case RootTypes.Query        => "query"
-      case RootTypes.Mutation     => "post"
-      case RootTypes.Subscription => "subscribe"
+    val initialBuilder = parseDescription(f).foldLeft(FieldBuilder.empty(toAnnotations(f))) { (builder, description) =>
+      builder.withDescription(description)
     }
-
-    val op: Operation = endPoint.withOperation(method).withName(operationId).withOperationId(operationId)
-    val request       = op.withRequest()
-    parseArguments(f, request, method)
-    val payload = op.withResponse().withPayload()
-    val shape   = parseType(f)
-    payload.withSchema(shape)
+    val method = OperationMethod(queryType)
+    val endpoint = initialBuilder
+      .withName(AmfScalar(fieldName, annotations))
+      .withTypeName(rootTypeName)
+      .withOperationType(queryType)
+      .withArguments(parseArguments(f, method))
+      .withSchema(parseType(f))
+      .build()
+    GraphQLDirectiveApplicationParser(f, endpoint).parse()
+    endpoint
   }
 
-  private def parseArguments(n: Node, request: Request, method: String): Unit = {
-    val arguments = collect(n, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
+  private def parseArguments(n: Node, method: String): List[Parameter] = {
+    collect(n, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
       parseArgument(method, argument)
-    }
-    if (arguments.nonEmpty) request.withQueryParameters(arguments)
+    }.toList
   }
 
   private def parseArgument(method: String, argument: Node): Parameter = {
     val (fieldName, annotations) =
       findName(argument, "AnonymousArgument", s"Missing name for field at root operation $method")
 
-    val queryParam = Parameter(toAnnotations(argument)).withName(fieldName, annotations).withBinding("query")
+    val queryParam = GraphqlArgument(toAnnotations(argument), AmfScalar(fieldName, annotations))
     parseDescription(argument, queryParam, queryParam.meta)
-
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
         setDefaultValue(argument, queryParam)

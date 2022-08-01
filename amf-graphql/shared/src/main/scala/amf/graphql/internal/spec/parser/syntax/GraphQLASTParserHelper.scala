@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
@@ -19,23 +19,30 @@ case class NullableShape(isNullable: Boolean, shape: AnyShape)
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def unpackNilUnion(shape: AnyShape): NullableShape = {
     shape match {
-      case union: UnionShape if union.anyOf.length == 2 =>
-        if (union.anyOf.head.isInstanceOf[NilShape]) {
-          union.anyOf.find(!_.isInstanceOf[NilShape]) match {
-            case Some(s: AnyShape) => NullableShape(isNullable = true, s)
-            case _                 => NullableShape(isNullable = false, shape)
-          }
-        } else {
-          NullableShape(isNullable = false, shape)
+      case union: UnionShape if isNilUnion(union) =>
+        findNonNilComponent(union) match {
+          case Some(s: AnyShape) => NullableShape(isNullable = true, s)
+          case _                 => NullableShape(isNullable = false, shape) // unreachable code
         }
       case _ => NullableShape(isNullable = false, shape)
     }
   }
 
+  private def findNonNilComponent(union: UnionShape) = union.anyOf.find(!_.isInstanceOf[NilShape])
+
+  private def isNilUnion(union: UnionShape) =
+    union.anyOf.length == 2 && union.anyOf.exists(_.isInstanceOf[NilShape]) && union.anyOf.exists(x =>
+      !x.isInstanceOf[NilShape]
+    )
+
   def parseDescription(n: ASTNode, element: DomainElement, model: DescriptionField): Unit = {
     findDescription(n).foreach { desc =>
       element.set(model.Description, cleanDocumentation(desc.value), toAnnotations(desc))
     }
+  }
+
+  def parseDescription(n: ASTNode): Option[AmfScalar] = {
+    findDescription(n).map { desc => AmfScalar(cleanDocumentation(desc.value), toAnnotations(desc)) }
   }
 
   def findDescription(n: ASTNode): Option[Terminal] = {

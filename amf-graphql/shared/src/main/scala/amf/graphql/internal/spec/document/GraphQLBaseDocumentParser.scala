@@ -4,7 +4,7 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
 import amf.core.client.scala.model.document.Document
@@ -116,9 +116,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     this.collect(node, typeDefinitionPath :+ OBJECT_TYPE_DEFINITION) foreach { case objTypeDef: Node =>
       searchName(objTypeDef) match {
         case Some(typeName) =>
-          val rootTypeOption = getRootType(typeName)
-          if (rootTypeOption.isDefined) parseTopLevelType(objTypeDef, rootTypeOption.get)
-          else parseNestedType(objTypeDef)
+          getRootType(typeName) match {
+            case Some(rootType) => parseTopLevelType(objTypeDef, rootType)
+            case None           => parseNestedType(objTypeDef)
+          }
         case _ => parseNestedType(objTypeDef)
       }
     }
@@ -203,11 +204,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
   }
 
-  private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Seq[EndPoint] = {
-    GraphQLRootTypeParser(objTypeDef, queryType).parse { ep: EndPoint =>
-      val oldEndpoints = webapi.endPoints
-      webapi.withEndPoints(oldEndpoints :+ ep)
-    }
+  private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Api = {
+    val endpoints    = GraphQLRootTypeParser(objTypeDef, queryType).parse()
+    val oldEndpoints = webapi.endPoints
+    webapi.withEndPoints(oldEndpoints ++ endpoints)
   }
 
   private def getRootType(typeName: String): Option[RootTypes.Value] = {

@@ -10,8 +10,8 @@ import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQL
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
 import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
 import amf.core.client.common.validation.ProfileNames
+import amf.graphqlfederation.internal.plugins.GraphQLFederationParsePlugin
 import amf.graphqlfederation.internal.spec.transformation.GraphQLFederationIntrospectionPipeline
-import amf.graphqlfederation.plugins.parse.GraphQLFederationParsePlugin
 
 object GraphQLFederationConfiguration extends APIConfigurationBuilder {
 

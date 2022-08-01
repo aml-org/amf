@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.parser.syntax.NullableShape
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.plugins.parse.GraphQLParsePlugin._
+import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, ScalarShape, UnionShape}
 import org.mulesoft.common.client.lexical.Position
 

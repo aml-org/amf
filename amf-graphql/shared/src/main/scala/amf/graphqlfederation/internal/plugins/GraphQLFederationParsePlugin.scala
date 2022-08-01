@@ -1,4 +1,4 @@
-package amf.graphql.plugins.parse
+package amf.graphqlfederation.internal.plugins
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.apicontract.internal.plugins.ApiParsePlugin
@@ -13,13 +13,12 @@ import amf.core.client.scala.parse.document.{
 }
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{GraphQL, Spec, Syntax}
-import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.document.GraphQLBaseDocumentParser
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{DEFINITION, DOCUMENT, TYPE_SYSTEM_DEFINITION}
-import org.mulesoft.antlrast.ast.Node
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.DEFINITION
+import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 
-object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
+object GraphQLFederationParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
   override def spec: Spec = GraphQL
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
@@ -29,8 +28,8 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     (_: ParsedDocument, _: ParserContext) => CompilerReferenceCollector()
 
-  private def context(document: Root, ctx: ParserContext): GraphQLWebApiContext = {
-    new GraphQLWebApiContext(
+  private def context(document: Root, ctx: ParserContext): GraphQLFederationWebApiContext = {
+    new GraphQLFederationWebApiContext(
       ctx.rootContextDocument,
       ctx.refs,
       ctx.parsingOptions,
@@ -52,9 +51,7 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
     }
   }
 
-  private def isGraphQL(doc: AntlrParsedDocument): Boolean = {
-    collect(doc.ast.root(), Seq(DEFINITION, TYPE_SYSTEM_DEFINITION)).exists(e => e.name == TYPE_SYSTEM_DEFINITION)
-  }
+  private def isGraphQL(doc: AntlrParsedDocument): Boolean = collect(doc.ast.root(), Seq(DEFINITION)).nonEmpty
 
   override def withIdAdoption: Boolean = true // TODO pending analysis and parsing cleanup
 }

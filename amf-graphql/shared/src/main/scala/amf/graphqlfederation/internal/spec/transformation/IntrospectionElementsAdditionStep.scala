@@ -1,19 +1,16 @@
 package amf.graphqlfederation.internal.spec.transformation
 
-import amf.core.client.platform.model.DataTypes
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
-import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.adoption.IdAdopter
-import amf.core.internal.annotations.Declares
 import amf.core.internal.metamodel.document.DocumentModel
-import amf.graphql.internal.spec.parser.syntax.Locations
-import amf.graphql.internal.spec.parser.syntax.Locations.domainFor
-import amf.graphqlfederation.internal.spec.transformation.IntrospectionElements._
-import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, UnionShape}
+import amf.graphqlfederation.internal.spec.transformation.introspection.IntrospectionTypes._
+import amf.graphqlfederation.internal.spec.transformation.introspection.IntrospectionDirectives._
+import amf.shapes.client.scala.model.domain._
 
 import scala.collection.mutable
 
@@ -28,18 +25,37 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   }
 
   private def transform(doc: Document): Document = {
-    val entitiesToAdd = getIntrospectionElements(doc)
-    val existing      = Option(doc.encodes).toList ::: doc.declares.toList
-    doc.withDeclares(doc.declares.toList ::: entitiesToAdd)
-    adopt(doc, existing)
+    val existing = doc.declares.toList
+    val nextDoc  = addIntrospectionElements(doc)
+    adopt(nextDoc, existing)
   }
 
-  private def getIntrospectionElements(doc: Document): List[DomainElement] = {
+  private def addIntrospectionElements(doc: Document): Document = {
     val fieldSet = _FieldSet()
+    val _any     = _Any()
+    val _service = _Service()
+    val _entity  = _Entity(assumeNodeShapes(doc))
+    addTypesToDocument(doc, fieldSet, _any, _service, _entity)
+    addExtensionEndpoints(doc, _any, _service, _entity)
+  }
 
-    val types      = List(_Any(), fieldSet, _Service(), _Entity(assumeNodeShapes(doc)))
+  private def addTypesToDocument(
+      doc: Document,
+      fieldSet: ScalarShape,
+      _any: ScalarShape,
+      _service: NodeShape,
+      _entity: UnionShape
+  ) = {
+    val types      = List(_any, fieldSet, _service, _entity)
     val directives = List(`@external`(), `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet))
-    types ++ directives
+    doc.setArrayWithoutId(DocumentModel.Declares, doc.declares ++ types ++ directives)
+  }
+
+  private def addExtensionEndpoints(doc: Document, _any: ScalarShape, _service: NodeShape, _entity: UnionShape) = {
+    val endpoints    = _Query(_any, _entity, _service)
+    val apiEndpoints = doc.encodes.asInstanceOf[Api].endPoints
+    doc.encodes.asInstanceOf[Api].withEndPoints(apiEndpoints ++ endpoints)
+    doc
   }
 
   private def adopt(doc: Document, existing: List[DomainElement]): Document = {
@@ -50,98 +66,4 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   }
 
   private def assumeNodeShapes(doc: Document): Seq[NodeShape] = doc.declares.collect { case n: NodeShape => n }
-}
-
-object IntrospectionElements {
-
-  private val FIELD_DEFINITION = "FIELD_DEFINITION"
-  private val SCHEMA           = "SCHEMA"
-  private val OBJECT           = "OBJECT"
-  private val INTERFACE        = "INTERFACE"
-
-  def _Any(): ScalarShape = {
-    ScalarShape()
-      .withName("_Any")
-      .withFormat("_Any")
-      .withDataType(DataTypes.String)
-  }
-
-  def _FieldSet(): ScalarShape = {
-    ScalarShape()
-      .withName("_FieldSet")
-      .withFormat("_FieldSet")
-      .withDataType(DataTypes.String)
-  }
-
-  def _Service(): NodeShape = {
-    NodeShape()
-      .withName("_Service")
-      .withProperties(
-        List(
-          PropertyShape()
-            .withName("sdl")
-            .withRange(
-              ScalarShape()
-                .withDataType(DataTypes.String)
-            )
-        )
-      )
-  }
-
-  def _Entity(types: Seq[NodeShape]): UnionShape = {
-    val typesWithKey = types.filter(_.keys.nonEmpty)
-    UnionShape()
-      .withName("_Entity")
-      .withAnyOf(typesWithKey)
-  }
-
-  def `@external`(): CustomDomainProperty = {
-    CustomDomainProperty()
-      .withName("external")
-      .withSchema(NodeShape())
-      .withDomain(domainFor(SCHEMA))
-  }
-
-  def `@requires`(fieldSet: ScalarShape): CustomDomainProperty = {
-    CustomDomainProperty()
-      .withName("requires")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(FIELD_DEFINITION))
-  }
-
-  def `@provides`(fieldSet: ScalarShape): CustomDomainProperty = {
-    CustomDomainProperty()
-      .withName("provides")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(FIELD_DEFINITION))
-  }
-
-  def `@key`(fieldSet: ScalarShape): CustomDomainProperty = {
-    // TODO: 'repeatable is not modeled'
-    CustomDomainProperty()
-      .withName("key")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(OBJECT, INTERFACE))
-  }
-
-  private def fieldSetArgument(fieldSet: ScalarShape): NodeShape = {
-    NodeShape()
-      .withProperties(
-        List(
-          PropertyShape()
-            .withName("fieldSet")
-            .withRange(fieldSet)
-        )
-      )
-  }
-
-  private def nullable(shape: NodeShape): UnionShape = {
-    UnionShape()
-      .withAnyOf(
-        List(
-          shape,
-          NilShape()
-        )
-      )
-  }
 }
