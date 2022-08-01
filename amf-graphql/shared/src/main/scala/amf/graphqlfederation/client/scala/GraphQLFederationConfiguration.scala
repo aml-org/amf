@@ -1,11 +1,8 @@
 package amf.graphqlfederation.client.scala
 
-import amf.antlr.internal.plugins.syntax.{
-  AntlrSyntaxRenderPlugin,
-  GraphQLFederationSyntaxParsePlugin,
-  SyamlForJsonLDSyntaxParsePlugin
-}
+import amf.antlr.internal.plugins.syntax.{AntlrSyntaxRenderPlugin, GraphQLFederationSyntaxParsePlugin, SyamlForJsonLDSyntaxParsePlugin}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
+import amf.apicontract.internal.transformation.{GraphQLCachePipeline, GraphQLEditingPipeline}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLFederationEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
 import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
@@ -29,9 +26,8 @@ object GraphQLFederationConfiguration extends APIConfigurationBuilder {
       )
       .withTransformationPipelines(
         List(
-          // TODO: replace with federation specific pipelines
-//          GraphQLEditingPipeline(),
-//          GraphQLCachePipeline()
+          GraphQLEditingPipeline(), // we will use the same GraphQL Editing & Cache pipelines until we find a scenario that requires a different pipeline
+          GraphQLCachePipeline(),
           GraphQLFederationIntrospectionPipeline
         )
       )
