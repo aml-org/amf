@@ -1,14 +1,8 @@
-schema {
-    query: Query
+scalar MyScalar @myDirectiveScalar(arg: "val")
+directive @myDirectiveScalar(arg: MyScalar) on SCALAR
+
+enum MyEnum @myDirectiveEnum(arg: A) {
+    A @myDirectiveEnum(arg: A)
+    B
 }
-
-type Query {
-    name: String
-}
-
-
-input User @invalidExample(arg: {name: "AA"}) {
-    name: String
-}
-
-directive @invalidExample(arg: User) on INPUT_OBJECT
+directive @myDirectiveEnum(arg: MyEnum) on ENUM | ENUM_VALUE

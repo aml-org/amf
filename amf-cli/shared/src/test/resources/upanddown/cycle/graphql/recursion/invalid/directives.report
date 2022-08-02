@@ -1,0 +1,46 @@
+ModelId: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 5
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'InputDirective' cannot reference itself indirectly thorough field 'prop'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective
+  Property: 
+  Range: [(12,0)-(12,87)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'InputDirective' cannot reference itself indirectly thorough input object 'InputType'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective
+  Property: 
+  Range: [(12,0)-(12,87)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'ScalarDirective' cannot reference itself indirectly thorough scalar 'Scalar'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective
+  Property: 
+  Range: [(13,0)-(13,54)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'EnumDirective' cannot reference itself indirectly thorough enum 'Enum'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective
+  Property: 
+  Range: [(14,0)-(14,61)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'EnumDirective' cannot reference itself indirectly thorough value 'A'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective
+  Property: 
+  Range: [(14,0)-(14,61)]
+  Location: 
