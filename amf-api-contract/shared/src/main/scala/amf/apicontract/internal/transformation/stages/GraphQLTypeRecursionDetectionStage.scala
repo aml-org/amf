@@ -20,7 +20,7 @@ import amf.shapes.client.scala.model.domain.operations.{
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape}
 import org.mulesoft.common.collections.FilterType
 
-case class GraphQLRecursionDetectionStage() extends TransformationStep() with PlatformSecrets {
+case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() with PlatformSecrets {
   def traverse(element: NamedDomainElement, previous: Seq[NamedDomainElement] = Nil)(implicit
       eh: AMFErrorHandler
   ): Unit = {
