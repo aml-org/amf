@@ -1,9 +1,2 @@
-schema {
-    query: Query
-}
-
-type Query {
-    name: String
-}
-
-directive @invalidExample(arg: String @invalidExample) on ARGUMENT_DEFINITION
+# this conforms because at the moment we are not parsing directive applications within directive declarations
+directive @invalidExample(arg: String @invalidExample(arg: "val")) on ARGUMENT_DEFINITION

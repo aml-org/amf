@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -30,7 +30,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -53,7 +53,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -63,7 +63,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -72,7 +72,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -97,13 +97,13 @@
                 "@value": "prop"
               }
             ],
-            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective": {
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "InputDirective"
                 }
               ],
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node",
               "@type": [
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
@@ -112,7 +112,7 @@
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective"
               }
             ]
           }
@@ -127,13 +127,13 @@
             "@value": "InputType"
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "InputDirective"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -142,12 +142,12 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective"
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -167,11 +167,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/list",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -192,13 +192,13 @@
                     "@value": "A"
                   }
                 ],
-                "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective": {
+                "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective": {
                   "http://a.ml/vocabularies/core#extensionName": [
                     {
                       "@value": "EnumDirective"
                     }
                   ],
-                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node",
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node",
                   "@type": [
                     "http://a.ml/vocabularies/data#Object",
                     "http://a.ml/vocabularies/data#Node",
@@ -206,7 +206,7 @@
                   ],
                   "http://a.ml/vocabularies/data#argument": [
                     {
-                      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node/argument",
+                      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node/argument",
                       "@type": [
                         "http://a.ml/vocabularies/data#Scalar",
                         "http://a.ml/vocabularies/data#Node",
@@ -232,20 +232,20 @@
                 },
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective"
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective"
                   }
                 ]
               }
             ]
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "EnumDirective"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -253,7 +253,7 @@
           ],
           "http://a.ml/vocabularies/data#argument": [
             {
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node/argument",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node/argument",
               "@type": [
                 "http://a.ml/vocabularies/data#Scalar",
                 "http://a.ml/vocabularies/data#Node",
@@ -279,12 +279,12 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective"
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -307,13 +307,13 @@
             "@value": "Scalar"
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective": {
+        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "ScalarDirective"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -321,7 +321,7 @@
           ],
           "http://a.ml/vocabularies/data#argument": [
             {
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node/argument",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node/argument",
               "@type": [
                 "http://a.ml/vocabularies/data#Scalar",
                 "http://a.ml/vocabularies/data#Node",
@@ -347,12 +347,12 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective"
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -368,7 +368,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -378,7 +378,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -387,7 +387,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -397,7 +397,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -406,7 +406,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -416,7 +416,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#property": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop",
                             "@type": [
                               "http://www.w3.org/ns/shacl#PropertyShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -425,7 +425,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#range": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -450,13 +450,13 @@
                                 "@value": "prop"
                               }
                             ],
-                            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective": {
+                            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective": {
                               "http://a.ml/vocabularies/core#extensionName": [
                                 {
                                   "@value": "InputDirective"
                                 }
                               ],
-                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node",
+                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node",
                               "@type": [
                                 "http://a.ml/vocabularies/data#Object",
                                 "http://a.ml/vocabularies/data#Node",
@@ -465,7 +465,7 @@
                             },
                             "http://a.ml/vocabularies/document#customDomainProperties": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective"
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective"
                               }
                             ]
                           }
@@ -480,13 +480,13 @@
                             "@value": "InputType"
                           }
                         ],
-                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective": {
+                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective": {
                           "http://a.ml/vocabularies/core#extensionName": [
                             {
                               "@value": "InputDirective"
                             }
                           ],
-                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node",
+                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node",
                           "@type": [
                             "http://a.ml/vocabularies/data#Object",
                             "http://a.ml/vocabularies/data#Node",
@@ -495,7 +495,7 @@
                         },
                         "http://a.ml/vocabularies/document#customDomainProperties": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/InputDirective"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/InputDirective"
                           }
                         ]
                       }
@@ -518,7 +518,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -531,7 +531,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -541,7 +541,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -550,7 +550,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -560,7 +560,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -569,7 +569,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -592,13 +592,13 @@
                             "@value": "Scalar"
                           }
                         ],
-                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective": {
+                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective": {
                           "http://a.ml/vocabularies/core#extensionName": [
                             {
                               "@value": "ScalarDirective"
                             }
                           ],
-                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node",
+                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node",
                           "@type": [
                             "http://a.ml/vocabularies/data#Object",
                             "http://a.ml/vocabularies/data#Node",
@@ -606,7 +606,7 @@
                           ],
                           "http://a.ml/vocabularies/data#argument": [
                             {
-                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node/argument",
+                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Scalar/customDomainProperties/ScalarDirective/data-node/argument",
                               "@type": [
                                 "http://a.ml/vocabularies/data#Scalar",
                                 "http://a.ml/vocabularies/data#Node",
@@ -632,7 +632,7 @@
                         },
                         "http://a.ml/vocabularies/document#customDomainProperties": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/ScalarDirective"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/ScalarDirective"
                           }
                         ]
                       }
@@ -655,7 +655,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective",
         "@type": [
           "http://a.ml/vocabularies/document#DomainProperty",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -671,7 +671,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective/shape/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -681,7 +681,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -690,7 +690,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument/union/default-union",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument/union/default-union",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -700,7 +700,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective/shape/default-node/property/property/argument/union/default-union/anyOf/nil/default-nil",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -709,7 +709,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -729,11 +729,11 @@
                         ],
                         "http://www.w3.org/ns/shacl#in": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/list",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/list",
                             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                             "http://www.w3.org/2000/01/rdf-schema#_1": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "http://a.ml/vocabularies/data#Node",
@@ -754,13 +754,13 @@
                                     "@value": "A"
                                   }
                                 ],
-                                "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective": {
+                                "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective": {
                                   "http://a.ml/vocabularies/core#extensionName": [
                                     {
                                       "@value": "EnumDirective"
                                     }
                                   ],
-                                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node",
+                                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node",
                                   "@type": [
                                     "http://a.ml/vocabularies/data#Object",
                                     "http://a.ml/vocabularies/data#Node",
@@ -768,7 +768,7 @@
                                   ],
                                   "http://a.ml/vocabularies/data#argument": [
                                     {
-                                      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node/argument",
+                                      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/in/A/customDomainProperties/EnumDirective/data-node/argument",
                                       "@type": [
                                         "http://a.ml/vocabularies/data#Scalar",
                                         "http://a.ml/vocabularies/data#Node",
@@ -794,20 +794,20 @@
                                 },
                                 "http://a.ml/vocabularies/document#customDomainProperties": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective"
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective"
                                   }
                                 ]
                               }
                             ]
                           }
                         ],
-                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective": {
+                        "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective": {
                           "http://a.ml/vocabularies/core#extensionName": [
                             {
                               "@value": "EnumDirective"
                             }
                           ],
-                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node",
+                          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node",
                           "@type": [
                             "http://a.ml/vocabularies/data#Object",
                             "http://a.ml/vocabularies/data#Node",
@@ -815,7 +815,7 @@
                           ],
                           "http://a.ml/vocabularies/data#argument": [
                             {
-                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node/argument",
+                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/scalar/Enum/customDomainProperties/EnumDirective/data-node/argument",
                               "@type": [
                                 "http://a.ml/vocabularies/data#Scalar",
                                 "http://a.ml/vocabularies/data#Node",
@@ -841,7 +841,7 @@
                         },
                         "http://a.ml/vocabularies/document#customDomainProperties": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/valid/directives.graphql#/declares/EnumDirective"
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/EnumDirective"
                           }
                         ]
                       }
