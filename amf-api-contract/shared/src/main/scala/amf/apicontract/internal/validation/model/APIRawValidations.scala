@@ -1204,6 +1204,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = shape("AnyShape"),
         constraint = shape("reservedTypeNames"),
         message = "Type name is reserved by Federation"
+      ),
+      AMFValidation(
+        uri = amfParser("reserved-endpoints"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("reservedEndpoints"),
+        message = "Endpoint is reserved by Federation"
       )
     )
     override def validations(): Seq[AMFValidation] = result
