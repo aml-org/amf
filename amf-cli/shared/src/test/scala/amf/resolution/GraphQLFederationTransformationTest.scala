@@ -87,9 +87,7 @@ class GraphQLFederationTransformationTest extends GraphQLFederationFunSuiteCycle
     for {
       parsed    <- client.parseDocument(basePath + path)
       transform <- Future.successful { client.transform(parsed.document, GraphQLFederationIntrospectionPipeline.name) }
-      validated <- client.validate(transform.baseUnit.cloneUnit())
     } yield {
-      validated.conforms shouldBe true
       transform.baseUnit.asInstanceOf[Document]
     }
   }

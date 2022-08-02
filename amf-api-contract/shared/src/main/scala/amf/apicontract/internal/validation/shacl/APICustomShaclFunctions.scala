@@ -9,7 +9,13 @@ import amf.apicontract.internal.metamodel.domain.security.{
   OpenIdConnectSettingsModel,
   SecuritySchemeModel
 }
-import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
+import amf.apicontract.internal.metamodel.domain.{
+  CallbackModel,
+  CorrelationIdModel,
+  EndPointModel,
+  ParameterModel,
+  TemplatedLinkModel
+}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.apicontract.internal.validation.shacl.graphql.{
   GraphQLAppliedDirective,
@@ -36,6 +42,63 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
+      new CustomShaclFunction {
+        override val name: String = "reservedEndpoints"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val reserved = Set("_service", "_entities")
+          val endpoint = element.asInstanceOf[EndPoint]
+          endpoint.path
+            .option()
+            .map(_.stripPrefix("/query/").stripPrefix("/mutation/").stripPrefix("/subscription/"))
+            .flatMap {
+              case path if reserved.contains(path) =>
+                val rootKind = {
+                  val name = endpoint.name.value()
+                  val end  = name.indexOf(".")
+                  name.substring(0, end)
+                }
+                Some(
+                  ValidationInfo(
+                    EndPointModel.Path,
+                    Some(s"Cannot declare field '$path' in type $rootKind since it is reserved by Federation"),
+                    Some(element.annotations)
+                  )
+                )
+              case _ => None
+            }
+            .foreach(res => validate(Some(res)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "reservedTypeNames"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val reserved = Set("_Any", "FieldSet", "link__Import", "link__Purpose", "_Entity", "_Service")
+          val shape    = element.asInstanceOf[AnyShape]
+          shape.name
+            .option()
+            .flatMap {
+              case name if reserved.contains(name) =>
+                val kind = shape match {
+                  case s: ScalarShape if s.values.nonEmpty   => "enum"
+                  case _: ScalarShape                        => "scalar"
+                  case n: NodeShape if n.isAbstract.value()  => "interface"
+                  case n: NodeShape if n.isInputOnly.value() => "input object"
+                  case _: NodeShape                          => "object"
+                  case _: UnionShape                         => "union"
+                  case _                                     => "type" // should be unreachable
+                }
+                Some(
+                  ValidationInfo(
+                    ScalarShapeModel.Name,
+                    Some(s"Cannot declare $kind with name '$name' since it is reserved by Federation"),
+                    Some(element.annotations)
+                  )
+                )
+              case _ => None
+            }
+            .foreach(res => validate(Some(res)))
+        }
+      },
       new CustomShaclFunction {
         override val name: String = "requiresExternal"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
