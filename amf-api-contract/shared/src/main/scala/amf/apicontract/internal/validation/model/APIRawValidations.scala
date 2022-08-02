@@ -1197,6 +1197,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("PropertyShape"),
         constraint = shape("providesExternal"),
         message = "Fields in @provides must be declared @external"
+      ),
+      AMFValidation(
+        uri = amfParser("reserved-type-names"),
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("AnyShape"),
+        constraint = shape("reservedTypeNames"),
+        message = "Type name is reserved by Federation"
       )
     )
     override def validations(): Seq[AMFValidation] = result

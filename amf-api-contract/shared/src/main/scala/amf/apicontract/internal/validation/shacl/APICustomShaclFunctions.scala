@@ -37,6 +37,36 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
       new CustomShaclFunction {
+        override val name: String = "reservedTypeNames"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val reserved = Set("_Any", "FieldSet", "link__Import", "link__Purpose", "_Entity", "_Service")
+          val shape    = element.asInstanceOf[AnyShape]
+          shape.name
+            .option()
+            .flatMap {
+              case name if reserved.contains(name) =>
+                val kind = shape match {
+                  case s: ScalarShape if s.values.nonEmpty   => "enum"
+                  case _: ScalarShape                        => "scalar"
+                  case n: NodeShape if n.isAbstract.value()  => "interface"
+                  case n: NodeShape if n.isInputOnly.value() => "input object"
+                  case _: NodeShape                          => "object"
+                  case _: UnionShape                         => "union"
+                  case _                                     => "type" // should be unreachable
+                }
+                Some(
+                  ValidationInfo(
+                    ScalarShapeModel.Name,
+                    Some(s"Cannot declare $kind with name '$name' since it is reserved by Federation"),
+                    Some(element.annotations)
+                  )
+                )
+              case _ => None
+            }
+            .foreach(res => validate(Some(res)))
+        }
+      },
+      new CustomShaclFunction {
         override val name: String = "requiresExternal"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val prop = element.asInstanceOf[PropertyShape]
