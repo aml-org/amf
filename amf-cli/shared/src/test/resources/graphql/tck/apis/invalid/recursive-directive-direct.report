@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-direct.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'invalidExample' cannot reference itself indirectly thorough field 'arg'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-direct.graphql#/declares/invalidExample
+  Property: 
+  Range: [(2,0)-(2,89)]
+  Location: 

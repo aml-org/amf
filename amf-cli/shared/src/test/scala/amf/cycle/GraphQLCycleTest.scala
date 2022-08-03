@@ -105,10 +105,32 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   }
 
   test("Can parse APIs with simple descriptions") {
-    cycle("descriptions/simple.graphql", "descriptions/simple.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps))
+    cycle(
+      "descriptions/simple.graphql",
+      "descriptions/simple.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
   }
 
   test("Can parse APIs with block descriptions") {
-    cycle("descriptions/block.graphql", "descriptions/block.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps))
+    cycle(
+      "descriptions/block.graphql",
+      "descriptions/block.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
+  }
+
+  test("Can parse API with directive applications within directive declarations") {
+    cycle(
+      "directive-with-directives/api.graphql",
+      "directive-with-directives/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
   }
 }

@@ -94,6 +94,11 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     addToDeclarations(directive)
   }
 
+  private def parseDirectiveApplicationInDirectiveDeclaration(directiveDef: Node): Unit = {
+    GraphQLDirectiveApplicationInDeclarationParser(directiveDef).parse()
+  }
+
+
   def parseTypeExtension(typeExtensionDef: Node): Unit = {
     val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse()
     ctx.declarations += shapeExtension
@@ -104,6 +109,12 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     this
       .collect(node, typeSystemDefinitionPath :+ DIRECTIVE_DEFINITION) foreach { case directiveDef: Node =>
       parseDirectiveDeclaration(directiveDef)
+    }
+
+    // let's parse directive applications within directive declarations
+    this
+      .collect(node, typeSystemDefinitionPath :+ DIRECTIVE_DEFINITION) foreach { case directiveDef: Node =>
+      parseDirectiveApplicationInDirectiveDeclaration(directiveDef)
     }
 
     // let's parse schema

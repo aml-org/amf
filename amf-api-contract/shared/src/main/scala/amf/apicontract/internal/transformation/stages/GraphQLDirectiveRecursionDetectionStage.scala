@@ -31,11 +31,8 @@ case class GraphQLDirectiveRecursionDetectionStage() extends TransformationStep(
           case _: DataNode                           => "value"
           case _                                     => "type" // should be unreachable
         }
-        if (element == source.schema)
-          s"Directive definition '${source.name.value()}' cannot reference itself"
-        else
-          s"Directive definition '${source.name
-              .value()}' cannot reference itself indirectly thorough $kind '${element.name.value()}'"
+        s"Directive definition '${source.name
+            .value()}' cannot reference itself indirectly thorough $kind '${element.name.value()}'"
       }
       eh.violation(RecursiveShapeSpecification, source.id, None, message, source.position(), source.location())
     }

@@ -6,7 +6,7 @@ Number of results: 5
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied here
+  Message: Directive MyDirective cannot be applied to schema
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location.api.graphql#/web-api/customDomainProperties/MyDirective
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied here
+  Message: Directive MyDirective cannot be applied to field 'name'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location.api.graphql#/web-api/endpoint/%2Fquery%2Fname/customDomainProperties/MyDirective
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied here
+  Message: Directive MyDirective cannot be applied to object 'MyObject'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location.api.graphql#/declares/shape/MyObject/customDomainProperties/MyDirective
   Property: 
@@ -30,7 +30,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied here
+  Message: Directive MyDirective cannot be applied to argument 'myArgument'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/MyDirective
   Property: 
@@ -38,7 +38,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied here
+  Message: Directive MyDirective cannot be applied to field 'myField'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/MyDirective
   Property: 
