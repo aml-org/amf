@@ -24,9 +24,10 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
   }
 
   def renderInheritance(nodeShape: NodeShape): String = {
-    nodeShape.effectiveInherits.headOption map { iface =>
-      s"implements ${iface.name.value()} "
-    } getOrElse ""
+    if (nodeShape.effectiveInherits.nonEmpty) {
+      val names = nodeShape.effectiveInherits.map(_.name.value())
+      s"implements ${names.mkString(" & ")} "
+    } else ""
   }
 
   def checkObjectType(name: String, shape: NodeShape): String = {
