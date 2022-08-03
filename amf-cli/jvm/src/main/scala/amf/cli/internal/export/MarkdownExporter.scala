@@ -24,11 +24,11 @@ object MarkdownExporter {
       .addHeader(2, model.name)
       .addText(model.doc)
       .addText("Types:")
-      .addBullet(model.types)
+      .addBullet(model.types.map(formatToCode))
       .startTable(List("Name", "Value", "Documentation", "Namespace"))
     model.fields
       .foldLeft(tempBuilder) { (builder, field) =>
-        builder.addRow(List(field.name, formatFieldValue(field), field.doc, field.namespace))
+        builder.addRow(List(field.name, formatFieldValue(field), field.doc, formatToCode(field.namespace)))
       }
       .addText("")
   }
@@ -41,6 +41,8 @@ object MarkdownExporter {
     if (field.isArray) value = s"[$value]"
     value
   }
+
+  private def formatToCode(value: String): String = s"`$value`"
 
   private def formatToAnchor(value: String): String = value.replace(" ", "-").toLowerCase
 }
