@@ -2,6 +2,10 @@ type Query {
     name: String
 }
 
-extend interface HasName {
+type Person {
     name: String
+}
+
+type Person {
+    surname: String
 }

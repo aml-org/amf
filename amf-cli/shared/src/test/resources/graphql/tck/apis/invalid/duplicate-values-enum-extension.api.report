@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-enum-values
   Message: Each enum value must be unique, 'PLUTO' it's not
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum-extension.api.graphql#/declares/scalar/Planet/or/scalar/Planet_1
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-values-enum-extension.api.graphql#/declares/scalar/Planet
   Property: http://www.w3.org/ns/shacl#in
-  Range: [(20,0)-(23,1)]
+  Range: [(5,0)-(8,1)]
   Location: 

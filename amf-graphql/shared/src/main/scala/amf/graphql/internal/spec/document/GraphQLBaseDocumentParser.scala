@@ -46,7 +46,6 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       fCtx.linkingActions.executeAll()
     }
     val declarations = ctx.declarations.shapes.values.toList ++
-      ctx.declarations.shapeExtensions.values.toList.flatten ++
       ctx.declarations.annotations.values.toList
     doc.withDeclares(declarations).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
   }
@@ -99,7 +98,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   def parseTypeExtension(typeExtensionDef: Node): Unit = {
     val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse()
-    ctx.declarations += shapeExtension
+    addToDeclarations(shapeExtension)
   }
 
   private def processTypes(node: Node): Unit = {

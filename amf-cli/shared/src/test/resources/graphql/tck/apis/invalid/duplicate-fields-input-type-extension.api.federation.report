@@ -8,15 +8,15 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
   Message: Cannot exist two or more fields with name 'anotherRandomText'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-input-type-extension.api.graphql#/declares/shape/InputType/and/shape/InputType_1/property/property/anotherRandomText
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-input-type-extension.api.graphql#/declares/shape/InputType/property/property/anotherRandomText
   Property: 
-  Range: [(23,4)-(23,29)]
+  Range: [(6,4)-(6,29)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
   Message: Cannot exist two or more fields with name 'anotherRandomText'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-input-type-extension.api.graphql#/declares/shape/InputType/and/shape/InputType_1/property/property/anotherRandomText_2
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-input-type-extension.api.graphql#/declares/shape/InputType/property/property/anotherRandomText_1
   Property: 
-  Range: [(24,4)-(24,29)]
+  Range: [(7,4)-(7,29)]
   Location: 

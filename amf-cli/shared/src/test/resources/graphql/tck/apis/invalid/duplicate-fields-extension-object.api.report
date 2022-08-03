@@ -8,15 +8,15 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
   Message: Cannot exist two or more fields with name 'mapUrl'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location/and/shape/Location_1/property/property/mapUrl
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location/property/property/mapUrl
   Property: 
-  Range: [(15,4)-(15,18)]
+  Range: [(6,4)-(6,18)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-field
   Message: Cannot exist two or more fields with name 'mapUrl'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location/and/shape/Location_1/property/property/mapUrl_2
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-fields-extension-object.api.graphql#/declares/shape/Location/property/property/mapUrl_1
   Property: 
-  Range: [(16,4)-(16,18)]
+  Range: [(7,4)-(7,18)]
   Location: 

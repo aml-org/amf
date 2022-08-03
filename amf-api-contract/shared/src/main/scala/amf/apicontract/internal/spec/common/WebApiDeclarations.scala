@@ -62,7 +62,6 @@ class WebApiDeclarations(
   var operationTraits: Map[String, Operation]           = Map()
   var messageTraits: Map[String, Message]               = Map()
   var others: Map[String, BaseUnit]                     = Map()
-  var shapeExtensions: Map[String, Seq[Shape]]          = Map() // we can have 0+ shape extensions with the same name
 
   override def addLibrary(alias: String, declarations: Declarations): Unit = {
     libraries = libraries + (alias -> declarations)
@@ -94,7 +93,6 @@ class WebApiDeclarations(
     responses.foreach { case (k, s) => merged.responses += (k -> s) }
     other.responses.foreach { case (k, s) => merged.responses += (k -> s) }
     extensions.foreach { case (k, s) => merged.extensions = merged.extensions + (k -> s) }
-    shapeExtensions.foreach { case (k, s) => merged.shapeExtensions = merged.shapeExtensions + (k -> s) }
   }
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
@@ -127,14 +125,7 @@ class WebApiDeclarations(
     next.operationTraits = operationTraits
     next.messageTraits = next.messageTraits
     next.others = others
-    next.shapeExtensions = shapeExtensions
     next
-  }
-
-  protected def addSchemaExtension(s: Shape): Unit = {
-    // we should not resolve declarations because schema extensions are non-referenciable
-    val newSeq = shapeExtensions.getOrElse(s.name.value(), Nil) :+ s
-    shapeExtensions += (s.name.value() -> newSeq)
   }
 
   override def +=(element: DomainElement): WebApiDeclarations = {
@@ -144,8 +135,6 @@ class WebApiDeclarations(
         resourceTypes = resourceTypes + (r.name.value() -> r)
       case t: Trait =>
         traits = traits + (t.name.value() -> t)
-      case s: Shape if s.isExtension.value() =>
-        addSchemaExtension(s)
       case h: Parameter if h.annotations.contains(classOf[DeclaredHeader]) =>
         headers = headers + (h.name.value() -> h)
       case p: Parameter =>
