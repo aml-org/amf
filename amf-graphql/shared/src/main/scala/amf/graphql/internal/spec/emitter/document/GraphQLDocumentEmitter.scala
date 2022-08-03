@@ -1,8 +1,7 @@
 package amf.graphql.internal.spec.emitter.document
 
-import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.emitter.domain.{GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
@@ -10,7 +9,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 
 class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GraphQLEmitter {
 
-  val ctx = new GraphQLEmitterContext(document).classifyEndpoints().indexInputTypes
+  val ctx: GraphQLEmitterContext = new GraphQLEmitterContext(document).classifyEndpoints().indexInputTypes
 
   def emit(): Unit = {
     builder.doc { doc =>
@@ -22,6 +21,7 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
     }
   }
 
+  // TODO: schema is not being rendered
   private def emitSchema(doc: StringDocBuilder) = {
     doc.fixed { b =>
       ctx.webApi.description.option().foreach { description =>
@@ -44,20 +44,18 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
   }
 
   def emitTopLevelTypes(b: StringDocBuilder): Unit = {
-    ctx.queryType.foreach { queryType =>
-      GraphQLRootTypeEmitter(queryType, ctx, b).emit()
-    }
-    ctx.mutationType.foreach { queryType =>
-      GraphQLRootTypeEmitter(queryType, ctx, b).emit()
-    }
-    ctx.subscriptionType.foreach { queryType =>
+    val rootLevelTypes = ctx.queryType ++ ctx.mutationType ++ ctx.subscriptionType
+    rootLevelTypes.foreach { queryType =>
       GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
   }
 
   def emitTypes(doc: StringDocBuilder): Unit = {
-    document.asInstanceOf[Document].declares.foreach { case shape: AnyShape =>
-      GraphQLTypeEmitter(shape, ctx, doc).emit()
+    document.asInstanceOf[Document].declares.foreach {
+      case shape: AnyShape =>
+        GraphQLTypeEmitter(shape, ctx, doc).emit()
+      case directive: CustomDomainProperty =>
+      // TODO: emit directive declarations, something like: GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
     }
   }
 

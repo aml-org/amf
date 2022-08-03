@@ -11,21 +11,28 @@ import org.scalatest.freespec.AsyncFreeSpec
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/** Steps: 1 - Simple cycle for <<directory>>: parse origin spec and generates target spec. Origin file:
-  * api.<<fileExtension>> Golden file: dumped.<<fileExtension>> Cannot be ignored 2 - Cycle for golden <<directory>>:
-  * parse dumped (previous step golden) and generates the same target. Check the generated target. Origin file:
-  * dumped.<<fileExtension>> Golden file: dumped.<<fileExtension>> To ignore this step, add .ignore extension to
-  * dumped.<<fileExtension>> (Step 1 will run anyway) 3 - Generate jsonld for <<directory>>: parse origin spec and
-  * generates a jsonld. Origin file: api.<<fileExtension>> Golden file: api.<<fileExtension>>.jsonld Cannot be ignored 4
-  * \- Generate golden from jsonld for <<directory>>: parse the jsonld for the origin and generates a target spec.
-  * Origin file: api.<<fileExtension>>.jsonld Golden file: api.<<fileExtension>>.jsonld.<<fileExtension>> To ignore this
-  * step, add .ignore extension to api.<<fileExtension>>.jsonld (Step 3 will run anyway) 5 - Parse golden from jsonld
-  * for <<directory>>: parse dumped spec target generated from jsonld and generates the same target. Check the generated
-  * target throw jsonld. Origin file: api.<<fileExtension>>.jsonld.<<fileExtension>> Golden file:
-  * api.<<fileExtension>>.jsonld.<<fileExtension>> To ignore this step add .ignore extension to
-  * api.<<fileExtension>>.jsonld.<<fileExtension>> (Step 4 will run anyway, unless that be explicitly ignored).
+/** Steps:
+  *   1. Simple cycle for [[directory]]: parse origin spec and generates target spec. Origin file: api.[[fileExtension]]
+  *      Golden file: dumped.[[fileExtension]] Cannot be ignored
   *
-  * <<directory>> : each directory case in the basePath location. <<fileExtension>>: the file extension provided for
+  *   1. Cycle for golden [[directory]]: parse dumped (previous step golden) and generates the same target. Check the
+  *      generated target. Origin file: dumped.[[fileExtension]] Golden file: dumped.[[fileExtension]] To ignore this
+  *      step, add .ignore extension to dumped.[[fileExtension]] (Step 1 will run anyway)
+  *
+  *   1. Generate jsonld for [[directory]]: parse origin spec and generates a jsonld. Origin file: api.[[fileExtension]]
+  *      Golden file: api.[[fileExtension]].jsonld Cannot be ignored
+  *
+  *   1. Generate golden from jsonld for [[directory]]: parse the jsonld for the origin and generates a target spec.
+  *      Origin file: api.[[fileExtension]].jsonld Golden file: api.[[fileExtension]].jsonld.[[fileExtension]] To ignore
+  *      this step, add .ignore extension to api.[[fileExtension]].jsonld (Step 3 will run anyway)
+  *
+  *   1. Parse golden from jsonld for [[directory]]: parse dumped spec target generated from jsonld and generates the
+  *      same target. Check the generated target throw jsonld. Origin file:
+  *      api.[[fileExtension]].jsonld.[[fileExtension]] Golden file: api.[[fileExtension]].jsonld.[[fileExtension]] To
+  *      ignore this step add .ignore extension to api.[[fileExtension]].jsonld.[[fileExtension]] (Step 4 will run
+  *      anyway, unless that be explicitly ignored).
+  *
+  * [[directory]] : each directory case in the basePath location. [[fileExtension]]: the file extension provided for
   * test.
   */
 trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonLdSerializationSuite {
