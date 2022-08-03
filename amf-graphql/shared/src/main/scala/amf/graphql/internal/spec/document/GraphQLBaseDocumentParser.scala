@@ -3,9 +3,7 @@ package amf.graphql.internal.spec.document
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
@@ -120,7 +118,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     // let's parse schema
     this.collect(node, typeSystemDefinitionPath :+ SCHEMA_DEFINITION).toList match {
       case head :: Nil => parseSchemaNode(head)
-      case _           => // ignore TODO violation
+      case _           => // ignore
     }
 
     // let's parse types

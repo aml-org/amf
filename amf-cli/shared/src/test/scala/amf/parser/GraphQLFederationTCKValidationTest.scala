@@ -28,6 +28,10 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
     "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-requires-nested.graphql"
   )
 
+  private val validFederationApisInvalidInGraphQL = Set(
+    "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/mandatory-schema-node.api.graphql"
+  )
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   // Test valid APIs
@@ -53,6 +57,11 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
         assertConforms(s"$basePath/valid/$api")
       }
     }
+    validFederationApisInvalidInGraphQL.foreach { api =>
+      ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
+        assertConforms(api)
+      }
+    }
   }
 
   private def runInvalidTests(base: String, testNamePrefix: String, reportProducer: String => String) = {
@@ -66,7 +75,8 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
       }
       .foreach { api =>
         val finalPath = s"$base/invalid/$api.graphql"
-        if (ignoredApis.contains(finalPath)) {
+        if (validFederationApisInvalidInGraphQL.contains(finalPath)) {} // ignore
+        else if (ignoredApis.contains(finalPath)) {
           ignore(s"$testNamePrefix TCK > Apis > Invalid > $api: should not conform") {
             val report = reportProducer(finalPath)
             assertReport(finalPath, report)
