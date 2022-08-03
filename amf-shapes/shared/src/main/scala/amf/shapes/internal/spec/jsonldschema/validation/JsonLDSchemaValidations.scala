@@ -40,6 +40,16 @@ object JsonLDSchemaValidations extends Validations {
     "Encoded domain element is incompatible with jsonschema ld parsing"
   )
 
+  val UnsupportedScalarTagType: ValidationSpecification = ValidationSpecification(
+    "unsupported-scalar-tagType",
+    "Unsupported scalar tag type"
+  )
+
+  val IncompatibleScalarDataType: ValidationSpecification = ValidationSpecification(
+    "incompatible-scalar-data-type",
+    "Scalar data type does not match with tag type"
+  )
+
   override val specification: String                      = JsonLDSchema.id
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)

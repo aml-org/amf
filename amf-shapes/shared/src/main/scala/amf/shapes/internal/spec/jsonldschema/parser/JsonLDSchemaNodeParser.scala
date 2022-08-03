@@ -13,7 +13,7 @@ case class JsonLDSchemaNodeParser(shape: Shape, node: YNode)(implicit ctx: JsonL
       case YType.Map => JsonLDObjectElementParser(node.as[YMap])(ctx).parse(shape)
       case YType.Seq => JsonLDArrayElementParser(node.as[YSequence])(ctx).parse(shape)
       case _ if node.value.isInstanceOf[YScalar] =>
-        JsonLDScalarElementParser
+        JsonLDScalarElementParser(node.as[YScalar]).parse(shape)
     }
   }
 }

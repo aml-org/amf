@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.jsonldschema.instance.model.domain
 
-import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
