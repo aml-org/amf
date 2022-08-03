@@ -9,9 +9,13 @@ import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, U
 case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: StringDocBuilder) {
 
   def emit(): Unit = {
+    if (shape.isExtension.value()) {
+      // TODO: should unify extension emission (prepend 'extend' instead of checking in every emitter)
+    }
     shape match {
-      case enum: ScalarShape if enum.values.nonEmpty =>
-        emitEnum(enum, b)
+      case scalar: ScalarShape =>
+        if (scalar.values.nonEmpty) emitEnum(scalar, b)
+        else {} // TODO: emit scalar
       case node: NodeShape =>
         emitObject(node, b)
       case union: UnionShape =>
@@ -40,7 +44,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
       val maybeInheritance = renderInheritance(node)
       val name             = shape.name.value()
       val effectiveType    = checkObjectType(name, node)
-      f.+=(s"$effectiveType $name $maybeInheritance{", pos(node.annotations))
+      f.+=(s"$isExtension$effectiveType $name $maybeInheritance{", pos(node.annotations))
       f.obj { o =>
         o.list { l =>
           node.properties.foreach { prop =>
@@ -58,7 +62,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
   def emitUnion(shape: UnionShape, b: StringDocBuilder): Unit = {
     b.fixed { f =>
       val members = shape.anyOf.map(_.name.value()).mkString(" | ")
-      f.+=(s"union ${shape.name.value()} = $members", pos(shape.annotations))
+      f.+=(s"${isExtension}union ${shape.name.value()} = $members", pos(shape.annotations))
     }
   }
 
@@ -66,7 +70,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
     b.fixed { f =>
       val name    = shape.name.value()
       val members = shape.values.collect { case s: ScalarNode => s }
-      f.+=(s"enum $name {", pos(shape.annotations))
+      f.+=(s"${isExtension}enum $name {", pos(shape.annotations))
       f.obj { o =>
         members.foreach { value =>
           o.+=(s"${value.value.value()}", pos(value.annotations))
@@ -75,4 +79,6 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
       f.+=("}")
     }
   }
+
+  def isExtension: String = if (shape.isExtension.value()) "extend " else ""
 }
