@@ -2,6 +2,13 @@ type Query {
 
   name: String
 }
-type InputType {
+type Mutation {
 
+  changeUserStatus(input_: InputType!): OutputType
+}
+type OutputType {
+  success : Boolean
+}
+input InputType {
+  randomText : String
 }

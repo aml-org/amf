@@ -2,7 +2,7 @@ type Query {
 
   text: String
 }
-type Person implements HasId {
+type Person implements HasName & HasId {
   id : ID!
   name : String!
   surname : String!
