@@ -1,5 +1,7 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
+import amf.shapes.client.scala.model.document.EntityContextBuilder
+import amf.shapes.internal.spec.jsonldschema.instance.model.domain.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDScalarElementBuilder}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
@@ -9,10 +11,11 @@ import scala.collection.mutable
 
 class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementBuilder(location) {
   private var items: IndexedSeq[JsonLDElementBuilder] = IndexedSeq.empty
+  override type THIS = JsonLDArrayElementBuilder
 
   override def merge(
-      other: JsonLDArrayElementBuilder.this.type
-  )(implicit ctx: JsonLDParserContext): JsonLDArrayElementBuilder.this.type = {
+      other: JsonLDArrayElementBuilder
+  )(implicit ctx: JsonLDParserContext): JsonLDArrayElementBuilder = {
     super.merge(other)
     this.withItems(mergeItems(other.items))
     this
@@ -48,6 +51,15 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
       case scalar: JsonLDScalarElementBuilder => scalar.merge(other.asInstanceOf[JsonLDScalarElementBuilder])
     }
   }
+
+  override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
+    val array = new JsonLDArray(classTerms.toList)
+    items.foreach { i => array.addMember(i.build(ctxBuilder)) }
+    ctxBuilder + array.meta
+    array
+  }
+
+  override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDArrayElementBuilder]
 }
 
 object JsonLDArrayElementBuilder {
