@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-interface-fields.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
+  Message: inputReturnField must be an output type, InputType it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-interface-fields.api.graphql#/declares/shape/Interface
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(10,4)-(10,31)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
+  Message: inputReturnFieldArray must be an output type, a list of InputType it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-interface-fields.api.graphql#/declares/shape/Interface
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(11,4)-(11,38)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
+  Message: inputReturnFieldArrayRequired must be an output type, a list of InputType it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-interface-fields.api.graphql#/declares/shape/Interface
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(12,4)-(12,47)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
+  Message: inputReturnFieldArrayRequired2 must be an output type, a list of InputType it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-interface-fields.api.graphql#/declares/shape/Interface
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(13,4)-(13,49)]
+  Location: 

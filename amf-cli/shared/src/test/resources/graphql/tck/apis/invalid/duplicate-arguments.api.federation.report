@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-arguments.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-argument
+  Message: Cannot exist two or more arguments with name 'unit'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/unit
+  Property: 
+  Range: [(12,11)-(12,29)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-argument
+  Message: Cannot exist two or more arguments with name 'unit'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-arguments.api.graphql#/declares/shape/Starship/supportedOperation/length/expects/request/parameter/parameter/unit_1
+  Property: 
+  Range: [(12,31)-(12,48)]
+  Location: 

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-interface-implementations
+  Message: Person cannot implement interface 'HasName' more than once
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql#/declares/shape/Person
+  Property: http://a.ml/vocabularies/shapes#inherits
+  Range: [(9,0)-(12,1)]
+  Location: 

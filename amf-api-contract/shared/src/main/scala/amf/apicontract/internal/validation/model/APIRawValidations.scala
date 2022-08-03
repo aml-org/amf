@@ -1183,7 +1183,7 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object GraphQLFederationValidations extends ProfileValidations {
-    private lazy val result                        = Seq(
+    private lazy val result = GraphQLValidations.validations() ++ Seq(
       AMFValidation(
         uri = amfParser("requires-external"),
         owlClass = sh("PropertyShape"),
