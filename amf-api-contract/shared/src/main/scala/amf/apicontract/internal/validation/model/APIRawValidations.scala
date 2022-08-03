@@ -1068,6 +1068,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("invalidIntrospectionName")
       ),
       AMFValidation(
+        message = "Must have 'schema' node or 'Query', 'Mutation' or 'Subscription' types",
+        owlClass = apiContract("API"),
+        owlProperty = apiContract("endpoint"),
+        constraint = shape("mandatoryGraphqlNonEmptyEndpoints")
+      ),
+      AMFValidation(
         uri = amfParser("invalid-extension-argument-type"),
         owlClass = apiContract("DomainExtension"),
         owlProperty = apiContract("extensionName"),
@@ -1183,7 +1189,12 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object GraphQLFederationValidations extends ProfileValidations {
-    private lazy val result                        = Seq(
+
+    private val ignored = Set(
+      shape("mandatoryGraphqlNonEmptyEndpoints").iri()
+    )
+
+    private lazy val result = graphqlValidations ++ Seq(
       AMFValidation(
         uri = amfParser("requires-external"),
         owlClass = sh("PropertyShape"),
@@ -1213,6 +1224,8 @@ object APIRawValidations extends CommonValidationDefinitions {
         message = "Endpoint is reserved by Federation"
       )
     )
+
+    private def graphqlValidations = GraphQLValidations.validations().filter(v => !ignored.contains(v.constraint))
     override def validations(): Seq[AMFValidation] = result
   }
 

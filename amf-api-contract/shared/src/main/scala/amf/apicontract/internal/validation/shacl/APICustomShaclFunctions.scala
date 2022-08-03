@@ -1,6 +1,7 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
@@ -42,6 +43,26 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
+      new CustomShaclFunction {
+        override val name: String = "mandatoryGraphqlNonEmptyEndpoints"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val webapi            = element.asInstanceOf[Api]
+          val hasEndpointsField = webapi.fields.exists(BaseApiModel.EndPoints)
+          val hasEndpoints      = webapi.endPoints.nonEmpty
+          if (!hasEndpoints && !hasEndpointsField) {
+            validate(
+              Some(
+                ValidationInfo(
+                  BaseApiModel.EndPoints,
+                  Some("Must have 'schema' node or 'Query', 'Mutation' or 'Subscription' types"),
+                  Some(element.annotations)
+                )
+              )
+            )
+          }
+        }
+      },
       new CustomShaclFunction {
         override val name: String = "reservedEndpoints"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {

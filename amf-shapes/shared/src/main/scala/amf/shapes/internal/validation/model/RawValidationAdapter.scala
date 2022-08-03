@@ -2,9 +2,13 @@ package amf.shapes.internal.validation.model
 
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.validation.core.ShaclSeverityUris.amfToShaclSeverity
-import amf.core.internal.validation.core.{FunctionConstraint, NodeConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.internal.validation.core.{
+  FunctionConstraint,
+  NodeConstraint,
+  PropertyConstraint,
+  ValidationSpecification
+}
 import amf.shapes.internal.validation.model.AMFRawValidations.AMFValidation
-import amf.shapes.internal.validation.shacl.ComplexShaclCustomValidations
 
 object RawValidationAdapter extends ImportUtils {
 
@@ -23,10 +27,7 @@ object RawValidationAdapter extends ImportUtils {
           case sh @ ValueType(Namespace.Shacl, _) =>
             Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(spec, validation, sh))))
           case sh @ ValueType(Namespace.Shapes, _) =>
-            findComplexShaclConstraint(sh)
-              .getOrElse(
-                Seq(specWithFunctionConstraint(validation, spec, sh))
-              )
+            Seq(specWithFunctionConstraint(validation, spec, sh))
 
           case _ => Seq(spec)
         }
@@ -108,25 +109,7 @@ object RawValidationAdapter extends ImportUtils {
   private def parseFunctionConstraint(validation: AMFValidation, sh: ValueType): FunctionConstraint = {
     FunctionConstraint(
       message = validation.message,
-      functionName = None, // i have to ignore the function name so it will be taken from the generated js library
-      code = Some(JsCustomValidations(sh.name)),
       internalFunction = Some(sh.name)
     )
-  }
-
-  private def findComplexShaclConstraint(sh: ValueType): Option[Seq[ValidationSpecification]] = {
-    ComplexShaclCustomValidations.defintions.get(sh.name)
-  }
-}
-
-// TODO: erase this. This is kept for legacy reasons as we no longer use JS functions for shacl validations. JS function behaviour is hardcoded in
-// several places and that change is out of the scope of this issue.
-object JsCustomValidations {
-  def apply(name: String): String = {
-    """
-      |function(shape) {
-      |  return true;
-      |}
-      """.stripMargin
   }
 }
