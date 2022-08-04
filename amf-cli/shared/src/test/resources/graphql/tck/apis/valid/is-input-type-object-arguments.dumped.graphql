@@ -3,8 +3,15 @@ type Query {
   a: String
 }
 type Object {
-
+  queryInputType(input_: InputType): String
+  queryEnum(input_: Enum): String
+  queryScalar(input_: String): String
+  queryCustomScalar(input_: Pepe): String
 }
 type InputType {
-
+  name : String
+}
+enum Enum {
+  A
+  B
 }

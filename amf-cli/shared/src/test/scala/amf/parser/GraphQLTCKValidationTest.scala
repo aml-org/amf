@@ -3,27 +3,22 @@ package amf.parser
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.GraphQLProfile
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.cycle.GraphQLFunSuiteCycleTests
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.io.FileAssertionTest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
-  val tckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
-  val apisPath: String = s"$tckPath/apis"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class GraphQLTCKValidationTest extends GraphQLFunSuiteCycleTests {
+  override def basePath: String = "amf-cli/shared/src/test/resources/graphql/tck/apis"
 
   // Test valid APIs
-  fs.syncFile(s"$apisPath/valid").list.foreach { api =>
-    ignore(s"GraphQL TCK > Apis > Valid > $api: should conform") { assertConforms(s"$apisPath/valid/$api") }
+  fs.syncFile(s"$basePath/valid").list.foreach { api =>
+    ignore(s"GraphQL TCK > Apis > Valid > $api: should conform") { assertConforms(s"$basePath/valid/$api") }
   }
 
   // Test invalid APIs
-  fs.syncFile(s"$apisPath/invalid")
+  fs.syncFile(s"$basePath/invalid")
     .list
     .groupBy(apiName)
     .values
@@ -33,13 +28,13 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
     }
     .foreach { api =>
       test(s"GraphQL TCK > Apis > Invalid > $api: should not conform") {
-        assertReport(s"$apisPath/invalid/$api.graphql")
+        assertReport(s"$basePath/invalid/$api.graphql")
       }
     }
 
   // Test singular API
   test("directive-argument-missing-value") {
-    assertReport(s"$apisPath/invalid/directive-argument-missing-value.api.graphql")
+    assertReport(s"$basePath/invalid/directive-argument-missing-value.api.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {
@@ -73,5 +68,4 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with F
   }
 
   private def apiName(api: String): String = api.split('.').dropRight(1).mkString(".")
-
 }

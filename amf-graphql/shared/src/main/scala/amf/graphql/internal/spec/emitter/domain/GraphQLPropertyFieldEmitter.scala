@@ -1,6 +1,5 @@
 package amf.graphql.internal.spec.emitter.domain
 
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos

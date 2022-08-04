@@ -153,8 +153,6 @@ type Starship implements Node {
     entire crew without having to resupply.
   """
   consumables : String
-  pilotConnection(after: String,first: Int,before: String,last: Int): StarshipPilotsConnection
-  filmConnection(after: String,first: Int,before: String,last: Int): StarshipFilmsConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -167,6 +165,8 @@ type Starship implements Node {
   The ID of an object
   """
   id : ID!
+  pilotConnection(after: String,first: Int,before: String,last: Int): StarshipPilotsConnection
+  filmConnection(after: String,first: Int,before: String,last: Int): StarshipFilmsConnection
 }
 type FilmStarshipsEdge {
   """
@@ -237,7 +237,6 @@ type Vehicle implements Node {
     Transport".
   """
   model : String
-
   """
   The class of this vehicle, such as "Wheeled" or "Repulsorcraft".
   """
@@ -275,8 +274,6 @@ type Vehicle implements Node {
     entire crew without having to resupply.
   """
   consumables : String
-  pilotConnection(after: String,first: Int,before: String,last: Int): VehiclePilotsConnection
-  filmConnection(after: String,first: Int,before: String,last: Int): VehicleFilmsConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -289,6 +286,8 @@ type Vehicle implements Node {
   The ID of an object
   """
   id : ID!
+  pilotConnection(after: String,first: Int,before: String,last: Int): VehiclePilotsConnection
+  filmConnection(after: String,first: Int,before: String,last: Int): VehicleFilmsConnection
 }
 type StarshipPilotsConnection {
   """
@@ -481,11 +480,6 @@ type Film implements Node {
   The ISO 8601 date format of film release at original creator country.
   """
   releaseDate : String
-  speciesConnection(after: String,first: Int,before: String,last: Int): FilmSpeciesConnection
-  starshipConnection(after: String,first: Int,before: String,last: Int): FilmStarshipsConnection
-  vehicleConnection(after: String,first: Int,before: String,last: Int): FilmVehiclesConnection
-  characterConnection(after: String,first: Int,before: String,last: Int): FilmCharactersConnection
-  planetConnection(after: String,first: Int,before: String,last: Int): FilmPlanetsConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -498,6 +492,11 @@ type Film implements Node {
   The ID of an object
   """
   id : ID!
+  speciesConnection(after: String,first: Int,before: String,last: Int): FilmSpeciesConnection
+  starshipConnection(after: String,first: Int,before: String,last: Int): FilmStarshipsConnection
+  vehicleConnection(after: String,first: Int,before: String,last: Int): FilmVehiclesConnection
+  characterConnection(after: String,first: Int,before: String,last: Int): FilmCharactersConnection
+  planetConnection(after: String,first: Int,before: String,last: Int): FilmPlanetsConnection
 }
 type FilmStarshipsConnection {
   """
@@ -592,8 +591,6 @@ type Planet implements Node {
     of water.
   """
   surfaceWater : Float
-  residentConnection(after: String,first: Int,before: String,last: Int): PlanetResidentsConnection
-  filmConnection(after: String,first: Int,before: String,last: Int): PlanetFilmsConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -606,6 +603,8 @@ type Planet implements Node {
   The ID of an object
   """
   id : ID!
+  residentConnection(after: String,first: Int,before: String,last: Int): PlanetResidentsConnection
+  filmConnection(after: String,first: Int,before: String,last: Int): PlanetFilmsConnection
 }
 type FilmPlanetsConnection {
   """
@@ -772,13 +771,11 @@ type Person implements Node {
     "n/a" if the person does not have a gender.
   """
   gender : String
-
   """
   The hair color of this person. Will be "unknown" if not known or "n/a" if the
     person does not have hair.
   """
   hairColor : String
-
   """
   The height of the person in centimeters.
   """
@@ -795,13 +792,10 @@ type Person implements Node {
   A planet that this person was born on or inhabits.
   """
   homeworld : Planet
-  filmConnection(after: String,first: Int,before: String,last: Int): PersonFilmsConnection
   """
   The species that this person belongs to, or null if unknown.
   """
   species : Species
-  starshipConnection(after: String,first: Int,before: String,last: Int): PersonStarshipsConnection
-  vehicleConnection(after: String,first: Int,before: String,last: Int): PersonVehiclesConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -814,6 +808,9 @@ type Person implements Node {
   The ID of an object
   """
   id : ID!
+  filmConnection(after: String,first: Int,before: String,last: Int): PersonFilmsConnection
+  starshipConnection(after: String,first: Int,before: String,last: Int): PersonStarshipsConnection
+  vehicleConnection(after: String,first: Int,before: String,last: Int): PersonVehiclesConnection
 }
 type SpeciesPeopleConnection {
   """
@@ -1189,8 +1186,6 @@ type Species implements Node {
   A planet that this species originates from.
   """
   homeworld : Planet
-  personConnection(after: String,first: Int,before: String,last: Int): SpeciesPeopleConnection
-  filmConnection(after: String,first: Int,before: String,last: Int): SpeciesFilmsConnection
   """
   The ISO 8601 date format of the time that this resource was created.
   """
@@ -1203,6 +1198,8 @@ type Species implements Node {
   The ID of an object
   """
   id : ID!
+  personConnection(after: String,first: Int,before: String,last: Int): SpeciesPeopleConnection
+  filmConnection(after: String,first: Int,before: String,last: Int): SpeciesFilmsConnection
 }
 type VehiclePilotsEdge {
   """

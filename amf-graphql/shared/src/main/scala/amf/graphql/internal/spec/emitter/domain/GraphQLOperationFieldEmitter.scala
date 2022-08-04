@@ -17,6 +17,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     val arguments = operation.request.queryParameters.map { arg =>
       GraphQLArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
+    // arguments side by side or each in a new line
     val isMultiLine  = arguments.exists(_.documentation.nonEmpty)
     val range        = operation.responses.head.payload.schema
     val returnedType = typeTarget(range)

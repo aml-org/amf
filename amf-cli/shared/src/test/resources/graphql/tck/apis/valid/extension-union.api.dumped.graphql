@@ -15,3 +15,4 @@ type Cat {
   color : String!
 }
 union SearchResult = Person | Dog
+extend union SearchResult = Cat

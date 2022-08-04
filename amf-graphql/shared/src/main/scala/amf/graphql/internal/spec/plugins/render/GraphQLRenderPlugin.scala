@@ -1,10 +1,10 @@
 package amf.graphql.internal.spec.plugins.render
 
-import amf.core.internal.remote.{GraphQL, Syntax}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.core.internal.plugins.syntax.{ASTBuilder, StringDocBuilder}
+import amf.core.internal.remote.{GraphQL, Syntax}
 import amf.graphql.internal.spec.emitter.document.GraphQLDocumentEmitter
 
 object GraphQLRenderPlugin extends AMFRenderPlugin {

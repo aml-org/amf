@@ -6,3 +6,6 @@ type Location {
   long : Float
   lat : Float
 }
+extend type Location {
+  mapUrl : String
+}

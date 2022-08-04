@@ -9,3 +9,6 @@ type Person implements HasName {
 interface HasName {
   name : String
 }
+extend interface HasName {
+  surname : String
+}
