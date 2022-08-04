@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.shapes.client.scala.model.document.EntityContextBuilder
-import amf.shapes.internal.spec.jsonldschema.instance.model.domain.{JsonLDArray, JsonLDElement}
+import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDScalarElementBuilder}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
