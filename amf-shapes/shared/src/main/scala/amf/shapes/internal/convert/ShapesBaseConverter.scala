@@ -1,23 +1,18 @@
 package amf.shapes.internal.convert
 
 import amf.aml.internal.convert.VocabulariesBaseConverter
-import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
+import amf.core.internal.convert.BidirectionalMatcher
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult, SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration}
+import amf.shapes.client.platform.model.document.{JsonSchemaDocument => ClientJsonSchemaDocument}
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.platform.model.domain
 import amf.shapes.client.platform.{ShapesConfiguration => ClientShapesConfiguration}
-import amf.shapes.client.platform.config.{SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration}
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
-import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult}
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.federation._
-import amf.shapes.client.scala.model.domain.operations.{
-  ShapeOperation,
-  ShapeParameter,
-  ShapePayload,
-  ShapeRequest,
-  ShapeResponse
-}
+import amf.shapes.client.scala.model.domain.operations._
 
 trait ShapesBaseConverter
     extends VocabulariesBaseConverter
@@ -48,6 +43,7 @@ trait ShapesBaseConverter
     with PropertyKeyMappingConverter
     with ExternalPropertyShapeConverter
     with KeyConverter
+    with JsonSchemaDocumentConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -276,5 +272,12 @@ trait KeyConverter extends PlatformSecrets {
   implicit object KeyMatcher extends BidirectionalMatcher[federation.Key, domain.federation.Key] {
     override def asClient(from: federation.Key): domain.federation.Key   = platform.wrap[domain.federation.Key](from)
     override def asInternal(from: domain.federation.Key): federation.Key = from._internal
+  }
+}
+
+trait JsonSchemaDocumentConverter extends PlatformSecrets {
+  implicit object JsonSchemaDocumentMatcher extends BidirectionalMatcher[JsonSchemaDocument, ClientJsonSchemaDocument] {
+    override def asClient(from: JsonSchemaDocument): ClientJsonSchemaDocument   = ClientJsonSchemaDocument(from)
+    override def asInternal(from: ClientJsonSchemaDocument): JsonSchemaDocument = from._internal
   }
 }
