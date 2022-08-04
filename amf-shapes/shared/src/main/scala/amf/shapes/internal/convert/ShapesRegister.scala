@@ -4,10 +4,11 @@ import amf.core.client.platform.model.domain.RecursiveShape
 import amf.core.internal.convert.UniqueInitializer
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.platform.model.document.JsonSchemaDocument
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.platform.model.domain.federation._
 import amf.shapes.client.scala.model
-import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
+import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.metamodel.federation._
 import amf.shapes.internal.domain.metamodel.operations._
@@ -106,6 +107,9 @@ private[amf] object ShapesRegister extends UniqueInitializer with PlatformSecret
     }
     platform.registerWrapper(ExternalPropertyShapeModel) {
       case s: amf.shapes.client.scala.model.domain.federation.ExternalPropertyShape => ExternalPropertyShape(s)
+    }
+    platform.registerWrapper(JsonSchemaDocumentModel) {
+      case s: amf.shapes.client.scala.model.document.JsonSchemaDocument => JsonSchemaDocument(s)
     }
   }
 

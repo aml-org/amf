@@ -4,7 +4,6 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
 import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel.SchemaVersion
 
