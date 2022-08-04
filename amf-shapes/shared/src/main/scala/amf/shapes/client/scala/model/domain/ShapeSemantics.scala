@@ -2,6 +2,7 @@ package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -286,9 +287,13 @@ object SemanticContext {
 
   def apply(ast: YPart): SemanticContext = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): SemanticContext =
+  def apply(annotations: Annotations): SemanticContext = {
     new SemanticContext(Fields(), annotations)
+      .withBase(BaseIri().withIri(Namespace.Core.base))
+      .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))
+      .withCuries(Seq(CuriePrefix().withAlias("core").withIri(Namespace.Core.base)))
+  }
 
   // TODO native-jsonld: add default with core terms
-  val default: SemacticContext = apply()
+  val default: SemanticContext = apply()
 }

@@ -4,7 +4,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.document.EntityContextBuilder
-import amf.shapes.internal.spec.jsonldschema.instance.model.domain.{JsonLDElement, JsonLDObject}
+import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDObject}
 import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleNodes

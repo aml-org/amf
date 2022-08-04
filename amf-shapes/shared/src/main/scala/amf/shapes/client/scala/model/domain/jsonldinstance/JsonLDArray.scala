@@ -1,11 +1,10 @@
-package amf.shapes.internal.spec.jsonldschema.instance.model.domain
+package amf.shapes.client.scala.model.domain.jsonldinstance
 
-import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.Data
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Iri, Str}
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 
 class JsonLDArray(terms: List[String]) extends JsonLDElement {
