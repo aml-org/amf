@@ -1,4 +1,4 @@
-package amf.shapes.internal.spec.jsonldschema.instance.model.domain
+package amf.shapes.client.scala.model.domain.jsonldinstance
 
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}

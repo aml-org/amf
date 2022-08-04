@@ -1,11 +1,8 @@
-package amf.shapes.internal.spec.jsonldschema.instance.model.domain
+package amf.shapes.client.scala.model.domain.jsonldinstance
 
-import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.parser.domain.Annotations
-
-import scala.collection.mutable
 
 trait JsonLDElement extends DomainElement {}
 
