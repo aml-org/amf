@@ -36,6 +36,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         parseArgument(argument)
     }
     val schema = NodeShape(virtual())
+    schema.withIsInputOnly(true)
     schema.withProperties(properties)
     directive.withSchema(schema)
   }
