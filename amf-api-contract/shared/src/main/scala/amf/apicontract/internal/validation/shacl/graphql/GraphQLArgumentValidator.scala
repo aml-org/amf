@@ -1,5 +1,6 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ScalarNodeModel
@@ -106,7 +107,7 @@ object GraphQLArgumentValidator {
         val parsedDatatype: String          = parsedProp.dataType.value()
         val definedDatatype: Option[String] = definedProp.datatype
         definedDatatype
-          .filter(x => x != parsedDatatype)
+          .filter(x => x != parsedDatatype && x != DataType.Any)
           .flatMap { datatype =>
             validationInfo(
               ScalarNodeModel.DataType,
