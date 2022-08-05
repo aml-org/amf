@@ -1,9 +1,5 @@
-schema {
-    query: Query
-}
-
 type Query {
-    searchResult: SearchResult
+    name: String
 }
 
 type Object1 {
@@ -21,7 +17,5 @@ interface Interface {
 }
 
 scalar Scalar
-
-union SearchResult = Object1 | Object2
 
 extend union SearchResult = Scalar | Union | Interface

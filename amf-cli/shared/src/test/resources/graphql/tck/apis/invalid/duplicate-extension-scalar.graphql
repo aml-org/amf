@@ -1,0 +1,8 @@
+type Query {
+    name: String
+}
+
+scalar Date
+extend scalar Date @myDirective
+
+directive @myDirective on SCALAR

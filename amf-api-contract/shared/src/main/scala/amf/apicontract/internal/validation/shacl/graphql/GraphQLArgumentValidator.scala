@@ -20,7 +20,7 @@ object GraphQLArgumentValidator {
         if (!prop.isValidOutputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"${prop.name} must be an output type, ${getShapeName(prop.range)} it's not",
+            s"Field '${prop.name}' must be an output type, '${getShapeName(prop.range)}' it's not",
             prop.annotations
           )
         } else None
@@ -30,7 +30,7 @@ object GraphQLArgumentValidator {
         if (!op.isValidOutputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"${op.name} must return a valid an output type, ${getShapeName(op.payload.get.schema)} it's not",
+            s"Field '${op.name}' must return a valid an output type, '${getShapeName(op.payload.get.schema)}' it's not",
             op.annotations
           )
         } else None
@@ -48,7 +48,7 @@ object GraphQLArgumentValidator {
       if (!op.isValidOutputType) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"${op.name} type must be an output type, ${getShapeName(op.payload.get.schema)} it's not",
+          s"Field '${op.name}' type must be an output type, '${getShapeName(op.payload.get.schema)}' it's not",
           op.annotations
         )
       } else None
@@ -62,7 +62,7 @@ object GraphQLArgumentValidator {
         if (!param.isValidInputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"Argument '${param.name}' must be an input type, ${getShapeName(param.schema)} it's not",
+            s"Argument '${param.name}' must be an input type, '${getShapeName(param.schema)}' it's not",
             param.annotations
           )
         } else None
@@ -71,10 +71,10 @@ object GraphQLArgumentValidator {
 
     // input type fields or directive arguments can't be output types
     val propertiesValidations = obj.properties.flatMap { prop =>
-      if (!prop.isValidInputType) {
+      if (!prop.isValidInputType && obj.isInput) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"${prop.name} must be an input type, ${getShapeName(prop.range)} it's not",
+          s"Field '${prop.name}' must be an input type, '${getShapeName(prop.range)}' it's not",
           prop.annotations
         )
       } else None
@@ -88,7 +88,7 @@ object GraphQLArgumentValidator {
       if (!param.isValidInputType) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"${param.name} type must be an input type, ${getShapeName(param.schema)} it's not",
+          s"Argument '${param.name}' type must be an input type, '${getShapeName(param.schema)}' it's not",
           param.annotations
         )
       } else None
@@ -110,7 +110,7 @@ object GraphQLArgumentValidator {
           .flatMap { datatype =>
             validationInfo(
               ScalarNodeModel.DataType,
-              s"Property ${parsedProp.name.value()} must be of type $datatype",
+              s"Property '${parsedProp.name.value()}' must be of type $datatype",
               parsedProp.annotations
             )
           }

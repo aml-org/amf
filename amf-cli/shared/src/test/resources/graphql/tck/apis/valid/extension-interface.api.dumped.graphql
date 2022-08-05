@@ -1,14 +1,7 @@
 type Query {
 
-  person: Person
-}
-type Person implements HasName {
-  name : String
-  surname : String
-}
-interface HasName {
-  name : String
+  name: String
 }
 extend interface HasName {
-  surname : String
+  name : String
 }

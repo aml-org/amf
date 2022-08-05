@@ -1,9 +1,5 @@
-schema {
-    query: Query
-}
-
 type Query {
-    searchResult: SearchResult
+    name: String
 }
 
 type Person {
@@ -16,11 +12,4 @@ type Dog {
     breed: String!
 }
 
-type Cat {
-    name: String!
-    color: String!
-}
-
-union SearchResult = Person | Dog
-
-extend union SearchResult = Cat
+extend union SearchResult = Person | Dog

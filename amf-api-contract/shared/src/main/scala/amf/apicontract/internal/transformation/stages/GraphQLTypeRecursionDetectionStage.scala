@@ -4,19 +4,14 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, NamedDomainElement, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.{NamedDomainElement, RecursiveShape, Shape}
+import amf.core.internal.adoption.IdAdopter
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
-import amf.shapes.client.scala.model.domain.operations.{
-  ShapeOperation,
-  ShapeParameter,
-  ShapePayload,
-  ShapeRequest,
-  ShapeResponse
-}
+import amf.shapes.client.scala.model.domain.operations._
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape}
 import org.mulesoft.common.collections.FilterType
 
@@ -76,13 +71,14 @@ case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() wit
         val newTargets = targets.map { target =>
           handleRecursion(target, previous) match {
             case Some(r) =>
+              r.adopted(source.id)
               r
             case None =>
               traverse(target, previous)
               target
           }
         }
-        if (newTargets.exists(_.isInstanceOf[RecursiveShape])) source.setArray(field, newTargets)
+        if (newTargets.exists(_.isInstanceOf[RecursiveShape])) source.setArrayWithoutId(field, newTargets)
     }
   }
 
@@ -139,6 +135,7 @@ case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() wit
         d.declares.filterType[Shape].foreach { shape =>
           traverse(shape)(errorHandler)
         }
+        new IdAdopter(model, model.id).adoptFromRoot()
         model
       case _ => model
     }

@@ -1,17 +1,9 @@
-schema {
-    query: Query
-}
-
 type Query {
-    location: Location
-}
-
-type Location {
-    long: Float
-    lat: Float
+    name: String
 }
 
 extend type Location {
-    mapUrl: String
+    long: Float
+    lat: Float
 }
 

@@ -1,20 +1,5 @@
-schema {
-    query: Query
-}
-
 type Query {
-    planet: Planet
-}
-
-enum Planet {
-    MERCURY
-    VENUS
-    EARTH
-    MARS
-    JUPITER
-    SATURN
-    URANUS
-    NEPTUNE
+    name: String
 }
 
 extend enum Planet {

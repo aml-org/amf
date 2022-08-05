@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type-in-endpoint
-  Message: Query.inputReturnField type must be an output type, InputType it's not
+  Message: Field 'Query.inputReturnField' type must be an output type, 'InputType' it's not
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-query-fields.api.graphql#/web-api/endpoint/%2Fquery%2FinputReturnField
   Property: http://www.w3.org/ns/shacl#property
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type-in-endpoint
-  Message: Query.inputReturnFieldArray type must be an output type, a list of InputType it's not
+  Message: Field 'Query.inputReturnFieldArray' type must be an output type, 'a list of InputType' it's not
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-query-fields.api.graphql#/web-api/endpoint/%2Fquery%2FinputReturnFieldArray
   Property: http://www.w3.org/ns/shacl#property
