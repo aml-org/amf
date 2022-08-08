@@ -30,11 +30,12 @@ case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext
         }
       case None => Nil
     }
-    val returnedType = typeTarget(operation.responses.head.payloads.head.schema)
-    val isMultiLine  = arguments.exists(a => a.documentation.nonEmpty)
-    l.fixed { f =>
-      ep.description.option().foreach { doc =>
-        documentationEmitter(doc, f)
+    val returnedType         = typeTarget(operation.responses.head.payloads.head.schema)
+    val isMultiLine          = arguments.exists(a => a.documentation.nonEmpty)
+    val rootFieldDescription = ep.description.option()
+    if (rootFieldDescription.isDefined) {
+      l.fixed { f =>
+        GraphQLDescriptionEmitter(rootFieldDescription, ctx, f).emit()
       }
     }
     if (isMultiLine) l.fixed { f =>
@@ -42,9 +43,7 @@ case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext
       f.obj { o =>
         arguments.zipWithIndex.foreach { case (GeneratedGraphQLArgument(description, arg), pos) =>
           o.fixed { of =>
-            description.foreach { desc =>
-              documentationEmitter(desc, of)
-            }
+            GraphQLDescriptionEmitter(description, ctx, of).emit()
             if (pos < arguments.length - 1) {
               of.+=(s"${arg},")
             } else {

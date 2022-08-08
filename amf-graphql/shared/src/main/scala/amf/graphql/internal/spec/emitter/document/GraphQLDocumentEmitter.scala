@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.{GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
+import amf.graphql.internal.spec.emitter.domain.{GraphQLDescriptionEmitter, GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
 import amf.shapes.client.scala.model.domain.AnyShape
 
 class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GraphQLEmitter {
@@ -24,9 +24,7 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
   // TODO: schema is not being rendered
   private def emitSchema(doc: StringDocBuilder) = {
     doc.fixed { b =>
-      ctx.webApi.description.option().foreach { description =>
-        documentationEmitter(description, b)
-      }
+      GraphQLDescriptionEmitter(ctx.webApi.description.option(), ctx, b).emit()
       b.+=("schema {")
       b.obj { obj =>
         ctx.queryType.foreach { queryType =>

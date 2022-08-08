@@ -21,31 +21,36 @@
             "@value": "descriptions.api.graphql"
           }
         ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "schema documentation"
+          }
+        ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiContract#path": [
               {
-                "@value": "/query/name"
+                "@value": "/query/translate"
               }
             ],
             "http://a.ml/vocabularies/core#name": [
               {
-                "@value": "Query.name"
+                "@value": "Query.translate"
               }
             ],
             "http://a.ml/vocabularies/core#description": [
               {
-                "@value": "This is the most basic property"
+                "@value": "Translates a string from a given language into a different language."
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -58,23 +63,70 @@
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
-                    "@value": "Query.name"
+                    "@value": "Query.translate"
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/expects/request/parameter/parameter/query/fromLanguage",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "fromLanguage"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#description": [
+                          {
+                            "@value": "The original language that `text` is provided in."
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": false
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/expects/request/parameter/parameter/query/fromLanguage/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -93,7 +145,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -101,7 +153,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -111,7 +163,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -120,7 +172,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/endpoint/%2Fquery%2Ftranslate/supportedOperation/query/Query.translate/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -143,7 +195,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
-                    "@value": "Query.name"
+                    "@value": "Query.translate"
                   }
                 ]
               }
@@ -171,6 +223,173 @@
         "http://a.ml/vocabularies/document#sourceSpec": [
           {
             "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#supportedOperation": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#Operation",
+              "http://a.ml/vocabularies/core#Operation",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "translate"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "Translates a string from a given language into a different language."
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#expects": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/expects/request",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Request",
+                  "http://a.ml/vocabularies/core#Request",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#parameter": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/expects/request/parameter/parameter/fromLanguage",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Parameter",
+                      "http://a.ml/vocabularies/core#Parameter",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "fromLanguage"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#binding": [
+                      {
+                        "@value": "query"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "The original language that `text` is provided in."
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#required": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/expects/request/parameter/parameter/fromLanguage/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#returns": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/returns/response",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Response",
+                  "http://a.ml/vocabularies/core#Response",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "default"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#payload": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/returns/response/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Payload",
+                      "http://a.ml/vocabularies/core#Payload",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/returns/response/default/union/default-union",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#UnionShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#anyOf": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/returns/response/default/union/default-union/anyOf/nil/default-nil",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#NilShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/shape/Person/supportedOperation/translate/returns/response/default/union/default-union/anyOf/scalar/default-scalar",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Person"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "A type."
           }
         ]
       }

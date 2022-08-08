@@ -17,7 +17,7 @@ case class GraphQLPropertyFieldEmitter(property: PropertyShape, ctx: GraphQLEmit
     property.description.option() match {
       case Some(desc) =>
         b.fixed { f =>
-          documentationEmitter(desc, f, Some(pos(property.annotations)))
+          GraphQLDescriptionEmitter(Some(desc), ctx, f, Some(pos(property.annotations))).emit()
           f.+=(fieldString)
         }
       case _ =>

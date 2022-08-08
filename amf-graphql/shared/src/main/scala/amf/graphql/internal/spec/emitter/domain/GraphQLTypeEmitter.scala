@@ -16,12 +16,12 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
     if (isExtension) {
       maybeExtend = "extend "
     } else {
-      // TODO: emit description (refactor documentationEmitter() method in common trait, move to separate emitter
+      val description = shape.description.option()
+      GraphQLDescriptionEmitter(description, ctx, b, Some(pos(shape.annotations))).emit()
     }
     shape match {
       case scalar: ScalarShape =>
-        if (hasEnum(scalar)) emitEnum(scalar, b)
-        else {} // TODO: emit scalar
+        if (hasEnum(scalar)) emitEnum(scalar, b) else emitScalar(scalar, b)
       case node: NodeShape =>
         emitObject(node, b)
       case union: UnionShape =>
@@ -47,6 +47,13 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
       "interface"
     } else {
       "type"
+    }
+  }
+
+  def emitScalar(shape: ScalarShape, b: StringDocBuilder): Unit = {
+    b.fixed { f =>
+      val name = shape.name.value()
+      f.+=(s"${maybeExtend}scalar $name", pos(shape.annotations))
     }
   }
 

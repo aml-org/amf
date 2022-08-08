@@ -7,7 +7,6 @@ schema {
   subscription: Subscription
 }
 type CustomQuery {
-
   allAnimals(animalRequest: AnimalRequest): [Animal]!
   """
   Get all the people
@@ -20,11 +19,9 @@ type CustomQuery {
   ): [Person!]!
 }
 type Mutation {
-
   createPerson(name: String!,age: Int!): Person!
 }
 type Subscription {
-
   newPerson: Person!
 }
 union LivingThing = Person | Animal
