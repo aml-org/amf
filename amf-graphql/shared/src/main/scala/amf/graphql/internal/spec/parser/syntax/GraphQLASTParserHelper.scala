@@ -6,13 +6,15 @@ import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.context.{GraphQLBaseWebApiContext, GraphQLWebApiContext}
 import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
+
+import scala.reflect.ClassTag
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
@@ -231,12 +233,21 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     shape
   }
 
-  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+  def contextually[T <: GraphQLBaseWebApiContext](fn: (T) => Any)(implicit
+      ctx: GraphQLBaseWebApiContext,
+      ct: ClassTag[T]
+  ): Unit = {
     ctx match {
-      case fedCtx: GraphQLFederationWebApiContext => fn(fedCtx)
-      case _                                      => // nothing
+      case c: T => fn(c)
+      case _    => // nothing
     }
   }
+
+  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit =
+    contextually[GraphQLFederationWebApiContext](fn)
+
+  def inGraphQL(fn: (GraphQLWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit =
+    contextually[GraphQLWebApiContext](fn)
 
   def setDefaultValue(n: Node, parameter: AbstractParameter): Unit = {
     val maybeNode = parseDefaultValue(n)

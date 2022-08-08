@@ -26,6 +26,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
         emitObject(node, b)
       case union: UnionShape =>
         emitUnion(union, b)
+      case _ => //
     }
   }
 
