@@ -2,12 +2,10 @@ package amf.graphql.internal.spec.emitter.domain
 
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.parser.syntax.NullableShape
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, ScalarShape, UnionShape}
-import org.mulesoft.common.client.lexical.Position
 
 trait GraphQLEmitter {
 
@@ -35,18 +33,6 @@ trait GraphQLEmitter {
           case _ =>
             throw new Exception(s"Type of target $shape not supported yet")
         }
-    }
-  }
-
-  def documentationEmitter(doc: String, b: StringDocBuilder, pos: Option[Position] = None): StringDocBuilder = {
-    b.fixed { l =>
-      if (pos.isDefined) {
-        l.+=("\"\"\"", pos.get)
-      } else {
-        l.+=("\"\"\"")
-      }
-      l.+=(doc)
-      l.+=("\"\"\"")
     }
   }
 }

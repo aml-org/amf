@@ -7,7 +7,7 @@ import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 
 case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLEmitterContext, b: StringDocBuilder)
-    extends GraphQLEmitter {
+  extends GraphQLEmitter {
 
   def emit(): Unit = {
     val name = operation.name.value()
@@ -20,21 +20,14 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     val returnedType = typeTarget(range)
 
     b.fixed { f =>
-      operation.description.option() match {
-        case Some(desc) =>
-          f.fixed { f =>
-            documentationEmitter(desc, f, Some(pos(operation.annotations)))
-          }
-        case _ => // ignore
-      }
+      val desc = operation.description.option()
+      GraphQLDescriptionEmitter(desc, ctx, f, Some(pos(operation.annotations))).emit()
       if (isMultiLine) {
         f.+=(s"$name(", pos(operation.annotations))
         f.obj { o =>
           arguments.zipWithIndex.foreach { case (GeneratedGraphQLArgument(desc, data), i) =>
             o.fixed { f =>
-              desc.foreach { doc =>
-                documentationEmitter(doc, f)
-              }
+              GraphQLDescriptionEmitter(desc, ctx, f).emit()
 
               if (i < arguments.length - 1) {
                 f.+=(s"$data,")
