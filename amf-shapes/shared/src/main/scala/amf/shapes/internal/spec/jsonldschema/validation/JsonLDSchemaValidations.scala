@@ -45,8 +45,8 @@ object JsonLDSchemaValidations extends Validations {
     "Unsupported scalar tag type"
   )
 
-  val IncompatibleScalarDataType: ValidationSpecification = ValidationSpecification(
-    "incompatible-scalar-data-type",
+  val IncompatibleScalarTagType: ValidationSpecification = ValidationSpecification(
+    "incompatible-scalar-tag-type",
     "Scalar data type does not match with tag type"
   )
 
@@ -54,5 +54,5 @@ object JsonLDSchemaValidations extends Validations {
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)
   override val levels: Map[String, Map[ProfileName, String]] =
-    Map(UnsupportedShape, all(VIOLATION), UnsupportedConditionalShape, all(VIOLATION))
+    Map((UnsupportedShape.id, all(VIOLATION)), (UnsupportedConditionalShape.id, all(VIOLATION)))
 }

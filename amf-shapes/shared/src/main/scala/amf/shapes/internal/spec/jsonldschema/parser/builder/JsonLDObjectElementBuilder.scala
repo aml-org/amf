@@ -1,9 +1,9 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
+import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.document.EntityContextBuilder
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDObject}
 import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
@@ -12,17 +12,18 @@ import org.mulesoft.common.client.lexical.SourceLocation
 
 import scala.collection.mutable
 
-class JsonLDObjectElementBuilder(location: SourceLocation) extends JsonLDElementBuilder(location) {
+class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends JsonLDElementBuilder(location) {
   override type THIS = JsonLDObjectElementBuilder
   type KEY           = String
   type TERM          = String
   val properties: mutable.Map[KEY, JsonLDPropertyBuilder] = mutable.Map()
   val termIndex: mutable.Map[TERM, KEY]                   = mutable.Map()
-  def +(property: JsonLDPropertyBuilder) = {
+  def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {
 
     // TODO: handle terms colitions. Check termIndex registry
     properties += property.key -> property
-    termIndex += property.term -> termIndex
+    termIndex += property.term -> property.key
+    this
   }
 
   override def merge(
@@ -40,19 +41,21 @@ class JsonLDObjectElementBuilder(location: SourceLocation) extends JsonLDElement
   def mergeAndReplaceProperty(current: JsonLDPropertyBuilder, other: JsonLDPropertyBuilder)(implicit
       ctx: JsonLDParserContext
   ): Any = {
-    val merged = current.element match {
+    val merged: JsonLDElementBuilder = current.element match {
       case obj: JsonLDObjectElementBuilder if other.element.isInstanceOf[JsonLDObjectElementBuilder] =>
         obj.merge(other.element.asInstanceOf[JsonLDObjectElementBuilder])
       case array: JsonLDArrayElementBuilder if other.element.isInstanceOf[JsonLDArrayElementBuilder] =>
         array.merge(other.element.asInstanceOf[JsonLDArrayElementBuilder])
       case scalar: JsonLDScalarElementBuilder if other.element.isInstanceOf[JsonLDScalarElementBuilder] =>
         scalar.merge(other.element.asInstanceOf[JsonLDScalarElementBuilder])
-      case _ =>
+      case other =>
         ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
         other
     }
+
     properties.remove(current.key)
-    this + merged
+    this + other.copy(element = merged)
+    this
   }
 
   override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
@@ -74,7 +77,7 @@ class JsonLDObjectElementBuilder(location: SourceLocation) extends JsonLDElement
 }
 
 object JsonLDObjectElementBuilder {
-  def empty() = new JsonLDObjectElementBuilder(SourceLocation.Unknown)
+  def empty(key: String) = new JsonLDObjectElementBuilder(SourceLocation.Unknown, key)
 }
 
 case class JsonLDPropertyBuilder(
