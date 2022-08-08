@@ -52,9 +52,7 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
     }
   }
 
-  private def isGraphQL(doc: AntlrParsedDocument): Boolean = {
-    collect(doc.ast.root(), Seq(DEFINITION, TYPE_SYSTEM_DEFINITION)).exists(e => e.name == TYPE_SYSTEM_DEFINITION)
-  }
+  private def isGraphQL(doc: AntlrParsedDocument): Boolean = collect(doc.ast.root(), Seq(DEFINITION)).nonEmpty
 
   override def withIdAdoption: Boolean = true // TODO pending analysis and parsing cleanup
 }
