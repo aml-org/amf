@@ -1,13 +1,10 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
-import amf.shapes.client.scala.model.document.EntityContextBuilder
+import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
-import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDScalarElementBuilder}
+import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
 import org.mulesoft.common.client.lexical.SourceLocation
-
-import scala.collection.mutable
 
 class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementBuilder(location) {
   private var items: IndexedSeq[JsonLDElementBuilder] = IndexedSeq.empty

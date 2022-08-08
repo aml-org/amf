@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.vocabulary.Namespace.Core
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
@@ -32,11 +33,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
   protected def setClassTerm(builder: JsonLDElementBuilder, semantics: Option[SemanticContext]) =
     builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
 
-  protected def findClassTerm(ctx: SemanticContext) = {
-    //    val strings = ctx.semantics.typeMappings.flatMap(_.option())
-    //    if(strings.isEmpty) Seq(ctx.semantics.base + name) else strings
-    ctx.typeMappings.flatMap(_.option())
-  }
+  protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option())
 
   def parseConditional(shape: Shape): T = parse(selectConditionalShape(shape))
 
@@ -47,7 +44,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
   def selectConditionalShape(shape: Shape): Shape =
     if (isValid(shape.ifShape, node)) shape.thenShape else shape.elseShape
 
-  def isValid(shape: Shape, node: YNode): Boolean = {
+  def isValid(shape: Shape, node: YValue): Boolean = {
     // TODO [Native-jsonld]: implement new validator, interface or configuration to invoke with boolean validator processor (fail early)
     ShapesConfiguration
       .predefined()

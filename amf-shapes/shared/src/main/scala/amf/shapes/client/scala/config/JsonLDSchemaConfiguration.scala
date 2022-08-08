@@ -2,33 +2,23 @@ package amf.shapes.client.scala.config
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.registries.AMLRegistry
-import amf.core.client.common.{HighPriority, PluginPriority}
-import amf.core.client.scala.config.{AMFEventListener, AMFOptions, ParsingOptions, RenderOptions, UnitCache}
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, ErrorHandlerProvider}
+import amf.core.client.scala.config._
+import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
-import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParsePlugin
-import amf.core.client.scala.parse.document.{
-  ParserContext,
-  ReferenceHandler,
-  SimpleReferenceHandler,
-  SyamlParsedDocument
-}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
-import amf.core.internal.parser.Root
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
-import amf.core.internal.remote.{JsonLDSchema, Mimes, Spec}
+import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
-import amf.shapes.client.scala.{ShapesBaseUnitClient, ShapesConfiguration}
-import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaNativeParser
-import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
+import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaParsePlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,6 +32,20 @@ class JsonLDSchemaConfiguration private[amf] (
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
+  override protected[amf] def copy(
+      resolvers: AMFResolvers = resolvers,
+      errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
+      registry: AMFRegistry = registry,
+      listeners: Set[AMFEventListener] = listeners,
+      options: AMFOptions = options
+  ): JsonLDSchemaConfiguration =
+    new JsonLDSchemaConfiguration(
+      resolvers,
+      errorHandlerProvider,
+      registry.asInstanceOf[AMLRegistry],
+      listeners,
+      options
+    )
   override def baseUnitClient(): JsonLDSchemaConfigurationClient = new JsonLDSchemaConfigurationClient(this)
 
   def withJsonLDSchema(jsonDocument: JsonSchemaDocument): JsonLDSchemaConfiguration = {
@@ -213,21 +217,16 @@ class JsonLDSchemaConfiguration private[amf] (
     super.forInstance(url).map(_.asInstanceOf[JsonLDSchemaConfiguration])(getExecutionContext)
 }
 
-class JsonLDSchemaParsePlugin(jsonSchema: JsonSchemaDocument) extends AMFParsePlugin {
-  override def spec: Spec = JsonLDSchema
+object JsonLDSchemaConfiguration {
+  def JsonLDSchema(): JsonLDSchemaConfiguration = {
+    val base = JsonSchemaConfiguration.JsonSchema()
+    new JsonLDSchemaConfiguration(
+      base.resolvers,
+      base.errorHandlerProvider,
+      base.registry,
+      base.listeners,
+      base.options
+    )
 
-  override def parse(document: Root, ctx: ParserContext): BaseUnit =
-    new JsonLDSchemaNativeParser(ctx.eh).parse(document, jsonSchema)
-
-  /** media types which specifies vendors that are parsed by this plugin.
-    */
-  override def mediaTypes: Seq[String] = Seq(Mimes.`application/schema+ld+json`)
-
-  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
-
-  override def allowRecursiveReferences: Boolean = false
-
-  override def applies(element: Root): Boolean = element.parsed.isInstanceOf[SyamlParsedDocument]
-
-  override def priority: PluginPriority = HighPriority
+  }
 }
