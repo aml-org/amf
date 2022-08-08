@@ -49,7 +49,14 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
-    doc.withDeclares(declarations).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+    doc.withDeclares(declarations)
+    inFederation { _ =>
+      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
+    }
+    inGraphQL { _ =>
+      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+    }
+    doc
   }
 
   private def parseWebAPI(ast: AST): Unit = {
