@@ -28,7 +28,7 @@ class JsonLDArray(terms: List[String]) extends JsonLDElement {
 
 // TODO native-jsonld: review properties
 class JsonLDArrayModel(terms: List[String]) extends JsonLDElementModel {
-  override def modelInstance: AmfObject = new JsonLDScalar(terms)
+  override def modelInstance: AmfObject = new JsonLDArray(terms)
 
   val Members: Field =
     Field(
