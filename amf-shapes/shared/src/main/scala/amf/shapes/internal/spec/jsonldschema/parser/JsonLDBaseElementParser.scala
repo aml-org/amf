@@ -18,7 +18,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
   def checkConditionals(shape: Shape): Seq[T] = {
 
-    val conditional = if (shape.isConditional) Some(parseConditional(shape)) else None
+    val conditional = if (shape.isConditional) parseConditional(shape) else None
 
     conditional.toSeq
     // TODO native-jsonld: compute all conditionals (oneOf, anyOf)
@@ -35,14 +35,14 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
   protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option())
 
-  def parseConditional(shape: Shape): T = parse(selectConditionalShape(shape))
+  def parseConditional(shape: Shape): Option[T] = selectConditionalShape(shape).map(parse)
 
   def unsupported(s: Shape): T
 
   def parseNode(shape: Shape): T
 
-  def selectConditionalShape(shape: Shape): Shape =
-    if (isValid(shape.ifShape, node)) shape.thenShape else shape.elseShape
+  def selectConditionalShape(shape: Shape): Option[Shape] =
+    if (isValid(shape.ifShape, node)) Option(shape.thenShape) else Option(shape.elseShape)
 
   def isValid(shape: Shape, node: YValue): Boolean = {
     // TODO [Native-jsonld]: implement new validator, interface or configuration to invoke with boolean validator processor (fail early)

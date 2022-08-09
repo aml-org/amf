@@ -51,6 +51,8 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
 
   override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
     val array = new JsonLDArray(classTerms.toList)
+
+    // TODO native-jsonld: I could have different specific meta for each member. Adding jsonLDElement has class type for now.
     items.foreach { i => array.addMember(i.build(ctxBuilder)) }
     ctxBuilder + array.meta
     array
