@@ -78,4 +78,6 @@ case class ForceEntry() extends Annotation
 
 case class BooleanSchema() extends Annotation
 
+case class DirectiveArguments() extends Annotation
+
 case class BaseVirtualNode(ast: YPart) extends Annotation

@@ -10,20 +10,9 @@ import amf.apicontract.internal.metamodel.domain.security.{
   OpenIdConnectSettingsModel,
   SecuritySchemeModel
 }
-import amf.apicontract.internal.metamodel.domain.{
-  CallbackModel,
-  CorrelationIdModel,
-  EndPointModel,
-  ParameterModel,
-  TemplatedLinkModel
-}
+import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
-import amf.apicontract.internal.validation.shacl.graphql.{
-  GraphQLAppliedDirective,
-  GraphQLArgumentValidator,
-  GraphQLEndpoint,
-  GraphQLObject
-}
+import amf.apicontract.internal.validation.shacl.graphql._
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
@@ -34,8 +23,9 @@ import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel,
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
+import amf.shapes.internal.annotations.DirectiveArguments
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
+import amf.shapes.internal.domain.metamodel.operations.{AbstractParameterModel, ShapeRequestModel}
 import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCustomShaclFunctions}
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
 
@@ -561,6 +551,98 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               AbstractParameterModel.Default
             )
           validationResults.foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedDirectiveApplication"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case s: DomainElement =>
+              val directiveApplications = s.customDomainProperties
+              checkDuplicates(
+                directiveApplications,
+                validate,
+                ShapeModel.CustomDomainProperties,
+                { directiveName: String => s"Directive '$directiveName' can only be applied once per location" },
+                Some(s.annotations)
+              )
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedField"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val isDirectiveArgumentsShape = element.annotations.contains(classOf[DirectiveArguments])
+          element match {
+            case obj: NodeShape if !isDirectiveArgumentsShape =>
+              val fields = obj.properties ++ obj.operations
+              checkDuplicates(
+                fields,
+                validate,
+                NodeShapeModel.Properties,
+                { fieldName: String => s"Cannot exist two or more fields with name '$fieldName'" },
+                Some(obj.annotations)
+              )
+
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedArgumentField"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              obj.operations.foreach({ op =>
+                val arguments = op.request.queryParameters
+                checkDuplicates(
+                  arguments,
+                  validate,
+                  ShapeRequestModel.QueryParameters,
+                  { argumentName: String => s"Cannot exist two or more arguments with name '$argumentName'" },
+                  Some(op.annotations)
+                )
+              })
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedArgumentDirective"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case directive: CustomDomainProperty =>
+              val arguments = directive.schema.asInstanceOf[NodeShape].properties
+              checkDuplicates(
+                arguments,
+                validate,
+                NodeShapeModel.Properties,
+                { argumentName: String => s"Cannot exist two or more arguments with name '$argumentName'" },
+                Some(directive.annotations)
+              )
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "invalidDirectiveApplication"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val isDirectiveArgument = element.annotations.contains(classOf[DirectiveArguments])
+          element match {
+            case directive: CustomDomainProperty =>
+              val arguments = directive.schema.asInstanceOf[NodeShape].properties
+              val results = arguments.flatMap({ arg =>
+                val directiveApplications = arg.customDomainProperties
+                GraphQLDirectiveLocationValidator(directiveApplications, arg, appliedToDirectiveArgument = true)
+              })
+              results.foreach(validate(_))
+            case elem: DomainElement if !isDirectiveArgument =>
+              val directiveApplications = elem.customDomainProperties
+              val results               = GraphQLDirectiveLocationValidator(directiveApplications, elem)
+              results.foreach(validate(_))
+            case _ => // ignore
+          }
         }
       }
     )

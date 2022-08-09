@@ -1,22 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directive-argument.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 2
+Number of results: 1
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-argument
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-argument-directive
   Message: Cannot exist two or more arguments with name 'text'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directive-argument.api.graphql#/declares/MyDirective/shape/default-node/property/property/text
-  Property: 
-  Range: [(9,23)-(9,35)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-argument
-  Message: Cannot exist two or more arguments with name 'text'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directive-argument.api.graphql#/declares/MyDirective/shape/default-node/property/property/text_1
-  Property: 
-  Range: [(9,37)-(9,49)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directive-argument.api.graphql#/declares/MyDirective
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(9,0)-(9,60)]
   Location: 

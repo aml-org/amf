@@ -392,34 +392,14 @@ object ParserSideValidations extends Validations {
     "Message header must be of type object"
   )
 
-  val InvalidDirectiveApplication = validation(
-    "invalid-directive-application",
-    "Directive should not be applied in current location"
-  )
-
   val InvalidDirectiveLocation = validation(
     "invalid-directive-location",
     "The location of the directive is invalid"
   )
 
-  val DuplicatedField = validation(
-    id = "duplicated-field",
-    message = "Cannot exist two or more fields with same name"
-  )
-
-  val DuplicatedArgument = validation(
-    id = "duplicated-argument",
-    message = "Cannot exist two or more arguments with same name"
-  )
-
   val DuplicatedDeclaration = validation(
     id = "duplicated-declaration",
     message = "Cannot exist two or more declarations with same name"
-  )
-
-  val DuplicatedDirectiveApplication = validation(
-    id = "duplicated-directive-application",
-    message = "Directive can only be applied once per location"
   )
 
   val UnmatchedFieldInFieldSet = validation(
@@ -446,7 +426,6 @@ object ParserSideValidations extends Validations {
     invalidExampleFieldWarning.id                -> all(WARNING), // TODO: should be violation
     OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
-    InvalidDirectiveApplication.id               -> all(VIOLATION),
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
@@ -491,7 +470,6 @@ object ParserSideValidations extends Validations {
     SchemasDeprecated,
     InvalidDocumentationType,
     InvalidAllowedTargetsType,
-    InvalidDirectiveApplication,
     InvalidDirectiveLocation,
     InvalidExtensionsType,
     ModuleNotFound,
@@ -509,9 +487,6 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    DuplicatedField,
-    DuplicatedArgument,
-    DuplicatedDeclaration,
-    DuplicatedDirectiveApplication
+    DuplicatedDeclaration
   )
 }
