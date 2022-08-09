@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
+import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDScalar}
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleScalarDataType
@@ -33,6 +34,7 @@ class JsonLDScalarElementBuilder(var dataType: String, var value: Any, override 
     this
   }
 
+  // TODO native-jsonld: should I create a new model for each specific scalar node? Value field needs specific scalar type? or we can handle string and convert using dataType field value
   override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
     val scalar = new JsonLDScalar(classTerms.toList).withValue(value).withDataType(dataType)
     ctxBuilder + scalar.meta

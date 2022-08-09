@@ -63,6 +63,9 @@ case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit v
   /** @return
     *   a jsondl scalar builder for the given YScalar value and dataType computed from the YType.
     */
-  def parseScalar(): JsonLDScalarElementBuilder =
-    new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
+  def parseScalar(): JsonLDScalarElementBuilder = {
+    // TODO: handle null as explicit null? we need to check null in jsonld emission?
+    if (dataType == DataTypes.Nil) new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location)
+    else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
+  }
 }
