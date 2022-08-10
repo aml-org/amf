@@ -19,7 +19,7 @@ object GraphQLDirectiveLocationValidator {
   ): Seq[Option[ValidationInfo]] = {
     directiveApplications
       .map(application => validateApplication(application, element, appliedToDirectiveArgument))
-      .collect { case Some(x) => Some(x) }
+      .filter(_.isDefined)
   }
 
   private def validateApplication(

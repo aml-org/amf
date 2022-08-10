@@ -9,22 +9,27 @@ case class GeneratedGraphQLArgument(documentation: Option[String], value: String
 case class GraphQLArgumentGenerator(param: Parameter, ctx: GraphQLEmitterContext) extends GraphQLEmitter {
 
   def generate(): GeneratedGraphQLArgument = {
-    val name       = param.name.value()
-    val targetName = typeTarget(param.schema)
-    val effectiveTargetName = if (param.required.option().getOrElse(false)) {
-      targetName
-    } else {
-      cleanNonNullable(targetName)
+    val name         = param.name.value()
+    val argumentType = extractGraphQLType
+    val description  = param.description.option()
+
+    val argumentDefinition = defaultValue match {
+      case Some(defaultValue) => s"$name: $argumentType = $defaultValue"
+      case _                  => s"$name: $argumentType"
     }
 
-    val documentation = param.description.option()
-    val defaultValue  = Option(param.defaultValue)
-    val maybeDefaultValue = if (defaultValue.isDefined) {
-      val effectiveValue = defaultValue.get.asInstanceOf[ScalarNode].value.value()
-      s" = $effectiveValue"
-    } else ""
-    val argumentDefinition = s"$name: $effectiveTargetName" ++ maybeDefaultValue
-    GeneratedGraphQLArgument(documentation, argumentDefinition)
+    GeneratedGraphQLArgument(description, argumentDefinition)
   }
 
+  private def extractGraphQLType: String = {
+    val argumentType = typeTarget(param.schema)
+    if (param.required.option().getOrElse(false)) argumentType else cleanNonNullable(argumentType)
+  }
+
+  private def defaultValue: Option[String] = {
+    param.defaultValue match {
+      case defaultValueNode: ScalarNode => Some(defaultValueNode.value.value())
+      case _                            => None
+    }
+  }
 }
