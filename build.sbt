@@ -1,14 +1,12 @@
 
 import Common.snapshots
 import NpmOpsPlugin.autoImport._
-import NpmOpsPlugin.npmInstallDepsTask
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import sbtsonar.SonarPlugin.autoImport.sonarProperties
 
 import scala.language.postfixOps
-import scala.sys.process._
 import Versions.versions
 import sbtassembly.AssemblyPlugin.autoImport.assembly
 
@@ -21,6 +19,8 @@ ThisBuild / organization := "com.github.amlorg"
 ThisBuild / scalaVersion := "2.12.11"
 ThisBuild / resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Common.public, Resolver.mavenLocal, Resolver.mavenCentral)
 ThisBuild / credentials ++= Common.credentials()
+
+val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -90,8 +90,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-shapes/js"
+    npmDependencies ++= npmDeps
   )
   .disablePlugins(SonarPlugin)
 
@@ -133,8 +132,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-api-contract/js"
+    npmDependencies ++= npmDeps
   )
   .disablePlugins(SonarPlugin)
 
@@ -154,9 +152,9 @@ lazy val apiContractJS =
 
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
 lazy val antlrv4JSRef  = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJS")
-val antlrv4Version = versions("antlrv4Version")
-lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast" % antlrv4Version
-lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs0.6" % antlrv4Version
+val antlr4Version = versions("antlr4Version")
+lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast" % antlr4Version
+lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs0.6" % antlr4Version
 
 lazy val antlr = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -177,8 +175,7 @@ lazy val antlr = crossProject(JSPlatform, JVMPlatform)
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-antlr-syntax.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-antlr-syntax/js"
+    npmDependencies ++= npmDeps
   )
   .disablePlugins(SonarPlugin)
 
@@ -214,8 +211,7 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-grpc.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-grpc/js"
+    npmDependencies ++= npmDeps
   )
   .disablePlugins(SonarPlugin)
 
@@ -250,8 +246,7 @@ lazy val graphql = crossProject(JSPlatform, JVMPlatform)
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-graphql.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-graphql/js"
+    npmDependencies ++= npmDeps
   )
   .disablePlugins(SonarPlugin)
 
@@ -306,8 +301,7 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "amf.js",
-    npmDependencies += ("ajv", "6.12.6"),
-    npmPackageLoc := "amf-cli/js"
+    npmDependencies ++= npmDeps
   )
   .jsSettings(TypingGenerationSettings.settings:_*)
   .disablePlugins(SonarPlugin)
