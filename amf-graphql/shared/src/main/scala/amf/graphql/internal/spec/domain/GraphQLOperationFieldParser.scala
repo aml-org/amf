@@ -1,10 +1,8 @@
 package amf.graphql.internal.spec.domain
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
 import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
@@ -18,7 +16,6 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     setterFn(operation)
     parseDescription(ast, operation, operation.meta)
     parseArguments()
-    checkArgumentsAreUnique()
     parseRange()
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
@@ -66,12 +63,4 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     payload.withSchema(parseType(ast))
     response.withPayload(payload)
   }
-
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
-    val arguments = operation.request.queryParameters
-    checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
-  }
-
-  private def duplicatedArgumentMsg(argumentName: String): String =
-    s"Cannot exist two or more arguments with name '$argumentName'"
 }

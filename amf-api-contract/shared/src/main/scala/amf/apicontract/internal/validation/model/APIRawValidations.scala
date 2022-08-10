@@ -1183,6 +1183,36 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiContract("path"),
         constraint = shape("invalidOutputTypeInEndpoint"),
         message = "Only an Output Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-directive-application"),
+        owlClass = doc("DomainElement"),
+        owlProperty = doc("customDomainProperties"),
+        constraint = shape("duplicatedDirectiveApplication")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-field"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("duplicatedField")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-argument-field"),
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("Request"),
+        constraint = shape("duplicatedArgumentField")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-argument-directive"),
+        owlClass = doc("DomainProperty"),
+        owlProperty = shape("Request"),
+        constraint = shape("duplicatedArgumentDirective")
+      ),
+      AMFValidation (
+        uri = amfParser("invalid-directive-application"),
+        owlClass = doc("DomainElement"),
+        owlProperty = doc("customDomainProperties"),
+        constraint = shape("invalidDirectiveApplication")
       )
     )
     override def validations(): Seq[AMFValidation] = result

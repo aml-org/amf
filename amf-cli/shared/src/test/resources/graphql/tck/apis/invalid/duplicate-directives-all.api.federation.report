@@ -1,182 +1,94 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 22
+Number of results: 11
 
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/web-api/customDomainProperties/duplicated
-  Property: 
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/web-api
+  Property: http://a.ml/vocabularies/document#customDomainProperties
   Range: [(1,7)-(1,18)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/web-api/customDomainProperties/duplicated_1
-  Property: 
-  Range: [(1,19)-(1,30)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyScalar
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(9,0)-(9,39)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyScalar/customDomainProperties/duplicated
-  Property: 
-  Range: [(9,16)-(9,27)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(11,0)-(13,1)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyScalar/customDomainProperties/duplicated_5
-  Property: 
-  Range: [(9,28)-(9,39)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(12,4)-(12,88)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/customDomainProperties/duplicated
-  Property: 
-  Range: [(11,14)-(11,25)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(12,12)-(12,54)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/customDomainProperties/duplicated_6
-  Property: 
-  Range: [(11,26)-(11,37)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInterface
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(15,0)-(17,1)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/duplicated
-  Property: 
-  Range: [(12,31)-(12,42)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/union/MyUnion
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(23,0)-(23,60)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/duplicated_11
-  Property: 
-  Range: [(12,43)-(12,54)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(25,0)-(27,1)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/duplicated
-  Property: 
-  Range: [(12,65)-(12,76)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(26,4)-(26,15)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/duplicated_10
-  Property: 
-  Range: [(12,77)-(12,88)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(29,0)-(31,1)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
   Message: Directive 'duplicated' can only be applied once per location
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInterface/customDomainProperties/duplicated
-  Property: 
-  Range: [(15,22)-(15,33)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInterface/customDomainProperties/duplicated_3
-  Property: 
-  Range: [(15,34)-(15,45)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/union/MyUnion/customDomainProperties/duplicated
-  Property: 
-  Range: [(23,14)-(23,25)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/union/MyUnion/customDomainProperties/duplicated_7
-  Property: 
-  Range: [(23,26)-(23,37)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum/customDomainProperties/duplicated
-  Property: 
-  Range: [(25,12)-(25,23)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum/customDomainProperties/duplicated_2
-  Property: 
-  Range: [(25,24)-(25,35)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/duplicated
-  Property: 
-  Range: [(26,16)-(26,27)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/duplicated_8
-  Property: 
-  Range: [(26,28)-(26,39)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject/customDomainProperties/duplicated
-  Property: 
-  Range: [(29,20)-(29,31)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject/customDomainProperties/duplicated_4
-  Property: 
-  Range: [(29,32)-(29,43)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/duplicated
-  Property: 
-  Range: [(30,21)-(30,32)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
-  Message: Directive 'duplicated' can only be applied once per location
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/duplicated_9
-  Property: 
-  Range: [(30,33)-(30,44)]
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-directives-all.api.graphql#/declares/shape/MyInputObject/property/property/myField
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(30,4)-(30,44)]
   Location: 
