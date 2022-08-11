@@ -8,7 +8,22 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations._
 
-case class GraphQLObject(node: NodeShape) {
+trait GraphQLElement {
+  def name: String
+  def annotations: Annotations
+}
+
+trait GraphQLField extends GraphQLElement {
+  def datatype: Option[String]
+  def schema: Option[Shape]
+}
+
+trait GraphQLArgument extends GraphQLElement {
+  def datatype: Option[String]
+  def default: DataNode
+}
+
+case class GraphQLObject(node: NodeShape) extends GraphQLElement {
   def name: String                      = node.name.value()
   def annotations: Annotations          = node.annotations
   def isInterface: Boolean              = node.isAbstract.value()
@@ -19,6 +34,8 @@ case class GraphQLObject(node: NodeShape) {
 
   def fields(): GraphQLFields = GraphQLFields(properties, operations)
 
+  def allFields(): Seq[GraphQLField] = fields().fields()
+
   def inherits: Seq[GraphQLObject] = node.inherits.map(_.asInstanceOf[NodeShape]).map(GraphQLObject)
 }
 
@@ -26,10 +43,13 @@ case class GraphQLFields(properties: Seq[GraphQLProperty], operations: Seq[Graph
   def names: Set[String] = {
     (properties.map(_.name) ++ operations.map(_.name)).toSet
   }
+
+  def fields(): Seq[GraphQLField] = properties ++ operations
 }
 
-case class GraphQLEndpoint(endpoint: EndPoint) {
+case class GraphQLEndpoint(endpoint: EndPoint) extends GraphQLElement {
   def name: String                      = endpoint.name.value()
+  def annotations: Annotations          = endpoint.annotations
   def path: String                      = endpoint.path.value()
   def operations: Seq[GraphQLOperation] = endpoint.operations.map(GraphQLOperation)
   def parameters: Seq[GraphQLParameter] = operations.flatMap(_.parameters)
@@ -37,7 +57,7 @@ case class GraphQLEndpoint(endpoint: EndPoint) {
   def isValidOutputType: Boolean        = parameters.forall(_.isValidOutputType)
 }
 
-case class GraphQLProperty(property: PropertyShape) {
+case class GraphQLProperty(property: PropertyShape) extends GraphQLField {
   def name: String               = property.name.value()
   def annotations: Annotations   = property.annotations
   def datatype: Option[String]   = GraphQLUtils.datatype(property.range)
@@ -45,14 +65,23 @@ case class GraphQLProperty(property: PropertyShape) {
   def range: Shape               = property.range
   def isValidInputType: Boolean  = GraphQLUtils.isValidInputType(range)
   def isValidOutputType: Boolean = GraphQLUtils.isValidOutputType(range)
+  def schema: Option[Shape]      = Some(range)
+  def minCount: Int              = property.minCount.value()
+  def maxCount: Int              = property.maxCount.value()
+
 }
 
-case class GraphQLOperation(operation: AbstractOperation) {
+case class GraphQLOperation(operation: AbstractOperation) extends GraphQLField {
   def name: String                       = operation.name.value()
   def annotations: Annotations           = operation.annotations
   def parameters: Seq[GraphQLParameter]  = operation.request.queryParameters.map(GraphQLParameter)
   def response: Option[AbstractResponse] = operation.responses.headOption
 
+  def datatype: Option[String] = payload flatMap { case payload =>
+    GraphQLUtils.datatype(payload.schema)
+  }
+
+  // TODO: why is it store in different fields? payload vs payloads
   def payload: Option[AbstractPayload] = response.flatMap {
     case r: Response       => r.payloads.headOption
     case sr: ShapeResponse => Some(sr.payload)
@@ -63,25 +92,28 @@ case class GraphQLOperation(operation: AbstractOperation) {
     case Some(payload) => GraphQLUtils.isValidOutputType(payload.schema)
     case None          => false
   }
+
+  def schema: Option[Shape] = payload.map(_.schema)
 }
 
-case class GraphQLParameter(parameter: AbstractParameter) {
+case class GraphQLParameter(parameter: AbstractParameter) extends GraphQLArgument {
   def name: String               = parameter.name.value()
   def annotations: Annotations   = parameter.annotations
   def datatype: Option[String]   = GraphQLUtils.datatype(parameter.schema)
   def default: DataNode          = parameter.schema.default
+  def required: Boolean          = parameter.required.value()
   def schema: Shape              = parameter.schema
   def isValidInputType: Boolean  = GraphQLUtils.isValidInputType(schema)
   def isValidOutputType: Boolean = GraphQLUtils.isValidOutputType(schema)
 }
 
-case class GraphQLDirective(directive: CustomDomainProperty) {
+case class GraphQLDirective(directive: CustomDomainProperty) extends GraphQLElement {
   def name: String             = directive.name.value()
   def annotations: Annotations = directive.annotations
   def fields: GraphQLFields    = GraphQLObject(directive.schema.asInstanceOf[NodeShape]).fields()
 }
 
-case class GraphQLAppliedDirective(directive: DomainExtension) {
+case class GraphQLAppliedDirective(directive: DomainExtension) extends GraphQLElement {
   def name: String             = directive.name.value()
   def annotations: Annotations = directive.annotations
   def definedProps(): Seq[GraphQLProperty] = directive.definedBy match {
@@ -146,6 +178,7 @@ object GraphQLUtils {
       case u: UnionShape => // nullable type
         u.anyOf.collectFirst { case s: ScalarShape => s.dataType.value() }
       case s: ScalarShape => Some(s.dataType.value())
+      case n: NodeShape   => None // should return something? objects and interfaces end up here
       case _              => None
     }
   }
