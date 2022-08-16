@@ -17,7 +17,7 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
         emitSchema(doc)
       }
       emitTopLevelTypes(doc)
-      emitTypes(doc)
+      emitDeclarations(doc)
     }
   }
 
@@ -48,7 +48,7 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
     }
   }
 
-  def emitTypes(doc: StringDocBuilder): Unit = {
+  def emitDeclarations(doc: StringDocBuilder): Unit = {
     document.asInstanceOf[Document].declares.foreach {
       case shape: AnyShape =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
