@@ -610,6 +610,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "1",
         openApiErrorMessage = "Response must have a 'description' field"
       ),
+        AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedEndpointPath")
+      ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("License"), core("url")),
       urlValidation(core("Organization"), core("url")),
@@ -1037,6 +1042,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value = """^(?!(.*#.+)$).*$""".stripMargin
       ),
+        AMFValidation(
+        owlClass = apiContract("AsyncAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedEndpointPath")
+      ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
       urlValidation(core("License"), core("url")),
@@ -1208,7 +1218,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = shape("Request"),
         constraint = shape("duplicatedArgumentDirective")
       ),
-      AMFValidation (
+      AMFValidation(
         uri = amfParser("invalid-directive-application"),
         owlClass = doc("DomainElement"),
         owlProperty = doc("customDomainProperties"),
