@@ -1,11 +1,13 @@
 package amf.xxxx
 
 import amf.apicontract.client.scala.OASConfiguration
+import amf.apicontract.client.scala.model.domain.Request
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.cache.CustomUnitCache
 import amf.core.client.scala.config.CachedReference
 import amf.core.client.scala.errorhandling.{ErrorHandlerProvider, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.Module
+import amf.core.client.scala.model.domain.Linkable
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -30,9 +32,12 @@ class XXXTest extends AsyncFunSuite with Matchers {
           .parseDocument(computePath("api.yaml"))
       }
     } yield {
-      val link = doc.document.encodes.asInstanceOf[WebApi].endPoints.head.operations.head.responses.head
-      link.isLink shouldBe true
-      link.linkTarget.get.location().get should include("component.yaml")
+      all(doc.document.declares.map(_.asInstanceOf[Linkable].isLink)) shouldBe true
+      all(
+        doc.document.declares
+          .filter(!_.isInstanceOf[Request])
+          .map(_.asInstanceOf[Linkable].linkTarget.get.location().get)
+      ) should include("component.yaml")
     }
   }
 

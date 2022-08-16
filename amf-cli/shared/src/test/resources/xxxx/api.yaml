@@ -2,9 +2,32 @@ openapi: 3.0.0
 info:
   title: Test API
   version: 1.0.0
-paths:
-  /test:
-    get:
-      responses:
-        "200":
-          $ref: "aComponent.yaml#/components/responses/my200"
+paths: {}
+components:
+  securitySchemes:
+    aSecurityScheme:
+      $ref: "aComponent.yaml#/components/securitySchemes/aSecurityScheme"
+  schemas:
+    aSchema:
+      $ref: "aComponent.yaml#/components/schemas/aSchema"
+  requestBodies:
+    aRequest:
+      $ref: "aComponent.yaml#/components/requestBodies/aRequest"
+  parameters:
+    aParameter:
+      $ref: "aComponent.yaml#/components/parameters/aParameter"
+  links:
+    aLink:
+      $ref: "aComponent.yaml#/components/links/aLink"
+  headers:
+    aHeader:
+      $ref: "aComponent.yaml#/components/headers/aHeader"
+  examples:
+    anExample:
+      $ref: "aComponent.yaml#/components/examples/anExample"
+  callbacks:
+    aCallback:
+      $ref: "aComponent.yaml#/components/callbacks/aCallback"
+  responses:
+    aResponse:
+      $ref: "aComponent.yaml#/components/responses/aResponse"

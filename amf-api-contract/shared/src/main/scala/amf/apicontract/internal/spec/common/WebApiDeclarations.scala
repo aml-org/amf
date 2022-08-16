@@ -27,6 +27,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
+import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.QName
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
@@ -315,7 +316,15 @@ class WebApiDeclarations(
       o
     }
 
-  def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
+  def findCallbackInDeclarations(key: String, scope: SearchScope.Scope = All): Option[List[Callback]] =
+    findForType(
+      key,
+      _.asInstanceOf[WebApiDeclarations].callbacks.map(tuple => (tuple._1 -> tuple._2.head)),
+      scope
+    ) match {
+      case Some(c: Callback) => Some(List(c))
+      case other             => None
+    }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
