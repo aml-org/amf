@@ -4,7 +4,13 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.internal.parser.domain.{Declarations, FragmentRef, FutureDeclarations, SearchScope}
+import amf.core.internal.parser.domain.{
+  Declarations,
+  FragmentRef,
+  FutureDeclarations,
+  QualifiedNameExtractor,
+  SearchScope
+}
 import amf.shapes.client.scala.model.document.DataTypeFragment
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
@@ -13,16 +19,21 @@ import amf.shapes.internal.spec.jsonschema.ref.JsonReference
 import org.yaml.model.YPart
 
 object ShapeDeclarations {
-  def empty(errorHandler: AMFErrorHandler, futureDeclarations: FutureDeclarations): ShapeDeclarations = {
-    new ShapeDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+  def empty(
+      errorHandler: AMFErrorHandler,
+      futureDeclarations: FutureDeclarations,
+      extractor: QualifiedNameExtractor
+  ): ShapeDeclarations = {
+    new ShapeDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations, extractor = extractor)
   }
 }
 
 class ShapeDeclarations(
     val alias: Option[String] = None,
     errorHandler: AMFErrorHandler,
-    futureDeclarations: FutureDeclarations
-) extends Declarations(Map.empty, Map.empty, Map.empty, errorHandler, futureDeclarations) {
+    futureDeclarations: FutureDeclarations,
+    extractor: QualifiedNameExtractor
+) extends Declarations(Map.empty, Map.empty, Map.empty, errorHandler, futureDeclarations, extractor) {
 
   var shapes: Map[String, Shape]                                  = Map()
   var extensions: Map[String, Dialect]                            = Map.empty
@@ -150,7 +161,7 @@ class ShapeDeclarations(
   }
 
   def copy(): ShapeDeclarations = {
-    val next = new ShapeDeclarations(alias, errorHandler, futureDeclarations)
+    val next = new ShapeDeclarations(alias, errorHandler, futureDeclarations, extractor)
     copy(next)
   }
 

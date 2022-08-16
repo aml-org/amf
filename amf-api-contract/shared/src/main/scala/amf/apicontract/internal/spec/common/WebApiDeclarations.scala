@@ -40,8 +40,9 @@ import org.yaml.model.{YNode, YPart}
 class WebApiDeclarations(
     alias: Option[String],
     val errorHandler: AMFErrorHandler,
-    val futureDeclarations: FutureDeclarations
-) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations) {
+    val futureDeclarations: FutureDeclarations,
+    extractor: QualifiedNameExtractor
+) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations, extractor) {
 
   var resourceTypes: Map[String, ResourceType]          = Map()
   var parameters: Map[String, Parameter]                = Map()
@@ -97,14 +98,21 @@ class WebApiDeclarations(
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
     val merged =
-      new WebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+      new WebApiDeclarations(
+        alias = alias,
+        errorHandler = errorHandler,
+        futureDeclarations = EmptyFutureDeclarations(),
+        extractor
+      )
     mergeParts(other, merged)
     merged
   }
 
   override def copy(): WebApiDeclarations = {
     val next =
-      super.copy(new WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations))
+      super.copy(
+        new WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations, extractor)
+      )
     libraries.foreach(entry => next.addLibrary(entry._1, entry._2))
     next.resourceTypes = resourceTypes
     next.parameters = parameters
@@ -206,7 +214,8 @@ class WebApiDeclarations(
         val result = new WebApiDeclarations(
           Some(alias),
           errorHandler = errorHandler,
-          futureDeclarations = EmptyFutureDeclarations()
+          futureDeclarations = EmptyFutureDeclarations(),
+          extractor
         )
         addLibrary(alias, result)
         result
@@ -391,9 +400,11 @@ object WebApiDeclarations {
   def apply(
       declarations: Seq[DomainElement],
       errorHandler: AMFErrorHandler,
-      futureDeclarations: FutureDeclarations
+      futureDeclarations: FutureDeclarations,
+      extractor: QualifiedNameExtractor
   ): WebApiDeclarations = {
-    val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+    val result =
+      new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations, extractor)
     declarations.foreach(result += _)
     result
   }
@@ -586,7 +597,12 @@ class OasLikeWebApiDeclarations(
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
     override val futureDeclarations: FutureDeclarations
-) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+) extends WebApiDeclarations(
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations,
+      OasComponentQualifiedNameExtractor
+    ) {}
 
 class OasWebApiDeclarations(
     override val asts: Map[String, YNode],
@@ -680,7 +696,12 @@ class RamlWebApiDeclarations(
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
     override val futureDeclarations: FutureDeclarations
-) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
+) extends WebApiDeclarations(
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations,
+      DotQualifiedNameExtractor
+    ) {
 
   def existsExternalAlias(lib: String): Boolean = externalLibs.contains(lib)
 
