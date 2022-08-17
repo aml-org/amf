@@ -6,17 +6,6 @@ type Query {
     text: String
 }
 
-type DogOwner implements PetOwner {
-    name: String
-    pet: Dog
-    otherPets: [Dog]
-}
-
-type Dog {
-    name: String
-    breed: String
-}
-
 interface PetOwner {
     name: String!
     pet: Pet
@@ -24,5 +13,27 @@ interface PetOwner {
 }
 
 interface Pet {
-    name: String
+    name: String!
+}
+
+type DogOwner implements PetOwner {
+    name: String!
+    pet: Dog
+    otherPets: [Dog]
+}
+
+type Dog implements Pet {
+    name: String!
+    breed: String
+}
+
+type DogOwnerWrong implements PetOwner {
+    name: String # nullable
+    pet: DogWrong # not a Pet
+    otherPets: [DogWrong] # not a Pet
+}
+
+type DogWrong { # doesn't implement Pet
+    name: String!
+    breed: String
 }

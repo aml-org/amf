@@ -1,11 +1,19 @@
 type Query {
-
   text: String
 }
-type DogOwner implements PetOwner {
-  name : String!
-  pet : Dog
-  otherPets : [Dog]
+interface Pet {
+  name : String
+}
+interface HousePetOwner {
+  housePet : HousePet
+}
+union HousePet = Dog | Cat
+type CatOwner implements HousePetOwner {
+  housePet : Cat
+}
+type Cat implements Pet {
+  name : String
+  color : String
 }
 type Dog implements Pet {
   name : String
@@ -16,6 +24,8 @@ interface PetOwner {
   pet : Pet
   otherPets : [Pet]
 }
-interface Pet {
-  name : String
+type DogOwner implements PetOwner {
+  name : String!
+  pet : Dog
+  otherPets : [Dog]
 }
