@@ -1,7 +1,6 @@
 package amf.graphql.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
-import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
@@ -16,6 +15,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     val name         = operation.name.value()
     val arguments    = collectArguments
     val returnedType = extractGraphQLType
+    val directives   = GraphQLDirectiveApplicationsRenderer(operation)
 
     // arguments side by side or each in a new line
     val isMultiLine = arguments.exists(_.documentation.nonEmpty)
@@ -25,11 +25,11 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
       if (isMultiLine) {
         LineEmitter(f, s"$name(").emit()
         emitArgumentsWithDescriptions(arguments, f, ctx)
-        LineEmitter(f, "):", returnedType).emit()
+        LineEmitter(f, "):", returnedType, directives).emit()
       } else {
-        val inputValueDefinitions = arguments.map(_.value).mkString(",")
+        val inputValueDefinitions = arguments.map(_.value).mkString(", ")
         val argumentsDefinition   = s"($inputValueDefinitions)"
-        LineEmitter(f, s"$name$argumentsDefinition:", returnedType).emit()
+        LineEmitter(f, s"$name$argumentsDefinition:", returnedType, directives).emit()
       }
     }
   }
@@ -44,7 +44,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
   }
   private def collectArguments = {
     operation.request.queryParameters.map { arg =>
-      GraphQLArgumentGenerator(toApiContractParameter(arg), ctx).generate()
+        GraphQLOperationArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
   }
   private def toApiContractParameter(arg: ShapeParameter): Parameter = {
@@ -52,6 +52,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
       .withName(arg.name.value())
       .withRequired(arg.required.option().getOrElse(false))
       .withSchema(arg.schema)
+      .withCustomDomainProperties(arg.customDomainProperties)
 
     Option(arg.defaultValue).map { default =>
       param.withDefaultValue(default)

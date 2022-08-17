@@ -4,12 +4,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.{
-  GraphQLDescriptionEmitter,
-  GraphQLEmitter,
-  GraphQLRootTypeEmitter,
-  GraphQLTypeEmitter
-}
+import amf.graphql.internal.spec.emitter.domain.{GraphQLDescriptionEmitter, GraphQLDirectiveApplicationsRenderer, GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
 import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.AnyShape
 
@@ -29,9 +24,11 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
 
   // TODO: schema is not being rendered
   private def emitSchema(doc: StringDocBuilder) = {
+    val directives = GraphQLDirectiveApplicationsRenderer(ctx.webApi)
+
     doc.fixed { b =>
       GraphQLDescriptionEmitter(ctx.webApi.description.option(), ctx, b).emit()
-      LineEmitter(b, "schema", "{").emit()
+      LineEmitter(b, "schema", directives, "{").emit()
       emitRootOperationTypeDefinitions(b)
       LineEmitter(b, "}").emit()
     }

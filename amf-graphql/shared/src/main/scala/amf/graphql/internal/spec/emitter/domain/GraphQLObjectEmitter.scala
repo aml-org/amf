@@ -15,8 +15,9 @@ case class GraphQLObjectEmitter(
       val name                 = node.name.value()
       val concreteGraphQLType  = checkObjectType(name)
       val implementsInterfaces = renderInheritance()
+      val directives           = GraphQLDirectiveApplicationsRenderer(node)
 
-      LineEmitter(f, extensionPrefix, concreteGraphQLType, name, implementsInterfaces, "{").emit()
+      LineEmitter(f, extensionPrefix, concreteGraphQLType, name, implementsInterfaces, directives, "{").emit()
       emitFields(f)
       LineEmitter(f, "}").emit()
     }
