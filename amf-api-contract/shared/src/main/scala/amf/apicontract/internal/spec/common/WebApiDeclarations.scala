@@ -36,6 +36,8 @@ import amf.shapes.internal.spec.common.error.ErrorNamedExample
 import amf.shapes.internal.spec.common.parser.ShapeDeclarations
 import org.yaml.model.{YNode, YPart}
 
+import scala.language.higherKinds
+
 /** Declarations object.
   */
 class WebApiDeclarations(
@@ -237,67 +239,72 @@ class WebApiDeclarations(
     }
 
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect { case p: Parameter =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect { case p: Parameter =>
       p
     }
 
   def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect { case p: Payload =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect { case p: Payload =>
       p
     }
 
   def findRequestBody(key: String, scope: SearchScope.Scope): Option[Request] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect { case r: Request =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect { case r: Request =>
       r
     }
 
   def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect { case r: Response =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect { case r: Response =>
       r
     }
 
   def findTemplatedLink(key: String, scope: SearchScope.Scope): Option[TemplatedLink] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].links, scope) collect { case l: TemplatedLink =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].links, scope) collect { case l: TemplatedLink =>
       l
     }
 
   def findHeader(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect { case p: Parameter =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect { case p: Parameter =>
       p
     }
 
   def findCorrelationId(key: String, scope: SearchScope.Scope): Option[CorrelationId] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect { case c: CorrelationId =>
-      c
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect {
+      case c: CorrelationId =>
+        c
     }
 
   def findServerBindings(key: String, scope: SearchScope.Scope): Option[ServerBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect { case c: ServerBindings =>
-      c
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect {
+      case c: ServerBindings =>
+        c
     }
 
   def findOperationBindings(key: String, scope: SearchScope.Scope): Option[OperationBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect { case c: OperationBindings =>
-      c
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect {
+      case c: OperationBindings =>
+        c
     }
 
   def findChannelBindings(key: String, scope: SearchScope.Scope): Option[ChannelBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect { case c: ChannelBindings =>
-      c
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect {
+      case c: ChannelBindings =>
+        c
     }
 
   def findMessageBindings(key: String, scope: SearchScope.Scope): Option[MessageBindings] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect { case c: MessageBindings =>
-      c
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect {
+      case c: MessageBindings =>
+        c
     }
 
   def findMessage(key: String, scope: SearchScope.Scope): Option[Message] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect { case m: Message =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect { case m: Message =>
       m
     }
 
   def findOperationTrait(key: String, scope: SearchScope.Scope): Option[Operation] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].operationTraits, scope) collect { case o: Operation =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].operationTraits, scope) collect { case o: Operation =>
       o
     }
 
@@ -312,18 +319,18 @@ class WebApiDeclarations(
   }
 
   def findMessageTrait(key: String, scope: SearchScope.Scope): Option[Message] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].messageTraits, scope) collect { case o: Message =>
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].messageTraits, scope) collect { case o: Message =>
       o
     }
 
   def findCallbackInDeclarations(key: String, scope: SearchScope.Scope = All): Option[List[Callback]] =
-    findForType(
+    findForType[List](
       key,
-      _.asInstanceOf[WebApiDeclarations].callbacks.map(tuple => (tuple._1 -> tuple._2.head)),
+      _.asInstanceOf[WebApiDeclarations].callbacks,
       scope
-    ) match {
-      case Some(c: Callback) => Some(List(c))
-      case other             => None
+    )(List(_)) match {
+      case Some(callbacks: List[DomainElement]) => Some(callbacks.collect { case callback: Callback => callback })
+      case _                                    => None
     }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
@@ -339,7 +346,7 @@ class WebApiDeclarations(
       scope: SearchScope.Scope,
       error: Option[String => Unit] = None
   ): Option[ResourceType] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].resourceTypes, scope) match {
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].resourceTypes, scope) match {
       case Some(r: ResourceType) => Some(r)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
@@ -357,7 +364,7 @@ class WebApiDeclarations(
   }
 
   private def findTrait(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[Trait] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].traits, scope) match {
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].traits, scope) match {
       case Some(t: Trait) => Some(t)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
@@ -380,7 +387,7 @@ class WebApiDeclarations(
       scope: SearchScope.Scope,
       error: Option[String => Unit] = None
   ): Option[SecurityScheme] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].securitySchemes, scope) match {
+    findForType[Identity](key, _.asInstanceOf[WebApiDeclarations].securitySchemes, scope) match {
       case Some(ss: SecurityScheme) => Some(ss)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
@@ -737,14 +744,14 @@ class ExtensionWebApiDeclarations(
     override val futureDeclarations: FutureDeclarations
 ) extends RamlWebApiDeclarations(alias, errorHandler, futureDeclarations) {
 
-  override def findForType(
+  override def findForType[C[_]](
       key: String,
-      map: Declarations => Map[String, DomainElement],
+      map: Declarations => Map[String, C[DomainElement]],
       scope: SearchScope.Scope
-  ): Option[DomainElement] = {
-    super.findForType(key, map, scope) match {
+  )(implicit wrapper: DomainElement => C[DomainElement]): Option[C[DomainElement]] = {
+    super.findForType[C](key, map, scope) match {
       case Some(x) => Some(x)
-      case None    => parentDeclarations.findForType(key, map, scope)
+      case None    => parentDeclarations.findForType[C](key, map, scope)
     }
   }
 }

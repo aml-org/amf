@@ -80,7 +80,7 @@ class ShapeDeclarations(
       scope: SearchScope.Scope,
       error: Option[String => Unit] = None
   ): Option[CreativeWork] =
-    findForType(key, Map.empty, scope) match {
+    findForType[Identity](key, Map.empty, scope) match {
       case Some(u: CreativeWork) => Some(u)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
@@ -113,7 +113,7 @@ class ShapeDeclarations(
   }
 
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
-    findForType(key, _.asInstanceOf[ShapeDeclarations].shapes, scope) match {
+    findForType[Identity](key, _.asInstanceOf[ShapeDeclarations].shapes, scope) match {
       case Some(anyShape: AnyShape) => Some(anyShape)
       case Some(other) if scope == SearchScope.Fragments =>
         error.foreach(
@@ -124,7 +124,7 @@ class ShapeDeclarations(
     }
 
   def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
-    findForType(key, _.asInstanceOf[ShapeDeclarations].examples, scope) collect { case e: Example =>
+    findForType[Identity](key, _.asInstanceOf[ShapeDeclarations].examples, scope) collect { case e: Example =>
       e
     }
 
