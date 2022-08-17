@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
+  Message: Duplicated resource path: '/user/{param}'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
+  Property: http://a.ml/vocabularies/apiContract#endpoint
+  Range: [(12,2)-(21,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
+  Message: Duplicated resource path: '/user/{param1}'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
+  Property: http://a.ml/vocabularies/apiContract#endpoint
+  Range: [(21,2)-(30,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
+  Message: Duplicated resource path: '/user/{param}/'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
+  Property: http://a.ml/vocabularies/apiContract#endpoint
+  Range: [(42,2)-(50,22)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml

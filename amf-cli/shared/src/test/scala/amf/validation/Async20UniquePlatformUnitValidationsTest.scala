@@ -322,4 +322,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("double-references/valid-ref-to-bindings-with-ref.yaml")
   }
 
+  test("Resources paths") {
+    validate("resources-paths/resources-paths.yaml", Some("resources-paths.report"))
+  }
 }

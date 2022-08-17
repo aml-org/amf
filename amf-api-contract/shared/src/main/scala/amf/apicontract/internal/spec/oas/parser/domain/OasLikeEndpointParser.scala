@@ -42,14 +42,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     if (!TemplateUri.isValid(pathText))
       ctx.eh.violation(InvalidEndpointPath, endpoint, TemplateUri.invalidMsg(pathText), entry.value.location)
 
-    val duplicated = collector.find(other => other.path.option() exists (identicalPaths(_, pathText)))
-    duplicated match {
-      case Some(other) =>
-        ctx.eh.violation(DuplicatedEndpointPath, other, "Duplicated resource path " + pathText, entry.location)
-        None
-      case None =>
-        parseEndpoint(endpoint)
-    }
+    parseEndpoint(endpoint)
   }
 
   /** Verify if two paths are identical.
@@ -248,13 +241,6 @@ case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: Li
   /** Verify if two paths are identical. In the case of OAS 3.0, paths with the same hierarchy but different templated
     * names are considered identical.
     */
-  override protected def identicalPaths(first: String, second: String): Boolean = {
-    def stripPathParams(s: String): String = {
-      val trimmed = if (s.endsWith("/")) s.init else s
-      trimmed.replaceAll("\\{.*?\\}", "")
-    }
-    stripPathParams(first) == stripPathParams(second)
-  }
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     super.parseEndpointMap(endpoint, map)
