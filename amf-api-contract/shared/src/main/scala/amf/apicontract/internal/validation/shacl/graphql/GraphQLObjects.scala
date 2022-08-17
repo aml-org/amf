@@ -178,7 +178,7 @@ object GraphQLUtils {
       case u: UnionShape => // nullable type
         u.anyOf.collectFirst { case s: ScalarShape => s.dataType.value() }
       case s: ScalarShape => Some(s.dataType.value())
-      case n: NodeShape   => None // should return something? objects and interfaces end up here
+      case n: NodeShape   => n.name.option()
       case _              => None
     }
   }

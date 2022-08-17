@@ -21,26 +21,25 @@ object GraphQLValidator {
       interface.allFields().map { field => RequiredField(interface.name, field) }
     }
 
-    requiredFields flatMap { requiredFieldClass =>
-      val requiredField    = requiredFieldClass.field
-      val maybeActualField = obj.allFields().find(_.name == requiredField.name)
+    requiredFields flatMap { requiredField =>
+      val maybeActualField = obj.allFields().find(_.name == requiredField.field.name)
       maybeActualField match {
         case Some(actualField) =>
           (requiredField, actualField) match {
-            case (required: GraphQLOperation, actual: GraphQLOperation) =>
-              validateArgumentTypes(required, actual) ++ validateCovariance(requiredFieldClass, actual)
-            case (required: GraphQLProperty, actual: GraphQLProperty) =>
-              validateCovariance(requiredFieldClass, actual)
-            case (required: GraphQLOperation, _: GraphQLProperty) =>
+            case (RequiredField(interface, op: GraphQLOperation), actual: GraphQLOperation) =>
+              validateArgumentTypes(op, interface, actual) ++ validateCovariance(requiredField, actual)
+            case (RequiredField(_, _: GraphQLProperty), actual: GraphQLProperty) =>
+              validateCovariance(requiredField, actual)
+            case (RequiredField(interface, field: GraphQLOperation), _: GraphQLProperty) =>
               validationInfo(
                 NodeShapeModel.Properties,
-                s"Field '${requiredField.name}' is missing it's required arguments: ${required.parameters.map(_.name).mkString(", ")}",
+                s"Field '${field.name}' required by interface '$interface' is missing it's required arguments: ${field.parameters.map(_.name).mkString(", ")}",
                 obj.annotations
               )
-            case (required: GraphQLProperty, _: GraphQLOperation) =>
+            case (RequiredField(interface, field: GraphQLProperty), _: GraphQLOperation) =>
               validationInfo(
                 NodeShapeModel.Properties,
-                s"Required field '${required.name}' has no arguments defined in '${requiredFieldClass.interface}' interface",
+                s"Field '${field.name}' required by interface '$interface' has no arguments defined",
                 obj.annotations
               )
             case _ => None
@@ -48,15 +47,19 @@ object GraphQLValidator {
         case None =>
           validationInfo(
             NodeShapeModel.Properties,
-            s"Field '${requiredField.name}' from interface '${requiredFieldClass.interface}' is required in '${obj.name}'",
+            s"Field '${requiredField.field.name}' required by interface '${requiredField.interface}' is missing in '${obj.name}'",
             obj.annotations
           )
       }
     }
   }
 
-  private def validateArgumentTypes(required: GraphQLOperation, actual: GraphQLOperation): Seq[ValidationInfo] = {
-    val tuples = required.parameters.map { requiredArg =>
+  private def validateArgumentTypes(
+      requiredOp: GraphQLOperation,
+      fromInterface: String,
+      actual: GraphQLOperation
+  ): Seq[ValidationInfo] = {
+    val tuples = requiredOp.parameters.map { requiredArg =>
       (requiredArg, actual.parameters.find(_.name == requiredArg.name))
     }
 
@@ -64,28 +67,27 @@ object GraphQLValidator {
       case (requiredArg: GraphQLParameter, None) =>
         validationInfo(
           AbstractParameterModel.Required,
-          s"Field '${actual.name}' is missing its required argument '${requiredArg.name}''",
+          s"Field '${actual.name}' required by interface '$fromInterface' is missing its required argument '${requiredArg.name}''",
           actual.annotations
         )
       case (requiredArg: GraphQLParameter, Some(actualArg: GraphQLParameter)) =>
         if (requiredArg.datatype != actualArg.datatype) {
-          val message = requiredArg.datatype match {
-            case Some(datatype) =>
-              s"Argument '${requiredArg.name}' of field '${required.name}' must be of type '$datatype''"
-            case None =>
-              s"Argument '${requiredArg.name}' of field '${required.name}' has an incorrect datatype"
-          }
-          validationInfo(AbstractParameterModel.Schema, message, actualArg.annotations)
+          validationInfo(
+            AbstractParameterModel.Schema,
+            s"Argument '${requiredArg.name}' of field '${requiredOp.name}' required by interface '$fromInterface' must be of type '${requiredArg.datatype
+                .getOrElse("")}'",
+            actualArg.annotations
+          )
         } else None
       case _ => None
     }
 
     val notDefinedValidations = actual.parameters
-      .filter { arg => !required.parameters.exists(_.name == arg.name) && arg.required }
+      .filter { arg => !requiredOp.parameters.exists(_.name == arg.name) && arg.required }
       .flatMap { arg =>
         validationInfo(
           AbstractParameterModel.Schema,
-          s"Required field '${required.name}' does not define a non-optional argument '${arg.name}'",
+          s"Field '${requiredOp.name}' required by interface '$fromInterface' does not define a non-optional argument '${arg.name}'",
           arg.annotations
         )
       }
@@ -94,17 +96,15 @@ object GraphQLValidator {
   }
 
   private def validateCovariance(requiredField: RequiredField, actual: GraphQLField): Seq[ValidationInfo] = {
-    val message = requiredField.field.datatype match {
-      case Some(datatype) =>
-        s"Field '${actual.name}' must be of type '$datatype' as defined in interface '${requiredField.interface}'"
-      case None => s"Field '${actual.name}' must be the same type as defined in interface '${requiredField.interface}' "
-    }
+    val message =
+      s"Field '${actual.name}' required by interface '${requiredField.interface}' must be of type '${requiredField.field.datatype
+          .getOrElse("")}'"
     val validation = (requiredField.field, actual) match {
       case (requiredProp: GraphQLProperty, actualProp: GraphQLProperty) =>
         if (requiredProp.minCount > actualProp.minCount) {
           validationInfo(
             AbstractParameterModel.Schema,
-            s"field '${actual.name}' can't be nullable because it's definition is non-nullable",
+            s"field '${actual.name}' required by interface '${requiredField.interface}' can't be nullable because it's definition is non-nullable",
             actual.annotations
           )
         } else if (!isValidSubType(requiredProp.range, actualProp.range))
