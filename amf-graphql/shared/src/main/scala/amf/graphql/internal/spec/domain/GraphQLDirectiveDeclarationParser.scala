@@ -18,6 +18,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
 
   def parse(): CustomDomainProperty = {
     parseName()
+    parseRepeatable()
     parseArguments()
     parseLocations()
     parseDescription(node, directive, directive.meta)
@@ -27,6 +28,12 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   private def parseName(): Unit = {
     val (name, annotations) = findName(node, "AnonymousDirective", "Missing directive name")
     directive.withName(name, annotations)
+  }
+
+  def parseRepeatable(): Unit = {
+    if (pathToTerminal(node, Seq("'repeatable'")).isDefined) {
+      directive.withRepeatable(true)
+    }
   }
 
   private def parseArguments(): Unit = {
