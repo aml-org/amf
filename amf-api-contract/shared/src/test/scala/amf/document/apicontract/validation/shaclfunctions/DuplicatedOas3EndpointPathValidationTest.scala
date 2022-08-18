@@ -2,19 +2,26 @@ package amf.document.apicontract.validation.shaclfunctions
 
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.internal.validation.shacl.oas.DuplicatedEndpointPathValidation
+import amf.apicontract.internal.validation.shacl.oas.DuplicatedOas3EndpointPathValidation
 import amf.validation.internal.shacl.custom.CustomShaclValidator
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-class DuplicatedEndpointPathValidationTest extends AnyFunSuite with Matchers {
+class DuplicatedOas3EndpointPathValidationTest extends AnyFunSuite with Matchers {
 
-  val validation: CustomShaclValidator.CustomShaclFunction = DuplicatedEndpointPathValidation()
+  val validation: CustomShaclValidator.CustomShaclFunction = DuplicatedOas3EndpointPathValidation()
 
   private def hasDuplicatePaths(api: WebApi): Boolean = {
     var hasDuplicates = false
     validation.run(api, { _ => hasDuplicates = true })
     hasDuplicates
+  }
+
+  test("Same path") {
+    val endPoint             = EndPoint().withPath("/user")
+    val endPointWithSamePath = EndPoint().withPath("/user")
+    val api                  = WebApi().withEndPoints(Seq(endPoint, endPointWithSamePath))
+    hasDuplicatePaths(api) shouldBe true
   }
 
   test("With parameter") {

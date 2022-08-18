@@ -103,4 +103,12 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Validate oas20 with a baseUriParameters annotation") {
     validate("base-uri-annotation.json", Some("base-uri-annotation.report"))
   }
+
+  test("Resources paths") {
+    validate(
+      "resources-paths/resources-paths.yaml",
+      Some("resources-paths.report"),
+      hideValidationResultsIfParseNotConforms = false
+    )
+  }
 }
