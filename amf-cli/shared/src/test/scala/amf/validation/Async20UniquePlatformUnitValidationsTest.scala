@@ -323,6 +323,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("Resources paths") {
-    validate("resources-paths/resources-paths.yaml", Some("resources-paths.report"))
+    validate(
+      "resources-paths/resources-paths.yaml",
+      Some("resources-paths.report"),
+      hideValidationResultsIfParseNotConforms = false
+    )
   }
 }

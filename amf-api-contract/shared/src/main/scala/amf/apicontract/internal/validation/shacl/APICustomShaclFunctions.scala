@@ -1,15 +1,17 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
-import amf.apicontract.internal.metamodel.domain.api.{BaseApiModel, WebApiModel}
+import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.apicontract.internal.validation.shacl.graphql._
-import amf.apicontract.internal.validation.shacl.oas.DuplicatedEndpointPathValidation
+import amf.apicontract.internal.validation.shacl.oas.{
+  DuplicatedCommonEndpointPathValidation,
+  DuplicatedOas3EndpointPathValidation}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
@@ -628,7 +630,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           }
         }
       },
-      DuplicatedEndpointPathValidation()
+      DuplicatedOas3EndpointPathValidation(),
+      DuplicatedCommonEndpointPathValidation()
     )
 
   private def validateObjectAndHasProperties(element: AmfElement) = {

@@ -610,11 +610,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "1",
         openApiErrorMessage = "Response must have a 'description' field"
       ),
-        AMFValidation(
-        owlClass = apiContract("WebAPI"),
-        owlProperty = apiContract("endpoints"),
-        constraint = shape("duplicatedEndpointPath")
-      ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("License"), core("url")),
       urlValidation(core("Organization"), core("url")),
@@ -647,7 +642,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value = "^(query|header)$"
       ),
-      schemaRequiredInParameter
+      schemaRequiredInParameter,
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedCommonEndpointPath")
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
@@ -750,6 +750,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = core("name"),
         constraint = sh("minLength"),
         value = "1"
+      ),
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedOas3EndpointPath")
       )
     )
 
@@ -1042,10 +1047,10 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value = """^(?!(.*#.+)$).*$""".stripMargin
       ),
-        AMFValidation(
+      AMFValidation(
         owlClass = apiContract("AsyncAPI"),
         owlProperty = apiContract("endpoints"),
-        constraint = shape("duplicatedEndpointPath")
+        constraint = shape("duplicatedCommonEndpointPath")
       ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
