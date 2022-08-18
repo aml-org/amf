@@ -4,6 +4,7 @@ import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
@@ -12,11 +13,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
 import amf.shapes.internal.spec.common.parser.TypeDeclarationParser.parseTypeDeclarations
 import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext, YMapEntryLike}
-import amf.shapes.internal.spec.common.{
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
-}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion}
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MandatorySchema, UnknownSchemaDraft}
@@ -40,7 +37,7 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
     addDeclarationsToModel(document, ctx.shapes.values.toList)
 
     val rootSchema = parseRootSchema(schemaVersion)
-    document.withEncodes(rootSchema)
+    document.set(DocumentModel.Encodes, rootSchema, Annotations.inferred())
 
     ctx.futureDeclarations.resolve()
 

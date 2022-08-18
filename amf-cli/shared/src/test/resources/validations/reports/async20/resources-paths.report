@@ -5,26 +5,26 @@ Number of results: 3
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
-  Message: Duplicated resource path: '/user/{param}'
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedCommonEndpointPath
+  Message: Duplicated resource path: '/user'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
   Property: http://a.ml/vocabularies/apiContract#endpoint
-  Range: [(12,2)-(21,0)]
+  Range: [(7,2)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml
 
-- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
-  Message: Duplicated resource path: '/user/{param1}'
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: Duplicate key : '/user'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
-  Property: http://a.ml/vocabularies/apiContract#endpoint
-  Range: [(21,2)-(30,0)]
+  Target: 
+  Property: 
+  Range: [(12,2)-(12,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml
 
-- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedEndpointPath
-  Message: Duplicated resource path: '/user/{param}/'
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-endpoints-duplicatedCommonEndpointPath
+  Message: Duplicated resource path: '/user'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml#/async-api
   Property: http://a.ml/vocabularies/apiContract#endpoint
-  Range: [(42,2)-(50,22)]
+  Range: [(12,2)-(17,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/resources-paths/resources-paths.yaml

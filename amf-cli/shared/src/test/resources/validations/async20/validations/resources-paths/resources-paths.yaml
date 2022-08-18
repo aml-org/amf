@@ -9,6 +9,11 @@ channels:
       message:
         payload:
           type: string
+  /user:
+    subscribe:
+      message:
+        payload:
+          type: string
   /user/{param}:
     parameters:
       param:
@@ -21,27 +26,6 @@ channels:
   /user/{param1}:
     parameters:
       param1:
-        schema:
-          type: string
-    subscribe:
-      message:
-        payload:
-          type: string
-  /user{param1}/{param2}:
-    parameters:
-      param1:
-        schema:
-          type: string
-      param2:
-        schema:
-          type: string
-    subscribe:
-      message:
-        payload:
-          type: string
-  /user/{param}/:
-    parameters:
-      param:
         schema:
           type: string
     subscribe:

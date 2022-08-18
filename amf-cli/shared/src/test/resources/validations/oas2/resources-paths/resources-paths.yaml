@@ -1,0 +1,35 @@
+swagger: "2.0"
+info:
+  title: Title
+  version: "1.0"
+paths:
+  /user:
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user:
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param}:
+    parameters:
+      - in: path
+        name: param
+        required: true
+        type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param1}:
+    parameters:
+      - in: path
+        name: param1
+        required: true
+        type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.

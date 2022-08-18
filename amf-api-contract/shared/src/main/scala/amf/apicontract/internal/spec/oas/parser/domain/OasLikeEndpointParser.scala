@@ -11,11 +11,7 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext, RemoteNodeNavigation}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.spec.spec.toRaml
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  DuplicatedEndpointPath,
-  InvalidEndpointPath,
-  InvalidEndpointType
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidEndpointPath, InvalidEndpointType}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -44,10 +40,6 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
 
     parseEndpoint(endpoint)
   }
-
-  /** Verify if two paths are identical.
-    */
-  protected def identicalPaths(first: String, second: String): Boolean = first == second
 
   private def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
