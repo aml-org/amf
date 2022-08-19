@@ -7,7 +7,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, U
 
 case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: StringDocBuilder) {
   def emit(): Unit = {
-    val extensionPrefix = if (isExtension) "extend " else ""
+    val extensionPrefix = if (isExtension) "extend" else ""
     emitDescription()
     b.fixed { f =>
       shape match {

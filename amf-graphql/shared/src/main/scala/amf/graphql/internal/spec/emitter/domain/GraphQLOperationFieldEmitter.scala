@@ -5,7 +5,8 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 
 case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLEmitterContext, b: StringDocBuilder)
@@ -22,12 +23,13 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     b.fixed { f =>
       emitFieldDescription(f)
       if (isMultiLine) {
-        f += (s"$name(", pos(operation.annotations))
+        LineEmitter(f, s"$name(").emit()
         emitArgumentsWithDescriptions(arguments, f, ctx)
-        f += s"): $returnedType"
+        LineEmitter(f, "):", returnedType).emit()
       } else {
-        val args = arguments.map(_.value).mkString(",")
-        f += (s"$name($args): $returnedType", pos(operation.annotations))
+        val inputValueDefinitions = arguments.map(_.value).mkString(",")
+        val argumentsDefinition   = s"($inputValueDefinitions)"
+        LineEmitter(f, s"$name$argumentsDefinition:", returnedType).emit()
       }
     }
   }

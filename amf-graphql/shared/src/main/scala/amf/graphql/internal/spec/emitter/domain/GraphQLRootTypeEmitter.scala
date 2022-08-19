@@ -2,18 +2,18 @@ package amf.graphql.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.core.internal.plugins.syntax.StringDocBuilder
-import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.{GraphQLEmitterContext, RootType}
-import amf.graphql.internal.spec.emitter.domain.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 
 case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext, b: StringDocBuilder)
     extends GraphQLEmitter {
 
   def emit(): Unit = {
     b.fixed { f =>
-      f += s"type ${rootType.name} {"
+      LineEmitter(f, "type", rootType.name, "{").emit()
       emitRootFields(f)
-      f += "}"
+      LineEmitter(f, "}").emit()
     }
   }
 
@@ -33,16 +33,17 @@ case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext
 
     val isMultiLine = arguments.exists(a => a.documentation.nonEmpty)
     if (isMultiLine) l.fixed { f =>
-      f += (s"$name(", pos(ep.annotations))
+      LineEmitter(f, s"$name(").emit()
       emitArgumentsWithDescriptions(arguments, f, ctx)
-      f += s"): $returnedType"
+      LineEmitter(f, "):", returnedType).emit()
     }
     else {
       if (arguments.nonEmpty) {
-        val args = arguments.map(_.value).mkString(",")
-        l += (s"$name($args): $returnedType", pos(ep.annotations))
+        val inputValueDefinitions = arguments.map(_.value).mkString(",")
+        val argumentsDefinition   = s"($inputValueDefinitions)"
+        LineEmitter(l, s"$name$argumentsDefinition:", returnedType).emit()
       } else {
-        l += (s"$name: $returnedType", pos(ep.annotations))
+        LineEmitter(l, s"$name:", returnedType).emit()
       }
     }
   }

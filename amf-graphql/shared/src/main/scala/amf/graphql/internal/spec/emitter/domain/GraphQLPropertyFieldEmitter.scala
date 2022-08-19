@@ -4,6 +4,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 
 case class GraphQLPropertyFieldEmitter(property: PropertyShape, ctx: GraphQLEmitterContext, b: StringDocBuilder)
     extends GraphQLEmitter {

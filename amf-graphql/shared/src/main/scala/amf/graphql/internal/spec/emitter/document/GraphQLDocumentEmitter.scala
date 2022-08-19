@@ -4,7 +4,13 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.{GraphQLDescriptionEmitter, GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
+import amf.graphql.internal.spec.emitter.domain.{
+  GraphQLDescriptionEmitter,
+  GraphQLEmitter,
+  GraphQLRootTypeEmitter,
+  GraphQLTypeEmitter
+}
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.AnyShape
 
 class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GraphQLEmitter {
@@ -25,30 +31,34 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
   private def emitSchema(doc: StringDocBuilder) = {
     doc.fixed { b =>
       GraphQLDescriptionEmitter(ctx.webApi.description.option(), ctx, b).emit()
-      b.+=("schema {")
-      b.obj { obj =>
-        ctx.queryType.foreach { queryType =>
-          obj.+=(s"query: ${queryType.name}")
-        }
-        ctx.mutationType.foreach { mutationType =>
-          obj.+=(s"mutation: ${mutationType.name}")
-        }
-        ctx.subscriptionType.foreach { subscriptionType =>
-          obj.+=(s"subscription: ${subscriptionType.name}")
-        }
-      }
-      b.+=("}")
+      LineEmitter(b, "schema", "{").emit()
+      emitRootOperationTypeDefinitions(b)
+      LineEmitter(b, "}").emit()
     }
   }
 
-  def emitTopLevelTypes(b: StringDocBuilder): Unit = {
+  private def emitRootOperationTypeDefinitions(b: StringDocBuilder) = {
+    b.obj { obj =>
+      ctx.queryType.foreach { queryType =>
+        LineEmitter(obj, "query:", queryType.name).emit()
+      }
+      ctx.mutationType.foreach { mutationType =>
+        LineEmitter(obj, "mutation:", mutationType.name).emit()
+      }
+      ctx.subscriptionType.foreach { subscriptionType =>
+        LineEmitter(obj, "subscription:", subscriptionType.name).emit()
+      }
+    }
+  }
+
+  private def emitTopLevelTypes(b: StringDocBuilder): Unit = {
     val rootLevelTypes = ctx.queryType ++ ctx.mutationType ++ ctx.subscriptionType
     rootLevelTypes.foreach { queryType =>
       GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
   }
 
-  def emitDeclarations(doc: StringDocBuilder): Unit = {
+  private def emitDeclarations(doc: StringDocBuilder): Unit = {
     document.asInstanceOf[Document].declares.foreach {
       case shape: AnyShape =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
