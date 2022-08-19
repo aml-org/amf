@@ -40,7 +40,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
       .withArguments(parseArguments(f, method))
       .withSchema(parseType(f))
       .build()
-    GraphQLDirectiveApplicationParser(f, endpoint).parse()
+    GraphQLDirectiveApplicationsParser(f, endpoint).parse()
     endpoint
   }
 
@@ -64,7 +64,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         setDefaultValue(argument, queryParam)
         queryParam.withSchema(shape).withRequired(true)
     }
-    GraphQLDirectiveApplicationParser(argument, queryParam).parse()
+    GraphQLDirectiveApplicationsParser(argument, queryParam).parse()
     queryParam
   }
 }

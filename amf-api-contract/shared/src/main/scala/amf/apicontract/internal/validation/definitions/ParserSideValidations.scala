@@ -397,6 +397,11 @@ object ParserSideValidations extends Validations {
     "The location of the directive is invalid"
   )
 
+  val InvalidArgumentValue = validation(
+    "invalid-argument-value",
+    "Invalid argument value"
+  )
+
   val DuplicatedDeclaration = validation(
     id = "duplicated-declaration",
     message = "Cannot exist two or more declarations with same name"
