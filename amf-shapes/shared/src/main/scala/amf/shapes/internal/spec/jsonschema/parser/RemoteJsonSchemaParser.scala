@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.parser
 
-import amf.core.client.scala.model.document.{BaseUnit, Fragment}
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
