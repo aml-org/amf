@@ -4,7 +4,14 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.{GraphQLDescriptionEmitter, GraphQLDirectiveApplicationsRenderer, GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
+import amf.graphql.internal.spec.emitter.domain.{
+  GraphQLDescriptionEmitter,
+  GraphQLDirectiveApplicationsRenderer,
+  GraphQLDirectiveDeclarationEmitter,
+  GraphQLEmitter,
+  GraphQLRootTypeEmitter,
+  GraphQLTypeEmitter
+}
 import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.AnyShape
 
@@ -59,9 +66,12 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
     document.asInstanceOf[Document].declares.foreach {
       case shape: AnyShape =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
-      case directive: CustomDomainProperty =>
-      // TODO: emit directive declarations, something like: GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
+      case directive: CustomDomainProperty if !isStandardDirective(directive) =>
+        GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
+      case _ => // ignore
     }
   }
 
+  // TODO: Change this filter to an annotation to make it scalable
+  private def isStandardDirective(directive: CustomDomainProperty): Boolean = directive.name.value() == "deprecated"
 }

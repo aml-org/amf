@@ -2,3 +2,4 @@ type Query {
   name: String
 }
 extend scalar Date @example
+directive @example on SCALAR
