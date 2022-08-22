@@ -1,6 +1,7 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
+import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
@@ -49,13 +50,13 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
     }
   }
 
-  override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
+  override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
     val array = new JsonLDArray(classTerms.toList)
 
     // TODO native-jsonld: I could have different specific meta for each member. Adding jsonLDElement has class type for now.
-    items.foreach { i => array.addMember(i.build(ctxBuilder)) }
+    items.foreach { i => array.addMember(i.build(ctxBuilder)._1) }
     ctxBuilder + array.meta
-    array
+    (array, array.meta)
   }
 
   override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDArrayElementBuilder]

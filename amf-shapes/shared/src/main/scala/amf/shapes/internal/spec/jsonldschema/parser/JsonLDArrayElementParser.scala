@@ -21,22 +21,26 @@ case class JsonLDArrayElementParser(seq: YSequence)(implicit val ctx: JsonLDPars
     val builder = new JsonLDArrayElementBuilder(seq.location)
 
     shape match {
-      case a: ArrayShape => parseItems(builder, a)
+      case a: ArrayShape => parseItems(builder, a.semanticContext, a.items)
 
       // TODO native-jsonld: support matrix and tuple parsing
       // case t:TupleShape =>
 //      case m:MatrixShape if seq.nodes.headOption.exists(_.tagType == YType.Seq) =>
 //        seq.nodes.collect({ s => s.as}).map(n => JsonLDArrayElementBuilder)
       case a: AnyShape if a.meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-        parseItems(builder, AnyShape().withSemanticContext(a.semanticContext.get))
+        parseItems(builder, a.semanticContext, buildEmptyAnyShape(a.semanticContext.get))
       case _ => unsupported(shape)
     }
   }
 
-  def parseItems(builder: JsonLDArrayElementBuilder, shape: AnyShape): JsonLDArrayElementBuilder = {
-    setClassTerm(builder, shape.semanticContext)
+  def parseItems(
+      builder: JsonLDArrayElementBuilder,
+      semanticContext: Option[SemanticContext],
+      items: Shape
+  ): JsonLDArrayElementBuilder = {
+    setClassTerm(builder, semanticContext)
     builder.withItems(seq.nodes.zipWithIndex.map({ case (node, index) =>
-      new JsonLDSchemaNodeParser(AnyShape(), node, index.toString).parse()
+      new JsonLDSchemaNodeParser(items, node, index.toString).parse()
     }))
   }
 }

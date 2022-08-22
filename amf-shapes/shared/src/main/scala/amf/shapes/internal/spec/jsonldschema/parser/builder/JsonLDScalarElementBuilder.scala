@@ -35,10 +35,18 @@ class JsonLDScalarElementBuilder(var dataType: String, var value: Any, override 
   }
 
   // TODO native-jsonld: should I create a new model for each specific scalar node? Value field needs specific scalar type? or we can handle string and convert using dataType field value
-  override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
-    val scalar = new JsonLDScalar(classTerms.toList).withValue(value).withDataType(dataType)
-    ctxBuilder + scalar.meta
-    scalar
+  override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
+    (new JsonLDScalar(value, dataType), getType)
+  }
+
+  private def getType = {
+    dataType match {
+      case DataTypes.Number  => Type.Float
+      case DataTypes.Integer => Type.Int
+      case DataTypes.Boolean => Type.Bool
+      case DataTypes.Nil     => Type.Null
+      case _                 => Type.Str
+    }
   }
 }
 

@@ -55,9 +55,10 @@ case class JsonLDObjectElementParser(
     setClassTerm(builder, semanticContext)
     // TODO native-jsonld: should we fill the defined properties with default value (using that value) if entry is not present or empty?
     map.entries.foreach { e =>
-      val sc = semanticContext.getOrElse(SemanticContext.default)
+      val sc  = semanticContext.getOrElse(SemanticContext.default)
+      val key = e.key.asScalar.map(_.text).getOrElse("")
       val (element, term) =
-        p.find(_.path.value() == e.key.toString)
+        p.find(_.name.value() == key)
           .fold(parseEntry(e, sc))(
             parseWithProperty(_, e.value, sc)
           )
@@ -69,11 +70,11 @@ case class JsonLDObjectElementParser(
   def parseEntry(e: YMapEntry, semanticContext: SemanticContext): (JsonLDElementBuilder, String) = {
     val entryKey = e.key.as[YScalar].text
     val term     = semanticContext.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + entryKey
-    (parser.JsonLDSchemaNodeParser(AnyShape().withSemanticContext(semanticContext), e.value, entryKey).parse(), term)
+    (parser.JsonLDSchemaNodeParser(buildEmptyAnyShape(semanticContext), e.value, entryKey).parse(), term)
   }
 
   def parseWithProperty(p: PropertyShape, node: YNode, semantics: SemanticContext): (JsonLDElementBuilder, String) = {
-    val term = findTerm(semantics, p.path.value())
+    val term = findTerm(semantics, p.name.value())
     (parser.JsonLDSchemaNodeParser(p.range, node, p.path.value()).parse(), term)
   }
 
@@ -93,7 +94,7 @@ case class JsonLDObjectElementParser(
           semanticMapping.iri.option()
         }
     }
-    strings.headOption.getOrElse(ctx.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + name)
+    strings.headOption.map(ctx.expand).getOrElse(ctx.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + name)
   }
 
   override def foldLeft(
