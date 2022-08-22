@@ -1,13 +1,13 @@
 package amf.shapes.client.scala.model.domain.jsonldinstance
 
-import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.client.scala.vocabulary.Namespace.Data
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 
-class JsonLDArray(terms: List[String]) extends JsonLDElement {
+class JsonLDArray(terms: List[String]) extends DomainElement with JsonLDElement {
   override def meta: JsonLDArrayModel = new JsonLDArrayModel(terms)
 
   /** Set of fields composing object. */

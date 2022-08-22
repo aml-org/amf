@@ -20,7 +20,8 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
     val conditional = if (shape.isConditional) parseConditional(shape) else None
 
-    conditional.toSeq
+    val oneOf = if (shape.isXOne) shape.xone.find(isValid(_, node)).map(parse) else None
+    (conditional ++ oneOf).toSeq
     // TODO native-jsonld: compute all conditionals (oneOf, anyOf)
 //    if (anyShape.isXOne) {
 //      anyShape.xone.collectFirst({ case a: AnyShape if isValid(a, map) => a }) match {
@@ -33,7 +34,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
   protected def setClassTerm(builder: JsonLDElementBuilder, semantics: Option[SemanticContext]) =
     builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
 
-  protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option())
+  protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option()).map(t => ctx.expand(t))
 
   def parseConditional(shape: Shape): Option[T] = selectConditionalShape(shape).map(parse)
 
@@ -53,4 +54,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
       .syncValidate(node.toString)
       .conforms
   }
+
+  protected def buildEmptyAnyShape(parentCtx: SemanticContext) =
+    AnyShape().withSemanticContext(parentCtx.copy().withTypeMappings(Nil))
 }

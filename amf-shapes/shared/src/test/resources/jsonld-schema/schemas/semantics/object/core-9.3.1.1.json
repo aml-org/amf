@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#",
+    "@characteristics": [
+      "alias:rootObject"
+    ],
+    "prop1": "alias.prop1Field"
+  },
+  "properties": {
+    "prop1": {
+      "@context": {
+        "@characteristics": [
+          "alias:arrayNode"
+        ]
+      },
+      "type": "array"
+    }
+  }
+}

@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.Shape
-import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SemanticContext}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDScalarElementBuilder
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
@@ -23,16 +23,16 @@ case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit v
 
   override def unsupported(s: Shape): JsonLDScalarElementBuilder = {
     ctx.violation(UnsupportedShape, s.id, "Invalid shape class for scalar node")
-    parseScalar()
+    parseScalar(None)
   }
 
   override def parseNode(shape: Shape): JsonLDScalarElementBuilder = {
     shape match {
       case scalar: ScalarShape =>
         checkDataTypeConsistence(scalar)
-        parseScalar()
+        parseScalar(scalar.semanticContext)
       case a: AnyShape if a.meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-        parseScalar()
+        parseScalar(a.semanticContext)
       case _ => unsupported(shape)
     }
   }
@@ -63,9 +63,14 @@ case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit v
   /** @return
     *   a jsondl scalar builder for the given YScalar value and dataType computed from the YType.
     */
-  def parseScalar(): JsonLDScalarElementBuilder = {
+  def parseScalar(semanticContext: Option[SemanticContext]): JsonLDScalarElementBuilder = {
     // TODO: handle null as explicit null? we need to check null in jsonld emission?
-    if (dataType == DataTypes.Nil) new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location)
-    else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
+    val builder =
+      if (dataType == DataTypes.Nil) new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location)
+      else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
+
+    setClassTerm(builder, semanticContext)
+    builder
   }
+
 }
