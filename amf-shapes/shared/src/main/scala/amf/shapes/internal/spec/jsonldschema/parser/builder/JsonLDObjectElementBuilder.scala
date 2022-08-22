@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.client.scala.vocabulary.ValueType
-import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDObject}
 import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
@@ -58,12 +58,16 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
     this
   }
 
-  override def build(ctxBuilder: EntityContextBuilder): JsonLDElement = {
+  override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
+    val obj = buildObj(ctxBuilder)
+    (obj, obj.meta)
+  }
 
+  private def buildObj(ctxBuilder: EntityContextBuilder): JsonLDObject = {
     val fields = termIndex.map { case (term, key) =>
       val currentBuilder: JsonLDPropertyBuilder = properties(key)
-      val element                               = currentBuilder.element.build(ctxBuilder)
-      (Field(element.meta, ValueType(term)) -> element)
+      val (element, elementType)                = currentBuilder.element.build(ctxBuilder)
+      (Field(elementType, ValueType(term)) -> element)
     }
     // TODO native-jsonld: handle hierarchy for same term at two properties.
     val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList)

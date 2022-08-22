@@ -8,6 +8,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDObject}
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDElementBuilder
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDSchemaNodeParser}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleDomainElement
@@ -20,8 +21,15 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
     val builder = getRootBuilder(node, jsonSchema)
 
     val ctxBuilder = new EntityContextBuilder()
-    val element    = builder.build(ctxBuilder)
-    JsonLDInstanceDocument(ctxBuilder.build()).withEncodes(element)
+    val element    = builder.build(ctxBuilder)._1
+    val instance   = JsonLDInstanceDocument(ctxBuilder.build())
+    element match {
+      case obj: JsonLDObject  => instance.withEncodes(obj)
+      case array: JsonLDArray => instance.withEncodes(array)
+      case _                  => // ignore
+      // TODO native-jsonld: add error
+    }
+    instance
   }
 
   def getRootBuilder(node: YNode, jsonSchema: Document): JsonLDElementBuilder = {

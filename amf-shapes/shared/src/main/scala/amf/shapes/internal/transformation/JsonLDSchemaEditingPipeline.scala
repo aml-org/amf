@@ -15,3 +15,9 @@ class JsonLDSchemaEditingPipeline private (val name: String) extends Transformat
       new ContextTransformationStage()
     ) :+ SourceInformationStage
 }
+
+object JsonLDSchemaEditingPipeline {
+  def apply()                    = new JsonLDSchemaEditingPipeline(name)
+  private[amf] def cachePipeline = new JsonLDSchemaEditingPipeline(PipelineId.Editing)
+  val name: String               = PipelineId.Editing
+}

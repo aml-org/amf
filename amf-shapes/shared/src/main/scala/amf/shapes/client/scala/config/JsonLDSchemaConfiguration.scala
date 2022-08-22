@@ -2,6 +2,7 @@ package amf.shapes.client.scala.config
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.registries.AMLRegistry
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -19,6 +20,7 @@ import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaParsePlugin
+import amf.shapes.internal.transformation.JsonLDSchemaEditingPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -55,7 +57,7 @@ class JsonLDSchemaConfiguration private[amf] (
   }
 
   private def transform(jsonSchemaDocument: JsonSchemaDocument): JsonSchemaDocument = {
-    baseUnitClient().transform(jsonSchemaDocument).baseUnit match {
+    baseUnitClient().transform(jsonSchemaDocument, PipelineId.Editing).baseUnit match {
       case jsd: JsonSchemaDocument => jsd
       case _                       => jsonSchemaDocument
     }
@@ -226,7 +228,7 @@ object JsonLDSchemaConfiguration {
       base.registry,
       base.listeners,
       base.options
-    )
+    ).withTransformationPipeline(JsonLDSchemaEditingPipeline())
 
   }
 }

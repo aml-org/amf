@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#",
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "@characteristics": [
+      "alias:rootObject"
+    ],
+    "prop1": "alias:one"
+  },
+  "type": "object",
+  "properties": {
+    "prop1": {}
+  },
+  "required": [ "prop1" ]
+}

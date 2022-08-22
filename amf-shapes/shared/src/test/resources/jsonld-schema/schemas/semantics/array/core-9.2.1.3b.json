@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "array",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#",
+    "@characteristics": [
+      "alias:rootArray"
+    ]
+  },
+  "items": {
+    "@context": {
+      "@characteristics": [
+        "alias:oneOfNode"
+      ]
+    },
+    "oneOf": [
+      {
+        "@context": {
+          "@characteristics": [
+            "alias:stringScalar"
+          ]
+        },
+        "type": "string"
+      },
+      {
+        "@context": {
+          "@characteristics": [
+            "alias:integerScalar"
+          ]
+        },
+        "type": "integer"
+      }
+    ]
+  }
+}

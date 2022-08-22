@@ -15,9 +15,8 @@
         "http://a.ml/vocabularies/document#JsonLDElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#prop1": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/object/6.1.1-a.json#/object/jsonld-scalar/"
-      }
+      "http://a.ml/vocabularies/core#one": "value1"
+      "http://a.ml/vocabularies/core#alpha": "value2"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/object/6.1.1-a.json#/object/jsonld-scalar/",
@@ -51,7 +50,9 @@
   "@context": {
     "@entities": {
       "http://a.ml/vocabularies/core#encodes": {
-        "http://a.ml/vocabularies/core#prop1": "http://a.ml/vocabularies/data#Scalar"
+        "http://a.ml/vocabularies/core#one": "colision"
+        "http://a.ml/vocabularies/core#alpha": "colision"
+
       },
       "http://a.ml/vocabularies/data#Scalar": {
         "http://a.ml/vocabularies/data#value": "http://www.w3.org/2001/XMLSchema#string",

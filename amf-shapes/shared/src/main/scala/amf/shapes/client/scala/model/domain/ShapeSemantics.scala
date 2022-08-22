@@ -287,13 +287,11 @@ object SemanticContext {
 
   def apply(ast: YPart): SemanticContext = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): SemanticContext = {
-    new SemanticContext(Fields(), annotations)
-      .withBase(BaseIri().withIri(Namespace.Core.base))
-      .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))
-      .withCuries(Seq(CuriePrefix().withAlias("core").withIri(Namespace.Core.base)))
-  }
+  def apply(annotations: Annotations): SemanticContext = new SemanticContext(Fields(), annotations)
 
   // TODO native-jsonld: add default with core terms
   val default: SemanticContext = apply()
+    .withBase(BaseIri().withIri(Namespace.Core.base))
+    .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))
+    .withCuries(Seq(CuriePrefix().withAlias("core").withIri(Namespace.Core.base)))
 }
