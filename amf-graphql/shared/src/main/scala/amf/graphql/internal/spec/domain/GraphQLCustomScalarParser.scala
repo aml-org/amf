@@ -13,19 +13,20 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
   val scalar: ScalarShape = ScalarShape(toAnnotations(customScalarTypeDef))
 
   def parse(): ScalarShape = {
-    scalar.withDataType(DataType.String)
-    parseNameAndFormat()
+    scalar.withDataType(DataType.Any)
+    parseName()
+    parseDescription(customScalarTypeDef, scalar, scalar.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, SCALAR_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(customScalarTypeDef, scalar).parse()
     scalar
   }
 
-  private def parseNameAndFormat(): Unit = {
+  private def parseName(): Unit = {
     val (name, annotations) = findName(customScalarTypeDef, "AnonymousScalar", "Missing scalar type name")
     scalar.withName(name, annotations)
-    scalar.withFormat(name)
   }
 
 }

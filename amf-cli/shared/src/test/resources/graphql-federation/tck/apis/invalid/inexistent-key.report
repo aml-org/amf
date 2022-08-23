@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/inexistent-key.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unmatched-field-in-field-set
+  Message: Cannot find property with name 'name' when resolving field set
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/inexistent-key.graphql#/declares/shape/Person
+  Property: 
+  Range: 
+  Location: 

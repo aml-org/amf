@@ -14,15 +14,20 @@ class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
         cycle(api, api.replace(".graphql", ".jsonld"), GraphQLHint, AmfJsonHint)
       }
 
-      ignore(s"GraphQL TCK > Apis > Valid > $api: dumped GraphQL matches golden") {
+      test(s"GraphQL TCK > Apis > Valid > $api: dumped GraphQL matches golden") {
         cycle(api, api.replace(".graphql", ".dumped.graphql"), GraphQLHint, GraphQLHint)
       }
     }
   }
 
-  ignore("specific graphql api") {
+  ignore("specific graphql api dumped JSON matches golden") {
     val api = "directive-arguments-default.api.graphql"
     cycle(api, api.replace(".graphql", ".jsonld"), GraphQLHint, AmfJsonHint)
+  }
+
+  ignore("specific graphql api dumped GraphQL matches golden") {
+    val api = "extension-union.api.graphql"
+    cycle(api, api.replace(".graphql", ".dumped.graphql"), GraphQLHint, GraphQLHint)
   }
 
   override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint

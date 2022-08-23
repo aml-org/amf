@@ -1,0 +1,9 @@
+type Review @key(fields: "id") {
+    id: ID!
+    product: Product @provides(fields: "name")
+}
+
+type Product @key(fields: "upc") {
+    upc: String @external
+    name: String
+}

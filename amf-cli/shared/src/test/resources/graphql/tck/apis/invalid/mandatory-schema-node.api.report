@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/mandatory-schema-node.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#API-endpoint-mandatoryGraphqlNonEmptyEndpoints
+  Message: Must have 'schema' node or 'Query', 'Mutation' or 'Subscription' types
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/mandatory-schema-node.api.graphql#/web-api
+  Property: http://a.ml/vocabularies/apiContract#endpoint
+  Range: 
+  Location: 

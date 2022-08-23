@@ -1,0 +1,19 @@
+type Query {
+    name: String
+}
+
+type Obj1 {
+    name: String
+}
+
+type Obj2 {
+    name: String
+}
+
+type Obj3 {
+    name: String
+}
+
+union Union = Obj1 | Obj2
+
+extend union Union = Obj3

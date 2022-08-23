@@ -642,7 +642,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value = "^(query|header)$"
       ),
-      schemaRequiredInParameter
+      schemaRequiredInParameter,
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedCommonEndpointPath")
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
@@ -745,6 +750,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = core("name"),
         constraint = sh("minLength"),
         value = "1"
+      ),
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedOas3EndpointPath")
       )
     )
 
@@ -1037,6 +1047,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value = """^(?!(.*#.+)$).*$""".stripMargin
       ),
+      AMFValidation(
+        owlClass = apiContract("AsyncAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicatedCommonEndpointPath")
+      ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
       urlValidation(core("License"), core("url")),
@@ -1066,6 +1081,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = doc("DomainElement"),
         owlProperty = sh("name"),
         constraint = shape("invalidIntrospectionName")
+      ),
+      AMFValidation(
+        message = "Must have 'schema' node or 'Query', 'Mutation' or 'Subscription' types",
+        owlClass = apiContract("API"),
+        owlProperty = apiContract("endpoint"),
+        constraint = shape("mandatoryGraphqlNonEmptyEndpoints")
       ),
       AMFValidation(
         uri = amfParser("invalid-extension-argument-type"),
@@ -1149,13 +1170,107 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("PropertyShape"),
         constraint = shape("requiredFields"),
         message = "Types definition must have at least one field"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-input-type"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("invalidInputType"),
+        message = "Only an Input Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-input-type-in-endpoint"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("invalidInputTypeInEndpoint"),
+        message = "Only an Input Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-output-type"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("invalidOutputType"),
+        message = "Only an Output Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-output-type-in-endpoint"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("invalidOutputTypeInEndpoint"),
+        message = "Only an Output Type can be placed here"
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-directive-application"),
+        owlClass = doc("DomainElement"),
+        owlProperty = doc("customDomainProperties"),
+        constraint = shape("duplicatedDirectiveApplication")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-field"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("duplicatedField")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-argument-field"),
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("Request"),
+        constraint = shape("duplicatedArgumentField")
+      ),
+      AMFValidation(
+        uri = amfParser("duplicated-argument-directive"),
+        owlClass = doc("DomainProperty"),
+        owlProperty = shape("Request"),
+        constraint = shape("duplicatedArgumentDirective")
+      ),
+      AMFValidation(
+        uri = amfParser("invalid-directive-application"),
+        owlClass = doc("DomainElement"),
+        owlProperty = doc("customDomainProperties"),
+        constraint = shape("invalidDirectiveApplication")
       )
     )
     override def validations(): Seq[AMFValidation] = result
   }
 
   object GraphQLFederationValidations extends ProfileValidations {
-    private lazy val result                        = Seq()
+
+    private val ignored = Set(
+      shape("mandatoryGraphqlNonEmptyEndpoints").iri()
+    )
+
+    private lazy val result = graphqlValidations ++ Seq(
+      AMFValidation(
+        uri = amfParser("requires-external"),
+        owlClass = sh("PropertyShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("requiresExternal"),
+        message = "Fields in @requires must be declared @external"
+      ),
+      AMFValidation(
+        uri = amfParser("provides-external"),
+        owlClass = sh("PropertyShape"),
+        owlProperty = sh("PropertyShape"),
+        constraint = shape("providesExternal"),
+        message = "Fields in @provides must be declared @external"
+      ),
+      AMFValidation(
+        uri = amfParser("reserved-type-names"),
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("AnyShape"),
+        constraint = shape("reservedTypeNames"),
+        message = "Type name is reserved by Federation"
+      ),
+      AMFValidation(
+        uri = amfParser("reserved-endpoints"),
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = shape("reservedEndpoints"),
+        message = "Endpoint is reserved by Federation"
+      )
+    )
+
+    private def graphqlValidations = GraphQLValidations.validations().filter(v => !ignored.contains(v.constraint))
     override def validations(): Seq[AMFValidation] = result
   }
 

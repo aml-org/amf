@@ -1,0 +1,12 @@
+type Query {
+    name: String
+}
+
+enum MyEnum {
+    A
+    B
+}
+
+extend enum MyEnum {
+    C
+}

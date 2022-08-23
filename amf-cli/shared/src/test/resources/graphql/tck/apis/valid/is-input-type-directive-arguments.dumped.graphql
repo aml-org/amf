@@ -3,5 +3,10 @@ type Query {
   a: String
 }
 type InputType {
-
+  name : String
 }
+enum Enum {
+  A
+  B
+}
+scalar Pepe

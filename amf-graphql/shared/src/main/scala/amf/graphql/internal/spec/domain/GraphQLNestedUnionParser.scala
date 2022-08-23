@@ -1,5 +1,6 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.internal.parser.domain.Annotations.inferred
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -14,8 +15,10 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
   def parse(): UnionShape = {
     parseName()
     parseMembers()
+    parseDescription(unionTypeDef, union, union.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(unionTypeDef, union).parse()
     union
@@ -34,7 +37,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
     }
 
     val finalMembers: Seq[AnyShape] = members.collect { case Some(t) => t }
-    union.withAnyOf(finalMembers)
+    union.withAnyOf(finalMembers, inferred())
   }
 
   private def parseName(): Unit = {

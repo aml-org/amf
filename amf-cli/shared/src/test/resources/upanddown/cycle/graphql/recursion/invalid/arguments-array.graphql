@@ -1,0 +1,16 @@
+type Continent {
+    request(filter: [Country]): String
+    request2(filter: [Country]!): String
+    request3(filter: [Country!]): String
+    request4(filter: [Country!]!): String
+    response(filter: String): [Country]
+    response2(filter: String): [Country]!
+    response3(filter: String): [Country!]
+    response4(filter: String): [Country!]!
+}
+
+type Country {
+    continent: Continent
+    continent2: Continent!
+}
+

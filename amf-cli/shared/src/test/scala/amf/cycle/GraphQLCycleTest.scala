@@ -1,25 +1,7 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.internal.remote.{AmfJsonHint, GraphQLHint}
-import amf.graphql.client.scala.GraphQLConfiguration
-import amf.io.FunSuiteCycleTests
-
-trait GraphQLFunSuiteCycleTests extends FunSuiteCycleTests {
-  override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = GraphQLConfiguration.GraphQL()
-    val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
-      amfConfig.withRenderOptions(r)
-    })
-    eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e)
-    )
-  }
-
-  override def renderOptions(): RenderOptions = super.renderOptions().withPrettyPrint
-}
 
 class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
@@ -97,15 +79,6 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
-  test("Can parse API multiple extensions on same object") {
-    cycle(
-      "multiple-extensions/api.graphql",
-      "multiple-extensions/api.jsonld",
-      GraphQLHint,
-      AmfJsonHint
-    )
-  }
-
   test("Can parse API with simple directive applications") {
     cycle("directives/simple.graphql", "directives/simple.jsonld", GraphQLHint, AmfJsonHint)
   }
@@ -120,5 +93,35 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
 
   test("Can parse API with multiple directives in a single element") {
     cycle("directives/multiple.graphql", "directives/multiple.jsonld", GraphQLHint, AmfJsonHint)
+  }
+
+  test("Can parse APIs with simple descriptions") {
+    cycle(
+      "descriptions/simple.graphql",
+      "descriptions/simple.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
+  }
+
+  test("Can parse APIs with block descriptions") {
+    cycle(
+      "descriptions/block.graphql",
+      "descriptions/block.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
+  }
+
+  test("Can parse API with directive applications within directive declarations") {
+    cycle(
+      "directive-with-directives/api.graphql",
+      "directive-with-directives/api.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withoutFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
   }
 }

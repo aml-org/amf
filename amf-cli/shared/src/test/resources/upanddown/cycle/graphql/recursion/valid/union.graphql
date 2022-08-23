@@ -1,0 +1,13 @@
+type Country {
+    in: Location
+}
+
+type City {
+    in: Location
+}
+
+type Continent {
+    in: Location
+}
+
+union Location = City | Country | Continent

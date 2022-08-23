@@ -18,7 +18,7 @@ case class FileShape private[amf] (override val fields: Fields, override val ann
 
   override def linkCopy(): FileShape = FileShape().withId(id)
 
-  override val meta: AnyShapeModel = FileShapeModel
+  override val meta: FileShapeModel.type = FileShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =

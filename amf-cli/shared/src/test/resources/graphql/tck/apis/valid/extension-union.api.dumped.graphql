@@ -1,6 +1,6 @@
 type Query {
 
-  searchResult: SearchResult
+  name: String
 }
 type Person {
   name : String!
@@ -10,8 +10,4 @@ type Dog {
   name : String!
   breed : String!
 }
-type Cat {
-  name : String!
-  color : String!
-}
-union SearchResult = Person | Dog
+extend union SearchResult = Person | Dog

@@ -28,7 +28,7 @@ case class MatrixShape private[amf] (override val fields: Fields, override val a
 
   override def linkCopy() = MatrixShape().withId(id)
 
-  override val meta: AnyShapeModel = MatrixShapeModel
+  override val meta: MatrixShapeModel.type = MatrixShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = MatrixShape.apply

@@ -1,6 +1,7 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -11,12 +12,9 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
     val ctx: GraphQLBaseWebApiContext
 ) extends GraphQLASTParserHelper {
 
-  def parse(): Shape = {
+  def parse(): Option[Shape] = {
     invokeAppropriateParser()
       .map(_.withIsExtension(true))
-      .getOrElse {
-        AnyShape()
-      }
   }
 
   private def invokeAppropriateParser(): Option[AnyShape] = {
@@ -26,7 +24,7 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
       .orElse {
         this
           .pathToNonTerminal(typeExtensionDef, Seq(OBJECT_TYPE_EXTENSION))
-          .map(parseObjectTypeExtension)
+          .flatMap(parseObjectTypeExtension)
       }
       .orElse {
         this
@@ -54,8 +52,11 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
     new GraphQLCustomScalarParser(node).parse()
   }
 
-  def parseObjectTypeExtension(node: Node): NodeShape = {
-    new GraphQLNestedTypeParser(node).parse()
+  def parseObjectTypeExtension(node: Node): Option[NodeShape] = {
+    searchName(node) match {
+      case Some("Query") | Some("Mutation") | Some("Subscription") => None
+      case _ => Some(new GraphQLNestedTypeParser(node).parse())
+    }
   }
 
   def parseInterfaceTypeExtension(node: Node): NodeShape = {

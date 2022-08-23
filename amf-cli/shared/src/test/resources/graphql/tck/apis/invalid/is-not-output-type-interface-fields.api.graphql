@@ -8,6 +8,9 @@ type Query {
 
 interface Interface {
     inputReturnField: InputType
+    inputReturnFieldArray: [InputType]
+    inputReturnFieldArrayRequired: [InputType!]
+    inputReturnFieldArrayRequired2: [InputType!]!
 }
 
 input InputType {

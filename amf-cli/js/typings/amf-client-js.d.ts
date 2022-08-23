@@ -2065,6 +2065,11 @@ declare module 'amf-client-js' {
 
 
   }
+  export class GraphQLConfiguration  {
+    static GraphQL(): AMFConfiguration
+
+
+  }
   export class GraphQLFederationConfiguration  {
     static GraphQLFederation(): AMFConfiguration
 

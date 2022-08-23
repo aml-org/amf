@@ -21,7 +21,7 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
 
   private def emitWithOptions(): Unit = {
     if (property.customDomainProperties.length == 1) {
-      val inlinedOption = builder.inilined { b =>
+      val inlinedOption = builder.inlined { b =>
         domain.GrpcOptionsEmitter(property.customDomainProperties.head, b, ctx).emitFieldExtension()
       }
       builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [$inlinedOption];", position)

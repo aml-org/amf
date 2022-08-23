@@ -5,7 +5,7 @@ type Query {
 type Starship {
   id : ID!
   name : String!
-  length(unit: Unit,scientificNotation: Boolean): Float
+  length(unit: Unit = METER,scientificNotation: Boolean = false): Float
 }
 enum Unit {
   METER

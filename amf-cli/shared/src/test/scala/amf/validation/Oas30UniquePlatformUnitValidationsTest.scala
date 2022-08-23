@@ -163,4 +163,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Valid ref to parameter with another ref") {
     validate("double-references/valid-ref-to-endpoint-with-ref-to-param.yaml")
   }
+
+  test("Resources paths") {
+    validate("resources-paths/resources-paths.yaml", Some("resources-paths.report"))
+  }
 }

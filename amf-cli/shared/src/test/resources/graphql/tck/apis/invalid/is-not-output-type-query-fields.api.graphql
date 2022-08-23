@@ -1,0 +1,12 @@
+schema {
+    query: Query
+}
+
+type Query {
+    inputReturnField: InputType
+    inputReturnFieldArray: [InputType]
+}
+
+input InputType {
+    randomText: String
+}

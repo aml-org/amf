@@ -1,0 +1,993 @@
+{
+  "@graph": [
+    {
+      "@id": "#1",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "introspected-types.graphql",
+      "apiContract:endpoint": [
+        {
+          "@id": "#2"
+        },
+        {
+          "@id": "#32"
+        }
+      ]
+    },
+    {
+      "@id": "#40",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.6.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "GraphQLFederation"
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/query/_entities",
+      "core:name": "Query._entities",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#3"
+        }
+      ]
+    },
+    {
+      "@id": "#32",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/query/_service",
+      "core:name": "Query._service",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#33"
+        }
+      ]
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "query",
+      "core:name": "Query._entities",
+      "apiContract:expects": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#8"
+        }
+      ],
+      "apiContract:operationId": "Query._entities"
+    },
+    {
+      "@id": "#33",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "query",
+      "core:name": "Query._service",
+      "apiContract:expects": [
+        {
+          "@id": "#34"
+        }
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#35"
+        }
+      ],
+      "apiContract:operationId": "Query._service"
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:Request",
+        "core:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:parameter": [
+        {
+          "@id": "#5"
+        }
+      ]
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "default",
+      "apiContract:payload": [
+        {
+          "@id": "#9"
+        }
+      ]
+    },
+    {
+      "@id": "#34",
+      "@type": [
+        "apiContract:Request",
+        "core:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#35",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "default",
+      "apiContract:payload": [
+        {
+          "@id": "#36"
+        }
+      ]
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Parameter",
+        "core:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "representations",
+      "apiContract:required": true,
+      "apiContract:binding": "query",
+      "raml-shapes:schema": {
+        "@id": "#6"
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:Payload",
+        "core:Payload",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#10"
+      }
+    },
+    {
+      "@id": "#36",
+      "@type": [
+        "apiContract:Payload",
+        "core:Payload",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#37"
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#7"
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#11"
+      }
+    },
+    {
+      "@id": "#37",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#38"
+        }
+      ],
+      "shacl:name": "_Service"
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "_Any",
+      "shacl:name": "_Any"
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#12"
+        },
+        {
+          "@id": "#31"
+        }
+      ]
+    },
+    {
+      "@id": "#38",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#39"
+      },
+      "shacl:name": "sdl"
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#13"
+        },
+        {
+          "@id": "#22"
+        }
+      ],
+      "shacl:name": "_Entity"
+    },
+    {
+      "@id": "#31",
+      "@type": [
+        "raml-shapes:NilShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#39",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#14"
+        },
+        {
+          "@id": "#16"
+        }
+      ],
+      "federation:keys": [
+        {
+          "@id": "#20"
+        }
+      ],
+      "shacl:name": "Dog"
+    },
+    {
+      "@id": "#22",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#23"
+        },
+        {
+          "@id": "#25"
+        }
+      ],
+      "federation:keys": [
+        {
+          "@id": "#29"
+        }
+      ],
+      "shacl:name": "Cat"
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#15"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "id"
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#17"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#20",
+      "@type": [
+        "federation:Key",
+        "doc:DomainElement"
+      ],
+      "federation:keyComponents": [
+        {
+          "@id": "#21"
+        }
+      ]
+    },
+    {
+      "@id": "#23",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#24"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "id"
+    },
+    {
+      "@id": "#25",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#26"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#29",
+      "@type": [
+        "federation:Key",
+        "doc:DomainElement"
+      ],
+      "federation:keyComponents": [
+        {
+          "@id": "#30"
+        }
+      ]
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "ID"
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#21",
+      "@type": [
+        "raml-shapes:PropertyShapePath",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:path": {
+        "@id": "#21/list"
+      }
+    },
+    {
+      "@id": "#24",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "ID"
+    },
+    {
+      "@id": "#26",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#30",
+      "@type": [
+        "raml-shapes:PropertyShapePath",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:path": {
+        "@id": "#30/list"
+      }
+    },
+    {
+      "@id": "#21/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#16"
+      }
+    },
+    {
+      "@id": "#30/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#25"
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#42"
+        },
+        {
+          "@id": "#13"
+        },
+        {
+          "@id": "#22"
+        },
+        {
+          "@id": "#7"
+        },
+        {
+          "@id": "#49"
+        },
+        {
+          "@id": "#37"
+        },
+        {
+          "@id": "#12"
+        },
+        {
+          "@id": "#50"
+        },
+        {
+          "@id": "#52"
+        },
+        {
+          "@id": "#57"
+        },
+        {
+          "@id": "#62"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#1"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#40"
+      }
+    },
+    {
+      "@id": "#42",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#43"
+        },
+        {
+          "@id": "#45"
+        },
+        {
+          "@id": "#47"
+        }
+      ],
+      "shacl:name": "Romagnoli"
+    },
+    {
+      "@id": "#49",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "_FieldSet",
+      "shacl:name": "_FieldSet"
+    },
+    {
+      "@id": "#50",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "rdfs:domain": [
+        {
+          "@id": "http://a.ml/vocabularies/apiContract#WebAPI"
+        }
+      ],
+      "raml-shapes:schema": {
+        "@id": "#51"
+      },
+      "core:name": "external"
+    },
+    {
+      "@id": "#52",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "rdfs:domain": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#Operation"
+        },
+        {
+          "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+        }
+      ],
+      "raml-shapes:schema": {
+        "@id": "#53"
+      },
+      "core:name": "requires"
+    },
+    {
+      "@id": "#57",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "rdfs:domain": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#Operation"
+        },
+        {
+          "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+        }
+      ],
+      "raml-shapes:schema": {
+        "@id": "#58"
+      },
+      "core:name": "provides"
+    },
+    {
+      "@id": "#62",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "rdfs:domain": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#NodeShape"
+        }
+      ],
+      "raml-shapes:schema": {
+        "@id": "#63"
+      },
+      "core:name": "key"
+    },
+    {
+      "@id": "#43",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#44"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "id"
+    },
+    {
+      "@id": "#45",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#46"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#47",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#48"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "goals"
+    },
+    {
+      "@id": "#51",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#53",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#54"
+        },
+        {
+          "@id": "#56"
+        }
+      ]
+    },
+    {
+      "@id": "#58",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#59"
+        },
+        {
+          "@id": "#61"
+        }
+      ]
+    },
+    {
+      "@id": "#63",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#64"
+        },
+        {
+          "@id": "#66"
+        }
+      ]
+    },
+    {
+      "@id": "#44",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "ID"
+    },
+    {
+      "@id": "#46",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#48",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "@id": "#54",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#55"
+        }
+      ]
+    },
+    {
+      "@id": "#56",
+      "@type": [
+        "raml-shapes:NilShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#59",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#60"
+        }
+      ]
+    },
+    {
+      "@id": "#61",
+      "@type": [
+        "raml-shapes:NilShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#64",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:property": [
+        {
+          "@id": "#65"
+        }
+      ]
+    },
+    {
+      "@id": "#66",
+      "@type": [
+        "raml-shapes:NilShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#55",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#49"
+      },
+      "shacl:name": "fieldSet"
+    },
+    {
+      "@id": "#60",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#49"
+      },
+      "shacl:name": "fieldSet"
+    },
+    {
+      "@id": "#65",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#49"
+      },
+      "shacl:name": "fieldSet"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "federation": "http://a.ml/vocabularies/federation#"
+  }
+}

@@ -2,6 +2,6 @@ type Query {
 
   name: String
 }
-type InputType {
-
+extend type InputType {
+  anotherRandomText : String
 }

@@ -10,6 +10,9 @@ type Query {
 
 input InputType {
     objectField: Object1
+    objectFieldList: [Object1]
+    objectFieldListRequired: [Object1!]
+    objectFieldListUltraRequired: [Object1!]!
     interfaceField: Interface
     unionField: Union
 }

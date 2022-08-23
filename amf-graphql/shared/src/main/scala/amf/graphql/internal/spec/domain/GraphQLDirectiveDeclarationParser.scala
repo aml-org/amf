@@ -1,13 +1,13 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
+import amf.core.internal.parser.domain.Annotations.virtual
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations, ScalarValueParser}
-import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
 import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.internal.annotations.DirectiveArguments
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
 
@@ -18,8 +18,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   def parse(): CustomDomainProperty = {
     parseName()
     parseArguments()
-    checkArgumentsAreUnique()
     parseLocations()
+    parseDescription(node, directive, directive.meta)
     directive
   }
 
@@ -33,8 +33,10 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case argument: Node =>
         parseArgument(argument)
     }
-    val schema = NodeShape()
+    val schema = NodeShape(virtual())
+    schema.withIsInputOnly(true)
     schema.withProperties(properties)
+    schema.annotations += DirectiveArguments()
     directive.withSchema(schema)
   }
 
@@ -45,6 +47,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
     val argumentType = parseType(n)
     setDefaultValue(n, propertyShape)
+    propertyShape.annotations += DirectiveArguments()
     propertyShape.withRange(argumentType)
   }
 
@@ -82,12 +85,4 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case _ => // ignore
     }
   }
-
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
-    val arguments = directive.schema.asInstanceOf[NodeShape].properties
-    checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
-  }
-
-  private def duplicatedArgumentMsg(argumentName: String): String =
-    s"Cannot exist two or more arguments with name '$argumentName'"
 }

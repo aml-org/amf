@@ -23,24 +23,24 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiContract#path": [
               {
-                "@value": "/query/date"
+                "@value": "/query/name"
               }
             ],
             "http://a.ml/vocabularies/core#name": [
               {
-                "@value": "Query.date"
+                "@value": "Query.name"
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -53,12 +53,12 @@
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
-                    "@value": "Query.date"
+                    "@value": "Query.name"
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -69,7 +69,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/returns/resp/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -88,7 +88,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/returns/resp/default/payload/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -96,7 +96,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/returns/resp/default/payload/default/union/default-union",
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -106,7 +106,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#NilShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -115,7 +115,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fdate/supportedOperation/query/Query.date/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -123,14 +123,9 @@
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/document#link-target": [
+                                "http://www.w3.org/ns/shacl#datatype": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#link-label": [
-                                  {
-                                    "@value": "Date"
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
                                 ]
                               }
@@ -143,7 +138,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
-                    "@value": "Query.date"
+                    "@value": "Query.name"
                   }
                 ]
               }
@@ -187,37 +182,7 @@
         ],
         "http://www.w3.org/ns/shacl#datatype": [
           {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#format": [
-          {
-            "@value": "Date"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "Date"
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date_1",
-        "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#format": [
-          {
-            "@value": "Date"
+            "@id": "http://www.w3.org/2001/XMLSchema#anyType"
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -236,7 +201,7 @@
               "@value": "example"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date_1/customDomainProperties/example/data-node",
+          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/extension-scalars.api.graphql#/declares/scalar/Date/customDomainProperties/example/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
@@ -271,7 +236,12 @@
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://www.w3.org/ns/shacl#property": []
+            "http://www.w3.org/ns/shacl#property": [],
+            "http://a.ml/vocabularies/shapes#inputOnly": [
+              {
+                "@value": true
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [

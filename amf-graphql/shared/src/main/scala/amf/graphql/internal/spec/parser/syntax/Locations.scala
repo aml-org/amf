@@ -32,4 +32,7 @@ object Locations {
     "SCHEMA"                 -> Seq(WebApiModel.`type`.head.iri())
   )
 
+  def domainFor(location: String*): Seq[String] = {
+    location.flatMap(locationToDomain.getOrElse(_, Seq.empty)).distinct
+  }
 }

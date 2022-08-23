@@ -3,9 +3,7 @@ package amf.graphql.internal.spec.document
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
@@ -30,7 +28,9 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   var MUTATION_TYPE     = "Mutation"
 
   val typeSystemDefinitionPath: Seq[String] = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION)
+  val typeSystemExtensionPath: Seq[String]  = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION)
   val typeDefinitionPath: Seq[String]       = typeSystemDefinitionPath :+ TYPE_DEFINITION
+  val typeExtensionPath: Seq[String]        = typeSystemExtensionPath :+ TYPE_EXTENSION
 
   val doc: Document          = Document()
   private def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
@@ -48,9 +48,15 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       fCtx.linkingActions.executeAll()
     }
     val declarations = ctx.declarations.shapes.values.toList ++
-      ctx.declarations.shapeExtensions.values.toList.flatten ++
       ctx.declarations.annotations.values.toList
-    doc.withDeclares(declarations).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+    doc.withDeclares(declarations)
+    inFederation { _ =>
+      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
+    }
+    inGraphQL { _ =>
+      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+    }
+    doc
   }
 
   private def parseWebAPI(ast: AST): Unit = {
@@ -94,9 +100,12 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     addToDeclarations(directive)
   }
 
+  private def parseDirectiveApplicationInDirectiveDeclaration(directiveDef: Node): Unit = {
+    GraphQLDirectiveApplicationInDeclarationParser(directiveDef).parse()
+  }
+
   def parseTypeExtension(typeExtensionDef: Node): Unit = {
-    val shapeExtension = GraphQLTypeExtensionParser(typeExtensionDef).parse()
-    ctx.declarations += shapeExtension
+    GraphQLTypeExtensionParser(typeExtensionDef).parse().foreach(addToDeclarations)
   }
 
   private def processTypes(node: Node): Unit = {
@@ -106,19 +115,34 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       parseDirectiveDeclaration(directiveDef)
     }
 
+    // let's parse directive applications within directive declarations
+    this
+      .collect(node, typeSystemDefinitionPath :+ DIRECTIVE_DEFINITION) foreach { case directiveDef: Node =>
+      parseDirectiveApplicationInDirectiveDeclaration(directiveDef)
+    }
+
     // let's parse schema
-    this.collect(node, typeSystemDefinitionPath :+ SCHEMA_DEFINITION).toList match {
-      case head :: Nil => parseSchemaNode(head)
-      case _           => // ignore TODO violation
+    val schemaExtension  = this.collect(node, typeSystemExtensionPath :+ SCHEMA_EXTENSION)
+    val schemaDefinition = this.collect(node, typeSystemDefinitionPath :+ SCHEMA_DEFINITION)
+    schemaDefinition.headOption.orElse(schemaExtension.headOption).foreach(parseSchemaNode)
+
+    // let's parse root extend types (e.g. `extend type Query`)
+    this.collectNodes(node, typeExtensionPath :+ OBJECT_TYPE_EXTENSION).foreach { objTypeDef =>
+      searchName(objTypeDef)
+        .flatMap(getRootType)
+        .foreach { rootType =>
+          parseTopLevelType(objTypeDef, rootType)
+        }
     }
 
     // let's parse types
     this.collect(node, typeDefinitionPath :+ OBJECT_TYPE_DEFINITION) foreach { case objTypeDef: Node =>
       searchName(objTypeDef) match {
         case Some(typeName) =>
-          val rootTypeOption = getRootType(typeName)
-          if (rootTypeOption.isDefined) parseTopLevelType(objTypeDef, rootTypeOption.get)
-          else parseNestedType(objTypeDef)
+          getRootType(typeName) match {
+            case Some(rootType) => parseTopLevelType(objTypeDef, rootType)
+            case None           => parseNestedType(objTypeDef)
+          }
         case _ => parseNestedType(objTypeDef)
       }
     }
@@ -160,16 +184,16 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
   }
 
-  private def parseSchemaNode(schemaNode: ASTNode): Unit = {
-    GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse()
-    findDescription(schemaNode) match {
-      case Some(terminal: Terminal) => // the description of the schema is set at the API level
-        webapi.set(WebApiModel.Description, cleanDocumentation(terminal.value), toAnnotations(terminal))
-      case _ => // ignore
-    }
+  private def parseSchemaNode(schemaAst: ASTNode): Unit = {
+    val schemaNode = schemaAst.asInstanceOf[Node]
+    GraphQLDirectiveApplicationParser(schemaNode, webapi).parse()
+    parseDescription(schemaNode, webapi, webapi.meta)
+
+    val isExtends     = find(schemaNode, EXTEND).nonEmpty
+    val operationPath = if (isExtends) Seq(OPERATION_TYPE_DEFINITION) else Seq(ROOT_OPERATION_TYPE_DEFINITION)
 
     // let's setup the names of the top level types
-    collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach { case typeDef: Node =>
+    collect(schemaNode, operationPath).foreach { case typeDef: Node =>
       val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
         case Some(t: Terminal) => t.value
         case _ =>
@@ -208,11 +232,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
   }
 
-  private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Seq[EndPoint] = {
-    GraphQLRootTypeParser(objTypeDef, queryType).parse { ep: EndPoint =>
-      val oldEndpoints = webapi.endPoints
-      webapi.withEndPoints(oldEndpoints :+ ep)
-    }
+  private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Api = {
+    val endpoints    = GraphQLRootTypeParser(objTypeDef, queryType).parse()
+    val oldEndpoints = webapi.endPoints
+    webapi.withEndPoints(oldEndpoints ++ endpoints)
   }
 
   private def getRootType(typeName: String): Option[RootTypes.Value] = {

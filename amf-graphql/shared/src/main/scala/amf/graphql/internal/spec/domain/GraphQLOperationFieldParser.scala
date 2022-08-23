@@ -1,10 +1,8 @@
 package amf.graphql.internal.spec.domain
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedArgument
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape, ScalarValueParser}
-import amf.graphql.internal.spec.parser.validation.ParsingValidationsHelper.checkDuplicates
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
@@ -16,12 +14,12 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   def parse(setterFn: ShapeOperation => Unit): Unit = {
     parseName()
     setterFn(operation)
-    parseDescription()
+    parseDescription(ast, operation, operation.meta)
     parseArguments()
-    checkArgumentsAreUnique()
     parseRange()
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationParser(ast, operation).parse()
   }
@@ -37,12 +35,10 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   private def parseArgument(n: Node): ShapeParameter = {
     val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
     val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
-    findDescription(n).foreach { desc =>
-      queryParam.withDescription(cleanDocumentation(desc.value))
-    }
-
+    parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
@@ -61,22 +57,10 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     operation.withName(name, annotations)
   }
 
-  private def parseDescription(): Unit = {
-    findDescription(ast).map(t => cleanDocumentation(t.value)).foreach(operation.withDescription)
-  }
-
   private def parseRange(): Unit = {
     val response = operation.withResponse()
     val payload  = ShapePayload().withName("default")
     payload.withSchema(parseType(ast))
     response.withPayload(payload)
   }
-
-  private def checkArgumentsAreUnique()(implicit ctx: GraphQLBaseWebApiContext): Unit = {
-    val arguments = operation.request.queryParameters
-    checkDuplicates(arguments, DuplicatedArgument, duplicatedArgumentMsg)
-  }
-
-  private def duplicatedArgumentMsg(argumentName: String): String =
-    s"Cannot exist two or more arguments with name '$argumentName'"
 }

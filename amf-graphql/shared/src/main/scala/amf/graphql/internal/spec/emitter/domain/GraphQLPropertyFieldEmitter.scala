@@ -1,6 +1,5 @@
 package amf.graphql.internal.spec.emitter.domain
 
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
@@ -10,20 +9,20 @@ case class GraphQLPropertyFieldEmitter(property: PropertyShape, ctx: GraphQLEmit
     extends GraphQLEmitter {
 
   def emit(): Object = {
-    val name           = property.name.value()
-    val nullable       = property.minCount.option().getOrElse(0) == 0
-    val range          = typeTarget(property.range)
-    val effectiveRange = if (nullable) cleanNonNullable(range) else range
-    val fieldString    = s"$name : $effectiveRange"
+    val name         = property.name.value()
+    val nullable     = property.minCount.option().getOrElse(0) == 0
+    val range        = typeTarget(property.range)
+    val returnedType = extractGraphQLType(nullable, range)
+    val fieldString  = s"$name : $returnedType"
     property.description.option() match {
-      case Some(desc) =>
+      case Some(description) =>
         b.fixed { f =>
-          documentationEmitter(desc, f, Some(pos(property.annotations)))
-          f.+=(fieldString)
+          GraphQLDescriptionEmitter(Some(description), ctx, f, Some(pos(property.annotations))).emit()
+          f += fieldString
         }
-      case _ =>
-        b.+=(fieldString, pos(property.annotations))
+      case _ => b += (fieldString, pos(property.annotations))
     }
   }
 
+  private def extractGraphQLType(nullable: Boolean, range: String) = if (nullable) cleanNonNullable(range) else range
 }

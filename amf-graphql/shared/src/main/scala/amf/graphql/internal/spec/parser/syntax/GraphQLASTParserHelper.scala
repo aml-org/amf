@@ -2,33 +2,51 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
+import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.context.{GraphQLBaseWebApiContext, GraphQLWebApiContext}
 import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.operations.{AbstractParameter, ShapeParameter}
+import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
+
+import scala.reflect.ClassTag
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
 trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def unpackNilUnion(shape: AnyShape): NullableShape = {
     shape match {
-      case union: UnionShape if union.anyOf.length == 2 =>
-        if (union.anyOf.head.isInstanceOf[NilShape]) {
-          union.anyOf.find(!_.isInstanceOf[NilShape]) match {
-            case Some(s: AnyShape) => NullableShape(isNullable = true, s)
-            case _                 => NullableShape(isNullable = false, shape)
-          }
-        } else {
-          NullableShape(isNullable = false, shape)
+      case union: UnionShape if isNilUnion(union) =>
+        findNonNilComponent(union) match {
+          case Some(s: AnyShape) => NullableShape(isNullable = true, s)
+          case _                 => NullableShape(isNullable = false, shape) // unreachable code
         }
       case _ => NullableShape(isNullable = false, shape)
     }
   }
+
+  private def findNonNilComponent(union: UnionShape) = union.anyOf.find(!_.isInstanceOf[NilShape])
+
+  private def isNilUnion(union: UnionShape) =
+    union.anyOf.length == 2 && union.anyOf.exists(_.isInstanceOf[NilShape]) && union.anyOf.exists(x =>
+      !x.isInstanceOf[NilShape]
+    )
+
+  def parseDescription(n: ASTNode, element: DomainElement, model: DescriptionField): Unit = {
+    findDescription(n).foreach { desc =>
+      element.set(model.Description, cleanDocumentation(desc.value), toAnnotations(desc))
+    }
+  }
+
+  def parseDescription(n: ASTNode): Option[AmfScalar] = {
+    findDescription(n).map { desc => AmfScalar(cleanDocumentation(desc.value), toAnnotations(desc)) }
+  }
+
   def findDescription(n: ASTNode): Option[Terminal] = {
     collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
       case n: Node => n.children.collectFirst({ case t: Terminal => t })
@@ -187,16 +205,21 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       UnionShape()
         .withAnyOf(
           Seq(
-            NilShape(),
+            NilShape(virtual()),
             shape
-          )
+          ),
+          synthesized()
         )
     } else {
       shape
     }
   }
 
-  def cleanDocumentation(doc: String): String = doc.replaceAll("\"\"\"", "").trim
+  def cleanDocumentation(doc: String): String = {
+    val trimmed = doc.replaceAll("\"\"\"", "").trim
+    if (trimmed.startsWith("\"") && trimmed.endsWith("\"")) trimmed.substring(1, trimmed.length - 1)
+    else trimmed
+  }
 
   def trimQuotes(value: String): String = {
     if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)
@@ -210,12 +233,21 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     shape
   }
 
-  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+  def contextually[T <: GraphQLBaseWebApiContext](fn: (T) => Any)(implicit
+      ctx: GraphQLBaseWebApiContext,
+      ct: ClassTag[T]
+  ): Unit = {
     ctx match {
-      case fedCtx: GraphQLFederationWebApiContext => fn(fedCtx)
-      case _                                      => // nothing
+      case c: T => fn(c)
+      case _    => // nothing
     }
   }
+
+  def inFederation(fn: (GraphQLFederationWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit =
+    contextually[GraphQLFederationWebApiContext](fn)
+
+  def inGraphQL(fn: (GraphQLWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit =
+    contextually[GraphQLWebApiContext](fn)
 
   def setDefaultValue(n: Node, parameter: AbstractParameter): Unit = {
     val maybeNode = parseDefaultValue(n)
@@ -223,5 +255,5 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def setDefaultValue(n: Node, shape: Shape): Unit =
-    parseDefaultValue(n).map(value => shape.withDefault(value))
+    parseDefaultValue(n).map(value => shape.withDefault(value, inferred()))
 }

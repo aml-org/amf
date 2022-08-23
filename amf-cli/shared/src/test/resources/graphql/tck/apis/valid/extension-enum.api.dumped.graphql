@@ -1,8 +1,8 @@
 type Query {
 
-  planet: Planet
+  name: String
 }
-enum Planet {
+extend enum Planet {
   MERCURY
   VENUS
   EARTH

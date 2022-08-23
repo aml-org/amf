@@ -2,9 +2,14 @@ package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphqlfederation.internal.spec.domain.{ExternalDirectiveParser, ProvidesParser, RequiresParser, ShapeFederationMetadataParser}
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import amf.graphqlfederation.internal.spec.domain.{
+  ExternalDirectiveParser,
+  ProvidesParser,
+  RequiresParser,
+  ShapeFederationMetadataParser
+}
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
@@ -15,11 +20,13 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   def parse(setterFn: PropertyShape => Unit): Unit = {
     parseName()
     setterFn(property)
-    parseDescription()
+    parseDescription(ast, property, property.meta)
     parseRange()
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
       ShapeFederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, property, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
       ExternalDirectiveParser(ast, property).parse()
       ProvidesParser(ast, property).parse()
       RequiresParser(ast, property, parent).parse()
@@ -30,10 +37,6 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   private def parseName(): Unit = {
     val (name, annotations) = findName(ast, "AnonymousField", "Missing name for field")
     property.withName(name, annotations)
-  }
-
-  private def parseDescription(): Unit = {
-    findDescription(ast).map(t => cleanDocumentation(t.value)).foreach(property.withDescription)
   }
 
   private def parseRange(): Unit = {

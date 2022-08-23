@@ -1,6 +1,31 @@
+"""
+schema documentation
+"""
+schema {
+  query: Query
+}
 type Query {
   """
-  This is the most basic property
+  Translates a string from a given language into a different language.
   """
-  name: String
+  translate(
+    """
+    The original language that `text` is provided in.
+    """
+    fromLanguage: String
+  ): String
+}
+"""
+A type.
+"""
+type Person {
+  """
+  Translates a string from a given language into a different language.
+  """
+  translate(
+    """
+    The original language that `text` is provided in.
+    """
+    fromLanguage: String
+  ): String
 }

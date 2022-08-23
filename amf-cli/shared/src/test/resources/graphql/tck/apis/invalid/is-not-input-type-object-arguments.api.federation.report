@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type-in-endpoint
+  Message: Argument 'input_' type must be an input type, 'Object1' it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FobjectArgument
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(7,19)-(7,34)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type-in-endpoint
+  Message: Argument 'input_' type must be an input type, 'Interface' it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FinterfaceArgument
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(8,22)-(8,39)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type-in-endpoint
+  Message: Argument 'input_' type must be an input type, 'Union' it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-object-arguments.api.graphql#/web-api/endpoint/%2Fquery%2FunionArgument
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(9,18)-(9,31)]
+  Location: 

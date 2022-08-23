@@ -1,0 +1,60 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Title
+
+paths:
+  /user:
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param}:
+    parameters:
+      - in: path
+        name: param
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param1}:
+    parameters:
+      - in: path
+        name: param1
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param1}/{param2}:
+    parameters:
+      - in: path
+        name: param1
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: param2
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.
+  /user{param}/:
+    parameters:
+      - in: path
+        name: param
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        "200":
+          description: Entity being requested was successfully returned.

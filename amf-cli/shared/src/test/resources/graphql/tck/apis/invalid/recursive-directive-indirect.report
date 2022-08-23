@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-indirect.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#API-endpoint-mandatoryGraphqlNonEmptyEndpoints
+  Message: Must have 'schema' node or 'Query', 'Mutation' or 'Subscription' types
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-indirect.graphql#/web-api
+  Property: http://a.ml/vocabularies/apiContract#endpoint
+  Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'myDirectiveScalar' cannot reference itself indirectly thorough scalar 'MyScalar'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-indirect.graphql#/declares/myDirectiveScalar
+  Property: 
+  Range: [(2,0)-(2,53)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'myDirectiveEnum' cannot reference itself indirectly thorough enum 'MyEnum'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-indirect.graphql#/declares/myDirectiveEnum
+  Property: 
+  Range: [(8,0)-(8,60)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Directive definition 'myDirectiveEnum' cannot reference itself indirectly thorough value 'A'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-indirect.graphql#/declares/myDirectiveEnum
+  Property: 
+  Range: [(8,0)-(8,60)]
+  Location: 
