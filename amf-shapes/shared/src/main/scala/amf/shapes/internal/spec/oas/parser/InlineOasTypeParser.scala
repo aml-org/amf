@@ -769,7 +769,7 @@ case class InlineOasTypeParser(
         }
       } getOrElse { (virtual(), inferred()) }
 
-      if (properties.nonEmpty)
+      if (properties.nonEmpty || propertiesEntry.nonEmpty)
         shape.setWithoutId(
           NodeShapeModel.Properties,
           AmfArray(properties.values.toSeq, propertiesAnnotations),
