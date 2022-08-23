@@ -1,6 +1,7 @@
-package amf.graphql.internal.spec.emitter.domain
+package amf.graphql.internal.spec.emitter.helpers
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
+import amf.graphql.internal.spec.emitter.domain.{GeneratedGraphQLArgument, GraphQLDescriptionEmitter}
 
 object GraphQLEmitterHelper {
   def emitArgumentsWithDescriptions(
@@ -12,7 +13,8 @@ object GraphQLEmitterHelper {
       arguments.zipWithIndex.foreach { case (GeneratedGraphQLArgument(description, arg), pos) =>
         o.fixed { of =>
           GraphQLDescriptionEmitter(description, ctx, of).emit()
-          if (isLastArgument(arguments, pos)) of += arg else of += s"$arg,"
+          val argString = if (isLastArgument(arguments, pos)) arg else s"$arg,"
+          LineEmitter(of, argString).emit()
         }
       }
     }

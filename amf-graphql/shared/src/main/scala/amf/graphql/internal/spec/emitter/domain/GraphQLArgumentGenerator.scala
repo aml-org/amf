@@ -1,35 +1,48 @@
 package amf.graphql.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
-import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
+import amf.graphql.internal.spec.emitter.helpers.StringBuilder
 
 case class GeneratedGraphQLArgument(documentation: Option[String], value: String)
 
-case class GraphQLArgumentGenerator(param: Parameter, ctx: GraphQLEmitterContext) extends GraphQLEmitter {
+case class GraphQLDirectiveArgumentGenerator(arg: PropertyShape, ctx: GraphQLEmitterContext)
+    extends GraphQLArgumentGenerator(arg, ctx) {
+  override def argumentType: String        = typeTarget(arg.range)
+  override def description: Option[String] = arg.description.option()
+  override def value: String               = getDefaultValue(arg.default)
+}
+
+case class GraphQLOperationArgumentGenerator(arg: Parameter, ctx: GraphQLEmitterContext)
+    extends GraphQLArgumentGenerator(arg, ctx) {
+  override def argumentType: String = {
+    val graphQLType = typeTarget(arg.schema)
+    if (arg.required.option().getOrElse(false)) graphQLType else cleanNonNullable(graphQLType)
+  }
+  override def description: Option[String] = arg.description.option()
+  override def value: String               = getDefaultValue(arg.defaultValue)
+}
+
+abstract class GraphQLArgumentGenerator(arg: NamedDomainElement, ctx: GraphQLEmitterContext) extends GraphQLEmitter {
 
   def generate(): GeneratedGraphQLArgument = {
-    val name         = param.name.value()
-    val argumentType = extractGraphQLType
-    val description  = param.description.option()
-
-    val argumentDefinition = defaultValue match {
-      case Some(defaultValue) => s"$name: $argumentType = $defaultValue"
-      case _                  => s"$name: $argumentType"
-    }
-
+    val argumentDefinition = StringBuilder(s"$name:", argumentType, defaultValue, directives)
     GeneratedGraphQLArgument(description, argumentDefinition)
   }
 
-  private def extractGraphQLType: String = {
-    val argumentType = typeTarget(param.schema)
-    if (param.required.option().getOrElse(false)) argumentType else cleanNonNullable(argumentType)
-  }
+  protected def name: String         = arg.name.value()
+  protected def defaultValue: String = if (value.nonEmpty) s"= $value" else ""
 
-  private def defaultValue: Option[String] = {
-    param.defaultValue match {
-      case defaultValueNode: ScalarNode => Some(defaultValueNode.value.value())
-      case _                            => None
+  protected def getDefaultValue(node: DataNode): String = {
+    node match {
+      case defaultValueNode: ScalarNode => defaultValueNode.value.value()
+      case _                            => ""
     }
   }
+  def argumentType: String
+  def description: Option[String]
+  def value: String
+  def directives: String = GraphQLDirectiveApplicationsRenderer(arg)
 }

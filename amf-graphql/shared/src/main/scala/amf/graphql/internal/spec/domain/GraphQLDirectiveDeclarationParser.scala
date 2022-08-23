@@ -3,6 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.internal.parser.domain.Annotations.virtual
+import amf.graphql.internal.spec.annotations.GraphQLLocation
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
@@ -52,11 +53,14 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseLocations(): Unit = {
-    var domains = Set[String]()
+    var domains   = Set[String]()
+    var locations = Set[String]()
     collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION)).foreach { n =>
       path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION)) match {
         case Some(graphqlLocation: Node) =>
-          val domainsFromLocation = getDomains(graphqlLocation).toSet
+          val locationName = graphqlLocation.children.head.asInstanceOf[Terminal].value
+          locations = locations + locationName
+          val domainsFromLocation = getDomains(locationName).toSet
           domains = domainsFromLocation ++: domains
         case _ =>
           n match {
@@ -65,13 +69,11 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
           }
       }
     }
+    directive.add(GraphQLLocation(locations))
     directive.withDomain(domains.toSeq)
   }
 
-  private def getDomains(location: Node): Seq[String] = {
-    val locationName: String = location.children.head.asInstanceOf[Terminal].value
-    Locations.locationToDomain.getOrElse(locationName, Seq())
-  }
+  private def getDomains(locationName: String): Seq[String] = Locations.locationToDomain.getOrElse(locationName, Seq())
 
   private def checkErrorNode(children: Seq[ASTElement]): Unit = {
     children.foreach {
