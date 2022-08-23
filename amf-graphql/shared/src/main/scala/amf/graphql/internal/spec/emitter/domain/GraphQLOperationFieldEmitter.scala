@@ -1,11 +1,11 @@
 package amf.graphql.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
-import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.GraphQLEmitterHelper.emitArgumentsWithDescriptions
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 
 case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLEmitterContext, b: StringDocBuilder)
@@ -15,6 +15,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     val name         = operation.name.value()
     val arguments    = collectArguments
     val returnedType = extractGraphQLType
+    val directives   = GraphQLDirectiveApplicationsRenderer(operation)
 
     // arguments side by side or each in a new line
     val isMultiLine = arguments.exists(_.documentation.nonEmpty)
@@ -22,12 +23,13 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
     b.fixed { f =>
       emitFieldDescription(f)
       if (isMultiLine) {
-        f += (s"$name(", pos(operation.annotations))
+        LineEmitter(f, s"$name(").emit()
         emitArgumentsWithDescriptions(arguments, f, ctx)
-        f += s"): $returnedType"
+        LineEmitter(f, "):", returnedType, directives).emit()
       } else {
-        val args = arguments.map(_.value).mkString(",")
-        f += (s"$name($args): $returnedType", pos(operation.annotations))
+        val inputValueDefinitions = arguments.map(_.value).mkString(", ")
+        val argumentsDefinition   = s"($inputValueDefinitions)"
+        LineEmitter(f, s"$name$argumentsDefinition:", returnedType, directives).emit()
       }
     }
   }
@@ -42,7 +44,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
   }
   private def collectArguments = {
     operation.request.queryParameters.map { arg =>
-      GraphQLArgumentGenerator(toApiContractParameter(arg), ctx).generate()
+        GraphQLOperationArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
   }
   private def toApiContractParameter(arg: ShapeParameter): Parameter = {
@@ -50,6 +52,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
       .withName(arg.name.value())
       .withRequired(arg.required.option().getOrElse(false))
       .withSchema(arg.schema)
+      .withCustomDomainProperties(arg.customDomainProperties)
 
     Option(arg.defaultValue).map { default =>
       param.withDefaultValue(default)

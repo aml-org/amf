@@ -1,7 +1,7 @@
 package amf.graphql.internal.spec.emitter.domain
 import amf.core.internal.plugins.syntax.StringDocBuilder
-import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.NodeShape
 
 case class GraphQLObjectEmitter(
@@ -12,25 +12,23 @@ case class GraphQLObjectEmitter(
 ) {
   def emit(): Unit = {
     b.fixed { f =>
-      val name                = node.name.value()
-      val concreteGraphQLType = checkObjectType(name)
-      renderInheritance() match {
-        case Some(implementedInterfaces) =>
-          f += (s"$extensionPrefix$concreteGraphQLType $name $implementedInterfaces {", pos(node.annotations))
-        case _ =>
-          f += (s"$extensionPrefix$concreteGraphQLType $name {", pos(node.annotations))
-      }
+      val name                 = node.name.value()
+      val concreteGraphQLType  = checkObjectType(name)
+      val implementsInterfaces = renderInheritance()
+      val directives           = GraphQLDirectiveApplicationsRenderer(node)
+
+      LineEmitter(f, extensionPrefix, concreteGraphQLType, name, implementsInterfaces, directives, "{").emit()
       emitFields(f)
-      f += "}"
+      LineEmitter(f, "}").emit()
     }
   }
 
-  private def renderInheritance(): Option[String] = {
-    if (implementsInterfaces) {
+  private def renderInheritance(): String = {
+    if (implementsInterfaces()) {
       val interfacesNames = node.effectiveInherits.map(_.name.value())
-      Some(s"implements ${interfacesNames.mkString(" & ")}")
+      s"implements ${interfacesNames.mkString(" & ")}"
     } else {
-      None
+      ""
     }
   }
 
@@ -64,5 +62,5 @@ case class GraphQLObjectEmitter(
     }
   }
 
-  private def implementsInterfaces: Boolean = node.effectiveInherits.nonEmpty
+  private def implementsInterfaces(): Boolean = node.effectiveInherits.nonEmpty
 }

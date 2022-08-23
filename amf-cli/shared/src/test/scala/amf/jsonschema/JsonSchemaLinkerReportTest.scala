@@ -1,6 +1,6 @@
 package amf.jsonschema
 
-import amf.apicontract.client.scala.OASConfiguration.OAS20
+import amf.apicontract.client.scala.OASConfiguration.{OAS20, OAS30}
 import amf.apicontract.client.scala.RAMLConfiguration.RAML10
 import amf.validation.UniquePlatformReportGenTest
 
@@ -95,6 +95,16 @@ class JsonSchemaLinkerReportTest extends UniquePlatformReportGenTest with JsonSc
       validate(
         "apis/incorrect-def-key-ref.raml",
         Some("incorrect-def-key-ref.raml.report"),
+        configOverride = Some(config)
+      )
+    }
+  }
+
+  test("valid - Link to declaration with special characters") {
+    withJsonSchema("schemas/encodeable-chars.json", OAS20()) flatMap { case (config, _) =>
+      validate(
+        "apis/oas30-encodeable-use.yaml",
+        None,
         configOverride = Some(config)
       )
     }

@@ -2,9 +2,8 @@ package amf.client.validation
 
 import amf.cli.internal.convert.NativeOpsFromJvm
 import amf.core.client.platform.model.DataTypes
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
-import amf.shapes.client.platform.model.domain.ScalarShape
+import amf.shapes.client.platform.model.domain.{ArrayShape, NodeShape, ScalarShape}
 
 class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
 
@@ -35,5 +34,23 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
     val zeroReport           = validator.syncValidate("0")
     positiveNumberReport.results.asSeq.head.message shouldBe "Can't divide by 0"
     zeroReport.results.asSeq.head.message shouldBe "Can't divide by 0"
+  }
+
+  test("Validation order shouldn't affect conformance of each payload") {
+    val itemsShape = new NodeShape()
+    val shape      = new ArrayShape().withItems(itemsShape)
+    val validator  = payloadValidator(shape, `application/yaml`)
+
+    val validPayload = "- {}"
+    // an error in multiple lines should not break the next validation
+    val invalidPayload = "- {}\n - {}"
+
+    val validReport1  = validator.syncValidate(validPayload)
+    val invalidReport = validator.syncValidate(invalidPayload)
+    val validReport2  = validator.syncValidate(validPayload)
+
+    validReport1.results.asSeq.size shouldBe 0
+    invalidReport.results.asSeq.size shouldBe 1
+    validReport2.results.asSeq.size shouldBe 0 // this line should not fail
   }
 }

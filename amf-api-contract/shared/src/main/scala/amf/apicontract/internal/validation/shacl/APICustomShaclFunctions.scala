@@ -33,8 +33,14 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
     ShapesCustomShaclFunctions.listOfFunctions ++ Seq(
       new CustomShaclFunction {
+        override val name: String = "requiredFields"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val obj = GraphQLObject(element.asInstanceOf[NodeShape])
+          GraphQLValidator.validateRequiredFields(obj).foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
         override val name: String = "mandatoryGraphqlNonEmptyEndpoints"
-
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val webapi            = element.asInstanceOf[Api]
           val hasEndpointsField = webapi.fields.exists(BaseApiModel.EndPoints)
@@ -147,7 +153,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "invalidOutputTypeInEndpoint"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val endpoint = GraphQLEndpoint(element.asInstanceOf[EndPoint])
-          val results  = GraphQLArgumentValidator.validateOutputTypes(endpoint)
+          val results  = GraphQLValidator.validateOutputTypes(endpoint)
           results.foreach(info => validate(Some(info)))
         }
       },
@@ -155,7 +161,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "invalidOutputType"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val obj     = GraphQLObject(element.asInstanceOf[NodeShape])
-          val results = GraphQLArgumentValidator.validateOutputTypes(obj)
+          val results = GraphQLValidator.validateOutputTypes(obj)
           results.foreach(info => validate(Some(info)))
         }
       },
@@ -163,7 +169,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "invalidInputTypeInEndpoint"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val endpoint = GraphQLEndpoint(element.asInstanceOf[EndPoint])
-          val results  = GraphQLArgumentValidator.validateInputTypes(endpoint)
+          val results  = GraphQLValidator.validateInputTypes(endpoint)
           results.foreach(info => validate(Some(info)))
         }
       },
@@ -171,28 +177,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "invalidInputType"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val obj     = GraphQLObject(element.asInstanceOf[NodeShape])
-          val results = GraphQLArgumentValidator.validateInputTypes(obj)
+          val results = GraphQLValidator.validateInputTypes(obj)
           results.foreach(info => validate(Some(info)))
-        }
-      },
-      new CustomShaclFunction {
-        override val name: String = "requiredFields"
-        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val obj                         = GraphQLObject(element.asInstanceOf[NodeShape])
-          val fields                      = obj.fields().names
-          val requiredFields: Seq[String] = obj.inherits.flatMap(_.fields().names)
-          requiredFields.foreach { requiredField =>
-            if (!fields.contains(requiredField))
-              validate(
-                Some(
-                  ValidationInfo(
-                    NodeShapeModel.Properties,
-                    Some(s"field $requiredField is required in ${obj.name}"),
-                    Some(obj.annotations)
-                  )
-                )
-              )
-          }
         }
       },
       new CustomShaclFunction {
@@ -264,7 +250,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "GraphQLDirectiveApplicationTypeValidation"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val directive         = GraphQLAppliedDirective(element.asInstanceOf[DomainExtension])
-          val validationResults = GraphQLArgumentValidator.validateDirectiveApplication(directive)
+          val validationResults = GraphQLValidator.validateDirectiveApplication(directive)
           validationResults.foreach(info => validate(Some(info)))
         }
       },
@@ -510,7 +496,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "GraphQLArgumentDefaultValueTypeValidationDirective"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val obj               = GraphQLObject(element.asInstanceOf[NodeShape])
-          val validationResults = GraphQLArgumentValidator.validateDefaultValues(obj)
+          val validationResults = GraphQLValidator.validateDefaultValues(obj)
           validationResults.foreach(info => validate(Some(info)))
         }
       },
@@ -518,7 +504,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "GraphQLArgumentDefaultValueTypeValidationParameter"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val param             = element.asInstanceOf[AbstractParameter]
-          val validationResults = GraphQLArgumentValidator.validateDefaultValues(param)
+          val validationResults = GraphQLValidator.validateDefaultValues(param)
           validationResults.foreach(info => validate(Some(info)))
         }
       },
@@ -530,9 +516,9 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             prop.property.range match {
               case u: UnionShape if u.anyOf.headOption.exists(_.isInstanceOf[NilShape]) =>
                 val realRange = u.anyOf.last
-                GraphQLArgumentValidator.validateIn(prop.default, realRange.values, ShapeModel.Default)
+                GraphQLValidator.validateIn(prop.default, realRange.values, ShapeModel.Default)
               case other =>
-                GraphQLArgumentValidator.validateIn(prop.default, other.values, ShapeModel.Default)
+                GraphQLValidator.validateIn(prop.default, other.values, ShapeModel.Default)
             }
 
           }
@@ -544,7 +530,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val param = element.asInstanceOf[AbstractParameter]
           val validationResults =
-            GraphQLArgumentValidator.validateIn(
+            GraphQLValidator.validateIn(
               Option(param.defaultValue),
               param.schema.values,
               AbstractParameterModel.Default

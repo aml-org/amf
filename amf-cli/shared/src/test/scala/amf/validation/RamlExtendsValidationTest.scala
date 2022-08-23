@@ -1,8 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Raml08Profile
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
 class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/extends/"

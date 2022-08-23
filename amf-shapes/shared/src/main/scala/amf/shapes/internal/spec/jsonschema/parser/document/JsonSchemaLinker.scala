@@ -1,7 +1,9 @@
 package amf.shapes.internal.spec.jsonschema.parser.document
 
 import amf.core.client.scala.model.document.ExternalFragment
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -44,7 +46,7 @@ object Draft4NameExtraction extends JsonSchemaRefNameExtraction {
   }
 }
 
-object JsonSchemaLinker {
+object JsonSchemaLinker extends PlatformSecrets {
 
   def linkShapeIn(ref: String, ast: YNode)(implicit ctx: ShapeParserContext): Option[AnyShape] = {
     val maybeDoc = findJsonSchemaDocument(ref, ctx)
@@ -136,14 +138,27 @@ object JsonSchemaLinker {
       )
   }
 
-  private def findShape(ref: String, doc: JsonSchemaDocument, name: String)(implicit ctx: ShapeParserContext) = {
+  private def findShape(ref: String, doc: JsonSchemaDocument, name: String)(implicit
+      ctx: ShapeParserContext
+  ): Option[AnyShape] = {
     ctx.getJsonSchemaRefGuide.currentUnit match {
       case Some(_: ExternalFragment) => findShapeInDoc(doc, name)
-      case _ => ctx.findDeclaredTypeInDocFragment(ref, name).collect { case shape: AnyShape => shape }
+      case _ =>
+        collectAnyShape(
+          ctx
+            .findDeclaredTypeInDocFragment(ref, name)
+            // I need the URI encoded to find the file, but the Shape name should not be encoded
+            // I don't know if it is encoded or not, so I will also try to find it decoded
+            .orElse(ctx.findDeclaredTypeInDocFragment(ref, platform.decodeURI(name)))
+        )
     }
   }
 
-  private def findShapeInDoc(doc: JsonSchemaDocument, name: String)(implicit ctx: ShapeParserContext) = {
+  private def collectAnyShape(shape: Option[Shape]): Option[AnyShape] = shape.collect { case shape: AnyShape => shape }
+
+  private def findShapeInDoc(doc: JsonSchemaDocument, name: String)(implicit
+      ctx: ShapeParserContext
+  ): Option[AnyShape] = {
     doc.declares.collectFirst {
       case shape: AnyShape if shape.name.option().contains(name) => shape
     }
