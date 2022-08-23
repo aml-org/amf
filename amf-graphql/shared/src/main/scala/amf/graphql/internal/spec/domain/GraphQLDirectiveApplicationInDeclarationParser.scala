@@ -17,7 +17,7 @@ case class GraphQLDirectiveApplicationInDeclarationParser(node: Node)(implicit v
         collectNodes(node, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { arg =>
           val argName = findName_(arg)
           val element = directive.schema.asInstanceOf[NodeShape].properties.find(_.name.value() == argName).get // we know we have this
-          GraphQLDirectiveApplicationParser(arg, element).parse()
+          GraphQLDirectiveApplicationsParser(arg, element).parse()
         }
       case _ => // unreachable
     }

@@ -764,6 +764,7 @@ Types:
  | schema | [Shape](#shape) | Schema for an entity | `http://a.ml/vocabularies/shapes#schema` |
  | name | string | Name for an entity | `http://a.ml/vocabularies/core#name` |
  | serializationOrder | int | position in the set of properties for a shape used to serialize this property on the wire | `http://a.ml/vocabularies/shapes#serializationOrder` |
+ | repeatable | boolean | Indicates if a Domain Element can define more than 1 Domain Extension defined by this Custom Domain Property | `http://a.ml/vocabularies/core#repeatable` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |

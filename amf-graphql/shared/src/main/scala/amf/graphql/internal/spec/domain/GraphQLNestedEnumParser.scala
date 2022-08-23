@@ -21,9 +21,9 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
     parseDescription(enumTypeDef, enum, enum.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE)).parse()
-      GraphQLDirectiveApplicationParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationsParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, DIRECTIVE)).parse()
     }
-    GraphQLDirectiveApplicationParser(enumTypeDef, enum).parse()
+    GraphQLDirectiveApplicationsParser(enumTypeDef, enum).parse()
     enum
   }
 
@@ -44,9 +44,9 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
                   value,
                   Seq(ENUM_VALUE_DIRECTIVE, ENUM_VALUE_FEDERATION_DIRECTIVE)
                 ).parse()
-                GraphQLDirectiveApplicationParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE, DIRECTIVE)).parse()
+                GraphQLDirectiveApplicationsParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE, DIRECTIVE)).parse()
               }
-              GraphQLDirectiveApplicationParser(valueDefNode, value).parse()
+              GraphQLDirectiveApplicationsParser(valueDefNode, value).parse()
               value
             case None => ScalarNode(virtual())
           }

@@ -17,9 +17,9 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLBa
     parseDescription(objTypeNode, obj, obj.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, INPUT_OBJECT_FEDERATION_DIRECTIVE)).parse()
-      GraphQLDirectiveApplicationParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationsParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, DIRECTIVE)).parse()
     }
-    GraphQLDirectiveApplicationParser(objTypeNode, obj).parse()
+    GraphQLDirectiveApplicationsParser(objTypeNode, obj).parse()
     obj
   }
 
