@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/federation-reserved.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 8
+Number of results: 9
 
 Level: Violation
 
@@ -27,6 +27,14 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/declares/scalar/link__Import
   Property: http://www.w3.org/ns/shacl#name
   Range: [(3,0)-(3,19)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-union
+  Message: Union definitions must have at least one value
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/declares/union/_Entity
+  Property: 
+  Range: [(5,0)-(5,13)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#reserved-type-names

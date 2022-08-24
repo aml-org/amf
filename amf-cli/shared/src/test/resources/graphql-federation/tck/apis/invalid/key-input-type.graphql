@@ -1,3 +1,4 @@
 input Person @key(fields: "name"){
+    # parser does not recognize the 'name' field because @external is not applicable on input fields. The parsed node shape will have empty properties
     name: String @external
 }
