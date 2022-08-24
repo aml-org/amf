@@ -186,7 +186,12 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseSchemaNode(schemaAst: ASTNode): Unit = {
     val schemaNode = schemaAst.asInstanceOf[Node]
+
+    inFederation { implicit fCtx =>
+      GraphQLDirectiveApplicationsParser(schemaNode, webapi, Seq(SCHEMA_DIRECTIVE, DIRECTIVE)).parse()
+    }
     GraphQLDirectiveApplicationsParser(schemaNode, webapi).parse()
+
     parseDescription(schemaNode, webapi, webapi.meta)
 
     val isExtends     = find(schemaNode, EXTEND).nonEmpty
