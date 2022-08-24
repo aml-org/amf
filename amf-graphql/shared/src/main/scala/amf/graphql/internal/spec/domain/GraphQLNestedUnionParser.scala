@@ -18,9 +18,9 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
     parseDescription(unionTypeDef, union, union.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE)).parse()
-      GraphQLDirectiveApplicationParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationsParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, DIRECTIVE)).parse()
     }
-    GraphQLDirectiveApplicationParser(unionTypeDef, union).parse()
+    GraphQLDirectiveApplicationsParser(unionTypeDef, union).parse()
     union
   }
 

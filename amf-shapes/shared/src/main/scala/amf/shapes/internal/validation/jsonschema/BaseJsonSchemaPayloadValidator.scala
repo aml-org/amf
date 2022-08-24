@@ -162,7 +162,7 @@ abstract class BaseJsonSchemaPayloadValidator(
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)
-    val eh           = configuration.newErrorHandler()
+    val eh           = configuration.eh()
     val emitter      = JsonSchemaEmitter(renderOptions, eh)
     val YDocument    = emitter.emit(shape, declarations)
     val document     = SyamlParsedDocument(YDocument)
@@ -223,7 +223,7 @@ abstract class BaseJsonSchemaPayloadValidator(
 
   private def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
 
-    val errorHandler = configuration.newErrorHandler()
+    val errorHandler = configuration.eh()
     PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
   }
 
