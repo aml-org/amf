@@ -108,6 +108,7 @@ object TokenTypes {
   val REQUIRES_DIRECTIVE                = "requiresDirective"
   val SCALAR_DIRECTIVE                  = "scalarDirective"
   val SCALAR_FEDERATION_DIRECTIVE       = "scalarFederationDirective"
+  val SCHEMA_DIRECTIVE                  = "schemaDirective"
   val SHAREABLE_DIRECTIVE               = "shareableDirective"
   val UNION_DIRECTIVE                   = "unionDirective"
   val UNION_FEDERATION_DIRECTIVE        = "unionFederationDirective"
