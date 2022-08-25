@@ -1,5 +1,4 @@
 type Query {
-
   a: String
 }
 type Object {
@@ -8,8 +7,8 @@ type Object {
   queryScalar(input_: String): String
   queryCustomScalar(input_: Pepe): String
 }
-type InputType {
-  name : String
+input InputType {
+  name: String
 }
 enum Enum {
   A

@@ -21,8 +21,6 @@ class GraphQLEmitterContext(document: BaseUnit) {
   var mutationType: Option[RootType]     = None
   var subscriptionType: Option[RootType] = None
 
-  val inputTypeNames: mutable.Set[String] = mutable.Set()
-
   val webApi: WebApi = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
 
   private def processPath(path: String): Option[(GraphQLBaseWebApiContext.RootTypes.Value, String)] = {
@@ -87,33 +85,6 @@ class GraphQLEmitterContext(document: BaseUnit) {
           topLevelTypeFor(rootType, rootTypeName, field, ep)
         case _ => // ignore
       }
-    }
-    this
-  }
-
-  def indexInputTypes: GraphQLEmitterContext = {
-    val shapes: Seq[Option[NodeShape]] = webApi.endPoints.flatMap { ep =>
-      ep.operations flatMap { op =>
-        Option(op.request) match {
-          case Some(req) =>
-            req.queryParameters.map { param =>
-              Option(param.schema) match {
-                case Some(n: NodeShape) =>
-                  Some(n)
-                case _ =>
-                  None
-              }
-            }
-          case _ => None
-        }
-      }
-    }
-
-    val nodeShapes = shapes collect { case Some(s) => s }
-
-    nodeShapes.foreach { s =>
-      val name = s.effectiveLinkTarget().asInstanceOf[Shape].name.value()
-      inputTypeNames += name
     }
     this
   }

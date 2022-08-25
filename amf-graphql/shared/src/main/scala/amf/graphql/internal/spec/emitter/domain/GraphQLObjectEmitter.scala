@@ -13,7 +13,7 @@ case class GraphQLObjectEmitter(
   def emit(): Unit = {
     b.fixed { f =>
       val name                 = node.name.value()
-      val concreteGraphQLType  = checkObjectType(name)
+      val concreteGraphQLType  = checkObjectType()
       val implementsInterfaces = renderInheritance()
       val directives           = GraphQLDirectiveApplicationsRenderer(node)
 
@@ -32,8 +32,8 @@ case class GraphQLObjectEmitter(
     }
   }
 
-  private def checkObjectType(name: String): String = {
-    if (ctx.inputTypeNames.contains(name)) {
+  private def checkObjectType(): String = {
+    if (isInputType) {
       "input"
     } else if (isInterface) {
       "interface"
@@ -42,7 +42,9 @@ case class GraphQLObjectEmitter(
     }
   }
 
+  private def isInputType = node.isInputOnly.value()
   private def isInterface = node.isAbstract.option().getOrElse(false)
+
   private def emitFields(f: StringDocBuilder): Unit = {
     f.obj { o =>
       o.list { l =>

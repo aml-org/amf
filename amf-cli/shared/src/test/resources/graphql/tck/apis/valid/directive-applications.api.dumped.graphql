@@ -10,7 +10,7 @@ type MyObject2 {
 interface MyInterface @example(text: Jorge) {
   myField: String!
 }
-type MyInputObject @example(text: Jorge) {
+input MyInputObject @example(text: Jorge) {
   myField: String! @example(text: Jorge)
 }
 scalar MyScalar @example(text: Jorge)
