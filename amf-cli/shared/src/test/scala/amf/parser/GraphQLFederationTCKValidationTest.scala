@@ -22,8 +22,7 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql",
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/recursive-directive-direct.graphql",
     "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides-nested.graphql",
-    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides.graphql",
-    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-requires-nested.graphql"
+    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides.graphql"
   )
 
   private val validFederationApisInvalidInGraphQL = Set(
