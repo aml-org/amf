@@ -1,0 +1,94 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/invalid-key-directive.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 11
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unmatched-field-in-field-set
+  Message: Cannot find property with name 'foo' when resolving field set
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: 
+  Range: [(2,14)-(2,17)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unmatched-field-in-field-set
+  Message: Property 'name' referenced by field set cannot have arguments
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: 
+  Range: [(3,14)-(3,18)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: Property 'recoveryCode' reference by field set can't be from an interface
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://a.ml/vocabularies/shapes#path
+  Range: [(4,0)-(4,37)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: Property 'value' reference by field set can't be from an input type
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://a.ml/vocabularies/shapes#path
+  Range: [(5,0)-(5,36)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unmatched-field-in-field-set
+  Message: Cannot find property with name 'inputValue' when resolving field set
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: 
+  Range: [(5,22)-(5,32)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: Property 'objectField' reference by field set can't be an object type
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://a.ml/vocabularies/shapes#path
+  Range: [(6,0)-(6,27)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: Property 'objectField' reference by field set can't be an object type
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://a.ml/vocabularies/shapes#path
+  Range: [(7,0)-(7,30)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: Property 'typeField' reference by field set can't be an object type
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://a.ml/vocabularies/shapes#path
+  Range: [(8,0)-(8,41)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
+  Message: Field 'value' must be an output type, 'InputValue' it's not
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(13,4)-(13,21)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
+  Message: The directive '@key' can't be applied to an interface
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/RecoveryCode
+  Property: http://a.ml/vocabularies/federation#keys
+  Range: [(25,23)-(25,43)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-definition
+  Message: Input Type definitions must have at least one field
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/InputValue
+  Property: http://www.w3.org/ns/shacl#property
+  Range: [(29,0)-(29,16)]
+  Location: 

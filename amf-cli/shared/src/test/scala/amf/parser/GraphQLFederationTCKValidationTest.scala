@@ -3,13 +3,13 @@ package amf.parser
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.GraphQLProfile
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.graphql.client.scala.GraphQLConfiguration
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleTests {
+  override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/"
 
   val graphqlTckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
   val graphqlApisPath: String = s"$graphqlTckPath/apis"
@@ -20,8 +20,6 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   private val ignoredApis = Set(
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/directive-argument-wrong-value.api.graphql",
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql",
-    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides-nested.graphql",
-    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/non-external-provides.graphql"
   )
 
   private val validFederationApisInvalidInGraphQL = Set(
@@ -39,15 +37,23 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   runInvalidGraphqlTck()
   runInvalidFederationTck()
 
-  private def runInvalidGraphqlTck() =
+  private val apiPath =
+    "amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/invalid-key-directive.graphql"
+
+  // Test singular API
+  test("invalid-key-directive") {
+    assertReport(apiPath, apiPath.replace(".graphql", ".report"))
+  }
+
+  private def runInvalidGraphqlTck(): Unit =
     runInvalidTests(graphqlApisPath, GRAPHQL, _.replace(".graphql", ".federation.report"))
-  private def runInvalidFederationTck() =
+  private def runInvalidFederationTck(): Unit =
     runInvalidTests(basePath, FEDERATION, _.replace(".graphql", ".report"))
 
-  private def runValidGraphqlTck()    = runValidTests(graphqlApisPath, GRAPHQL)
-  private def runValidFederationTck() = runValidTests(basePath, FEDERATION)
+  private def runValidGraphqlTck(): Unit    = runValidTests(graphqlApisPath, GRAPHQL)
+  private def runValidFederationTck(): Unit = runValidTests(basePath, FEDERATION)
 
-  private def runValidTests(basePath: String, testNamePrefix: String) = {
+  private def runValidTests(basePath: String, testNamePrefix: String): Unit = {
     fs.syncFile(s"$basePath/valid").list.foreach { api =>
       ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
         assertConforms(s"$basePath/valid/$api")
@@ -60,7 +66,7 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
     }
   }
 
-  private def runInvalidTests(base: String, testNamePrefix: String, reportProducer: String => String) = {
+  private def runInvalidTests(base: String, testNamePrefix: String, reportProducer: String => String): Unit = {
     fs.syncFile(s"$base/invalid")
       .list
       .groupBy(apiName)
@@ -116,6 +122,4 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   }
 
   private def apiName(api: String): String = api.split('.').dropRight(1).mkString(".")
-
-  override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/"
 }

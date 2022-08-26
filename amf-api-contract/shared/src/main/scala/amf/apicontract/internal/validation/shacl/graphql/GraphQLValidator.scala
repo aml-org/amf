@@ -1,18 +1,73 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
-import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{DataNode, NamedDomainElement, ScalarNode, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ScalarNodeModel
-import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.internal.metamodel.domain.extensions.{DomainExtensionModel, PropertyShapePathModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.federation.Key
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object GraphQLValidator {
+
+  def checkValidPath(path: Seq[PropertyShape], key: Key): Seq[ValidationInfo] = {
+    path.flatMap { propertyShape =>
+      propertyShape.range match {
+        case n: NodeShape =>
+          if (n.isAbstract.value())
+            validationInfo(
+              PropertyShapePathModel.Path,
+              s"Property '${propertyShape.name}' reference by field set can't be from an interface",
+              key.annotations
+            )
+          else if (n.isInputOnly.value())
+            validationInfo(
+              PropertyShapePathModel.Path,
+              s"Property '${propertyShape.name}' reference by field set can't be from an input type",
+              key.annotations
+            )
+          else {
+            if (n == path.last.range) {
+              validationInfo(
+                PropertyShapePathModel.Path,
+                s"Property '${propertyShape.name}' reference by field set can't be an object type",
+                key.annotations
+              )
+            } else None
+          }
+        case _: ScalarShape => None
+        case _ =>
+          if (propertyShape.name.value() != "error") {
+            validationInfo(
+              PropertyShapePathModel.Path,
+              s"Property '${propertyShape.name}' must be from an object type",
+              key.annotations
+            )
+          } else None
+      }
+    }
+  }
+
+  def validateKeyDirective(node: NodeShape): Seq[ValidationInfo] = {
+    node.keys.flatMap { key =>
+      if (node.isAbstract.value())
+        validationInfo(NodeShapeModel.Keys, "The directive '@key' can't be applied to an interface", key.annotations)
+      else if (node.isInputOnly.value())
+        validationInfo(NodeShapeModel.Keys, "The directive '@key' can't be applied to an input type", key.annotations)
+      else {
+        val components = key.components
+        components.flatMap { component =>
+          checkValidPath(component.path, key)
+        }
+      }
+    }
+  }
+
   case class RequiredField(interface: String, field: GraphQLField)
 
   def validateRequiredFields(obj: GraphQLObject): Seq[ValidationInfo] = {
@@ -310,7 +365,7 @@ object GraphQLValidator {
             )
           case _ => None
         }
-      case _ => None // TODO: take input objects into account when resolution and hierarchy is done
+      case _ => None
     }
   }
 

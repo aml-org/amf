@@ -3,15 +3,20 @@ package amf.apicontract.internal.validation.shacl
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
+import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
-import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
-import amf.apicontract.internal.metamodel.domain._
+import amf.apicontract.internal.metamodel.domain.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  SecuritySchemeModel
+}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.apicontract.internal.validation.shacl.graphql._
 import amf.apicontract.internal.validation.shacl.oas.{
   DuplicatedCommonEndpointPathValidation,
-  DuplicatedOas3EndpointPathValidation}
+  DuplicatedOas3EndpointPathValidation
+}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.SynthesizedField
@@ -130,6 +135,13 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               )
             )
             .foreach(info => validate(Some(info)))
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "keyDirectiveValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val results = GraphQLValidator.validateKeyDirective(element.asInstanceOf[NodeShape])
+          results.foreach(info => validate(Some(info)))
         }
       },
       new CustomShaclFunction {
