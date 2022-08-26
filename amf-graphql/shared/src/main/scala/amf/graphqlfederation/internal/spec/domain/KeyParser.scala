@@ -20,7 +20,7 @@ case class KeyParser(ast: Node, target: NodeShape, basePath: Seq[String])(implic
         val action =
           LinkEvaluation[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext](paths) {
             resolvedPaths =>
-              val key = Key().withComponents(resolvedPaths)
+              val key = Key(toAnnotations(keyAst)).withComponents(resolvedPaths)
               parseResolvable(keyAst, key)
               val keys = target.keys :+ key
               target.withKeys(keys)
