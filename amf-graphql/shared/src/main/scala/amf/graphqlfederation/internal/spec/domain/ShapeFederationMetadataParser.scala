@@ -17,9 +17,9 @@ case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMe
   }
 
   protected def parseOverride(): Unit = {
-    pathToNonTerminal(ast, basePath :+ OVERRIDE_DIRECTIVE)
+    collectNodes(ast, basePath :+ OVERRIDE_DIRECTIVE).headOption
       .map(findName(_, "default-from", "ERR"))
-      .foreach { case _ @ (overrideTarget, annotations) =>
+      .foreach { case _ @(overrideTarget, annotations) =>
         in { metadata =>
           metadata.set(OverrideFrom, overrideTarget, annotations)
         }
@@ -27,7 +27,7 @@ case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMe
   }
 
   protected def parseShareable(): Unit = {
-    pathToNonTerminal(ast, basePath :+ SHAREABLE_DIRECTIVE)
+    collectNodes(ast, basePath :+ SHAREABLE_DIRECTIVE).headOption
       .foreach { _ =>
         in { metadata =>
           metadata.withShareable(true)
@@ -36,7 +36,7 @@ case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMe
   }
 
   protected def parseInaccessible(): Unit = {
-    pathToNonTerminal(ast, basePath :+ INACCESSIBLE_DIRECTIVE)
+    collectNodes(ast, basePath :+ INACCESSIBLE_DIRECTIVE).headOption
       .foreach { _ =>
         in { metadata =>
           metadata.withInaccessible(true)
