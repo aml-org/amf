@@ -16,12 +16,12 @@ case class ExternalDirectiveParser(ast: Node, target: PropertyShape)(implicit va
     extends GraphQLASTParserHelper {
 
   def parse(): Unit = {
-    pathToNonTerminal(ast, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE, EXTERNAL_DIRECTIVE))
+    collectNodes(ast, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE, EXTERNAL_DIRECTIVE)).headOption
       .foreach { _ =>
         target.withIsStub(true)
       }
 
-    pathToNonTerminal(ast, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE, EXTERNAL_DIRECTIVE))
+    collectNodes(ast, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE, EXTERNAL_DIRECTIVE)).headOption
       .foreach { _ =>
         target.withIsStub(true)
       }

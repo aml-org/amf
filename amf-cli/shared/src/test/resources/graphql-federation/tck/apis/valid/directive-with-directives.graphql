@@ -1,0 +1,4 @@
+directive @directiveA on ARGUMENT_DEFINITION
+directive @directiveB on ARGUMENT_DEFINITION
+directive @myDirective(argA: String @directiveA, argB: String = "defaultB" @inaccessible) on SCALAR
+scalar MyScalar @myDirective(argA: "valueA", argB: "valueB")

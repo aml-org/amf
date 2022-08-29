@@ -13,6 +13,7 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
       shape match {
         case scalar: ScalarShape if hasEnum(scalar) => GraphQLEnumEmitter(scalar, extensionPrefix, ctx, f).emit()
         case scalar: ScalarShape                    => GraphQLScalarEmitter(scalar, extensionPrefix, ctx, f).emit()
+        case node: NodeShape if isInputType(node)   => GraphQLInputTypeEmitter(node, extensionPrefix, ctx, f).emit()
         case node: NodeShape                        => GraphQLObjectEmitter(node, extensionPrefix, ctx, f).emit()
         case union: UnionShape                      => GraphQLUnionEmitter(union, extensionPrefix, ctx, f).emit()
         case _                                      => //
@@ -22,10 +23,11 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
 
   private def isExtension: Boolean = shape.isExtension.value()
   private def emitDescription(): Unit = {
-    if(!isExtension){
+    if (!isExtension) {
       val description = shape.description.option()
       GraphQLDescriptionEmitter(description, ctx, b, Some(pos(shape.annotations))).emit()
     }
   }
   private def hasEnum(scalar: ScalarShape) = scalar.values.nonEmpty
+  private def isInputType(node: NodeShape) = node.isInputOnly.value()
 }
