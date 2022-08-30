@@ -1,0 +1,16 @@
+type Query {
+  name: String!
+}
+
+interface BaseType {
+  field: BaseType
+}
+
+interface FirstChild implements BaseType {
+  field: FirstChild
+}
+
+interface SecondChild implements FirstChild {
+  field: SecondChild
+}
+
