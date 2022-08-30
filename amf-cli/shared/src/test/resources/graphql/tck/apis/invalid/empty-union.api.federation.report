@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-union.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-union.api.graphql#/declares/union/SearchResult
   Property: 
   Range: [(19,0)-(19,20)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error: Unexpected end of file
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(19,20)-(19,20)]
   Location: 

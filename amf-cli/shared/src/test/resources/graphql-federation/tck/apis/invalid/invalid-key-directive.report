@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis//invalid/invalid-key-directive.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 11
+Number of results: 12
 
 Level: Violation
 
@@ -91,4 +91,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/InputValue
   Property: http://www.w3.org/ns/shacl#property
   Range: [(29,0)-(29,16)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: '@key'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(29,17)-(29,21)]
   Location: 

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/invalid-def-after-valid.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: 'INVALID'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,0)-(9,7)]
+  Location: 
