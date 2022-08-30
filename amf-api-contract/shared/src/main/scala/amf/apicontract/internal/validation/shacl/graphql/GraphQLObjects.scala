@@ -2,11 +2,14 @@ package amf.apicontract.internal.validation.shacl.graphql
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response}
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.isValidOutputType
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations._
+
+import scala.annotation.tailrec
 
 trait GraphQLElement {
   def name: String
@@ -58,9 +61,13 @@ case class GraphQLEndpoint(endpoint: EndPoint) extends GraphQLElement {
 }
 
 case class GraphQLProperty(property: PropertyShape) extends GraphQLField {
-  def name: String               = property.name.value()
-  def annotations: Annotations   = property.annotations
-  def datatype: Option[String]   = GraphQLUtils.datatype(property.range)
+  def name: String             = property.name.value()
+  def annotations: Annotations = property.annotations
+  def datatype: Option[String] = GraphQLUtils.datatype(property.range)
+  def isAny: Boolean = property.range match {
+    case sc: ScalarShape => sc.dataType.value() == DataType.Any
+    case _               => false
+  }
   def default: Option[DataNode]  = Option(property.default)
   def range: Shape               = property.range
   def isValidInputType: Boolean  = GraphQLUtils.isValidInputType(range)
@@ -77,8 +84,10 @@ case class GraphQLOperation(operation: AbstractOperation) extends GraphQLField {
   def parameters: Seq[GraphQLParameter]  = operation.request.queryParameters.map(GraphQLParameter)
   def response: Option[AbstractResponse] = operation.responses.headOption
 
-  def datatype: Option[String] = payload flatMap { case payload =>
-    GraphQLUtils.datatype(payload.schema)
+  def datatype: Option[String] = payload flatMap (payload => GraphQLUtils.datatype(payload.schema))
+  def isAny: Boolean = payload.map(_.schema) match {
+    case Some(sc: ScalarShape) => sc.dataType.value() == DataType.Any
+    case _                     => false
   }
 
   // TODO: why is it store in different fields? payload vs payloads
@@ -176,13 +185,14 @@ object GraphQLUtils {
   def datatype(shape: Shape): Option[String] = {
     shape match {
       case u: UnionShape => // nullable type
-        u.anyOf.collectFirst { case s: ScalarShape => s.dataType.value() }
-      case s: ScalarShape => Some(s.dataType.value())
+        u.anyOf.collectFirst { case s: ScalarShape => GraphQLDataTypes.from(s) }
+      case s: ScalarShape => Some(GraphQLDataTypes.from(s))
       case n: NodeShape   => n.name.option()
       case _              => None
     }
   }
 
+  @tailrec
   def isValidInputType(schema: Shape): Boolean = {
     schema match {
       case u: UnionShape   => GraphQLNullable(u).isValidInput
@@ -192,6 +202,7 @@ object GraphQLUtils {
     }
   }
 
+  @tailrec
   def isValidOutputType(schema: Shape): Boolean = {
     schema match {
       case u: UnionShape   => GraphQLNullable(u).isValidOutput

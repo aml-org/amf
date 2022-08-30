@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#required-fields
-  Message: Field 'id' required by interface 'Id1' must be of type 'http://www.w3.org/2001/XMLSchema#string'
+  Message: Field 'id' required by interface 'Id1' must be of type 'String'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/conflicting-interfaces.api.graphql#/declares/shape/Person
   Property: http://a.ml/vocabularies/shapes#schema

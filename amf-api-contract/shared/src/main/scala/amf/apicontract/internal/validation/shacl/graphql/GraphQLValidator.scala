@@ -236,14 +236,14 @@ object GraphQLValidator {
     val typesValidations = parsedProps.flatMap { parsedProp =>
       val definition = definedProps.find(_.name == parsedProp.name.value())
       definition flatMap { definedProp =>
-        val parsedDatatype: String          = parsedProp.dataType.value()
+        val parsedDatatype: String          = GraphQLDataTypes.from(parsedProp)
         val definedDatatype: Option[String] = definedProp.datatype
         definedDatatype
-          .filter(x => x != parsedDatatype && x != DataType.Any)
+          .filter(x => x != parsedDatatype && definedProp.isAny)
           .flatMap { datatype =>
             validationInfo(
               ScalarNodeModel.DataType,
-              s"Property '${parsedProp.name.value()}' must be of type $datatype",
+              s"Property '${parsedProp.name.value()}' must be of type '$datatype'",
               parsedProp.annotations
             )
           }
@@ -301,7 +301,7 @@ object GraphQLValidator {
   ): Option[ValidationInfo] = {
     defaultValue match {
       case scalarNode: ScalarNode =>
-        scalarNode.dataType.value() match {
+        GraphQLDataTypes.from(scalarNode) match {
           case s: String if s != declaredDatatype =>
             validationInfo(
               ScalarNodeModel.DataType,

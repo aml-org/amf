@@ -1,9 +1,8 @@
 package amf.graphql.internal.spec.emitter.domain
 
-import amf.core.client.scala.model.DataType
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLDataTypes
 import amf.core.client.scala.model.domain.Shape
 import amf.graphql.internal.spec.parser.syntax.NullableShape
-import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, ScalarShape, UnionShape}
 
@@ -16,15 +15,8 @@ trait GraphQLEmitter {
       case Some(target) => target + "!"
       case _ =>
         shape match {
-          case sc: ScalarShape =>
-            sc.dataType.value() match {
-              case s if s == DataType.Integer                                            => INT + "!"
-              case s if s == DataType.Float                                              => FLOAT + "!"
-              case s if s == DataType.Boolean                                            => BOOLEAN + "!"
-              case s if s == DataType.Any && sc.format.option().contains("ID") => ID + "!"
-              case _                                                                     => STRING + "!"
-            }
-          case l: ArrayShape => s"[${typeTarget(l.items.asInstanceOf[AnyShape])}]!"
+          case sc: ScalarShape => s"${GraphQLDataTypes.from(sc)}!"
+          case l: ArrayShape   => s"[${typeTarget(l.items.asInstanceOf[AnyShape])}]!"
           case u: UnionShape =>
             unpackNilUnion(u) match {
               case NullableShape(false, s) => s"${u.name.value()}!"
