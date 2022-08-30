@@ -16,7 +16,7 @@ case class GraphQLEnumEmitter(
     val directives = GraphQLDirectiveApplicationsRenderer(enum)
     LineEmitter(b, extensionPrefix, "enum", name, directives, "{").emit()
     emitEnumValues()
-    LineEmitter(b, "}").emit()
+    LineEmitter(b).closeBlock()
   }
   private def emitEnumValues() = {
     val enumValues = enum.values.collect { case s: ScalarNode => s }

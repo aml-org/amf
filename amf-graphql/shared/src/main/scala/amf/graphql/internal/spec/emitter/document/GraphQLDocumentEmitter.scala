@@ -37,7 +37,7 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
       GraphQLDescriptionEmitter(ctx.webApi.description.option(), ctx, b).emit()
       LineEmitter(b, "schema", directives, "{").emit()
       emitRootOperationTypeDefinitions(b)
-      LineEmitter(b, "}").emit()
+      LineEmitter(b).closeBlock()
     }
   }
 

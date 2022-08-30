@@ -1,0 +1,24 @@
+type Query {
+  text: String
+}
+
+type Person implements HasFullName {
+  name: String!
+  middleName: String!
+  surname: String!
+}
+
+interface HasName {
+  name: String!
+}
+
+interface HasSurname {
+  surname: String!
+}
+
+interface HasFullName implements HasName & HasSurname {
+  name: String!
+  middleName: String!
+  surname: String!
+}
+
