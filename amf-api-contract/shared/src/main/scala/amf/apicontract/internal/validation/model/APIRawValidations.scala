@@ -1255,6 +1255,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         message = "Fields in @provides must be declared @external"
       ),
       AMFValidation(
+        uri = amfParser("key-directive-validations"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("NodeShape"),
+        constraint = shape("keyDirectiveValidations"),
+        message = "@key is not allowed here"
+      ),
+      AMFValidation(
         uri = amfParser("reserved-type-names"),
         owlClass = shape("AnyShape"),
         owlProperty = shape("AnyShape"),
