@@ -121,7 +121,7 @@ object TokenTypes {
     STRING  -> DataType.String,
     BOOLEAN -> DataType.Boolean,
     ENUM    -> DataType.String,
-    ID      -> DataType.String
+    ID      -> DataType.Any
   )
 
   val toTerminal: Map[String, String] = Map(

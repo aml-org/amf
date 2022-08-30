@@ -18,11 +18,11 @@ trait GraphQLEmitter {
         shape match {
           case sc: ScalarShape =>
             sc.dataType.value() match {
-              case s if s == DataType.Integer                                     => INT + "!"
-              case s if s == DataType.Float                                       => FLOAT + "!"
-              case s if s == DataType.Boolean                                     => BOOLEAN + "!"
-              case s if s == DataType.String && sc.format.option().contains("ID") => ID + "!"
-              case _                                                              => STRING + "!"
+              case s if s == DataType.Integer                                            => INT + "!"
+              case s if s == DataType.Float                                              => FLOAT + "!"
+              case s if s == DataType.Boolean                                            => BOOLEAN + "!"
+              case s if s == DataType.Any && sc.format.option().contains("ID") => ID + "!"
+              case _                                                                     => STRING + "!"
             }
           case l: ArrayShape => s"[${typeTarget(l.items.asInstanceOf[AnyShape])}]!"
           case u: UnionShape =>
