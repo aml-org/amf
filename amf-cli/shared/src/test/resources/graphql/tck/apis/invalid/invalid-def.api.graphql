@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+directive INVALID @MyDirective(text: String) on SCHEMA

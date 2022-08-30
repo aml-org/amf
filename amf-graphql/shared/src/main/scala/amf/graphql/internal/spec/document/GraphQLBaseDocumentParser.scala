@@ -4,7 +4,7 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{AntlrError, DuplicatedDeclaration}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -37,6 +37,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
+    loadSyntaxErrors(ast)
     parseWebAPI(ast)
     ast.current() match {
       case node: Node =>
@@ -57,6 +58,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
     }
     doc
+  }
+
+  private def loadSyntaxErrors(ast: AST): Unit = {
+    ast.getErrors.foreach(err => ctx.eh.violation(AntlrError, "", err.message, err.location))
   }
 
   private def parseWebAPI(ast: AST): Unit = {
