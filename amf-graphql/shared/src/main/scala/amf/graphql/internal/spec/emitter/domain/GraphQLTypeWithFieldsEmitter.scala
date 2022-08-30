@@ -16,7 +16,7 @@ abstract class GraphQLTypeWithFieldsEmitter(
     b.fixed { f =>
       LineEmitter(f, typeString, "{").emit()
       emitFields(f)
-      LineEmitter(f, "}").emit()
+      LineEmitter(f).closeBlock()
     }
   }
 

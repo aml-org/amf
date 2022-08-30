@@ -13,7 +13,7 @@ case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext
     b.fixed { f =>
       LineEmitter(f, "type", rootType.name, "{").emit()
       emitRootFields(f)
-      LineEmitter(f, "}").emit()
+      LineEmitter(f).closeBlock()
     }
   }
 
@@ -61,7 +61,7 @@ case class GraphQLRootTypeEmitter(rootType: RootType, ctx: GraphQLEmitterContext
     Option(operation.request) match {
       case Some(request) =>
         request.queryParameters.map { param =>
-            GraphQLOperationArgumentGenerator(param, ctx).generate()
+          GraphQLOperationArgumentGenerator(param, ctx).generate()
         }
       case None => Nil
     }
