@@ -141,7 +141,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
         case STRING  => scalar.withDataType(DataType.String)
         case BOOLEAN => scalar.withDataType(DataType.Boolean)
         case ID =>
-          scalar.withDataType(DataType.String)
+          scalar.withDataType(DataType.Any)
           scalar.withFormat("ID")
         case _ =>
           astError(s"Unknown GraphQL scalar type $typeName", toAnnotations(t))

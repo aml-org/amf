@@ -1,3 +1,7 @@
+type Query {
+    name: String
+}
+
 scalar MyScalar @myDirectiveScalar(arg: "val")
 directive @myDirectiveScalar(arg: MyScalar) on SCALAR
 

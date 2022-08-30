@@ -1,14 +1,4 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/directive-argument-wrong-value.api.graphql
 Profile: GraphQL
-Conforms: false
-Number of results: 1
-
-Level: Violation
-
-- Constraint: http://a.ml/vocabularies/amf/parser#invalid-extension-argument-type
-  Message: Property 'text' must be of type http://www.w3.org/2001/XMLSchema#string
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/directive-argument-wrong-value.api.graphql#/web-api/customDomainProperties/MyDirective
-  Property: http://www.w3.org/ns/shacl#datatype
-  Range: [(1,26)-(1,30)]
-  Location: 
+Conforms: true
+Number of results: 0
