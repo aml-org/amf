@@ -1,6 +1,7 @@
 package amf.apicontract.internal.metamodel.domain.api
 
 import amf.apicontract.internal.metamodel.domain._
+import amf.apicontract.internal.metamodel.domain.common.VersionField
 import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
 import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
@@ -12,7 +13,7 @@ import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
 /** Web Api metamodel
   */
-trait ApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel {
+trait ApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel with VersionField {
 
   val Servers =
     Field(
@@ -49,9 +50,6 @@ trait ApiModel extends DomainElementModel with NameFieldSchema with DescriptionF
       ApiContract + "scheme",
       ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol")
     )
-
-  val Version =
-    Field(Str, Core + "version", ModelDoc(ModelVocabularies.Core, "version", "Version of the API"))
 
   val TermsOfService = Field(
     Str,

@@ -15,7 +15,7 @@ import amf.apicontract.client.platform.model.domain.templates.{ParametrizedResou
 import amf.apicontract.client.scala.model.document.{AnnotationTypeDeclarationFragment, DataTypeFragment, DocumentationItemFragment, NamedExampleFragment}
 import amf.apicontract.client.scala.model.{document, domain}
 import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ExtensionModel, OverlayModel}
+import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ComponentModuleModel, ExtensionModel, OverlayModel}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api._
 import amf.apicontract.internal.metamodel.domain.bindings._
@@ -73,6 +73,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(OverlayModel) { case m: document.Overlay =>
       Overlay(m)
+    }
+    platform.registerWrapper(ComponentModuleModel) { case m: document.ComponentModule =>
+      new ComponentModule(m)
     }
 
     // Api (domain)

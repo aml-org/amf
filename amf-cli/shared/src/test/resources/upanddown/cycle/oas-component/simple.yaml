@@ -1,0 +1,196 @@
+openapi: 3.0.0
+
+info:
+  title: Sample Pet Store App
+  version: 1.0.1
+
+components:
+  schemas:
+    common:
+      title: common schema
+      multipleOf: 2
+      maximum: 32
+      exclusiveMaximum: true
+      minimum: 0
+      exclusiveMinimum: true
+      maxLength: 100
+      minLength: 0
+      type: string
+      description: common test case
+      nullable: true
+      externalDocs:
+        description: Find more info here
+        url: https://example.com
+      example: a
+      deprecated: false
+    arraySchema:
+      minItems: 0
+      uniqueItems: true
+      maxItems: 100
+      items:
+        type: string
+    objectSchema:
+      maxProperties: 100
+      minProperties: 0
+      required:
+        - a
+      properties:
+        a:
+          readOnly: false
+          writeOnly: false
+          xml:
+            name: a
+            attribute: false
+            wrapped: false
+            namespace: http://example.com/schema/sample
+            prefix: sample
+      additionalProperties: false
+    refSchema:
+      $ref: '#/components/schemas/objectSchema'
+    oneOfschema:
+      oneOf:
+        - $ref: '#/components/schemas/objectSchema'
+        - $ref: '#/components/schemas/arraySchema'
+      discriminator:
+        propertyName: a
+        mapping:
+          dog: '#/components/schemas/objectSchema'
+    anyOfSchema:
+      anyOf:
+        - $ref: '#/components/schemas/objectSchema'
+        - $ref: '#/components/schemas/arraySchema'
+    allOfSchema:
+      allOf:
+        - $ref: '#/components/schemas/objectSchema'
+        - $ref: '#/components/schemas/arraySchema'
+    notSchema:
+      not:
+        type: string
+  responses:
+    aResponse:
+      description: a response
+      headers:
+        inlined:
+          description: The number of allowed requests in the current period
+          schema:
+            type: integer
+        aRef:
+          $ref: "#/components/headers/aHeader"
+      content:
+        application/json:
+          schema:
+            type: string
+          example: a
+      links:
+        refLink:
+          $ref: "#/components/links/address"
+
+  parameters:
+    headerP:
+      name: headerP
+      in: header
+      schema:
+        type: string
+    pathP:
+      name: pathP
+      in: path
+      required: true
+      schema:
+        type: string
+    cookieP:
+      name: cookieP
+      in: cookie
+      schema:
+        type: string
+      examples:
+        anExample:
+          value: a
+    aParam:
+      name: aParam
+      description: a description
+      in: query
+      deprecated: false
+      allowEmptyValue: true
+      explode: false
+      allowReserved: false
+      example: a
+      schema:
+        type: string
+  examples:
+    aExample:
+      summary: a summary
+      description: a description
+      value: a
+    externalValueExample:
+      externalValue: a
+
+  requestBodies:
+    requestBody:
+      description: a description
+      content:
+        'text/plain':
+          examples:
+            user:
+              summary: User example in text plain format
+              externalValue: 'http://foo.bar/examples/user-example.txt'
+  headers:
+    aHeader:
+      description: a description
+      deprecated: false
+      allowEmptyValue: true
+      explode: false
+      allowReserved: false
+      example: a
+      schema:
+        type: string
+  securitySchemes:
+    apikey:
+      description: a security scheme
+      type: apiKey
+      name: api_key
+      in: header
+    http:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    openIdConnect:
+      type: openIdConnect
+      openIdConnectUrl: url
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          refreshUrl: https://example.com/api/oauth/dialog
+          authorizationUrl: https://example.com/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+  links:
+    forOpId:
+      operationId: an operation Id
+    address:
+      # the target link operationId
+      operationRef: operation reference
+      parameters:
+        # get the `id` field from the request path parameter named `id`
+        userId: $request.path.id
+      requestBody: aaa
+      description: a description
+      server:
+        url: https://development.gigantic-server.com/v1
+        description: Development server
+  callbacks:
+    myWebhook:
+      'http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body#/email}':
+        post:
+          requestBody:
+            description: Callback payload
+            content:
+              'application/json':
+                schema:
+                  $ref: "#/components/schemas/objectSchema"
+          responses:
+            '200':
+              description: webhook successfully processed and no retries will be performed
+
+paths: {}

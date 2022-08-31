@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain.operations
 
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedAmfObject, Shape}
 import amf.shapes.client.scala.model.domain.operations.{AbstractPayload => InternalAbstractPayload}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain.{ArrayShape, NodeShape, ScalarShape}
@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 abstract class AbstractPayload(override private[amf] val _internal: InternalAbstractPayload)
     extends DomainElement
-    with NamedDomainElement
+    with NamedAmfObject
     with PlatformSecrets
     with Linkable {
 

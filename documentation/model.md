@@ -31,6 +31,7 @@ AMF Model Documentation
 * [ChannelBinding](#channelbinding)
 * [ChannelBindings](#channelbindings)
 * [ClassTerm](#classterm)
+* [ComponentModule](#componentmodule)
 * [ContextMapping](#contextmapping)
 * [CorrelationId](#correlationid)
 * [CreativeWork](#creativework)
@@ -690,6 +691,29 @@ Types:
  | properties | [url] | Properties that have the ClassTerm in the domain | `http://a.ml/vocabularies/meta#properties` |
  | subClassOf | [url] | Subsumption relationship across terms | `http://www.w3.org/2000/01/rdf-schema#subClassOf` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## ComponentModule
+Model defining a Component Module
+Types:
+* `http://a.ml/vocabularies/apiContract#ComponentModule`
+* `http://a.ml/vocabularies/document#Document`
+* `http://a.ml/vocabularies/document#Fragment`
+* `http://a.ml/vocabularies/document#Module`
+* `http://a.ml/vocabularies/document#Unit`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | `http://a.ml/vocabularies/document#declares` |
+ | version | string | Version of the current model | `http://a.ml/vocabularies/document#version` |
+ | references | [[BaseUnit](#baseunit)] | references across base units | `http://a.ml/vocabularies/document#references` |
+ | usage | string | Human readable description of the unit | `http://a.ml/vocabularies/document#usage` |
+ | describedBy | url | Link to the AML dialect describing a particular subgraph of information | `http://a.ml/vocabularies/meta#describedBy` |
+ | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | `http://a.ml/vocabularies/document#root` |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | `http://a.ml/vocabularies/document#package` |
+ | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | `http://a.ml/vocabularies/document#processingData` |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | `http://a.ml/vocabularies/document#sourceInformation` |
+ | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | version | string | Version of the API | `http://a.ml/vocabularies/core#version` |
 
 ## ContextMapping
 Stores information about mapping rules for a property in the model

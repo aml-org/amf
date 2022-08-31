@@ -1,5 +1,6 @@
 package amf.apicontract.internal.entities
 
+import amf.apicontract.internal.metamodel.document.ComponentModuleModel
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, WebApiModel}
 import amf.apicontract.internal.metamodel.domain.bindings._
@@ -80,6 +81,7 @@ private[amf] object APIEntities extends Entities {
     KeyModel,
     OperationFederationMetadataModel,
     PropertyKeyMappingModel,
-    ParameterKeyMappingModel
+    ParameterKeyMappingModel,
+    ComponentModuleModel
   )
 }

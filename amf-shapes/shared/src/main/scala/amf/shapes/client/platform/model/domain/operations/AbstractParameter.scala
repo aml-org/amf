@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain.operations
 
 import amf.core.client.platform.model.{Annotations, BoolField, StrField}
-import amf.core.client.platform.model.domain.{DataNode, DomainElement, NamedDomainElement, Shape}
+import amf.core.client.platform.model.domain.{DataNode, DomainElement, NamedAmfObject, Shape}
 import amf.shapes.client.platform.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.client.scala.model.domain.operations.{AbstractParameter => InternalAbstractParameter}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 abstract class AbstractParameter(override private[amf] val _internal: InternalAbstractParameter)
     extends DomainElement
-    with NamedDomainElement
+    with NamedAmfObject
     with PlatformSecrets {
 
   def parameterName: StrField = _internal.parameterName
