@@ -1,7 +1,7 @@
 package amf.apicontract.client.platform.model.domain.bindings
 
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedAmfObject}
 import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings => InternalChannelBindings}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class ChannelBindings(override private[amf] val _internal: InternalChannelBindings)
     extends DomainElement
-    with NamedDomainElement
+    with NamedAmfObject
     with Linkable {
 
   @JSExportTopLevel("ChannelBindings")

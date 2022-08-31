@@ -1,26 +1,15 @@
 package amf.apicontract.client.scala.model.domain.api
 
-import amf.apicontract.client.scala.model.domain.{
-  EndPoint,
-  License,
-  Organization,
-  SecuredElement,
-  Server,
-  ServerContainer,
-  Tag
-}
+import amf.apicontract.client.scala.model.domain.common.VersionedAmfObject
+import amf.apicontract.client.scala.model.domain.{License, _}
+import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.Description
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.core.internal.remote.Spec
-import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
-import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.shapes.client.scala.model.domain.DocumentedElement
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
-import org.yaml.model.{YMap, YNode}
 
 /** Web Api internal model
   */
@@ -28,14 +17,14 @@ abstract class Api(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
     with SecuredElement
     with ServerContainer
-    with DocumentedElement {
+    with DocumentedElement
+    with VersionedAmfObject {
 
   def description: StrField                      = fields.field(Description)
   def identifier: StrField                       = fields.field(Identifier)
   def schemes: Seq[StrField]                     = fields.field(Schemes)
   def accepts: Seq[StrField]                     = fields.field(Accepts)
   def contentType: Seq[StrField]                 = fields.field(ContentType)
-  def version: StrField                          = fields.field(Version)
   def termsOfService: StrField                   = fields.field(TermsOfService)
   def provider: Organization                     = fields.field(Provider)
   def license: License                           = fields.field(WebApiLicense)
@@ -50,7 +39,6 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def withEndPoints(endPoints: Seq[EndPoint]): this.type               = setArray(EndPoints, endPoints)
   def withAccepts(accepts: Seq[String]): this.type                     = set(Accepts, accepts)
   def withContentType(contentType: Seq[String]): this.type             = set(ContentType, contentType)
-  def withVersion(version: String): this.type                          = set(Version, version)
   def withTermsOfService(terms: String): this.type                     = set(TermsOfService, terms)
   def withProvider(provider: Organization): this.type                  = set(Provider, provider)
   def withLicense(license: License): this.type                         = set(WebApiLicense, license)
