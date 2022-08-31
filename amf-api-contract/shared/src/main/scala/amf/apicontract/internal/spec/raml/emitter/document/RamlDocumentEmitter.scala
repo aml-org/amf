@@ -22,7 +22,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST, SourceYPart}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.parser.domain.{DotQualifiedNameExtractor, FieldEntry}
 import amf.core.internal.remote.{Raml10, Spec}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -48,7 +48,8 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, UnhandledErrorHandler, EmptyFutureDeclarations())
+    val declarations =
+      WebApiDeclarations(document.declares, UnhandledErrorHandler, EmptyFutureDeclarations(), DotQualifiedNameExtractor)
 
     val result = ListBuffer[EntryEmitter]()
 
@@ -129,7 +130,8 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, UnhandledErrorHandler, EmptyFutureDeclarations())
+    val declarations =
+      WebApiDeclarations(document.declares, UnhandledErrorHandler, EmptyFutureDeclarations(), DotQualifiedNameExtractor)
 
     val result = ListBuffer[EntryEmitter]()
 

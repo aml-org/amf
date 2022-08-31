@@ -8,6 +8,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser._
+import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
@@ -35,7 +36,12 @@ abstract class WebApiContext(
     with SpecAwareContext {
 
   override val declarations: WebApiDeclarations = declarationsOption.getOrElse({
-    val decls = new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations)
+    val decls = new WebApiDeclarations(
+      None,
+      errorHandler = eh,
+      futureDeclarations = futureDeclarations,
+      DotQualifiedNameExtractor
+    )
     decls.extensions ++= computeExtensions
     decls
   })

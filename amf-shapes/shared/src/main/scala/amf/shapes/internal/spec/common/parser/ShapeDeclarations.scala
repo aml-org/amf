@@ -4,7 +4,13 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Fragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.internal.parser.domain.{Declarations, FragmentRef, FutureDeclarations, SearchScope}
+import amf.core.internal.parser.domain.{
+  Declarations,
+  FragmentRef,
+  FutureDeclarations,
+  QualifiedNameExtractor,
+  SearchScope
+}
 import amf.shapes.client.scala.model.document.DataTypeFragment
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
@@ -13,16 +19,21 @@ import amf.shapes.internal.spec.jsonschema.ref.JsonReference
 import org.yaml.model.YPart
 
 object ShapeDeclarations {
-  def empty(errorHandler: AMFErrorHandler, futureDeclarations: FutureDeclarations): ShapeDeclarations = {
-    new ShapeDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+  def empty(
+      errorHandler: AMFErrorHandler,
+      futureDeclarations: FutureDeclarations,
+      extractor: QualifiedNameExtractor
+  ): ShapeDeclarations = {
+    new ShapeDeclarations(None, errorHandler, futureDeclarations, extractor)
   }
 }
 
 class ShapeDeclarations(
     val alias: Option[String] = None,
     errorHandler: AMFErrorHandler,
-    futureDeclarations: FutureDeclarations
-) extends Declarations(Map.empty, Map.empty, Map.empty, errorHandler, futureDeclarations) {
+    futureDeclarations: FutureDeclarations,
+    extractor: QualifiedNameExtractor
+) extends Declarations(Map.empty, Map.empty, Map.empty, errorHandler, futureDeclarations, extractor) {
 
   var shapes: Map[String, Shape]                                  = Map()
   var extensions: Map[String, Dialect]                            = Map.empty
@@ -127,9 +138,9 @@ class ShapeDeclarations(
     this
   }
 
-  protected def addSchema(s: Shape): Unit = {
+  protected def addSchema(indexKey: String, s: Shape): Unit = {
     futureDeclarations.resolveRef(aliased(s.name.value()), s)
-    shapes = shapes + (s.name.value() -> s)
+    shapes = shapes + (indexKey -> s)
   }
 
   def aliased(name: String): String = alias match {
@@ -137,20 +148,20 @@ class ShapeDeclarations(
     case None         => name
   }
 
-  override def +=(element: DomainElement): ShapeDeclarations = {
+  override def +=(indexKey: String, element: DomainElement): this.type = {
     // future declarations are used for shapes, and therefore only resolved for that case
     element match {
       case s: Shape =>
-        addSchema(s)
+        addSchema(indexKey, s)
       case ex: Example =>
-        examples = examples + (ex.name.value() -> ex)
-      case _ => super.+=(element)
+        examples = examples + (indexKey -> ex)
+      case _ => super.+=(indexKey, element)
     }
     this
   }
 
   def copy(): ShapeDeclarations = {
-    val next = new ShapeDeclarations(alias, errorHandler, futureDeclarations)
+    val next = new ShapeDeclarations(alias, errorHandler, futureDeclarations, extractor)
     copy(next)
   }
 

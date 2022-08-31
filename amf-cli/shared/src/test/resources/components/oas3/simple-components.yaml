@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: 1.0.0
+paths: {}
+components:
+  securitySchemes:
+    aSecurityScheme:
+      description: something
+      type: apiKey
+
+  schemas:
+    aSchema:
+      description: Something
+  requestBodies:
+    aRequest:
+      description: something
+      content: {}
+  parameters:
+    aParameter:
+      name: aParameter
+      in: query
+      description: aParam
+      schema:
+        type: string
+  links:
+    aLink:
+      description: something2
+  headers:
+    aHeader:
+      description: something
+      schema:
+        type: string
+  examples:
+    anExample:
+      value:
+        a: true
+  callbacks:
+    aCallback:
+      /aCallback:
+        get:
+          summary: asdasda
+          description: something
+          responses:
+            '200':
+              description: asdasdasd
+  responses:
+    aResponse:
+      description: Something else

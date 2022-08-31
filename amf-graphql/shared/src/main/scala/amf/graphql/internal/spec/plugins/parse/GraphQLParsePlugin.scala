@@ -12,6 +12,7 @@ import amf.core.client.scala.parse.document.{
   ReferenceHandler
 }
 import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.remote.{GraphQL, Spec, Syntax}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.document.GraphQLBaseDocumentParser
@@ -35,7 +36,7 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
       ctx.refs,
       ctx.parsingOptions,
       ctx,
-      Some(WebApiDeclarations(Nil, UnhandledErrorHandler, ctx.futureDeclarations))
+      Some(WebApiDeclarations(Nil, UnhandledErrorHandler, ctx.futureDeclarations, DotQualifiedNameExtractor))
     )
   }
 

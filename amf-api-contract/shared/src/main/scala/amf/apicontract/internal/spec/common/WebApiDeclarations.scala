@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.common
 
 import amf.aml.client.scala.model.document.Dialect
-import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
@@ -23,15 +22,14 @@ import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, T
 import amf.apicontract.internal.spec.common.WebApiDeclarations._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, NamedDomainElement, ObjectNode, Shape}
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
+import amf.core.internal.parser.domain.SearchScope.{All, Named}
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.QName
-import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
-import amf.shapes.internal.spec.common.error.ErrorNamedExample
 import amf.shapes.internal.spec.common.parser.ShapeDeclarations
 import org.yaml.model.{YNode, YPart}
 
@@ -40,8 +38,9 @@ import org.yaml.model.{YNode, YPart}
 class WebApiDeclarations(
     alias: Option[String],
     val errorHandler: AMFErrorHandler,
-    val futureDeclarations: FutureDeclarations
-) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations) {
+    val futureDeclarations: FutureDeclarations,
+    val extractor: QualifiedNameExtractor
+) extends ShapeDeclarations(alias, errorHandler, futureDeclarations = futureDeclarations, extractor) {
 
   var resourceTypes: Map[String, ResourceType]          = Map()
   var parameters: Map[String, Parameter]                = Map()
@@ -97,14 +96,14 @@ class WebApiDeclarations(
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
     val merged =
-      new WebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+      new WebApiDeclarations(alias, errorHandler, EmptyFutureDeclarations(), extractor)
     mergeParts(other, merged)
     merged
   }
 
   override def copy(): WebApiDeclarations = {
     val next =
-      super.copy(new WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations))
+      super.copy(new WebApiDeclarations(alias, errorHandler, futureDeclarations, extractor))
     libraries.foreach(entry => next.addLibrary(entry._1, entry._2))
     next.resourceTypes = resourceTypes
     next.parameters = parameters
@@ -128,50 +127,49 @@ class WebApiDeclarations(
     next
   }
 
-  override def +=(element: DomainElement): WebApiDeclarations = {
+  override def +=(indexKey: String, element: DomainElement): this.type = {
     // future declarations are used for shapes, and therefore only resolved for that case
     element match {
       case r: ResourceType =>
-        resourceTypes = resourceTypes + (r.name.value() -> r)
+        resourceTypes = resourceTypes + (indexKey -> r)
       case t: Trait =>
-        traits = traits + (t.name.value() -> t)
+        traits = traits + (indexKey -> t)
       case h: Parameter if h.annotations.contains(classOf[DeclaredHeader]) =>
-        headers = headers + (h.name.value() -> h)
+        headers = headers + (indexKey -> h)
       case p: Parameter =>
-        parameters = parameters + (p.name.value() -> p)
+        parameters = parameters + (indexKey -> p)
       case p: Payload =>
-        payloads = payloads + (p.name.value() -> p)
+        payloads = payloads + (indexKey -> p)
       case ss: SecurityScheme =>
-        securitySchemes = securitySchemes + (ss.name.value() -> ss)
+        securitySchemes = securitySchemes + (indexKey -> ss)
       case re: Response =>
-        responses = responses + (re.name.value() -> re)
+        responses = responses + (indexKey -> re)
       case rq: Request =>
-        requests = requests + (rq.name.value() -> rq)
+        requests = requests + (indexKey -> rq)
       case l: TemplatedLink =>
-        links = links + (l.name.value() -> l)
+        links = links + (indexKey -> l)
       case l: CorrelationId =>
-        correlationIds = correlationIds + (l.name.value() -> l)
+        correlationIds = correlationIds + (indexKey -> l)
       case m: Message =>
-        if (m.isAbstract.value()) messageTraits = messageTraits + (m.name.value() -> m)
-        else messages = messages + (m.name.value()                                -> m)
+        if (m.isAbstract.value()) messageTraits = messageTraits + (indexKey -> m)
+        else messages = messages + (indexKey                                -> m)
       case o: Operation if o.isAbstract.value() =>
-        operationTraits = operationTraits + (o.name.value() -> o)
+        operationTraits = operationTraits + (indexKey -> o)
       case b: MessageBindings =>
-        messageBindings = messageBindings + (b.name.value() -> b)
+        messageBindings = messageBindings + (indexKey -> b)
       case b: ServerBindings =>
-        serverBindings = serverBindings + (b.name.value() -> b)
+        serverBindings = serverBindings + (indexKey -> b)
       case b: ChannelBindings =>
-        channelBindings = channelBindings + (b.name.value() -> b)
+        channelBindings = channelBindings + (indexKey -> b)
       case b: OperationBindings =>
-        operationBindings = operationBindings + (b.name.value() -> b)
+        operationBindings = operationBindings + (indexKey -> b)
 
       case c: Callback =>
-        val name = c.name.value()
-        callbacks.get(name) match {
-          case Some(prev) => callbacks = callbacks + (name -> (c :: prev))
-          case None       => callbacks = callbacks + (name -> List(c))
+        callbacks.get(indexKey) match {
+          case Some(prev) => callbacks = callbacks + (indexKey -> (c :: prev))
+          case None       => callbacks = callbacks + (indexKey -> List(c))
         }
-      case _ => super.+=(element)
+      case _ => super.+=(indexKey, element)
     }
     this
   }
@@ -205,8 +203,9 @@ class WebApiDeclarations(
       case _ =>
         val result = new WebApiDeclarations(
           Some(alias),
-          errorHandler = errorHandler,
-          futureDeclarations = EmptyFutureDeclarations()
+          errorHandler,
+          EmptyFutureDeclarations(),
+          extractor
         )
         addLibrary(alias, result)
         result
@@ -306,7 +305,11 @@ class WebApiDeclarations(
       o
     }
 
-  def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
+  def findCallbackInDeclarations(key: String, scope: SearchScope.Scope = Named): Option[List[Callback]] =
+    findManyForType(key, _.asInstanceOf[WebApiDeclarations].callbacks, scope) match {
+      case Some(callbacks: List[DomainElement]) => Some(callbacks.collect { case callback: Callback => callback })
+      case _                                    => None
+    }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
@@ -391,9 +394,10 @@ object WebApiDeclarations {
   def apply(
       declarations: Seq[DomainElement],
       errorHandler: AMFErrorHandler,
-      futureDeclarations: FutureDeclarations
+      futureDeclarations: FutureDeclarations,
+      extractor: QualifiedNameExtractor
   ): WebApiDeclarations = {
-    val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+    val result = new WebApiDeclarations(None, errorHandler, futureDeclarations, extractor)
     declarations.foreach(result += _)
     result
   }
@@ -585,8 +589,9 @@ class OasLikeWebApiDeclarations(
     val asts: Map[String, YNode],
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+    override val futureDeclarations: FutureDeclarations,
+    override val extractor: QualifiedNameExtractor = JsonPointerQualifiedNameExtractor
+) extends WebApiDeclarations(alias, errorHandler, futureDeclarations, extractor) {}
 
 class OasWebApiDeclarations(
     override val asts: Map[String, YNode],
@@ -680,7 +685,12 @@ class RamlWebApiDeclarations(
     override val alias: Option[String],
     override val errorHandler: AMFErrorHandler,
     override val futureDeclarations: FutureDeclarations
-) extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
+) extends WebApiDeclarations(
+      alias,
+      errorHandler = errorHandler,
+      futureDeclarations = futureDeclarations,
+      DotQualifiedNameExtractor
+    ) {
 
   def existsExternalAlias(lib: String): Boolean = externalLibs.contains(lib)
 

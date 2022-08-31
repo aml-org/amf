@@ -6,7 +6,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.datanode.DataNodeParserContext
-import amf.core.internal.parser.domain.{FragmentRef, SearchScope}
+import amf.core.internal.parser.domain.{DotQualifiedNameExtractor, FragmentRef, SearchScope}
 import org.yaml.model.YNode
 
 import scala.collection.mutable
@@ -27,7 +27,7 @@ abstract class ExtensionsContext(
   }
 
   val declarations: ShapeDeclarations = declarationsOption.getOrElse(
-    ShapeDeclarations.empty(eh, futureDeclarations).withExtensions(computeExtensions)
+    ShapeDeclarations.empty(eh, futureDeclarations, DotQualifiedNameExtractor).withExtensions(computeExtensions)
   )
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =

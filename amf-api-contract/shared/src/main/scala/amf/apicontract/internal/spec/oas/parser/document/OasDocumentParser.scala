@@ -24,7 +24,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
-import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.client.scala.parse.document.{ParsedReference, SyamlParsedDocument}
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
@@ -94,6 +94,9 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
   def parseDocument(): Document = parseDocument(Document())
 
+  protected def buildReferencesParser(document: Document, map: YMap): ReferencesParser =
+    ReferencesParser(document, root, "uses".asOasExtension)
+
   private def parseDocument[T <: Document](document: T): T = {
     document
       .withLocation(root.location)
@@ -102,7 +105,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)
 
-    val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
+    val references = buildReferencesParser(document, map).parse()
     parseDeclarations(root, map, document)
 
     val api = parseWebApi(map)
