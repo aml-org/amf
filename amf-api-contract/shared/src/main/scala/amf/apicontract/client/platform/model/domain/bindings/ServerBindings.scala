@@ -1,7 +1,7 @@
 package amf.apicontract.client.platform.model.domain.bindings
 
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.apicontract.client.scala.model.domain.bindings.{ServerBindings => InternalServerBindings}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class ServerBindings(override private[amf] val _internal: InternalServerBindings)
     extends DomainElement
-    with NamedAmfObject
+    with NamedDomainElement
     with Linkable {
 
   @JSExportTopLevel("ServerBindings")

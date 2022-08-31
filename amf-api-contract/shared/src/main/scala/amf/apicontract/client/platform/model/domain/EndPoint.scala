@@ -4,7 +4,7 @@ import amf.apicontract.client.platform.model.domain.bindings.ChannelBindings
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.apicontract.client.scala.model.domain.{EndPoint => InternalEndPoint}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -14,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     extends DomainElement
-    with NamedAmfObject {
+    with NamedDomainElement {
 
   @JSExportTopLevel("EndPoint")
   def this() = this(InternalEndPoint())

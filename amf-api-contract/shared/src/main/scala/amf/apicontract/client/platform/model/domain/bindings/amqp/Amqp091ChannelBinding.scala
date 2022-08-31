@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091Queue => InternalAmqp091Queue
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model.domain.{DomainElement, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -48,7 +48,7 @@ case class Amqp091ChannelBinding(override private[amf] val _internal: InternalAm
 @JSExportAll
 case class Amqp091ChannelExchange(override private[amf] val _internal: InternalAmqp091ChannelExchange)
     extends DomainElement
-    with NamedAmfObject {
+    with NamedDomainElement {
 
   @JSExportTopLevel("Amqp091ChannelExchange")
   def this() = this(InternalAmqp091ChannelExchange())
@@ -88,7 +88,7 @@ case class Amqp091ChannelExchange(override private[amf] val _internal: InternalA
 @JSExportAll
 case class Amqp091Queue(override private[amf] val _internal: InternalAmqp091Queue)
     extends DomainElement
-    with NamedAmfObject {
+    with NamedDomainElement {
 
   @JSExportTopLevel("Amqp091Queue")
   def this() = this(InternalAmqp091Queue())

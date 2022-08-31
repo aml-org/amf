@@ -1,7 +1,7 @@
 package amf.apicontract.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -12,7 +12,7 @@ import amf.apicontract.client.scala.model.domain.{Callback => InternalCallback}
 @JSExportAll
 case class Callback(override private[amf] val _internal: InternalCallback)
     extends DomainElement
-    with NamedAmfObject {
+    with NamedDomainElement {
 
   @JSExportTopLevel("Callback")
   def this() = this(InternalCallback())

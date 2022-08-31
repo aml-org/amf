@@ -2,10 +2,10 @@ package amf.apicontract.client.platform.model.document
 
 import amf.apicontract.client.platform.model.domain.common.VersionedAmfObject
 import amf.apicontract.client.scala.model.document.{ComponentModule => InternalComponentModule}
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.document.Module
 import amf.core.client.platform.model.domain.NamedAmfObject
-import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

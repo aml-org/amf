@@ -5,7 +5,7 @@ import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.client.scala.model.domain.api.{Api => InternalApi}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.shapes.client.platform.model.domain.CreativeWork
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.JSExportAll
 abstract class Api[A](override private[amf] val _internal: InternalApi)
     extends ApiFieldSetter[A]
     with DomainElement
-    with NamedAmfObject {
+    with NamedDomainElement {
 
   def name: StrField                            = _internal.name
   def description: StrField                     = _internal.description

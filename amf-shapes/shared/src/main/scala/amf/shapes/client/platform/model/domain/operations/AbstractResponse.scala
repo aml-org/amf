@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain.operations
 
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, NamedAmfObject}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.operations.{AbstractResponse => InternalAbstractResponse}
 import amf.shapes.internal.convert.ShapeClientConverters._
@@ -9,7 +9,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-trait AbstractResponse extends DomainElement with NamedAmfObject with PlatformSecrets {
+trait AbstractResponse extends DomainElement with NamedDomainElement with PlatformSecrets {
 
   override private[amf] val _internal: InternalAbstractResponse
   type PayloadType <: AbstractPayload
