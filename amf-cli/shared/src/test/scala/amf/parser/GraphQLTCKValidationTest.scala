@@ -32,9 +32,14 @@ class GraphQLTCKValidationTest extends GraphQLFunSuiteCycleTests {
       }
     }
 
-  // Test singular API
-  test("broken-covariance") {
-    assertReport(s"$basePath/invalid/broken-covariance.api.graphql")
+  // Test invalid singular API
+  test("interface-chain") {
+    assertReport(s"$basePath/invalid/interface-chain.graphql")
+  }
+
+  // Test valid singular API
+  test("interface-chain-covariant") {
+    assertConforms(s"$basePath/valid/interface-chain-covariant.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {
