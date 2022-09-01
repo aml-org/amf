@@ -1,16 +1,21 @@
 package amf.apicontract.internal.spec.common.parser
 
 import amf.aml.client.scala.model.document.Dialect
+import amf.apicontract.client.scala.model.domain.{Callback, Parameter, Request, Response, TemplatedLink}
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document._
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.ExpectedModule
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.domain.Example
+import com.sun.tools.javac.parser.ReferenceParser
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
@@ -20,17 +25,25 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
     ctx.declarations.getOrCreateLibrary(alias)
     unit match {
       case d: Module =>
-        val library = ctx.declarations.getOrCreateLibrary(alias)
-        d.declares.foreach(library += _)
-        collectExtensions(library, d)
-      case fragment: Fragment => ctx.declarations += (alias -> fragment)
+        indexModule(alias, d) { (module, declarations) =>
+          module.declares.foreach(declarations += _)
+        }
+      case fragment: Fragment => ctx.declarations += (alias, fragment)
       case jsonDoc: JsonSchemaDocument =>
         ctx.declarations.documentFragments += (alias -> (jsonDoc.encodes -> buildDeclarationMap(jsonDoc)))
       case _ => // ignore
     }
   }
 
-  private def collectExtensions(library: WebApiDeclarations, l: Module): Unit = {
+  protected def indexModule(alias: String, module: Module)(
+      indexDeclared: (Module, WebApiDeclarations) => Unit
+  ): Unit = {
+    val library = ctx.declarations.getOrCreateLibrary(alias)
+    indexDeclared(module, library)
+    collectExtensions(library, module)
+  }
+
+  protected def collectExtensions(library: WebApiDeclarations, l: Module): Unit = {
     l.references
       .filterType[Dialect]
       .foreach { d =>
@@ -43,9 +56,11 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
   }
 }
 
-abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext) {
+abstract class CommonReferencesParser(references: Seq[ParsedReference], register: WebApiRegister)(implicit
+    ctx: WebApiContext
+) {
   def parse(): ReferenceCollector[BaseUnit] = {
-    val result = CallbackReferenceCollector(WebApiRegister())
+    val result = CallbackReferenceCollector(register)
     parseLibraries(result)
     references.foreach {
       case ParsedReference(f: Fragment, origin: Reference, _) => result += (origin.url, f)
@@ -59,14 +74,29 @@ abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit
   protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit
 }
 
-case class ReferencesParser(
+object ReferencesParser {
+
+  def apply(baseUnit: BaseUnit, root: Root, key: String)(implicit ctx: WebApiContext): ReferencesParser = {
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    new ReferencesParser(baseUnit, root.location, key, map, root.references, WebApiRegister())
+  }
+
+  def apply(baseUnit: BaseUnit, rootLoc: String, key: String, map: YMap, references: Seq[ParsedReference])(implicit
+      ctx: WebApiContext
+  ): ReferencesParser = {
+    new ReferencesParser(baseUnit, rootLoc, key, map, references, WebApiRegister())
+  }
+}
+
+class ReferencesParser(
     baseUnit: BaseUnit,
     rootLoc: String,
     key: String,
     map: YMap,
-    references: Seq[ParsedReference]
+    references: Seq[ParsedReference],
+    register: WebApiRegister
 )(implicit ctx: WebApiContext)
-    extends CommonReferencesParser(references) {
+    extends CommonReferencesParser(references, register) {
 
   private def target(url: String): Option[BaseUnit] =
     references.find(r => r.origin.url.equals(url)).map(_.unit)
@@ -118,7 +148,7 @@ case class ReferencesParser(
 }
 
 case class AsyncReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
-    extends CommonReferencesParser(references) {
+    extends CommonReferencesParser(references, WebApiRegister()) {
   override protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit = Unit
 }
 

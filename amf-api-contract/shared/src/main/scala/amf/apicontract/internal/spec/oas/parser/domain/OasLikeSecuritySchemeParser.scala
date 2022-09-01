@@ -104,7 +104,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
 
   def parseReferenced(parsedUrl: String, node: YNode, adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
     ctx.declarations
-      .findSecurityScheme(parsedUrl, SearchScope.Fragments)
+      .findSecurityScheme(parsedUrl, SearchScope.All)
       .map(securityScheme => {
         val scheme: SecurityScheme =
           securityScheme.link(AmfScalar(parsedUrl), Annotations(node), Annotations.synthesized())
