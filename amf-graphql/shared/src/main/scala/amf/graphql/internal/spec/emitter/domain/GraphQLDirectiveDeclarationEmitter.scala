@@ -18,10 +18,11 @@ case class GraphQLDirectiveDeclarationEmitter(
     val name                  = directive.name.value()
     val arguments             = collectArguments()
     val locations             = collectLocations()
+    val repeatable            = if (directive.repeatable.value()) "repeatable" else ""
     val inputValuesDefinition = arguments.mkString(", ")
     val argumentsDefinition   = if (hasArguments(arguments)) s"($inputValuesDefinition)" else ""
 
-    b.fixed { f => LineEmitter(f, "directive", s"@$name$argumentsDefinition", "on", locations).emit() }
+    b.fixed { f => LineEmitter(f, "directive", s"@$name$argumentsDefinition", repeatable, "on", locations).emit() }
   }
 
   private def hasArguments(arguments: Seq[String]) = arguments.nonEmpty
