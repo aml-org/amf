@@ -15,7 +15,6 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.ExpectedModule
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.Example
-import com.sun.tools.javac.parser.ReferenceParser
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
