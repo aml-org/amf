@@ -11,6 +11,7 @@ import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.DirectiveArguments
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
+import amf.core.internal.remote.{GraphQL, GraphQLFederation, Spec}
 
 case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
@@ -31,7 +32,11 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   def parseRepeatable(): Unit = {
-    if (pathToTerminal(node, Seq("'repeatable'")).isDefined) {
+    val tokenName = ctx.spec match {
+      case GraphQL           => "'repeatable'"
+      case GraphQLFederation => "REPEATABLE_KEYWORD"
+    }
+    if (pathToTerminal(node, Seq(tokenName)).isDefined) {
       directive.withRepeatable(true)
     }
   }
