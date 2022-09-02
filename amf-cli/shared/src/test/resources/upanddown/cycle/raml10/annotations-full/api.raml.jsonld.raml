@@ -1,21 +1,23 @@
 #%RAML 1.0
 title: full
+(AnnotationInRoot): hello
 version: "1.0"
 mediaType: application/json
 baseUri: myfalsehost.com/apis
 /customers:
+  (AnnotationInCustomer): hello
   /{customer_id}:
     uriParameters:
       customer_id:
         (AnnotationInParameter): hello
     get:
       description: Returns Customer data
+      (AnnotationInGet): hello
       responses:
         "200":
           body:
             application/json:
               type: any
-      (AnnotationInGet): hello
     delete:
       description: Removes a Customer from the system
     /accounts:
@@ -40,5 +42,3 @@ baseUri: myfalsehost.com/apis
           body:
             application/json:
               type: string
-  (AnnotationInCustomer): hello
-(AnnotationInRoot): hello
