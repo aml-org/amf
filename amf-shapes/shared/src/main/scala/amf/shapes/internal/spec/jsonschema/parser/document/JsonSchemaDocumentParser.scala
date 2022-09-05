@@ -4,16 +4,26 @@ import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Spec
+import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel
 import amf.shapes.internal.spec.common.parser.TypeDeclarationParser.parseTypeDeclarations
-import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext, YMapEntryLike}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion}
+import amf.shapes.internal.spec.common.parser.{
+  BaseReferencesParser,
+  QuickFieldParserOps,
+  ShapeParserContext,
+  YMapEntryLike
+}
+import amf.shapes.internal.spec.common.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion
+}
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MandatorySchema, UnknownSchemaDraft}
@@ -27,19 +37,29 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
 
   def parse(): JsonSchemaDocument = {
 
-    val document = JsonSchemaDocument()
-    document.withLocation(root.location).withProcessingData(BaseUnitProcessingData().withSourceSpec(Spec.JSONSCHEMA))
+    val document = JsonSchemaDocument(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
+      .withLocation(root.location)
+      .withProcessingData(BaseUnitProcessingData().withSourceSpec(Spec.JSONSCHEMA))
+
+    document.set(BaseUnitModel.Location, root.location)
 
     val (schemaVersion, _) = setSchemaVersion(document)
 
-    // Parsing declaration schemas from "definitions" or "$defs"
-    parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this), Some(document))
-    addDeclarationsToModel(document, ctx.shapes.values.toList)
+    root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
+      val references =
+        BaseReferencesParser(document, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
-    val rootSchema = parseRootSchema(schemaVersion)
-    document.set(DocumentModel.Encodes, rootSchema, Annotations.inferred())
+      // Parsing declaration schemas from "definitions" or "$defs"
+      parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this), Some(document))
+      addDeclarationsToModel(document, ctx.shapes.values.toList)
 
-    ctx.futureDeclarations.resolve()
+      if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
+
+      val rootSchema = parseRootSchema(schemaVersion)
+      document.set(DocumentModel.Encodes, rootSchema, Annotations.inferred())
+
+      ctx.futureDeclarations.resolve()
+    }
 
     document
   }
