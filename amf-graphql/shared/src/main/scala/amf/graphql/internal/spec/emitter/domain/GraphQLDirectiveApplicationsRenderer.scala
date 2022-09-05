@@ -32,8 +32,8 @@ object GraphQLDirectiveApplicationsRenderer {
   }
 
   private def buildArgumentString(arg: DataNode) = {
-    val argName   = arg.asInstanceOf[ScalarNode].name.value()
-    val value     = arg.asInstanceOf[ScalarNode].value.value()
+    val argName   = arg.name.value()
+    val value     = DataNodeRenderer.render(arg)
     s"$argName: $value"
   }
 
