@@ -1,6 +1,13 @@
 type Query {
   name: String
 }
-type ChessBoard {
-  grid : [[Int!]!]!
+
+type ChessBoard implements Chess {
+  grid: [[Int!]!]! @matrixDirective
 }
+
+interface Chess {
+  grid: [[Int!]!]!
+}
+
+directive @matrixDirective(matrix: [[String]]) on FIELD_DEFINITION
