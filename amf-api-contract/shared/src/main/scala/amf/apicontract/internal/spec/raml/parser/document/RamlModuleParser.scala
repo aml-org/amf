@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.internal.spec.common.parser.ReferencesParser
+import amf.apicontract.internal.spec.common.parser.WebApiLikeReferencesParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
 import amf.core.client.scala.model.document.Module
@@ -27,7 +27,7 @@ case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: R
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       ctx.closedShape(module, rootMap, "module")
 
-      val references = ReferencesParser(module, root.location, "uses", rootMap, root.references).parse()
+      val references = WebApiLikeReferencesParser(module, root.location, "uses", rootMap, root.references).parse()
 
       parseDeclarations(root, rootMap)
       UsageParser(rootMap, module).parse()

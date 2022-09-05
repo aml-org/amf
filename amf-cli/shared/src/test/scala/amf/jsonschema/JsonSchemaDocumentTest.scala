@@ -1,7 +1,8 @@
 package amf.jsonschema
 
-import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, ConfigurationAdapter}
 import amf.cache.CustomUnitCache
+import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.CachedReference
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
@@ -14,7 +15,11 @@ trait JsonSchemaDocumentTest {
   protected implicit def executionContext: ExecutionContext
   protected val basePath: String
 
-  protected def parse(jsonSchemaPath: String, apiPath: String, base: AMFConfiguration) = {
+  protected def parse(
+      jsonSchemaPath: String,
+      apiPath: String,
+      base: AMFConfiguration
+  ): Future[(AMFParseResult, JsonSchemaDocument)] = {
     for {
       (config, doc) <- withJsonSchema(jsonSchemaPath, base)
       client        <- Future.successful(config.baseUnitClient())
@@ -29,7 +34,7 @@ trait JsonSchemaDocumentTest {
       config: AMFConfiguration
   ): Future[(AMFConfiguration, JsonSchemaDocument)] = {
     val client =
-      JsonSchemaConfiguration.JsonSchema().withErrorHandlerProvider(() => UnhandledErrorHandler).baseUnitClient()
+      jsonSchemaConfiguration().withErrorHandlerProvider(() => UnhandledErrorHandler).baseUnitClient()
     for {
       parsed <- client.parse(computePath(path)).map(_.baseUnit)
     } yield {
@@ -39,8 +44,12 @@ trait JsonSchemaDocumentTest {
     }
   }
 
-  protected def computePath(ref: String) = {
+  protected def computePath(ref: String): String = {
     if (basePath.startsWith("file://")) basePath + ref
     else s"file://${basePath}" + ref
   }
+
+  protected def jsonSchemaConfiguration(): AMFConfiguration =
+    ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
+
 }

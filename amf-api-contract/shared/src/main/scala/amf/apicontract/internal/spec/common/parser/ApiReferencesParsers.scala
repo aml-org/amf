@@ -1,25 +1,21 @@
 package amf.apicontract.internal.spec.common.parser
 
 import amf.aml.client.scala.model.document.Dialect
-import amf.apicontract.client.scala.model.domain.{Callback, Parameter, Request, Response, TemplatedLink}
-import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document._
-import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.ExpectedModule
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
-import amf.shapes.client.scala.model.domain.Example
+import amf.shapes.internal.spec.common.parser.{CommonReferencesParser, ReferencesRegister}
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
 /** */
-case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideEffect[BaseUnit] {
+case class WebApiRegister()(implicit ctx: WebApiContext) extends ReferencesRegister {
   override def onCollect(alias: String, unit: BaseUnit): Unit = {
     ctx.declarations.getOrCreateLibrary(alias)
     unit match {
@@ -49,56 +45,17 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
         library += d.extensionIndex
       }
   }
-
-  private def buildDeclarationMap(document: JsonSchemaDocument) = {
-    document.declares.map(shape => shape.asInstanceOf[Shape].name.value() -> shape.asInstanceOf[Shape]).toMap
-  }
 }
 
-abstract class CommonReferencesParser(references: Seq[ParsedReference], register: WebApiRegister)(implicit
-    ctx: WebApiContext
-) {
-  def parse(): ReferenceCollector[BaseUnit] = {
-    val result = CallbackReferenceCollector(register)
-    parseLibraries(result)
-    references.foreach {
-      case ParsedReference(f: Fragment, origin: Reference, _) => result += (origin.url, f)
-      case ParsedReference(d: Document, origin: Reference, _) => result += (origin.url, d)
-      case ParsedReference(m: Module, origin: Reference, _)   => result += (origin.url, m)
-      case _                                                  => // Nothing
-    }
-    result
-  }
-
-  protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit
-}
-
-object ReferencesParser {
-
-  def apply(baseUnit: BaseUnit, root: Root, key: String)(implicit ctx: WebApiContext): ReferencesParser = {
-    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
-    new ReferencesParser(baseUnit, root.location, key, map, root.references, WebApiRegister())
-  }
-
-  def apply(baseUnit: BaseUnit, rootLoc: String, key: String, map: YMap, references: Seq[ParsedReference])(implicit
-      ctx: WebApiContext
-  ): ReferencesParser = {
-    new ReferencesParser(baseUnit, rootLoc, key, map, references, WebApiRegister())
-  }
-}
-
-class ReferencesParser(
+case class WebApiLikeReferencesParser(
     baseUnit: BaseUnit,
     rootLoc: String,
     key: String,
     map: YMap,
     references: Seq[ParsedReference],
-    register: WebApiRegister
+    register: ReferencesRegister
 )(implicit ctx: WebApiContext)
     extends CommonReferencesParser(references, register) {
-
-  private def target(url: String): Option[BaseUnit] =
-    references.find(r => r.origin.url.equals(url)).map(_.unit)
 
   override def parseLibraries(result: ReferenceCollector[BaseUnit]): Unit = {
     map.key(
@@ -135,6 +92,7 @@ class ReferencesParser(
         }
     )
   }
+  private def target(url: String): Option[BaseUnit] = references.find(r => r.origin.url.equals(url)).map(_.unit)
 
   private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
@@ -143,6 +101,20 @@ class ReferencesParser(
         module.add(aliases.copy(aliases = aliases.aliases + alias))
       case None => module.add(Aliases(Set(alias)))
     }
+  }
+}
+
+object WebApiLikeReferencesParser {
+
+  def apply(baseUnit: BaseUnit, root: Root, key: String)(implicit ctx: WebApiContext): WebApiLikeReferencesParser = {
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    new WebApiLikeReferencesParser(baseUnit, root.location, key, map, root.references, WebApiRegister())
+  }
+
+  def apply(baseUnit: BaseUnit, rootLoc: String, key: String, map: YMap, references: Seq[ParsedReference])(implicit
+      ctx: WebApiContext
+  ): WebApiLikeReferencesParser = {
+    new WebApiLikeReferencesParser(baseUnit, rootLoc, key, map, references, WebApiRegister())
   }
 }
 
@@ -157,7 +129,7 @@ object ReferencesParserAnnotations {
       ctx: WebApiContext
   ): (ReferenceCollector[BaseUnit], Option[Aliases]) = {
     val tmp          = Document()
-    val declarations = ReferencesParser(tmp, root.location, key, map, root.references).parse()
+    val declarations = WebApiLikeReferencesParser(tmp, root.location, key, map, root.references).parse()
     (declarations, tmp.annotations.find(classOf[Aliases]))
   }
 }

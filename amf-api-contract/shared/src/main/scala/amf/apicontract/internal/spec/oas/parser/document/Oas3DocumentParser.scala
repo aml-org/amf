@@ -6,7 +6,11 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
-import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationsParser, ReferencesParser, YamlTagValidator}
+import amf.apicontract.internal.spec.common.parser.{
+  AbstractDeclarationsParser,
+  WebApiLikeReferencesParser,
+  YamlTagValidator
+}
 import amf.apicontract.internal.spec.oas.parser.Oas3ReferencesParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.internal.utils._
@@ -27,7 +31,7 @@ import org.yaml.model.{YMap, YMapEntry, YScalar}
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
     extends OasDocumentParser(root, Spec.OAS30) {
 
-  override protected def buildReferencesParser(document: Document, map: YMap): ReferencesParser =
+  override protected def buildReferencesParser(document: Document, map: YMap): WebApiLikeReferencesParser =
     Oas3ReferencesParser(document, root)
 
   override def parseWebApi(map: YMap): WebApi = {

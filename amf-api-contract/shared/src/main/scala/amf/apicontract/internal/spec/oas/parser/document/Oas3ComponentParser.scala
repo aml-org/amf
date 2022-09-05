@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
 import amf.apicontract.internal.metamodel.document.ComponentModuleModel
-import amf.apicontract.internal.spec.common.parser.ReferencesParser
+import amf.apicontract.internal.spec.common.parser.WebApiLikeReferencesParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
@@ -24,7 +24,8 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
-      val references = ReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
+      val references =
+        WebApiLikeReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
       Oas3DocumentParser(root).parseDeclarations(root, rootMap, module)
       addDeclarationsToModel(module)

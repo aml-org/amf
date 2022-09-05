@@ -1,6 +1,5 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.internal.spec.common.reference.JsonRefsReferenceHandler
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.common.{LowPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -16,6 +15,7 @@ import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
+import amf.shapes.internal.spec.common.reference.JsonRefsReferenceHandler
 
 case class ApiContractFallbackPlugin(
     strict: Boolean = true,
@@ -69,23 +69,23 @@ case class ApiContractFallbackPlugin(
               .warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
           case SeverityLevels.VIOLATION =>
             ctx.eh.violation(
-                CouldntGuessRoot,
-                "",
-                None,
-                s"Couldn't guess spec for root file",
-                None,
-                Some(document.location)
+              CouldntGuessRoot,
+              "",
+              None,
+              s"Couldn't guess spec for root file",
+              None,
+              Some(document.location)
             )
         }
       } else if (!skipValidations) {
         pluginThatMatches(document, ctx.config.sortedReferenceParsePlugins).foreach { spec =>
           ctx.eh.warning(
-              CantReferenceSpecInFileTree,
-              "",
-              None,
-              s"Document identified as ${spec.id} is of different spec from root",
-              None,
-              Some(document.location)
+            CantReferenceSpecInFileTree,
+            "",
+            None,
+            s"Document identified as ${spec.id} is of different spec from root",
+            None,
+            Some(document.location)
           )
         }
       }
@@ -98,8 +98,8 @@ case class ApiContractFallbackPlugin(
     override val priority: PluginPriority = LowPriority
 
     override def mediaTypes: Seq[String] = Seq(
-        `application/json`,
-        `application/yaml`
+      `application/json`,
+      `application/yaml`
     )
 
     override def applies(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
