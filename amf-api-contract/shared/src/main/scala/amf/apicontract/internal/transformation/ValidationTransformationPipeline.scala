@@ -14,6 +14,8 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
 import amf.core.client.common.validation.{
   Async20Profile,
+  GraphQLFederationProfile,
+  GraphQLProfile,
   Oas20Profile,
   Oas30Profile,
   ProfileName,
@@ -59,9 +61,10 @@ class ValidationTransformationPipeline private[amf] (
 object ValidationTransformationPipeline {
   def apply(profile: ProfileName, unit: BaseUnit, configuration: ValidationConfiguration): BaseUnit = {
     val pipeline = profile match {
-      case Oas30Profile   => Oas30ValidationTransformationPipeline()
-      case Async20Profile => Async20CachePipeline()
-      case _              => new ValidationTransformationPipeline(profile)
+      case Oas30Profile                              => Oas30ValidationTransformationPipeline()
+      case Async20Profile                            => Async20CachePipeline()
+      case GraphQLProfile | GraphQLFederationProfile => GraphQLCachePipeline()
+      case _                                         => new ValidationTransformationPipeline(profile)
     }
     val runner = TransformationPipelineRunner(configuration.eh, configuration.amfConfig)
     runner.run(unit, pipeline)
