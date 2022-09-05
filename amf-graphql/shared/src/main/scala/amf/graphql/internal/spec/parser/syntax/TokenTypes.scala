@@ -121,7 +121,7 @@ object TokenTypes {
     FLOAT   -> DataType.Float,
     STRING  -> DataType.String,
     BOOLEAN -> DataType.Boolean,
-    ENUM    -> DataType.String,
+    ENUM    -> DataType.Any,
     ID      -> DataType.Any
   )
 

@@ -13,7 +13,7 @@ import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
-  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.String)
+  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.Any)
 
   def parse(): ScalarShape = {
     parseName()
@@ -64,7 +64,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
     path(element, pathToValue) match {
       case Some(n: Node) if hasTerminalChild(n) =>
         val t = n.children.head.asInstanceOf[Terminal]
-        val s = ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t)).withName(t.value)
+        val s = ScalarNode(t.value, Some(XsdTypes.xsdAnyType.iri()), toAnnotations(t)).withName(t.value)
         Some(s)
       case _ => None
     }
