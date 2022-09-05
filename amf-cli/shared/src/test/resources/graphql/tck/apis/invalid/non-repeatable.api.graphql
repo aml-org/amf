@@ -1,0 +1,10 @@
+type Query {
+    name: String
+}
+
+directive @NonRepeatable(val: String) on SCALAR
+directive @Repeatable(val: String) repeatable on SCALAR
+
+scalar Fail @NonRepeatable(val: "nr1") @NonRepeatable(val: "nr2")
+scalar OK @Repeatable(val: "nr1") @Repeatable(val: "nr2")
+

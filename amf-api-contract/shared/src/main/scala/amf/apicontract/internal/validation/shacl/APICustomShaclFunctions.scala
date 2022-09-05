@@ -556,12 +556,19 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case s: DomainElement =>
               val directiveApplications = s.customDomainProperties
+              def shouldSkip(element: NamedDomainElement): Boolean = {
+                element match {
+                  case ext: DomainExtension => ext.definedBy.repeatable.value()
+                  case _                    => false
+                }
+              }
               checkDuplicates(
                 directiveApplications,
                 validate,
                 ShapeModel.CustomDomainProperties,
                 { directiveName: String => s"Directive '$directiveName' can only be applied once per location" },
-                Some(s.annotations)
+                Some(s.annotations),
+                shouldSkip
               )
             case _ => // ignore
           }
@@ -682,11 +689,12 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       validate: Option[ValidationInfo] => Unit,
       field: Field,
       message: String => String,
-      annotations: Some[Annotations]
+      annotations: Some[Annotations],
+      shouldSkip: NamedDomainElement => Boolean = _ => false
   ): Unit = {
     s.foreach({ elem =>
       val elemName = elem.name.value()
-      if (elemName != null && isDuplicated(elemName, s))
+      if (elemName != null && !shouldSkip(elem) && isDuplicated(elemName, s))
         validate(Some(ValidationInfo(field, Some(message(elemName)), annotations)))
     })
   }
