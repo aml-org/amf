@@ -186,8 +186,8 @@ object GraphQLUtils {
   def datatype(shape: Shape): Option[String] = {
     shape match {
       case u: UnionShape => // nullable type
-        u.anyOf.collectFirst { case s: ScalarShape => GraphQLDataTypes.from(s) }
-      case s: ScalarShape => Some(GraphQLDataTypes.from(s))
+        u.anyOf.collectFirst { case s: ScalarShape => GraphQLDataTypes.coercedFrom(s) }
+      case s: ScalarShape => Some(GraphQLDataTypes.coercedFrom(s))
       case n: NodeShape   => n.name.option()
       case _              => None
     }

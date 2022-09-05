@@ -8,20 +8,29 @@ object GraphQLDataTypes {
 
   def from(scalar: ScalarShape): String = {
     scalar.dataType.value() match {
-      case s if s == DataType.Integer => "Int"
-      case s if s == DataType.Float   => "Float"
-      case s if s == DataType.Boolean => "Boolean"
-      case s if s == DataType.Any     => scalar.format.value()
-      case _                          => "String"
+      case DataType.Integer => "Int"
+      case DataType.Float   => "Float"
+      case DataType.Boolean => "Boolean"
+      case DataType.Any     => scalar.format.value()
+      case _                => "String"
+    }
+  }
+
+  def coercedFrom(scalar: ScalarShape): String = {
+    scalar.dataType.value() match {
+      case DataType.Integer => "Int"
+      case DataType.Float   => "Float"
+      case DataType.Boolean => "Boolean"
+      case _                => "String"
     }
   }
 
   def from(scalar: ScalarNode): String = {
     scalar.dataType.value() match {
-      case s if s == DataType.Integer => "Int"
-      case s if s == DataType.Float   => "Float"
-      case s if s == DataType.Boolean => "Boolean"
-      case _                          => "String"
+      case DataType.Integer => "Int"
+      case DataType.Float   => "Float"
+      case DataType.Boolean => "Boolean"
+      case _                => "String"
     }
   }
 
