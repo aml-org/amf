@@ -4,8 +4,8 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{In
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DomainElement, ScalarNode}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.parser.syntax.ScalarValueParser
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS}
+import amf.graphql.internal.spec.parser.syntax.ValueParser
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, VALUE}
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.mulesoft.antlrast.ast.Node
 
@@ -16,9 +16,10 @@ class SpecifiedByDirectiveApplicationParser(override implicit val ctx: GraphQLBa
   override def parse(node: Node, element: DomainElement): Unit = {
     collectNodes(node, Seq(ARGUMENTS, ARGUMENT))
       .find(isName("url", _))
-      .flatMap(ScalarValueParser.parseValue) match {
-      case Some(dataTypeNode) if dataTypeNode.dataType.value() == DataType.String =>
-        setDataTypeField(element, dataTypeNode)
+      .flatMap(pathToNonTerminal(_, Seq(VALUE)))
+      .flatMap(ValueParser.parseValue(_)) match {
+      case Some(scalarNode: ScalarNode) if scalarNode.dataType.value() == DataType.String =>
+        setDataTypeField(element, scalarNode)
       case _ =>
         ctx.eh.violation(
           InvalidArgumentValue,
