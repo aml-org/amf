@@ -1,13 +1,12 @@
 package amf.apicontract.internal.validation.shacl.graphql
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.scala.model.domain.{AmfScalar, DataNode, DomainElement}
-import amf.core.client.scala.model.domain.extensions.{DomainExtension, PropertyShape}
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.inferGraphQLKind
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.common.{NameFieldSchema, NameFieldShacl}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
 import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
@@ -76,23 +75,5 @@ object GraphQLDirectiveLocationValidator {
         }
       }
       .map(name => s"'$name'")
-  }
-  private def inferGraphQLKind(element: DomainElement, appliedToDirectiveArgument: Boolean): String = {
-    element match {
-      case _: PropertyShape if appliedToDirectiveArgument => "argument"
-      case _: PropertyShape                               => "field"
-      case _: ShapeOperation                              => "field"
-      case _: ShapeParameter                              => "argument"
-      case s: ScalarShape if s.values.nonEmpty            => "enum"
-      case _: ScalarShape                                 => "scalar"
-      case n: NodeShape if n.isAbstract.value()           => "interface"
-      case n: NodeShape if n.isInputOnly.value()          => "input object"
-      case _: NodeShape                                   => "object"
-      case _: UnionShape                                  => "union"
-      case _: DataNode                                    => "value"
-      case _: EndPoint                                    => "field"
-      case _: WebApi                                      => "schema"
-      case _                                              => "type" // should be unreachable
-    }
   }
 }

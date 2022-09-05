@@ -1,10 +1,11 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response}
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.isValidOutputType
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
-import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations._
@@ -147,7 +148,7 @@ case class GraphQLNullable(union: UnionShape) {
       union.anyOf match {
         case List(_: NilShape, n: NodeShape)   => n.name.value()
         case List(_: NilShape, u: UnionShape)  => GraphQLNullable(u).name
-        case List(_: NilShape, s: ScalarShape) => s.name.value()
+        case List(_: NilShape, s: ScalarShape) => s.name.option().getOrElse(GraphQLDataTypes.from(s))
         case List(_: NilShape, a: ArrayShape) =>
           val items = a.items match {
             case u: UnionShape => GraphQLNullable(u).name
@@ -209,6 +210,25 @@ object GraphQLUtils {
       case n: NodeShape    => !GraphQLObject(n).isInput
       case arr: ArrayShape => isValidOutputType(arr.items)
       case _               => true
+    }
+  }
+
+  def inferGraphQLKind(element: DomainElement, appliedToDirectiveArgument: Boolean): String = {
+    element match {
+      case _: PropertyShape if appliedToDirectiveArgument => "argument"
+      case _: PropertyShape                               => "field"
+      case _: ShapeOperation                              => "field"
+      case _: ShapeParameter                              => "argument"
+      case s: ScalarShape if s.values.nonEmpty            => "enum"
+      case _: ScalarShape                                 => "scalar"
+      case n: NodeShape if n.isAbstract.value()           => "interface"
+      case n: NodeShape if n.isInputOnly.value()          => "input object"
+      case _: NodeShape                                   => "object"
+      case _: UnionShape                                  => "union"
+      case _: DataNode                                    => "value"
+      case _: EndPoint                                    => "field"
+      case _: WebApi                                      => "schema"
+      case _                                              => "type" // should be unreachable
     }
   }
 }
