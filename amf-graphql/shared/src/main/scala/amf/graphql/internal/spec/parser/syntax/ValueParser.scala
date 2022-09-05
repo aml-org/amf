@@ -11,7 +11,7 @@ import scala.language.implicitConversions
 
 object ValueParser {
   private val parsers: Seq[AbstractValueParser[_ <: DataNode]] =
-    Seq(IntValueParser, FloatValueParser, StringValueParser, BooleanValueParser, EnumValueParser)
+    Seq(ObjectValueParser, ListValueParser, IntValueParser, FloatValueParser, StringValueParser, BooleanValueParser, EnumValueParser)
 
   def parseValue(node: Node, path: Seq[String] = Nil)(implicit ctx: GraphQLBaseWebApiContext): Option[DataNode] =
     parsers.firstThatCan(_.parse(node, path))
