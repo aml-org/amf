@@ -62,6 +62,7 @@ object TokenTypes {
   val ENUM_VALUE                     = "enumValue"
   val LIST_VALUE                     = "listValue"
   val OBJECT_VALUE                   = "objectValue"
+  val OBJECT_FIELD                   = "objectField"
   val VALUE                          = "value"
   val INT                            = "Int"
   val FLOAT                          = "Float"
