@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.document
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
-import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, ReferencesParser}
+import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, WebApiLikeReferencesParser}
 import amf.apicontract.internal.spec.oas.OasHeader
 import amf.apicontract.internal.spec.oas.OasHeader._
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
@@ -68,7 +68,8 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       fragment
     }
 
-    val references = ReferencesParser(fragment, root.location, "uses".asOasExtension, map, root.references).parse()
+    val references =
+      WebApiLikeReferencesParser(fragment, root.location, "uses".asOasExtension, map, root.references).parse()
 
     fragment
       .withLocation(root.location)

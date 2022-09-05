@@ -14,17 +14,11 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser, OasResponseParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  InvalidAnnotationType,
-  InvalidParameterType,
-  InvalidSecurityRequirementsSeq,
-  InvalidSecuritySchemeType,
-  MandatoryPathsProperty
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
-import amf.core.client.scala.parse.document.{ParsedReference, SyamlParsedDocument}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
@@ -34,15 +28,9 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
-import amf.shapes.internal.spec.common.parser.{
-  AnnotationParser,
-  OasLikeCreativeWorkParser,
-  RamlCreativeWorkParser,
-  ShapeParserContext,
-  YMapEntryLike
-}
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -94,8 +82,8 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
   def parseDocument(): Document = parseDocument(Document())
 
-  protected def buildReferencesParser(document: Document, map: YMap): ReferencesParser =
-    ReferencesParser(document, root, "uses".asOasExtension)
+  protected def buildReferencesParser(document: Document, map: YMap): WebApiLikeReferencesParser =
+    WebApiLikeReferencesParser(document, root, "uses".asOasExtension)
 
   private def parseDocument[T <: Document](document: T): T = {
     document
