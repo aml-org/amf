@@ -1,0 +1,20 @@
+type Query {
+    name: String
+}
+
+enum MyEnum {
+    A
+    B
+}
+
+directive @myDirective(param: MyEnum! = A, params: [MyEnum!]! = [A, B]) on OBJECT | INTERFACE
+
+type MyObj @myDirective(param: A, params: [A, B]) {
+    operation(param: MyEnum! = A): String
+    listOperation(params: [MyEnum!]! = [A, B]): String
+}
+
+interface MyInterface @myDirective(param: A, params: [A, B]) {
+    operation(param: MyEnum! = A): String
+    listOperation(params: [MyEnum!]! = [A, B]): String
+}
