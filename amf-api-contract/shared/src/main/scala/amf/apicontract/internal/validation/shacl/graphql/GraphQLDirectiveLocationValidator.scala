@@ -6,6 +6,7 @@ import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.common.{NameFieldSchema, NameFieldShacl}
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
@@ -26,7 +27,7 @@ object GraphQLDirectiveLocationValidator {
       element: DomainElement,
       appliedToDirectiveArgument: Boolean = false
   ): Option[ValidationInfo] = {
-    val validDomains     = directiveApplication.definedBy.domain.map(_.toString)
+    val validDomains     = getDirectiveLocations(directiveApplication)
     val currentDomains   = element.meta.typeIris // maybe head?
     val isAValidLocation = currentDomains.exists(validDomains.contains)
 
@@ -40,6 +41,15 @@ object GraphQLDirectiveLocationValidator {
         ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations))
       )
     } else None
+  }
+
+  private def getDirectiveLocations(
+      directiveApplication: DomainExtension
+  ) = {
+    Option(directiveApplication.definedBy) match {
+      case Some(definedBy) => definedBy.domain.map(_.toString)
+      case _               => Seq()
+    }
   }
 
   private def buildErrorMessage(
