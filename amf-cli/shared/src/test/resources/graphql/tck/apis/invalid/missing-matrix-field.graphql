@@ -6,7 +6,19 @@ interface Chess {
     grid: [[Int!]!]!
 }
 
-type ChessBoard implements Chess {
+type ChessBoard1 implements Chess {
+    grid: [[Int!]!]
+}
+
+type ChessBoard2 implements Chess {
+    grid: [[Int!]]
+}
+
+type ChessBoard3 implements Chess {
+    grid: [[Int]]
+}
+
+type ChessBoard4 implements Chess {
     grid: [[Int!]!]! @matrixDirective(matrix: [["this"],["is"], ["a"], ["string"]])
 }
 
