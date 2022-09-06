@@ -412,6 +412,11 @@ object ParserSideValidations extends Validations {
     message = "Cannot find property when resolving fieldSet"
   )
 
+  val AntlrError = validation(
+    "antlr-error",
+    "Syntax error"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
