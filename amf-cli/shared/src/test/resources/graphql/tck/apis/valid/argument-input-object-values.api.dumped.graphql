@@ -1,0 +1,30 @@
+type Query {
+  name: String
+}
+
+enum MyEnum {
+  A
+  B
+}
+
+input MyInputObj {
+  name: String
+  nested: MyNestedInputObj
+  myEnum: MyEnum
+}
+
+interface MyInterface @myDirective(param: { name: "pepe", nested: { lastName: "argento" }, myEnum: A }, params: [ { name: "pepe", nested: { lastName: "argento" }, myEnum: A } ]) {
+  operation(param: MyInputObj! = { name: "pepe", nested: { lastName: "argento" }, myEnum: A }): String
+  listOperation(params: [MyInputObj!]! = [ { name: "pepe", nested: { lastName: "argento" }, myEnum: A } ]): String
+}
+
+input MyNestedInputObj {
+  lastName: String
+}
+
+type MyObj @myDirective(param: { name: "pepe", nested: { lastName: "argento" }, myEnum: A }, params: [ { name: "pepe", nested: { lastName: "argento" }, myEnum: A } ]) {
+  operation(param: MyInputObj! = { name: "pepe", nested: { lastName: "argento" }, myEnum: A }): String
+  listOperation(params: [MyInputObj!]! = [ { name: "pepe", nested: { lastName: "argento" }, myEnum: A } ]): String
+}
+
+directive @myDirective(param: MyInputObj! = { name: "pepe", nested: { lastName: "argento" }, myEnum: A }, params: [MyInputObj!]! = [ { name: "pepe", nested: { lastName: "argento" }, myEnum: A } ]) on OBJECT | INTERFACE
