@@ -50,6 +50,11 @@ object JsonLDSchemaValidations extends Validations {
     "Scalar data type does not match with tag type"
   )
 
+  val InvalidCharacteristicsUse: ValidationSpecification = ValidationSpecification(
+    "invalid-characteristics-use",
+    "Characteristics can only be used at inlined types of property ranges. Usage at encodes and declared shapes and array items is not allowed"
+  )
+
   override val specification: String                      = JsonLDSchema.id
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)

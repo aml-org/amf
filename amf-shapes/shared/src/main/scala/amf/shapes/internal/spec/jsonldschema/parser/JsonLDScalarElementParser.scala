@@ -69,7 +69,6 @@ case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit v
       if (dataType == DataTypes.Nil) new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location)
       else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
 
-    setClassTerm(builder, semanticContext)
     builder
   }
 
