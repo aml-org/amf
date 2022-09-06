@@ -18,9 +18,9 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
     with ExemplifiedDomainElement {
 
   // TODO: should return Option has field can be null
-  def documentation: CreativeWork        = fields.field(Documentation)
-  def xmlSerializationkey: XMLSerializer = fields.field(XMLSerialization)
-  def comment: StrField                  = fields.field(Comment)
+  def documentation: CreativeWork     = fields.field(Documentation)
+  def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
+  def comment: StrField               = fields.field(Comment)
 
   def withSemanticContext(context: SemanticContext): this.type = set(AnyShapeModel.Semantics, context)
   def semanticContext: Option[SemanticContext]                 = Option(fields.field(AnyShapeModel.Semantics))
