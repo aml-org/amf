@@ -73,6 +73,7 @@ object TokenTypes {
   val INT_TERMINAL                   = "INT"
   val FLOAT_TERMINAL                 = "FLOAT"
   val STRING_TERMINAL                = "STRING"
+  val NULL_TERMINAL                  = "'null'"
 
   // Federation
   val FIELD_SET           = "fieldSet"
@@ -117,12 +118,13 @@ object TokenTypes {
   val SCALAR_TYPES: Seq[String] = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
 
   val toDataType: Map[String, String] = Map(
-    INT     -> DataType.Integer,
-    FLOAT   -> DataType.Float,
-    STRING  -> DataType.String,
-    BOOLEAN -> DataType.Boolean,
-    ENUM    -> DataType.Any,
-    ID      -> DataType.Any
+    INT           -> DataType.Integer,
+    FLOAT         -> DataType.Float,
+    STRING        -> DataType.String,
+    BOOLEAN       -> DataType.Boolean,
+    ENUM          -> DataType.Any,
+    ID            -> DataType.Any,
+    NULL_TERMINAL -> DataType.Nil
   )
 
   val toTerminal: Map[String, String] = Map(
