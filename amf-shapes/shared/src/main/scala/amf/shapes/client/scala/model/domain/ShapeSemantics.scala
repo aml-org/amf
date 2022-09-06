@@ -129,6 +129,9 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
   def withTypeMappings(typeMappings: Seq[String]): this.type = set(SemanticContextModel.TypeMapping, typeMappings)
   def typeMappings: Seq[StrField]                            = fields.field(SemanticContextModel.TypeMapping)
 
+  def withOverrideMappings(mappings: Seq[String]): this.type = set(SemanticContextModel.OverrideMappings, mappings)
+  def overrideMappings: Seq[String]                          = fields.field(SemanticContextModel.OverrideMappings)
+
   override def componentId: String = "/" + "@context".urlComponentEncoded
 
   def prefixMap(): Map[String, String] = {

@@ -158,6 +158,17 @@ object SemanticContextModel extends DomainElementModel {
       ModelDoc(ModelVocabularies.Meta, "mappings", "Set of property mappings and coercions defined in a context")
     )
 
+  val OverrideMappings =
+    Field(
+      Array(Iri),
+      Meta + "overrideMappings",
+      ModelDoc(
+        ModelVocabularies.Meta,
+        "overrideMappings",
+        "Set of property mappings and coercions defined in a context to detail parent property term."
+      )
+    )
+
   val TypeMapping =
     Field(
       Array(Iri),
