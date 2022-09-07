@@ -126,6 +126,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
         // We don't skip completely the validation because if the payload is an object with an error we want the error
         case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
         case e: InvalidJsonValue              => validationProcessor.processException(e, None)
+        case e: MaxNestingValueReached => validationProcessor.processException(e, None)
       }
   }
 
