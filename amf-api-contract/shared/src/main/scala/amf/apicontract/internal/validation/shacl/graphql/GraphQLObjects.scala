@@ -1,7 +1,7 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.{EndPoint, Response}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter, Response}
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.isValidOutputType
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
@@ -9,7 +9,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Doma
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations._
-
+import amf.shapes.internal.annotations.InputTypeField
 import scala.annotation.tailrec
 
 trait GraphQLElement {
@@ -215,20 +215,40 @@ object GraphQLUtils {
 
   def inferGraphQLKind(element: DomainElement, appliedToDirectiveArgument: Boolean): String = {
     element match {
-      case _: PropertyShape if appliedToDirectiveArgument => "argument"
-      case _: PropertyShape                               => "field"
-      case _: ShapeOperation                              => "field"
-      case _: ShapeParameter                              => "argument"
-      case s: ScalarShape if s.values.nonEmpty            => "enum"
-      case _: ScalarShape                                 => "scalar"
-      case n: NodeShape if n.isAbstract.value()           => "interface"
-      case n: NodeShape if n.isInputOnly.value()          => "input object"
-      case _: NodeShape                                   => "object"
-      case _: UnionShape                                  => "union"
-      case _: DataNode                                    => "value"
-      case _: EndPoint                                    => "field"
-      case _: WebApi                                      => "schema"
-      case _                                              => "type" // should be unreachable
+      case s: ScalarShape if s.values.nonEmpty                                 => "enum"
+      case _: ScalarShape                                                      => "scalar"
+      case _: ScalarNode                                                       => "enum value"
+      case n: NodeShape if n.isAbstract.value()                                => "interface"
+      case n: NodeShape if n.isInputOnly.value()                               => "input object"
+      case _: NodeShape                                                        => "object"
+      case _: UnionShape                                                       => "union"
+      case _: WebApi                                                           => "schema"
+      case f: PropertyShape if f.annotations.contains(classOf[InputTypeField]) => "input field"
+      case _: Parameter                                                        => "argument"
+      case _: ShapeParameter                                                   => "argument"
+      case _: PropertyShape if appliedToDirectiveArgument                      => "argument"
+      case _: ShapeOperation                                                   => "field"
+      case _: PropertyShape                                                    => "field"
+      case _: EndPoint                                                         => "field"
+      case _                                                                   => "type" // should be unreachable
     }
+  }
+
+  def locationFor(kind: String): String = {
+    val locationByGraphQLKind: Map[String, String] = Map[String, String](
+      "schema"       -> "SCHEMA",
+      "scalar"       -> "SCALAR",
+      "object"       -> "OBJECT",
+      "field"        -> "FIELD_DEFINITION",
+      "argument"     -> "ARGUMENT_DEFINITION",
+      "interface"    -> "INTERFACE",
+      "union"        -> "UNION",
+      "enum"         -> "ENUM",
+      "enum value"   -> "ENUM_VALUE",
+      "input object" -> "INPUT_OBJECT",
+      "input field"  -> "INPUT_FIELD_DEFINITION"
+    )
+
+    locationByGraphQLKind.getOrElse(kind, "INVALID LOCATION")
   }
 }

@@ -555,11 +555,13 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           element match {
             case s: DomainElement =>
-              val directiveApplications = s.customDomainProperties
+              val directiveApplications                                             = s.customDomainProperties
+              def directiveHasLocationsToBeAppliedOn(ext: DomainExtension): Boolean = Option(ext.definedBy).isDefined
               def shouldSkip(element: NamedDomainElement): Boolean = {
                 element match {
-                  case ext: DomainExtension => ext.definedBy.repeatable.value()
-                  case _                    => false
+                  case ext: DomainExtension =>
+                    directiveHasLocationsToBeAppliedOn(ext) && ext.definedBy.repeatable.value()
+                  case _ => false
                 }
               }
               checkDuplicates(

@@ -1,0 +1,36 @@
+schema @MyDirective {
+    query: Query
+}
+
+type Query {
+    name: String @MyDirective
+}
+
+scalar MyScalar @MyDirective
+
+type MyObject @MyDirective {
+    myField(myArgument: String @MyDirective): String! @MyDirective
+    myField2: String! @MyDirective
+}
+
+interface MyInterface @MyDirective {
+    myField: String!
+}
+
+type MyObject2 {
+    myField2: String
+}
+
+union MyUnion @MyDirective = MyObject | MyObject2
+
+input MyInputObject @MyDirective {
+    myField: String! @MyDirective
+}
+
+enum MyEnum @MyDirective{
+  ENUMVALUE @MyDirective
+}
+
+directive @MyDirective on ENUM_VALUE
+
+directive @MyDirective2(text: String @MyDirective) on SCALAR

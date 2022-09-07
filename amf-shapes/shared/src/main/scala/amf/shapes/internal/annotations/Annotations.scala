@@ -81,3 +81,7 @@ case class BooleanSchema() extends Annotation
 case class DirectiveArguments() extends Annotation
 
 case class BaseVirtualNode(ast: YPart) extends Annotation
+
+case class GraphQLLocation(location: Set[String]) extends Annotation
+
+case class InputTypeField() extends Annotation
