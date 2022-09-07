@@ -2,10 +2,10 @@ package amf.graphql.internal.spec.emitter.domain
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
-import amf.graphql.internal.spec.annotations.GraphQLLocation
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.internal.annotations.GraphQLLocation
 
 case class GraphQLDirectiveDeclarationEmitter(
     directive: CustomDomainProperty,
