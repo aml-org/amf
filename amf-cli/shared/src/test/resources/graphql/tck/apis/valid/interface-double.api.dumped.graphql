@@ -1,15 +1,18 @@
 type Query {
-
   text: String
 }
+
 type Person implements HasName & HasId {
-  id : ID!
-  name : String!
-  surname : String!
+  id: ID!
+  name: String!
+  surname: String!
 }
+
 interface HasName {
-  name : String!
+  name: String!
 }
+
 interface HasId {
-  id : ID!
+  id: ID!
 }
+

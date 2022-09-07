@@ -4,6 +4,7 @@ schema documentation
 schema {
   query: Query
 }
+
 type Query {
   """
   Translates a string from a given language into a different language.
@@ -15,6 +16,7 @@ type Query {
     fromLanguage: String
   ): String
 }
+
 """
 A type.
 """
@@ -29,3 +31,4 @@ type Person {
     fromLanguage: String
   ): String
 }
+
