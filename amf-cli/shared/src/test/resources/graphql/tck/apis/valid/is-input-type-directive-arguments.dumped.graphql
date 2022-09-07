@@ -1,13 +1,16 @@
 type Query {
   a: String
 }
+
 input InputType {
   name: String
 }
+
 enum Enum {
   A
   B
 }
+
 scalar Pepe
 directive @testInputType(input_: InputType) on SCHEMA
 directive @testEnum(input_: Enum) on SCHEMA

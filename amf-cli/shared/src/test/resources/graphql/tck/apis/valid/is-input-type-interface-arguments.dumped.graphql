@@ -1,17 +1,21 @@
 type Query {
   a: String
 }
+
 input InputType {
   name: String
 }
+
 interface Interface {
   queryInputType(input_: InputType): String
   queryEnum(input_: Enum): String
   queryScalar(input_: String): String
   queryCustomScalar(input_: Pepe): String
 }
+
 enum Enum {
   A
   B
 }
+
 scalar Pepe

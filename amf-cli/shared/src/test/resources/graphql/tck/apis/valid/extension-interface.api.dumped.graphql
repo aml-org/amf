@@ -1,7 +1,8 @@
 type Query {
-
   name: String
 }
+
 extend interface HasName {
-  name : String
+  name: String
 }
+

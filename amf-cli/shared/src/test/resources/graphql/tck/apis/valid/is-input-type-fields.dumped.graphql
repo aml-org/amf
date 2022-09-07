@@ -1,14 +1,17 @@
 type Query {
   a: String
 }
+
 input InputType {
   inputTypeField: InputType
   enumField: Enum
   scalarField: String
   customScalarField: Pepe
 }
+
 enum Enum {
   A
   B
 }
+
 scalar Pepe

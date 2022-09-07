@@ -6,6 +6,7 @@ schema {
   mutation: Mutation
   subscription: Subscription
 }
+
 type CustomQuery {
   allAnimals(animalRequest: AnimalRequest): [Animal]!
   """
@@ -18,32 +19,40 @@ type CustomQuery {
     last: Int
   ): [Person!]!
 }
+
 type Mutation {
-  createPerson(name: String!,age: Int!): Person!
+  createPerson(name: String!, age: Int!): Person!
 }
+
 type Subscription {
   newPerson: Person!
 }
+
 union LivingThing = Person | Animal
 type Person {
-  name : String!
-  age : Int!
-  posts(limit: Int,offset: Int): [Post!]!
+  name: String!
+  age: Int!
+  posts(limit: Int, offset: Int): [Post!]!
 }
+
 type Post {
-  title : String!
-  author : Person!
+  title: String!
+  author: Person!
 }
+
 type Animal {
-  age : Int!
-  paws : Int
-  kingdom : Kingdom
+  age: Int!
+  paws: Int
+  kingdom: Kingdom
 }
+
 enum Kingdom {
   ANIMAL
   VEGETAL
   MUSHROOM
 }
+
 input AnimalRequest {
-  kingodm : Kingdom
+  kingodm: Kingdom
 }
+
