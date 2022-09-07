@@ -18,7 +18,6 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   private val FEDERATION = "GRAPHQL FEDERATION"
 
   private val ignoredApis = Set(
-    "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/directive-argument-wrong-value.api.graphql",
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql",
   )
 

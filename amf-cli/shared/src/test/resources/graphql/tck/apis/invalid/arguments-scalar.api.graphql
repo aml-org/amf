@@ -1,0 +1,8 @@
+type Query {
+    name: String
+}
+
+directive @stringDirective(valid: String = "String", invalid: String = true) on SCALAR
+directive @booleanDirective(valid: Boolean = true, invalid: Boolean = "String") on SCALAR
+directive @intDirectiveDirective(valid: Int = 1, invalid: Int = 1.0) on SCALAR
+directive @floatDirective(valid: Float = 1.0, invalid: Float = 1) on SCALAR

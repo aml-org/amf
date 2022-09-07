@@ -1,0 +1,8 @@
+type Query {
+    name: String
+}
+
+directive @valid1(valid: ID = "String") on SCALAR
+directive @valid2(valid: ID = true) on SCALAR
+directive @valid3(valid: ID = null) on SCALAR
+directive @invalid1(invalid: ID! = null) on SCALAR

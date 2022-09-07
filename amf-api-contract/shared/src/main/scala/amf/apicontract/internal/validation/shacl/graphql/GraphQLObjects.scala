@@ -69,6 +69,12 @@ case class GraphQLProperty(property: PropertyShape) extends GraphQLField {
     case sc: ScalarShape => sc.dataType.value() == DataType.Any
     case _               => false
   }
+  def isNullable: Boolean = {
+    property.range match {
+      case u: UnionShape => GraphQLNullable(u).isNullable
+      case _             => false
+    }
+  }
   def default: Option[DataNode]  = Option(property.default)
   def range: Shape               = property.range
   def isValidInputType: Boolean  = GraphQLUtils.isValidInputType(range)
