@@ -3,9 +3,7 @@ package amf.graphql.internal.spec.emitter.context
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.Shape
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.collection.mutable
 
@@ -72,7 +70,8 @@ class GraphQLEmitterContext(document: BaseUnit) {
     val namedQueryType        = queryType.exists(_.name != "Query")
     val namedSubscriptionType = subscriptionType.exists(_.name != "Subscription")
     val namedMutationType     = mutationType.exists(_.name != "Mutation")
-    hasDescription || namedQueryType || namedSubscriptionType || namedMutationType
+    val hasDirectives         = webApi.customDomainProperties.nonEmpty
+    hasDescription || namedQueryType || namedSubscriptionType || namedMutationType || hasDirectives
   }
 
   def classifyEndpoints(): GraphQLEmitterContext = {

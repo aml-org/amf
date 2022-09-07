@@ -1,13 +1,15 @@
 type Query {
-
   searchResult: SearchResult
 }
+
 type Person {
-  name : String!
-  surname : String!
+  name: String!
+  surname: String!
 }
+
 type Dog {
-  name : String!
-  breed : String!
+  name: String!
+  breed: String!
 }
+
 union SearchResult = Person | Dog

@@ -1,3 +1,7 @@
+schema @example(text: "Jorge") {
+  query: Query
+}
+
 type Query {
   rootField: String @example(text: "Jorge")
 }

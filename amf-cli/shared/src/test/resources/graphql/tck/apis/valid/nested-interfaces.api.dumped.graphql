@@ -1,14 +1,18 @@
 type Query {
   name: String
 }
+
 type Person implements HasNameAndSurname {
-  name : String
-  surname : String
+  name: String
+  surname: String
 }
+
 interface HasName {
-  name : String
+  name: String
 }
+
 interface HasNameAndSurname implements HasName {
-  name : String
-  surname : String
+  name: String
+  surname: String
 }
+

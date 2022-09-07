@@ -1,8 +1,9 @@
 type Query {
-
   name: String
 }
+
 extend type Location {
-  long : Float
-  lat : Float
+  long: Float
+  lat: Float
 }
+
