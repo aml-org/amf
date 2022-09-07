@@ -256,6 +256,140 @@
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
                 "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#matrix": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Array",
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://www.w3.org/2000/01/rdf-schema#member": [
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Array",
+                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                        "http://a.ml/vocabularies/data#Node",
+                        "http://a.ml/vocabularies/document#DomainElement"
+                      ],
+                      "http://www.w3.org/2000/01/rdf-schema#member": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/member/data-node",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Scalar",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#value": [
+                            {
+                              "@value": "this"
+                            }
+                          ],
+                          "http://www.w3.org/ns/shacl#datatype": [
+                            {
+                              "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Array",
+                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                        "http://a.ml/vocabularies/data#Node",
+                        "http://a.ml/vocabularies/document#DomainElement"
+                      ],
+                      "http://www.w3.org/2000/01/rdf-schema#member": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/member/data-node",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Scalar",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#value": [
+                            {
+                              "@value": "is"
+                            }
+                          ],
+                          "http://www.w3.org/ns/shacl#datatype": [
+                            {
+                              "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Array",
+                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                        "http://a.ml/vocabularies/data#Node",
+                        "http://a.ml/vocabularies/document#DomainElement"
+                      ],
+                      "http://www.w3.org/2000/01/rdf-schema#member": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/member/data-node",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Scalar",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#value": [
+                            {
+                              "@value": "a"
+                            }
+                          ],
+                          "http://www.w3.org/ns/shacl#datatype": [
+                            {
+                              "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Array",
+                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                        "http://a.ml/vocabularies/data#Node",
+                        "http://a.ml/vocabularies/document#DomainElement"
+                      ],
+                      "http://www.w3.org/2000/01/rdf-schema#member": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/member/data-node",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Scalar",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#value": [
+                            {
+                              "@value": "string"
+                            }
+                          ],
+                          "http://www.w3.org/ns/shacl#datatype": [
+                            {
+                              "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "matrix"
+                    }
+                  ]
+                }
               ]
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [

@@ -3,7 +3,7 @@ type Query {
 }
 
 type ChessBoard implements Chess {
-  grid: [[Int!]!]! @matrixDirective
+  grid: [[Int!]!]! @matrixDirective(matrix: [ [ "this" ], [ "is" ], [ "a" ], [ "string" ] ])
 }
 
 interface Chess {

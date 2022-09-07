@@ -135,8 +135,8 @@ case class GraphQLAppliedDirective(directive: DomainExtension) extends GraphQLEl
     case _ => Seq()
   }
 
-  def parsedProps(): Seq[ScalarNode] = directive.extension match {
-    case o: ObjectNode => o.allProperties().map(_.asInstanceOf[ScalarNode]).toList
+  def propertyValues(): Seq[DataNode] = directive.extension match {
+    case o: ObjectNode => o.allProperties().toList
     case _             => Seq()
   }
 }
