@@ -5,6 +5,7 @@ import sbt.util.Logger
 import sbt.{AutoPlugin, Compile, Def, Test, settingKey, taskKey}
 
 import java.io.File
+import scala.language.postfixOps
 import scala.sys.process.Process
 
 object NpmOpsPlugin extends AutoPlugin {
@@ -13,6 +14,7 @@ object NpmOpsPlugin extends AutoPlugin {
   override def requires = ScalaJSPlugin
 
   object autoImport {
+    val npmLinkDependencies = settingKey[List[String]]("List of npm dependencies to link")
     val npmDependencies = settingKey[List[(String, String)]]("List of npm dependencies name and version")
     val npmInstallDeps  = taskKey[Unit]("Install NPM dependencies if not installed")
     val npmPackageLoc   = settingKey[File]("Path to the location of the packages' 'package.json'")
@@ -23,6 +25,15 @@ object NpmOpsPlugin extends AutoPlugin {
     val log = sLog.value
     log.info("Installing NPM dependencies...")
     installDepsIfNotAlreadyInstalled(npmDependencies.value, npmPackageLoc.value, log)
+    linkDependencies(npmLinkDependencies.value, npmPackageLoc.value, log)
+  }
+
+  private def linkDependencies(deps: List[String], npmPackageLoc: File, logger: Logger) = {
+    if (deps.nonEmpty) {
+      val npmDepsAsString = deps.mkString(" ")
+      logger.info(s"Installing NPM dependencies: $npmDepsAsString")
+      Process(s"npm install --save-exact $npmDepsAsString", npmPackageLoc) !!
+    } else logger.info("Skipping as there aren't any NPM dependencies to link")
   }
 
   private def installDepsIfNotAlreadyInstalled(
@@ -50,6 +61,7 @@ object NpmOpsPlugin extends AutoPlugin {
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
     npmInstallDeps      := npmInstallDepsTask.value,
     npmDependencies     := Nil,
+    npmLinkDependencies := Nil,
     npmPackageLoc       := baseDirectory.value,
     Compile / fastOptJS := (Compile / fastOptJS).dependsOn(npmInstallDepsTask).value,
     Compile / fullOptJS := (Compile / fullOptJS).dependsOn(npmInstallDepsTask).value,
