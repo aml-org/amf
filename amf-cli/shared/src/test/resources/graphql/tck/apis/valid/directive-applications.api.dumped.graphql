@@ -1,22 +1,28 @@
 type Query {
-  rootField: String @example(text: Jorge)
+  rootField: String @example(text: "Jorge")
 }
-enum MyEnum @example(text: Jorge) {
-  MyEnumValue @example(text: Jorge)
+
+enum MyEnum @example(text: "Jorge") {
+  MyEnumValue @example(text: "Jorge")
 }
+
 type MyObject2 {
   myField2: String
 }
-interface MyInterface @example(text: Jorge) {
+
+interface MyInterface @example(text: "Jorge") {
   myField: String!
 }
-input MyInputObject @example(text: Jorge) {
-  myField: String! @example(text: Jorge)
+
+input MyInputObject @example(text: "Jorge") {
+  myField: String! @example(text: "Jorge")
 }
-scalar MyScalar @example(text: Jorge)
-type MyObject @example(text: Jorge) {
-  myField(myArgument: String @example(text: Jorge)): String! @example(text: Jorge)
+
+scalar MyScalar @example(text: "Jorge")
+type MyObject @example(text: "Jorge") {
+  myField(myArgument: String @example(text: "Jorge")): String! @example(text: "Jorge")
 }
-union MyUnion @example(text: Jorge) = MyObject | MyObject2
+
+union MyUnion @example(text: "Jorge") = MyObject | MyObject2
 directive @example(text: String @example2) on ENUM | INPUT_FIELD_DEFINITION | ENUM_VALUE | SCALAR | ARGUMENT_DEFINITION | SCHEMA | INPUT_OBJECT | FIELD_DEFINITION | INTERFACE | OBJECT | UNION
 directive @example2 on ARGUMENT_DEFINITION

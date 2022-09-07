@@ -35,12 +35,8 @@ abstract class GraphQLArgumentGenerator(arg: NamedDomainElement, ctx: GraphQLEmi
   protected def name: String         = arg.name.value()
   protected def defaultValue: String = if (value.nonEmpty) s"= $value" else ""
 
-  protected def getDefaultValue(node: DataNode): String = {
-    node match {
-      case defaultValueNode: ScalarNode => defaultValueNode.value.value()
-      case _                            => ""
-    }
-  }
+  protected def getDefaultValue(node: DataNode): String = DataNodeRenderer.render(node)
+
   def argumentType: String
   def description: Option[String]
   def value: String

@@ -6,8 +6,8 @@ import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.Define
 import amf.core.internal.parser.domain.Annotations.{inferred, virtual}
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.parser.syntax.ScalarValueParser
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS}
+import amf.graphql.internal.spec.parser.syntax.ValueParser
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, VALUE}
 import org.mulesoft.antlrast.ast.Node
 
 class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWebApiContext)
@@ -39,7 +39,12 @@ class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWe
 
   protected def parseArgument(n: Node, objectNode: ObjectNode): Unit = {
     val (name, _) = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
-    ScalarValueParser.parseValue(n).map(scalarNode => objectNode.addProperty(name, scalarNode, toAnnotations(n)))
+    for {
+      valueNode   <- pathToNonTerminal(n, Seq(VALUE))
+      parsedValue <- ValueParser.parseValue(valueNode)
+    } yield {
+      objectNode.addProperty(name, parsedValue, toAnnotations(n))
+    }
   }
 
   protected def parseDefinedBy(directiveApplication: DomainExtension, node: Node): Unit = {

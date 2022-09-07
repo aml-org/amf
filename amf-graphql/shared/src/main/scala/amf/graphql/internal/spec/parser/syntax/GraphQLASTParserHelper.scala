@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.{GraphQLBaseWebApiContext, GraphQLWebApiContext}
-import amf.graphql.internal.spec.parser.syntax.ScalarValueParser.parseDefaultValue
+import amf.graphql.internal.spec.parser.syntax.ValueParser.parseValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
@@ -249,23 +249,21 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   def inGraphQL(fn: (GraphQLWebApiContext) => Any)(implicit ctx: GraphQLBaseWebApiContext): Unit =
     contextually[GraphQLWebApiContext](fn)
 
-  def setDefaultValue(n: Node, parameter: AbstractParameter): Unit = {
-    val maybeNode = parseDefaultValue(n)
-    maybeNode.map(value => parameter.withDefaultValue(value))
+  def setDefaultValue(n: Node, parameter: AbstractParameter)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
+    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => parameter.withDefaultValue(value))
   }
 
-  def setDefaultValue(n: Node, shape: Shape): Unit =
-    parseDefaultValue(n).map(value => shape.withDefault(value, inferred()))
+  def setDefaultValue(n: Node, shape: Shape)(implicit ctx: GraphQLBaseWebApiContext): Unit =
+    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => shape.withDefault(value, inferred()))
 
-//  sealed trait GraphQLSpec
-//  object GraphQL    extends GraphQLSpec
-//  object Federation extends GraphQLSpec
-//
-//  def spec(implicit ctx: GraphQLBaseWebApiContext): GraphQLSpec = {
-//    ctx match {
-//      case _: GraphQLFederationWebApiContext => Federation
-//      case _: GraphQLWebApiContext           => GraphQL
-//    }
-//  }
-
+  //  sealed trait GraphQLSpec
+  //  object GraphQL    extends GraphQLSpec
+  //  object Federation extends GraphQLSpec
+  //
+  //  def spec(implicit ctx: GraphQLBaseWebApiContext): GraphQLSpec = {
+  //    ctx match {
+  //      case _: GraphQLFederationWebApiContext => Federation
+  //      case _: GraphQLWebApiContext           => GraphQL
+  //    }
+  //  }
 }

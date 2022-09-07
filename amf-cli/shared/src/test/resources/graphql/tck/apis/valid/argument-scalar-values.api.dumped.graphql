@@ -1,0 +1,16 @@
+type Query {
+  name: String
+}
+
+type MyObj @myDirective(nullable: null, float: 1.0, str: "hello", bool: true, int: 1) @myListDirective(nullable: [ null ], float: [ 1.0 ], str: [ "hello" ], bool: [ true ], int: [ 1 ]) {
+  operation(int: Int! = 1, float: Float! = 1.0, str: String! = "hello", bool: Boolean! = true, nullable: String = null): String
+  listOperation(int: [Int!]! = 1, float: [Float!]! = 1.0, str: [String!]! = "hello", bool: [Boolean!]! = true, nullable: [String] = null): String
+}
+
+interface MyInterface @myDirective(nullable: null, float: 1.0, str: "hello", bool: true, int: 1) @myListDirective(nullable: [ null ], float: [ 1.0 ], str: [ "hello" ], bool: [ true ], int: [ 1 ]) {
+  operation(int: Int! = 1, float: Float! = 1.0, str: String! = "hello", bool: Boolean! = true, nullable: String = null): String
+  listOperation(int: [Int!]! = 1, float: [Float!]! = 1.0, str: [String!]! = "hello", bool: [Boolean!]! = true, nullable: [String] = null): String
+}
+
+directive @myDirective(int: Int! = 1, float: Float! = 1.0, str: String! = "hello", bool: Boolean! = true, nullable: String = null) on OBJECT | INTERFACE
+directive @myListDirective(int: [Int!]! = [ 1 ], float: [Float!]! = [ 1.0 ], str: [String!]! = [ "hello" ], bool: [Boolean!]! = [ true ], nullable: [String] = [ null ]) on OBJECT | INTERFACE

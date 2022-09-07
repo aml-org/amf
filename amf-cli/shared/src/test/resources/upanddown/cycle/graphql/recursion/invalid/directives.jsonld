@@ -108,6 +108,31 @@
                 "http://a.ml/vocabularies/data#Object",
                 "http://a.ml/vocabularies/data#Node",
                 "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#argument": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node/argument",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "null"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "argument"
+                    }
+                  ]
+                }
               ]
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
@@ -138,6 +163,31 @@
             "http://a.ml/vocabularies/data#Object",
             "http://a.ml/vocabularies/data#Node",
             "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#argument": [
+            {
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node/argument",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "null"
+                }
+              ],
+              "http://www.w3.org/ns/shacl#datatype": [
+                {
+                  "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "argument"
+                }
+              ]
+            }
           ]
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
@@ -157,7 +207,7 @@
         ],
         "http://www.w3.org/ns/shacl#datatype": [
           {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
+            "@id": "http://www.w3.org/2001/XMLSchema#anyType"
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -184,7 +234,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                   }
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -219,7 +269,7 @@
                       ],
                       "http://www.w3.org/ns/shacl#datatype": [
                         {
-                          "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                         }
                       ],
                       "http://a.ml/vocabularies/core#name": [
@@ -266,7 +316,7 @@
               ],
               "http://www.w3.org/ns/shacl#datatype": [
                 {
-                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                 }
               ],
               "http://a.ml/vocabularies/core#name": [
@@ -456,6 +506,31 @@
                                 "http://a.ml/vocabularies/data#Object",
                                 "http://a.ml/vocabularies/data#Node",
                                 "http://a.ml/vocabularies/document#DomainElement"
+                              ],
+                              "http://a.ml/vocabularies/data#argument": [
+                                {
+                                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/property/property/prop/customDomainProperties/InputDirective/data-node/argument",
+                                  "@type": [
+                                    "http://a.ml/vocabularies/data#Scalar",
+                                    "http://a.ml/vocabularies/data#Node",
+                                    "http://a.ml/vocabularies/document#DomainElement"
+                                  ],
+                                  "http://a.ml/vocabularies/data#value": [
+                                    {
+                                      "@value": "null"
+                                    }
+                                  ],
+                                  "http://www.w3.org/ns/shacl#datatype": [
+                                    {
+                                      "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                                    }
+                                  ],
+                                  "http://a.ml/vocabularies/core#name": [
+                                    {
+                                      "@value": "argument"
+                                    }
+                                  ]
+                                }
                               ]
                             },
                             "http://a.ml/vocabularies/document#customDomainProperties": [
@@ -486,6 +561,31 @@
                             "http://a.ml/vocabularies/data#Object",
                             "http://a.ml/vocabularies/data#Node",
                             "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#argument": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/directives.graphql#/declares/shape/InputType/customDomainProperties/InputDirective/data-node/argument",
+                              "@type": [
+                                "http://a.ml/vocabularies/data#Scalar",
+                                "http://a.ml/vocabularies/data#Node",
+                                "http://a.ml/vocabularies/document#DomainElement"
+                              ],
+                              "http://a.ml/vocabularies/data#value": [
+                                {
+                                  "@value": "null"
+                                }
+                              ],
+                              "http://www.w3.org/ns/shacl#datatype": [
+                                {
+                                  "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/core#name": [
+                                {
+                                  "@value": "argument"
+                                }
+                              ]
+                            }
                           ]
                         },
                         "http://a.ml/vocabularies/document#customDomainProperties": [
@@ -719,7 +819,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
@@ -746,7 +846,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#datatype": [
                                   {
-                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                    "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/core#name": [
@@ -781,7 +881,7 @@
                                       ],
                                       "http://www.w3.org/ns/shacl#datatype": [
                                         {
-                                          "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                                         }
                                       ],
                                       "http://a.ml/vocabularies/core#name": [
@@ -828,7 +928,7 @@
                               ],
                               "http://www.w3.org/ns/shacl#datatype": [
                                 {
-                                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                                 }
                               ],
                               "http://a.ml/vocabularies/core#name": [
