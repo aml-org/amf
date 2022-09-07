@@ -1,0 +1,110 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 13
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to schema
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/web-api
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(1,7)-(1,19)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to field 'name'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/web-api/endpoint/%2Fquery%2Fname
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(6,17)-(6,29)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to scalar 'MyScalar'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/scalar/MyScalar
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(9,16)-(9,28)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to object 'MyObject'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyObject
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(11,14)-(11,26)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to argument 'myArgument'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(12,31)-(12,43)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to field 'myField'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyObject/supportedOperation/myField
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(12,54)-(12,66)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to field 'myField2'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyObject/property/property/myField2
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(13,22)-(13,34)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to interface 'MyInterface'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyInterface
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(16,22)-(16,34)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to union 'MyUnion'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/union/MyUnion
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(24,14)-(24,26)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to input field 'myField'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/shape/MyInputObject/property/property/myField
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(27,21)-(27,33)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to enum 'MyEnum'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/scalar/MyEnum
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(30,12)-(30,24)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to enum value 'ENUMVALUE'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/scalar/MyEnum/in/ENUMVALUE
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(31,12)-(31,24)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive MyDirective cannot be applied to argument 'text'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-input.api.graphql#/declares/MyDirective2
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(36,37)-(36,49)]
+  Location: 

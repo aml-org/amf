@@ -3,15 +3,14 @@ package amf.graphql.internal.spec.domain
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.internal.parser.domain.Annotations.virtual
-import amf.graphql.internal.spec.annotations.GraphQLLocation
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
 import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.internal.annotations.DirectiveArguments
+import amf.shapes.internal.annotations.{DirectiveArguments, GraphQLLocation}
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
-import amf.core.internal.remote.{GraphQL, GraphQLFederation, Spec}
+import amf.core.internal.remote.{GraphQL, GraphQLFederation}
 
 case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
