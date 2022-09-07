@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'String' value but got 'Boolean' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/invalid/shape/default-node
+  Property: http://a.ml/vocabularies/data#value
+  Range: [(6,38)-(6,42)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-parameter
+  Message: Expecting 'String' value but got 'Boolean' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/shape/Object/supportedOperation/invalid/expects/request/parameter/parameter/invalid
+  Property: http://a.ml/vocabularies/data#value
+  Range: [(10,31)-(10,35)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-extension-argument-type
+  Message: Expecting 'String' value but got 'Boolean' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/scalar/ScalarInvalid/customDomainProperties/valid
+  Property: http://a.ml/vocabularies/data#value
+  Range: [(14,35)-(14,40)]
+  Location: 

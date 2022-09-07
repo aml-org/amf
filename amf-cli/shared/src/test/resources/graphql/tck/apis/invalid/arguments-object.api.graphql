@@ -1,0 +1,14 @@
+type Query {
+    name: String
+}
+
+input Object {
+    a: String
+    b: String!
+}
+
+directive @valid1(valid: Object = {a: "A", b: "B"}) on SCALAR
+directive @valid2(valid: Object = { b: "B" }) on SCALAR
+directive @invalid1(invalid: Object = {a: true, b: "B"}) on SCALAR
+directive @invalid2(invalid: Object = {a: "A", c: "C"}) on SCALAR
+

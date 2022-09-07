@@ -6,9 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
-  Message: Default value of argument text must be of type String
+  Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-directive.graphql#/declares/MyDirective/shape/default-node
-  Property: http://www.w3.org/ns/shacl#datatype
-  Range: [(9,23)-(9,42)]
+  Property: http://a.ml/vocabularies/data#value
+  Range: [(9,38)-(9,42)]
   Location: 
