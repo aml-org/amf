@@ -20,6 +20,10 @@ interface Interface {
     name: String
 }
 
+input Input {
+    name: String
+}
+
 scalar Scalar
 
-union SearchResult = Scalar | Union | Interface
+union SearchResult = Scalar | Union | Interface | Input
