@@ -25,6 +25,7 @@ import amf.shapes.internal.spec.common.emitter.PayloadEmitter
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes
+import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
@@ -108,8 +109,9 @@ abstract class BaseJsonSchemaPayloadValidator(
     try {
       performValidation(buildCandidate(fragment), validationProcessor)
     } catch {
-      case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment.encodes))
-      case e: InvalidJsonValue  => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonObject      => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonValue       => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: MaxNestingValueReached => validationProcessor.processException(e, None)
     }
   }
 
@@ -142,6 +144,7 @@ abstract class BaseJsonSchemaPayloadValidator(
         // We don't skip completely the validation because if the payload is an object with an error we want the error
         case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
         case e: InvalidJsonValue              => validationProcessor.processException(e, None)
+        case e: MaxNestingValueReached        => validationProcessor.processException(e, None)
       }
   }
 
