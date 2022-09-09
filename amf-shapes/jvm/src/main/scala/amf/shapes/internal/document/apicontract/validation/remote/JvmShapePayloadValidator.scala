@@ -6,7 +6,6 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.internal.utils.RegexConverter
-import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.document.apicontract.validation.json.{
   InvalidJSONValueException,
@@ -17,6 +16,7 @@ import amf.shapes.internal.document.apicontract.validation.json.{
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema._
+import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
@@ -32,6 +32,8 @@ class JvmShapePayloadValidator(
     protected val validationMode: ValidationMode,
     private val configuration: ShapeValidationConfiguration
 ) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+
+  private val DEFAULT_MAX_NESTING_LIMIT: Int = 2000 // Because of Raml Java Parser compatibility
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
@@ -117,19 +119,23 @@ class JvmShapePayloadValidator(
 
   override protected def loadJsonSchema(text: String): Object = {
     withJsonExceptionCatching(() => {
-      new JSONTokenerHack(text).nextValue()
+      val maxJsonYamlDepth = getMaxJsonYamlNestingDepth
+      new JSONTokenerHack(text, maxJsonYamlDepth).nextValue()
     })
   }
 
   override protected def loadJson(text: String): Object = {
+    val maxJsonYamlDepth = getMaxJsonYamlNestingDepth
     withJsonExceptionCatching(() => {
       val json = shape match {
-        case _: ScalarShape => new ScalarTokenerHack(text).parseAll()
-        case _              => new JSONTokenerHack(text).parseAll()
+        case _: ScalarShape => new ScalarTokenerHack(text, maxJsonYamlDepth).parseAll()
+        case _              => new JSONTokenerHack(text, maxJsonYamlDepth).parseAll()
       }
       json
     })
   }
+
+  private def getMaxJsonYamlNestingDepth = configuration.maxJsonYamlDepth.getOrElse(DEFAULT_MAX_NESTING_LIMIT)
 
   private def withJsonExceptionCatching(jsonLoading: () => Object): Object = {
     try jsonLoading()
@@ -153,6 +159,10 @@ case class JvmReportValidationProcessor(
 
   override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {
+
+      case e: MaxNestingValueReached =>
+        Seq(invalidJsonValidation(e.getMessage, element, e))
+
       case validationException: ValidationException =>
         iterateValidations(validationException, element)
 
@@ -183,7 +193,7 @@ case class JvmReportValidationProcessor(
     processResults(results)
   }
 
-  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: RuntimeException) =
+  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: Exception) =
     AMFValidationResult(
       message = message,
       level = SeverityLevels.VIOLATION,
