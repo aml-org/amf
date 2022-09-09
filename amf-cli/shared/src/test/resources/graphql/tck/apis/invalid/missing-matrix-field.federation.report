@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 4
+Number of results: 3
 
 Level: Violation
 
@@ -27,12 +27,4 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql#/declares/shape/ChessBoard3
   Property: http://a.ml/vocabularies/shapes#schema
   Range: [(18,4)-(18,17)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Type '[[String]]' from field 'matrix' must be an input type
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql#/declares/matrixDirective/shape/default-node
-  Property: http://www.w3.org/ns/shacl#property
-  Range: [(25,27)-(25,45)]
   Location: 

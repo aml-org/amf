@@ -263,9 +263,10 @@ object GraphQLValidator {
     // input type fields or directive arguments cannot be output types
     val propertiesValidations = obj.properties.flatMap { prop =>
       if (!prop.isValidInputType && obj.isInput) {
+        val message = s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an input type"
         validationInfo(
           NodeShapeModel.Properties,
-          s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an input type",
+          message,
           prop.annotations
         )
       } else None
