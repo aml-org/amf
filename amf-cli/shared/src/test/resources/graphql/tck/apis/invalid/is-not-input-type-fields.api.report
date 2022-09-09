@@ -6,7 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'objectField' must be an input type, 'Object1' it's not
+  Message: Type 'Object1' from field 'objectField' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'objectFieldList' must be an input type, 'a list of Object1' it's not
+  Message: Type '[Object1]' from field 'objectFieldList' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'objectFieldListRequired' must be an input type, 'a list of Object1' it's not
+  Message: Type '[Object1]' from field 'objectFieldListRequired' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
@@ -30,7 +30,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'objectFieldListUltraRequired' must be an input type, 'a list of Object1' it's not
+  Message: Type '[Object1]' from field 'objectFieldListUltraRequired' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
@@ -38,7 +38,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'interfaceField' must be an input type, 'Interface' it's not
+  Message: Type 'Interface' from field 'interfaceField' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
@@ -46,7 +46,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'unionField' must be an input type, 'Union' it's not
+  Message: Type 'Union' from field 'unionField' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-fields.api.graphql#/declares/shape/InputType
   Property: http://www.w3.org/ns/shacl#property
