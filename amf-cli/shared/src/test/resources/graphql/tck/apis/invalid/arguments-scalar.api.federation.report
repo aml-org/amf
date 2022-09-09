@@ -9,7 +9,7 @@ Level: Violation
   Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/stringDirective/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(5,71)-(5,75)]
   Location: 
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/booleanDirective/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(6,70)-(6,78)]
   Location: 
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: Expecting 'Int' value but got 'Float' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/intDirectiveDirective/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(7,64)-(7,67)]
   Location: 
 
@@ -33,6 +33,6 @@ Level: Violation
   Message: Expecting 'Float' value but got 'Int' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/floatDirective/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(8,63)-(8,64)]
   Location: 

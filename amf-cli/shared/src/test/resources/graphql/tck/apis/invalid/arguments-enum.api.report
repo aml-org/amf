@@ -9,7 +9,7 @@ Level: Violation
   Message: Expecting 'enum' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-enum.api.graphql#/declares/invalid1/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(11,38)-(11,41)]
   Location: 
 
@@ -17,6 +17,6 @@ Level: Violation
   Message: Expecting 'String' value but got 'Any' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-enum.api.graphql#/declares/invalid2/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(12,38)-(12,39)]
   Location: 

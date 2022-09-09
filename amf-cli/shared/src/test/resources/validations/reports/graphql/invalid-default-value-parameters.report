@@ -9,7 +9,7 @@ Level: Violation
   Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/myQueryParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(6,31)-(6,40)]
   Location: 
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/declares/shape/MyObject/supportedOperation/name/expects/request/parameter/parameter/myObjParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(10,29)-(10,38)]
   Location: 
 
@@ -25,6 +25,6 @@ Level: Violation
   Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/declares/shape/MyInterface/supportedOperation/name/expects/request/parameter/parameter/myIntParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(15,29)-(15,38)]
   Location: 

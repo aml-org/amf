@@ -9,7 +9,7 @@ Level: Violation
   Message: Value 'C' is not a member of enum 'Alternative'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/myQueryParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(6,37)-(6,38)]
   Location: 
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: Value 'C' is not a member of enum 'Alternative'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/shape/MyObject/supportedOperation/name/expects/request/parameter/parameter/myObjParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(10,35)-(10,36)]
   Location: 
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: Value 'C' is not a member of enum 'Alternative'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/shape/MyInterface/supportedOperation/name/expects/request/parameter/parameter/myIntParam
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(15,35)-(15,36)]
   Location: 
 
@@ -33,6 +33,6 @@ Level: Violation
   Message: Value 'C' is not a member of enum 'Alternative'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/MyDirective/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(18,43)-(18,44)]
   Location: 

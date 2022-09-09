@@ -512,7 +512,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           val results = node.properties.flatMap { property =>
             val expected = property.range
             val actual   = property.default
-            ValueValidator.validate(expected, actual)
+            ValueValidator.validate(expected, actual)(ShapeModel.Default)
           }
           results.foreach(result => validate(Some(result)))
         }
@@ -521,7 +521,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "GraphQLArgumentDefaultValueTypeValidationParameter"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val param             = element.asInstanceOf[AbstractParameter]
-          val validationResults = ValueValidator.validate(param.schema, param.defaultValue)
+          val validationResults = ValueValidator.validate(param.schema, param.defaultValue)(AbstractParameterModel.Default)
           validationResults.foreach(info => validate(Some(info)))
         }
       },

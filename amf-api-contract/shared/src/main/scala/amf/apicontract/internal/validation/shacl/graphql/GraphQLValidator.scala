@@ -4,7 +4,7 @@ import amf.apicontract.internal.validation.shacl.graphql.values.ValueValidator
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.ScalarNodeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ScalarNodeModel}
 import amf.core.internal.metamodel.domain.extensions.{DomainExtensionModel, PropertyShapePathModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
@@ -288,7 +288,7 @@ object GraphQLValidator {
 
     directive.definedProps().flatMap { prop =>
       values.get(prop.name) match {
-        case Some(value) => ValueValidator.validate(prop.range, value)
+        case Some(value) => ValueValidator.validate(prop.range, value)(DomainElementModel.CustomDomainProperties)
         case None if prop.default.isEmpty && !prop.isNullable =>
           Seq(
             ValidationInfo(
