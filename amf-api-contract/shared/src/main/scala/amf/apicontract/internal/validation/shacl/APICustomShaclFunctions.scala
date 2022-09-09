@@ -244,14 +244,15 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           if (!isWrapper) {
             val members = union.anyOf
             val invalidMembers = members.filter {
-              case n: NodeShape if n.isAbstract.value() => true  // interfaces
-              case any if !any.isInstanceOf[NodeShape]  => true  // not an Object
-              case _                                    => false // an Object
+              case n: NodeShape if n.isAbstract.value()  => true  // interfaces
+              case n: NodeShape if n.isInputOnly.value() => true  // input objects
+              case any if !any.isInstanceOf[NodeShape]   => true  // not an Object
+              case _                                     => false // an Object
             }
             val validationResults = invalidMembers.map { elem =>
               ValidationInfo(
                 UnionShapeModel.AnyOf,
-                Some(s"All union members must be Object type, ${elem.name.value()} it's not"),
+                Some(s"'${elem.name.value()}' is not a valid union member (only Object types)"),
                 Some(union.annotations)
               )
             }
@@ -520,8 +521,9 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       new CustomShaclFunction {
         override val name: String = "GraphQLArgumentDefaultValueTypeValidationParameter"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val param             = element.asInstanceOf[AbstractParameter]
-          val validationResults = ValueValidator.validate(param.schema, param.defaultValue)(AbstractParameterModel.Default)
+          val param = element.asInstanceOf[AbstractParameter]
+          val validationResults =
+            ValueValidator.validate(param.schema, param.defaultValue)(AbstractParameterModel.Default)
           validationResults.foreach(info => validate(Some(info)))
         }
       },
