@@ -1,6 +1,8 @@
 package amf.graphql.internal.spec.parser.syntax
 
 import amf.core.client.scala.model.DataType
+import amf.core.internal.remote.{GraphQL, GraphQLFederation}
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 
 object TokenTypes {
   val DOCUMENT                       = "document"
@@ -73,7 +75,28 @@ object TokenTypes {
   val INT_TERMINAL                   = "INT"
   val FLOAT_TERMINAL                 = "FLOAT"
   val STRING_TERMINAL                = "STRING"
-  val NULL_TERMINAL                  = "'null'"
+
+  def TRUE(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'true'"
+      case GraphQLFederation => "TRUE"
+      case _                 => ""
+    }
+  }
+  def FALSE(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'false'"
+      case GraphQLFederation => "FALSE"
+      case _                 => ""
+    }
+  }
+  def NULL(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'null'"
+      case GraphQLFederation => "NULL"
+      case _                 => ""
+    }
+  }
 
   // Federation
   val FIELD_SET           = "fieldSet"
@@ -117,22 +140,4 @@ object TokenTypes {
 
   val SCALAR_TYPES: Seq[String] = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
 
-  val toDataType: Map[String, String] = Map(
-    INT           -> DataType.Integer,
-    FLOAT         -> DataType.Float,
-    STRING        -> DataType.String,
-    BOOLEAN       -> DataType.Boolean,
-    ENUM          -> DataType.Any,
-    ID            -> DataType.Any,
-    NULL_TERMINAL -> DataType.Nil
-  )
-
-  val toTerminal: Map[String, String] = Map(
-    INT          -> INT_TERMINAL,
-    FLOAT        -> FLOAT_TERMINAL,
-    STRING       -> STRING_TERMINAL,
-    INT_VALUE    -> INT_TERMINAL,
-    FLOAT_VALUE  -> FLOAT_TERMINAL,
-    STRING_VALUE -> STRING_TERMINAL
-  )
 }
