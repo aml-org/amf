@@ -8,6 +8,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{An
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
@@ -50,6 +51,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
+    declarations.foreach(_.annotations += DeclaredElement())
     doc.withDeclares(declarations)
     inFederation { _ =>
       doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
