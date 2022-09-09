@@ -1,14 +1,14 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
+import amf.apicontract.internal.validation.shacl.graphql.values.ValueValidator
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{ArrayNode, DataNode, NamedDomainElement, ObjectNode, ScalarNode, Shape}
+import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.ScalarNodeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ScalarNodeModel}
 import amf.core.internal.metamodel.domain.extensions.{DomainExtensionModel, PropertyShapePathModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.federation.Key
-import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
@@ -284,98 +284,21 @@ object GraphQLValidator {
   }
 
   def validateDirectiveApplication(directive: GraphQLAppliedDirective): Seq[ValidationInfo] = {
-    val definedProps: Seq[GraphQLProperty] = directive.definedProps()
-    val propertyValues: Seq[DataNode]      = directive.propertyValues()
+    val values = directive.propertyValues().map(value => value.name.value() -> value).toMap
 
-    // validate types
-    val typesValidations = propertyValues.flatMap {
-      case scalarValue: ScalarNode => validateScalarValue(definedProps, scalarValue)
-      case arrayValue: ArrayNode   => None // todo
-      case objectValue: ObjectNode => None // todo
-      case _ => None // todo
-    }
-
-    // validate missing arguments
-    val missingArguments = definedProps.filter(_.default.isEmpty).flatMap { requiredProp =>
-      if (!propertyValues.exists(_.name.value() == requiredProp.name)) {
-        validationInfo(
-          DomainExtensionModel.DefinedBy,
-          s"Missing required argument ${requiredProp.name}",
-          directive.annotations
-        )
-      } else None
-    }
-
-    typesValidations ++ missingArguments
-  }
-
-  private def validateScalarValue(
-      definedProps: Seq[GraphQLProperty],
-      scalarValue: ScalarNode
-  ): Option[ValidationInfo] = {
-    val definition = definedProps.find(_.name == scalarValue.name.value())
-    definition flatMap { definedProp =>
-      val parsedDatatype: String          = GraphQLDataTypes.from(scalarValue)
-      val definedDatatype: Option[String] = definedProp.datatype
-      definedDatatype
-        .filter(x => x != parsedDatatype && definedProp.isAny)
-        .flatMap { datatype =>
-          validationInfo(
-            ScalarNodeModel.DataType,
-            s"Property '${scalarValue.name.value()}' must be of type '$datatype'",
-            scalarValue.annotations
-          )
-        }
-    }
-  }
-
-  def validateDefaultValues(node: GraphQLObject): Seq[ValidationInfo] = {
-    node.properties.flatMap { prop =>
-      validateDefaultValue(prop.datatype.getOrElse(""), prop.default.orNull, prop.property, prop.annotations)
-    }
-  }
-
-  def validateIn(value: Option[DataNode], in: Seq[DataNode], field: Field): Option[ValidationInfo] = {
-    (value, in.headOption) match {
-      case (Some(value: ScalarNode), Some(_: ScalarNode)) =>
-        val inScalar   = in.asInstanceOf[Seq[ScalarNode]]
-        val conformsIn = inScalar.exists(_.value.value() == value.value.value())
-        if (!conformsIn) {
-          validationInfo(
-            field,
-            s"Default value of argument must be one of [${inScalar.map(_.value.value()).mkString(",")}]",
-            value.annotations
-          )
-        } else None
-      case _ => None
-    }
-  }
-
-  def validateDefaultValues(parameter: AbstractParameter): Seq[ValidationInfo] = {
-    GraphQLUtils
-      .datatype(parameter.schema)
-      .flatMap(validateDefaultValue(_, parameter.defaultValue, parameter.schema, parameter.annotations))
-      .toSeq
-  }
-
-  private def validateDefaultValue[T <: NamedDomainElement](
-      declaredDatatype: String,
-      defaultValue: DataNode,
-      shape: T,
-      annotations: Annotations
-  ): Option[ValidationInfo] = {
-    defaultValue match {
-      case scalarNode: ScalarNode =>
-        GraphQLDataTypes.from(scalarNode) match {
-          case s: String if s != declaredDatatype =>
-            validationInfo(
-              ScalarNodeModel.DataType,
-              s"Default value of argument ${shape.name.value()} must be of type $declaredDatatype",
-              annotations
+    directive.definedProps().flatMap { prop =>
+      values.get(prop.name) match {
+        case Some(value) => ValueValidator.validate(prop.range, value)(DomainElementModel.CustomDomainProperties)
+        case None if prop.default.isEmpty && !prop.isNullable =>
+          Seq(
+            ValidationInfo(
+              DomainExtensionModel.DefinedBy,
+              Some(s"Missing required argument ${prop.name}"),
+              Some(directive.annotations)
             )
-          case _ => None
-        }
-      case _ => None
+          )
+        case _ => Nil
+      }
     }
   }
 

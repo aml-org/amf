@@ -6,9 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-extension-argument-type
-  Message: Property text must be of type http://www.w3.org/2001/XMLSchema#string
+  Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/directive-argument-wrong-value.api.graphql#/web-api/customDomainProperties/MyDirective
-  Property: http://www.w3.org/ns/shacl#datatype
+  Property: http://a.ml/vocabularies/document#customDomainProperties
   Range: [(1,26)-(1,30)]
   Location: 

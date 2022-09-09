@@ -1,0 +1,11 @@
+type Query {
+    name: String
+}
+
+directive @valid1(valid: String = null) on SCALAR
+directive @valid2(valid: [String!] = null) on SCALAR
+directive @valid3(valid: [String]! = [null]) on SCALAR
+
+directive @invalid1(invalid: String! = null) on SCALAR
+directive @invalid2(invalid: [String]! = null) on SCALAR
+directive @invalid3(invalid: [String!] = [null]) on SCALAR

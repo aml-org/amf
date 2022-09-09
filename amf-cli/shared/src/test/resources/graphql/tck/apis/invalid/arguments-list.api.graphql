@@ -1,0 +1,10 @@
+type Query {
+    name: String
+}
+
+
+directive @valid1(valid: [String] = ["A", "B"]) on SCALAR
+directive @valid2(valid: [[String]] = [["A", "B"], ["C", "D"]]) on SCALAR
+directive @invalid1(invalid: [Boolean] = ["A", "B"]) on SCALAR
+directive @invalid2(invalid: [[Boolean]] = [["A", "B"], ["C", "D"]]) on SCALAR
+

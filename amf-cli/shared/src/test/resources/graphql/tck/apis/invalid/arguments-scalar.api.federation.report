@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'String' value but got 'Boolean' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/stringDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(5,71)-(5,75)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/booleanDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(6,70)-(6,78)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Int' value but got 'Float' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/intDirectiveDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(7,64)-(7,67)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Float' value but got 'Int' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-scalar.api.graphql#/declares/floatDirective/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(8,63)-(8,64)]
+  Location: 

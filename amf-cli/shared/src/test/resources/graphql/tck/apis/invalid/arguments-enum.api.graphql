@@ -1,0 +1,12 @@
+type Query {
+    name: String
+}
+
+enum MyEnum {
+    A
+    B
+}
+
+directive @valid(valid: MyEnum = A) on SCALAR
+directive @invalid1(invalid: MyEnum = "A") on SCALAR
+directive @invalid2(invalid: String = A) on SCALAR
