@@ -17,10 +17,6 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   private val GRAPHQL    = "GRAPHQL VANILLA"
   private val FEDERATION = "GRAPHQL FEDERATION"
 
-  private val ignoredApis = Set(
-    "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/duplicate-interfaces-object.api.graphql",
-  )
-
   private val validFederationApisInvalidInGraphQL = Set(
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/mandatory-schema-node.api.graphql"
   )
@@ -77,12 +73,7 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
       .foreach { api =>
         val finalPath = s"$base/invalid/$api.graphql"
         if (validFederationApisInvalidInGraphQL.contains(finalPath)) {} // ignore
-        else if (ignoredApis.contains(finalPath)) {
-          ignore(s"$testNamePrefix TCK > Apis > Invalid > $api: should not conform") {
-            val report = reportProducer(finalPath)
-            assertReport(finalPath, report)
-          }
-        } else {
+        else {
           test(s"$testNamePrefix TCK > Apis > Invalid > $api: should not conform") {
             val report = reportProducer(finalPath)
             assertReport(finalPath, report)
