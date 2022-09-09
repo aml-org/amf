@@ -1,11 +1,15 @@
 package amf.shapes.internal.document.apicontract.validation.json
 
+import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.json.JSONTokener
 
 import java.lang
 import scala.util.matching.Regex
 
-class JSONTokenerHack(text: String) extends JSONTokener(text) {
+// Instance must be discarded after each use
+class JSONTokenerHack(text: String, val nestingLimit: Long) extends JSONTokener(text) {
+
+  private var currentNestingAmountReached: Long = 0
 
   def parseAll(): Object = {
     val parsed = nextValueHack()
@@ -29,10 +33,14 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
         this.nextString(c)
       case '{' =>
         this.back()
-        new JSONObject(this)
+        withoutReachingMaxNestedLevel {
+          new JSONObject(this)
+        }
       case '[' =>
         this.back()
-        new JSONArray(this)
+        withoutReachingMaxNestedLevel {
+          new JSONArray(this)
+        }
       case c =>
         val sb      = new StringBuilder()
         var newChar = c
@@ -45,6 +53,16 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
         val string = sb.toString.trim()
         if ("" == string) throw this.syntaxError("Missing value")
         JSONObject.stringToValue(string)
+    }
+  }
+
+  protected def withoutReachingMaxNestedLevel[T](thunk: => T): T = {
+    currentNestingAmountReached += 1
+    if (currentNestingAmountReached >= nestingLimit) throw MaxNestingValueReached(nestingLimit)
+    else {
+      val result = thunk
+      currentNestingAmountReached -= 1
+      result
     }
   }
 
@@ -73,6 +91,6 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
   }
 }
 
-class ScalarTokenerHack(text: String) extends JSONTokenerHack(text) {
+class ScalarTokenerHack(text: String, nestingLimit: Long) extends JSONTokenerHack(text, nestingLimit: Long) {
   override protected def shouldContinueParsing(newChar: Char): Boolean = newChar != 0
 }
