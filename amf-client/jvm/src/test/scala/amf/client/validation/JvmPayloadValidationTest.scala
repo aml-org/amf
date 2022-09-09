@@ -1,9 +1,11 @@
 package amf.client.validation
 
+import amf.client.environment.Environment
 import amf.client.model.DataTypes
-import amf.client.model.domain.ScalarShape
+import amf.client.model.domain.{NodeShape, PropertyShape, ScalarShape}
 import amf.convert.NativeOpsFromJvm
 import amf.core.AMF
+import amf.core.remote.Mimes
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 
 class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
@@ -47,6 +49,64 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
       val zeroReport           = validator.syncValidate("application/json", "0")
       positiveNumberReport.results.asSeq.head.message shouldBe "Can't divide by 0"
       zeroReport.results.asSeq.head.message shouldBe "Can't divide by 0"
+    }
+  }
+
+  test("Payload with max depth that exceeds the one in environment should not conform") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val dummyShape     = new NodeShape()
+      val maxDepth = 50
+      val env = Environment.empty().setMaxYamlDepth(maxDepth)
+      val validator = dummyShape.payloadValidator(Mimes.`APPLICATION/JSON`, env).asOption.get
+      val payload =
+        """{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{
+          |[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{
+          |{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{
+          |{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{
+          |{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{
+          |{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[{{{{{{{[
+          |{{{{{[{{{{{{""".stripMargin
+
+      payload.count(char => char == '{' || char == '[') shouldBe > (50)
+
+      val report = validator.syncValidate(Mimes.`APPLICATION/JSON`, payload)
+      report._internal.results.head.message should include(s"Reached maximum nesting value of $maxDepth in JSON")
+      report.conforms shouldBe false
+    }
+  }
+
+  test("Big payload with nested depth accumulation of more than 7 but max accumulation of less than 7 should be valid") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val dummyShape     = new NodeShape()
+      val maxDepth = 7
+      val env = Environment.empty().setMaxYamlDepth(maxDepth)
+      val validator = dummyShape.payloadValidator(Mimes.`APPLICATION/JSON`, env).asOption.get
+      val payload =
+        """{
+          | "items": [
+          |   {
+          |     "a": {
+          |       "b": {
+          |         "c": {
+          |         }
+          |       }
+          |     }
+          |   },
+          |   {
+          |     "a": {
+          |       "b": {
+          |         "c": {
+          |         }
+          |       }
+          |     }
+          |   }
+          | ]
+          |}""".stripMargin
+      val report = validator.syncValidate(Mimes.`APPLICATION/JSON`, payload)
+      println(report)
+      report.conforms shouldBe true
     }
   }
 }

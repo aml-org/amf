@@ -6,6 +6,8 @@ import amf.client.model.DataTypes
 import amf.client.model.domain._
 import amf.core.AMF
 import amf.core.model.domain.{RecursiveShape => InternalRecursiveShape}
+import amf.core.remote.Mimes
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
