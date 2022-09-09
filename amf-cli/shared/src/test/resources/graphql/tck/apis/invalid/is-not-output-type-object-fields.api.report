@@ -6,7 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
-  Message: Field 'inputReturnField' must be an output type, 'InputType' it's not
+  Message: Type 'InputType' from field 'inputReturnField' must be an output type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-object-fields.api.graphql#/declares/shape/Object
   Property: http://www.w3.org/ns/shacl#property
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
-  Message: Field 'inputReturnFieldArray' must be an output type, 'a list of InputType' it's not
+  Message: Type '[InputType]' from field 'inputReturnFieldArray' must be an output type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-object-fields.api.graphql#/declares/shape/Object
   Property: http://www.w3.org/ns/shacl#property
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
-  Message: Field 'inputReturnFieldOperation' must return a valid an output type, 'InputType' it's not
+  Message: Type 'InputType' from field 'inputReturnFieldOperation' must be an output type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-object-fields.api.graphql#/declares/shape/Object
   Property: http://www.w3.org/ns/shacl#property
@@ -30,7 +30,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
-  Message: Field 'inputReturnFieldOperationArray' must return a valid an output type, 'a list of InputType' it's not
+  Message: Type '[InputType]' from field 'inputReturnFieldOperationArray' must be an output type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-output-type-object-fields.api.graphql#/declares/shape/Object
   Property: http://www.w3.org/ns/shacl#property

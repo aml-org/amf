@@ -160,8 +160,8 @@ case class GraphQLNullable(union: UnionShape) {
             case u: UnionShape => GraphQLNullable(u).name
             case s: Shape      => s.name.value()
           }
-          s"a list of $items"
-        case _ => "an Union"
+          s"[$items]"
+        case _ => "union"
       }
     } else name.value()
   }

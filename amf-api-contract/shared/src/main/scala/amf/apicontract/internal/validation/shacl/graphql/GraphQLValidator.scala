@@ -13,6 +13,8 @@ import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
+import scala.annotation.tailrec
+
 object GraphQLValidator {
 
   def checkValidPath(path: Seq[PropertyShape], key: Key): Seq[ValidationInfo] = {
@@ -22,20 +24,20 @@ object GraphQLValidator {
           if (n.isAbstract.value())
             validationInfo(
               PropertyShapePathModel.Path,
-              s"Property '${propertyShape.name}' reference by field set can't be from an interface",
+              s"Property '${propertyShape.name}' reference by field set cannot be from an interface",
               key.annotations
             )
           else if (n.isInputOnly.value())
             validationInfo(
               PropertyShapePathModel.Path,
-              s"Property '${propertyShape.name}' reference by field set can't be from an input type",
+              s"Property '${propertyShape.name}' reference by field set cannot be from an input type",
               key.annotations
             )
           else {
             if (n == path.last.range) {
               validationInfo(
                 PropertyShapePathModel.Path,
-                s"Property '${propertyShape.name}' reference by field set can't be an object type",
+                s"Property '${propertyShape.name}' reference by field set cannot be an object type",
                 key.annotations
               )
             } else None
@@ -56,9 +58,9 @@ object GraphQLValidator {
   def validateKeyDirective(node: NodeShape): Seq[ValidationInfo] = {
     node.keys.flatMap { key =>
       if (node.isAbstract.value())
-        validationInfo(NodeShapeModel.Keys, "The directive '@key' can't be applied to an interface", key.annotations)
+        validationInfo(NodeShapeModel.Keys, "The directive '@key' cannot be applied to an interface", key.annotations)
       else if (node.isInputOnly.value())
-        validationInfo(NodeShapeModel.Keys, "The directive '@key' can't be applied to an input type", key.annotations)
+        validationInfo(NodeShapeModel.Keys, "The directive '@key' cannot be applied to an input type", key.annotations)
       else {
         val components = key.components
         components.flatMap { component =>
@@ -159,7 +161,7 @@ object GraphQLValidator {
         if (requiredProp.minCount > actualProp.minCount) {
           validationInfo(
             AbstractParameterModel.Schema,
-            s"field '${actual.name}' required by interface '${requiredField.interface}' can't be nullable because it's definition is non-nullable",
+            s"field '${actual.name}' required by interface '${requiredField.interface}' cannot be nullable because its definition is non-nullable",
             actual.annotations
           )
         } else if (!isValidSubType(requiredProp.range, actualProp.range))
@@ -179,6 +181,7 @@ object GraphQLValidator {
     Seq(validation).flatten
   }
 
+  @tailrec
   private def isValidSubType(requiredOutput: Shape, actualOutput: Shape): Boolean = {
     (requiredOutput, actualOutput) match {
       case (required: ScalarShape, actual: ScalarShape) => required.dataType.value() == actual.dataType.value()
@@ -208,7 +211,7 @@ object GraphQLValidator {
         if (!prop.isValidOutputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"Field '${prop.name}' must be an output type, '${getShapeName(prop.range)}' it's not",
+            s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an output type",
             prop.annotations
           )
         } else None
@@ -218,7 +221,7 @@ object GraphQLValidator {
         if (!op.isValidOutputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"Field '${op.name}' must return a valid an output type, '${getShapeName(op.payload.get.schema)}' it's not",
+            s"Type '${getShapeName(op.payload.get.schema)}' from field '${op.name}' must be an output type",
             op.annotations
           )
         } else None
@@ -236,7 +239,7 @@ object GraphQLValidator {
       if (!op.isValidOutputType) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"Field '${op.name}' type must be an output type, '${getShapeName(op.payload.get.schema)}' it's not",
+          s"Type '${getShapeName(op.payload.get.schema)}' from field '${op.name}' must be an output type",
           op.annotations
         )
       } else None
@@ -244,25 +247,25 @@ object GraphQLValidator {
   }
 
   def validateInputTypes(obj: GraphQLObject): Seq[ValidationInfo] = {
-    // fields arguments can't be output types
+    // fields arguments cannot be output types
     val operationValidations = obj.operations.flatMap { op =>
       op.parameters.flatMap { param =>
         if (!param.isValidInputType) {
           validationInfo(
             NodeShapeModel.Properties,
-            s"Argument '${param.name}' must be an input type, '${getShapeName(param.schema)}' it's not",
+            s"Type '${getShapeName(param.schema)}' from argument '${param.name}' must be an input type",
             param.annotations
           )
         } else None
       }
     }
 
-    // input type fields or directive arguments can't be output types
+    // input type fields or directive arguments cannot be output types
     val propertiesValidations = obj.properties.flatMap { prop =>
       if (!prop.isValidInputType && obj.isInput) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"Field '${prop.name}' must be an input type, '${getShapeName(prop.range)}' it's not",
+          s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an input type",
           prop.annotations
         )
       } else None
@@ -276,7 +279,7 @@ object GraphQLValidator {
       if (!param.isValidInputType) {
         validationInfo(
           NodeShapeModel.Properties,
-          s"Argument '${param.name}' type must be an input type, '${getShapeName(param.schema)}' it's not",
+          s"Type '${getShapeName(param.schema)}' from argument '${param.name}' must be an input type",
           param.annotations
         )
       } else None
@@ -293,7 +296,7 @@ object GraphQLValidator {
           Seq(
             ValidationInfo(
               DomainExtensionModel.DefinedBy,
-              Some(s"Missing required argument ${prop.name}"),
+              Some(s"Missing required argument '${prop.name}'"),
               Some(directive.annotations)
             )
           )
@@ -304,7 +307,7 @@ object GraphQLValidator {
 
   private def getShapeName(shape: Shape): String = shape match {
     case u: UnionShape   => GraphQLNullable(u).name
-    case arr: ArrayShape => s"a list of ${getShapeName(arr.items)}"
+    case arr: ArrayShape => s"[${getShapeName(arr.items)}]"
     case s               => s.name.value()
   }
 

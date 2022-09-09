@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: Property 'recoveryCode' reference by field set can't be from an interface
+  Message: Property 'recoveryCode' reference by field set cannot be from an interface
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://a.ml/vocabularies/shapes#path
@@ -30,7 +30,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: Property 'value' reference by field set can't be from an input type
+  Message: Property 'value' reference by field set cannot be from an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://a.ml/vocabularies/shapes#path
@@ -46,7 +46,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: Property 'objectField' reference by field set can't be an object type
+  Message: Property 'objectField' reference by field set cannot be an object type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://a.ml/vocabularies/shapes#path
@@ -54,7 +54,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: Property 'objectField' reference by field set can't be an object type
+  Message: Property 'objectField' reference by field set cannot be an object type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://a.ml/vocabularies/shapes#path
@@ -62,7 +62,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: Property 'typeField' reference by field set can't be an object type
+  Message: Property 'typeField' reference by field set cannot be an object type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://a.ml/vocabularies/shapes#path
@@ -70,7 +70,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-output-type
-  Message: Field 'value' must be an output type, 'InputValue' it's not
+  Message: Type 'InputValue' from field 'value' must be an output type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/User
   Property: http://www.w3.org/ns/shacl#property
@@ -78,7 +78,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#key-directive-validations
-  Message: The directive '@key' can't be applied to an interface
+  Message: The directive '@key' cannot be applied to an interface
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/invalid-key-directive.graphql#/declares/shape/RecoveryCode
   Property: http://a.ml/vocabularies/federation#keys

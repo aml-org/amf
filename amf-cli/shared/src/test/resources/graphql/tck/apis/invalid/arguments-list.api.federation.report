@@ -6,7 +6,7 @@ Number of results: 10
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'valid' must be an input type, 'a list of String' it's not
+  Message: Type '[String]' from field 'valid' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/valid1/shape/default-node
   Property: http://www.w3.org/ns/shacl#property
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'valid' must be an input type, 'a list of a list of String' it's not
+  Message: Type '[[String]]' from field 'valid' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/valid2/shape/default-node
   Property: http://www.w3.org/ns/shacl#property
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'invalid' must be an input type, 'a list of Boolean' it's not
+  Message: Type '[Boolean]' from field 'invalid' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid1/shape/default-node
   Property: http://www.w3.org/ns/shacl#property
@@ -46,7 +46,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'invalid' must be an input type, 'a list of a list of Boolean' it's not
+  Message: Type '[[Boolean]]' from field 'invalid' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid2/shape/default-node
   Property: http://www.w3.org/ns/shacl#property
