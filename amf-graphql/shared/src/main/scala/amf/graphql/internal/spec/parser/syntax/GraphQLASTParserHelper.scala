@@ -255,15 +255,4 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def setDefaultValue(n: Node, shape: Shape)(implicit ctx: GraphQLBaseWebApiContext): Unit =
     parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => shape.withDefault(value, inferred()))
-
-  //  sealed trait GraphQLSpec
-  //  object GraphQL    extends GraphQLSpec
-  //  object Federation extends GraphQLSpec
-  //
-  //  def spec(implicit ctx: GraphQLBaseWebApiContext): GraphQLSpec = {
-  //    ctx match {
-  //      case _: GraphQLFederationWebApiContext => Federation
-  //      case _: GraphQLWebApiContext           => GraphQL
-  //    }
-  //  }
 }
