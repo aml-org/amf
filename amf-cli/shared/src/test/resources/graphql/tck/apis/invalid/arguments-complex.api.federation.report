@@ -9,7 +9,7 @@ Level: Violation
   Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid1/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(14,54)-(14,58)]
   Location: 
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: Provided value for object 'Child' is missing property 'b'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid2/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(15,49)-(15,70)]
   Location: 
 
@@ -25,6 +25,6 @@ Level: Violation
   Message: Unexpected property 'c' is not defined in object 'Child'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid2/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(15,49)-(15,70)]
   Location: 

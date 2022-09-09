@@ -1,29 +1,26 @@
 package amf.apicontract.internal.validation.shacl.graphql.values
 
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{Annotation, DataNode, ScalarNode, Shape}
+import amf.core.client.scala.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DataNodeModel, ScalarNodeModel}
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{ArrayShape, NilShape, NodeShape, ScalarShape, UnionShape}
+import amf.shapes.client.scala.model.domain._
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 trait ValueValidator[S <: Shape] {
-  protected val defaultField: Field = ScalarNodeModel.Value
-
-  def validate(shape: S, value: DataNode): Seq[ValidationInfo]
+  def validate(shape: S, value: DataNode)(implicit targetField: Field): Seq[ValidationInfo]
 
   // helper
   protected def isNull(s: ScalarNode): Boolean = s.dataType.value() == DataType.Nil
 
-  def typeError(expected: String, actual: String, annotations: Annotations): ValidationInfo = {
+  def typeError(expected: String, actual: String, annotations: Annotations)(implicit targetField: Field): ValidationInfo = {
     val message = s"Expecting '$expected' value but got '$actual' value instead"
-    ValidationInfo(defaultField, Some(message), Some(annotations))
+    ValidationInfo(targetField, Some(message), Some(annotations))
   }
 }
 
 object ValueValidator {
-  def validate(shape: Shape, value: DataNode): Seq[ValidationInfo] = {
+  def validate(shape: Shape, value: DataNode)(implicit targetField: Field): Seq[ValidationInfo] = {
     shape match {
       case _ if value == null                                        => Nil
       case s: ScalarShape if s.values.nonEmpty                       => EnumValueValidator.validate(s, value)

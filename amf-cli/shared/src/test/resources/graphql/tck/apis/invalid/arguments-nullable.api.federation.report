@@ -17,7 +17,7 @@ Level: Violation
   Message: Expecting 'String' value but got 'null' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/invalid1/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(9,39)-(9,43)]
   Location: 
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: Expecting 'list' value but got 'null' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/invalid2/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(10,41)-(10,45)]
   Location: 
 
@@ -41,6 +41,6 @@ Level: Violation
   Message: Expecting 'String' value but got 'null' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/invalid3/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(11,42)-(11,46)]
   Location: 

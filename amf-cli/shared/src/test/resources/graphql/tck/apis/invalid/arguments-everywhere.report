@@ -9,7 +9,7 @@ Level: Violation
   Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/invalid/shape/default-node
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(6,38)-(6,42)]
   Location: 
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/shape/Object/supportedOperation/invalid/expects/request/parameter/parameter/invalid
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(10,31)-(10,35)]
   Location: 
 
@@ -25,6 +25,6 @@ Level: Violation
   Message: Expecting 'String' value but got 'Boolean' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-everywhere.graphql#/declares/scalar/ScalarInvalid/customDomainProperties/valid
-  Property: http://a.ml/vocabularies/data#value
+  Property: http://a.ml/vocabularies/document#customDomainProperties
   Range: [(14,35)-(14,40)]
   Location: 
