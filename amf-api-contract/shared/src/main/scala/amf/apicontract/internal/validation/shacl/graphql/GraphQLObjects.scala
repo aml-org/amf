@@ -41,7 +41,7 @@ case class GraphQLObject(node: NodeShape) extends GraphQLElement {
 
   def allFields(): Seq[GraphQLField] = fields().fields()
 
-  def inherits: Seq[GraphQLObject] = node.inherits.map(_.asInstanceOf[NodeShape]).map(GraphQLObject)
+  def inherits: Seq[GraphQLObject] = node.inherits.collect { case n: NodeShape => n }.map(GraphQLObject)
 }
 
 case class GraphQLFields(properties: Seq[GraphQLProperty], operations: Seq[GraphQLOperation]) {
