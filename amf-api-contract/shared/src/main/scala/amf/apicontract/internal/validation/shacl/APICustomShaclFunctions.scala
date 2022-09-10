@@ -51,6 +51,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           val node = element.asInstanceOf[NodeShape]
           node.inherits.foreach {
             case n: NodeShape if n.isAbstract.value() => // ok
+            case _: UnresolvedShape => // skip, already validated when validating references
             case p =>
               val message = {
                 val childName  = node.name.value()
