@@ -3,6 +3,7 @@ import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 
 case class GraphQLEnumEmitter(
@@ -24,7 +25,14 @@ case class GraphQLEnumEmitter(
       enumValues.foreach { enumValue =>
         val name       = enumValue.value.value()
         val directives = GraphQLDirectiveApplicationsRenderer(enumValue)
-        LineEmitter(o, name, directives).emit()
+        enumValue.description.option() match {
+          case Some(description) =>
+            o.fixed { f =>
+              GraphQLDescriptionEmitter(Some(description), ctx, f, Some(pos(enumValue.annotations))).emit()
+              LineEmitter(f, name, directives).emit()
+            }
+          case _ => LineEmitter(o, name, directives).emit()
+        }
       }
     }
   }
