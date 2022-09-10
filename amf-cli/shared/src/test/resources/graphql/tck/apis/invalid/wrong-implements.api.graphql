@@ -23,6 +23,6 @@ enum MyEnum {
     B
 }
 
-type MyObject implements MyScalar & MyInput & MyUnion & MyEnum {
+type MyObject implements MyScalar & MyInput & MyUnion & MyEnum & MyUnresolved {
   name: String
 }
