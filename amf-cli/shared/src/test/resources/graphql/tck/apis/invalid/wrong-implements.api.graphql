@@ -1,0 +1,28 @@
+type Query {
+    name: String
+}
+
+scalar MyScalar
+
+input MyInput {
+    name: String
+}
+
+type A {
+    name: String
+}
+
+type B {
+    name: String
+}
+
+union MyUnion = A | B
+
+enum MyEnum {
+    A
+    B
+}
+
+type MyObject implements MyScalar & MyInput & MyUnion & MyEnum {
+  name: String
+}

@@ -46,6 +46,23 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         }
       },
       new CustomShaclFunction {
+        override val name: String = "validGraphQLInheritance"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val node = element.asInstanceOf[NodeShape]
+          node.inherits.foreach {
+            case n: NodeShape if n.isAbstract.value() => // ok
+            case p =>
+              val message = {
+                val childName  = node.name.value()
+                val parentName = p.name.value()
+                s"Type '$childName' cannot implement non-interface type '$parentName'"
+              }
+              val result = ValidationInfo(NodeShapeModel.Inherits, Some(message), Some(node.annotations))
+              validate(Some(result))
+          }
+        }
+      },
+      new CustomShaclFunction {
         override val name: String = "mandatoryGraphqlNonEmptyEndpoints"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val webapi            = element.asInstanceOf[Api]

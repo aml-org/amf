@@ -1089,6 +1089,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("mandatoryGraphqlNonEmptyEndpoints")
       ),
       AMFValidation(
+        uri = amfParser("invalid-inheritance"),
+        message = "Invalid inheritance",
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("inherits"),
+        constraint = shape("validGraphQLInheritance")
+      ),
+      AMFValidation(
         uri = amfParser("invalid-extension-argument-type"),
         owlClass = apiContract("DomainExtension"),
         owlProperty = apiContract("extensionName"),
