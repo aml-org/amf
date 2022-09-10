@@ -59,6 +59,10 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
   private def getEnumValue(valueNode: Node): Option[ScalarNode] =
     valueFrom(valueNode, Seq(ENUM_VALUE, NAME))
       .orElse(valueFrom(valueNode, Seq(ENUM_VALUE, NAME, KEYWORD)))
+      .map { e =>
+        parseDescription(valueNode, e, e.meta)
+        e
+      }
 
   private def valueFrom(element: ASTNode, pathToValue: Seq[String]): Option[ScalarNode] = {
     path(element, pathToValue) match {

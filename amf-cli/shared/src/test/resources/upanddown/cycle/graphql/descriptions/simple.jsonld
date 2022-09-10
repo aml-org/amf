@@ -951,6 +951,11 @@
                     "@id": "http://www.w3.org/2001/XMLSchema#anyType"
                   }
                 ],
+                "http://a.ml/vocabularies/core#description": [
+                  {
+                    "@value": "Enum value description"
+                  }
+                ],
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "Value"
@@ -964,7 +969,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/simple.graphql#/declares/scalar/Enum/in/Value/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/simple.graphql#/declares/scalar/Enum/in/Value/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/simple.graphql#/declares/scalar/Enum/in/Value"
@@ -973,6 +978,19 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(39,4)-(39,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/simple.graphql#/declares/scalar/Enum/in/Value/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/core#description"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(38,4)-(38,28)]"
                           }
                         ]
                       }
