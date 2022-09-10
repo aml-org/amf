@@ -1,0 +1,5 @@
+type Query {
+    name: String
+}
+
+scalar MyScalar @myDirective(a: "string")
