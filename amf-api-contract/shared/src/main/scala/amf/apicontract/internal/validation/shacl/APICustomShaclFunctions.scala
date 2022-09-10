@@ -263,6 +263,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             val invalidMembers = members.filter {
               case n: NodeShape if n.isAbstract.value()  => true  // interfaces
               case n: NodeShape if n.isInputOnly.value() => true  // input objects
+              case _: UnresolvedShape                    => false // unresolved shapes are already validated when resolving references
               case any if !any.isInstanceOf[NodeShape]   => true  // not an Object
               case _                                     => false // an Object
             }

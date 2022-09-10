@@ -1,0 +1,9 @@
+type Query {
+    name: String
+}
+
+type A {
+    name: String
+}
+
+union MyUnion = A | B

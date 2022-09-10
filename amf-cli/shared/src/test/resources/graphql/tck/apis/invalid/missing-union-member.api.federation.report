@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-union-member.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'B'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-union-member.api.graphql#/declares/union/MyUnion/anyOf/unresolved
+  Property: 
+  Range: [(9,20)-(9,21)]
+  Location: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-union-member.api.graphql
