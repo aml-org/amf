@@ -7,7 +7,7 @@ import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
@@ -15,7 +15,7 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVo
   *
   * EndPoint in the API holding a number of executable operations
   */
-object EndPointModel extends DomainElementModel with KeyField with NameFieldSchema with DescriptionField {
+object EndPointModel extends DomainElementModel with KeyField with NameFieldSchema with DescribedElementModel {
 
   val Path =
     Field(Str, ApiContract + "path", ModelDoc(ModelVocabularies.ApiContract, "path", "Path template for an endpoint"))

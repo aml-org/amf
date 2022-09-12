@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.domain.model
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.core.client.scala.model.domain.AmfScalar
-import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.domain.Annotations.virtual
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
@@ -66,7 +66,7 @@ case class FieldBuilder[I <: FieldBuilderInfo](
   def build()(implicit ev: I =:= Mandatory): EndPoint = {
     val endpoint     = EndPoint(annotations)
     val endpointPath = EndpointPath(name.toString(), operationType)
-    description.foreach(scalar => endpoint.set(DescriptionField.Description, scalar.toString(), scalar.annotations))
+    description.foreach(scalar => endpoint.set(DescribedElementModel.Description, scalar.toString(), scalar.annotations))
     endpoint.withPath(endpointPath).withName(s"$typeName.$name", name.annotations)
     endpoint.withOperations(Seq(operation(endpoint)))
   }

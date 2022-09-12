@@ -7,12 +7,12 @@ import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 /** Server meta model
   */
-object ServerModel extends DomainElementModel with NameFieldSchema with DescriptionField {
+object ServerModel extends DomainElementModel with NameFieldSchema with DescribedElementModel {
   val Url = Field(
     Str,
     Core + "urlTemplate",

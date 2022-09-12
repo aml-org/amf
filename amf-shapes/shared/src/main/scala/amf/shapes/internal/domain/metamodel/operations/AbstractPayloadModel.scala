@@ -6,7 +6,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain._
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
@@ -14,7 +14,7 @@ trait AbstractPayloadModel
     extends DomainElementModel
     with KeyField
     with NameFieldSchema
-    with DescriptionField
+    with DescribedElementModel
     with ExamplesField {
 
   val MediaType: Field = Field(
