@@ -53,6 +53,7 @@ object TokenTypes {
   val DIRECTIVE_LOCATIONS            = "directiveLocations"
   val DIRECTIVE_LOCATION             = "directiveLocation"
   val TYPE_SYSTEM_DIRECTIVE_LOCATION = "typeSystemDirectiveLocation"
+  val EXECUTABLE_DIRECTIVE_LOCATION  = "executableDirectiveLocation"
   val DIRECTIVES                     = "directives"
   val DIRECTIVE                      = "directive"
   val DEFAULT_VALUE                  = "defaultValue"

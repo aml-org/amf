@@ -1,11 +1,13 @@
 package amf.graphql.internal.spec.emitter.domain
+
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.emitter.helpers.LineEmitter
+import GraphQLLocationHelper.toLocationName
 import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.internal.annotations.GraphQLLocation
 
 case class GraphQLDirectiveDeclarationEmitter(
     directive: CustomDomainProperty,
@@ -33,10 +35,12 @@ case class GraphQLDirectiveDeclarationEmitter(
   }
 
   private def collectLocations(): String = {
-    directive.annotations.find(classOf[GraphQLLocation]) match {
-      case Some(locations) => locations.location.mkString(" | ")
-      case _               => ""
-    }
+    directive.domain
+      .flatMap { fieldValue =>
+        val locationIri = fieldValue.value()
+        toLocationName(locationIri)
+      }
+      .mkString(" | ")
   }
 
   private def collectArguments(): Seq[String] = {

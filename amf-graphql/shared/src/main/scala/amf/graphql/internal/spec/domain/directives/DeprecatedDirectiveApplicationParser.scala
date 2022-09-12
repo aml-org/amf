@@ -6,7 +6,7 @@ import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.Define
 import amf.core.internal.parser.domain.Annotations.inferred
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.parser.syntax.Locations.locationToDomain
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
@@ -30,7 +30,7 @@ class DeprecatedDirectiveApplicationParser(override implicit val ctx: GraphQLBas
   private def generateDeclaration(): CustomDomainProperty = {
     val customDomainProperty = CustomDomainProperty(inferred())
     customDomainProperty.withName("deprecated", inferred())
-    customDomainProperty.withDomain(Seq("FIELD_DEFINITION", "ENUM_VALUE").flatMap(locationToDomain))
+    customDomainProperty.withDomain(Seq("FIELD_DEFINITION", "ENUM_VALUE").flatMap(toLocationIri))
     val schema = NodeShape()
     val scalar = ScalarShape(inferred()).withDataType(DataType.String)
     val argument = PropertyShape()
