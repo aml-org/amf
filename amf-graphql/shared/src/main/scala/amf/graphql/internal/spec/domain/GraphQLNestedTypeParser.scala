@@ -53,7 +53,6 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
       case Some(i: NodeShape) if i.isAbstract.value() =>
         i.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case Some(n: NodeShape) =>
-        astError("Error extending non interface type", toAnnotations(t))
         n.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case _ =>
         unresolvedShape(typeName, t)

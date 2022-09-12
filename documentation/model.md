@@ -480,6 +480,7 @@ Types:
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | member | [[DataNode](#datanode)] |  | `http://www.w3.org/2000/01/rdf-schema#member` |
+ | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -1568,6 +1569,7 @@ Types:
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | value | string |  | `http://a.ml/vocabularies/data#value` |
+ | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -2000,6 +2002,7 @@ Types:
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+ | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
 
 ## ObjectPropertyTerm
 
@@ -2557,6 +2560,7 @@ Types:
  | ------ | ------ | ------ | ------ |
  | value | string | value for an scalar dynamic node | `http://a.ml/vocabularies/data#value` |
  | datatype | url | Data type of value for an scalar dynamic node | `http://www.w3.org/ns/shacl#datatype` |
+ | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |

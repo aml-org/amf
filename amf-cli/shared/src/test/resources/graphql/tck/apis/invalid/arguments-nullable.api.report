@@ -1,17 +1,9 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 5
+Number of results: 3
 
 Level: Violation
-
-- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'valid' must be an input type, 'a list of null' it's not
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/valid2/shape/default-node
-  Property: http://www.w3.org/ns/shacl#property
-  Range: [(6,18)-(6,41)]
-  Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
   Message: Expecting 'String' value but got 'null' value instead
@@ -27,14 +19,6 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/invalid2/shape/default-node
   Property: http://www.w3.org/ns/shacl#defaultValue
   Range: [(10,41)-(10,45)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Field 'invalid' must be an input type, 'a list of null' it's not
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-nullable.api.graphql#/declares/invalid3/shape/default-node
-  Property: http://www.w3.org/ns/shacl#property
-  Range: [(11,20)-(11,47)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive

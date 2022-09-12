@@ -6,7 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Argument 'input_' must be an input type, 'Object1' it's not
+  Message: Type 'Object1' from argument 'input_' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-interface-arguments.api.graphql#/declares/shape/Test
   Property: http://www.w3.org/ns/shacl#property
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Argument 'input_' must be an input type, 'Interface' it's not
+  Message: Type 'Interface' from argument 'input_' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-interface-arguments.api.graphql#/declares/shape/Test
   Property: http://www.w3.org/ns/shacl#property
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-input-type
-  Message: Argument 'input_' must be an input type, 'Union' it's not
+  Message: Type 'Union' from argument 'input_' must be an input type
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/is-not-input-type-interface-arguments.api.graphql#/declares/shape/Test
   Property: http://www.w3.org/ns/shacl#property

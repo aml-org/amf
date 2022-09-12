@@ -18,4 +18,8 @@ interface Interface {
 
 scalar Scalar
 
-extend union SearchResult = Scalar | Union | Interface
+input Input {
+    name: String
+}
+
+extend union SearchResult = Scalar | Union | Interface | Input

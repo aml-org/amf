@@ -7,13 +7,13 @@ import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
 /** Web Api metamodel
   */
-trait ApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel with VersionField {
+trait ApiModel extends DomainElementModel with NameFieldSchema with DescribedElementModel with TagsModel with VersionField {
 
   val Servers =
     Field(

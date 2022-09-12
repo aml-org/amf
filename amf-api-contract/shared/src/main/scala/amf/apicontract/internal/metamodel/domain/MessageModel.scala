@@ -7,7 +7,7 @@ import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.{ExampleModel, NodeShapeModel}
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
@@ -18,7 +18,7 @@ trait MessageModel
     with DocumentationField
     with AbstractModel
     with NameFieldSchema
-    with DescriptionField
+    with DescribedElementModel
     with LinkableElementModel
     with DomainElementModel
     with ParametersFieldModel {
