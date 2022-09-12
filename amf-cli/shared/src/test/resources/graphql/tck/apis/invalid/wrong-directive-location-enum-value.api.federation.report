@@ -6,7 +6,7 @@ Number of results: 12
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to schema
+  Message: Directive 'MyDirective' cannot be applied to SCHEMA
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/web-api
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to scalar 'MyScalar'
+  Message: Directive 'MyDirective' cannot be applied to SCALAR 'MyScalar'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/scalar/MyScalar
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -22,7 +22,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to object 'MyObject'
+  Message: Directive 'MyDirective' cannot be applied to OBJECT 'MyObject'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyObject
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -30,7 +30,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to argument 'myArgument'
+  Message: Directive 'MyDirective' cannot be applied to ARGUMENT_DEFINITION 'myArgument'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -38,7 +38,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to field 'myField'
+  Message: Directive 'MyDirective' cannot be applied to FIELD_DEFINITION 'myField'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyObject/supportedOperation/myField
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -46,7 +46,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to field 'myField2'
+  Message: Directive 'MyDirective' cannot be applied to FIELD_DEFINITION 'myField2'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyObject/property/property/myField2
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -54,7 +54,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to interface 'MyInterface'
+  Message: Directive 'MyDirective' cannot be applied to INTERFACE 'MyInterface'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyInterface
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -62,7 +62,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to union 'MyUnion'
+  Message: Directive 'MyDirective' cannot be applied to UNION 'MyUnion'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/union/MyUnion
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -70,7 +70,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to input object 'MyInputObject'
+  Message: Directive 'MyDirective' cannot be applied to INPUT_OBJECT 'MyInputObject'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyInputObject
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -78,7 +78,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to input field 'myField'
+  Message: Directive 'MyDirective' cannot be applied to INPUT_FIELD_DEFINITION 'myField'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/MyInputObject/property/property/myField
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -86,7 +86,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to enum 'MyEnum'
+  Message: Directive 'MyDirective' cannot be applied to ENUM 'MyEnum'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/scalar/MyEnum
   Property: http://a.ml/vocabularies/document#customDomainProperties
@@ -94,7 +94,7 @@ Level: Violation
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
-  Message: Directive MyDirective cannot be applied to argument 'text'
+  Message: Directive 'MyDirective' cannot be applied to ARGUMENT_DEFINITION 'text'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/MyDirective2
   Property: http://a.ml/vocabularies/document#customDomainProperties

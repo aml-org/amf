@@ -1132,34 +1132,37 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
           {
-            "@id": "http://a.ml/vocabularies/shapes#Operation"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/SCHEMA"
           },
           {
-            "@id": "http://a.ml/vocabularies/shapes#ScalarShape"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/SCALAR"
           },
           {
-            "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/OBJECT"
           },
           {
-            "@id": "http://a.ml/vocabularies/shapes#UnionShape"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/FIELD_DEFINITION"
           },
           {
-            "@id": "http://a.ml/vocabularies/shapes#Parameter"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ARGUMENT_DEFINITION"
           },
           {
-            "@id": "http://a.ml/vocabularies/apiContract#WebAPI"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/INTERFACE"
           },
           {
-            "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/UNION"
           },
           {
-            "@id": "http://a.ml/vocabularies/apiContract#Parameter"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ENUM"
           },
           {
-            "@id": "http://a.ml/vocabularies/data#Scalar"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ENUM_VALUE"
           },
           {
-            "@id": "http://www.w3.org/ns/shacl#NodeShape"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/INPUT_OBJECT"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/INPUT_FIELD_DEFINITION"
           }
         ],
         "http://a.ml/vocabularies/shapes#schema": [
@@ -1266,13 +1269,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
           {
-            "@id": "http://www.w3.org/ns/shacl#NodeShape"
-          },
-          {
-            "@id": "http://a.ml/vocabularies/shapes#Parameter"
-          },
-          {
-            "@id": "http://a.ml/vocabularies/apiContract#Parameter"
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ARGUMENT_DEFINITION"
           }
         ],
         "http://a.ml/vocabularies/shapes#schema": [
