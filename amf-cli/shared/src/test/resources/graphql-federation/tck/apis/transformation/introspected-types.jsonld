@@ -644,7 +644,7 @@
       ],
       "rdfs:domain": [
         {
-          "@id": "http://a.ml/vocabularies/apiContract#WebAPI"
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/SCHEMA"
         }
       ],
       "raml-shapes:schema": {
@@ -661,13 +661,7 @@
       ],
       "rdfs:domain": [
         {
-          "@id": "http://a.ml/vocabularies/shapes#Operation"
-        },
-        {
-          "@id": "http://www.w3.org/ns/shacl#PropertyShape"
-        },
-        {
-          "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/FIELD_DEFINITION"
         }
       ],
       "raml-shapes:schema": {
@@ -684,13 +678,7 @@
       ],
       "rdfs:domain": [
         {
-          "@id": "http://a.ml/vocabularies/shapes#Operation"
-        },
-        {
-          "@id": "http://www.w3.org/ns/shacl#PropertyShape"
-        },
-        {
-          "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/FIELD_DEFINITION"
         }
       ],
       "raml-shapes:schema": {
@@ -707,7 +695,10 @@
       ],
       "rdfs:domain": [
         {
-          "@id": "http://www.w3.org/ns/shacl#NodeShape"
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/OBJECT"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/INTERFACE"
         }
       ],
       "raml-shapes:schema": {

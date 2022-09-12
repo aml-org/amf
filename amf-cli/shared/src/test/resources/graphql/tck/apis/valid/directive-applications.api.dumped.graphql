@@ -28,5 +28,5 @@ type MyObject @example(text: "Jorge") {
 }
 
 union MyUnion @example(text: "Jorge") = MyObject | MyObject2
-directive @example(text: String @example2) on ENUM | INPUT_FIELD_DEFINITION | ENUM_VALUE | SCALAR | ARGUMENT_DEFINITION | SCHEMA | INPUT_OBJECT | FIELD_DEFINITION | INTERFACE | OBJECT | UNION
+directive @example(text: String @example2) on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 directive @example2 on ARGUMENT_DEFINITION
