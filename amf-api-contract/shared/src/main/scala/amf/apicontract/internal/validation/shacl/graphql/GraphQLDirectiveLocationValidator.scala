@@ -1,12 +1,11 @@
 package amf.apicontract.internal.validation.shacl.graphql
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.{inferGraphQLKind, locationFor}
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocation
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.common.{NameFieldSchema, NameFieldShacl}
-import amf.shapes.internal.annotations.GraphQLLocation
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object GraphQLDirectiveLocationValidator {
@@ -25,25 +24,20 @@ object GraphQLDirectiveLocationValidator {
       element: DomainElement,
       appliedToDirectiveArgument: Boolean = false
   ): Option[ValidationInfo] = {
-    val kind               = inferGraphQLKind(element, appliedToDirectiveArgument)
-    val currentLocation    = locationFor(kind)
-    val directiveLocations = getDirectiveLocations(directiveApplication)
-    val isAValidLocation   = directiveLocations.contains(currentLocation)
+    val result = for {
+      actual      <- toLocation(element, appliedToDirectiveArgument)
+      declaration <- Option(directiveApplication.definedBy)
+    } yield {
+      val expected           = declaration.domain.map(_.value())
+      val isValidApplication = expected.contains(actual.iri.iri())
+      (actual, isValidApplication)
+    }
 
-    if (!isAValidLocation) {
-      val message = buildErrorMessage(directiveApplication, element, kind)
-      Some(
-        ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations))
-      )
-    } else None
-  }
-
-  private def getDirectiveLocations(
-      directiveApplication: DomainExtension
-  ): Set[String] = {
-    Option(directiveApplication.definedBy) match {
-      case Some(definedBy) => definedBy.annotations.find(classOf[GraphQLLocation]).map(_.location).getOrElse(Set())
-      case _               => Set()
+    result match {
+      case Some((actual, false)) =>
+        val message = buildErrorMessage(directiveApplication, element, actual.name)
+        Some(ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations)))
+      case _ => None
     }
   }
 
@@ -51,8 +45,8 @@ object GraphQLDirectiveLocationValidator {
     val nameOpt: Option[String] = extractName(element)
 
     nameOpt match {
-      case Some(name) => s"Directive ${directiveApplication.name.value()} cannot be applied to $kind $name"
-      case _          => s"Directive ${directiveApplication.name.value()} cannot be applied to $kind"
+      case Some(name) => s"Directive '${directiveApplication.name.value()}' cannot be applied to $kind $name"
+      case _          => s"Directive '${directiveApplication.name.value()}' cannot be applied to $kind"
     }
   }
 

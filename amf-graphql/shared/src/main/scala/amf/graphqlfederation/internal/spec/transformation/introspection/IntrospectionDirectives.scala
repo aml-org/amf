@@ -1,8 +1,9 @@
 package amf.graphqlfederation.internal.spec.transformation.introspection
 
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
-import amf.graphql.internal.spec.parser.syntax.Locations.domainFor
 import TypeBuilders.nullable
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper
+import GraphQLLocationHelper.toLocationIris
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 object IntrospectionDirectives {
@@ -16,21 +17,21 @@ object IntrospectionDirectives {
     CustomDomainProperty()
       .withName("external")
       .withSchema(NodeShape())
-      .withDomain(domainFor(SCHEMA))
+      .withDomain(toLocationIris(SCHEMA))
   }
 
   def `@requires`(fieldSet: ScalarShape): CustomDomainProperty = {
     CustomDomainProperty()
       .withName("requires")
       .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(FIELD_DEFINITION))
+      .withDomain(toLocationIris(FIELD_DEFINITION))
   }
 
   def `@provides`(fieldSet: ScalarShape): CustomDomainProperty = {
     CustomDomainProperty()
       .withName("provides")
       .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(FIELD_DEFINITION))
+      .withDomain(toLocationIris(FIELD_DEFINITION))
   }
 
   def `@key`(fieldSet: ScalarShape): CustomDomainProperty = {
@@ -38,7 +39,7 @@ object IntrospectionDirectives {
     CustomDomainProperty()
       .withName("key")
       .withSchema(nullable(fieldSetArgument(fieldSet)))
-      .withDomain(domainFor(OBJECT, INTERFACE))
+      .withDomain(toLocationIris(OBJECT, INTERFACE))
   }
 
   private def fieldSetArgument(fieldSet: ScalarShape): NodeShape = {
