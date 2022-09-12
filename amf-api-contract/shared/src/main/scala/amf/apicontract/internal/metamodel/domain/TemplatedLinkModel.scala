@@ -5,7 +5,7 @@ import amf.core.client.scala.vocabulary.Namespace.ApiContract
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
 
@@ -15,7 +15,7 @@ object TemplatedLinkModel
     extends DomainElementModel
     with LinkableElementModel
     with NameFieldSchema
-    with DescriptionField {
+    with DescribedElementModel {
 
   val Template = Field(
     Str,

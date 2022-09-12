@@ -4,13 +4,13 @@ import amf.core.client.scala.vocabulary.Namespace.Core
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Iri, Str}
-import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.CreativeWork
 
 /** Creative work metamodel
   */
-object CreativeWorkModel extends DomainElementModel with LinkableElementModel with DescriptionField {
+object CreativeWorkModel extends DomainElementModel with LinkableElementModel with DescribedElementModel {
 
   val Url =
     Field(Iri, Core + "url", ModelDoc(ModelVocabularies.Core, "url", "URL for the creative work"))

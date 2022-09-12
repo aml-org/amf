@@ -17,7 +17,7 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.metamodel.Type.Scalar
 import amf.core.internal.metamodel.document.BaseUnitModel
-import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField, NameFieldSchema, NameFieldShacl}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, DisplayNameField, NameFieldSchema, NameFieldShacl}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.DotQualifiedNameExtractor
@@ -377,7 +377,7 @@ object MergingRestrictions {
       NameFieldSchema.Name,
       DisplayNameField.DisplayName,
       ShapeModel.DisplayName,
-      DescriptionField.Description,
+      DescribedElementModel.Description,
       DocumentationField.Documentation,
       TagModel.Documentation,
       BaseApiModel.Documentations,
