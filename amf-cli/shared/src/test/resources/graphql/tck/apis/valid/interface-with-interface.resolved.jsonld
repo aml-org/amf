@@ -432,7 +432,7 @@
             ],
             "http://a.ml/vocabularies/shapes#inherits": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -447,7 +447,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -456,7 +456,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -490,7 +490,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -505,7 +505,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -514,7 +514,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -552,7 +552,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -567,7 +567,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -576,7 +576,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -610,7 +610,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname",
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -625,7 +625,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -634,7 +634,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -798,7 +798,7 @@
         ],
         "http://a.ml/vocabularies/shapes#inherits": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -813,7 +813,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -822,7 +822,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasName/property/property/name/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasName/property/name/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -856,7 +856,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname",
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -871,7 +871,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname",
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -880,7 +880,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasSurname/property/property/surname/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-with-interface.graphql#/declares/shape/HasFullName/shape/HasSurname/property/surname/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",

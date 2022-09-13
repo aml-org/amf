@@ -33,7 +33,7 @@ class GraphQLTCKValidationTest extends GraphQLFunSuiteCycleTests {
     }
 
   // Test invalid singular API
-  test("interface-chain") {
+  ignore("interface-chain") {
     assertReport(s"$basePath/invalid/missing-matrix-field.graphql")
   }
 

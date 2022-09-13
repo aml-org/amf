@@ -1,0 +1,15 @@
+type Query {
+    name: String
+}
+
+interface A implements C {
+    field: String
+}
+
+interface B implements A {
+    field: String
+}
+
+interface C implements B & A {
+    field: String
+}
