@@ -397,6 +397,84 @@
             "@value": "A type."
           }
         ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/myDirective",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/SCALAR"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/myDirective/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/myDirective/shape/default-node/property/property/arg",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/declares/myDirective/shape/default-node/property/property/arg/scalar/default-scalar",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "arg"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#description": [
+                  {
+                    "@value": "A directive argument."
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#inputOnly": [
+              {
+                "@value": true
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "myDirective"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "A directive."
+          }
+        ]
       }
     ]
   }

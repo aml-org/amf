@@ -57,6 +57,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     val propertyShape       = PropertyShape(toAnnotations(n))
     val (name, annotations) = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
     propertyShape.withName(name, annotations)
+    parseDescription(n, propertyShape, propertyShape.meta)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
     val argumentType = parseType(n)
     setDefaultValue(n, propertyShape)
