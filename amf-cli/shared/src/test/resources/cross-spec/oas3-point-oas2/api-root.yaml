@@ -1,0 +1,12 @@
+openapi: 3.0.0
+
+info:
+  title: Test API
+  version: 1.0.0
+
+components:
+  schemas:
+    SomeType:
+      $ref: api-pointed.json#/definitions/TheType
+
+paths: {}
