@@ -1,16 +1,17 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.internal.parser.domain.Annotations.virtual
+import amf.core.internal.remote.{GraphQL, GraphQLFederation}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
 import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.internal.annotations.{DirectiveArguments, GraphQLLocation}
+import amf.shapes.internal.annotations.DirectiveArguments
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
-import amf.core.internal.remote.{GraphQL, GraphQLFederation}
 
 case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
@@ -64,15 +65,18 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseLocations(): Unit = {
-    var domains   = Set[String]()
-    var locations = Set[String]()
+    var domains = Seq[String]()
     collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION)).foreach { n =>
-      path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION)) match {
-        case Some(graphqlLocation: Node) =>
-          val locationName = graphqlLocation.children.head.asInstanceOf[Terminal].value
-          locations = locations + locationName
-          val domainsFromLocation = getDomains(locationName).toSet
-          domains = domainsFromLocation ++: domains
+      lazy val typeSystemLocation = path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION))
+      lazy val executableLocation = path(n, Seq(EXECUTABLE_DIRECTIVE_LOCATION))
+      typeSystemLocation.orElse(executableLocation) match {
+        case Some(rawLocation: Node) =>
+          val locationName = rawLocation.children.head.asInstanceOf[Terminal].value
+          toLocationIri(locationName) match {
+            case Some(locationIri) =>
+              domains = domains :+ locationIri
+            case None => // unreachable, will fail first on ANTLR parsing
+          }
         case _ =>
           n match {
             case n: Node => checkErrorNode(n.children.toList)
@@ -80,11 +84,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
           }
       }
     }
-    directive.add(GraphQLLocation(locations))
-    directive.withDomain(domains.toSeq)
+    directive.withDomain(domains.distinct)
   }
-
-  private def getDomains(locationName: String): Seq[String] = Locations.locationToDomain.getOrElse(locationName, Seq())
 
   private def checkErrorNode(children: Seq[ASTElement]): Unit = {
     children.foreach {

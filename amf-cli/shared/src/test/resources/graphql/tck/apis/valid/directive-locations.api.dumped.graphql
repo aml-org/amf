@@ -1,0 +1,23 @@
+type Query {
+  name: String
+}
+
+directive @mutation on MUTATION
+directive @union on UNION
+directive @field_definition on FIELD_DEFINITION
+directive @field on FIELD
+directive @variable_definition on VARIABLE_DEFINITION
+directive @argument_definition on ARGUMENT_DEFINITION
+directive @fragment_spread on FRAGMENT_SPREAD
+directive @interface on INTERFACE
+directive @subscription on SUBSCRIPTION
+directive @query on QUERY
+directive @input_field_definition on INPUT_FIELD_DEFINITION
+directive @inline_fragment on INLINE_FRAGMENT
+directive @enum_value on ENUM_VALUE
+directive @object on OBJECT
+directive @scalar on SCALAR
+directive @schema on SCHEMA
+directive @fragment_definition on FRAGMENT_DEFINITION
+directive @enum on ENUM
+directive @input_object on INPUT_OBJECT
