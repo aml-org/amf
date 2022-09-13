@@ -1878,6 +1878,11 @@
             "@value": "Directive"
           }
         ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Directive description"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/block.graphql#/declares/Directive/source-map",
@@ -1901,7 +1906,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/block.graphql#/declares/Directive/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/block.graphql#/declares/Directive/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/block.graphql#/declares/Directive"
@@ -1910,6 +1915,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(45,0)-(46,30)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/descriptions/block.graphql#/declares/Directive/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#description"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(45,0)-(45,27)]"
                   }
                 ]
               }
