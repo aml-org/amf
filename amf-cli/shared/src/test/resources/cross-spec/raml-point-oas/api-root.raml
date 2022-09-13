@@ -1,0 +1,14 @@
+#%RAML 1.0
+
+title: Cross-Spec RAML to OAS
+
+version: 1.0.0
+
+types:
+  SomeType: !include api-pointed.yaml
+
+/apps:
+  get:
+    body:
+      application/json:
+        type: SomeType
