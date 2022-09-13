@@ -788,6 +788,7 @@ Types:
  | domain | [url] | RDFS domain property | `http://www.w3.org/2000/01/rdf-schema#domain` |
  | schema | [Shape](#shape) | Schema for an entity | `http://a.ml/vocabularies/shapes#schema` |
  | name | string | Name for an entity | `http://a.ml/vocabularies/core#name` |
+ | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | serializationOrder | int | position in the set of properties for a shape used to serialize this property on the wire | `http://a.ml/vocabularies/shapes#serializationOrder` |
  | repeatable | boolean | Indicates if a Domain Element can define more than 1 Domain Extension defined by this Custom Domain Property | `http://a.ml/vocabularies/core#repeatable` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |

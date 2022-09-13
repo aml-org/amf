@@ -27,3 +27,9 @@ type Person {
     fromLanguage: String
   ): String
 }
+
+"""A directive."""
+directive @myDirective(
+  """A directive argument."""
+  arg: String!
+) on SCALAR
