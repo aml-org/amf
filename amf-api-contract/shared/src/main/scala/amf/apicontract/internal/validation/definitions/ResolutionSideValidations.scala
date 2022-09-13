@@ -12,6 +12,11 @@ object ResolutionSideValidations extends Validations {
   override val specification: String = RESOLUTION_SIDE_VALIDATION
   override val namespace: Namespace  = AmfResolution
 
+  val RecursiveInheritance = validation(
+    "recursive-inheritance",
+    "Recursive Inheritance"
+  )
+
   val UnsupportedPipeline = validation(
     "unsupported-pipeline",
     "Unsupported pipeline"
@@ -82,6 +87,7 @@ object ResolutionSideValidations extends Validations {
     InvalidConsumesWithFileParameter,
     ExamplesWithInvalidMimeType,
     ExamplesWithNoSchemaDefined,
-    DuplicatedParameterWarning
+    DuplicatedParameterWarning,
+    RecursiveInheritance
   )
 }
