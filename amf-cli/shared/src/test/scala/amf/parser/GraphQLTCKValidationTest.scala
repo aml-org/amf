@@ -37,7 +37,7 @@ class GraphQLTCKValidationTest extends GraphQLFunSuiteCycleTests {
     assertReport(s"$basePath/invalid/missing-matrix-field.graphql")
   }
 
-  // Test valid singular API
+  // Test valid singular API. Only used to debug a Singular test, this is run as part of the TCK
   ignore("interface-chain-covariant") {
     assertConforms(s"$basePath/valid/interface-chain-covariant.graphql")
   }
