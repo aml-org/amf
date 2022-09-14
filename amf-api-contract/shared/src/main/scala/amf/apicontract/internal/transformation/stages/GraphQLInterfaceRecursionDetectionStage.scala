@@ -38,14 +38,15 @@ case class GraphQLInterfaceRecursionDetectionStage() extends TransformationStep(
     val newInherits = current.inherits.map {
       case next: NodeShape if isInterface(next) && previous.contains(next) =>
         reportError(current, previous, next, eh)
-        RecursiveShape(next)
+        val rec = RecursiveShape(next)
+        rec.adopted(current.id) // we adopt since we will set the new inherits without ID
+        rec
       case next => next
     }
-//    if (newInherits.nonEmpty) current.setArrayWithoutId(Inherits, newInherits)
     if (newInherits.nonEmpty) {
       current.fields.getValueAsOption(ShapeModel.Inherits) match {
         case Some(Value(arr: AmfArray, ann)) =>
-          current.set(ShapeModel.Inherits, AmfArray(newInherits, arr.annotations), ann)
+          current.setWithoutId(ShapeModel.Inherits, AmfArray(newInherits, arr.annotations), ann)
         case _ => // ignore
       }
     }
