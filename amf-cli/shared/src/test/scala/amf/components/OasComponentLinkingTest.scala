@@ -1,13 +1,14 @@
 package amf.components
 
-import amf.apicontract.client.scala.{AMFDocumentResult, OASConfiguration}
+import amf.apicontract.client.scala.model.document.ComponentModule
 import amf.apicontract.client.scala.model.domain.Request
+import amf.apicontract.client.scala.{AMFDocumentResult, OASConfiguration}
 import amf.cache.CustomUnitCache
 import amf.core.client.scala.config.CachedReference
 import amf.core.client.scala.errorhandling.{ErrorHandlerProvider, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
-import amf.core.internal.annotations.{VirtualElement, VirtualNode}
+import amf.core.internal.annotations.VirtualElement
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -17,7 +18,7 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
 
   private val basePath: String = "file://amf-cli/shared/src/test/resources/components/oas3/"
 
-  override implicit val executionContext = ExecutionContext.Implicits.global
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Oas component module can be used from document when injected in cache") {
     val componentPath                      = "simple-components.yaml"
@@ -61,14 +62,11 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
   private def withComponent(uri: String): Future[Module] = {
     val errorHandler: ErrorHandlerProvider = () => UnhandledErrorHandler
     OASConfiguration
-      .OAS30()
+      .OAS30Component()
       .withErrorHandlerProvider(errorHandler)
       .baseUnitClient()
-      .parseDocument(basePath + uri)
-      .map(_.document)
-      .map(doc =>
-        Module().withId(doc.id).withProcessingData(doc.processingData).withDeclares(doc.declares).withRoot(true)
-      )
+      .parse(basePath + uri)
+      .map(_.baseUnit.asInstanceOf[ComponentModule])
   }
 
   protected def computePath(ref: String): String = {

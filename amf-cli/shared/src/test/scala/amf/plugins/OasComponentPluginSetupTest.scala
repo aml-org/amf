@@ -1,10 +1,9 @@
 package amf.plugins
 
-import amf.apicontract.client.scala.configuration.OasComponentConfiguration
+import amf.apicontract.client.scala.OASConfiguration
 import amf.apicontract.client.scala.model.document.ComponentModule
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
-import amf.core.client.scala.model.document.Module
 import amf.core.internal.remote.Spec
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -48,7 +47,7 @@ class OasComponentPluginSetupTest extends AsyncFunSuite with Matchers {
   }
 
   private def parse(uri: String): Future[AMFParseResult] = {
-    val client = OasComponentConfiguration.OAS30Component().baseUnitClient()
+    val client = OASConfiguration.OAS30Component().baseUnitClient()
     client.parse(base + uri)
   }
 }

@@ -5,7 +5,7 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.ReferenceHandler
-import amf.core.internal.remote.{JSONRefs, Spec}
+import amf.core.internal.remote.{JSONRefs, JsonSchema, Spec}
 
 trait ApiParsePlugin extends SpecAwareParsePlugin {
 
@@ -15,5 +15,5 @@ trait ApiParsePlugin extends SpecAwareParsePlugin {
 }
 
 trait SpecAwareParsePlugin extends AMFParsePlugin with CrossSpecRestriction {
-  override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
+  override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs, JsonSchema)
 }
