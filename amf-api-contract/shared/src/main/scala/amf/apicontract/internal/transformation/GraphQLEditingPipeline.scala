@@ -7,6 +7,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
 }
 import amf.apicontract.internal.transformation.stages.{
   GraphQLDirectiveRecursionDetectionStage,
+  GraphQLInterfaceRecursionDetectionStage,
   GraphQLTypeRecursionDetectionStage
 }
 import amf.core.client.common.transform._
@@ -23,6 +24,7 @@ class GraphQLEditingPipeline private (urlShortening: Boolean, override val name:
       references,
       GraphQLTypeRecursionDetectionStage(),
       GraphQLDirectiveRecursionDetectionStage(),
+      GraphQLInterfaceRecursionDetectionStage(),
       new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
       new AnnotationRemovalStage(),
       new SemanticExtensionFlatteningStage
