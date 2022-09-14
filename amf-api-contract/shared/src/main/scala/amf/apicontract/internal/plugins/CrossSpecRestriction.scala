@@ -9,15 +9,18 @@ import org.mulesoft.common.client.lexical.SourceLocation
 
 trait CrossSpecRestriction { this: SpecAwareParsePlugin =>
 
-  // TODO: all documents should have a Vendor
-  protected def restrictCrossSpecReferences(optionalReferencedSpec: Option[Spec], reference: Reference)(implicit
+  protected def restrictCrossSpecReferences(referenceSpec: Option[Spec], reference: Reference)(implicit
       errorHandler: AMFErrorHandler
   ): Unit = {
-    val possibleReferencedSpec: List[Spec] = (optionalReferencedSpec ++ validSpecsToReference).toList
-    optionalReferencedSpec.foreach { referencedSpec =>
-      if (!possibleReferencedSpec.contains(referencedSpec)) {
+    referenceSpec.foreach { referencedSpec =>
+      if (!validSpecsToReference.contains(referencedSpec)) {
         referenceNodes(reference).foreach(node =>
-          errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node)
+          errorHandler.violation(
+            InvalidCrossSpec,
+            "",
+            s"Cannot reference a ${referencedSpec.id} spec from a different spec",
+            node
+          )
         )
       }
     }
