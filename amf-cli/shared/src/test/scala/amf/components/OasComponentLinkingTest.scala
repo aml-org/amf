@@ -1,6 +1,5 @@
 package amf.components
 
-import amf.apicontract.client.scala.configuration.OasComponentConfiguration
 import amf.apicontract.client.scala.model.document.ComponentModule
 import amf.apicontract.client.scala.model.domain.Request
 import amf.apicontract.client.scala.{AMFDocumentResult, OASConfiguration}
@@ -19,7 +18,7 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
 
   private val basePath: String = "file://amf-cli/shared/src/test/resources/components/oas3/"
 
-  override implicit val executionContext = ExecutionContext.Implicits.global
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Oas component module can be used from document when injected in cache") {
     val componentPath                      = "simple-components.yaml"
@@ -62,7 +61,7 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
 
   private def withComponent(uri: String): Future[Module] = {
     val errorHandler: ErrorHandlerProvider = () => UnhandledErrorHandler
-    OasComponentConfiguration
+    OASConfiguration
       .OAS30Component()
       .withErrorHandlerProvider(errorHandler)
       .baseUnitClient()
