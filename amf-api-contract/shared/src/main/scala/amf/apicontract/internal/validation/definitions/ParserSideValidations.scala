@@ -91,6 +91,16 @@ object ParserSideValidations extends Validations {
     "Paths property must be declared"
   )
 
+  val MandatoryEmptyPaths = validation(
+    "mandatory-empty-paths",
+    "Paths property must be an empty object"
+  )
+
+  val MandatoryProperty = validation(
+    "mandatory-property",
+    "Property is mandatory"
+  )
+
   val MandatoryChannelsProperty = validation(
     "mandatory-channels-property",
     "Channels property must be declared"

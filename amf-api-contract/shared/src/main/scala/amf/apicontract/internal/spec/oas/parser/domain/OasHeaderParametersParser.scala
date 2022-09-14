@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
@@ -46,7 +47,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parameter
     }
 
-    val header: Parameter = if (ctx.syntax == Oas3Syntax) {
+    val header: Parameter = if (ctx.spec == Spec.OAS30) {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "headers")

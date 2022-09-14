@@ -5,7 +5,7 @@ import amf.apicontract.internal.annotations.EmptyPayload
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel}
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, DomainElement}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, Lazy}
@@ -98,7 +98,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
   def parse(): Option[Request] = {
 
     val target = new Target {
-      override def foreach(fn: DomainElement => Unit): Unit = fn(request.getOrCreate)
+      override def foreach(fn: AmfObject => Unit): Unit = fn(request.getOrCreate)
     }
 
     map.key(
