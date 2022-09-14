@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.configuration.OasComponentConfiguration
+import amf.apicontract.client.scala.OASConfiguration
 import amf.core.internal.remote.{AmfJsonHint, Oas30YamlHint}
 
 class OasComponentCycle extends GraphQLFunSuiteCycleTests {
@@ -12,7 +12,7 @@ class OasComponentCycle extends GraphQLFunSuiteCycleTests {
       "simple.jsonld",
       Oas30YamlHint,
       AmfJsonHint,
-      amfConfig = Some(OasComponentConfiguration.OAS30Component())
+      amfConfig = Some(OASConfiguration.OAS30Component())
     )
   }
 
@@ -22,9 +22,8 @@ class OasComponentCycle extends GraphQLFunSuiteCycleTests {
       "simple.jsonld.yaml",
       AmfJsonHint,
       Oas30YamlHint,
-      amfConfig = Some(OasComponentConfiguration.OAS30Component())
+      amfConfig = Some(OASConfiguration.OAS30Component())
     )
   }
-
 
 }

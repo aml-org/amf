@@ -162,6 +162,8 @@ object OASConfiguration extends APIConfigurationBuilder {
 
   private val oas = "OAS"
 
+  private val oasComponent = "OAS Component"
+
   def OAS20(): AMFConfiguration =
     common()
       .withPlugins(
@@ -204,10 +206,35 @@ object OASConfiguration extends APIConfigurationBuilder {
         )
       )
 
+  def OAS30Component(): AMFConfiguration =
+    common()
+      .withPlugins(
+        List(
+          Oas30ComponentParsePlugin,
+          Oas30ComponentRenderPlugin,
+          Oas30ElementRenderPlugin,
+          APIShaclModelValidationPlugin(ProfileNames.OAS30),
+          APIPayloadValidationPlugin(ProfileNames.OAS30)
+        )
+      )
+      .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
+      .withTransformationPipelines(
+        List(
+          Oas30TransformationPipeline(),
+          Oas3EditingPipeline(),
+          Oas3CachePipeline()
+        )
+      )
+
   def OAS(): AMFConfiguration =
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
       .withTransformationPipelines(unsupportedTransformationsSet(oas))
+
+  def OASComponent(): AMFConfiguration =
+    common()
+      .withPlugins(List(Oas30ComponentParsePlugin, ViolationModelValidationPlugin(oasComponent)))
+      .withTransformationPipelines(unsupportedTransformationsSet(oasComponent))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
     case Spec.OAS20 => OASConfiguration.OAS20()

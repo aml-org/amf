@@ -4018,7 +4018,11 @@ declare module 'amf-client-js' {
 
     static OAS30(): AMFConfiguration
 
+    static OAS30Component(): AMFConfiguration
+
     static OAS(): AMFConfiguration
+
+    static OASComponent(): AMFConfiguration
 
     static fromSpec(spec: Spec): AMFConfiguration
 

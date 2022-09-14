@@ -1,6 +1,5 @@
 package amf.crosspec
 
-import amf.apicontract.client.scala.configuration.OasComponentConfiguration
 import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
 import amf.cache.CustomUnitCache
 import amf.core.client.scala.config.CachedReference
@@ -34,7 +33,7 @@ class CrossSpecValidationTest extends UniquePlatformReportGenTest {
     withCachedReference(
       OASConfiguration.OAS20(),
       basePath + "oas2-point-oas3component/component.yaml",
-      OasComponentConfiguration.OAS30Component()
+      OASConfiguration.OAS30Component()
     ).flatMap(configuration =>
       validate(
         "oas2-point-oas3component/api-root.json",
