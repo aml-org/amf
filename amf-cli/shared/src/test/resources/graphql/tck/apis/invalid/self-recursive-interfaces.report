@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/self-recursive-interfaces.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/resolution#recursive-inheritance
+  Message: Invalid cyclic interface implementations A -> A
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/self-recursive-interfaces.graphql#/declares/shape/A
+  Property: 
+  Range: [(5,0)-(7,1)]
+  Location: 

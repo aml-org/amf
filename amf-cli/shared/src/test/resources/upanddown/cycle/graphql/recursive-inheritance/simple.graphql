@@ -1,0 +1,11 @@
+type Query {
+    name: String
+}
+
+interface A implements B {
+    name: String
+}
+
+interface B implements A {
+    name: String
+}

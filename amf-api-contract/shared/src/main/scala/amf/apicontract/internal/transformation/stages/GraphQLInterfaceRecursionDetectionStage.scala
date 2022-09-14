@@ -60,7 +60,17 @@ case class GraphQLInterfaceRecursionDetectionStage() extends TransformationStep(
 
   private def reportError(current: NodeShape, previous: Seq[NodeShape], next: NodeShape, eh: AMFErrorHandler): Unit = {
     val message = {
-      val chain = (previous :+ current :+ next).map(_.name.value()).mkString(" -> ")
+      val chain = {
+        val actualChain =
+          if (current != next) // check for self inheritance A -> A
+            previous :+ current :+ next
+          else {
+            previous :+ current
+          }
+
+        // make string
+        actualChain.map(_.name.value()).mkString(" -> ")
+      }
       s"Invalid cyclic interface implementations $chain"
     }
     eh.violation(RecursiveInheritance, current, message, current.annotations)
