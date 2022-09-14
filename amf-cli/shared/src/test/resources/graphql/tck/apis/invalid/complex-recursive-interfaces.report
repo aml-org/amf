@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#recursive-inheritance
   Message: Invalid cyclic interface implementations A -> C -> B -> A
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/complex-recursive-interfaces.graphql#/declares/shape/A/shape/C/shape/B
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/complex-recursive-interfaces.graphql#/declares/shape/B
   Property: 
   Range: [(9,0)-(11,1)]
   Location: 
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#recursive-inheritance
   Message: Invalid cyclic interface implementations A -> C -> A
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/complex-recursive-interfaces.graphql#/declares/shape/A/shape/C
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/complex-recursive-interfaces.graphql#/declares/shape/C
   Property: 
   Range: [(13,0)-(15,1)]
   Location: 
