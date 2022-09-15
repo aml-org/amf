@@ -24,10 +24,9 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
     val element    = builder.build(ctxBuilder)._1
     val instance   = JsonLDInstanceDocument(ctxBuilder.build())
     element match {
-      case obj: JsonLDObject  => instance.withEncodes(obj)
-      case array: JsonLDArray => instance.withEncodes(array)
+      case obj: JsonLDObject  => instance.withEncodes(Seq(obj))
+      case array: JsonLDArray => instance.withEncodes(array.jsonLDElements)
       case _                  => // ignore
-      // TODO native-jsonld: add error
     }
     instance
   }
