@@ -26,7 +26,7 @@ object FlattenedJsonLdInstanceEmitter {
       namespaceAliases: NamespaceAliases = Namespace.defaultAliases,
       fieldProvision: ApplicableMetaFieldRenderProvider
   ): Boolean = {
-    implicit val ctx: GraphEmitterContext =
+    implicit val ctx: FlattenedGraphEmitterContext =
       FlattenedGraphEmitterContext(unit, renderOptions, namespaceAliases = namespaceAliases)
     new FlattenedJsonLdInstanceEmitter(builder, renderOptions, fieldProvision).root(unit)
     true
@@ -37,7 +37,7 @@ class FlattenedJsonLdInstanceEmitter[T](
     override val builder: DocBuilder[T],
     override val options: RenderOptions,
     override val fieldProvision: ApplicableMetaFieldRenderProvider
-)(implicit ctx: GraphEmitterContext)
+)(implicit ctx: FlattenedGraphEmitterContext)
     extends FlattenedJsonLdEmitter[T](builder, options, fieldProvision)(ctx) {
   override def createArrayValues(a: Type.Array, seq: AmfArray, b: Part[T], v: Value): Unit = {
     seq.values.foreach { v => emitArrayMember(v, b) }
