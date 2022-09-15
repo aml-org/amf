@@ -33,7 +33,6 @@ case class JsonLDObjectElementParser(
     extends JsonLDBaseElementParser[JsonLDObjectElementBuilder](map)(ctx) {
 
   override def parseNode(s: Shape): JsonLDObjectElementBuilder = {
-    // TODO native-jsonld: weird to update context here for any and at withObject method for nodeshapes.
     s match {
       case n: NodeShape => parseWithObject(n)
       case anyShape: AnyShape if anyShape.meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
@@ -47,13 +46,11 @@ case class JsonLDObjectElementParser(
     JsonLDObjectElementBuilder.empty(key)
   }
 
-  // TODO native-jsonld: support additional dynamic properties
   def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder = parseDynamic(n.properties, n.semanticContext)
 
   def parseDynamic(p: Seq[PropertyShape], semanticContext: Option[SemanticContext]): JsonLDObjectElementBuilder = {
     val builder = new JsonLDObjectElementBuilder(map.location, key)
     setClassTerm(builder, semanticContext)
-    // TODO native-jsonld: should we fill the defined properties with default value (using that value) if entry is not present or empty?
     map.entries.foreach { e =>
       val sc  = semanticContext.getOrElse(SemanticContext.default)
       val key = e.key.asScalar.map(_.text).getOrElse("")
@@ -66,6 +63,9 @@ case class JsonLDObjectElementParser(
     }
     builder
   }
+
+  private def setClassTerm(builder: JsonLDObjectElementBuilder, semantics: Option[SemanticContext]) =
+    builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
 
   def parseEntry(e: YMapEntry, semanticContext: SemanticContext): (JsonLDElementBuilder, String) = {
     val entryKey = e.key.as[YScalar].text

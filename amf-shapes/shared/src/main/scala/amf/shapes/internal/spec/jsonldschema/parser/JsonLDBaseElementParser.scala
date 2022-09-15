@@ -12,8 +12,16 @@ import org.yaml.model.{YNode, YValue}
 
 abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(implicit ctx: JsonLDParserContext) {
 
-  def parse(shape: Shape): T = checkConditionals(shape).foldLeft(parseNode(shape))(foldLeft)
+  def parse(shape: Shape): T = checkConditionals(shape).foldLeft(setCharacteristics(parseNode(shape), shape))(foldLeft)
 
+  def setCharacteristics(topNode: T, shape: Shape): T = {
+    shape match {
+      case a: AnyShape =>
+        a.semanticContext.flatMap(_.overrideMappings.headOption).foreach(ot => topNode.withOverridedTerm(ot))
+      case _ => // ignore
+    }
+    topNode
+  }
   def foldLeft(current: T, other: T): T
 
   def checkConditionals(shape: Shape): Seq[T] = {
@@ -22,7 +30,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
     val oneOf = if (shape.isXOne) shape.xone.find(isValid(_, node)).map(parse) else None
     (conditional ++ oneOf).toSeq
-    // TODO native-jsonld: compute all conditionals (oneOf, anyOf)
+
 //    if (anyShape.isXOne) {
 //      anyShape.xone.collectFirst({ case a: AnyShape if isValid(a, map) => a }) match {
 //        case Some(nodeShape: NodeShape) =>
@@ -30,9 +38,6 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 //      }
 //    }
   }
-
-  protected def setClassTerm(builder: JsonLDElementBuilder, semantics: Option[SemanticContext]) =
-    builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
 
   protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option()).map(t => ctx.expand(t))
 

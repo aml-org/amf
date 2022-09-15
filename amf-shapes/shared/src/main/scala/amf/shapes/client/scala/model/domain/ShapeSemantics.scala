@@ -292,7 +292,6 @@ object SemanticContext {
 
   def apply(annotations: Annotations): SemanticContext = new SemanticContext(Fields(), annotations)
 
-  // TODO native-jsonld: add default with core terms
   val default: SemanticContext = apply()
     .withBase(BaseIri().withIri(Namespace.Core.base))
     .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))

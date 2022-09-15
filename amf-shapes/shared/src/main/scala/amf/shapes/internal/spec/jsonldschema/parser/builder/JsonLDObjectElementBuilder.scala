@@ -11,6 +11,7 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
 import org.mulesoft.common.client.lexical.SourceLocation
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends JsonLDElementBuilder(location) {
   override type THIS = JsonLDObjectElementBuilder
@@ -18,6 +19,8 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
   type TERM          = String
   val properties: mutable.Map[KEY, JsonLDPropertyBuilder] = mutable.Map()
   val termIndex: mutable.Map[TERM, KEY]                   = mutable.Map()
+  val classTerms: ListBuffer[String]                      = ListBuffer()
+
   def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {
 
     // TODO: handle terms colitions. Check termIndex registry
@@ -31,6 +34,7 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
   )(implicit ctx: JsonLDParserContext): JsonLDObjectElementBuilder = {
     super.merge(other)
 
+    other.classTerms.foreach { t => if (!classTerms.contains(t)) classTerms.prepend(t) }
     other.properties.foreach { t =>
       if (properties.contains(t._2.key)) mergeAndReplaceProperty(properties(t._2.key), t._2)
       else this + t._2
@@ -42,6 +46,8 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
       ctx: JsonLDParserContext
   ): Any = {
     val merged: JsonLDElementBuilder = current.element match {
+      case _: JsonLDErrorBuilder                               => other.element
+      case _ if other.element.isInstanceOf[JsonLDErrorBuilder] => current.element
       case obj: JsonLDObjectElementBuilder if other.element.isInstanceOf[JsonLDObjectElementBuilder] =>
         obj.merge(other.element.asInstanceOf[JsonLDObjectElementBuilder])
       case array: JsonLDArrayElementBuilder if other.element.isInstanceOf[JsonLDArrayElementBuilder] =>
@@ -67,9 +73,10 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
     val fields = termIndex.map { case (term, key) =>
       val currentBuilder: JsonLDPropertyBuilder = properties(key)
       val (element, elementType)                = currentBuilder.element.build(ctxBuilder)
-      (Field(elementType, ValueType(term)) -> element)
+      val overridedTerm                         = currentBuilder.element.getOverridedTerm.getOrElse(term)
+      (Field(elementType, ValueType(overridedTerm)) -> element)
     }
-    // TODO native-jsonld: handle hierarchy for same term at two properties.
+
     val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList)
     ctxBuilder + entityModel
     val dObject = new JsonLDObject(Fields(), Annotations(), entityModel)
