@@ -17,7 +17,7 @@ class GCLInstanceSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
       jsonDocument <- client.parseJsonLDSchema("file://" + basePath + "schemav1.json").map(_.jsonDocument)
       instance     <- client.parseJsonLDInstance("file://" + basePath + "instance1.yaml", jsonDocument).map(_.instance)
       tmp <- writeTemporaryFile(basePath + "instance1.jsonld")(
-        client.render(instance, Mimes.`application/ld+json`)
+        client.render(instance, "application/schemald+json")
       )
       r <- assertDifferences(tmp, basePath + "instance1.jsonld")
     } yield r

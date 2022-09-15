@@ -44,7 +44,7 @@ class JsonLDSchemaSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
       jsonDocument <- client.parseJsonLDSchema("file://" + schemasPath + schema).map(_.jsonDocument)
       instance     <- client.parseJsonLDInstance("file://" + instancesPath + schema, jsonDocument).map(_.instance)
       tmp <- writeTemporaryFile("file://" + resultsPath + schema + ".jsonld")(
-        client.render(instance, Mimes.`application/ld+json`)
+        client.render(instance, "application/schemald+json")
       )
       r <- assertDifferences(tmp, "file://" + resultsPath + schema + ".jsonld")
     } yield r

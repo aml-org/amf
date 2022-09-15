@@ -9,14 +9,23 @@ import org.mulesoft.common.client.lexical.SourceLocation
 import scala.collection.mutable.ListBuffer
 
 abstract class JsonLDElementBuilder(val location: SourceLocation) {
+  private var overridedTerm: Option[String] = None
   type THIS <: JsonLDElementBuilder
   def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type)
 
-  val classTerms: ListBuffer[String] = ListBuffer()
   def merge(other: THIS)(implicit ctx: JsonLDParserContext): THIS = {
-    other.classTerms.foreach { t => if (!classTerms.contains(t)) classTerms.prepend(t) }
+    other.getOverridedTerm.foreach(this.withOverridedTerm)
     this.asInstanceOf[THIS]
   }
 
   def canEquals(other: Any): Boolean
+
+  def withOverridedTerm(term: String): THIS = {
+    overridedTerm = Some(term)
+    this.asInstanceOf[THIS]
+  }
+
+  def getOverridedTerm: Option[String] = overridedTerm
 }
+
+trait JsonLDErrorBuilder
