@@ -4,6 +4,8 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Prop
 import TypeBuilders.nullable
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper
 import GraphQLLocationHelper.toLocationIris
+import amf.core.client.platform.model.DataTypes
+import amf.core.client.scala.model.domain.ScalarNode
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 object IntrospectionDirectives {
@@ -23,22 +25,35 @@ object IntrospectionDirectives {
   def `@requires`(fieldSet: ScalarShape): CustomDomainProperty = {
     CustomDomainProperty()
       .withName("requires")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
+      .withSchema(fieldSetArgument(fieldSet))
       .withDomain(toLocationIris(FIELD_DEFINITION))
   }
 
   def `@provides`(fieldSet: ScalarShape): CustomDomainProperty = {
     CustomDomainProperty()
       .withName("provides")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
+      .withSchema(fieldSetArgument(fieldSet))
       .withDomain(toLocationIris(FIELD_DEFINITION))
   }
 
   def `@key`(fieldSet: ScalarShape): CustomDomainProperty = {
-    // TODO: 'repeatable is not modeled'
     CustomDomainProperty()
       .withName("key")
-      .withSchema(nullable(fieldSetArgument(fieldSet)))
+      .withRepeatable(true)
+      .withSchema {
+        NodeShape()
+          .withProperties(
+            List(
+              PropertyShape()
+                .withName("fieldSet")
+                .withRange(fieldSet),
+              PropertyShape()
+                .withName("resolvable")
+                .withDefault(ScalarNode("true", Some(DataTypes.Boolean)))
+                .withRange(nullable(ScalarShape().withDataType(DataTypes.Boolean)))
+            )
+          )
+      }
       .withDomain(toLocationIris(OBJECT, INTERFACE))
   }
 
