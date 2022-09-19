@@ -11,4 +11,4 @@ addSbtPlugin("com.eed3si9n"       % "sbt-buildinfo"            % "0.10.0")
 resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral)
 credentials ++= Common.credentials()
 
-addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.14")
+addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.18")
