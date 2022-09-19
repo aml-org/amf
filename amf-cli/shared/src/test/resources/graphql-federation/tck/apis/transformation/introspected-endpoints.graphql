@@ -5,3 +5,7 @@ schema {
 type Query {
     name: String
 }
+
+type Person @key(fields: "name") {
+    name: String
+}
