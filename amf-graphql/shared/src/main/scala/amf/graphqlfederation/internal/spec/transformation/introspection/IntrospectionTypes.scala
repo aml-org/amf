@@ -22,7 +22,7 @@ object IntrospectionTypes {
     ScalarShape()
       .withName("_FieldSet")
       .withFormat("_FieldSet")
-      .withDataType(DataTypes.String)
+      .withDataType(DataTypes.Any)
   }
 
   def _Service(): NodeShape = {

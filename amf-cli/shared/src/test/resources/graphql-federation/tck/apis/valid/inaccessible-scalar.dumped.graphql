@@ -9,6 +9,6 @@ type _Service {
 }
 
 directive @external on SCHEMA
-directive @requires on FIELD_DEFINITION
-directive @provides on FIELD_DEFINITION
-directive @key on OBJECT | INTERFACE
+directive @requires(fieldSet: _FieldSet!) on FIELD_DEFINITION
+directive @provides(fieldSet: _FieldSet!) on FIELD_DEFINITION
+directive @key(fieldSet: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
