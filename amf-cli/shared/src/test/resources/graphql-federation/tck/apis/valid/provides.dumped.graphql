@@ -1,5 +1,5 @@
 type Query {
-  _entities(representations: [String!]!): [_Entity]!
+  _entities(representations: [_Any!]!): [_Entity]!
   _service: _Service
 }
 
