@@ -15,6 +15,7 @@ import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInf
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Spec
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
 import amf.shapes.internal.spec.common.parser.{RamlScalarNode, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
@@ -40,9 +41,11 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         checkForUndefinedVersion(entry, variables)
         parseBaseUriParameters(server, TemplateUri.variables(value))
 
-        api.setWithoutId(WebApiModel.Servers,
-                         AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-                         Annotations(entry))
+        api.setWithoutId(
+          WebApiModel.Servers,
+          AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+          Annotations(entry)
+        )
       case None =>
         map
           .key("baseUriParameters")
@@ -57,9 +60,11 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             val server = Server()
             parseBaseUriParameters(server, Nil)
 
-            api.setWithoutId(WebApiModel.Servers,
-                             AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-                             Annotations(entry))
+            api.setWithoutId(
+              WebApiModel.Servers,
+              AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+              Annotations(entry)
+            )
           }
     }
 
@@ -163,7 +168,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
     extends OasServersParser(map, elem, field) {
 
-  override def parse(): Unit = if (ctx.syntax == Oas3Syntax) parseServers("servers")
+  override def parse(): Unit = if (ctx.spec == Spec.OAS30) parseServers("servers")
 }
 
 case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: OasWebApiContext)

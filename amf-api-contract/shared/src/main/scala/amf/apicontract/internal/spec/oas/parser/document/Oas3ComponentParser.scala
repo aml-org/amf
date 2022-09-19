@@ -2,9 +2,15 @@ package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
 import amf.apicontract.internal.metamodel.document.ComponentModuleModel
-import amf.apicontract.internal.spec.common.parser.WebApiLikeReferencesParser
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiLikeReferencesParser}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  MandatoryEmptyPaths,
+  MandatoryPathsProperty,
+  MandatoryProperty
+}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.BaseUnitModel
@@ -31,18 +37,19 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
       addDeclarationsToModel(module)
 
       if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
-
       parseRootFields(rootMap, module)
+      assertPaths(rootMap, module)
+      ctx.closedShape(module, rootMap, "root")
     }
-
     module
 
   }
 
   private def parseRootFields(map: YMap, module: ComponentModule): Unit = {
-
-    map.key("info", entry => parseInfoFields(entry, module))
-
+    map.key("info") match {
+      case Some(entry) => parseInfoFields(entry, module)
+      case None        => mandatoryInfo(module)
+    }
   }
 
   private def parseInfoFields(entry: YMapEntry, module: ComponentModule): Unit = {
@@ -50,16 +57,39 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
     val info = entry.value.as[YMap]
 
     info.key("title") match {
-      case Some(title) => setScalarField(ComponentModuleModel.Name, title, title.value.toString, module)
-      case None        => // TODO show error
+      case Some(entry) => (ComponentModuleModel.Name in module)(entry)
+      case None        => mandatoryTitle(module)
     }
     info.key("version") match {
-      case Some(version) => setScalarField(ComponentModuleModel.Version, version, version.value.toString, module)
-      case None          => // TODO show error
+      case Some(entry) => (ComponentModuleModel.Version in module)(entry)
+      case None        => mandatoryVersion(module)
+    }
+
+    ctx.closedShape(module, info, "info")
+  }
+
+  private def assertPaths(map: YMap, module: ComponentModule): Unit = {
+    map.key("paths") match {
+      case Some(entry: YMapEntry) =>
+        val hasEntries = entry.value.as[YMap].entries.nonEmpty
+        if (hasEntries) mandatoryEmptyPathsError(module)
+      case _ => mandatoryPathsError(module)
     }
   }
 
-  private def setScalarField(field: Field, entry: YMapEntry, value: Any, module: ComponentModule): Unit =
-    module.set(field, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
+  private def mandatoryEmptyPathsError(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
+    ctx.eh.violation(MandatoryEmptyPaths, element, "'paths' must be an empty object")
+  }
 
+  private def mandatoryInfo(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
+    ctx.eh.violation(MandatoryProperty, element, "'info' node is mandatory")
+  }
+
+  private def mandatoryTitle(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
+    ctx.eh.violation(MandatoryProperty, element, "'title' node is mandatory")
+  }
+
+  private def mandatoryVersion(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
+    ctx.eh.violation(MandatoryProperty, element, "'version' node is mandatory")
+  }
 }

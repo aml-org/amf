@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+Profile: 
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'termsOfService' not supported in a OAS 3.0 info node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+  Property: 
+  Range: [(5,2)-(6,0)]
+  Location: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'description' not supported in a OAS 3.0 info node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+  Property: 
+  Range: [(6,2)-(7,0)]
+  Location: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'contact' not supported in a OAS 3.0 info node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+  Property: 
+  Range: [(7,2)-(8,0)]
+  Location: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'license' not supported in a OAS 3.0 info node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
+  Property: 
+  Range: [(8,2)-(9,0)]
+  Location: file://amf-cli/shared/src/test/resources/components/oas3/invalid-oas30-info-keys-in-info.yaml
