@@ -1,0 +1,20 @@
+type Query {
+  _entities(representations: [String!]!): [_Entity]!
+  _service: _Service
+}
+
+scalar MyScalar @myDirective(argA: "valueA", argB: "valueB")
+directive @directiveA on ARGUMENT_DEFINITION
+directive @directiveB on ARGUMENT_DEFINITION
+directive @myDirective(argA: String @directiveA, argB: String = "defaultB") on SCALAR
+scalar _Any
+scalar _FieldSet
+type _Service {
+  sdl: String
+}
+
+union _Entity = 
+directive @external on SCHEMA
+directive @requires on FIELD_DEFINITION
+directive @provides on FIELD_DEFINITION
+directive @key on OBJECT | INTERFACE

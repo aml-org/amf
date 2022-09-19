@@ -1,0 +1,22 @@
+schema @MyDirective {
+  query: Query
+}
+
+type Query {
+  text: String
+  _entities(representations: [String!]!): [_Entity]!
+  _service: _Service
+}
+
+directive @MyDirective on SCHEMA
+scalar _Any
+scalar _FieldSet
+type _Service {
+  sdl: String
+}
+
+union _Entity = 
+directive @external on SCHEMA
+directive @requires on FIELD_DEFINITION
+directive @provides on FIELD_DEFINITION
+directive @key on OBJECT | INTERFACE

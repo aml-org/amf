@@ -1,0 +1,39 @@
+type Query {
+  operation(arg: String!): String!
+  _entities(representations: [String!]!): [_Entity]!
+  _service: _Service
+  property: String!
+}
+
+interface Interface @Directive {
+  property: String! @Directive
+  operation(arg: String! @Directive): String! @Directive
+}
+
+enum Enum @Directive {
+  Value @Directive
+}
+
+scalar Scalar @Directive
+type Object @Directive {
+  property: String! @Directive
+  operation(arg: String! @Directive): String! @Directive
+}
+
+input InputObject @Directive {
+  property: String! @Directive
+}
+
+union Union @Directive = Object
+directive @Directive on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+scalar _Any
+scalar _FieldSet
+type _Service {
+  sdl: String
+}
+
+union _Entity = 
+directive @external on SCHEMA
+directive @requires on FIELD_DEFINITION
+directive @provides on FIELD_DEFINITION
+directive @key on OBJECT | INTERFACE
