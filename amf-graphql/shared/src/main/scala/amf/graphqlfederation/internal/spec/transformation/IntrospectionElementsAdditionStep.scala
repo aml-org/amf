@@ -58,7 +58,7 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
         case _       => List(fieldSet, _service)
       }
     }
-    val directives = List(`@external`(), `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet))
+    val directives = List(`@external`, `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet), `@shareable`, `@inaccessible`, `@override`)
     doc.setArrayWithoutId(DocumentModel.Declares, doc.declares ++ types ++ directives)
   }
 
