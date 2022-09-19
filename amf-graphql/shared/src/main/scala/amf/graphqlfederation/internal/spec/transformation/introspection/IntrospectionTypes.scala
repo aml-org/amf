@@ -47,11 +47,18 @@ object IntrospectionTypes {
       .withAnyOf(typesWithKey)
   }
 
-  def _Query(_any: AnyShape, _entity: AnyShape, _serviceType: AnyShape): List[EndPoint] = {
-    List(
-      _entities(_any, _entity),
-      _service(_serviceType)
-    )
+  def _Query(_any: AnyShape, _entity: Option[AnyShape], _serviceType: AnyShape): List[EndPoint] = {
+    _entity match {
+      case Some(e) =>
+        List(
+          _entities(_any, e),
+          _service(_serviceType)
+        )
+      case None =>
+        List(
+          _service(_serviceType)
+        )
+    }
   }
 
   private def _service(_serviceType: AnyShape): EndPoint = {

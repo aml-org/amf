@@ -1,5 +1,4 @@
 type Query {
-  _entities(representations: [String!]!): [_Entity]!
   _service: _Service
 }
 
@@ -12,13 +11,11 @@ type MemberB {
 }
 
 union MyUnion = MemberA | MemberB
-scalar _Any
 scalar _FieldSet
 type _Service {
   sdl: String
 }
 
-union _Entity = 
 directive @external on SCHEMA
 directive @requires on FIELD_DEFINITION
 directive @provides on FIELD_DEFINITION
