@@ -10,16 +10,65 @@ import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 object IntrospectionDirectives {
 
-  private val FIELD_DEFINITION = "FIELD_DEFINITION"
-  private val SCHEMA           = "SCHEMA"
-  private val OBJECT           = "OBJECT"
-  private val INTERFACE        = "INTERFACE"
+  private val FIELD_DEFINITION       = "FIELD_DEFINITION"
+  private val OBJECT                 = "OBJECT"
+  private val INTERFACE              = "INTERFACE"
+  private val UNION                  = "UNION"
+  private val ARGUMENT_DEFINITION    = "ARGUMENT_DEFINITION"
+  private val SCALAR                 = "SCALAR"
+  private val ENUM                   = "ENUM"
+  private val ENUM_VALUE             = "ENUM_VALUE"
+  private val INPUT_OBJECT           = "INPUT_OBJECT"
+  private val INPUT_FIELD_DEFINITION = "INPUT_FIELD_DEFINITION"
 
-  def `@external`(): CustomDomainProperty = {
+  def `@shareable`: CustomDomainProperty = {
+    CustomDomainProperty()
+      .withName("shareable")
+      .withSchema(NodeShape())
+      .withDomain(toLocationIris(OBJECT, FIELD_DEFINITION))
+  }
+
+  def `@inaccessible`: CustomDomainProperty = {
+    CustomDomainProperty()
+      .withName("inaccessible")
+      .withSchema(NodeShape())
+      .withDomain(
+        toLocationIris(
+          FIELD_DEFINITION,
+          OBJECT,
+          INTERFACE,
+          UNION,
+          ARGUMENT_DEFINITION,
+          SCALAR,
+          ENUM,
+          ENUM_VALUE,
+          INPUT_OBJECT,
+          INPUT_FIELD_DEFINITION
+        )
+      )
+  }
+
+  def `@override`: CustomDomainProperty = {
+    CustomDomainProperty()
+      .withName("override")
+      .withSchema {
+        NodeShape()
+          .withProperties(
+            List(
+              PropertyShape()
+                .withName("from")
+                .withRange(ScalarShape().withDataType(DataTypes.String))
+            )
+          )
+      }
+      .withDomain(toLocationIris(FIELD_DEFINITION))
+  }
+
+  def `@external`: CustomDomainProperty = {
     CustomDomainProperty()
       .withName("external")
       .withSchema(NodeShape())
-      .withDomain(toLocationIris(SCHEMA))
+      .withDomain(toLocationIris(FIELD_DEFINITION))
   }
 
   def `@requires`(fieldSet: ScalarShape): CustomDomainProperty = {
