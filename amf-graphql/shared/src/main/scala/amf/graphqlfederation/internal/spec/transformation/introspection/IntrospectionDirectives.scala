@@ -94,7 +94,7 @@ object IntrospectionDirectives {
           .withProperties(
             List(
               PropertyShape()
-                .withName("fieldSet")
+                .withName("fields")
                 .withRange(fieldSet),
               PropertyShape()
                 .withName("resolvable")
@@ -111,7 +111,7 @@ object IntrospectionDirectives {
       .withProperties(
         List(
           PropertyShape()
-            .withName("fieldSet")
+            .withName("fields")
             .withRange(fieldSet)
         )
       )
