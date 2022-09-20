@@ -1,13 +1,16 @@
 package amf.cycle
 
+import amf.apicontract.client.scala.model.document.SecuritySchemeFragment
 import amf.apicontract.client.scala.model.domain.security.{HttpSettings, SecurityScheme}
 import amf.apicontract.client.scala.model.domain.templates.Trait
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.DeclaresModel
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.annotations.ErrorDeclaration
+import amf.core.internal.adoption.IdAdopter
+import amf.core.internal.annotations.{ErrorDeclaration, TrackedElement}
 import amf.core.internal.remote.{AmfJsonHint, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.matchers.should.Matchers
 
 class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
@@ -35,6 +38,26 @@ class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
         model.cloneUnit().asInstanceOf[DeclaresModel].declares.head.asInstanceOf[SecurityScheme].settings
       settings.meta.`type`.head.iri() should be(clonedSettings.meta.`type`.head.iri())
       clonedSettings.isInstanceOf[HttpSettings] should be(true)
+    }
+  }
+
+  test("Test clone with tracked parameter at example") {
+    val config = CycleConfig("security-scheme-fragment.raml", "", Raml10YamlHint, AmfJsonHint, basePath, None, None)
+    for {
+      model <- build(config, buildConfig(None, None))
+    } yield {
+      val cloned = model.cloneUnit()
+      new IdAdopter(cloned, "http://fake.location.com#").adoptFromRoot()
+
+      val param =
+        cloned.asInstanceOf[SecuritySchemeFragment].encodes.headers.head
+
+      val trackedElement =
+        param.schema.asInstanceOf[AnyShape].examples.head.annotations.find(classOf[TrackedElement]).get
+      val trackedObject = trackedElement.elements.left.get.head
+      trackedObject shouldBe (param)
+      trackedObject.id shouldBe (param.id)
+      trackedObject.id.contains("security-scheme-fragment.raml") shouldBe (false)
     }
   }
 

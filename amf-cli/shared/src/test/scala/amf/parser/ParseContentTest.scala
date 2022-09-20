@@ -1,15 +1,16 @@
 package amf.parser
 
 import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
-import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.graphql.client.scala.GraphQLConfiguration
+import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class ParseContentTest extends AsyncFunSuite with Matchers with PlatformSecrets {
@@ -54,13 +55,25 @@ class ParseContentTest extends AsyncFunSuite with Matchers with PlatformSecrets 
     run("vocabulary.yaml", AML, expectVocabulary)
   }
 
+  test("GraphQL parsed by content should return a Document") {
+    run("graphql-api.graphql", GRAPHQL, config = GraphQLConfiguration.GraphQL())
+  }
+
+  test("GraphQLFederation parsed by content should return a Document") {
+    run(
+      "graphql-federation-api.graphql",
+      GRAPHQL_FEDERATION,
+      config = GraphQLFederationConfiguration.GraphQLFederation()
+    )
+  }
+
   private def run(
       apiName: String,
       expectedSpec: Spec,
-      expectType: BaseUnit => Assertion = expectDocument
+      expectType: BaseUnit => Assertion = expectDocument,
+      config: AMFConfiguration = APIConfiguration.API()
   ): Future[Assertion] = {
     val content = readContent(basePath + apiName)
-    val config  = APIConfiguration.API()
     config.baseUnitClient().parseContent(content).map { result =>
       result.sourceSpec shouldEqual expectedSpec
       result.baseUnit.sourceSpec shouldEqual Some(expectedSpec)

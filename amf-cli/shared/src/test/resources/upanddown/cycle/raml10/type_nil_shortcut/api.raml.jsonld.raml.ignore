@@ -9,16 +9,23 @@ annotationTypes:
     description: |
       This annotation allows to specify a method which will not be transformed into an operation.
       Optionally, a reason can be defined.
+    description: |
+      This annotation allows to specify a method which will not be transformed into an operation.
+      Optionally, a reason can be defined.
     allowedTargets:
       - Method
   operationName:
     type: string
     description: |
       This annotation allows to specify a custom operation name.
+    description: |
+      This annotation allows to specify a custom operation name.
     allowedTargets:
       - Method
   parameterName:
     type: string
+    description: |
+      This annotation allows to specify a custom parameter name.
     description: |
       This annotation allows to specify a custom parameter name.
     allowedTargets:

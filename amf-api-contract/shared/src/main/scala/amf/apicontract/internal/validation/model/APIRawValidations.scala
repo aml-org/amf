@@ -1089,6 +1089,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("mandatoryGraphqlNonEmptyEndpoints")
       ),
       AMFValidation(
+        uri = amfParser("invalid-inheritance"),
+        message = "Invalid inheritance",
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("inherits"),
+        constraint = shape("validGraphQLInheritance")
+      ),
+      AMFValidation(
         uri = amfParser("invalid-extension-argument-type"),
         owlClass = apiContract("DomainExtension"),
         owlProperty = apiContract("extensionName"),
@@ -1105,18 +1112,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = core("Parameter"),
         owlProperty = core("defaultValue"),
         constraint = shape("GraphQLArgumentDefaultValueTypeValidationParameter")
-      ),
-      AMFValidation(
-        uri = amfParser("invalid-default-value-in-directive"),
-        owlClass = sh("NodeShape"),
-        owlProperty = sh("PropertyShape"),
-        constraint = shape("GraphQLArgumentDefaultValueInValidationDirective")
-      ),
-      AMFValidation(
-        uri = amfParser("invalid-default-value-in-parameter"),
-        owlClass = core("Parameter"),
-        owlProperty = core("defaultValue"),
-        constraint = shape("GraphQLArgumentDefaultValueInValidationParameter")
       ),
       AMFValidation(
         uri = amfParser("invalid-union-members"),
@@ -1253,6 +1248,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("PropertyShape"),
         constraint = shape("providesExternal"),
         message = "Fields in @provides must be declared @external"
+      ),
+      AMFValidation(
+        uri = amfParser("key-directive-validations"),
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("NodeShape"),
+        constraint = shape("keyDirectiveValidations"),
+        message = "@key is not allowed here"
       ),
       AMFValidation(
         uri = amfParser("reserved-type-names"),

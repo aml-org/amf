@@ -13,7 +13,7 @@ import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
-  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.String)
+  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.Any)
 
   def parse(): ScalarShape = {
     parseName()
@@ -21,9 +21,9 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
     parseDescription(enumTypeDef, enum, enum.meta)
     inFederation { implicit fCtx =>
       ShapeFederationMetadataParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE)).parse()
-      GraphQLDirectiveApplicationParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, DIRECTIVE)).parse()
+      GraphQLDirectiveApplicationsParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, DIRECTIVE)).parse()
     }
-    GraphQLDirectiveApplicationParser(enumTypeDef, enum).parse()
+    GraphQLDirectiveApplicationsParser(enumTypeDef, enum).parse()
     enum
   }
 
@@ -44,9 +44,9 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
                   value,
                   Seq(ENUM_VALUE_DIRECTIVE, ENUM_VALUE_FEDERATION_DIRECTIVE)
                 ).parse()
-                GraphQLDirectiveApplicationParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE, DIRECTIVE)).parse()
+                GraphQLDirectiveApplicationsParser(valueDefNode, value, Seq(ENUM_VALUE_DIRECTIVE, DIRECTIVE)).parse()
               }
-              GraphQLDirectiveApplicationParser(valueDefNode, value).parse()
+              GraphQLDirectiveApplicationsParser(valueDefNode, value).parse()
               value
             case None => ScalarNode(virtual())
           }
@@ -59,12 +59,16 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
   private def getEnumValue(valueNode: Node): Option[ScalarNode] =
     valueFrom(valueNode, Seq(ENUM_VALUE, NAME))
       .orElse(valueFrom(valueNode, Seq(ENUM_VALUE, NAME, KEYWORD)))
+      .map { e =>
+        parseDescription(valueNode, e, e.meta)
+        e
+      }
 
   private def valueFrom(element: ASTNode, pathToValue: Seq[String]): Option[ScalarNode] = {
     path(element, pathToValue) match {
       case Some(n: Node) if hasTerminalChild(n) =>
         val t = n.children.head.asInstanceOf[Terminal]
-        val s = ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t)).withName(t.value)
+        val s = ScalarNode(t.value, Some(XsdTypes.xsdAnyType.iri()), toAnnotations(t)).withName(t.value)
         Some(s)
       case _ => None
     }

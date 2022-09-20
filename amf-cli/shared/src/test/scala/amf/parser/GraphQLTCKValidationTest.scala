@@ -32,9 +32,14 @@ class GraphQLTCKValidationTest extends GraphQLFunSuiteCycleTests {
       }
     }
 
-  // Test singular API
-  test("directive-argument-missing-value") {
-    assertReport(s"$basePath/invalid/directive-argument-missing-value.api.graphql")
+  // Test invalid singular API
+  ignore("interface-chain") {
+    assertReport(s"$basePath/invalid/missing-matrix-field.graphql")
+  }
+
+  // Test valid singular API
+  ignore("interface-chain-covariant") {
+    assertConforms(s"$basePath/valid/interface-chain-covariant.graphql")
   }
 
   def assertConforms(api: String): Future[Assertion] = {

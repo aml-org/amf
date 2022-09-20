@@ -1,16 +1,19 @@
 type Query {
-
   name: String
 }
+
 type Type {
-  recursion : Type
-  recursionList : [Type!]!
+  recursion: Type
+  recursionList: [Type!]!
 }
-type Input {
-  recursion : Input
-  recursionList : [Input!]!
+
+input Input {
+  recursion: Input
+  recursionList: [Input!]!
 }
+
 interface Interface {
-  recursion : Interface
-  recursionList : [Interface!]!
+  recursion: Interface
+  recursionList: [Interface!]!
 }
+

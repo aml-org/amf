@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-interface.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-interface.api.graphql#/declares/shape/HasId
   Property: http://www.w3.org/ns/shacl#property
   Range: [(13,0)-(13,15)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: '}'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(14,0)-(14,1)]
   Location: 

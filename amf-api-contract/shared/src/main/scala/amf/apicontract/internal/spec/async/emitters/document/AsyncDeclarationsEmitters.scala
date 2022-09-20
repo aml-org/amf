@@ -15,6 +15,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.unsafe.PlatformSecrets
@@ -26,7 +27,8 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
 ) extends PlatformSecrets {
   val emitters: Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(declares, UnhandledErrorHandler, EmptyFutureDeclarations())
+    val declarations =
+      WebApiDeclarations(declares, UnhandledErrorHandler, EmptyFutureDeclarations(), DotQualifiedNameExtractor)
 
     val result = ListBuffer[EntryEmitter]()
 

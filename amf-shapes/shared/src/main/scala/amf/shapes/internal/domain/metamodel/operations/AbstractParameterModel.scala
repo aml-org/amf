@@ -6,7 +6,7 @@ import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Str}
 import amf.core.internal.metamodel.domain._
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.KeyField
 
 trait AbstractParameterModel
@@ -14,7 +14,7 @@ trait AbstractParameterModel
     with LinkableElementModel
     with KeyField
     with NameFieldSchema
-    with DescriptionField {
+    with DescribedElementModel {
 
   val ParameterName: Field = Field(
     Str,

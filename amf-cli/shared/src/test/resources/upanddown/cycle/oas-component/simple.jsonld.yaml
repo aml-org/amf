@@ -1,0 +1,195 @@
+openapi: 3.0.0
+info:
+  title: Sample Pet Store App
+  version: 1.0.1
+paths: {}
+components:
+  schemas:
+    refSchema:
+      $ref: objectSchema
+    oneOfschema:
+      oneOf:
+        -
+          $ref: objectSchema
+        -
+          $ref: arraySchema
+      type: object
+      discriminator:
+        propertyName: a
+        mapping:
+          dog: "#/components/schemas/objectSchema"
+    notSchema:
+      not:
+        type: string
+    common:
+      anyOf:
+        -
+          title: common schema
+          description: common test case
+          externalDocs:
+            url: https://example.com
+            description: Find more info here
+          deprecated: false
+          example:
+            strict: true
+            value: a
+          type: string
+          minLength: 0
+          maxLength: 100
+        -
+          type: "null"
+    allOfSchema:
+      allOf:
+        -
+          $ref: objectSchema
+        -
+          $ref: arraySchema
+    arraySchema:
+      type: array
+      maxItems: 100
+      minItems: 0
+      uniqueItems: true
+      items:
+        type: string
+    anyOfSchema:
+      anyOf:
+        -
+          $ref: objectSchema
+        -
+          $ref: arraySchema
+    objectSchema:
+      type: object
+      minProperties: 0
+      maxProperties: 100
+      additionalProperties: false
+      required:
+        - a
+      properties:
+        a:
+          xml:
+            namespace: http://example.com/schema/sample
+            prefix: sample
+          readOnly: false
+          writeOnly: false
+  securitySchemes:
+    apikey:
+      type: apiKey
+      description: a security scheme
+      name: api_key
+      in: header
+    http:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    openIdConnect:
+      type: openIdConnect
+      openIdConnectUrl: url
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/api/oauth/dialog
+          refreshUrl: https://example.com/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+  parameters:
+    cookieP:
+      name: cookieP
+      in: cookie
+      schema:
+        type: string
+      examples:
+        anExample:
+          value: a
+    pathP:
+      name: pathP
+      required: true
+      in: path
+      schema:
+        type: string
+    headerP:
+      name: headerP
+      in: header
+      schema:
+        type: string
+    aHeader:
+      name: aHeader
+      description: a description
+      in: header
+      schema:
+        type: string
+      deprecated: false
+      examples:
+        default:
+          value: a
+    aParam:
+      name: aParam
+      description: a description
+      in: query
+      schema:
+        type: string
+      deprecated: false
+      examples:
+        default:
+          value: a
+  responses:
+    aResponse:
+      description: a response
+      headers:
+        inlined:
+          description: The number of allowed requests in the current period
+          schema:
+            type: integer
+        aRef:
+          $ref: "#/components/headers/aHeader"
+      content:
+        application/json:
+          examples:
+            default:
+              value: a
+          schema:
+            type: string
+      links:
+        refLink:
+          $ref: address
+  examples:
+    aExample:
+      summary: a summary
+      description: a description
+      value: a
+    externalValueExample:
+      externalValue: a
+  requestBodies:
+    requestBody:
+      description: a description
+      content:
+        text/plain:
+          examples:
+            user:
+              summary: User example in text plain format
+              externalValue: http://foo.bar/examples/user-example.txt
+  links:
+    forOpId:
+      operationId: an operation Id
+    address:
+      description: a description
+      parameters:
+        userId: $request.path.id
+      server:
+        url: https://development.gigantic-server.com/v1
+        description: Development server
+      requestBody: aaa
+  callbacks:
+    myWebhook:
+      http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body#/email}:
+        post:
+          requestBody:
+            description: Callback payload
+            content:
+              application/json:
+                schema:
+                  $ref: objectSchema
+          responses:
+            "200":
+              description: webhook successfully processed and no retries will be performed

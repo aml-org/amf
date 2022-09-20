@@ -1,0 +1,745 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:sourceSpec": "JSON Schema"
+    },
+    {
+      "@id": "#/shape/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/shape/schema/property/property/street_address"
+        },
+        {
+          "@id": "#/shape/schema/property/property/city"
+        },
+        {
+          "@id": "#/shape/schema/property/property/state"
+        }
+      ],
+      "shacl:name": "schema",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#street_address"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/shape/schema/property/property/street_address/scalar/street_address"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "street_address",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/street_address/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/city",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#city"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/shape/schema/property/property/city/scalar/city"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "city",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/city/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/state",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#state"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/shape/schema/property/property/state/any/default-any"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "state",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/state/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/shape/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/scalar/street_address",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "street_address",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/street_address/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/property/property/street_address/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/scalar/city",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "city",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/city/scalar/city/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/city/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/property/property/city/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/any/default-any",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/references/0/declares/any/state"
+        }
+      ],
+      "doc:link-label": "basic-schema.json#/definitions/state",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/shape/schema/property/property/state/any/default-any/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/state/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/property/property/state/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:closed",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/shape/schema/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema",
+      "sourcemaps:value": "[(1,0)-(20,1)]"
+    },
+    {
+      "@id": "#/shape/schema/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(4,2)-(14,3)]"
+    },
+    {
+      "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema",
+      "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/street_address",
+      "sourcemaps:value": "[(5,4)-(7,5)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "[(16,4)-(16,20)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/scalar/city/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/shape/schema/property/property/city/scalar/city/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/city/scalar/city/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/shape/schema/property/property/city/scalar/city/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/city",
+      "sourcemaps:value": "[(8,4)-(10,5)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "[(17,4)-(17,10)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/any/default-any/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/shape/schema/property/property/state/any/default-any/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/shape/schema/property/property/state/any/default-any/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/state",
+      "sourcemaps:value": "[(11,4)-(13,5)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "[(18,4)-(18,11)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/street_address/scalar/street_address",
+      "sourcemaps:value": "[(6,6)-(6,12)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/street_address/scalar/street_address",
+      "sourcemaps:value": "[(5,4)-(7,5)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(6,6)-(6,22)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/scalar/city/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/city/scalar/city",
+      "sourcemaps:value": "[(9,6)-(9,12)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/scalar/city/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/city/scalar/city",
+      "sourcemaps:value": "[(8,4)-(10,5)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/city/scalar/city/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(9,6)-(9,22)]"
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/any/default-any/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:link-target",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/shape/schema/property/property/state/any/default-any/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema/property/property/state/any/default-any",
+      "sourcemaps:value": "[(12,14)-(12,52)]"
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#/references/0"
+        }
+      ],
+      "@type": [
+        "doc:JsonSchemaDocument",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:schemaVersion": "http://json-schema.org/draft-07/schema#",
+      "doc:encodes": {
+        "@id": "#/shape/schema"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0",
+      "@type": [
+        "doc:JsonSchemaDocument",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:schemaVersion": "http://json-schema.org/draft-07/schema#",
+      "doc:encodes": {
+        "@id": "#/references/0/shape/schema"
+      },
+      "doc:declares": [
+        {
+          "@id": "#/references/0/declares/any/state"
+        }
+      ],
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/references/0/BaseUnitProcessingData"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/shape/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:name": "schema",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/shape/schema/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "state",
+      "shacl:in": {
+        "@id": "#/references/0/declares/any/state/list"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/any/state/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:sourceSpec": "JSON Schema"
+    },
+    {
+      "@id": "#/references/0/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/references/0/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:document-declaration-key": [
+        {
+          "@id": "#/references/0/source-map/document-declaration-key/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json",
+      "sourcemaps:value": "[(1,0)-(20,1)]"
+    },
+    {
+      "@id": "#/source-map/lexical/element_0",
+      "sourcemaps:element": "doc:schemaVersion",
+      "sourcemaps:value": "[(2,2)-(2,54)]"
+    },
+    {
+      "@id": "#/references/0/shape/schema/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/shape/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/shape/schema/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/references/0/shape/schema/source-map/type-property-lexical-info/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/references/0/declares/any/state/in/scalar_1"
+      },
+      "rdfs:_2": {
+        "@id": "#/references/0/declares/any/state/in/scalar_2"
+      }
+    },
+    {
+      "@id": "#/references/0/declares/any/state/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/references/0/declares/any/state/source-map/declared-element/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/any/state/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/references/0/declares/any/state/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/references/0/declares/any/state/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0",
+      "sourcemaps:value": "[(1,0)-(12,1)]"
+    },
+    {
+      "@id": "#/references/0/source-map/lexical/element_0",
+      "sourcemaps:element": "doc:schemaVersion",
+      "sourcemaps:value": "[(2,2)-(2,54)]"
+    },
+    {
+      "@id": "#/references/0/source-map/document-declaration-key/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0",
+      "sourcemaps:value": "definitions"
+    },
+    {
+      "@id": "#/references/0/shape/schema/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:closed",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/shape/schema/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/shape/schema",
+      "sourcemaps:value": "[(1,0)-(12,1)]"
+    },
+    {
+      "@id": "#/references/0/shape/schema/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/shape/schema",
+      "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "CA",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_2",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "NY",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_2",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/declares/any/state",
+      "sourcemaps:value": ""
+    },
+    {
+      "@id": "#/references/0/declares/any/state/source-map/lexical/element_2",
+      "sourcemaps:element": "shacl:name",
+      "sourcemaps:value": "[(5,4)-(5,11)]"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:in",
+      "sourcemaps:value": "[(6,6)-(9,7)]"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/declares/any/state",
+      "sourcemaps:value": "[(5,4)-(10,5)]"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/synthesized-field/element_1",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_1/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/declares/any/state/in/scalar_1",
+      "sourcemaps:value": "[(7,8)-(7,12)]"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/synthesized-field/element_1",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/references/0/declares/any/state/in/scalar_2/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/declares/any/state/in/scalar_2",
+      "sourcemaps:value": "[(8,8)-(8,12)]"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "data": "http://a.ml/vocabularies/data#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+  }
+}

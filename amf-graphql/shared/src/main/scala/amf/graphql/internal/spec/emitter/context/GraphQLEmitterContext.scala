@@ -3,9 +3,7 @@ package amf.graphql.internal.spec.emitter.context
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.Shape
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.collection.mutable
 
@@ -20,8 +18,6 @@ class GraphQLEmitterContext(document: BaseUnit) {
   var queryType: Option[RootType]        = None
   var mutationType: Option[RootType]     = None
   var subscriptionType: Option[RootType] = None
-
-  val inputTypeNames: mutable.Set[String] = mutable.Set()
 
   val webApi: WebApi = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
 
@@ -74,7 +70,8 @@ class GraphQLEmitterContext(document: BaseUnit) {
     val namedQueryType        = queryType.exists(_.name != "Query")
     val namedSubscriptionType = subscriptionType.exists(_.name != "Subscription")
     val namedMutationType     = mutationType.exists(_.name != "Mutation")
-    hasDescription || namedQueryType || namedSubscriptionType || namedMutationType
+    val hasDirectives         = webApi.customDomainProperties.nonEmpty
+    hasDescription || namedQueryType || namedSubscriptionType || namedMutationType || hasDirectives
   }
 
   def classifyEndpoints(): GraphQLEmitterContext = {
@@ -87,33 +84,6 @@ class GraphQLEmitterContext(document: BaseUnit) {
           topLevelTypeFor(rootType, rootTypeName, field, ep)
         case _ => // ignore
       }
-    }
-    this
-  }
-
-  def indexInputTypes: GraphQLEmitterContext = {
-    val shapes: Seq[Option[NodeShape]] = webApi.endPoints.flatMap { ep =>
-      ep.operations flatMap { op =>
-        Option(op.request) match {
-          case Some(req) =>
-            req.queryParameters.map { param =>
-              Option(param.schema) match {
-                case Some(n: NodeShape) =>
-                  Some(n)
-                case _ =>
-                  None
-              }
-            }
-          case _ => None
-        }
-      }
-    }
-
-    val nodeShapes = shapes collect { case Some(s) => s }
-
-    nodeShapes.foreach { s =>
-      val name = s.effectiveLinkTarget().asInstanceOf[Shape].name.value()
-      inputTypeNames += name
     }
     this
   }

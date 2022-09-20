@@ -6,25 +6,25 @@ Number of results: 3
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-parameter
-  Message: Default value of argument null must be of type http://www.w3.org/2001/XMLSchema#boolean
+  Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/myQueryParam
-  Property: http://www.w3.org/ns/shacl#datatype
-  Range: [(6,9)-(6,40)]
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(6,31)-(6,40)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-parameter
-  Message: Default value of argument null must be of type http://www.w3.org/2001/XMLSchema#boolean
+  Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/declares/shape/MyObject/supportedOperation/name/expects/request/parameter/parameter/myObjParam
-  Property: http://www.w3.org/ns/shacl#datatype
-  Range: [(10,9)-(10,38)]
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(10,29)-(10,38)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-parameter
-  Message: Default value of argument null must be of type http://www.w3.org/2001/XMLSchema#boolean
+  Message: Expecting 'Boolean' value but got 'String' value instead
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-parameters.graphql#/declares/shape/MyInterface/supportedOperation/name/expects/request/parameter/parameter/myIntParam
-  Property: http://www.w3.org/ns/shacl#datatype
-  Range: [(15,9)-(15,38)]
+  Property: http://a.ml/vocabularies/core#defaultValue
+  Range: [(15,29)-(15,38)]
   Location: 

@@ -12,7 +12,7 @@ case class PropertyShapePathLinker()
     extends Linker[Seq, PropertyShapePathExpression, PropertyShapePath, GraphQLFederationWebApiContext] {
 
   override def link(source: Seq[PropertyShapePathExpression])(implicit
-                                                              ctx: GraphQLFederationWebApiContext
+      ctx: GraphQLFederationWebApiContext
   ): Seq[PropertyShapePath] = source.map(link)
 
   private def link(
@@ -34,14 +34,16 @@ case class PropertyShapePathLinker()
               ctx.eh.violation(
                 UnmatchedFieldInFieldSet,
                 source.root,
-                s"Property '$propName' referenced by field set cannot have arguments"
+                s"Property '$propName' referenced by field set cannot have arguments",
+                annotations
               )
               PropertyShape().withName("error")
             case _ =>
               ctx.eh.violation(
                 UnmatchedFieldInFieldSet,
                 source.root,
-                s"Cannot find property with name '$propName' when resolving field set"
+                s"Cannot find property with name '$propName' when resolving field set",
+                annotations
               )
               PropertyShape().withName("error")
           }

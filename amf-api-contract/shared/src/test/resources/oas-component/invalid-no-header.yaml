@@ -1,0 +1,25 @@
+info:
+  title: Sample Pet Store App
+  version: 1.0.1
+
+components:
+  schemas:
+    common:
+      title: common schema
+      multipleOf: 2
+      maximum: 32
+      exclusiveMaximum: true
+      minimum: 0
+      exclusiveMinimum: true
+      maxLength: 100
+      minLength: 0
+      type: string
+      description: common test case
+      nullable: true
+      externalDocs:
+        description: Find more info here
+        url: https://example.com
+      example: a
+      deprecated: false
+
+paths: {}

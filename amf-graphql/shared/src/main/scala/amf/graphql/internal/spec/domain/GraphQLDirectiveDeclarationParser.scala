@@ -1,11 +1,13 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
 import amf.core.internal.parser.domain.Annotations.virtual
+import amf.core.internal.remote.{GraphQL, GraphQLFederation}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, Locations}
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.DirectiveArguments
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
@@ -17,6 +19,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
 
   def parse(): CustomDomainProperty = {
     parseName()
+    parseRepeatable()
     parseArguments()
     parseLocations()
     parseDescription(node, directive, directive.meta)
@@ -26,6 +29,16 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   private def parseName(): Unit = {
     val (name, annotations) = findName(node, "AnonymousDirective", "Missing directive name")
     directive.withName(name, annotations)
+  }
+
+  def parseRepeatable(): Unit = {
+    val tokenName = ctx.spec match {
+      case GraphQL           => "'repeatable'"
+      case GraphQLFederation => "REPEATABLE_KEYWORD"
+    }
+    if (pathToTerminal(node, Seq(tokenName)).isDefined) {
+      directive.withRepeatable(true)
+    }
   }
 
   private def parseArguments(): Unit = {
@@ -44,6 +57,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     val propertyShape       = PropertyShape(toAnnotations(n))
     val (name, annotations) = findName(n, "AnonymousDirectiveArgument", "Missing argument name")
     propertyShape.withName(name, annotations)
+    parseDescription(n, propertyShape, propertyShape.meta)
     // can be UnresolvedShape, as its type may not be parsed yet, it will later be resolved
     val argumentType = parseType(n)
     setDefaultValue(n, propertyShape)
@@ -52,12 +66,18 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
   }
 
   private def parseLocations(): Unit = {
-    var domains = Set[String]()
+    var domains = Seq[String]()
     collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION)).foreach { n =>
-      path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION)) match {
-        case Some(graphqlLocation: Node) =>
-          val domainsFromLocation = getDomains(graphqlLocation).toSet
-          domains = domainsFromLocation ++: domains
+      lazy val typeSystemLocation = path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION))
+      lazy val executableLocation = path(n, Seq(EXECUTABLE_DIRECTIVE_LOCATION))
+      typeSystemLocation.orElse(executableLocation) match {
+        case Some(rawLocation: Node) =>
+          val locationName = rawLocation.children.head.asInstanceOf[Terminal].value
+          toLocationIri(locationName) match {
+            case Some(locationIri) =>
+              domains = domains :+ locationIri
+            case None => // unreachable, will fail first on ANTLR parsing
+          }
         case _ =>
           n match {
             case n: Node => checkErrorNode(n.children.toList)
@@ -65,12 +85,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
           }
       }
     }
-    directive.withDomain(domains.toSeq)
-  }
-
-  private def getDomains(location: Node): Seq[String] = {
-    val locationName: String = location.children.head.asInstanceOf[Terminal].value
-    Locations.locationToDomain.getOrElse(locationName, Seq())
+    directive.withDomain(domains.distinct)
   }
 
   private def checkErrorNode(children: Seq[ASTElement]): Unit = {

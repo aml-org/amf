@@ -1,0 +1,54 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 6
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid1/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(8,42)-(8,45)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid1/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(8,47)-(8,50)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(9,45)-(9,48)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(9,50)-(9,53)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(9,57)-(9,60)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'Boolean' value but got 'String' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-list.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(9,62)-(9,65)]
+  Location: 

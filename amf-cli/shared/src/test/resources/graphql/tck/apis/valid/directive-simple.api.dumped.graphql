@@ -1,4 +1,9 @@
-type Query {
+schema @MyDirective {
+  query: Query
+}
 
+type Query {
   name: String
 }
+
+directive @MyDirective on SCHEMA

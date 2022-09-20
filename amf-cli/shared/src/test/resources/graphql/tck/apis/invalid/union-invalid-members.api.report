@@ -1,30 +1,38 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 3
+Number of results: 4
 
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
-  Message: All union members must be Object type, Interface it's not
+  Message: 'Input' is not a valid union member (only Object types)
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
   Property: http://a.ml/vocabularies/shapes#anyOf
-  Range: [(25,0)-(25,47)]
+  Range: [(29,0)-(29,55)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
-  Message: All union members must be Object type, Scalar it's not
+  Message: 'Interface' is not a valid union member (only Object types)
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
   Property: http://a.ml/vocabularies/shapes#anyOf
-  Range: [(25,0)-(25,47)]
+  Range: [(29,0)-(29,55)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
-  Message: All union members must be Object type, Union it's not
+  Message: 'Scalar' is not a valid union member (only Object types)
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
   Property: http://a.ml/vocabularies/shapes#anyOf
-  Range: [(25,0)-(25,47)]
+  Range: [(29,0)-(29,55)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
+  Message: 'Union' is not a valid union member (only Object types)
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql#/declares/union/SearchResult
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(29,0)-(29,55)]
   Location: 

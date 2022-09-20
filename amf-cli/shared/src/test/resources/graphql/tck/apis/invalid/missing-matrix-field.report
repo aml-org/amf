@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-fields
+  Message: field 'grid' required by interface 'Chess' cannot be nullable because its definition is non-nullable
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql#/declares/shape/ChessBoard1
+  Property: http://a.ml/vocabularies/shapes#schema
+  Range: [(10,4)-(10,19)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-fields
+  Message: field 'grid' required by interface 'Chess' cannot be nullable because its definition is non-nullable
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql#/declares/shape/ChessBoard2
+  Property: http://a.ml/vocabularies/shapes#schema
+  Range: [(14,4)-(14,18)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-fields
+  Message: field 'grid' required by interface 'Chess' cannot be nullable because its definition is non-nullable
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/missing-matrix-field.graphql#/declares/shape/ChessBoard3
+  Property: http://a.ml/vocabularies/shapes#schema
+  Range: [(18,4)-(18,17)]
+  Location: 

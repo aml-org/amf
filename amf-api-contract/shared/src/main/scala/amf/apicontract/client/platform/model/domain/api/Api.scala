@@ -6,7 +6,6 @@ import amf.apicontract.client.scala.model.domain.api.{Api => InternalApi}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
-import amf.core.internal.remote.Spec
 import amf.shapes.client.platform.model.domain.CreativeWork
 
 import scala.scalajs.js.annotation.JSExportAll

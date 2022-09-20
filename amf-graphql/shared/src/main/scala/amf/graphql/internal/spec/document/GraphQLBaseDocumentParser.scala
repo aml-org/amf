@@ -4,10 +4,11 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedDeclaration
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{AntlrError, DuplicatedDeclaration}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
@@ -37,6 +38,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
+    loadSyntaxErrors(ast)
     parseWebAPI(ast)
     ast.current() match {
       case node: Node =>
@@ -49,6 +51,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     }
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
+    declarations.foreach(_.annotations += DeclaredElement())
     doc.withDeclares(declarations)
     inFederation { _ =>
       doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
@@ -57,6 +60,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
     }
     doc
+  }
+
+  private def loadSyntaxErrors(ast: AST): Unit = {
+    ast.getErrors.foreach(err => ctx.eh.violation(AntlrError, "", err.message, err.location))
   }
 
   private def parseWebAPI(ast: AST): Unit = {
@@ -186,7 +193,12 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseSchemaNode(schemaAst: ASTNode): Unit = {
     val schemaNode = schemaAst.asInstanceOf[Node]
-    GraphQLDirectiveApplicationParser(schemaNode, webapi).parse()
+
+    inFederation { implicit fCtx =>
+      GraphQLDirectiveApplicationsParser(schemaNode, webapi, Seq(SCHEMA_DIRECTIVE, DIRECTIVE)).parse()
+    }
+    GraphQLDirectiveApplicationsParser(schemaNode, webapi).parse()
+
     parseDescription(schemaNode, webapi, webapi.meta)
 
     val isExtends     = find(schemaNode, EXTEND).nonEmpty

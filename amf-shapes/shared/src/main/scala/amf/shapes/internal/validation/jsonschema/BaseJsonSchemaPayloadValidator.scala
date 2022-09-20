@@ -25,6 +25,7 @@ import amf.shapes.internal.spec.common.emitter.PayloadEmitter
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes
+import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
 
@@ -107,8 +108,9 @@ abstract class BaseJsonSchemaPayloadValidator(
     try {
       performValidation(buildCandidate(fragment), validationProcessor)
     } catch {
-      case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment.encodes))
-      case e: InvalidJsonValue  => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonObject      => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonValue       => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: MaxNestingValueReached => validationProcessor.processException(e, None)
     }
   }
 
@@ -141,6 +143,7 @@ abstract class BaseJsonSchemaPayloadValidator(
         // We don't skip completely the validation because if the payload is an object with an error we want the error
         case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
         case e: InvalidJsonValue              => validationProcessor.processException(e, None)
+        case e: MaxNestingValueReached        => validationProcessor.processException(e, None)
       }
   }
 
@@ -162,10 +165,11 @@ abstract class BaseJsonSchemaPayloadValidator(
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)
-    val emitter =
-      JsonSchemaEmitter(options = renderOptions, errorHandler = configuration.eh)
-    val document = SyamlParsedDocument(document = emitter.emit(shape, declarations))
-    validationProcessor.keepResults(configuration.eh.getResults)
+    val eh           = configuration.eh()
+    val emitter      = JsonSchemaEmitter(renderOptions, eh)
+    val YDocument    = emitter.emit(shape, declarations)
+    val document     = SyamlParsedDocument(YDocument)
+    validationProcessor.keepResults(eh.getResults)
     val writer = new StringWriter()
     SyamlSyntaxRenderPlugin.emit(`application/json`, document, writer).map(_.toString)
   }
@@ -222,7 +226,7 @@ abstract class BaseJsonSchemaPayloadValidator(
 
   private def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
 
-    val errorHandler = configuration.eh
+    val errorHandler = configuration.eh()
     PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
   }
 

@@ -1,14 +1,16 @@
 type Query {
-
   name: String
 }
-type Mutation {
 
+type Mutation {
   changeUserStatus(input_: InputType!): OutputType
 }
+
 type OutputType {
-  success : Boolean
+  success: Boolean
 }
+
 input InputType {
-  randomText : String
+  randomText: String
 }
+

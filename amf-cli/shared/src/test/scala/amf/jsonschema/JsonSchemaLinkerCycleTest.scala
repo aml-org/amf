@@ -41,7 +41,19 @@ class JsonSchemaLinkerCycleTest extends FunSuiteCycleTests with JsonSchemaDocume
     }
   }
 
-  private def config(base: AMFConfiguration) = {
+  test("JSON Schema to JSON-LD - draft-7 definitions $ref") {
+    withJsonSchema("schemas/basic-schema.json", config(jsonSchemaConfiguration())).flatMap { case (config, _) =>
+      cycle(
+        "schemas/schema-base.json",
+        "cycled/schema-base.json.jsonld",
+        AmfJsonHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
+    }
+  }
+
+  private def config(base: AMFConfiguration): AMFConfiguration = {
     base.withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris.withSourceMaps)
   }
 }

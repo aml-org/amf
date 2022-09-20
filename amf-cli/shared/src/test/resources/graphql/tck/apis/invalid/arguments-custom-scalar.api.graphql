@@ -1,0 +1,10 @@
+type Query {
+    name: String
+}
+
+scalar MyScalar
+
+directive @valid1(valid: MyScalar = "String") on SCALAR
+directive @valid2(valid: MyScalar = true) on SCALAR
+directive @valid3(valid: MyScalar = null) on SCALAR
+directive @invalid1(invalid: MyScalar! = null) on SCALAR

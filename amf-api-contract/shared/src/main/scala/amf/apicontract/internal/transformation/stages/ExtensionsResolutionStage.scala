@@ -17,13 +17,15 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.metamodel.Type.Scalar
 import amf.core.internal.metamodel.document.BaseUnitModel
-import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField, NameFieldSchema, NameFieldShacl}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, DisplayNameField, NameFieldSchema, NameFieldShacl}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -236,7 +238,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       extensionId: String,
       extensionLocation: Option[String]
   ): Unit = {
-    val declarations = WebApiDeclarations(main.declares, errorHandler, EmptyFutureDeclarations())
+    val declarations =
+      WebApiDeclarations(main.declares, errorHandler, EmptyFutureDeclarations(), DotQualifiedNameExtractor)
 
     // Extension declarations will be added to main document. The ones with the same name will be merged.
     val mergingTracker = IdTracker()
@@ -374,7 +377,7 @@ object MergingRestrictions {
       NameFieldSchema.Name,
       DisplayNameField.DisplayName,
       ShapeModel.DisplayName,
-      DescriptionField.Description,
+      DescribedElementModel.Description,
       DocumentationField.Documentation,
       TagModel.Documentation,
       BaseApiModel.Documentations,

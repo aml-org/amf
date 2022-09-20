@@ -4,12 +4,20 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
-import amf.graphql.internal.spec.emitter.domain.{GraphQLDescriptionEmitter, GraphQLEmitter, GraphQLRootTypeEmitter, GraphQLTypeEmitter}
+import amf.graphql.internal.spec.emitter.domain.{
+  GraphQLDescriptionEmitter,
+  GraphQLDirectiveApplicationsRenderer,
+  GraphQLDirectiveDeclarationEmitter,
+  GraphQLEmitter,
+  GraphQLRootTypeEmitter,
+  GraphQLTypeEmitter
+}
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 import amf.shapes.client.scala.model.domain.AnyShape
 
 class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GraphQLEmitter {
 
-  val ctx: GraphQLEmitterContext = new GraphQLEmitterContext(document).classifyEndpoints().indexInputTypes
+  val ctx: GraphQLEmitterContext = new GraphQLEmitterContext(document).classifyEndpoints()
 
   def emit(): Unit = {
     builder.doc { doc =>
@@ -23,38 +31,47 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
 
   // TODO: schema is not being rendered
   private def emitSchema(doc: StringDocBuilder) = {
+    val directives = GraphQLDirectiveApplicationsRenderer(ctx.webApi)
+
     doc.fixed { b =>
       GraphQLDescriptionEmitter(ctx.webApi.description.option(), ctx, b).emit()
-      b.+=("schema {")
-      b.obj { obj =>
-        ctx.queryType.foreach { queryType =>
-          obj.+=(s"query: ${queryType.name}")
-        }
-        ctx.mutationType.foreach { mutationType =>
-          obj.+=(s"mutation: ${mutationType.name}")
-        }
-        ctx.subscriptionType.foreach { subscriptionType =>
-          obj.+=(s"subscription: ${subscriptionType.name}")
-        }
-      }
-      b.+=("}")
+      LineEmitter(b, "schema", directives, "{").emit()
+      emitRootOperationTypeDefinitions(b)
+      LineEmitter(b).closeBlock()
     }
   }
 
-  def emitTopLevelTypes(b: StringDocBuilder): Unit = {
+  private def emitRootOperationTypeDefinitions(b: StringDocBuilder) = {
+    b.obj { obj =>
+      ctx.queryType.foreach { queryType =>
+        LineEmitter(obj, "query:", queryType.name).emit()
+      }
+      ctx.mutationType.foreach { mutationType =>
+        LineEmitter(obj, "mutation:", mutationType.name).emit()
+      }
+      ctx.subscriptionType.foreach { subscriptionType =>
+        LineEmitter(obj, "subscription:", subscriptionType.name).emit()
+      }
+    }
+  }
+
+  private def emitTopLevelTypes(b: StringDocBuilder): Unit = {
     val rootLevelTypes = ctx.queryType ++ ctx.mutationType ++ ctx.subscriptionType
     rootLevelTypes.foreach { queryType =>
       GraphQLRootTypeEmitter(queryType, ctx, b).emit()
     }
   }
 
-  def emitDeclarations(doc: StringDocBuilder): Unit = {
+  private def emitDeclarations(doc: StringDocBuilder): Unit = {
     document.asInstanceOf[Document].declares.foreach {
       case shape: AnyShape =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
-      case directive: CustomDomainProperty =>
-      // TODO: emit directive declarations, something like: GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
+      case directive: CustomDomainProperty if !isStandardDirective(directive) =>
+        GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
+      case _ => // ignore
     }
   }
 
+  // TODO: Change this filter to an annotation to make it scalable
+  private def isStandardDirective(directive: CustomDomainProperty): Boolean = directive.name.value() == "deprecated"
 }

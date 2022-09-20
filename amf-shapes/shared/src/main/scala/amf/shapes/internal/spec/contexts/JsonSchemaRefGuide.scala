@@ -1,14 +1,13 @@
 package amf.shapes.internal.spec.contexts
 
-import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
 import amf.core.client.scala.parse.document.ParsedReference
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.contexts.ReferenceFinder.{getFileUrl, getJsonReferenceFragment}
-import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.getYNodeFrom
 import amf.shapes.internal.spec.jsonschema.ref.AstFinder
+import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaRootCreator.getYNodeFrom
 import org.yaml.model.YNode
 
 case class JsonSchemaRefGuide(currentLoc: String, currentUnit: Option[BaseUnit], references: Seq[ParsedReference])(

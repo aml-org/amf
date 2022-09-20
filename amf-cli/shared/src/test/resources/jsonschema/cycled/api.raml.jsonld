@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.6.0",
+      "apiContract:modelVersion": "3.7.0",
       "doc:sourceSpec": "RAML 1.0"
     },
     {
@@ -402,6 +402,9 @@
       ],
       "sourcemaps:lexical": [
         {
+          "@id": "#/references/0/source-map/lexical/element_1"
+        },
+        {
           "@id": "#/references/0/source-map/lexical/element_0"
         }
       ],
@@ -499,6 +502,11 @@
           "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "#/references/0/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/api.raml#/references/0",
+      "sourcemaps:value": "[(1,0)-(17,0)]"
     },
     {
       "@id": "#/references/0/source-map/lexical/element_0",

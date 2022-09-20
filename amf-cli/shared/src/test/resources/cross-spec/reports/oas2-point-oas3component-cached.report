@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/cross-spec/oas2-point-oas3component/api-root.json
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'component.yaml#/components/schemas/TheType'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/cross-spec/oas2-point-oas3component/api-root.json#/declares/unresolved
+  Property: 
+  Range: [(10,6)-(10,58)]
+  Location: file://amf-cli/shared/src/test/resources/cross-spec/oas2-point-oas3component/api-root.json
+
+- Constraint: http://a.ml/vocabularies/amf/core#invalid-cross-spec
+  Message: Cannot reference a OAS 3.0 spec from a different spec
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(10,14)-(10,58)]
+  Location: file://amf-cli/shared/src/test/resources/cross-spec/oas2-point-oas3component/api-root.json

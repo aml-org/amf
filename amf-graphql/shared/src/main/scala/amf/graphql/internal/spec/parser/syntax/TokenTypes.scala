@@ -1,6 +1,8 @@
 package amf.graphql.internal.spec.parser.syntax
 
 import amf.core.client.scala.model.DataType
+import amf.core.internal.remote.{GraphQL, GraphQLFederation}
+import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 
 object TokenTypes {
   val DOCUMENT                       = "document"
@@ -51,6 +53,7 @@ object TokenTypes {
   val DIRECTIVE_LOCATIONS            = "directiveLocations"
   val DIRECTIVE_LOCATION             = "directiveLocation"
   val TYPE_SYSTEM_DIRECTIVE_LOCATION = "typeSystemDirectiveLocation"
+  val EXECUTABLE_DIRECTIVE_LOCATION  = "executableDirectiveLocation"
   val DIRECTIVES                     = "directives"
   val DIRECTIVE                      = "directive"
   val DEFAULT_VALUE                  = "defaultValue"
@@ -62,6 +65,7 @@ object TokenTypes {
   val ENUM_VALUE                     = "enumValue"
   val LIST_VALUE                     = "listValue"
   val OBJECT_VALUE                   = "objectValue"
+  val OBJECT_FIELD                   = "objectField"
   val VALUE                          = "value"
   val INT                            = "Int"
   val FLOAT                          = "Float"
@@ -72,6 +76,28 @@ object TokenTypes {
   val INT_TERMINAL                   = "INT"
   val FLOAT_TERMINAL                 = "FLOAT"
   val STRING_TERMINAL                = "STRING"
+
+  def TRUE(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'true'"
+      case GraphQLFederation => "TRUE"
+      case _                 => ""
+    }
+  }
+  def FALSE(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'false'"
+      case GraphQLFederation => "FALSE"
+      case _                 => ""
+    }
+  }
+  def NULL(implicit ctx: GraphQLBaseWebApiContext): String = {
+    ctx.spec match {
+      case GraphQL           => "'null'"
+      case GraphQLFederation => "NULL"
+      case _                 => ""
+    }
+  }
 
   // Federation
   val FIELD_SET           = "fieldSet"
@@ -108,27 +134,11 @@ object TokenTypes {
   val REQUIRES_DIRECTIVE                = "requiresDirective"
   val SCALAR_DIRECTIVE                  = "scalarDirective"
   val SCALAR_FEDERATION_DIRECTIVE       = "scalarFederationDirective"
+  val SCHEMA_DIRECTIVE                  = "schemaDirective"
   val SHAREABLE_DIRECTIVE               = "shareableDirective"
   val UNION_DIRECTIVE                   = "unionDirective"
   val UNION_FEDERATION_DIRECTIVE        = "unionFederationDirective"
 
   val SCALAR_TYPES: Seq[String] = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
 
-  val toDataType: Map[String, String] = Map(
-    INT     -> DataType.Integer,
-    FLOAT   -> DataType.Float,
-    STRING  -> DataType.String,
-    BOOLEAN -> DataType.Boolean,
-    ENUM    -> DataType.String,
-    ID      -> DataType.String
-  )
-
-  val toTerminal: Map[String, String] = Map(
-    INT          -> INT_TERMINAL,
-    FLOAT        -> FLOAT_TERMINAL,
-    STRING       -> STRING_TERMINAL,
-    INT_VALUE    -> INT_TERMINAL,
-    FLOAT_VALUE  -> FLOAT_TERMINAL,
-    STRING_VALUE -> STRING_TERMINAL
-  )
 }

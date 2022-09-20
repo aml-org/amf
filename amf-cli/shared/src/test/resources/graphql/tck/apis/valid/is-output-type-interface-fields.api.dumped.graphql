@@ -1,26 +1,31 @@
 type Query {
-
   name: String
 }
+
 interface Interface {
-  name : String
+  name: String
 }
+
 enum Enum {
   A
   B
 }
+
 interface RootInterface {
-  objectField : Object1
-  interfaceField : Interface
-  unionField : Union
-  scalarField : Scalar
-  enumField : Enum
+  objectField: Object1
+  interfaceField: Interface
+  unionField: Union
+  scalarField: Scalar
+  enumField: Enum
 }
+
 type Object1 {
-  success : Boolean
+  success: Boolean
 }
+
 scalar Scalar
 type Object2 {
-  success : Boolean
+  success: Boolean
 }
+
 union Union = Object1 | Object2

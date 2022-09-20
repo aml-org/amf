@@ -2,66 +2,16 @@ package amf.apicontract.internal.convert
 
 import amf.apicontract.client.platform
 import amf.apicontract.client.platform.model.{document, domain}
-import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.client.scala.model.domain.{
-  Callback,
-  CorrelationId,
-  Encoding,
-  EndPoint,
-  License,
-  Message,
-  Operation,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
-}
+import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
+import amf.apicontract.client.scala.model.domain.{Callback, CorrelationId, Encoding, EndPoint, License, Message, Operation, Organization, Parameter, Payload, Request, Response, Server, Tag, TemplatedLink}
 import amf.apicontract.client.scala.model.domain.federation._
-import amf.apicontract.client.scala.model.domain.bindings.amqp.{
-  Amqp091ChannelBinding,
-  Amqp091ChannelExchange,
-  Amqp091MessageBinding,
-  Amqp091OperationBinding,
-  Amqp091Queue
-}
+import amf.apicontract.client.scala.model.domain.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091OperationBinding, Amqp091Queue}
 import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
+import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttMessageBinding, MqttOperationBinding, MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.scala.model.domain.bindings.{
-  ChannelBinding,
-  ChannelBindings,
-  EmptyBinding,
-  MessageBinding,
-  MessageBindings,
-  OperationBinding,
-  OperationBindings,
-  ServerBinding,
-  ServerBindings
-}
-import amf.apicontract.client.scala.model.domain.security.{
-  ApiKeySettings,
-  HttpApiKeySettings,
-  HttpSettings,
-  OAuth1Settings,
-  OAuth2Flow,
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  ParametrizedSecurityScheme,
-  Scope,
-  SecurityRequirement,
-  SecurityScheme,
-  Settings
-}
+import amf.apicontract.client.scala.model.domain.bindings.{ChannelBinding, ChannelBindings, EmptyBinding, MessageBinding, MessageBindings, OperationBinding, OperationBindings, ServerBinding, ServerBindings}
+import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, HttpApiKeySettings, HttpSettings, OAuth1Settings, OAuth2Flow, OAuth2Settings, OpenIdConnectSettings, ParametrizedSecurityScheme, Scope, SecurityRequirement, SecurityScheme, Settings}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
@@ -121,6 +71,7 @@ trait ApiBaseConverter
     with APIContractProcessingDataConverter
     with OperationFederationMetadataConverter
     with ParameterKeyMappingConverter
+    with ComponentModuleConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -585,5 +536,12 @@ trait ParameterKeyMappingConverter extends PlatformSecrets {
   implicit object ParameterKeyMappingMatcher extends BidirectionalMatcher[ParameterKeyMapping, domain.federation.ParameterKeyMapping] {
     override def asClient(from: ParameterKeyMapping): domain.federation.ParameterKeyMapping   = platform.wrap[domain.federation.ParameterKeyMapping](from)
     override def asInternal(from: domain.federation.ParameterKeyMapping): ParameterKeyMapping = from._internal
+  }
+}
+
+trait ComponentModuleConverter extends PlatformSecrets {
+  implicit object ComponentModuleMatcher extends BidirectionalMatcher[ComponentModule, document.ComponentModule] {
+    override def asClient(from: ComponentModule): document.ComponentModule   = new document.ComponentModule(from)
+    override def asInternal(from: document.ComponentModule): ComponentModule = from._internal
   }
 }

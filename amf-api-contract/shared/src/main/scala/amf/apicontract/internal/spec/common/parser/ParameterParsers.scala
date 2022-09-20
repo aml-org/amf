@@ -576,8 +576,10 @@ case class Oas2ParameterParser(
     val refUrl = OasDefinitions.stripParameterDefinitionsPrefix(ref.value)
     ctx.declarations.findParameter(refUrl, SearchScope.All) match {
       case Some(param) =>
+        val parameterName        = refUrl.split("/").last
         val parameter: Parameter = param.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized())
-        parameter.withName(refUrl)
+        // TODO: Could also delete link name
+        parameter.withName(parameterName)
         OasParameter(parameter, Some(ref))
       case None =>
         ctx.declarations.findPayload(refUrl, SearchScope.All) match {

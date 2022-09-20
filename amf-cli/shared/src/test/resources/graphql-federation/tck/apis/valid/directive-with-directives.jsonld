@@ -1,0 +1,406 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "directive-with-directives.graphql"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.7.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQLFederation"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/scalar/MyScalar",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#anyType"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "MyScalar"
+          }
+        ],
+        "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "myDirective"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/scalar/MyScalar/customDomainProperties/myDirective/data-node",
+          "@type": [
+            "http://a.ml/vocabularies/data#Object",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#argA": [
+            {
+              "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/scalar/MyScalar/customDomainProperties/myDirective/data-node/argA",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "valueA"
+                }
+              ],
+              "http://www.w3.org/ns/shacl#datatype": [
+                {
+                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "argA"
+                }
+              ]
+            }
+          ],
+          "http://a.ml/vocabularies/data#argB": [
+            {
+              "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/scalar/MyScalar/customDomainProperties/myDirective/data-node/argB",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "valueB"
+                }
+              ],
+              "http://www.w3.org/ns/shacl#datatype": [
+                {
+                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "argB"
+                }
+              ]
+            }
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveA",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ARGUMENT_DEFINITION"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveA/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [],
+            "http://a.ml/vocabularies/shapes#inputOnly": [
+              {
+                "@value": true
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "directiveA"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveB",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/ARGUMENT_DEFINITION"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveB/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [],
+            "http://a.ml/vocabularies/shapes#inputOnly": [
+              {
+                "@value": true
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "directiveB"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective",
+        "@type": [
+          "http://a.ml/vocabularies/document#DomainProperty",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+          {
+            "@id": "http://a.ml/vocabularies/graphql#directive/location/SCALAR"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schema": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argA",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argA/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argA/union/default-union/anyOf/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argA/union/default-union/anyOf/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "argA"
+                  }
+                ],
+                "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveA": {
+                  "http://a.ml/vocabularies/core#extensionName": [
+                    {
+                      "@value": "directiveA"
+                    }
+                  ],
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argA/customDomainProperties/directiveA/data-node",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Object",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ]
+                },
+                "http://a.ml/vocabularies/document#customDomainProperties": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/directiveA"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB/union/default-union",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB/union/default-union/anyOf/nil/default-nil",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB/union/default-union/anyOf/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "argB"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB/data-node",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "defaultB"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/federation#federationMetadata": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/directive-with-directives.graphql#/declares/myDirective/shape/default-node/property/property/argB/federation-metadata",
+                    "@type": [
+                      "http://a.ml/vocabularies/federation#ShapeFederationMetadata",
+                      "http://a.ml/vocabularies/federation#FederationMetadata",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/federation#inaccessible": [
+                      {
+                        "@value": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#inputOnly": [
+              {
+                "@value": true
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "myDirective"
+          }
+        ]
+      }
+    ]
+  }
+]

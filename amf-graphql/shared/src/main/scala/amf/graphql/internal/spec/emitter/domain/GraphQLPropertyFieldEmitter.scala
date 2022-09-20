@@ -4,23 +4,26 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
+import amf.graphql.internal.spec.emitter.helpers.{LineEmitter, StringBuilder}
 
 case class GraphQLPropertyFieldEmitter(property: PropertyShape, ctx: GraphQLEmitterContext, b: StringDocBuilder)
     extends GraphQLEmitter {
 
-  def emit(): Object = {
+  def emit(): Unit = {
     val name         = property.name.value()
     val nullable     = property.minCount.option().getOrElse(0) == 0
     val range        = typeTarget(property.range)
     val returnedType = extractGraphQLType(nullable, range)
-    val fieldString  = s"$name : $returnedType"
+    val directives   = GraphQLDirectiveApplicationsRenderer(property)
+    val fieldString  = StringBuilder(s"$name:", returnedType, directives)
+
     property.description.option() match {
       case Some(description) =>
         b.fixed { f =>
           GraphQLDescriptionEmitter(Some(description), ctx, f, Some(pos(property.annotations))).emit()
-          f += fieldString
+          LineEmitter(f, fieldString).emit()
         }
-      case _ => b += (fieldString, pos(property.annotations))
+      case _ => LineEmitter(b, fieldString).emit()
     }
   }
 

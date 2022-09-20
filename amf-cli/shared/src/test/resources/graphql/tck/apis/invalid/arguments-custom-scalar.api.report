@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-custom-scalar.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'MyScalar' value but got 'null' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-custom-scalar.api.graphql#/declares/invalid1/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(10,41)-(10,45)]
+  Location: 

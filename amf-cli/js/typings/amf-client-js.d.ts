@@ -3187,6 +3187,18 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ComponentModule extends Module  {
+    name: StrField
+    version: StrField
+
+    constructor()
+
+    withName(name: string): this
+
+    withVersion(version: string): this
+
+
+  }
   export class MqttServerBinding implements ServerBinding  {
     customDomainProperties: Array<DomainExtension>
     clientId: StrField
@@ -4018,7 +4030,11 @@ declare module 'amf-client-js' {
 
     static OAS30(): AMFConfiguration
 
+    static OAS30Component(): AMFConfiguration
+
     static OAS(): AMFConfiguration
+
+    static OASComponent(): AMFConfiguration
 
     static fromSpec(spec: Spec): AMFConfiguration
 
@@ -7000,6 +7016,8 @@ declare module 'amf-client-js' {
     readonly maxYamlReferences: undefined | number
 
     report(result: AMFValidationResult): void
+
+    eh(): ClientErrorHandler
 
     fetchContent(url: string): Promise<Content>
 

@@ -7,6 +7,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandl
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.remote.{Grpc, Spec, Syntax}
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.document.GrpcDocumentParser
@@ -56,7 +57,7 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
       ctx.refs,
       ctx.parsingOptions,
       ctx,
-      Some(WebApiDeclarations(Nil, UnhandledErrorHandler, ctx.futureDeclarations))
+      Some(WebApiDeclarations(Nil, UnhandledErrorHandler, ctx.futureDeclarations, DotQualifiedNameExtractor))
     )
     // setup the package path
     GrpcPackageParser(ast, Document())(grpcCtx).parseName() match {

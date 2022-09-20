@@ -6,14 +6,14 @@ import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core, Security}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField}
+import amf.core.internal.metamodel.domain.common.{DescribedElementModel, DisplayNameField}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 
 object SecuritySchemeModel
     extends DomainElementModel
     with KeyField
-    with DescriptionField
+    with DescribedElementModel
     with DisplayNameField
     with ParametersFieldModel {
 

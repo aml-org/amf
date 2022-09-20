@@ -31,10 +31,16 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   }
 
   private def addIntrospectionElements(doc: Document): Document = {
-    val fieldSet = _FieldSet()
+    val fieldSet = FieldSet()
     val _any     = _Any()
     val _service = _Service()
-    val _entity  = _Entity(assumeNodeShapes(doc))
+    val _entity = {
+      retrieveEntities(doc) match {
+        case entities if entities.nonEmpty => Some(_Entity(entities))
+        case _                             => None
+      }
+
+    }
     addTypesToDocument(doc, fieldSet, _any, _service, _entity)
     addExtensionEndpoints(doc, _any, _service, _entity)
   }
@@ -44,14 +50,24 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
       fieldSet: ScalarShape,
       _any: ScalarShape,
       _service: NodeShape,
-      _entity: UnionShape
+      _entity: Option[UnionShape]
   ) = {
-    val types      = List(_any, fieldSet, _service, _entity)
-    val directives = List(`@external`(), `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet))
+    val types = {
+      _entity match {
+        case Some(e) => List(_any, fieldSet, _service, e)
+        case _       => List(fieldSet, _service)
+      }
+    }
+    val directives = List(`@external`, `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet), `@shareable`, `@inaccessible`, `@override`)
     doc.setArrayWithoutId(DocumentModel.Declares, doc.declares ++ types ++ directives)
   }
 
-  private def addExtensionEndpoints(doc: Document, _any: ScalarShape, _service: NodeShape, _entity: UnionShape) = {
+  private def addExtensionEndpoints(
+      doc: Document,
+      _any: ScalarShape,
+      _service: NodeShape,
+      _entity: Option[UnionShape]
+  ) = {
     val endpoints    = _Query(_any, _entity, _service)
     val apiEndpoints = doc.encodes.asInstanceOf[Api].endPoints
     doc.encodes.asInstanceOf[Api].withEndPoints(apiEndpoints ++ endpoints)
@@ -65,5 +81,7 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
     doc
   }
 
-  private def assumeNodeShapes(doc: Document): Seq[NodeShape] = doc.declares.collect { case n: NodeShape => n }
+  private def retrieveEntities(doc: Document): Seq[NodeShape] = doc.declares.collect {
+    case n: NodeShape if n.keys.nonEmpty => n
+  }
 }

@@ -1,14 +1,11 @@
 package amf.apicontract.internal.validation.shacl.graphql
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.scala.model.domain.{AmfScalar, DataNode, DomainElement}
-import amf.core.client.scala.model.domain.extensions.{DomainExtension, PropertyShape}
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocation
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.common.{NameFieldSchema, NameFieldShacl}
-import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter}
-import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object GraphQLDirectiveLocationValidator {
@@ -27,35 +24,32 @@ object GraphQLDirectiveLocationValidator {
       element: DomainElement,
       appliedToDirectiveArgument: Boolean = false
   ): Option[ValidationInfo] = {
-    val validDomains     = directiveApplication.definedBy.domain.map(_.toString)
-    val currentDomains   = element.meta.typeIris // maybe head?
-    val isAValidLocation = currentDomains.exists(validDomains.contains)
+    val result = for {
+      actual      <- toLocation(element, appliedToDirectiveArgument)
+      declaration <- Option(directiveApplication.definedBy)
+    } yield {
+      val expected           = declaration.domain.map(_.value())
+      val isValidApplication = expected.contains(actual.iri.iri())
+      (actual, isValidApplication)
+    }
 
-    // when parsing directives we parse arguments as property shapes of a virtual node shape
-    lazy val isValidApplicationToDirectiveArgument = appliedToDirectiveArgument && element.meta
-      .isInstanceOf[PropertyShapeModel.type] && validDomains.intersect(ShapeParameterModel.typeIris).nonEmpty
-
-    if (!isAValidLocation && !isValidApplicationToDirectiveArgument) {
-      val message = buildErrorMessage(directiveApplication, element, appliedToDirectiveArgument)
-      Some(
-        ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations))
-      )
-    } else None
+    result match {
+      case Some((actual, false)) =>
+        val message = buildErrorMessage(directiveApplication, element, actual.name)
+        Some(ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations)))
+      case _ => None
+    }
   }
 
-  private def buildErrorMessage(
-      directiveApplication: DomainExtension,
-      element: DomainElement,
-      appliedToDirectiveArgument: Boolean
-  ) = {
-    val kind                    = inferGraphQLKind(element, appliedToDirectiveArgument)
+  private def buildErrorMessage(directiveApplication: DomainExtension, element: DomainElement, kind: String) = {
     val nameOpt: Option[String] = extractName(element)
 
     nameOpt match {
-      case Some(name) => s"Directive ${directiveApplication.name.value()} cannot be applied to $kind $name"
-      case _          => s"Directive ${directiveApplication.name.value()} cannot be applied to $kind"
+      case Some(name) => s"Directive '${directiveApplication.name.value()}' cannot be applied to $kind $name"
+      case _          => s"Directive '${directiveApplication.name.value()}' cannot be applied to $kind"
     }
   }
+
   private def extractName(element: DomainElement) = {
     element.fields
       .getValueAsOption(NameFieldSchema.Name)
@@ -76,23 +70,5 @@ object GraphQLDirectiveLocationValidator {
         }
       }
       .map(name => s"'$name'")
-  }
-  private def inferGraphQLKind(element: DomainElement, appliedToDirectiveArgument: Boolean): String = {
-    element match {
-      case _: PropertyShape if appliedToDirectiveArgument => "argument"
-      case _: PropertyShape                               => "field"
-      case _: ShapeOperation                              => "field"
-      case _: ShapeParameter                              => "argument"
-      case s: ScalarShape if s.values.nonEmpty            => "enum"
-      case _: ScalarShape                                 => "scalar"
-      case n: NodeShape if n.isAbstract.value()           => "interface"
-      case n: NodeShape if n.isInputOnly.value()          => "input object"
-      case _: NodeShape                                   => "object"
-      case _: UnionShape                                  => "union"
-      case _: DataNode                                    => "value"
-      case _: EndPoint                                    => "field"
-      case _: WebApi                                      => "schema"
-      case _                                              => "type" // should be unreachable
-    }
   }
 }

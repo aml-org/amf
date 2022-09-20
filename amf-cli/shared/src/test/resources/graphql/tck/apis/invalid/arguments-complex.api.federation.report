@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Expecting 'String' value but got 'Boolean' value instead
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid1/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(14,54)-(14,58)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Provided value for object 'Child' is missing property 'b'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(15,49)-(15,70)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-directive
+  Message: Unexpected property 'c' is not defined in object 'Child'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/arguments-complex.api.graphql#/declares/invalid2/shape/default-node
+  Property: http://www.w3.org/ns/shacl#defaultValue
+  Range: [(15,49)-(15,70)]
+  Location: 

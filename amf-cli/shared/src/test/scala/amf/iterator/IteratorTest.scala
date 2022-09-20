@@ -15,7 +15,7 @@ import amf.core.client.scala.traversal.iterator.{
   InstanceCollector
 }
 import amf.core.internal.annotations.DomainExtensionAnnotation
-import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Raml10YamlHint
 import org.scalatest.funsuite.AsyncFunSuite
@@ -132,7 +132,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
     val domainExtension = DomainExtension().withName("a domain extension")
     response.set(
-      DescriptionField.Description,
+      DescribedElementModel.Description,
       AmfScalar("a description", Annotations(DomainExtensionAnnotation(domainExtension)))
     )
     new Document(Fields(), Annotations()).withEncodes(api)

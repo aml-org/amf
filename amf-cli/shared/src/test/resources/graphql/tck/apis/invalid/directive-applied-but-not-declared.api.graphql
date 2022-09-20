@@ -1,0 +1,7 @@
+schema @MyDirective(text: "Luke Skywalker") {
+    query: Query
+}
+
+type Query {
+    name: String
+}

@@ -397,6 +397,11 @@ object ParserSideValidations extends Validations {
     "The location of the directive is invalid"
   )
 
+  val InvalidArgumentValue = validation(
+    "invalid-argument-value",
+    "Invalid argument value"
+  )
+
   val DuplicatedDeclaration = validation(
     id = "duplicated-declaration",
     message = "Cannot exist two or more declarations with same name"
@@ -405,6 +410,11 @@ object ParserSideValidations extends Validations {
   val UnmatchedFieldInFieldSet = validation(
     id = "unmatched-field-in-field-set",
     message = "Cannot find property when resolving fieldSet"
+  )
+
+  val AntlrError = validation(
+    "antlr-error",
+    "Syntax error"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(

@@ -1,0 +1,34 @@
+schema @example(text: "Jorge") {
+    query: Query
+}
+
+type Query {
+    rootField: String @example(text: "Jorge")
+}
+
+scalar MyScalar @example(text: "Jorge")
+
+type MyObject @example(text: "Jorge") {
+    myField(myArgument: String @example(text: "Jorge")): String! @example(text: "Jorge")
+}
+
+interface MyInterface @example(text: "Jorge") {
+    myField: String!
+}
+
+type MyObject2 {
+    myField2: String
+}
+
+union MyUnion @example(text: "Jorge") = MyObject | MyObject2
+
+enum MyEnum @example(text: "Jorge") {
+    MyEnumValue @example(text: "Jorge")
+}
+
+input MyInputObject @example(text: "Jorge") {
+    myField: String! @example(text: "Jorge")
+}
+
+directive @example(text: String @example2) on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @example2 on ARGUMENT_DEFINITION

@@ -1,0 +1,15 @@
+type Query {
+    name: String
+}
+input Child {
+    a: [String]
+    b: [String]
+}
+
+input Parent {
+    child: [Child]
+}
+
+directive @valid(valid: Parent = {child : [ {a: ["A"], b: ["B"] } ] }) on SCALAR
+directive @invalid1(invalid: Parent = {child : [ {a: [true], b: ["B"] } ] }) on SCALAR
+directive @invalid2(invalid: Parent = {child : [ {a: ["A"], c: ["C"] } ] }) on SCALAR

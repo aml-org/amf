@@ -1,0 +1,1374 @@
+{
+"@graph": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#APIContractProcessingData"
+],
+"http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+"http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml",
+"http://a.ml/vocabularies/document#declares": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/refSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/notSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/headerP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/path/pathP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/apikey"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/http"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/openIdConnect"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/aExample"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/externalValueExample"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/forOpId"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader"
+}
+],
+"@type": [
+"http://a.ml/vocabularies/apiContract#ComponentModule",
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#root": true,
+"http://a.ml/vocabularies/document#processingData": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/BaseUnitProcessingData"
+},
+"http://a.ml/vocabularies/core#name": "Sample Pet Store App",
+"http://a.ml/vocabularies/core#version": "1.0.1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/refSchema",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "objectSchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "refSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#closed": false,
+"http://a.ml/vocabularies/shapes#discriminator": "a",
+"http://a.ml/vocabularies/shapes#discriminatorMapping": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorMapping/mapping/dog"
+}
+],
+"http://a.ml/vocabularies/shapes#discriminatorValueMapping": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorValueMapping/discriminator-value-mapping/dog"
+}
+],
+"http://www.w3.org/ns/shacl#name": "oneOfschema",
+"http://www.w3.org/ns/shacl#xone": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/exclusiveOr/shape/item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/exclusiveOr/array/item1"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/notSchema",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#name": "notSchema",
+"http://www.w3.org/ns/shacl#not": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/notSchema/scalar/not"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common",
+"@type": [
+"http://a.ml/vocabularies/shapes#UnionShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#anyOf": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/nil/default-nil"
+}
+],
+"http://www.w3.org/ns/shacl#name": "common"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#name": "allOfSchema",
+"http://www.w3.org/ns/shacl#and": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema/and/shape/item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema/and/array/item1"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema",
+"@type": [
+"http://a.ml/vocabularies/shapes#ArrayShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#items": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema/scalar/items"
+},
+"http://www.w3.org/ns/shacl#minCount": 0,
+"http://www.w3.org/ns/shacl#maxCount": 100,
+"http://a.ml/vocabularies/shapes#uniqueItems": true,
+"http://www.w3.org/ns/shacl#name": "arraySchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#name": "anyOfSchema",
+"http://www.w3.org/ns/shacl#or": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema/or/shape/item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema/or/array/item1"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#minProperties": 0,
+"http://a.ml/vocabularies/shapes#maxProperties": 100,
+"http://www.w3.org/ns/shacl#closed": true,
+"http://www.w3.org/ns/shacl#property": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a"
+}
+],
+"http://www.w3.org/ns/shacl#name": "objectSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/headerP",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "headerP",
+"http://a.ml/vocabularies/apiContract#paramName": "headerP",
+"http://a.ml/vocabularies/apiContract#required": false,
+"http://a.ml/vocabularies/apiContract#style": "simple",
+"http://a.ml/vocabularies/apiContract#explode": false,
+"http://a.ml/vocabularies/apiContract#binding": "header",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/headerP/scalar/headerP"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/path/pathP",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "pathP",
+"http://a.ml/vocabularies/apiContract#paramName": "pathP",
+"http://a.ml/vocabularies/apiContract#required": true,
+"http://a.ml/vocabularies/apiContract#style": "simple",
+"http://a.ml/vocabularies/apiContract#explode": false,
+"http://a.ml/vocabularies/apiContract#binding": "path",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/path/pathP/scalar/pathP"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "cookieP",
+"http://a.ml/vocabularies/apiContract#paramName": "cookieP",
+"http://a.ml/vocabularies/apiContract#required": false,
+"http://a.ml/vocabularies/apiContract#style": "form",
+"http://a.ml/vocabularies/apiContract#explode": true,
+"http://a.ml/vocabularies/apiContract#binding": "cookie",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/scalar/cookieP"
+},
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/examples/example/anExample"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "aParam",
+"http://a.ml/vocabularies/apiContract#paramName": "aParam",
+"http://a.ml/vocabularies/core#description": "a description",
+"http://a.ml/vocabularies/apiContract#required": false,
+"http://a.ml/vocabularies/document#deprecated": false,
+"http://a.ml/vocabularies/apiContract#allowEmptyValue": true,
+"http://a.ml/vocabularies/apiContract#style": "form",
+"http://a.ml/vocabularies/apiContract#explode": false,
+"http://a.ml/vocabularies/apiContract#allowReserved": false,
+"http://a.ml/vocabularies/apiContract#binding": "query",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/scalar/aParam"
+},
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/examples/example/default-example"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/apikey",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "apikey",
+"http://a.ml/vocabularies/security#type": "Api Key",
+"http://a.ml/vocabularies/core#description": "a security scheme",
+"http://a.ml/vocabularies/security#settings": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/apikey/settings/api-key"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/http",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "http",
+"http://a.ml/vocabularies/security#type": "http",
+"http://a.ml/vocabularies/security#settings": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/http/settings/http"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/openIdConnect",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "openIdConnect",
+"http://a.ml/vocabularies/security#type": "openIdConnect",
+"http://a.ml/vocabularies/security#settings": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/openIdConnect/settings/open-id-connect"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "oauth2",
+"http://a.ml/vocabularies/security#type": "OAuth 2.0",
+"http://a.ml/vocabularies/security#settings": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#link": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/links/templatedLink/refLink"
+}
+],
+"http://a.ml/vocabularies/core#name": "aResponse",
+"http://a.ml/vocabularies/core#description": "a response",
+"http://a.ml/vocabularies/apiContract#payload": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson"
+}
+],
+"http://a.ml/vocabularies/apiContract#header": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/inlined"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/aRef"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/aExample",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "aExample",
+"http://a.ml/vocabularies/apiContract#guiSummary": "a summary",
+"http://a.ml/vocabularies/core#description": "a description",
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/aExample/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/externalValueExample",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "externalValueExample",
+"http://a.ml/vocabularies/document#externalValue": "a",
+"http://a.ml/vocabularies/document#strict": true
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "requestBody",
+"http://a.ml/vocabularies/core#description": "a description",
+"http://a.ml/vocabularies/apiContract#payload": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/forOpId",
+"@type": [
+"http://a.ml/vocabularies/apiContract#TemplatedLink",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "forOpId",
+"http://a.ml/vocabularies/apiContract#operationId": "an operation Id"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address",
+"@type": [
+"http://a.ml/vocabularies/apiContract#TemplatedLink",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "address",
+"http://a.ml/vocabularies/apiContract#mapping": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address/mapping/mapping/userId"
+}
+],
+"http://a.ml/vocabularies/apiContract#requestBody": "aaa",
+"http://a.ml/vocabularies/core#description": "a description",
+"http://a.ml/vocabularies/apiContract#server": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Callback",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "myWebhook",
+"http://a.ml/vocabularies/apiContract#expression": "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body#/email}",
+"http://a.ml/vocabularies/apiContract#endpoint": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "aHeader",
+"http://a.ml/vocabularies/core#description": "a description",
+"http://a.ml/vocabularies/document#deprecated": false,
+"http://a.ml/vocabularies/apiContract#allowEmptyValue": true,
+"http://a.ml/vocabularies/apiContract#style": "simple",
+"http://a.ml/vocabularies/apiContract#explode": false,
+"http://a.ml/vocabularies/apiContract#binding": "header",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/scalar/schema"
+},
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/examples/example/default-example"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorMapping/mapping/dog",
+"@type": [
+"http://a.ml/vocabularies/apiContract#IriTemplateMapping",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#templateVariable": "dog",
+"http://a.ml/vocabularies/apiContract#linkExpression": "#/components/schemas/objectSchema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorValueMapping/discriminator-value-mapping/dog",
+"@type": [
+"http://a.ml/vocabularies/shapes#DiscriminatorValueMapping",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#discriminatorValue": "dog",
+"http://a.ml/vocabularies/shapes#discriminatorValueTarget": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorValueMapping/discriminator-value-mapping/dog/shape/oneOfschema"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/exclusiveOr/shape/item0",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "objectSchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/exclusiveOr/array/item1",
+"@type": [
+"http://a.ml/vocabularies/shapes#ArrayShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "arraySchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/notSchema/scalar/not",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "not"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#minLength": 0,
+"http://www.w3.org/ns/shacl#maxLength": 100,
+"http://www.w3.org/ns/shacl#name": "common",
+"http://a.ml/vocabularies/core#name": "common schema",
+"http://a.ml/vocabularies/core#description": "common test case",
+"http://a.ml/vocabularies/shapes#deprecated": false,
+"http://a.ml/vocabularies/core#documentation": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/creative-work/https%3A%2F%2Fexample.com"
+},
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/nil/default-nil",
+"@type": [
+"http://a.ml/vocabularies/shapes#NilShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema/and/shape/item0",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "objectSchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema/and/array/item1",
+"@type": [
+"http://a.ml/vocabularies/shapes#ArrayShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "arraySchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema/scalar/items",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "items"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema/or/shape/item0",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "objectSchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item0"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/anyOfSchema/or/array/item1",
+"@type": [
+"http://a.ml/vocabularies/shapes#ArrayShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/array/arraySchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "arraySchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "item1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a",
+"@type": [
+"http://www.w3.org/ns/shacl#PropertyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#path": [
+{
+"@id": "http://a.ml/vocabularies/data#a"
+}
+],
+"http://a.ml/vocabularies/shapes#range": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a/any/a"
+},
+"http://www.w3.org/ns/shacl#minCount": 1,
+"http://www.w3.org/ns/shacl#name": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/headerP/scalar/headerP",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "headerP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/path/pathP/scalar/pathP",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "pathP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/scalar/cookieP",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "cookieP"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/examples/example/anExample",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "anExample",
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/examples/example/anExample/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/scalar/aParam",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "aParam"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/examples/example/default-example",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/examples/example/default-example/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/apikey/settings/api-key",
+"@type": [
+"http://a.ml/vocabularies/security#ApiKeySettings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "api_key",
+"http://a.ml/vocabularies/security#in": "header"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/http/settings/http",
+"@type": [
+"http://a.ml/vocabularies/security#HttpSettings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#scheme": "bearer",
+"http://a.ml/vocabularies/security#bearerFormat": "JWT"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/openIdConnect/settings/open-id-connect",
+"@type": [
+"http://a.ml/vocabularies/security#OpenIdConnectSettings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#openIdConnectUrl": "url"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2",
+"@type": [
+"http://a.ml/vocabularies/security#OAuth2Settings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#flows": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/links/templatedLink/refLink",
+"@type": [
+"http://a.ml/vocabularies/apiContract#TemplatedLink",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "refLink",
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "address"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#mediaType": "application/json",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/scalar/schema"
+},
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/inlined",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "inlined",
+"http://a.ml/vocabularies/core#description": "The number of allowed requests in the current period",
+"http://a.ml/vocabularies/apiContract#style": "simple",
+"http://a.ml/vocabularies/apiContract#explode": false,
+"http://a.ml/vocabularies/apiContract#binding": "header",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/inlined/scalar/schema"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/aRef",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/core#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "aRef",
+"http://a.ml/vocabularies/apiContract#binding": "header",
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "aHeader"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/example/aExample/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#mediaType": "text/plain",
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address/mapping/mapping/userId",
+"@type": [
+"http://a.ml/vocabularies/apiContract#IriTemplateMapping",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#templateVariable": "userId",
+"http://a.ml/vocabularies/apiContract#linkExpression": "$request.path.id"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/templatedLink/address/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Server",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#urlTemplate": "https://development.gigantic-server.com/v1",
+"http://a.ml/vocabularies/core#description": "Development server"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D",
+"@type": [
+"http://a.ml/vocabularies/apiContract#EndPoint",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#path": "/http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body#/email}",
+"http://a.ml/vocabularies/apiContract#supportedOperation": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/scalar/schema",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "schema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/examples/example/default-example",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/examples/example/default-example/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/oneOfschema/discriminatorValueMapping/discriminator-value-mapping/dog/shape/oneOfschema",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "dog",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "oneOfschema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/creative-work/https%3A%2F%2Fexample.com",
+"@type": [
+"http://a.ml/vocabularies/core#CreativeWork",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#url": [
+{
+"@id": "https://example.com"
+}
+],
+"http://a.ml/vocabularies/core#description": "Find more info here"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a/any/a",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#name": "a",
+"http://a.ml/vocabularies/shapes#readOnly": false,
+"http://a.ml/vocabularies/shapes#writeOnly": false,
+"http://a.ml/vocabularies/shapes#xmlSerialization": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a/any/a/xml"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/cookie/cookieP/examples/example/anExample/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/query/aParam/examples/example/default-example/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit",
+"@type": [
+"http://a.ml/vocabularies/security#OAuth2Flow",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#authorizationUri": "https://example.com/api/oauth/dialog",
+"http://a.ml/vocabularies/security#flow": "implicit",
+"http://a.ml/vocabularies/security#refreshUri": "https://example.com/api/oauth/dialog",
+"http://a.ml/vocabularies/security#scope": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit/scope/write%3Apets"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit/scope/read%3Apets"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/scalar/schema",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": "schema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/core#mediaType": "application/json",
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/source-map"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/header/parameter/header/inlined/scalar/schema",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#integer"
+}
+],
+"http://www.w3.org/ns/shacl#name": "schema"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "user",
+"http://a.ml/vocabularies/apiContract#guiSummary": "User example in text plain format",
+"http://a.ml/vocabularies/document#externalValue": "http://foo.bar/examples/user-example.txt",
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/core#mediaType": "text/plain",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user/source-map"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/core#Operation",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#method": "post",
+"http://a.ml/vocabularies/apiContract#expects": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody"
+}
+],
+"http://a.ml/vocabularies/apiContract#returns": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/returns/resp/200"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/examples/example/default-example/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a/any/a/xml",
+"@type": [
+"http://a.ml/vocabularies/shapes#XMLSerializer",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#xmlAttribute": false,
+"http://a.ml/vocabularies/shapes#xmlWrapped": false,
+"http://a.ml/vocabularies/shapes#xmlName": "a",
+"http://a.ml/vocabularies/shapes#xmlNamespace": "http://example.com/schema/sample",
+"http://a.ml/vocabularies/shapes#xmlPrefix": "sample"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit/scope/write%3Apets",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "write:pets",
+"http://a.ml/vocabularies/core#description": "modify pets in your account"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit/scope/read%3Apets",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "read:pets",
+"http://a.ml/vocabularies/core#description": "read your pets"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/scalar_1",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#tracked-element": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/source-map/tracked-element/element_0"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#tracked-element": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user/source-map/tracked-element/element_0"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/core#Request",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": "requestBody",
+"http://a.ml/vocabularies/core#description": "Callback payload",
+"http://a.ml/vocabularies/apiContract#payload": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson"
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/returns/resp/200",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/core#Response",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#statusCode": "200",
+"http://a.ml/vocabularies/core#name": "200",
+"http://a.ml/vocabularies/core#description": "webhook successfully processed and no retries will be performed"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example/source-map/tracked-element/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson/examples/example/default-example",
+"http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/resp/aResponse/payload/application%2Fjson"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user/source-map/tracked-element/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain/examples/example/user",
+"http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/request%2FrequestBody/payload/text%2Fplain"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/core#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#mediaType": "application/json",
+"http://a.ml/vocabularies/shapes#schema": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson/shape/objectSchema"
+}
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/callback/http%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/%2Fhttp%3A%2F%2FnotificationServer.com%3FtransactionId%3D%7B%24request.body%23%2Fid%7D%26email%3D%7B%24request.body%23%2Femail%7D/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson/shape/objectSchema",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema"
+}
+],
+"http://a.ml/vocabularies/document#link-label": "objectSchema",
+"http://a.ml/vocabularies/document#recursive": true,
+"http://www.w3.org/ns/shacl#name": "objectSchema"
+}
+]
+}

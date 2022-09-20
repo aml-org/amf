@@ -1,0 +1,5 @@
+type Person @doc(value: "Doc 1") @doc(value: "Doc 2") {
+  name: String
+}
+
+directive @doc(value: String) repeatable on OBJECT

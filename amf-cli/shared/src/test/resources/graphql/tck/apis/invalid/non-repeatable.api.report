@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/non-repeatable.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-directive-application
+  Message: Directive 'NonRepeatable' can only be applied once per location
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/non-repeatable.api.graphql#/declares/scalar/Fail
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(8,0)-(8,65)]
+  Location: 

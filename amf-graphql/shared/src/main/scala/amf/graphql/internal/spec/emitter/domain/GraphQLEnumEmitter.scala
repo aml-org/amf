@@ -1,22 +1,38 @@
 package amf.graphql.internal.spec.emitter.domain
 import amf.core.internal.plugins.syntax.StringDocBuilder
-import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.internal.render.BaseEmitters.pos
+import amf.graphql.internal.spec.emitter.helpers.LineEmitter
 
-case class GraphQLEnumEmitter(enum: ScalarShape, extensionPrefix: String, ctx: GraphQLEmitterContext, b: StringDocBuilder) {
+case class GraphQLEnumEmitter(
+    enum: ScalarShape,
+    extensionPrefix: String,
+    ctx: GraphQLEmitterContext,
+    b: StringDocBuilder
+) {
   def emit(): Unit = {
     val name       = enum.name.value()
-    b += (s"${extensionPrefix}enum $name {", pos(enum.annotations))
+    val directives = GraphQLDirectiveApplicationsRenderer(enum)
+    LineEmitter(b, extensionPrefix, "enum", name, directives, "{").emit()
     emitEnumValues()
-    b += "}"
+    LineEmitter(b).closeBlock()
   }
   private def emitEnumValues() = {
     val enumValues = enum.values.collect { case s: ScalarNode => s }
     b.obj { o =>
       enumValues.foreach { enumValue =>
-        o += (s"${enumValue.value.value()}", pos(enumValue.annotations))
+        val name       = enumValue.value.value()
+        val directives = GraphQLDirectiveApplicationsRenderer(enumValue)
+        enumValue.description.option() match {
+          case Some(description) =>
+            o.fixed { f =>
+              GraphQLDescriptionEmitter(Some(description), ctx, f, Some(pos(enumValue.annotations))).emit()
+              LineEmitter(f, name, directives).emit()
+            }
+          case _ => LineEmitter(o, name, directives).emit()
+        }
       }
     }
   }

@@ -1,0 +1,31 @@
+type User
+@key(fields: "foo") # foo doesn't exist
+@key(fields: "name") # name has arguments
+@key(fields: "recoveryCode { code }") # RecoveryCode is an interface
+@key(fields: "value { inputValue }") # InputValue is an input type
+@key(fields: "objectField") # objectField is an object type, not a scalar
+@key(fields: "id objectField") # objectField is an object type, not a scalar
+@key(fields: "objectField { typeField }") # typeField is an object type, not a scalar
+{
+    id: ID!
+    name(surname: String): String!
+    recoveryCode: RecoveryCode
+    value: InputValue # should be output type
+    objectField: ValidType
+}
+
+type ValidType {
+    typeField: ObjectType
+}
+
+type ObjectType {
+    name: String
+}
+
+interface RecoveryCode @key(fields: "code") { # interfaces can't have @key directive
+    code: String
+}
+
+input InputValue @key(fields: "inputValue") { # input types can't have @key directive
+    inputValue: String
+}

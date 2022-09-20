@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-enum.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/empty-enum.api.graphql#/declares/scalar/Season
   Property: 
   Range: [(9,0)-(9,11)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: '}'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(10,0)-(10,1)]
   Location: 

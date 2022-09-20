@@ -180,7 +180,7 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-    val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
+    val references = WebApiLikeReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val api = parseWebApi(map)
     document.setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
