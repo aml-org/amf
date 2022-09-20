@@ -54,7 +54,12 @@ case class GraphQLDirectiveDeclarationEmitter(
   }
 
   private def collectArguments(): Seq[GeneratedGraphQLArgument] = {
-    val arguments = directive.schema.asInstanceOf[NodeShape].properties
-    arguments.map { arg => GraphQLDirectiveArgumentGenerator(arg, ctx).generate() }
+    directive.schema match {
+      case n: NodeShape =>
+        val arguments = n.properties
+        arguments.map { arg => GraphQLDirectiveArgumentGenerator(arg, ctx).generate() }
+      case _ => Nil
+    }
+
   }
 }
