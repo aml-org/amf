@@ -4,7 +4,8 @@ import org.mulesoft.typings.plugin.ScalaJsTypingsPlugin.autoImport.{
   namespaceReplacer,
   namespaceTopLevelExports,
   scalaFilteredClasses,
-  typingModuleName
+  typingModuleName,
+  formattingCmd
 }
 import org.mulesoft.typings.resolution.BuiltInMappings.{dictionary, option, overwrite}
 import org.mulesoft.typings.resolution.MappingFactory
@@ -14,10 +15,13 @@ import sbt.SettingsDefinition
 object TypingGenerationSettings {
 
   val settings: Seq[SettingsDefinition] = Seq(
-    typingModuleName         := typingsModuleName,
-    customMappings           := typingsCustomMappings,
-    namespaceReplacer        := typingsNamespaceReplacer,
-    scalaFilteredClasses     := typingsFilters,
+    typingModuleName     := typingsModuleName,
+    customMappings       := typingsCustomMappings,
+    namespaceReplacer    := typingsNamespaceReplacer,
+    scalaFilteredClasses := typingsFilters,
+    // TODO this fails because the generated typing is invalid
+//    formattingCmd            := Some("npx prettier --write amf-cli/js/@types/amf.d.ts"),
+    formattingCmd            := None,
     namespaceTopLevelExports := false
   )
 
