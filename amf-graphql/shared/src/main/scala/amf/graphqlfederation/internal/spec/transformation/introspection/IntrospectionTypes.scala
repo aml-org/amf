@@ -18,10 +18,10 @@ object IntrospectionTypes {
       .withDataType(DataTypes.Any)
   }
 
-  def _FieldSet(): ScalarShape = {
+  def FieldSet(): ScalarShape = {
     ScalarShape()
-      .withName("_FieldSet")
-      .withFormat("_FieldSet")
+      .withName("FieldSet")
+      .withFormat("FieldSet")
       .withDataType(DataTypes.Any)
   }
 
