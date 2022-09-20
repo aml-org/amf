@@ -4,7 +4,7 @@ import amf.apicontract.internal.validation.shacl.graphql.GraphQLDataTypes
 import amf.core.client.scala.model.domain.Shape
 import amf.graphql.internal.spec.parser.syntax.NullableShape
 import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin._
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, ScalarShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape, UnionShape}
 
 trait GraphQLEmitter {
 
@@ -22,6 +22,7 @@ trait GraphQLEmitter {
               case NullableShape(false, s) => s"${u.name.value()}!"
               case NullableShape(true, s)  => s"${cleanNonNullable(typeTarget(s))}"
             }
+          case n: NodeShape => n.name.value()
           case _ =>
             throw new Exception(s"Type of target $shape not supported yet")
         }
