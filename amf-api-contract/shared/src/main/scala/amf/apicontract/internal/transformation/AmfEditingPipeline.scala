@@ -7,7 +7,7 @@ import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.transform.stages.{ReferenceResolutionStage, SourceInformationStage, UrlShortenerStage}
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.{ShapeNormalizationStage, ShapeNormalizationStage2}
 
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
     extends TransformationPipeline() {
@@ -23,7 +23,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
     Seq(
       references,
       new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
-      new ShapeNormalizationStage(profileName, keepEditingInfo = true),
+      new ShapeNormalizationStage2(profileName, keepEditingInfo = true),
       new SecurityResolutionStage(),
       parameterNormalizationStage,
       new ServersNormalizationStage(profileName, keepEditingInfo = true),

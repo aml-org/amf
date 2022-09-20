@@ -1,25 +1,15 @@
 package amf.apicontract.internal.transformation
 
 import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
-import amf.apicontract.internal.spec.async.transformation.{
-  AsyncContentTypeResolutionStage,
-  AsyncExamplePropagationResolutionStage,
-  JsonMergePatchStage,
-  ServerVariableExampleResolutionStage
-}
-import amf.apicontract.internal.spec.common.transformation.stage.{
-  AnnotationRemovalStage,
-  OpenApiParametersNormalizationStage,
-  ParametersNormalizationStage,
-  PathDescriptionNormalizationStage
-}
+import amf.apicontract.internal.spec.async.transformation.{AsyncContentTypeResolutionStage, AsyncExamplePropagationResolutionStage, JsonMergePatchStage, ServerVariableExampleResolutionStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, OpenApiParametersNormalizationStage, ParametersNormalizationStage, PathDescriptionNormalizationStage}
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Async20Profile, ProfileName}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.remote.AsyncApi20
 import amf.core.internal.transform.stages.SourceInformationStage
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.{ShapeNormalizationStage, ShapeNormalizationStage2}
 
 class Async20EditingPipeline private (urlShortening: Boolean = true, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {
@@ -33,7 +23,7 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
   override def steps: Seq[TransformationStep] =
     Seq(
       references,
-      new ShapeNormalizationStage(profileName, keepEditingInfo = true),
+      new ShapeNormalizationStage2(profileName, keepEditingInfo = true),
       new JsonMergePatchStage(isEditing = true),
       new AsyncContentTypeResolutionStage(),
       new AsyncExamplePropagationResolutionStage(),

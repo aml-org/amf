@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Cat:
+    type: object
+    properties:
+      cat-prop:
+        type: string
+  Parrot:
+    type: object
+    properties:
+      parrot-prop:
+        type: string
+  HasHome:
+    type: object
+    properties:
+      home-prop:
+        type: boolean
+  IsOnFarm:
+    type: object
+    properties:
+      farm-prop:
+        type: boolean
+  root:
+    type: [ HasHome | IsOnFarm ,  Cat | Parrot ]
+    properties:
+      a: integer
+      b: string

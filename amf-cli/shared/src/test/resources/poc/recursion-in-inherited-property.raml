@@ -1,0 +1,51 @@
+#%RAML 1.0
+title: Healthcare EHR Appointments Process API
+version: v2
+
+types:
+  Appointment:
+    properties:
+      participant:
+        type: array
+        items:
+          type: BackboneElement
+          properties:
+            actor?:
+              type: Reference
+            status:
+              type: string
+
+  BackboneElement:
+    type: Element
+    properties:
+      modifierExtension?: string
+
+  Reference:
+    type: Element
+
+  Element:
+    type: object
+    properties:
+      extension?:
+        type: Extension
+
+  Extension:
+    properties:
+      valueIdentifier?:
+        type: Reference
+
+
+/appointments:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Appointment
+            example:
+              participant:
+                - status: accepted
+                  actor:
+                    reference: Patient/9
+                    display: Andreas Anderson
+              status: proposed

@@ -433,4 +433,12 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       targetName shouldBe Some(YScalar("original-name"))
     }
   }
+
+  test("recursive"){
+    val api = s"$basePath/recursive-datagraph.raml"
+    modelAssertion(api, PipelineId.Editing) {bu =>
+      println(ramlClient.render(bu, "application/ld+json"))
+      true shouldBe(true)
+    }
+  }
 }

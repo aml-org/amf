@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: API
+
+
+types:
+  A:
+    properties:
+      # exit though B
+      a: A | B
+  B:
+    properties:
+      b: string

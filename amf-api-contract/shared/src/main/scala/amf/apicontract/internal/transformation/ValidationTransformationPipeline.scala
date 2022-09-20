@@ -1,32 +1,14 @@
 package amf.apicontract.internal.transformation
 
 import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
-import amf.apicontract.internal.spec.common.transformation.stage.{
-  AmfParametersNormalizationStage,
-  AnnotationRemovalStage,
-  MediaTypeResolutionStage,
-  OpenApiParametersNormalizationStage,
-  ParametersNormalizationStage,
-  PayloadAndParameterResolutionStage,
-  Raml10ParametersNormalizationStage,
-  ResponseExamplesResolutionStage
-}
+import amf.apicontract.internal.spec.common.transformation.stage.{AmfParametersNormalizationStage, AnnotationRemovalStage, MediaTypeResolutionStage, OpenApiParametersNormalizationStage, ParametersNormalizationStage, PayloadAndParameterResolutionStage, Raml10ParametersNormalizationStage, ResponseExamplesResolutionStage}
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
-import amf.core.client.common.validation.{
-  Async20Profile,
-  GraphQLFederationProfile,
-  GraphQLProfile,
-  Oas20Profile,
-  Oas30Profile,
-  ProfileName,
-  Raml08Profile,
-  Raml10Profile
-}
+import amf.core.client.common.validation.{Async20Profile, GraphQLFederationProfile, GraphQLProfile, Oas20Profile, Oas30Profile, ProfileName, Raml08Profile, Raml10Profile}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, SourceInformationStage}
 import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.{ShapeNormalizationStage, ShapeNormalizationStage2}
 
 // Validation pipeline is not registered in AMF configuration, is it only called internally.
 class ValidationTransformationPipeline private[amf] (
@@ -39,7 +21,7 @@ class ValidationTransformationPipeline private[amf] (
       new ReferenceResolutionStage(keepEditingInfo = false),
       new ExternalSourceRemovalStage,
       new ExtensionsResolutionStage(profile, keepEditingInfo = false),
-      new ShapeNormalizationStage(profile, keepEditingInfo = false),
+      new ShapeNormalizationStage2(profile, keepEditingInfo = false),
       parameterNormalizationStageFor(profile),
       new MediaTypeResolutionStage(profile, isValidation = true),
       new ResponseExamplesResolutionStage(),
