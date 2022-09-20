@@ -3031,7 +3031,19 @@ declare module "amf-client-js" {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
 
-    withId(id: string): this;
+
+  }
+  export class ComponentModule extends Module  {
+    name: StrField
+    version: StrField
+
+    constructor()
+
+    withName(name: string): this
+
+    withVersion(version: string): this
+
+
   }
   export class MqttServerBinding implements ServerBinding {
     customDomainProperties: Array<DomainExtension>;
