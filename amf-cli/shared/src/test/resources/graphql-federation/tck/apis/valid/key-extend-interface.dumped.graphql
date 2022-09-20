@@ -3,7 +3,7 @@ type Query {
   _service: _Service
 }
 
-extend interface Person {
+extend interface Person @key(fields: "name") {
   name: String
 }
 

@@ -3,7 +3,7 @@ type Query {
 }
 
 input Person {
-  name: String
+  name: String @inaccessible
 }
 
 scalar FieldSet

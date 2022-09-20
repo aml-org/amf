@@ -3,7 +3,7 @@ type Query {
   _service: _Service
 }
 
-interface Person {
+interface Person @key(fields: "name") {
   name: String
 }
 

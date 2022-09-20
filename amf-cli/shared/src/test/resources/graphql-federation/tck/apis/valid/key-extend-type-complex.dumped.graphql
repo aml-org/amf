@@ -7,10 +7,10 @@ type RecoveryCode {
   code: String
 }
 
-extend type User {
-  id: ID!
-  name: String!
-  surname: String!
+extend type User @key(fields: "id") @key(fields: "name") @key(fields: "recoveryCode { code }") {
+  id: ID! @external
+  name: String! @external
+  surname: String! @external
   recoveryCode: RecoveryCode
 }
 

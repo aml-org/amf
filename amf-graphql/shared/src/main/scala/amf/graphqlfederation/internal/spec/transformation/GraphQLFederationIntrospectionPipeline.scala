@@ -11,6 +11,7 @@ object GraphQLFederationIntrospectionPipeline extends TransformationPipeline {
   override def steps: Seq[TransformationStep] =
     GraphQLEditingPipeline().steps.filterNot(_.isInstanceOf[UrlShortenerStage]) ++ List(
       IntrospectionElementsAdditionStep,
+      FederationModelToDomainExtension(),
       new UrlShortenerStage()
     )
 }

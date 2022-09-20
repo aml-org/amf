@@ -3,7 +3,7 @@ type Query {
 }
 
 enum Colors {
-  RED
+  RED @inaccessible
   GREEN
   BLUE
 }

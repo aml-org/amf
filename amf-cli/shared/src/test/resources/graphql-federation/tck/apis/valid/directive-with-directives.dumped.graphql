@@ -5,7 +5,7 @@ type Query {
 scalar MyScalar @myDirective(argA: "valueA", argB: "valueB")
 directive @directiveA on ARGUMENT_DEFINITION
 directive @directiveB on ARGUMENT_DEFINITION
-directive @myDirective(argA: String @directiveA, argB: String = "defaultB") on SCALAR
+directive @myDirective(argA: String @directiveA, argB: String = "defaultB" @inaccessible) on SCALAR
 scalar FieldSet
 type _Service {
   sdl: String

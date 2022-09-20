@@ -3,14 +3,14 @@ type Query {
   _service: _Service
 }
 
-type Review {
+type Review @key(fields: "id") {
   id: ID!
-  product: Product
+  product: Product @provides(fields: "name")
 }
 
-type Product {
-  upc: String
-  name: String
+type Product @key(fields: "upc") {
+  upc: String @external
+  name: String @external
 }
 
 scalar _Any

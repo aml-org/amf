@@ -10,7 +10,7 @@ type MemberB {
   propB: String
 }
 
-union MyUnion = MemberA | MemberB
+union MyUnion @inaccessible = MemberA | MemberB
 scalar FieldSet
 type _Service {
   sdl: String

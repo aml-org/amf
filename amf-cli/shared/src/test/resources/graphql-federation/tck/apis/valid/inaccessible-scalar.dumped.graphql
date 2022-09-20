@@ -2,7 +2,7 @@ type Query {
   _service: _Service
 }
 
-scalar Name
+scalar Name @inaccessible
 scalar FieldSet
 type _Service {
   sdl: String

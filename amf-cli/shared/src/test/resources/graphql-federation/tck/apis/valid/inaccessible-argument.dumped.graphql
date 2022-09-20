@@ -3,7 +3,7 @@ type Query {
 }
 
 type Image {
-  url(size: Int): String
+  url(size: Int @inaccessible): String
 }
 
 scalar FieldSet
