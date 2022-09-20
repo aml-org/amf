@@ -82,6 +82,8 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   }
 
   private def retrieveEntities(doc: Document): Seq[NodeShape] = doc.declares.collect {
-    case n: NodeShape if n.keys.nonEmpty => n
+    case n: NodeShape if isEntity(n) => n
   }
+
+  private def isEntity(n: NodeShape): Boolean = n.keys.nonEmpty && n.keys.exists(_.isResolvable.value()) && !n.isAbstract.value()
 }
