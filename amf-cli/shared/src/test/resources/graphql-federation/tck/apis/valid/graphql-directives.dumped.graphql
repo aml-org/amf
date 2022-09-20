@@ -25,15 +25,15 @@ input InputObject @Directive {
 
 union Union @Directive = Object
 directive @Directive on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-scalar _FieldSet
+scalar FieldSet
 type _Service {
   sdl: String
 }
 
 directive @external on FIELD_DEFINITION
-directive @requires(fieldSet: _FieldSet!) on FIELD_DEFINITION
-directive @provides(fieldSet: _FieldSet!) on FIELD_DEFINITION
-directive @key(fieldSet: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+directive @requires(fieldSet: FieldSet!) on FIELD_DEFINITION
+directive @provides(fieldSet: FieldSet!) on FIELD_DEFINITION
+directive @key(fieldSet: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
 directive @shareable on OBJECT | FIELD_DEFINITION
 directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 directive @override(from: String!) on FIELD_DEFINITION

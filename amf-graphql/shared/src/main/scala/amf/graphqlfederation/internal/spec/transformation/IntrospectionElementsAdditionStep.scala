@@ -31,7 +31,7 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   }
 
   private def addIntrospectionElements(doc: Document): Document = {
-    val fieldSet = _FieldSet()
+    val fieldSet = FieldSet()
     val _any     = _Any()
     val _service = _Service()
     val _entity = {

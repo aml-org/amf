@@ -22,11 +22,11 @@ class GraphQLFederationTransformationTest extends GraphQLFederationFunSuiteCycle
 
   val basePath = "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/transformation/"
 
-  test("Types _Any, _FieldSet, _Entity and _Service should be in introspected schema") {
+  test("Types _Any, FieldSet, _Entity and _Service should be in introspected schema") {
     transformed("introspected-types.graphql").map { doc: Document =>
       val findInDeclares: String => Option[DomainElement] = findShapeWithName(doc.declares.toList, _)
       findInDeclares("_Any").get shouldBe a[ScalarShape]
-      findInDeclares("_FieldSet").get shouldBe a[ScalarShape]
+      findInDeclares("FieldSet").get shouldBe a[ScalarShape]
       findInDeclares("_Entity").get shouldBe a[UnionShape]
       findInDeclares("_Service").get shouldBe a[NodeShape]
     }
