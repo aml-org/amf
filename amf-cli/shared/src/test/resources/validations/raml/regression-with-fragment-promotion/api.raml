@@ -1,0 +1,20 @@
+#%RAML 1.0
+
+title: An Api
+
+types:
+  accountTypeRaml: !include account.json
+  holdTypeRaml: !include hold.json
+
+/some-endpoint:
+  get:
+    body:
+      application/json:
+        type: accountTypeRaml
+        example:
+          charges:
+            - chargeProp:
+                instanceId: "asasdasdasd"
+          holds:
+            - holdProp:
+                instanceId: "asasdasdasd"

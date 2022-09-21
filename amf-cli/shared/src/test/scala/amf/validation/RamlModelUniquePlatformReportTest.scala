@@ -693,4 +693,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("multiple annotations without definition 2") {
     validate("/raml/annotation-mixed-2.raml", Some("annotation-mixed-2.report"))
   }
+
+  test("RAML and JSON Schema both pointing to a JSON Schema in a specific fashion") {
+    validate("/raml/regression-with-fragment-promotion/api.raml")
+  }
 }
