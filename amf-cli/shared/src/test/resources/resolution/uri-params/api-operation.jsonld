@@ -1,0 +1,150 @@
+{
+  "@graph": [
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.7.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "MyAPI",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#3"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "core:version": "[(3,0)-(5,0)]",
+          "#2": "[(2,0)-(9,0)]",
+          "core:name": "[(2,0)-(3,0)]"
+        }
+      }
+    },
+    {
+      "@id": "/BaseUnitSourceInformation",
+      "@type": [
+        "doc:BaseUnitSourceInformation"
+      ],
+      "doc:rootLocation": "file://amf-cli/shared/src/test/resources/resolution/uri-params/api-operation.raml"
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/endpoint/{myParam}",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "apiContract:parameter": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:path": "[(5,0)-(5,19)]",
+          "#3": "[(5,0)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "smaps": {
+        "lexical": {
+          "#4": "[(6,2)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Parameter",
+        "core:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "myParam",
+      "apiContract:paramName": "myParam",
+      "apiContract:required": true,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#6"
+      },
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true",
+          "apiContract:paramName": "true",
+          "core:name": "true",
+          "apiContract:required": "true"
+        },
+        "default-node": {
+          "#5": ""
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "myParam"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#1"
+      },
+      "doc:sourceInformation": {
+        "@id": "/BaseUnitSourceInformation"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}
