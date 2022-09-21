@@ -19,7 +19,15 @@ trait ScopedJsonContext {
   private def getContext(valueAST: YNode, schemaEntry: YMapEntry)(implicit ctx: ShapeParserContext) = {
     // we set the local schema entry to be able to resolve local $refs
     ctx.setJsonSchemaAST(schemaEntry.value)
-    toSchemaContext(ctx, valueAST)
+    val context = toSchemaContext(ctx, valueAST)
+
+    // TODO: find way to avoid doing this.
+    /*
+     * This is related to a bug that occurs when a RAML and a JSON Schema point to the same JSON Schema where the pointed JSON schema occupies the whole file (it isn't pointed at by a json pointer with uri fragment)
+     */
+    context.declarations.fragments =
+      Map.empty // Leaving fragments empty to avoid regression. This is the behaviour that ended up occurring due to a bug.
+    context
   }
 
   /** Clean from globalSpace the local references
