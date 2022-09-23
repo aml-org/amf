@@ -404,6 +404,12 @@ class AMFConfiguration private[amf] (
   override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMFConfiguration =
     super._withReferenceParsePlugin(amfPlugin)
 
+  override def withRootParsePlugins(amfParsePlugin: List[AMFParsePlugin]): AMFConfiguration =
+    super._withRootParsePlugins(amfParsePlugin)
+
+  override def withReferenceParsePlugins(amfPlugin: List[AMFParsePlugin]): AMFConfiguration =
+    super._withReferenceParsePlugins(amfPlugin)
+
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
     super._withPlugins(plugins)
 
@@ -520,11 +526,11 @@ object ConfigurationAdapter extends APIConfigurationBuilder {
           pluginsRegistry.renderPlugins ++
           pluginsRegistry.syntaxRenderPlugins ++
           pluginsRegistry.syntaxParsePlugins ++
-          pluginsRegistry.referenceParsePlugins ++
           pluginsRegistry.payloadPlugins ++
-          pluginsRegistry.validatePlugins ++
-          pluginsRegistry.rootParsePlugins
+          pluginsRegistry.validatePlugins
       )
+      .withRootParsePlugins(pluginsRegistry.rootParsePlugins)
+      .withReferenceParsePlugins(pluginsRegistry.referenceParsePlugins)
       .withTransformationPipelines(
         baseConfiguration.registry.getTransformationPipelines.values.toList
       )
