@@ -9,6 +9,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDElementBuilder
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
 import org.yaml.model.{YNode, YValue}
+import org.yaml.render.JsonRender
 
 abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(implicit ctx: JsonLDParserContext) {
 
@@ -56,10 +57,9 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
       .predefined()
       .elementClient()
       .payloadValidatorFor(shape, Mimes.`application/json`, ValidationMode.ScalarRelaxedValidationMode)
-      .syncValidate(node.toString)
+      .syncValidate(ctx.yValueCache.get(node))
       .conforms
   }
-
-  protected def buildEmptyAnyShape(parentCtx: SemanticContext) =
+  protected def buildEmptyAnyShape(parentCtx: SemanticContext): AnyShape =
     AnyShape().withSemanticContext(parentCtx.copy().withTypeMappings(Nil))
 }
