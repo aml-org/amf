@@ -11,5 +11,5 @@ class JsonLDObject(override val fields: Fields, override val annotations: Annota
   override def meta: Obj = model
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override private[amf] def componentId = "/object/"
+  override def componentId = "/object/"
 }

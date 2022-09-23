@@ -15,17 +15,17 @@ class Amqp091OperationBinding(override val fields: Fields, override val annotati
   override protected def bindingVersionField: Field    = BindingVersion
   override def meta: Amqp091OperationBindingModel.type = Amqp091OperationBindingModel
 
-  private[amf] override def componentId: String = "/amqp091-operation"
-  def expiration: IntField                      = fields.field(Expiration)
-  def userId: StrField                          = fields.field(UserId)
-  def cc: Seq[StrField]                         = fields.field(CC)
-  def priority: IntField                        = fields.field(Priority)
-  def deliveryMode: IntField                    = fields.field(DeliveryMode)
-  def mandatory: BoolField                      = fields.field(Mandatory)
-  def bcc: Seq[StrField]                        = fields.field(BCC)
-  def replyTo: StrField                         = fields.field(ReplyTo)
-  def timestamp: BoolField                      = fields.field(Timestamp)
-  def ack: BoolField                            = fields.field(Ack)
+  override def componentId: String = "/amqp091-operation"
+  def expiration: IntField         = fields.field(Expiration)
+  def userId: StrField             = fields.field(UserId)
+  def cc: Seq[StrField]            = fields.field(CC)
+  def priority: IntField           = fields.field(Priority)
+  def deliveryMode: IntField       = fields.field(DeliveryMode)
+  def mandatory: BoolField         = fields.field(Mandatory)
+  def bcc: Seq[StrField]           = fields.field(BCC)
+  def replyTo: StrField            = fields.field(ReplyTo)
+  def timestamp: BoolField         = fields.field(Timestamp)
+  def ack: BoolField               = fields.field(Ack)
 
   def withExpiration(expiration: Int): this.type     = set(Expiration, expiration)
   def withUserId(userId: String): this.type          = set(UserId, userId)

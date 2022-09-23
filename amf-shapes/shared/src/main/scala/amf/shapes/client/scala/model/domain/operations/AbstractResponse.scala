@@ -17,7 +17,7 @@ trait AbstractResponse extends NamedDomainElement {
   override def meta: AbstractResponseModel = AbstractResponseModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/response"
+  override def componentId: String = "/response"
 
   override def nameField: Field = Name
 }

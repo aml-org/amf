@@ -21,7 +21,7 @@ case class DiscriminatorValueMapping private[amf] (fields: Fields, annotations: 
   override def meta: DiscriminatorValueMappingModel.type = DiscriminatorValueMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     s"/discriminator-value-mapping/${value.value().urlComponentEncoded}"
 }
 

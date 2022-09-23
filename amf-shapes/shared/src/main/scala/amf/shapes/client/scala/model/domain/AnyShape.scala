@@ -36,7 +36,7 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   override def meta: AnyShapeModel = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
+  override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
 
   protected[amf] def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
