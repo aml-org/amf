@@ -111,6 +111,12 @@ class ShapesConfiguration private[amf] (
   override def withReferenceParsePlugin(plugin: AMFParsePlugin): ShapesConfiguration =
     super._withReferenceParsePlugin(plugin)
 
+  override def withRootParsePlugins(amfParsePlugin: List[AMFParsePlugin]): ShapesConfiguration =
+    super._withRootParsePlugins(amfParsePlugin)
+
+  override def withReferenceParsePlugins(amfPlugin: List[AMFParsePlugin]): ShapesConfiguration =
+    super._withReferenceParsePlugins(amfPlugin)
+
   override def withPlugins(plugins: List[AMFPlugin[_]]): ShapesConfiguration =
     super._withPlugins(plugins)
 

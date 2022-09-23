@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: An API
+  version: 1.0.0
+paths:
+  /anEndpoint:
+     get:
+       responses:
+         "200":
+           description: "Something"
+           content:
+             application/json:
+               schema:
+                 $ref: "schema-with-id.json#/myIdedSchema"
