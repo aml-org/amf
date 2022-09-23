@@ -15,13 +15,11 @@ import sbt.SettingsDefinition
 object TypingGenerationSettings {
 
   val settings: Seq[SettingsDefinition] = Seq(
-    typingModuleName     := typingsModuleName,
-    customMappings       := typingsCustomMappings,
-    namespaceReplacer    := typingsNamespaceReplacer,
-    scalaFilteredClasses := typingsFilters,
-    // TODO this fails because the generated typing is invalid
-//    formattingCmd            := Some("npx prettier --write amf-cli/js/@types/amf.d.ts"),
-    formattingCmd            := None,
+    typingModuleName         := typingsModuleName,
+    customMappings           := typingsCustomMappings,
+    namespaceReplacer        := typingsNamespaceReplacer,
+    scalaFilteredClasses     := typingsFilters,
+    formattingCmd            := Some("npx prettier --write amf-cli/js/@types/amf.d.ts"),
     namespaceTopLevelExports := false
   )
 
@@ -70,4 +68,5 @@ object TypingGenerationSettings {
       .withTypeFilter("^.*$", "AmfObjectWrapper")
       .withTypeFilter("^.*$", "StringBuffer")
       .withMethodFilter("^.*\\.ValidationReport$", "toString")
+      .withMethodFilter("^.*$", "+")
 }
