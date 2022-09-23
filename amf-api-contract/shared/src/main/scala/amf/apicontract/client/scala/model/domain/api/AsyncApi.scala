@@ -8,7 +8,7 @@ case class AsyncApi(fields: Fields, annotations: Annotations) extends Api(fields
   override def meta: AsyncApiModel.type = AsyncApiModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/async-api"
+  override def componentId: String = "/async-api"
 }
 
 object AsyncApi {

@@ -110,7 +110,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   override def meta: OperationModel.type = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = {
+  override def componentId: String = {
     val methodName = method.option().getOrElse("default-operation").urlComponentEncoded
     val opId       = operationId.option().map(id => "/" + id.urlComponentEncoded).getOrElse("")
     "/" + methodName + opId

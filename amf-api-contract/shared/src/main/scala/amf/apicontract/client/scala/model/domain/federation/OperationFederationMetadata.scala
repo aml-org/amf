@@ -18,7 +18,7 @@ case class OperationFederationMetadata(fields: Fields, annotations: Annotations)
   def withKeyMappings(keyMappings: Seq[ParameterKeyMapping]): this.type = setArray(KeyMappings, keyMappings)
 
   override def meta: OperationFederationMetadataModel.type = OperationFederationMetadataModel
-  override private[amf] def componentId                    = s"/federation-metadata"
+  override def componentId                                 = s"/federation-metadata"
 }
 
 object OperationFederationMetadata {

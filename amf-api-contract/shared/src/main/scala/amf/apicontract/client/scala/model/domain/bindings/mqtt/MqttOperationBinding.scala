@@ -23,7 +23,7 @@ class MqttOperationBinding(override val fields: Fields, override val annotations
 
   override def key: StrField = fields.field(MqttOperationBindingModel.key)
 
-  private[amf] override def componentId: String = "/mqtt-operation"
+  override def componentId: String              = "/mqtt-operation"
   override def linkCopy(): MqttOperationBinding = MqttOperationBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

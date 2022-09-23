@@ -38,7 +38,7 @@ class Example private[amf] (override val fields: Fields, override val annotation
   override def key: StrField = fields.field(ExampleModel.key)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */

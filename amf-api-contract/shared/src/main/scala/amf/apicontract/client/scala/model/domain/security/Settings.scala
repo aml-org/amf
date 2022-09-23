@@ -50,7 +50,7 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
   override def meta: SettingsModel = SettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/default"
+  override def componentId: String = "/settings/default"
 }
 
 object Settings {
@@ -79,7 +79,7 @@ case class OAuth1Settings(override val fields: Fields, override val annotations:
   override def meta: OAuth1SettingsModel.type = OAuth1SettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/oauth1"
+  override def componentId: String = "/settings/oauth1"
 }
 
 object OAuth1Settings {
@@ -109,7 +109,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   override def meta: OAuth2SettingsModel.type = OAuth2SettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/oauth2"
+  override def componentId: String = "/settings/oauth2"
 }
 
 object OAuth2Settings {
@@ -131,7 +131,7 @@ case class ApiKeySettings(override val fields: Fields, override val annotations:
   override def meta: ApiKeySettingsModel.type = ApiKeySettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/api-key"
+  override def componentId: String = "/settings/api-key"
 }
 
 object ApiKeySettings {
@@ -153,7 +153,7 @@ case class HttpApiKeySettings(override val fields: Fields, override val annotati
   override def meta: HttpApiKeySettingsModel.type = HttpApiKeySettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/http-api-key"
+  override def componentId: String = "/settings/http-api-key"
 }
 
 object HttpApiKeySettings {
@@ -175,7 +175,7 @@ case class HttpSettings(override val fields: Fields, override val annotations: A
   override def meta: HttpSettingsModel.type = HttpSettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/http"
+  override def componentId: String = "/settings/http"
 }
 
 object HttpSettings {
@@ -197,7 +197,7 @@ case class OpenIdConnectSettings(override val fields: Fields, override val annot
   override def meta: OpenIdConnectSettingsModel.type = OpenIdConnectSettingsModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/settings/open-id-connect"
+  override def componentId: String = "/settings/open-id-connect"
 }
 
 object OpenIdConnectSettings {

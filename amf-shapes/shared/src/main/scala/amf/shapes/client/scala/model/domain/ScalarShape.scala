@@ -31,7 +31,7 @@ case class ScalarShape private[amf] (override val fields: Fields, override val a
   override val meta: ScalarShapeModel.type = ScalarShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/scalar/" + name.option().getOrElse("default-scalar").urlComponentEncoded
 
   private[amf] override def ramlSyntaxKey: String = dataType.option().getOrElse("#shape").split("#").last match {

@@ -24,7 +24,7 @@ class JsonLDInstanceDocument(
   override def references: Seq[BaseUnit] = Nil
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override private[amf] def componentId = ""
+  override def componentId = ""
 
   def encodes: Seq[JsonLDElement] = fields(JsonLDInstanceDocumentModel.Encodes)
 

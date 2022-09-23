@@ -18,7 +18,7 @@ case class ServerBindings(fields: Fields, annotations: Annotations) extends Name
   override def nameField: Field = Name
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/" + name.option().getOrElse("server-bindings").urlComponentEncoded
 
   override def linkCopy(): ServerBindings = {
