@@ -14,7 +14,7 @@ case class NilShape private[amf] (override val fields: Fields, override val anno
   override val meta: NilShapeModel.type = NilShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded
+  override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded
 
   private[amf] override def ramlSyntaxKey: String = "shape"
 

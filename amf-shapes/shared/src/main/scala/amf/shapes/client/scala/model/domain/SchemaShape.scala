@@ -20,7 +20,7 @@ case class SchemaShape private[amf] (override val fields: Fields, override val a
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded
 
   private[amf] override def ramlSyntaxKey: String = "schemaShape" // same that any shape

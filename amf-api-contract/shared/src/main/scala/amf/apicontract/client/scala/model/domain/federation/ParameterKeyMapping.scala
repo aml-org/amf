@@ -20,7 +20,7 @@ case class ParameterKeyMapping(fields: Fields, annotations: Annotations) extends
   override def withTarget(target: PropertyShapePath): this.type = set(Target, target)
 
   override def meta: ParameterKeyMappingModel.type = ParameterKeyMappingModel
-  override private[amf] def componentId            = s"/parameterKeyMapping"
+  override def componentId                         = s"/parameterKeyMapping"
 }
 
 object ParameterKeyMapping {

@@ -16,8 +16,8 @@ case class Key(fields: Fields, annotations: Annotations) extends DomainElement {
   def isResolvable: BoolField                        = fields.field(IsResolvable)
   def withResolvable(resolvable: Boolean): this.type = set(IsResolvable, resolvable)
 
-  override def meta: KeyModel.type      = KeyModel
-  override private[amf] def componentId = s"/key"
+  override def meta: KeyModel.type = KeyModel
+  override def componentId         = s"/key"
 }
 
 object Key {

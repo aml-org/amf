@@ -24,7 +24,7 @@ case class XMLSerializer private[amf] (fields: Fields, annotations: Annotations)
   override def meta = XMLSerializerModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/xml"
+  override def componentId: String = "/xml"
 }
 
 object XMLSerializer {

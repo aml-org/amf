@@ -44,7 +44,7 @@ abstract class DataArrangementShape private[amf] (fields: Fields, annotations: A
     array
   }
 
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
