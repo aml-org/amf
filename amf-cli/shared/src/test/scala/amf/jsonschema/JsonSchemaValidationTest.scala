@@ -35,4 +35,20 @@ class JsonSchemaValidationTest extends UniquePlatformReportGenTest {
       )
     }
   }
+
+  test("JSON Schema with const property should be valid in Draft 7 or newer") {
+    validate(
+      "const.json",
+      Some("const.json.report"),
+      configOverride = Some(config)
+    )
+  }
+
+  test("JSON Schema with conditionals should be valid in Draft 7 or newer") {
+    validate(
+      "conditionals.json",
+      Some("conditionals.json.report"),
+      configOverride = Some(config)
+    )
+  }
 }
