@@ -182,6 +182,9 @@ declare module "amf-client-js" {
   export interface ClientUnitCache {
     fetch(url: string): Promise<CachedReference>;
   }
+  export class ClientUnitCacheAdapter {
+    static adapt(cache: ClientUnitCache): UnitCache
+  }
   export class ValidatePayloadRequest {
     shape: Shape;
     mediaType: string;
@@ -3003,6 +3006,7 @@ declare module "amf-client-js" {
     static readonly Editing: "editing";
     static readonly Compatibility: "compatibility";
     static readonly Cache: "cache";
+    static readonly Introspection: "introspection";
   }
   export class SecurityRequirement implements DomainElement {
     name: StrField;
@@ -3018,6 +3022,8 @@ declare module "amf-client-js" {
     annotations(): Annotations;
 
     withName(name: string): this;
+
+    withId(id: string): this;
 
     withScheme(): ParametrizedSecurityScheme;
 
