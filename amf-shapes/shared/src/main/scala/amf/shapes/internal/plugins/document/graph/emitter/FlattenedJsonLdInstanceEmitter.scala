@@ -55,7 +55,7 @@ class FlattenedJsonLdInstanceEmitter[T](
 
   def emitArrayMember(element: AmfElement, b: Part[T]): Unit = {
     element match {
-      case obj: AmfObject    => emitObjMember(obj, b)
+      case obj: AmfObject    => emitObjMember(obj, b, inArray = true)
       case scalar: AmfScalar => emitScalarMember(scalar, b)
       case arr: AmfArray =>
         b.list { b =>
