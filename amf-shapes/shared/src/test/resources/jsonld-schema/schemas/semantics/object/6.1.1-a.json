@@ -3,18 +3,13 @@
   "type": "object",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootArray"
     ],
     "prop1": "amlorg://a.ml/semantics.yaml#Prop1Field"
   },
   "properties": {
     "prop1": {
-      "@context": {
-        "@characteristics": [
-          "alias:nullScalar"
-        ]
-      },
       "type": "null"
     }
   }

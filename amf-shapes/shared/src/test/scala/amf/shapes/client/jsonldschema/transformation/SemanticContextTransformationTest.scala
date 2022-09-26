@@ -8,7 +8,11 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import scala.concurrent.ExecutionContext
+
 class SemanticContextTransformationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
+
+  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private lazy val basePath: String = "amf-shapes/shared/src/test/resources/jsonld-schema/semantic-context/"
 

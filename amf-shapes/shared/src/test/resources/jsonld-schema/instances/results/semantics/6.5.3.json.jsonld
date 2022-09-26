@@ -8,71 +8,34 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/encodes/object/",
       "@type": [
         "amlorg://a.ml/semantics.yaml#rootObject",
-        "http://a.ml/vocabularies/document#JsonLDObject",
-        "http://a.ml/vocabularies/document#JsonLDElement",
-        "http://a.ml/vocabularies/document#DomainElement"
+        "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "amlorg://a.ml/semantics.yaml#one": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/jsonld-scalar/"
-      },
-      "amlorg://a.ml/semantics.yaml#prop2": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/jsonld-scalar/_1"
-      }
-    },
-    {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/jsonld-scalar/",
-      "@type": [
-        "http://a.ml/vocabularies/data#Scalar"
-      ],
-      "http://a.ml/vocabularies/data#value": "value1",
-      "http://www.w3.org/ns/shacl#datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/jsonld-scalar/_1",
-      "@type": [
-        "http://a.ml/vocabularies/data#Scalar"
-      ],
-      "http://a.ml/vocabularies/data#value": "value2",
-      "http://www.w3.org/ns/shacl#datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ]
+      "amlorg://a.ml/semantics.yaml#one": "value1",
+      "amlorg://a.ml/semantics.yaml#prop2": "value2"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json",
       "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/object/"
+        "@list": [
+          {
+            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/encodes/object/"
+          }
+        ]
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/6.5.3.json#/BaseUnitProcessingData"
       }
     }
-  ],
-  "@context": {
-    "@entities": {
-      "http://a.ml/vocabularies/data#Scalar": {
-        "http://a.ml/vocabularies/data#value": "http://www.w3.org/2001/XMLSchema#string",
-        "http://www.w3.org/ns/shacl#datatype": "http://www.w3.org/2001/XMLSchema#url"
-      },
-      "amlorg://a.ml/semantics.yaml#rootObject": {
-        "amlorg://a.ml/semantics.yaml#one": "http://a.ml/vocabularies/data#Scalar",
-        "amlorg://a.ml/semantics.yaml#prop2": "http://a.ml/vocabularies/data#Scalar"
-      }
-    }
-  }
+  ]
 }

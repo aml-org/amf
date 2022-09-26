@@ -8,7 +8,7 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
 import org.mulesoft.common.client.lexical.SourceLocation
 
 class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementBuilder(location) {
-  private var items: IndexedSeq[JsonLDElementBuilder] = IndexedSeq.empty
+  private var items: Seq[JsonLDElementBuilder] = Seq.empty
   override type THIS = JsonLDArrayElementBuilder
 
   override def merge(
@@ -20,8 +20,8 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
   }
 
   def mergeItems(
-      others: IndexedSeq[JsonLDElementBuilder]
-  )(implicit ctx: JsonLDParserContext): IndexedSeq[JsonLDElementBuilder] = {
+      others: Seq[JsonLDElementBuilder]
+  )(implicit ctx: JsonLDParserContext): Seq[JsonLDElementBuilder] = {
     if (others.length != items.length)
       others // never should happen this, because I return .empty() if not possible to parse
     else {
@@ -35,7 +35,7 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
         })
     }
   }
-  def withItems(items: IndexedSeq[JsonLDElementBuilder]): this.type = {
+  def withItems(items: Seq[JsonLDElementBuilder]): this.type = {
     this.items = items
     this
   }

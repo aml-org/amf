@@ -11,6 +11,6 @@ import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElementModel, 
 class JsonLDEntityModel(val terms: List[ValueType], val fields: List[Field]) extends JsonLDElementModel {
   override def modelInstance: AmfObject = new JsonLDObject(Fields(), Annotations(), this)
 
-  override val `type`: List[ValueType] = terms ++ ((Document + "JsonLDObject") :: JsonLDElementModel.`type`)
+  override val `type`: List[ValueType] = terms ++ List(Document + "JsonLDObject")
 
 }

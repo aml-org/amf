@@ -6,11 +6,15 @@ import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient}
 import org.scalatest.funsuite.AsyncFunSuite
 
+import scala.concurrent.ExecutionContext
+
 class JsonLDSchemaSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
   private lazy val basePath: String      = "amf-shapes/shared/src/test/resources/jsonld-schema/"
   private lazy val schemasPath: String   = basePath + "schemas/"
   private lazy val instancesPath: String = basePath + "instances/"
   private lazy val resultsPath: String   = basePath + "instances/results/"
+
+  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val client: JsonLDSchemaConfigurationClient =
     JsonLDSchemaConfiguration.JsonLDSchema().withRenderOptions(RenderOptions().withPrettyPrint).baseUnitClient()
@@ -34,9 +38,9 @@ class JsonLDSchemaSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   goldens.foreach { path =>
-    test(s"Test case $path") {
-      run(path)
-    }
+    if (path.endsWith(".ignore")) ignore(s"Test case $path") { run(path) }
+    else
+      test(s"Test case $path") { run(path) }
   }
 
   def run(schema: String) = {

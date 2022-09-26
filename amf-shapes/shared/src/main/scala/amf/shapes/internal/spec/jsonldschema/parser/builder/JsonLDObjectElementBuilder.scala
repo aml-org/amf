@@ -18,7 +18,7 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
   type KEY           = String
   type TERM          = String
   val properties: mutable.Map[KEY, JsonLDPropertyBuilder] = mutable.Map()
-  val termIndex: mutable.Map[TERM, KEY]                   = mutable.Map()
+  val termIndex: mutable.LinkedHashMap[TERM, KEY]         = mutable.LinkedHashMap()
   val classTerms: ListBuffer[String]                      = ListBuffer()
 
   def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {

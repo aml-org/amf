@@ -8,56 +8,26 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/jsonld-array/",
-      "@type": [
-        "amlorg://a.ml/semantics.yaml#rootArray",
-        "http://a.ml/vocabularies/data#Array"
-      ],
-      "http://a.ml/vocabularies/data#members": [
-        {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/jsonld-array/members/jsonld-scalar/"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/jsonld-array/members/jsonld-scalar/",
-      "@type": [
-        "amlorg://a.ml/semantics.yaml#numberScalar",
-        "http://a.ml/vocabularies/data#Scalar"
-      ],
-      "http://a.ml/vocabularies/data#value": "1.1",
-      "http://www.w3.org/ns/shacl#datatype": [
-        {
-          "@id": "http://a.ml/vocabularies/shapes#number"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json",
       "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/jsonld-array/"
+        "@list": [
+          {
+            "@value": "1.1",
+            "@type": "http://www.w3.org/2001/XMLSchema#double"
+          }
+        ]
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/BaseUnitProcessingData"
       }
     }
-  ],
-  "@context": {
-    "@entities": {
-      "amlorg://a.ml/semantics.yaml#numberScalar": {
-        "http://a.ml/vocabularies/data#value": "http://www.w3.org/2001/XMLSchema#string",
-        "http://www.w3.org/ns/shacl#datatype": "http://www.w3.org/2001/XMLSchema#url"
-      },
-      "amlorg://a.ml/semantics.yaml#rootArray": {
-        "http://a.ml/vocabularies/data#members": "http://a.ml/vocabularies/document#JsonLDElement"
-      }
-    }
-  }
+  ]
 }

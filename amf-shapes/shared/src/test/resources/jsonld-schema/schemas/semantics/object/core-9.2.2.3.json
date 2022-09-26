@@ -2,19 +2,14 @@
   "$schema": "http://json-schema.org/draft/2019-09/schema#",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootObject"
     ],
     "prop1": "alias.prop1Field"
   },
   "properties": {
     "prop1": {
-      "type": "string",
-      "@context": {
-        "@characteristics": [
-          "alias:prop1Node"
-        ]
-      }
+      "type": "string"
     }
   },
   "if": {
@@ -24,18 +19,13 @@
   },
   "else": {
     "@context": {
-      "@characteristics": [
+      "@type": [
         "alias:elseNode"
       ],
       "prop1": "alias.propChangeField",
       "prop2": "alias.prop2Field"
     },
     "prop2": {
-      "@context": {
-        "@characteristics": [
-          "alias:scalarInteger"
-        ]
-      },
       "type": "integer"
     }
   }

@@ -3,19 +3,13 @@
   "type": "object",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootObject"
     ],
     "prop1": "alias.prop1Field"
   },
   "properties": {
     "prop1": {
-      "@context": {
-        "alias2": "amlorg://newAliasUri/semantics.yaml#",
-        "@characteristics": [
-          "alias2:prop1Object"
-        ]
-      },
       "type": "object"
     }
   }
