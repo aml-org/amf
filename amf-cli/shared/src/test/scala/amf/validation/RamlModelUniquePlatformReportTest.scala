@@ -697,4 +697,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("RAML and JSON Schema both pointing to a JSON Schema in a specific fashion") {
     validate("/raml/regression-with-fragment-promotion/api.raml")
   }
+
+  // W-11689045
+  test("nested JSON Schema reference by id in draft 4") {
+    validate("/raml/nested-json-schema-ref/api.raml", Some("raml/nested-json-schema-ref.report"))
+  }
 }
