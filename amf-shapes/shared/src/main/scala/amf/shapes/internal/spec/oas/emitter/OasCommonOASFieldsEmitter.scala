@@ -9,7 +9,6 @@ import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, TypeDef}
 import amf.shapes.internal.spec.common.emitter.{NumberTypeToYTypeConverter, ShapeEmitterContext}
 import amf.shapes.internal.spec.raml.emitter.RamlFormatTranslator
-
 import scala.collection.mutable.ListBuffer
 
 // TODO Refactor: This inheritance is very weird
@@ -28,11 +27,6 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
     fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
 
     emitFormatRanges(fs, result)
-
-    if (spec.schemaVersion isSmallerThanOrDifferentThan JSONSchemaDraft7SchemaVersion) {
-      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
-      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
-    }
 
     fs.entry(ScalarShapeModel.MultipleOf)
       .map(f => result += ValueEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
@@ -74,14 +68,48 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
   private def emitMinAndMax(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
     if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
+      // exclusiveMinimum/exclusiveMaximum should be emitted as numbers
       fs.entry(ScalarShapeModel.Minimum)
         .foreach(emitMin(_, result, fs.entry(ScalarShapeModel.ExclusiveMinimum).exists(_.scalar.toBool)))
       fs.entry(ScalarShapeModel.Maximum)
         .foreach(emitMax(_, result, fs.entry(ScalarShapeModel.ExclusiveMaximum).exists(_.scalar.toBool)))
+      fs.entry(ScalarShapeModel.ExclusiveMinimumNumeric)
+        .map(f => result += ValueEmitter("exclusiveMinimum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
+      fs.entry(ScalarShapeModel.ExclusiveMaximumNumeric)
+        .map(f => result += ValueEmitter("exclusiveMaximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
     } else {
+      // exclusiveMinimum/exclusiveMaximum should be emitted as Booleans
       fs.entry(ScalarShapeModel.Minimum).foreach(emitMin(_, result))
       fs.entry(ScalarShapeModel.Maximum).foreach(emitMax(_, result))
+      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
+      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
+      convertNumericExclusiveToBoolean(fs, result)
     }
+  }
+
+  private def convertNumericExclusiveToBoolean(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
+    fs.entry(ScalarShapeModel.ExclusiveMinimumNumeric)
+      .map(f => {
+        if (fs.entry(ScalarShapeModel.Minimum).isEmpty) {
+          convertNumericExclusiveMinToBoolean(result, f)
+        }
+      })
+    fs.entry(ScalarShapeModel.ExclusiveMaximumNumeric)
+      .map(f => {
+        if (fs.entry(ScalarShapeModel.Maximum).isEmpty) {
+          convertNumericExclusiveMaxToBoolean(result, f)
+        }
+      })
+  }
+
+  private def convertNumericExclusiveMaxToBoolean(result: ListBuffer[EntryEmitter], f: FieldEntry) = {
+    emitMax(f, result)
+    result += RawValueEmitter("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum, AmfScalar(true))
+  }
+
+  private def convertNumericExclusiveMinToBoolean(result: ListBuffer[EntryEmitter], f: FieldEntry) = {
+    emitMin(f, result)
+    result += RawValueEmitter("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum, AmfScalar(true))
   }
 
   private def emitMin(f: FieldEntry, result: ListBuffer[EntryEmitter], isExclusive: Boolean = false) =

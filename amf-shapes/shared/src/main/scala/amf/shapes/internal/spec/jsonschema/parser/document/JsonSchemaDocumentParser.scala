@@ -56,7 +56,7 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
         declarationsKey(schemaVersion),
         Some(this),
         Some(document),
-        Option(schemaVersion.asInstanceOf[SchemaVersion])
+        Option(schemaVersion)
       )
       addDeclarationsToModel(document, ctx.shapes.values.toList)
 

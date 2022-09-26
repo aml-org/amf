@@ -10,7 +10,7 @@ import amf.core.internal.remote._
 trait ResolutionCapabilities {
   protected def transform(unit: BaseUnit, pipeline: String, spec: Spec, amfConfig: AMFConfiguration): BaseUnit = {
     spec match {
-      case AsyncApi | AsyncApi20 | Raml08 | Raml10 | Oas20 | Oas30 =>
+      case AsyncApi | AsyncApi20 | Raml08 | Raml10 | Oas20 | Oas30 | JsonSchema =>
         amfConfig.baseUnitClient().transform(unit, pipeline).baseUnit
       case Amf =>
         TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, UnhandledAmfPipeline(pipeline))

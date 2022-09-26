@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "exclusiveMinimum": true,
+      "exclusiveMaximum": true
+    }
+  }
+}
