@@ -3,8 +3,9 @@ package amf.client.model
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.ContextMapping
-import amf.shapes.internal.document.metamodel.DataTypeFragmentModel
+import amf.shapes.internal.document.metamodel.{DataTypeFragmentModel, JsonLDInstanceDocumentModel}
 import amf.shapes.internal.domain.metamodel.{
   BaseIRIModel,
   ContextMappingModel,
@@ -26,7 +27,8 @@ class PlatformModelWrappersTest extends AnyFunSuite with Matchers with PlatformS
     DefaultVocabularyModel.`type`.head.toString,
     CuriePrefixModel.`type`.head.toString,
     BaseIRIModel.`type`.head.toString,
-    DataTypeFragmentModel.`type`.head.toString
+    DataTypeFragmentModel.`type`.head.toString,
+    JsonLDInstanceDocumentModel.`type`.head.toString // TODO: remove when future is complete
   )
 
   test("All models have platform wrappers registered") {

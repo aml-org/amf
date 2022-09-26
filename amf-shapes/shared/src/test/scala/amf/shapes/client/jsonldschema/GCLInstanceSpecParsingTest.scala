@@ -6,8 +6,11 @@ import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient}
 import org.scalatest.funsuite.AsyncFunSuite
 
+import scala.concurrent.ExecutionContext
+
 class GCLInstanceSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
-  private lazy val basePath: String = "amf-shapes/shared/src/test/resources/jsonld-schema/gcl/"
+  private lazy val basePath: String                        = "amf-shapes/shared/src/test/resources/jsonld-schema/gcl/"
+  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val client: JsonLDSchemaConfigurationClient =
     JsonLDSchemaConfiguration.JsonLDSchema().withRenderOptions(RenderOptions().withPrettyPrint).baseUnitClient()
