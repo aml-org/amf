@@ -1,0 +1,13 @@
+
+input KeyMapping {
+    fieldName: String,
+    argumentName: String
+}
+
+directive @dg_entityReference(name: String, fieldName: String, keyMapping: [KeyMapping!]!) repeatable on OBJECT | INTERFACE
+
+type Customer @dg_entityReference(name: "Address", fieldName: "address", keyMapping: [{ fieldName: "addressId", argumentName: "id" }]) {
+    customerId: Int!
+    fullName: String!
+    addressId: String!
+}

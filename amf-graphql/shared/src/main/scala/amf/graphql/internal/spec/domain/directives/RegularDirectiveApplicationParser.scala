@@ -1,26 +1,56 @@
 package amf.graphql.internal.spec.domain.directives
 
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode}
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
 import amf.core.internal.parser.domain.Annotations.{inferred, virtual}
 import amf.core.internal.parser.domain.SearchScope
+import amf.core.internal.render.SpecOrdering.Lexical
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.parser.syntax.ValueParser
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, VALUE}
+import amf.graphql.internal.spec.parser.syntax.ValueParser
+import amf.shapes.internal.spec.common.parser.ApiExtensionsParser
 import org.mulesoft.antlrast.ast.Node
+import org.yaml.model.YDocument.PartBuilder
+import org.yaml.model.{YDocument, YMapEntry, YNode}
 
 class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWebApiContext)
-    extends DirectiveApplicationParser {
+    extends DirectiveApplicationParser
+    with ApiExtensionsParser {
 
   override def appliesTo(node: Node): Boolean = true
 
   def parse(node: Node, element: DomainElement): Unit = {
+    val directiveApplication = parseDirective(node)
+    val effective = parseApiExtensionFromDomain(directiveApplication, element).getOrElse(directiveApplication)
+    element.withCustomDomainProperty(effective)
+  }
+
+  def parseDirective(node: Node): DomainExtension = {
     val directiveApplication = DomainExtension(toAnnotations(node))
-    parseName(directiveApplication, node)
-    parseDefinedBy(directiveApplication, node)
-    parseArguments(directiveApplication, node)
-    element.withCustomDomainProperty(directiveApplication)
+    populateDirective(directiveApplication, node)
+    directiveApplication
+  }
+
+  private def populateDirective(directive: DomainExtension, node: Node): Unit = {
+    parseName(directive, node)
+    parseDefinedBy(directive, node)
+    parseArguments(directive, node)
+  }
+
+  def parseApiExtensionFromDomain(domainExtension: DomainExtension, element: DomainElement): Option[DomainExtension] = {
+    val (name, entry) = getNamedEntryForExtension(domainExtension)
+    parseSemantic(entry, element.meta.`type`.map(_.iri()), Some(ctx.extensionsFacadeBuilder.extensionName(name)))
+  }
+
+  private def getNamedEntryForExtension(domainExtension: DomainExtension) = {
+    val name = domainExtension.name.value()
+    (name, YMapEntry(name, dataNodeToYNode(domainExtension.extension)))
+  }
+  private def dataNodeToYNode(dataNode: DataNode): YNode = {
+    val emit: PartBuilder => Unit = DataNodeEmitter(dataNode, Lexical)(ctx.eh).emit _
+    YDocument(emit).node
   }
 
   protected def parseName(directiveApplication: DomainExtension, node: Node): Unit = {

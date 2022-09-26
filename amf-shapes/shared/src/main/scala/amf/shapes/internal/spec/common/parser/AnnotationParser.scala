@@ -54,7 +54,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   }
 }
 
-object AnnotationParser {
+object AnnotationParser extends ApiExtensionsParser {
   def parseExtensions(
       parent: Option[AmfObject],
       map: YMap,
@@ -69,7 +69,13 @@ object AnnotationParser {
       }
     }
 
-  private def parseSemantic(
+  private def entryKey(entry: YMapEntry): String = {
+    entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
+  }
+}
+
+trait ApiExtensionsParser {
+  protected def parseSemantic(
       entry: YMapEntry,
       elementTypes: Seq[String],
       semanticParser: Option[SemanticExtensionsFacade]
@@ -79,12 +85,7 @@ object AnnotationParser {
       parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
     }
   }
-
-  private def entryKey(entry: YMapEntry): String = {
-    entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
-  }
 }
-
 private case class ExtensionParser(
     annotation: String,
     parent: Option[AmfObject],

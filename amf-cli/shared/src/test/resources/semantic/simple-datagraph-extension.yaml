@@ -1,0 +1,48 @@
+#%Dialect 1.0
+dialect: Pagination Test
+version: 1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  aml: http://a.ml/vocab#
+  dataGraph: http://dataGraph/extension#
+  shacl: http://www.w3.org/ns/shacl#
+
+documents: {}
+
+annotationMappings:
+  EntityReference:
+    domain: shacl.NodeShape
+    propertyTerm: dataGraph.entityReference
+    range:    EntityReferenceNode
+
+nodeMappings:
+  EntityReferenceNode:
+    classTerm: dataGraph.EntityReference
+    mapping:
+      name:
+        propertyTerm: dataGraph.name
+        range: string
+        mandatory: true
+      fieldName:
+        propertyTerm: dataGraph.fieldName
+        range: string
+        mandatory: true
+      keyMapping:
+        propertyTerm: dataGraph.keyMapping
+        range: KeyMappingNode
+        allowMultiple: true
+  KeyMappingNode:
+    classTerm: dataGraph.KeyMappingNode
+    mapping:
+      fieldName:
+        propertyTerm: dataGraph.fieldName
+        range: string
+        mandatory: true
+      argumentName:
+        propertyTerm: dataGraph.argumentName
+        range: string
+        mandatory: true
+
+extensions:
+  dg_entityReference: EntityReference

@@ -1,0 +1,474 @@
+{
+  "@graph": [
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "simple-datagraph-extension.graphql"
+    },
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.7.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "GraphQL"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declares/shape/Customer"
+        },
+        {
+          "@id": "#/declares/shape/KeyMapping"
+        },
+        {
+          "@id": "#/declares/dg_entityReference"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declares/shape/Customer",
+      "@type": [
+        "sh:NodeShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:property": [
+        {
+          "@id": "#/declares/shape/Customer/property/property/customerId"
+        },
+        {
+          "@id": "#/declares/shape/Customer/property/property/fullName"
+        },
+        {
+          "@id": "#/declares/shape/Customer/property/property/addressId"
+        }
+      ],
+      "sh:name": "Customer",
+      "dataGraph:entityReference": {
+        "@id": "#/declares/shape/Customer/customDomainProperties/dg_entityReference/element"
+      }
+    },
+    {
+      "@id": "#/declares/shape/KeyMapping",
+      "@type": [
+        "sh:NodeShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:property": [
+        {
+          "@id": "#/declares/shape/KeyMapping/property/property/fieldName"
+        },
+        {
+          "@id": "#/declares/shape/KeyMapping/property/property/argumentName"
+        }
+      ],
+      "raml-shapes:inputOnly": true,
+      "sh:name": "KeyMapping"
+    },
+    {
+      "@id": "#/declares/dg_entityReference",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "rdfs:domain": [
+        {
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/OBJECT"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/graphql#directive/location/INTERFACE"
+        }
+      ],
+      "raml-shapes:schema": {
+        "@id": "#/declares/dg_entityReference/shape/default-node"
+      },
+      "core:name": "dg_entityReference",
+      "core:repeatable": true
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/customerId",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/Customer/property/property/customerId/scalar/default-scalar"
+      },
+      "sh:minCount": 1,
+      "sh:name": "customerId"
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/fullName",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/Customer/property/property/fullName/scalar/default-scalar"
+      },
+      "sh:minCount": 1,
+      "sh:name": "fullName"
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/addressId",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/Customer/property/property/addressId/scalar/default-scalar"
+      },
+      "sh:minCount": 1,
+      "sh:name": "addressId"
+    },
+    {
+      "@id": "#/declares/shape/Customer/customDomainProperties/dg_entityReference/element",
+      "@type": [
+        "dataGraph:EntityReference",
+        "file://amf-cli/shared/src/test/resources/semantic/simple-datagraph-extension.yaml#/declarations/EntityReferenceNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "dataGraph:keyMapping": [
+        {
+          "@id": "#/declares/shape/Customer/customDomainProperties/dg_entityReference/element/element"
+        }
+      ],
+      "dataGraph:name": "Address",
+      "dataGraph:fieldName": "address"
+    },
+    {
+      "@id": "#/declares/shape/KeyMapping/property/property/fieldName",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/KeyMapping/property/property/fieldName/scalar/default-scalar"
+      },
+      "sh:minCount": 0,
+      "sh:name": "fieldName"
+    },
+    {
+      "@id": "#/declares/shape/KeyMapping/property/property/argumentName",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/KeyMapping/property/property/argumentName/scalar/default-scalar"
+      },
+      "sh:minCount": 0,
+      "sh:name": "argumentName"
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node",
+      "@type": [
+        "sh:NodeShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:property": [
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name"
+        },
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName"
+        },
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping"
+        }
+      ],
+      "raml-shapes:inputOnly": true
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/customerId/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/fullName/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/Customer/property/property/addressId/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/Customer/customDomainProperties/dg_entityReference/element/element",
+      "@type": [
+        "dataGraph:KeyMappingNode",
+        "file://amf-cli/shared/src/test/resources/semantic/simple-datagraph-extension.yaml#/declarations/KeyMappingNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "dataGraph:argumentName": "id",
+      "dataGraph:fieldName": "addressId"
+    },
+    {
+      "@id": "#/declares/shape/KeyMapping/property/property/fieldName/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/KeyMapping/property/property/argumentName/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union"
+      },
+      "sh:name": "name"
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union"
+      },
+      "sh:name": "fieldName"
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping",
+      "@type": [
+        "sh:PropertyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping/array/default-array"
+      },
+      "sh:name": "keyMapping"
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union/anyOf/nil/default-nil"
+        },
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union/anyOf/scalar/default-scalar"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union/anyOf/nil/default-nil"
+        },
+        {
+          "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union/anyOf/scalar/default-scalar"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping/array/default-array",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping/array/default-array/shape/default-node"
+      }
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union/anyOf/nil/default-nil",
+      "@type": [
+        "raml-shapes:NilShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/name/union/default-union/anyOf/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union/anyOf/nil/default-nil",
+      "@type": [
+        "raml-shapes:NilShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/fieldName/union/default-union/anyOf/scalar/default-scalar",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/dg_entityReference/shape/default-node/property/property/keyMapping/array/default-array/shape/default-node",
+      "@type": [
+        "sh:NodeShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/declares/shape/KeyMapping"
+        }
+      ],
+      "doc:link-label": "KeyMapping"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/simple-datagraph-extension.graphql",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "dataGraph": "http://dataGraph/extension#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "sh": "http://www.w3.org/ns/shacl#"
+  }
+}

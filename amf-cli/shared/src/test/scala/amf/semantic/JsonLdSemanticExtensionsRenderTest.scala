@@ -1,11 +1,14 @@
 package amf.semantic
 
+import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
+import amf.graphql.client.scala.GraphQLConfiguration
 import amf.io.FunSuiteCycleTests
+import amf.testing.ConfigProvider
 
 import scala.concurrent.Future
 
@@ -97,18 +100,40 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
     }
   }
 
+  test("Render flattened jsonld with datagraph extension with graphql spec") {
+    getConfig("simple-datagraph-extension.yaml", GraphQLConfiguration.GraphQL()).flatMap { config =>
+      cycle(
+        "simple-datagraph-extension.graphql",
+        golden = "simple-datagraph-extension.graphql.jsonld",
+        GraphQLHint,
+        AmfJsonHint,
+        amfConfig = Some(config)
+      )
+    }
+  }
+
   /** Method for transforming parsed unit. Override if necessary. */
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    APIConfiguration.fromSpec(unit.sourceSpec.get).baseUnitClient().transform(unit).baseUnit
+    ConfigProvider.configFor(unit.sourceSpec.get).baseUnitClient().transform(unit).baseUnit
   }
 
   private def getConfig(
       dialect: String,
       baseConfig: AMFConfiguration = APIConfiguration.API()
   ): Future[AMFConfiguration] = {
-    baseConfig
-      .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
+    parseDialect(s"file://$basePath" + dialect).map { d =>
+      baseConfig
+        .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
+        .withErrorHandlerProvider(() => UnhandledErrorHandler)
+        .withDialect(d.dialect)
+    }
+  }
+
+  private def parseDialect(dialectPath: String) = {
+    AMLConfiguration
+      .predefined()
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
-      .withDialect(s"file://$basePath" + dialect)
+      .baseUnitClient()
+      .parseDialect(dialectPath)
   }
 }
