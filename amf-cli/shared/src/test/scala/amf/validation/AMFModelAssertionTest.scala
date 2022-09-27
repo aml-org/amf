@@ -8,8 +8,8 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
-import amf.core.internal.annotations.{Inferred, VirtualElement, VirtualNode}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, InlineElement, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
@@ -20,7 +20,6 @@ import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
@@ -74,7 +73,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
     def getFirstResponsePayload(bu: BaseUnit): Payload = getFirstResponse(bu).payloads.head
 
-    def getFirstPayloadSchema(bu: BaseUnit): ScalarShape = getFirstResponsePayload(bu).schema.asInstanceOf[ScalarShape]
+    def getFirstPayloadSchema(bu: BaseUnit): Shape = getFirstResponsePayload(bu).schema
   }
 
   test("AMF should persist and restore the raw XML schema") {
@@ -395,6 +394,14 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
         // both lexicals should start in column 4
         lexicals map (_.start.column) exists (_ != 4) shouldBe false
       }
+    }
+  }
+
+  test("Declared union should have DeclaredElement annotation") {
+    val api = s"$basePath/raml/declared-element-annotation-union.raml"
+    modelAssertion(api, PipelineId.Editing) { bu =>
+      val union = bu.asInstanceOf[Document].declares.head
+      union.annotations.contains(classOf[DeclaredElement]) shouldBe true
     }
   }
 }
