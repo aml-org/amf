@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "definitions": {
+    "test": {
+      "type": "object",
+      "oneOf": [
+        {
+          "if": {
+            "properties": { "country": { "const": "United States of America" } }
+          },
+          "then": {
+            "properties": { "postal_code": { "pattern": "[0-9]{5}(-[0-9]{4})?" } }
+          }
+        }
+      ]
+    }
+  }
+}

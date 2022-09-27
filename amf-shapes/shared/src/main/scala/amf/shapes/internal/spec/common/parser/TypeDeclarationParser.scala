@@ -9,6 +9,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.annotations.DocumentDeclarationKey
+import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MultipleDefinitionKey, UnableToParseShape}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
@@ -20,13 +21,14 @@ object TypeDeclarationParser {
       definitionsKey: String,
       declarationKeysHolder: Option[DeclarationKeyCollector]
   )(implicit ctx: ShapeParserContext): List[AnyShape] =
-    parseTypeDeclarations(map, Seq(definitionsKey), declarationKeysHolder, None)
+    parseTypeDeclarations(map, Seq(definitionsKey), declarationKeysHolder, None, None)
 
   def parseTypeDeclarations(
       map: YMap,
       definitionsKeys: Seq[String],
       declarationKeysHolder: Option[DeclarationKeyCollector],
-      document: Option[Document] = None
+      document: Option[Document] = None,
+      schemaVersion: Option[SchemaVersion] = None
   )(implicit ctx: ShapeParserContext): List[AnyShape] = {
     val definitionEntries = definitionsKeys.flatMap(dk => map.key(dk))
     validateMultipleDeclarationKeys(definitionEntries.size, map, definitionsKeys)
@@ -34,7 +36,7 @@ object TypeDeclarationParser {
       .map { de =>
         // I will annotate the declaration key in the document if present
         document.foreach(_.annotations += DocumentDeclarationKey(de.key.asScalar.get.text))
-        parseDeclarationMap(de, declarationKeysHolder)
+        parseDeclarationMap(de, declarationKeysHolder, schemaVersion)
       }
       .getOrElse(Nil)
   }
@@ -55,7 +57,8 @@ object TypeDeclarationParser {
 
   private def parseDeclarationMap(
       declarationEntry: YMapEntry,
-      declarationKeysHolder: Option[DeclarationKeyCollector]
+      declarationKeysHolder: Option[DeclarationKeyCollector],
+      schemaVersion: Option[SchemaVersion]
   )(implicit
       ctx: ShapeParserContext
   ): List[AnyShape] = {
@@ -70,7 +73,8 @@ object TypeDeclarationParser {
             e,
             shape => {
               shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-            }
+            },
+            schemaVersion
           )
           .parse() match {
           case Some(shape) =>

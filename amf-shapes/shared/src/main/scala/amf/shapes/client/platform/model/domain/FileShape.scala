@@ -13,16 +13,18 @@ case class FileShape(override private[amf] val _internal: InternalFileShape) ext
   @JSExportTopLevel("FileShape")
   def this() = this(InternalFileShape())
 
-  def fileTypes: ClientList[StrField] = _internal.fileTypes.asClient
-  def pattern: StrField               = _internal.pattern
-  def minLength: IntField             = _internal.minLength
-  def maxLength: IntField             = _internal.maxLength
-  def minimum: DoubleField            = _internal.minimum
-  def maximum: DoubleField            = _internal.maximum
-  def exclusiveMinimum: BoolField     = _internal.exclusiveMinimum
-  def exclusiveMaximum: BoolField     = _internal.exclusiveMaximum
-  def format: StrField                = _internal.format
-  def multipleOf: DoubleField         = _internal.multipleOf
+  def fileTypes: ClientList[StrField]      = _internal.fileTypes.asClient
+  def pattern: StrField                    = _internal.pattern
+  def minLength: IntField                  = _internal.minLength
+  def maxLength: IntField                  = _internal.maxLength
+  def minimum: DoubleField                 = _internal.minimum
+  def maximum: DoubleField                 = _internal.maximum
+  def exclusiveMinimum: BoolField          = _internal.exclusiveMinimum
+  def exclusiveMaximum: BoolField          = _internal.exclusiveMaximum
+  def exclusiveMinimumNumeric: DoubleField = _internal.exclusiveMinimumNumeric
+  def exclusiveMaximumNumeric: DoubleField = _internal.exclusiveMaximumNumeric
+  def format: StrField                     = _internal.format
+  def multipleOf: DoubleField              = _internal.multipleOf
 
   def withFileTypes(fileTypes: ClientList[String]): this.type = {
     _internal.withFileTypes(fileTypes.asInternal)
@@ -54,6 +56,14 @@ case class FileShape(override private[amf] val _internal: InternalFileShape) ext
   }
   def withExclusiveMaximum(max: Boolean): this.type = {
     _internal.withExclusiveMaximum(max)
+    this
+  }
+  def withExclusiveMinimumNumeric(min: Double): this.type = {
+    _internal.withExclusiveMinimumNumeric(min)
+    this
+  }
+  def withExclusiveMaximumNumeric(max: Double): this.type = {
+    _internal.withExclusiveMaximumNumeric(max)
     this
   }
   def withFormat(format: String): this.type = {

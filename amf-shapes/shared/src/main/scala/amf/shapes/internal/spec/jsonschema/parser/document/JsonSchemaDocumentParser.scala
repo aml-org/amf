@@ -22,7 +22,8 @@ import amf.shapes.internal.spec.common.parser.{
 import amf.shapes.internal.spec.common.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
+  JSONSchemaVersion,
+  SchemaVersion
 }
 import amf.shapes.internal.spec.jsonschema.JsonSchemaEntry
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
@@ -50,7 +51,13 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
         BaseReferencesParser(document, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
       // Parsing declaration schemas from "definitions" or "$defs"
-      parseTypeDeclarations(map, declarationsKey(schemaVersion), Some(this), Some(document))
+      parseTypeDeclarations(
+        map,
+        declarationsKey(schemaVersion),
+        Some(this),
+        Some(document),
+        Option(schemaVersion)
+      )
       addDeclarationsToModel(document, ctx.shapes.values.toList)
 
       if (references.nonEmpty) document.withReferences(references.baseUnitReferences())

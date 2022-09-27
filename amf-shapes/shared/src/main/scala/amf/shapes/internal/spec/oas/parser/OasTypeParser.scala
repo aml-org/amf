@@ -40,13 +40,15 @@ object OasTypeParser {
   ): OasTypeParser =
     new OasTypeParser(node, name, node.value, adopt, version)
 
-  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
+  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit, schemaVersion: Option[SchemaVersion] = None)(
+      implicit ctx: ShapeParserContext
+  ): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),
       entry.value,
       adopt,
-      getSchemaVersion(ctx),
+      schemaVersion.getOrElse(getSchemaVersion(ctx)),
       true
     )
 
