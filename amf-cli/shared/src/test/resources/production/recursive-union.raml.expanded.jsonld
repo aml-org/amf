@@ -616,9 +616,9 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#inline-element": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/inline-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType"
@@ -641,7 +641,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,4)-(11,0)]"
+                    "@value": "[(5,2)-(8,0)]"
                   }
                 ]
               },
@@ -655,6 +655,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(5,2)-(5,10)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/type-property-lexical-info/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,4)-(6,8)]"
                   }
                 ]
               }

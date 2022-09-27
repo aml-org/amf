@@ -1255,6 +1255,21 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/security-with-query-string.json#/declares/scheme/oauth_2_0/shape/queryString/source-map/type-property-lexical-info/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/queryString/security-with-query-string.json#/declares/scheme/oauth_2_0/shape/queryString"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(40,10)-(40,16)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/security-with-query-string.json#/declares/scheme/oauth_2_0/shape/queryString/source-map/lexical/element_0",
@@ -1265,7 +1280,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(42,12)-(42,28)]"
+                        "@value": "[(39,8)-(44,9)]"
                       }
                     ]
                   }

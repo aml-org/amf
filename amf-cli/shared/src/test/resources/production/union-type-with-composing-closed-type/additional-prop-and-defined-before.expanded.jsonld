@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#14",
+        "@id": "#15",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#15",
+            "@id": "#16",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#16",
+                "@id": "#17",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -53,7 +53,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#17",
+                    "@id": "#18",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -62,7 +62,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#18",
+                        "@id": "#19",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -97,7 +97,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#18": "[(26,6)-(27,24)]"
+                            "#19": "[(26,6)-(27,24)]"
                           }
                         }
                       }
@@ -111,7 +111,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#16": "[(24,2)-(27,24)]"
+                    "#17": "[(24,2)-(27,24)]"
                   }
                 }
               }
@@ -119,7 +119,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(23,0)-(23,7)]",
-                "#15": "[(23,0)-(27,24)]"
+                "#16": "[(23,0)-(27,24)]"
               }
             }
           }
@@ -127,7 +127,7 @@
         "smaps": {
           "lexical": {
             "core:version": "[(3,0)-(5,0)]",
-            "#14": "[(2,0)-(27,24)]",
+            "#15": "[(2,0)-(27,24)]",
             "core:name": "[(2,0)-(3,0)]"
           }
         }
@@ -140,7 +140,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#13",
+        "@id": "#14",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -392,11 +392,23 @@
         ],
         "smaps": {
           "inherited-shapes": {
+            "#1": "amf://id#13"
+          },
+          "resolved-link": {
             "#1": "amf://id#12"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(7,4)-(7,8)]"
           },
           "lexical": {
             "shacl:name": "[(6,2)-(6,12)]",
-            "#1": "[(7,4)-(10,0)]"
+            "#1": "[(6,2)-(10,0)]"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "resolved-link-target": {
+            "#1": "amf://id#1"
           }
         }
       },
