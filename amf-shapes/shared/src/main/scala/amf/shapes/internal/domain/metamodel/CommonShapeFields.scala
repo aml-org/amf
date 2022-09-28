@@ -43,14 +43,14 @@ trait CommonShapeFields {
   val ExclusiveMinimumNumeric = Field(
     Double,
     Shapes + "exclusiveMinimumNumeric",
-    ModelDoc(ModelVocabularies.Shapes, "min. exclusive", "Minimum exclusive constraint"),
+    ModelDoc(ModelVocabularies.Shapes, "min. exclusive numeric", "Minimum exclusive constraint"),
     deprecated = true
   )
 
   val ExclusiveMaximumNumeric = Field(
     Double,
     Shapes + "exclusiveMaximumNumeric",
-    ModelDoc(ModelVocabularies.Shapes, "max. exclusive", "Maximum exclusive constraint"),
+    ModelDoc(ModelVocabularies.Shapes, "max. exclusive numeric", "Maximum exclusive constraint"),
     deprecated = true
   )
 
