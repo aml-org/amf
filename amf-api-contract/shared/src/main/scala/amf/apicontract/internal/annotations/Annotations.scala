@@ -3,7 +3,7 @@ package amf.apicontract.internal.annotations
 import amf.core.client.scala.model.domain._
 import org.mulesoft.common.client.lexical.PositionRange
 
-case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
+case class FormBodyParameter() extends EternalSerializedAnnotation {
   override val name: String  = "form-body-parameter"
   override val value: String = "true"
 }
@@ -14,7 +14,7 @@ object FormBodyParameter extends AnnotationGraphLoader {
   }
 }
 
-case class BodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
+case class BodyParameter() extends EternalSerializedAnnotation {
   override val name: String  = "body-parameter"
   override val value: String = "true"
 }
