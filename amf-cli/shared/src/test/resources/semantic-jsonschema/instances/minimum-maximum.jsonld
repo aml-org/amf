@@ -21,7 +21,44 @@
         "doc:DomainElement"
       ],
       "data:name": "Pepito",
-      "data:age": 33.0
+      "data:age": 33.0,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/encodes/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/encodes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/encodes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/encodes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/encodes/source-map/lexical/element_2",
+      "sourcemaps:element": "data:name",
+      "sourcemaps:value": "[(3,2)-(3,18)]"
+    },
+    {
+      "@id": "#/encodes/source-map/lexical/element_0",
+      "sourcemaps:element": "data:age",
+      "sourcemaps:value": "[(4,2)-(4,11)]"
+    },
+    {
+      "@id": "#/encodes/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/minimum-maximum.json#/encodes",
+      "sourcemaps:value": "[(1,0)-(5,1)]"
     },
     {
       "@id": "",
@@ -43,13 +80,35 @@
       "doc:root": true,
       "doc:processingData": {
         "@id": "/BaseUnitProcessingData"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/minimum-maximum.json",
+      "sourcemaps:value": "[(1,0)-(5,1)]"
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/minimum-maximum.json",
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "meta": "http://a.ml/vocabularies/meta#"
   }
 }

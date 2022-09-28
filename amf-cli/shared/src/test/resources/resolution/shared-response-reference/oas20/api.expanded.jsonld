@@ -119,12 +119,20 @@
                               }
                             ]
                           }
-                        ]
+                        ],
+                        "smaps": {
+                          "virtual-element": {
+                            "#11": "true"
+                          }
+                        }
                       }
                     ],
                     "smaps": {
                       "resolved-link-target": {
                         "#19": "amf://id#10"
+                      },
+                      "resolved-link": {
+                        "#19": "amf://id#19"
                       },
                       "lexical": {
                         "core:description": "[(28,4)-(29,0)]",
@@ -132,9 +140,6 @@
                       },
                       "declared-element": {
                         "#19": ""
-                      },
-                      "resolved-link": {
-                        "#19": "amf://id#19"
                       }
                     }
                   }
@@ -240,12 +245,20 @@
                               }
                             ]
                           }
-                        ]
+                        ],
+                        "smaps": {
+                          "virtual-element": {
+                            "#12": "true"
+                          }
+                        }
                       }
                     ],
                     "smaps": {
                       "resolved-link-target": {
                         "#22": "amf://id#10"
+                      },
+                      "resolved-link": {
+                        "#22": "amf://id#22"
                       },
                       "lexical": {
                         "core:description": "[(28,4)-(29,0)]",
@@ -253,9 +266,6 @@
                       },
                       "declared-element": {
                         "#22": ""
-                      },
-                      "resolved-link": {
-                        "#22": "amf://id#22"
                       }
                     }
                   }
@@ -592,11 +602,11 @@
                 "doc:raw": "true",
                 "doc:strict": "true"
               },
-              "lexical": {
-                "#6": "[(32,6)-(34,21)]"
-              },
               "tracked-element": {
                 "#6": "amf://id#10,amf://id#11,amf://id#12"
+              },
+              "lexical": {
+                "#6": "[(32,6)-(34,21)]"
               }
             }
           }
@@ -609,18 +619,18 @@
           "resolved-link": {
             "#1": "amf://id#13"
           },
-          "type-property-lexical-info": {
-            "#1": "[(20,4)-(20,8)]"
+          "resolved-link-target": {
+            "#1": "amf://id#1"
+          },
+          "declared-element": {
+            "#1": ""
           },
           "lexical": {
             "shacl:name": "[(19,2)-(19,15)]",
             "#1": "[(19,2)-(26,0)]"
           },
-          "declared-element": {
-            "#1": ""
-          },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
+          "type-property-lexical-info": {
+            "#1": "[(20,4)-(20,8)]"
           }
         }
       },
@@ -928,11 +938,11 @@
                         "doc:raw": "true",
                         "doc:strict": "true"
                       },
-                      "lexical": {
-                        "#6": "[(32,6)-(34,21)]"
-                      },
                       "tracked-element": {
                         "#6": "amf://id#10,amf://id#11,amf://id#12"
+                      },
+                      "lexical": {
+                        "#6": "[(32,6)-(34,21)]"
                       }
                     }
                   }
@@ -945,18 +955,18 @@
                   "resolved-link": {
                     "#1": "amf://id#13"
                   },
-                  "type-property-lexical-info": {
-                    "#1": "[(20,4)-(20,8)]"
+                  "resolved-link-target": {
+                    "#1": "amf://id#1"
+                  },
+                  "declared-element": {
+                    "#1": ""
                   },
                   "lexical": {
                     "shacl:name": "[(19,2)-(19,15)]",
                     "#1": "[(19,2)-(26,0)]"
                   },
-                  "declared-element": {
-                    "#1": ""
-                  },
-                  "resolved-link-target": {
-                    "#1": "amf://id#1"
+                  "type-property-lexical-info": {
+                    "#1": "[(20,4)-(20,8)]"
                   }
                 }
               }
@@ -964,6 +974,9 @@
             "smaps": {
               "lexical": {
                 "raml-shapes:schema": "[(29,4)-(31,0)]"
+              },
+              "virtual-element": {
+                "#14": "true"
               }
             }
           }
@@ -1093,11 +1106,11 @@
                 "doc:raw": "true",
                 "doc:strict": "true"
               },
-              "lexical": {
-                "#6": "[(32,6)-(34,21)]"
-              },
               "tracked-element": {
                 "#6": "amf://id#10,amf://id#11,amf://id#12"
+              },
+              "lexical": {
+                "#6": "[(32,6)-(34,21)]"
               }
             }
           }

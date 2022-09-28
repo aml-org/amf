@@ -237,6 +237,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/lexical/element_3"
@@ -249,11 +254,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/declared-element/element_0"
         }
       ]
     },
@@ -412,6 +412,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,10)]"
@@ -430,11 +435,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(13,33)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml#/declares/shape/Customer/property/property/name/scalar/name/source-map",

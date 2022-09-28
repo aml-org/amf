@@ -34,11 +34,11 @@
               }
             ],
             "smaps": {
-              "lexical": {
-                "core:urlTemplate": "[(2,0)-(4,0)]"
-              },
               "synthesized-field": {
                 "#86": "true"
+              },
+              "lexical": {
+                "core:urlTemplate": "[(2,0)-(4,0)]"
               }
             }
           }
@@ -2327,11 +2327,11 @@
                                   "synthesized-field": {
                                     "doc:strict": "true"
                                   },
-                                  "lexical": {
-                                    "#11": "[(17,8)-(19,0)]"
-                                  },
                                   "tracked-element": {
                                     "#11": "amf://id#9"
+                                  },
+                                  "lexical": {
+                                    "#11": "[(17,8)-(19,0)]"
                                   }
                                 }
                               }
@@ -2357,6 +2357,9 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(15,4)-(19,0)]"
+                      },
+                      "virtual-element": {
+                        "#8": "true"
                       }
                     }
                   }

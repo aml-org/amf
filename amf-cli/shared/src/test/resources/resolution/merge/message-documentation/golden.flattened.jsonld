@@ -18,7 +18,12 @@
       "http://a.ml/vocabularies/core#name": "message",
       "http://a.ml/vocabularies/core#documentation": {
         "@id": "target/creative-work/baseUrl"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "testId/resp/message#/source-map"
+        }
+      ]
     },
     {
       "@id": "target/creative-work/baseUrl",
@@ -31,7 +36,60 @@
           "@id": "baseUrl"
         }
       ],
-      "http://a.ml/vocabularies/core#description": "traitUrl"
+      "http://a.ml/vocabularies/core#description": "traitUrl",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/creative-work/baseUrl#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "testId/resp/message#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "target/creative-work/baseUrl#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "target/creative-work/baseUrl#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "target/creative-work/baseUrl#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "testId/resp/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(5,0)]"
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,7)]"
+    },
+    {
+      "@id": "target/creative-work/baseUrl#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/creative-work/baseUrl",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
+    },
+    {
+      "@id": "target/creative-work/baseUrl#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#url",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(5,0)]"
     },
     {
       "@id": "testId",

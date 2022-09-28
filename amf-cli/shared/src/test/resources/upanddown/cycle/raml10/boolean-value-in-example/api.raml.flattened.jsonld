@@ -227,6 +227,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/lexical/element_3"
@@ -239,11 +244,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/declared-element/element_0"
         }
       ]
     },
@@ -470,6 +470,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,4)]"
@@ -488,11 +493,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(18,14)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declares/shape/T1/property/property/p1/scalar/p1/source-map",

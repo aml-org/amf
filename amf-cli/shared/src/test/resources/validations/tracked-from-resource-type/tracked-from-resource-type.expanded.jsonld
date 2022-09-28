@@ -894,11 +894,11 @@
                 "doc:raw": "true",
                 "doc:strict": "true"
               },
-              "lexical": {
-                "#7": "[(2,0)-(3,17)]"
-              },
               "tracked-element": {
                 "#7": "amf://id#10,amf://id#11"
+              },
+              "lexical": {
+                "#7": "[(2,0)-(3,17)]"
               }
             }
           }
@@ -910,15 +910,15 @@
           "resolved-link": {
             "#4": "amf://id#13"
           },
-          "lexical": {
-            "shacl:name": "[(5,2)-(5,9)]",
-            "#4": "[(5,2)-(9,0)]"
+          "resolved-link-target": {
+            "#4": "amf://id#4"
           },
           "declared-element": {
             "#4": ""
           },
-          "resolved-link-target": {
-            "#4": "amf://id#4"
+          "lexical": {
+            "shacl:name": "[(5,2)-(5,9)]",
+            "#4": "[(5,2)-(9,0)]"
           }
         }
       },

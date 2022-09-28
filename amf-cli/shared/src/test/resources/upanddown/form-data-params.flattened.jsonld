@@ -187,6 +187,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/source-map/lexical/element_1"
@@ -245,6 +250,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/payload/formData/source-map/form-body-parameter/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/source-map/lexical/element_1",

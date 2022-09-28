@@ -112,6 +112,29 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               },
                               {
@@ -132,6 +155,29 @@
                                   {
                                     "@value": "MyEnum"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/supportedOperation/query/Query.myEnum/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(5,12)-(5,18)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -144,6 +190,29 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.myEnum"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/web-api/endpoint/%2Fquery%2FmyEnum"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,4)-(5,18)]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -221,6 +290,29 @@
                   {
                     "@value": "INPUT"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(9,4)-(9,9)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -245,6 +337,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "TYPE"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/TYPE/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/TYPE/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/TYPE"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(10,4)-(10,8)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -271,6 +386,29 @@
                   {
                     "@value": "ENUM"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,4)-(11,8)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -295,6 +433,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "SCALAR"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCALAR/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCALAR/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCALAR"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,4)-(12,10)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -321,6 +482,29 @@
                   {
                     "@value": "INTERFACE"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INTERFACE/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INTERFACE/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INTERFACE"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(13,4)-(13,13)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -345,6 +529,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "DIRECTIVE"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/DIRECTIVE/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/DIRECTIVE/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/DIRECTIVE"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(14,4)-(14,13)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -371,6 +578,29 @@
                   {
                     "@value": "EXTEND"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/EXTEND/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/EXTEND/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/EXTEND"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(15,4)-(15,10)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -395,6 +625,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "UNION"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/UNION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/UNION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/UNION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(16,4)-(16,9)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -421,6 +674,29 @@
                   {
                     "@value": "IMPLEMENTS"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/IMPLEMENTS/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/IMPLEMENTS/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/IMPLEMENTS"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(17,4)-(17,14)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -445,6 +721,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "QUERY"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/QUERY/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/QUERY/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/QUERY"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(18,4)-(18,9)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -471,6 +770,29 @@
                   {
                     "@value": "MUTATION"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/MUTATION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/MUTATION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/MUTATION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(19,4)-(19,12)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -495,6 +817,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "SUBSCRIPTION"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SUBSCRIPTION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SUBSCRIPTION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SUBSCRIPTION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(20,4)-(20,16)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -521,6 +866,29 @@
                   {
                     "@value": "SCHEMA"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCHEMA/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCHEMA/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/SCHEMA"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(21,4)-(21,10)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -545,6 +913,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "FRAGMENT"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(22,4)-(22,12)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -571,6 +962,29 @@
                   {
                     "@value": "FIELD"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(23,4)-(23,9)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -595,6 +1009,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "FRAGMENT_DEFINITION"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_DEFINITION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_DEFINITION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_DEFINITION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(24,4)-(24,23)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -621,6 +1058,29 @@
                   {
                     "@value": "FRAGMENT_SPREAD"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_SPREAD/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_SPREAD/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FRAGMENT_SPREAD"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(25,4)-(25,19)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -645,6 +1105,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "INLINE_FRAGMENT"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INLINE_FRAGMENT/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INLINE_FRAGMENT/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INLINE_FRAGMENT"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(26,4)-(26,19)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -671,6 +1154,29 @@
                   {
                     "@value": "OBJECT"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/OBJECT/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/OBJECT/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/OBJECT"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(27,4)-(27,10)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -695,6 +1201,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "FIELD_DEFINITION"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD_DEFINITION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD_DEFINITION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/FIELD_DEFINITION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(28,4)-(28,20)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -721,6 +1250,29 @@
                   {
                     "@value": "ARGUMENT_DEFINITION"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ARGUMENT_DEFINITION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ARGUMENT_DEFINITION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ARGUMENT_DEFINITION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(29,4)-(29,23)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -745,6 +1297,29 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "ENUM_VALUE"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM_VALUE/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM_VALUE/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/ENUM_VALUE"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(30,4)-(30,14)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -771,6 +1346,29 @@
                   {
                     "@value": "INPUT_OBJECT"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_OBJECT/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_OBJECT/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_OBJECT"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(31,4)-(31,16)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -795,6 +1393,67 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "INPUT_FIELD_DEFINITION"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_FIELD_DEFINITION/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_FIELD_DEFINITION/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/in/INPUT_FIELD_DEFINITION"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(32,4)-(32,26)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/keyword-enum-values/api.graphql#/declares/scalar/MyEnum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,0)-(33,1)]"
                   }
                 ]
               }

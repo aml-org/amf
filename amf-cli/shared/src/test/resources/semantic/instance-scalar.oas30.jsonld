@@ -23,6 +23,11 @@
         {
           "@id": "#/web-api/endpoint/%2Fendpoint"
         }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "/web-api#/source-map"
+        }
       ]
     },
     {
@@ -35,6 +40,31 @@
       "apiContract:supportedOperation": [
         {
           "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/web-api#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/web-api#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_2"
         }
       ]
     },
@@ -50,7 +80,43 @@
         {
           "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200"
         }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map"
+        }
       ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_3",
+      "sourcemaps:element": "core:version",
+      "sourcemaps:value": "[(4,2)-(5,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_1",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(3,2)-(4,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:endpoint",
+      "sourcemaps:value": "[(5,0)-(12,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.oas30.yaml/web-api",
+      "sourcemaps:value": "[(1,0)-(12,0)]"
     },
     {
       "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
@@ -63,7 +129,73 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "Something",
-      "aml:pagination": 5
+      "aml:pagination": 5,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.oas30.yaml#/web-api/endpoint/%2Fendpoint",
+      "sourcemaps:value": "[(6,2)-(12,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.oas30.yaml#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
+      "sourcemaps:value": "[(7,4)-(12,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:returns",
+      "sourcemaps:value": "[(8,6)-(12,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(9,8)-(9,13)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "sourcemaps:element": "core:description",
+      "sourcemaps:value": "[(10,10)-(11,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.oas30.yaml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
+      "sourcemaps:value": "[(9,8)-(12,0)]"
     },
     {
       "@id": "",
@@ -87,6 +219,7 @@
     "aml": "http://a.ml/vocab#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
   }
 }

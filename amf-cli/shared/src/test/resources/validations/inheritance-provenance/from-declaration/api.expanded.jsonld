@@ -140,12 +140,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
+                                  "inheritance-provenance": {
+                                    "#12": "amf://id#1"
+                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(6,12)-(6,18)]",
                                     "#12": "[(6,6)-(7,0)]"
-                                  },
-                                  "inheritance-provenance": {
-                                    "#12": "amf://id#1"
                                   }
                                 }
                               },
@@ -224,14 +224,14 @@
                               "inherited-shapes": {
                                 "#11": "amf://id#15"
                               },
-                              "lexical": {
-                                "#11": "[(10,6)-(14,0)]"
+                              "synthesized-field": {
+                                "shacl:closed": "true"
                               },
                               "type-property-lexical-info": {
                                 "#11": "[(11,8)-(11,12)]"
                               },
-                              "synthesized-field": {
-                                "shacl:closed": "true"
+                              "lexical": {
+                                "#11": "[(10,6)-(14,0)]"
                               }
                             }
                           }
@@ -246,6 +246,9 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(9,4)-(14,0)]"
+                      },
+                      "virtual-element": {
+                        "#9": "true"
                       }
                     }
                   }
@@ -392,15 +395,15 @@
           "resolved-link": {
             "#1": "amf://id#4"
           },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,8)]",
-            "#1": "[(4,2)-(7,0)]"
+          "resolved-link-target": {
+            "#1": "amf://id#1"
           },
           "declared-element": {
             "#1": ""
           },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
+          "lexical": {
+            "shacl:name": "[(4,2)-(4,8)]",
+            "#1": "[(4,2)-(7,0)]"
           }
         }
       }

@@ -113,7 +113,12 @@
           "@id": "/shape/if/property/property/country"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/Conditional",
@@ -137,6 +142,11 @@
         {
           "@id": "#/declarations/SchemaNode_2"
         }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Conditional/source-map"
+        }
       ]
     },
     {
@@ -152,7 +162,12 @@
           "@id": "/shape/then/property/property/postal_code"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map"
+        }
+      ]
     },
     {
       "@id": "/shape/if/property/property/country",
@@ -169,7 +184,34 @@
       "shacl:minCount": 0,
       "shacl:in": {
         "@id": "/shape/if/property/property/country/list"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/shape/if/property/property/country#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Conditional/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Conditional/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/shape/then/property/property/postal_code",
@@ -184,7 +226,23 @@
         }
       ],
       "shacl:minCount": 0,
-      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?"
+      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?",
+      "sourcemaps:sources": [
+        {
+          "@id": "/shape/then/property/property/postal_code#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/shape/if/property/property/country/list",
@@ -193,6 +251,53 @@
         "@value": "United States of America",
         "@type": "xsd:string"
       }
+    },
+    {
+      "@id": "/shape/if/property/property/country#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/shape/if/property/property/country#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(9,4)-(14,3)]"
+    },
+    {
+      "@id": "#/declarations/Conditional/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/Conditional",
+      "sourcemaps:value": "[(1,0)-(22,1)]"
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/shape/then/property/property/postal_code#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode_1",
+      "sourcemaps:value": "[(16,4)-(21,3)]"
+    },
+    {
+      "@id": "/shape/if/property/property/country#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-without-else.json/shape/if/property/property/country",
+      "sourcemaps:value": "[(10,6)-(12,7)]"
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-without-else.json/shape/then/property/property/postal_code",
+      "sourcemaps:value": "[(17,6)-(19,7)]"
     }
   ],
   "@context": {
@@ -201,6 +306,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"

@@ -258,6 +258,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#type-expression": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/declared-element/element_0"
@@ -269,11 +274,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-expression": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0"
         }
       ]
     },
@@ -324,6 +324,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#type-expression": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/declared-element/element_0"
@@ -335,11 +340,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-expression": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0"
         }
       ]
     },
@@ -416,6 +416,11 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C",
+      "http://a.ml/vocabularies/document-source-maps#value": "A | B"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C",
       "http://a.ml/vocabularies/document-source-maps#value": ""
@@ -429,11 +434,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(6,3)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C",
-      "http://a.ml/vocabularies/document-source-maps#value": "A | B"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/anyOf/scalar/default-scalar/source-map",
@@ -468,6 +468,11 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D",
+      "http://a.ml/vocabularies/document-source-maps#value": "A | C"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D",
       "http://a.ml/vocabularies/document-source-maps#value": ""
@@ -481,11 +486,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,3)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D",
-      "http://a.ml/vocabularies/document-source-maps#value": "A | C"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/anyOf/scalar/default-scalar/source-map/synthesized-field/element_0",

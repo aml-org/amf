@@ -120,7 +120,12 @@
           "@id": "/property/property/scopes"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/scopes",
@@ -134,7 +139,54 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/scopes#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/scopes#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/scopes#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider",
+      "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
+      "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider",
+      "sourcemaps:value": "[(1,0)-(19,1)]"
+    },
+    {
+      "@id": "/property/property/scopes#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/schema-with-dot-in-title.json/property/property/scopes",
+      "sourcemaps:value": "[(5,4)-(9,5)]"
     }
   ],
   "@context": {
@@ -142,6 +194,7 @@
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

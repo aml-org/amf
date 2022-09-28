@@ -219,13 +219,13 @@
         "resolved-link-target": {
           "#4": "amf://id#4"
         },
+        "resolved-link": {
+          "#4": "amf://id#12"
+        },
         "lexical": {
           "doc:dataNode": "[(15,6)-(23,0)]",
           "#4": "[(14,4)-(23,0)]",
           "core:name": "[(14,4)-(14,8)]"
-        },
-        "resolved-link": {
-          "#4": "amf://id#12"
         }
       }
     },
@@ -261,13 +261,13 @@
         "resolved-link-target": {
           "#13": "amf://id#13"
         },
+        "resolved-link": {
+          "#13": "amf://id#20"
+        },
         "lexical": {
           "doc:dataNode": "[(7,6)-(13,0)]",
           "#13": "[(6,4)-(13,0)]",
           "core:name": "[(6,4)-(6,11)]"
-        },
-        "resolved-link": {
-          "#13": "amf://id#20"
         }
       }
     },
@@ -342,14 +342,14 @@
         "resolved-link": {
           "#28": "amf://id#32"
         },
-        "type-property-lexical-info": {
-          "#28": "[(6,9)-(6,15)]"
+        "resolved-link-target": {
+          "#28": "amf://id#28"
         },
         "lexical": {
           "#28": "[(29,10)-(32,0)]"
         },
-        "resolved-link-target": {
-          "#28": "amf://id#28"
+        "type-property-lexical-info": {
+          "#28": "[(6,9)-(6,15)]"
         },
         "parsed-json-schema": {
           "#28": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -405,11 +405,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#40": "[(6,9)-(6,15)]"
-        },
         "lexical": {
           "#40": "[(38,10)-(40,0)]"
+        },
+        "type-property-lexical-info": {
+          "#40": "[(6,9)-(6,15)]"
         },
         "parsed-json-schema": {
           "#40": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -642,14 +642,14 @@
         "resolved-link": {
           "#31": "amf://id#32"
         },
-        "type-property-lexical-info": {
-          "#31": "[(6,9)-(6,15)]"
+        "resolved-link-target": {
+          "#31": "amf://id#28"
         },
         "lexical": {
           "#31": "[(29,10)-(32,0)]"
         },
-        "resolved-link-target": {
-          "#31": "amf://id#28"
+        "type-property-lexical-info": {
+          "#31": "[(6,9)-(6,15)]"
         },
         "parsed-json-schema": {
           "#31": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"

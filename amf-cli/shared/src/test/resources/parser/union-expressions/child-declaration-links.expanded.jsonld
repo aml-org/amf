@@ -389,6 +389,21 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-expression": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "A | B"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/declared-element/element_0",
@@ -428,21 +443,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(6,2)-(6,3)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#type-expression": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C/source-map/type-expression/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/C"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "A | B"
                   }
                 ]
               }
@@ -588,6 +588,21 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-expression": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "A | C"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/declared-element/element_0",
@@ -627,21 +642,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,2)-(7,3)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#type-expression": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D/source-map/type-expression/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-expressions/child-declaration-links.raml#/declares/union/D"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "A | C"
                   }
                 ]
               }

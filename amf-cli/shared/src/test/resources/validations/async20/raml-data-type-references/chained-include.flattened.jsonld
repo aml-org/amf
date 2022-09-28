@@ -86,6 +86,9 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "#16": "[(14,0)-(19,0)]"
         }
@@ -130,11 +133,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#18": "[(15,8)-(19,0)]"
-        },
         "type-property-lexical-info": {
           "#18": "[(16,10)-(16,14)]"
+        },
+        "lexical": {
+          "#18": "[(15,8)-(19,0)]"
         }
       }
     },
@@ -190,14 +193,14 @@
         "resolved-link": {
           "#7": "amf://id#9"
         },
-        "lexical": {
-          "#7": "[(3,0)-(6,0)]"
+        "resolved-link-target": {
+          "#7": "amf://id#7"
         },
         "type-property-lexical-info": {
           "#7": "[(3,0)-(3,4)]"
         },
-        "resolved-link-target": {
-          "#7": "amf://id#7"
+        "lexical": {
+          "#7": "[(3,0)-(6,0)]"
         }
       }
     },

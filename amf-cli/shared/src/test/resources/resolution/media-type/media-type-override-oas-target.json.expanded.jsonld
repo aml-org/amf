@@ -396,6 +396,21 @@
                                     ]
                                   }
                                 ],
+                                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/bodyOne/shape/bodyOne/source-map/parameter-binding-in-body-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/bodyOne/shape/bodyOne"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(28,10)-(28,22)]"
+                                      }
+                                    ]
+                                  }
+                                ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
                                     "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/bodyOne/shape/bodyOne/source-map/type-property-lexical-info/element_0",
@@ -435,21 +450,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(16,10)-(16,27)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/bodyOne/shape/bodyOne/source-map/parameter-binding-in-body-lexical-info/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/bodyOne/shape/bodyOne"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(28,10)-(28,22)]"
                                       }
                                     ]
                                   }
@@ -619,6 +619,29 @@
                                         "@value": "[(39,14)-(39,20)]"
                                       }
                                     ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
                                   }
                                 ]
                               }
