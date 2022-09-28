@@ -34,7 +34,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
 
     val key = YNode(YScalar(name), YType.Str)
 
-    if (property.range.annotations.contains(classOf[SynthesizedField])) {
+    if (property.range.annotations.isSynthesized) {
       b.entry(
         key,
         raw(_, "", YType.Null)

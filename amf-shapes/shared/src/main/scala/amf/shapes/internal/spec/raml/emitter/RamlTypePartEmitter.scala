@@ -25,7 +25,7 @@ abstract class RamlTypePartEmitter(
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
-    if (Option(shape).isDefined && shape.annotations.contains(classOf[SynthesizedField])) {
+    if (Option(shape).isDefined && shape.annotations.isSynthesized) {
       raw(b, "", YType.Null)
     } else {
       emitter match {

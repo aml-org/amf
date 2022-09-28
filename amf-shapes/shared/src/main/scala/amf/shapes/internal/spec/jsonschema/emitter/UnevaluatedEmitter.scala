@@ -59,5 +59,5 @@ class UnevaluatedEmitter(
 
   private def getAnnotationsFrom(field: Field) = fs.entry(field).map(_.value.annotations)
   private def isExplicit(f: FieldEntry)        = f.value.annotations.contains(classOf[ExplicitField])
-  private def isSynthesized(f: FieldEntry)     = f.value.annotations.contains(classOf[SynthesizedField])
+  private def isSynthesized(f: FieldEntry)     = f.value.annotations.isSynthesized
 }

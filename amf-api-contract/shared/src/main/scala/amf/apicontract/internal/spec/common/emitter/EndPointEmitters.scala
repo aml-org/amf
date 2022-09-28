@@ -42,7 +42,7 @@ case class Raml10EndPointEmitter(
 
     fs.entry(EndPointModel.Parameters)
       .map { f =>
-        if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+        if (f.array.values.exists(f => !f.annotations.isSynthesized)) {
 
           val (path, other) = f.array.values.asInstanceOf[Seq[Parameter]].partition(p => p.isPath)
 
@@ -83,7 +83,7 @@ case class Raml08EndPointEmitter(
     val variables: Seq[String] = TemplateUri.variables(endpoint.path.value())
     fs.entry(EndPointModel.Parameters)
       .map { f =>
-        if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+        if (f.array.values.exists(f => !f.annotations.isSynthesized)) {
           var uriParameters: Seq[Parameter]  = Nil
           var pathParameters: Seq[Parameter] = Nil
           f.array.values.foreach { case p: Parameter =>
@@ -123,7 +123,7 @@ abstract class RamlEndPointEmitter(
     extends EntryEmitter
     with PartEmitter {
 
-  implicit val shapeEmitterCtx = AgnosticShapeEmitterContextAdapter(spec)
+  implicit val shapeEmitterCtx: AgnosticShapeEmitterContextAdapter = AgnosticShapeEmitterContextAdapter(spec)
 
   def endpoint: EndPoint
 

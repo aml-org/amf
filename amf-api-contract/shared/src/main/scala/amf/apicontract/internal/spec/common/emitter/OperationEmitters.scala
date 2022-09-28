@@ -176,7 +176,7 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
       fields
         .entry(RequestModel.UriParameters)
         .map { f =>
-          if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+          if (f.array.values.exists(f => !f.annotations.isSynthesized)) {
             result += RamlParametersEmitter(baseUriParameterKey, f, ordering, references)
           }
         }

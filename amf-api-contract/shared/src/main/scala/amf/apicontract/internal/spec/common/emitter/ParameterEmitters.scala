@@ -80,7 +80,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
 
   override protected def emitParameter(b: EntryBuilder): Unit = {
     val fs = parameter.fields
-    if (Option(parameter.schema).isDefined && parameter.schema.annotations.contains(classOf[SynthesizedField])) {
+    if (Option(parameter.schema).isDefined && parameter.schema.annotations.isSynthesized) {
       b.complexEntry(
         emitParameterKey(fs, _),
         raw(_, "", YType.Null)
@@ -111,7 +111,7 @@ case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
     spec: RamlSpecEmitterContext
 ) extends PartEmitter {
 
-  protected implicit val shapeCtx = RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = RamlShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     val fs = parameter.fields
@@ -187,7 +187,7 @@ case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
     spec: RamlSpecEmitterContext
 ) extends PartEmitter {
 
-  protected implicit val shapeCtx = raml.emitter.RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = raml.emitter.RamlShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     parameter.schema match {
@@ -212,7 +212,7 @@ case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
         })
       case other =>
         val shapeType = if (other != null) other.getClass.toString else "null"
-        CommentEmitter(other, s"Cannot emit ${shapeType} type of shape in raml 08").emit(b)
+        CommentEmitter(other, s"Cannot emit $shapeType type of shape in raml 08").emit(b)
     }
 
   }
@@ -256,7 +256,7 @@ case class OasParametersEmitter(
     references: Seq[BaseUnit]
 )(implicit val spec: OasSpecEmitterContext) {
 
-  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: AgnosticShapeEmitterContextAdapter = AgnosticShapeEmitterContextAdapter(spec)
 
   def ramlEndpointEmitters(): Seq[EntryEmitter] = Seq(OasParameterEmitter(parameters, references))
 
@@ -358,13 +358,11 @@ case class OasParametersEmitter(
   }
 }
 
-case class ParameterEmitter(parameter: Parameter,
-                            ordering: SpecOrdering,
-                            references: Seq[BaseUnit],
-                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
+    implicit val spec: OasSpecEmitterContext
+) extends PartEmitter {
 
-  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(spec)
 
   private def emitLink(b: PartBuilder): Unit = {
     val label = parameter.linkTarget match {
@@ -465,7 +463,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     spec: OasSpecEmitterContext
 ) extends EntryEmitter {
 
-  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(spec)
 
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
@@ -550,7 +548,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     val spec: OasSpecEmitterContext
 ) extends PartEmitter {
 
-  protected implicit val shapeCtx = context.OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = context.OasLikeShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit =
     handleInlinedRefOr(b, payload) {
