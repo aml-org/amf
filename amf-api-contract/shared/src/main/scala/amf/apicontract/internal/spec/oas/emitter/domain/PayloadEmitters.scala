@@ -33,7 +33,7 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
     spec: RamlSpecEmitterContext
 ) extends EntryEmitter {
 
-  protected implicit val shapeCtx = RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = RamlShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
@@ -130,7 +130,7 @@ case class Raml10PayloadPartEmitter(payload: Payload, ordering: SpecOrdering, re
 
 case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {
 
-  protected implicit val shapeCtx = emitter.RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = emitter.RamlShapeEmitterContextAdapter(spec)
 
   def emitters: Seq[Emitter] = {
     payload.fields.entry(PayloadModel.MediaType) match {
@@ -174,7 +174,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
 
   val typeEmitters: Seq[Emitter] = {
     Option(payload.schema) match {
-      case Some(s: Shape) if s.annotations.contains(classOf[SynthesizedField]) => Nil
+      case Some(s: Shape) if s.annotations.isSynthesized => Nil
       case Some(node: NodeShape) if !node.isLink && node.annotations.find(classOf[ParsedJSONSchema]).isEmpty =>
         Seq(Raml08FormPropertiesEmitter(node, ordering))
       case Some(anyShape: AnyShape) =>
@@ -195,7 +195,7 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
     spec: RamlSpecEmitterContext
 ) extends EntryEmitter {
 
-  protected implicit val shapeCtx = emitter.RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = emitter.RamlShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -268,7 +268,7 @@ case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: 
     spec: RamlSpecEmitterContext
 ) {
 
-  protected implicit val shapeCtx = emitter.RamlShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = emitter.RamlShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[Emitter] = {
     if (payload.fields.entry(PayloadModel.MediaType).isDefined) {

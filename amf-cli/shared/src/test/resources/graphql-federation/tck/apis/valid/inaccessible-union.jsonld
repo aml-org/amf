@@ -79,6 +79,29 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA/scalar/default-scalar/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA/scalar/default-scalar/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(2,11)-(2,17)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -91,12 +114,73 @@
               {
                 "@value": "propA"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/property/property/propA"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,4)-(2,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "MemberA"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberA"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(3,1)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -132,6 +216,29 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB/scalar/default-scalar/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB/scalar/default-scalar/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,11)-(6,17)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -144,12 +251,73 @@
               {
                 "@value": "propB"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/property/property/propB"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,4)-(6,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "MemberB"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/shape/MemberB"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,0)-(7,1)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -186,6 +354,29 @@
               {
                 "@value": "MemberA"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberA/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberA/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberA"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,30)-(9,37)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           {
@@ -211,6 +402,29 @@
               {
                 "@value": "MemberB"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberB/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberB/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/anyOf/shape/MemberB"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,40)-(9,47)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
@@ -230,6 +444,44 @@
             "http://a.ml/vocabularies/federation#inaccessible": [
               {
                 "@value": true
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-union.graphql#/declares/union/MyUnion"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(9,0)-(9,47)]"
+                  }
+                ]
               }
             ]
           }

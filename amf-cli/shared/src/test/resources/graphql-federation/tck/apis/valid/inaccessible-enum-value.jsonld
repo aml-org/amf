@@ -107,6 +107,29 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/RED/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/RED/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/RED"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(2,4)-(2,7)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -132,6 +155,29 @@
                   {
                     "@value": "GREEN"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/GREEN/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/GREEN/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/GREEN"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,4)-(3,9)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -156,6 +202,67 @@
                 "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "BLUE"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/BLUE/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/BLUE/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/in/BLUE"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(4,4)-(4,8)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/inaccessible-enum-value.graphql#/declares/scalar/Colors"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(5,1)]"
                   }
                 ]
               }

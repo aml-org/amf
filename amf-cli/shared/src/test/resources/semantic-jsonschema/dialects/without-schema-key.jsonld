@@ -97,7 +97,12 @@
           "@id": "/property/property/info/array/info/shape/items/property/property/note"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/Person",
@@ -118,7 +123,12 @@
           "@id": "/property/property/info"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Person/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/info/array/info/shape/items/property/property/note",
@@ -132,7 +142,28 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/info/array/info/shape/items/property/property/note#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/name",
@@ -146,7 +177,12 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 1
+      "shacl:minCount": 1,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/name#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/age",
@@ -160,7 +196,12 @@
           "@id": "http://www.w3.org/2001/XMLSchema#long"
         }
       ],
-      "shacl:minCount": 1
+      "shacl:minCount": 1,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/age#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/info",
@@ -174,7 +215,71 @@
       },
       "shacl:minCount": 0,
       "meta:allowMultiple": true,
-      "shacl:mandatory": false
+      "shacl:mandatory": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/info#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Person/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/Person/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Person/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/info/array/info/shape/items/property/property/note#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/info/array/info/shape/items/property/property/note#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(23,8)-(23,14)]"
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(21,6)-(29,7)]"
+    },
+    {
+      "@id": "/property/property/name#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/name#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/age#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/age#/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/info/list",
@@ -182,6 +287,47 @@
       "rdfs:_1": {
         "@id": "#/declarations/SchemaNode"
       }
+    },
+    {
+      "@id": "/property/property/info#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/info#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Person/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/Person",
+      "sourcemaps:value": "[(7,2)-(7,8)]"
+    },
+    {
+      "@id": "#/declarations/Person/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/Person",
+      "sourcemaps:value": "[(1,0)-(32,1)]"
+    },
+    {
+      "@id": "/property/property/info/array/info/shape/items/property/property/note#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json/property/property/info/array/info/shape/items/property/property/note",
+      "sourcemaps:value": "[(25,10)-(27,11)]"
+    },
+    {
+      "@id": "/property/property/name#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json/property/property/name",
+      "sourcemaps:value": "[(13,4)-(15,5)]"
+    },
+    {
+      "@id": "/property/property/age#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json/property/property/age",
+      "sourcemaps:value": "[(16,4)-(18,5)]"
+    },
+    {
+      "@id": "/property/property/info#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json/property/property/info",
+      "sourcemaps:value": "[(19,4)-(30,5)]"
     }
   ],
   "@context": {
@@ -190,6 +336,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

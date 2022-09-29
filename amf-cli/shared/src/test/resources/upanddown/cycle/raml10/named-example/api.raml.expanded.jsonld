@@ -810,6 +810,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/named-example/api.raml#/declares/shape/person/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/named-example/api.raml#/declares/shape/person"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/named-example/api.raml#/declares/shape/person/source-map/lexical/element_3",
@@ -860,21 +875,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,2)-(9,41)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/named-example/api.raml#/declares/shape/person/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/named-example/api.raml#/declares/shape/person"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }

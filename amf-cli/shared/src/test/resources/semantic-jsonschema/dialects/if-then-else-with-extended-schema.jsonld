@@ -103,7 +103,12 @@
           "@id": "/shape/else/property/property/postal_code"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode_2/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/SchemaNode",
@@ -118,7 +123,12 @@
           "@id": "/shape/if/property/property/country"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/Conditional",
@@ -151,6 +161,11 @@
         {
           "@id": "#/declarations/SchemaNode_2"
         }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Conditional/source-map"
+        }
       ]
     },
     {
@@ -166,7 +181,12 @@
           "@id": "/shape/then/property/property/postal_code"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map"
+        }
+      ]
     },
     {
       "@id": "/shape/else/property/property/postal_code",
@@ -181,7 +201,23 @@
         }
       ],
       "shacl:minCount": 0,
-      "shacl:pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+      "shacl:pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
+      "sourcemaps:sources": [
+        {
+          "@id": "/shape/else/property/property/postal_code#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/shape/if/property/property/country",
@@ -198,7 +234,23 @@
       "shacl:minCount": 0,
       "shacl:in": {
         "@id": "/shape/if/property/property/country/list"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/shape/if/property/property/country#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/street_address",
@@ -212,7 +264,12 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/street_address#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/country",
@@ -232,7 +289,28 @@
       },
       "shacl:defaultValue": {
         "@id": "/property/property/country/any/country/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/country#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Conditional/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/Conditional/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Conditional/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/shape/then/property/property/postal_code",
@@ -247,7 +325,39 @@
         }
       ],
       "shacl:minCount": 0,
-      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?"
+      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?",
+      "sourcemaps:sources": [
+        {
+          "@id": "/shape/then/property/property/postal_code#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/shape/else/property/property/postal_code#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/shape/else/property/property/postal_code#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode_2",
+      "sourcemaps:value": "[(36,4)-(41,3)]"
     },
     {
       "@id": "/shape/if/property/property/country/list",
@@ -256,6 +366,33 @@
         "@value": "United States of America",
         "@type": "xsd:string"
       }
+    },
+    {
+      "@id": "/shape/if/property/property/country#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/shape/if/property/property/country#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(22,4)-(27,3)]"
+    },
+    {
+      "@id": "/property/property/street_address#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/street_address#/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/country/list",
@@ -282,7 +419,90 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/country/any/country/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/country#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/country#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Conditional/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/Conditional",
+      "sourcemaps:value": "[(8,2)-(8,8)]"
+    },
+    {
+      "@id": "#/declarations/Conditional/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/Conditional",
+      "sourcemaps:value": "[(1,0)-(42,1)]"
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/shape/then/property/property/postal_code#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode_1",
+      "sourcemaps:value": "[(29,4)-(34,3)]"
+    },
+    {
+      "@id": "/shape/else/property/property/postal_code#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/shape/else/property/property/postal_code",
+      "sourcemaps:value": "[(37,6)-(39,7)]"
+    },
+    {
+      "@id": "/shape/if/property/property/country#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/shape/if/property/property/country",
+      "sourcemaps:value": "[(23,6)-(25,7)]"
+    },
+    {
+      "@id": "/property/property/street_address#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/property/property/street_address",
+      "sourcemaps:value": "[(10,4)-(12,5)]"
+    },
+    {
+      "@id": "/property/property/country/any/country/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/country/any/country/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/country#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/property/property/country",
+      "sourcemaps:value": "[(13,4)-(19,5)]"
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/shape/then/property/property/postal_code",
+      "sourcemaps:value": "[(30,6)-(32,7)]"
+    },
+    {
+      "@id": "/property/property/country/any/country/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-else-with-extended-schema.json/property/property/country/any/country/scalar_1",
+      "sourcemaps:value": "[(14,17)-(14,43)]"
     }
   ],
   "@context": {
@@ -292,6 +512,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"

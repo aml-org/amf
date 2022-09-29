@@ -39,11 +39,11 @@
               }
             ],
             "smaps": {
-              "lexical": {
-                "core:urlTemplate": "[(2,0)-(4,0)]"
-              },
               "synthesized-field": {
                 "#38": "true"
+              },
+              "lexical": {
+                "core:urlTemplate": "[(2,0)-(4,0)]"
               }
             }
           }
@@ -359,11 +359,11 @@
                               "synthesized-field": {
                                 "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#25": "[(7,2)-(9,3)]"
-                              },
                               "type-property-lexical-info": {
                                 "#25": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#25": "[(7,2)-(9,3)]"
                               }
                             }
                           }
@@ -447,11 +447,11 @@
                               "synthesized-field": {
                                 "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#28": "[(4,2)-(6,3)]"
-                              },
                               "type-property-lexical-info": {
                                 "#28": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#28": "[(4,2)-(6,3)]"
                               }
                             }
                           }
@@ -502,14 +502,14 @@
                   "resolved-link": {
                     "#22": "amf://id#29"
                   },
-                  "lexical": {
-                    "#22": "[(10,2)-(28,3)]"
+                  "resolved-link-target": {
+                    "#22": "amf://id#22"
                   },
                   "type-property-lexical-info": {
                     "#22": "[(11,4)-(11,10)]"
                   },
-                  "resolved-link-target": {
-                    "#22": "amf://id#22"
+                  "lexical": {
+                    "#22": "[(10,2)-(28,3)]"
                   }
                 }
               }
@@ -528,11 +528,11 @@
               "synthesized-field": {
                 "shacl:minCount": "true"
               },
-              "lexical": {
-                "#21": "[(13,4)-(15,5)]"
-              },
               "inheritance-provenance": {
                 "#21": "amf://id#20"
+              },
+              "lexical": {
+                "#21": "[(13,4)-(15,5)]"
               }
             }
           },
@@ -617,11 +617,11 @@
                               "synthesized-field": {
                                 "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#25": "[(7,2)-(9,3)]"
-                              },
                               "type-property-lexical-info": {
                                 "#25": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#25": "[(7,2)-(9,3)]"
                               }
                             }
                           }
@@ -705,11 +705,11 @@
                               "synthesized-field": {
                                 "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#28": "[(4,2)-(6,3)]"
-                              },
                               "type-property-lexical-info": {
                                 "#28": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#28": "[(4,2)-(6,3)]"
                               }
                             }
                           }
@@ -760,14 +760,14 @@
                   "resolved-link": {
                     "#22": "amf://id#29"
                   },
-                  "lexical": {
-                    "#22": "[(10,2)-(28,3)]"
+                  "resolved-link-target": {
+                    "#22": "amf://id#22"
                   },
                   "type-property-lexical-info": {
                     "#22": "[(11,4)-(11,10)]"
                   },
-                  "resolved-link-target": {
-                    "#22": "amf://id#22"
+                  "lexical": {
+                    "#22": "[(10,2)-(28,3)]"
                   }
                 }
               }
@@ -786,11 +786,11 @@
               "synthesized-field": {
                 "shacl:minCount": "true"
               },
-              "lexical": {
-                "#30": "[(16,4)-(18,5)]"
-              },
               "inheritance-provenance": {
                 "#30": "amf://id#20"
+              },
+              "lexical": {
+                "#30": "[(16,4)-(18,5)]"
               }
             }
           },
@@ -1166,14 +1166,14 @@
                   "synthesized-field": {
                     "core:name": "true"
                   },
+                  "parsed-json-example": {
+                    "#12": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+                  },
                   "lexical": {
                     "data:operator": "[(11,2)-(11,31)]",
                     "data:additionalApplicants": "[(2,2)-(9,3)]",
                     "#12": "[(1,0)-(12,1)]",
                     "data:merchant": "[(10,2)-(10,30)]"
-                  },
-                  "parsed-json-example": {
-                    "#12": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
                   }
                 }
               }
@@ -1207,6 +1207,9 @@
           "inheritance-provenance": {
             "doc:reference-id": "amf://id#20"
           },
+          "inherited-shapes": {
+            "#10": "amf://id#35"
+          },
           "declared-element": {
             "#10": ""
           },
@@ -1214,9 +1217,6 @@
             "apiContract:examples": "[(12,4)-(16,0)]",
             "#10": "[(10,11)-(16,0)]",
             "shacl:name": "[(10,2)-(10,10)]"
-          },
-          "inherited-shapes": {
-            "#10": "amf://id#35"
           }
         }
       }

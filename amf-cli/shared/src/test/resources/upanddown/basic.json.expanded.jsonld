@@ -44,6 +44,21 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#host-lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.json#/web-api/server/api.example.com%2Fpath/source-map/host-lexical/element_0",
@@ -59,12 +74,12 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.json#/web-api/server/api.example.com%2Fpath/source-map/virtual-element/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/basic.json#/web-api/server/api.example.com%2Fpath"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

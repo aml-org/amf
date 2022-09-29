@@ -653,6 +653,21 @@
                                     ]
                                   }
                                 ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param2/shape/schema/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param2/shape/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(15,8)-(15,12)]"
+                                      }
+                                    ]
+                                  }
+                                ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
                                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param2/shape/schema/source-map/lexical/element_1",
@@ -677,21 +692,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(16,19)-(19,0)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param2/shape/schema/source-map/type-property-lexical-info/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param2/shape/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(15,8)-(15,12)]"
                                       }
                                     ]
                                   }
@@ -783,6 +783,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(8,4)-(19,0)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
                               }
                             ]
                           }

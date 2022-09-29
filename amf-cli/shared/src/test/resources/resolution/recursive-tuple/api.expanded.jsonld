@@ -381,11 +381,11 @@
                                                           "resolved-link": {
                                                             "#35": "amf://id#36"
                                                           },
-                                                          "lexical": {
-                                                            "#35": "[(9,4)-(18,5)]"
-                                                          },
                                                           "resolved-link-target": {
                                                             "#35": "amf://id#24"
+                                                          },
+                                                          "lexical": {
+                                                            "#35": "[(9,4)-(18,5)]"
                                                           }
                                                         }
                                                       }
@@ -443,11 +443,11 @@
                                               "resolved-link": {
                                                 "#28": "amf://id#37"
                                               },
-                                              "lexical": {
-                                                "#28": "[(19,4)-(34,5)]"
-                                              },
                                               "resolved-link-target": {
                                                 "#28": "amf://id#28"
+                                              },
+                                              "lexical": {
+                                                "#28": "[(19,4)-(34,5)]"
                                               }
                                             }
                                           }
@@ -484,11 +484,11 @@
                                       "resolved-link": {
                                         "#24": "amf://id#36"
                                       },
-                                      "lexical": {
-                                        "#24": "[(9,4)-(18,5)]"
-                                      },
                                       "resolved-link-target": {
                                         "#24": "amf://id#24"
+                                      },
+                                      "lexical": {
+                                        "#24": "[(9,4)-(18,5)]"
                                       }
                                     }
                                   }
@@ -689,11 +689,11 @@
                                                   "resolved-link": {
                                                     "#35": "amf://id#36"
                                                   },
-                                                  "lexical": {
-                                                    "#35": "[(9,4)-(18,5)]"
-                                                  },
                                                   "resolved-link-target": {
                                                     "#35": "amf://id#24"
+                                                  },
+                                                  "lexical": {
+                                                    "#35": "[(9,4)-(18,5)]"
                                                   }
                                                 }
                                               }
@@ -751,11 +751,11 @@
                                       "resolved-link": {
                                         "#28": "amf://id#37"
                                       },
-                                      "lexical": {
-                                        "#28": "[(19,4)-(34,5)]"
-                                      },
                                       "resolved-link-target": {
                                         "#28": "amf://id#28"
+                                      },
+                                      "lexical": {
+                                        "#28": "[(19,4)-(34,5)]"
                                       }
                                     }
                                   }
@@ -1057,11 +1057,11 @@
                                   "synthesized-field": {
                                     "doc:strict": "true"
                                   },
-                                  "lexical": {
-                                    "#14": "[(1,0)-(1,0)]"
-                                  },
                                   "tracked-element": {
                                     "#14": "amf://id#12"
+                                  },
+                                  "lexical": {
+                                    "#14": "[(1,0)-(1,0)]"
                                   }
                                 }
                               }
@@ -1072,14 +1072,14 @@
                               }
                             ],
                             "smaps": {
-                              "type-property-lexical-info": {
-                                "#13": "[(2,2)-(2,8)]"
+                              "parsed-json-schema": {
+                                "#13": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}"
                               },
                               "lexical": {
                                 "#13": "[(9,12)-(36,1)]"
                               },
-                              "parsed-json-schema": {
-                                "#13": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}"
+                              "type-property-lexical-info": {
+                                "#13": "[(2,2)-(2,8)]"
                               }
                             }
                           }

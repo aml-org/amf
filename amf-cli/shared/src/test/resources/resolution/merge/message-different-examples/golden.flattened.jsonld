@@ -20,6 +20,11 @@
         {
           "@id": "target/example/default-example_1"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "testId/resp/message#/source-map"
+        }
       ]
     },
     {
@@ -41,6 +46,20 @@
       ]
     },
     {
+      "@id": "testId/resp/message#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
       "@id": "patch/examples/example/default-example_1/object_1",
       "@type": [
         "http://a.ml/vocabularies/data#Object",
@@ -53,7 +72,12 @@
       "http://a.ml/vocabularies/data#signup": {
         "@id": "patch/examples/example/default-example_1/object_1/signup"
       },
-      "http://a.ml/vocabularies/core#name": "object_1"
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1#/source-map"
+        }
+      ]
     },
     {
       "@id": "target/example/default-example_1#/source-map",
@@ -64,7 +88,22 @@
         {
           "@id": "target/example/default-example_1#/source-map/tracked-element/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "target/example/default-example_1#/source-map/lexical/element_0"
+        }
       ]
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "testId/resp/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(8,0)]"
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,7)]"
     },
     {
       "@id": "patch/examples/example/default-example_1/object_1/user",
@@ -79,7 +118,12 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "user"
+      "http://a.ml/vocabularies/core#name": "user",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1/user#/source-map"
+        }
+      ]
     },
     {
       "@id": "patch/examples/example/default-example_1/object_1/signup",
@@ -94,12 +138,86 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "signup"
+      "http://a.ml/vocabularies/core#name": "signup",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1/signup#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_2"
+        },
+        {
+          "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_1"
+        }
+      ]
     },
     {
       "@id": "target/example/default-example_1#/source-map/tracked-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "target/example/default-example_1",
       "http://a.ml/vocabularies/document-source-maps#value": "patch"
+    },
+    {
+      "@id": "target/example/default-example_1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/example/default-example_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,14)-(6,0)]"
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1/user#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1/user#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1/signup#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "patch/examples/example/default-example_1/object_1/signup#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#user",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,8)-(5,0)]"
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#signup",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(6,0)]"
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "patch/examples/example/default-example_1/object_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(6,0)]"
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1/user#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "patch/examples/example/default-example_1/object_1/user",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,14)-(4,20)]"
+    },
+    {
+      "@id": "patch/examples/example/default-example_1/object_1/signup#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "patch/examples/example/default-example_1/object_1/signup",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,16)-(5,24)]"
     },
     {
       "@id": "testId",

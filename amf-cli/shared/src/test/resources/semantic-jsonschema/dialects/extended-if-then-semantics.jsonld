@@ -132,7 +132,12 @@
           "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode_2/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/SchemaNode",
@@ -156,6 +161,11 @@
         {
           "@id": "#/declarations/SchemaNode_3"
         }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map"
+        }
       ]
     },
     {
@@ -171,7 +181,12 @@
           "@id": "/and/any/item0/shape/if/property/property/logStatistics"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map"
+        }
+      ]
     },
     {
       "@id": "#/declarations/SomePolicy",
@@ -193,6 +208,11 @@
       "http://a.ml/vocabularies/amf/aml#and": [
         {
           "@id": "#/declarations/SchemaNode"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SomePolicy/source-map"
         }
       ]
     },
@@ -218,7 +238,34 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "sourcemaps:sources": [
+        {
+          "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/and/any/item0/shape/if/property/property/logStatistics",
@@ -235,7 +282,23 @@
       "shacl:minCount": 1,
       "shacl:in": {
         "@id": "/and/any/item0/shape/if/property/property/logStatistics/list"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/and/any/item0/shape/if/property/property/logStatistics#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/thisApiName",
@@ -258,7 +321,12 @@
       "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
       "shacl:defaultValue": {
         "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/thisApiName#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/thisApiVersion",
@@ -281,7 +349,49 @@
       "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
       "shacl:defaultValue": {
         "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/thisApiVersion#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SomePolicy/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/SomePolicy/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SomePolicy/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode_2",
+      "sourcemaps:value": "[(45,8)-(51,7)]"
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(33,4)-(52,5)]"
     },
     {
       "@id": "/and/any/item0/shape/if/property/property/logStatistics/list",
@@ -290,6 +400,22 @@
         "@value": "true",
         "@type": "xsd:boolean"
       }
+    },
+    {
+      "@id": "/and/any/item0/shape/if/property/property/logStatistics#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/and/any/item0/shape/if/property/property/logStatistics#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode_1",
+      "sourcemaps:value": "[(35,8)-(43,7)]"
     },
     {
       "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1",
@@ -304,7 +430,23 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/thisApiName#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/thisApiName#/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1",
@@ -319,7 +461,85 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/thisApiVersion#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/thisApiVersion#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SomePolicy/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/SomePolicy",
+      "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
+      "@id": "#/declarations/SomePolicy/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SomePolicy",
+      "sourcemaps:value": "[(1,0)-(61,1)]"
+    },
+    {
+      "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/and/any/item0/shape/then/property/property/statisticsIdentifier",
+      "sourcemaps:value": "[(46,10)-(49,11)]"
+    },
+    {
+      "@id": "/and/any/item0/shape/if/property/property/logStatistics#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/and/any/item0/shape/if/property/property/logStatistics",
+      "sourcemaps:value": "[(36,10)-(38,11)]"
+    },
+    {
+      "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/thisApiName#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/property/property/thisApiName",
+      "sourcemaps:value": "[(5,4)-(15,5)]"
+    },
+    {
+      "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/thisApiVersion#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/property/property/thisApiVersion",
+      "sourcemaps:value": "[(16,4)-(26,5)]"
+    },
+    {
+      "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/property/property/thisApiName/scalar/thisApiName/scalar_1",
+      "sourcemaps:value": "[(7,17)-(7,42)]"
+    },
+    {
+      "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1",
+      "sourcemaps:value": "[(18,17)-(18,45)]"
     }
   ],
   "@context": {
@@ -329,6 +549,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"

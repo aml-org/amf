@@ -454,6 +454,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declares/shape/mySchema/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declares/shape/mySchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declares/shape/mySchema/source-map/type-property-lexical-info/element_0",
@@ -532,21 +547,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(10,13)-(18,14)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declares/shape/mySchema/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declares/shape/mySchema"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }

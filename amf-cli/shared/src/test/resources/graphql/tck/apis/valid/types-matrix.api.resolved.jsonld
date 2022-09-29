@@ -112,6 +112,29 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               },
                               {
@@ -127,6 +150,29 @@
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(2,10)-(2,16)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -139,6 +185,29 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.name"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/web-api/endpoint/%2Fquery%2Fname"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,4)-(2,16)]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -228,6 +297,75 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(10,12)-(10,16)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,11)-(10,18)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/array/default-array"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(10,10)-(10,20)]"
+                          }
                         ]
                       }
                     ]
@@ -292,6 +430,52 @@
                             {
                               "@id": "http://www.w3.org/2001/XMLSchema#string"
                             }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/member/data-node/source-map",
+                              "@type": [
+                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/member/data-node/source-map/lexical/element_0",
+                                  "http://a.ml/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/member/data-node"
+                                    }
+                                  ],
+                                  "http://a.ml/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(10,48)-(10,54)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node/source-map/lexical/element_0",
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(10,47)-(10,55)]"
+                                }
+                              ]
+                            }
                           ]
                         }
                       ]
@@ -320,6 +504,52 @@
                           "http://www.w3.org/ns/shacl#datatype": [
                             {
                               "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/member/data-node/source-map",
+                              "@type": [
+                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/member/data-node/source-map/lexical/element_0",
+                                  "http://a.ml/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/member/data-node"
+                                    }
+                                  ],
+                                  "http://a.ml/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(10,57)-(10,61)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1/source-map/lexical/element_0",
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_1"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(10,56)-(10,62)]"
+                                }
+                              ]
                             }
                           ]
                         }
@@ -350,6 +580,52 @@
                             {
                               "@id": "http://www.w3.org/2001/XMLSchema#string"
                             }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/member/data-node/source-map",
+                              "@type": [
+                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/member/data-node/source-map/lexical/element_0",
+                                  "http://a.ml/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/member/data-node"
+                                    }
+                                  ],
+                                  "http://a.ml/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(10,65)-(10,68)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2/source-map/lexical/element_0",
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_2"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(10,64)-(10,69)]"
+                                }
+                              ]
+                            }
                           ]
                         }
                       ]
@@ -379,6 +655,52 @@
                             {
                               "@id": "http://www.w3.org/2001/XMLSchema#string"
                             }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/member/data-node/source-map",
+                              "@type": [
+                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/member/data-node/source-map/lexical/element_0",
+                                  "http://a.ml/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/member/data-node"
+                                    }
+                                  ],
+                                  "http://a.ml/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(10,72)-(10,80)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3/source-map/lexical/element_0",
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/member/data-node_3"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(10,71)-(10,81)]"
+                                }
+                              ]
+                            }
                           ]
                         }
                       ]
@@ -388,6 +710,67 @@
                     {
                       "@value": "matrix"
                     }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix/source-map/lexical/element_0",
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/matrix"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(10,46)-(10,82)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/source-map/lexical/element_0",
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "http://a.ml/vocabularies/data#matrix"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(10,38)-(10,82)]"
+                        }
+                      ]
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                    {
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node/source-map/virtual-element/element_0",
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/customDomainProperties/matrixDirective/data-node"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "true"
+                        }
+                      ]
+                    }
                   ]
                 }
               ]
@@ -395,6 +778,29 @@
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/property/property/grid"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,4)-(10,83)]"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -462,6 +868,75 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#integer"
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(6,12)-(6,16)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(6,11)-(6,18)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(6,10)-(6,20)]"
+                              }
                             ]
                           }
                         ]
@@ -478,12 +953,111 @@
                   {
                     "@value": "grid"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,4)-(6,20)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "Chess"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(7,1)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/ChessBoard"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(9,0)-(11,1)]"
+                  }
+                ]
               }
             ]
           }
@@ -546,6 +1120,75 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(6,12)-(6,16)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(6,11)-(6,18)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/array/default-array"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,10)-(6,20)]"
+                          }
                         ]
                       }
                     ]
@@ -562,12 +1205,73 @@
               {
                 "@value": "grid"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/property/property/grid"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,4)-(6,20)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Chess"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/shape/Chess"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,0)-(7,1)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -620,6 +1324,29 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/nil/default-nil/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/nil/default-nil"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -649,6 +1376,29 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               },
                               {
@@ -678,6 +1428,29 @@
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://a.ml/vocabularies/shapes#Shape",
                                           "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil/source-map",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/nil/default-nil"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "true"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
                                         ]
                                       },
                                       {
@@ -693,9 +1466,78 @@
                                           {
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/scalar/default-scalar/source-map",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/union/default-union/anyOf/scalar/default-scalar"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(13,37)-(13,43)]"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
                                         ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/union/default-union/anyOf/array/default-array"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(13,36)-(13,44)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/union/default-union/anyOf/array/default-array"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(13,35)-(13,45)]"
                                   }
                                 ]
                               }
@@ -710,6 +1552,29 @@
                   {
                     "@value": "matrix"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/property/property/matrix"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(13,27)-(13,45)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -717,12 +1582,73 @@
               {
                 "@value": true
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "matrixDirective"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-matrix.api.graphql#/declares/matrixDirective"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,0)-(13,66)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

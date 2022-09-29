@@ -39,21 +39,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/annotations/api.raml#/web-api/server/http%3A%2F%2Fapi.com%2Fmain/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(3,0)-(5,0)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/annotations/api.raml#/web-api/server/http%3A%2F%2Fapi.com%2Fmain/source-map/synthesized-field/element_0",
@@ -65,6 +50,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/annotations/api.raml#/web-api/server/http%3A%2F%2Fapi.com%2Fmain/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(5,0)]"
                       }
                     ]
                   }

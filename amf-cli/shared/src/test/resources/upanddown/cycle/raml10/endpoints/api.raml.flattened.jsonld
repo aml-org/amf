@@ -240,14 +240,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/lexical/element_0"
         }
       ]
     },
@@ -447,14 +447,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(32,0)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/server/api.example.com%2Fpath/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(32,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/endpoints/api.raml#/web-api/organization/source-map/lexical/element_3",

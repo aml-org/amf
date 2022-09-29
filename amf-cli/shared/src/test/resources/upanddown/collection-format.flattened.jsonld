@@ -222,6 +222,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request/source-map/lexical/element_2"
@@ -349,6 +354,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request/header/parameter/header/param1/source-map/lexical/element_3"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/collection-format.json#/web-api/endpoint/%2Fsomepath/supportedOperation/get/Some%20title/expects/request/source-map/lexical/element_2",

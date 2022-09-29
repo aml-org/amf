@@ -18,7 +18,12 @@
       "http://a.ml/vocabularies/core#name": "message",
       "http://a.ml/vocabularies/apiBinding#binding": {
         "@id": "target/message-bindings"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "testId/resp/message#/source-map"
+        }
+      ]
     },
     {
       "@id": "target/message-bindings",
@@ -29,6 +34,25 @@
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
           "@id": "target/message-bindings/kafka-message"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/message-bindings#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "testId/resp/message#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "testId/resp/message#/source-map/lexical/element_0"
         }
       ]
     },
@@ -43,7 +67,33 @@
         "@id": "target/message-bindings/bindings/kafka-message/scalar/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
-      "http://a.ml/vocabularies/apiBinding#type": "kafka"
+      "http://a.ml/vocabularies/apiBinding#type": "kafka",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/message-bindings/kafka-message#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "target/message-bindings#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "target/message-bindings#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "testId/resp/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(8,0)]"
+    },
+    {
+      "@id": "testId/resp/message#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,7)]"
     },
     {
       "@id": "target/message-bindings/bindings/kafka-message/scalar/schema",
@@ -62,7 +112,28 @@
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://www.w3.org/ns/shacl#in": {
         "@id": "target/message-bindings/bindings/kafka-message/scalar/schema/list"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "target/message-bindings/kafka-message#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "target/message-bindings#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(8,0)]"
     },
     {
       "@id": "target/message-bindings/bindings/kafka-message/scalar/schema/list",
@@ -70,6 +141,33 @@
       "http://www.w3.org/2000/01/rdf-schema#_1": {
         "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1"
       }
+    },
+    {
+      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_2"
+        },
+        {
+          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/kafka-message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(8,0)]"
     },
     {
       "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1",
@@ -84,7 +182,48 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_1"
+      "http://a.ml/vocabularies/core#name": "scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/bindings/kafka-message/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(5,12)]"
+    },
+    {
+      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(6,0)]"
+    },
+    {
+      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,8)-(7,0)]"
+    },
+    {
+      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/bindings/kafka-message/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,10)-(7,0)]"
+    },
+    {
+      "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,15)-(6,25)]"
     },
     {
       "@id": "testId",

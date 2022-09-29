@@ -34,11 +34,14 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "core:urlTemplate": "true"
+              },
               "host-lexical": {
                 "core:urlTemplate": "[(6,2)-(6,33)]"
               },
-              "synthesized-field": {
-                "core:urlTemplate": "true"
+              "virtual-element": {
+                "#5": "true"
               }
             }
           }
@@ -152,6 +155,9 @@
                       }
                     ],
                     "smaps": {
+                      "virtual-element": {
+                        "#8": "true"
+                      },
                       "lexical": {
                         "apiContract:payload": "[(10,8)-(14,9)]",
                         "#8": "[(9,14)-(15,7)]"
@@ -239,15 +245,15 @@
           "parameter-name-for-payload": {
             "core:name": "splitPaymentDetails->[(20,6)-(20,35)]"
           },
-          "form-body-parameter": {
-            "#1": "true"
+          "declared-element": {
+            "#1": ""
           },
           "lexical": {
             "core:name": "[(20,6)-(20,35)]",
             "#1": "[(19,4)-(22,5)]"
           },
-          "declared-element": {
-            "#1": ""
+          "form-body-parameter": {
+            "#1": "true"
           }
         }
       }

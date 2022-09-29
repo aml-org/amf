@@ -108,6 +108,29 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/scalar/default-scalar/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/scalar/default-scalar/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/scalar/default-scalar"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(2,10)-(2,17)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -118,6 +141,29 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.name"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/web-api/endpoint/%2Fquery%2Fname"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,4)-(2,17)]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -192,6 +238,29 @@
                   {
                     "@value": "BaseType"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field/shape/default-node/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field/shape/default-node/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field/shape/default-node"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,11)-(6,19)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -204,12 +273,73 @@
               {
                 "@value": "field"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/property/property/field"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,4)-(6,19)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "BaseType"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/BaseType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,0)-(7,1)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -255,6 +385,29 @@
                   {
                     "@value": "FirstChild"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field/shape/default-node/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field/shape/default-node/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field/shape/default-node"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(10,11)-(10,21)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -266,6 +419,29 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "field"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/property/property/field"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,4)-(10,21)]"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -298,6 +474,67 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "BaseType"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/inherits/shape/BaseType/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/inherits/shape/BaseType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/inherits/shape/BaseType"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,32)-(9,40)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/FirstChild"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(9,0)-(11,1)]"
+                  }
+                ]
               }
             ]
           }
@@ -345,6 +582,29 @@
                   {
                     "@value": "SecondChild"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field/shape/default-node/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field/shape/default-node/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field/shape/default-node"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(14,11)-(14,22)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -356,6 +616,29 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "field"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/property/property/field"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,4)-(14,22)]"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -388,6 +671,67 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "FirstChild"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/inherits/shape/FirstChild/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/inherits/shape/FirstChild/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/inherits/shape/FirstChild"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(13,33)-(13,43)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/interface-chain-covariant.graphql#/declares/shape/SecondChild"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,0)-(15,1)]"
+                  }
+                ]
               }
             ]
           }

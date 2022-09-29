@@ -26,7 +26,7 @@ object DocumentDeclarationKey extends AnnotationGraphLoader {
 }
 
 /** Represents parsed RAML Data Type from any type of RAML document. */
-case class ParsedRamlDatatype(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+case class ParsedRamlDatatype(rawText: String) extends EternalSerializedAnnotation {
   override val name: String  = "parsed-raml-datatype"
   override val value: String = rawText
 }
@@ -36,7 +36,7 @@ object ParsedRamlDatatype extends AnnotationGraphLoader {
     Some(ParsedRamlDatatype(value))
 }
 
-case class ParsedJSONExample(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+case class ParsedJSONExample(rawText: String) extends EternalSerializedAnnotation {
   override val name: String  = "parsed-json-example"
   override val value: String = rawText
 }
@@ -58,7 +58,7 @@ case class GeneratedRamlDatatype(rawText: String) extends Annotation
 /** Mark the declaration as the root of the JSON schema. */
 case class JSONSchemaRoot() extends Annotation
 
-case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {
+case class JSONSchemaId(id: String) extends EternalSerializedAnnotation {
   override val name: String  = "json-schema-id"
   override val value: String = id
 }

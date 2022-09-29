@@ -78,7 +78,7 @@ class Amqp091ChannelBindingEmitter(binding: Amqp091ChannelBinding, ordering: Spe
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
         fs.entry(Amqp091ChannelBindingModel.Is).foreach { f =>
-          if (!f.element.annotations.contains(classOf[SynthesizedField])) result += ValueEmitter("is", f)
+          if (!f.element.annotations.isSynthesized) result += ValueEmitter("is", f)
           result ++= emitExchangeAndQueueProperties
         }
         emitBindingVersion(fs, result)
@@ -140,7 +140,7 @@ class Amqp091ChannelQueueEmitter(binding: Amqp091Queue, ordering: SpecOrdering) 
     )
   }
 
-  private def isSynthesized(f: FieldEntry): Boolean = f.value.annotations.contains(classOf[SynthesizedField])
+  private def isSynthesized(f: FieldEntry): Boolean = f.value.annotations.isSynthesized
 
   override def position(): Position = pos(binding.annotations)
 }

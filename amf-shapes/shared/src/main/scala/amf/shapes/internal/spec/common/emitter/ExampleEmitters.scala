@@ -112,7 +112,7 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
       })
   }
 
-  protected def keyName(example: Example) = {
+  protected def keyName(example: Example): String = {
     if (spec.isOas3) example.name.value()
     else example.mediaType.value()
   }
@@ -152,7 +152,7 @@ case class NamedMultipleExampleEmitter(
 )(implicit spec: ShapeEmitterContext)
     extends MultipleExampleEmitter(key, examples, ordering, references) {
 
-  def emit(b: PartBuilder) = {
+  def emit(b: PartBuilder): Unit = {
     val emitters = examplesWithKey.map { case (key, example) => new KeyedExampleEmitter(key, example, ordering) }
     b.obj(traverse(ordering.sorted(emitters.toList), _))
   }
@@ -242,7 +242,7 @@ object RamlExampleValuesEmitter {
       List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
-            case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
+            case Some(entry) => !entry.value.annotations.isSynthesized
             case None        => false
           }
         }
@@ -289,7 +289,7 @@ class ExpandedRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)
   }
 
   private def isNotSynthetic(fs: Fields, field: Field) =
-    fs.entry(field).get.value.annotations.contains(classOf[SynthesizedField])
+    fs.entry(field).get.value.annotations.isSynthesized
 
   private def isStrict(fs: Fields) = {
     fs.entry(ExampleModel.Strict).isDefined

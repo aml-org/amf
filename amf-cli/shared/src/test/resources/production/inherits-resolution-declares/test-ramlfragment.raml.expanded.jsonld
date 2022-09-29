@@ -39,21 +39,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/server/https%3A%2F%2Fanypoint.mulesoft.com%2Fexchange%2Fapi%2Fv1/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(5,0)-(7,0)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/server/https%3A%2F%2Fanypoint.mulesoft.com%2Fexchange%2Fapi%2Fv1/source-map/synthesized-field/element_0",
@@ -65,6 +50,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/server/https%3A%2F%2Fanypoint.mulesoft.com%2Fexchange%2Fapi%2Fv1/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(7,0)]"
                       }
                     ]
                   }
@@ -166,6 +166,29 @@
                                     "@value": "[(10,6)-(11,0)]"
                                   }
                                 ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
                               }
                             ]
                           }
@@ -323,6 +346,29 @@
                                     "@value": "[(14,8)-(14,44)]"
                                   }
                                 ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
                               }
                             ]
                           }
@@ -675,6 +721,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#inline-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/references/0/shape/type/source-map/inline-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/references/0/shape/type"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/references/0/shape/type/source-map/auto-generated-name/element_0",
@@ -701,21 +762,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(3,11)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#inline-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/references/0/shape/type/source-map/inline-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/references/0/shape/type"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }

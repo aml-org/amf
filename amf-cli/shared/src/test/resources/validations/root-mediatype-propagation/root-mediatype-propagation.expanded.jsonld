@@ -152,7 +152,12 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "smaps": {
+                      "virtual-element": {
+                        "#15": "true"
+                      }
+                    }
                   }
                 ],
                 "smaps": {
@@ -419,14 +424,14 @@
                 "doc:raw": "true",
                 "doc:strict": "true"
               },
+              "tracked-element": {
+                "#6": "amf://id#8,amf://id#9"
+              },
               "lexical": {
                 "#6": "[(17,15)-(17,22)]"
               },
               "auto-generated-name": {
                 "#6": ""
-              },
-              "tracked-element": {
-                "#6": "amf://id#8,amf://id#9"
               }
             }
           }
@@ -434,6 +439,9 @@
         "smaps": {
           "resolved-link-target": {
             "#1": "amf://id#1"
+          },
+          "resolved-link": {
+            "#1": "amf://id#10"
           },
           "declared-element": {
             "#1": ""
@@ -445,9 +453,6 @@
           },
           "type-property-lexical-info": {
             "#1": "[(8,4)-(8,8)]"
-          },
-          "resolved-link": {
-            "#1": "amf://id#10"
           }
         }
       }

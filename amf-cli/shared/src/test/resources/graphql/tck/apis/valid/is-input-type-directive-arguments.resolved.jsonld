@@ -112,6 +112,29 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               },
                               {
@@ -127,6 +150,29 @@
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(6,7)-(6,13)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -139,6 +185,29 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.a"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/web-api/endpoint/%2Fquery%2Fa"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,4)-(6,13)]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -208,6 +277,29 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(17,10)-(17,16)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -220,6 +312,29 @@
               {
                 "@value": "name"
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,4)-(17,16)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
@@ -231,6 +346,44 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "InputType"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(16,0)-(18,1)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -279,6 +432,29 @@
                   {
                     "@value": "A"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(21,4)-(21,5)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -304,6 +480,67 @@
                   {
                     "@value": "B"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(22,4)-(22,5)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(20,0)-(23,1)]"
+                  }
                 ]
               }
             ]
@@ -327,6 +564,44 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Pepe"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(25,0)-(25,11)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -379,6 +654,29 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -413,6 +711,29 @@
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/scalar/default-scalar"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(17,10)-(17,16)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ],
@@ -424,6 +745,29 @@
                             "http://www.w3.org/ns/shacl#name": [
                               {
                                 "@value": "name"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/property/property/name"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(17,4)-(17,16)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -437,6 +781,44 @@
                           {
                             "@value": "InputType"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map/declared-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/shape/InputType"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(16,0)-(18,1)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -446,6 +828,29 @@
                   {
                     "@value": "input_"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/property/property/input_"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(10,25)-(10,42)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -453,12 +858,73 @@
               {
                 "@value": true
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "testInputType"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testInputType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,0)-(10,53)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -511,6 +977,29 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -558,6 +1047,29 @@
                                   {
                                     "@value": "A"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/A"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(21,4)-(21,5)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ],
@@ -583,6 +1095,67 @@
                                   {
                                     "@value": "B"
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/in/B"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(22,4)-(22,5)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map/declared-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Enum"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(20,0)-(23,1)]"
+                                  }
                                 ]
                               }
                             ]
@@ -596,6 +1169,29 @@
                   {
                     "@value": "input_"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/property/property/input_"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,20)-(11,32)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -603,12 +1199,73 @@
               {
                 "@value": true
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "testEnum"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testEnum"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(11,0)-(11,43)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -661,6 +1318,29 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -676,6 +1356,29 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/union/default-union/anyOf/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,30)-(12,36)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -685,6 +1388,29 @@
                   {
                     "@value": "input_"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/property/property/input_"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,22)-(12,36)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -692,12 +1418,73 @@
               {
                 "@value": true
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "testScalar"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testScalar"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,0)-(12,47)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -750,6 +1537,29 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/union/default-union/anyOf/nil/default-nil"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -770,6 +1580,44 @@
                           {
                             "@value": "Pepe"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map/declared-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/scalar/Pepe"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(25,0)-(25,11)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -779,6 +1627,29 @@
                   {
                     "@value": "input_"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/property/property/input_"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(13,28)-(13,40)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -786,12 +1657,73 @@
               {
                 "@value": true
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "testCustomScalar"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-directive-arguments.graphql#/declares/testCustomScalar"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,0)-(13,51)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

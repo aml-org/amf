@@ -400,7 +400,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "validParameterLocation"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val location = element.fields.getValueAsOption(ParameterModel.Binding)
-          if (location.exists(!_.annotations.contains(classOf[SynthesizedField]))) {
+          if (location.exists(!_.annotations.isSynthesized)) {
             validateAsyncExpression(location.map(_.value), () => validate(Some(ValidationInfo(ParameterModel.Binding))))
           }
         }

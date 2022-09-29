@@ -126,7 +126,12 @@
           "@id": "/property/property/clientSecretExpression"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader",
@@ -143,7 +148,12 @@
       "shacl:minCount": 1,
       "shacl:defaultValue": {
         "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/clientIdExpression",
@@ -166,7 +176,12 @@
       "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
       "shacl:defaultValue": {
         "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/clientIdExpression#/source-map"
+        }
+      ]
     },
     {
       "@id": "/property/property/clientSecretExpression",
@@ -183,7 +198,28 @@
       "shacl:minCount": 0,
       "shacl:defaultValue": {
         "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1"
-      }
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/clientSecretExpression#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1",
@@ -198,7 +234,23 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader#/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1",
@@ -213,7 +265,23 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/clientIdExpression#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/clientIdExpression#/source-map/lexical/element_0"
+        }
+      ]
     },
     {
       "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1",
@@ -228,7 +296,96 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1"
+      "core:name": "scalar_1",
+      "sourcemaps:sources": [
+        {
+          "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/clientSecretExpression#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/clientSecretExpression#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(10,2)-(10,8)]"
+    },
+    {
+      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
+      "sourcemaps:element": "#/declarations/SchemaNode",
+      "sourcemaps:value": "[(1,0)-(44,1)]"
+    },
+    {
+      "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/credentialsOriginHasHttpBasicAuthenticationHeader",
+      "sourcemaps:value": "[(12,4)-(24,5)]"
+    },
+    {
+      "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/clientIdExpression#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/clientIdExpression",
+      "sourcemaps:value": "[(25,4)-(32,5)]"
+    },
+    {
+      "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/clientSecretExpression#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/clientSecretExpression",
+      "sourcemaps:value": "[(33,4)-(38,5)]"
+    },
+    {
+      "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1",
+      "sourcemaps:value": "[(15,17)-(15,35)]"
+    },
+    {
+      "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1",
+      "sourcemaps:value": "[(28,17)-(28,53)]"
+    },
+    {
+      "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1#/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complex-with-characteristics.json/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1",
+      "sourcemaps:value": "[(36,17)-(36,57)]"
     }
   ],
   "@context": {
@@ -237,6 +394,7 @@
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

@@ -117,17 +117,17 @@
           "@id": "#/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
+      "sourcemaps:type-property-lexical-info": [
+        {
+          "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/shape/schema/source-map/lexical/element_1"
         },
         {
           "@id": "#/shape/schema/source-map/lexical/element_0"
-        }
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -241,6 +241,11 @@
       "sourcemaps:value": "true"
     },
     {
+      "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema",
+      "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
       "@id": "#/shape/schema/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema",
       "sourcemaps:value": "[(1,0)-(20,1)]"
@@ -249,11 +254,6 @@
       "@id": "#/shape/schema/source-map/lexical/element_0",
       "sourcemaps:element": "shacl:property",
       "sourcemaps:value": "[(4,2)-(14,3)]"
-    },
-    {
-      "@id": "#/shape/schema/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/shape/schema",
-      "sourcemaps:value": "[(3,2)-(3,8)]"
     },
     {
       "@id": "#/shape/schema/property/property/street_address/scalar/street_address/source-map",
@@ -496,6 +496,11 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:virtual-element": [
+        {
+          "@id": "#/references/0/source-map/virtual-element/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/references/0/source-map/lexical/element_1"
@@ -530,14 +535,14 @@
           "@id": "#/references/0/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/references/0/shape/schema/source-map/lexical/element_0"
-        }
-      ],
       "sourcemaps:type-property-lexical-info": [
         {
           "@id": "#/references/0/shape/schema/source-map/type-property-lexical-info/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/references/0/shape/schema/source-map/lexical/element_0"
         }
       ]
     },
@@ -574,6 +579,11 @@
       ]
     },
     {
+      "@id": "#/references/0/source-map/virtual-element/element_0",
+      "sourcemaps:element": "doc:declares",
+      "sourcemaps:value": "true"
+    },
+    {
       "@id": "#/references/0/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0",
       "sourcemaps:value": "[(1,0)-(12,1)]"
@@ -594,14 +604,14 @@
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/references/0/shape/schema/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/shape/schema",
-      "sourcemaps:value": "[(1,0)-(12,1)]"
-    },
-    {
       "@id": "#/references/0/shape/schema/source-map/type-property-lexical-info/element_0",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/shape/schema",
       "sourcemaps:value": "[(3,2)-(3,8)]"
+    },
+    {
+      "@id": "#/references/0/shape/schema/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/schemas/schema-base.json#/references/0/shape/schema",
+      "sourcemaps:value": "[(1,0)-(12,1)]"
     },
     {
       "@id": "#/references/0/declares/any/state/in/scalar_1",
