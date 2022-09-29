@@ -130,7 +130,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
   def typeMappings: Seq[StrField]                            = fields.field(SemanticContextModel.TypeMapping)
 
   def withOverrideMappings(mappings: Seq[String]): this.type = set(SemanticContextModel.OverrideMappings, mappings)
-  def overrideMappings: Seq[String]                          = fields.field(SemanticContextModel.OverrideMappings)
+  def overrideMappings: Seq[StrField]                        = fields.field(SemanticContextModel.OverrideMappings)
 
   override def componentId: String = "/" + "@context".urlComponentEncoded
 
@@ -175,6 +175,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
       }
       newMapping
     })
+    newContext.withOverrideMappings(overrideMappings.flatMap(_.option().map(expand)))
 
     newContext
   }
@@ -251,6 +252,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     }
     merged.withMapping(accTypings.values.toList)
 
+    merged.withOverrideMappings(toMerge.overrideMappings.flatMap(_.option()))
     merged
   }
 

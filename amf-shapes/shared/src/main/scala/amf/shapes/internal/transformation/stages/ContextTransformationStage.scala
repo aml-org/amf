@@ -28,76 +28,78 @@ class ContextTransformationStage extends TransformationStep {
     model
   }
 
-  private case class SemanticContextResolver(eh: AMFErrorHandler) {
-    def computeDocument(jsonDoc: JsonSchemaDocument): Unit = {
-      val encodedCtx = computeContext(jsonDoc.encodes, SemanticContext.default)
-      jsonDoc.declares.foreach({ case s: Shape => computeContext(s, encodedCtx) })
+}
+
+case class SemanticContextResolver(eh: AMFErrorHandler) {
+  def computeDocument(jsonDoc: JsonSchemaDocument): Unit = {
+    val encodedCtx = computeContext(jsonDoc.encodes, SemanticContext.default)
+    jsonDoc.declares.foreach({ case s: Shape => computeContext(s, encodedCtx) })
+  }
+
+  def computeContext(
+      shape: Shape,
+      parentContext: SemanticContext,
+      characteristecsAllowed: Boolean = false
+  ): SemanticContext = {
+
+    shape match {
+      case a: AnyShape => mergeContext(a, parentContext, characteristecsAllowed)
+      case _ =>
+        computeTree(shape, parentContext)
+        parentContext
     }
+  }
 
-    def computeContext(
-        shape: Shape,
-        parentContext: SemanticContext,
-        characteristecsAllowed: Boolean = false
-    ): SemanticContext = {
-
-      shape match {
-        case a: AnyShape => mergeContext(a, parentContext, characteristecsAllowed)
-        case _ =>
-          computeTree(shape, parentContext)
-          parentContext
-      }
+  def mergeContext(a: AnyShape, parentContext: SemanticContext, characteristecsAllowed: Boolean): SemanticContext = {
+    val termCheckFN: SemanticContext => SemanticContext = (a: SemanticContext) => {
+      if (!characteristecsAllowed) cleanOverridedTerms(a)
+      a
     }
+    val context = a.semanticContext.fold(parentContext)(sc => parentContext.merge(termCheckFN(sc)))
+    a.withSemanticContext(context)
+    computeTree(a, context)
+    context
+  }
 
-    def mergeContext(a: AnyShape, parentContext: SemanticContext, characteristecsAllowed: Boolean): SemanticContext = {
-      val termCheckFN: SemanticContext => SemanticContext = (a: SemanticContext) => {
-        if (!characteristecsAllowed) cleanOverridedTerms(a)
-        a
-      }
-      val context = a.semanticContext.fold(parentContext)(sc => parentContext.merge(termCheckFN(sc)))
-      a.withSemanticContext(context)
-      computeTree(a, context)
-      context
-    }
-
-    def cleanOverridedTerms(context: SemanticContext): Any = {
-      val mappings = context.overrideMappings
-      if (mappings.nonEmpty) {
-        eh.violation(
-          InvalidCharacteristicsUse,
-          context.id,
-          InvalidCharacteristicsUse.message,
-          context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
-        )
-        context.withOverrideMappings(Nil)
-      }
-    }
-
-    def computeTree(shape: Shape, ctx: SemanticContext): Unit = {
-      val (properties, others) = shape.fields
-        .fields()
-        .partition(_.field == NodeShapeModel.Properties)
-
-      computeGeneralShapes(others.map(_.element), ctx)
-      computeProperties(
-        properties
-          .map(_.element)
-          .collectFirst { case arr: AmfArray => arr.values.collect({ case p: PropertyShape => p }) }
-          .getOrElse(Nil),
-        ctx
+  def cleanOverridedTerms(context: SemanticContext): Any = {
+    val mappings = context.overrideMappings
+    if (mappings.nonEmpty) {
+      eh.violation(
+        InvalidCharacteristicsUse,
+        context.id,
+        InvalidCharacteristicsUse.message,
+        context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
       )
+      context.withOverrideMappings(Nil)
     }
+  }
 
-    def computeGeneralShapes(others: Iterable[AmfElement], ctx: SemanticContext): Unit = {
-      others.toList
-        .flatMap({
-          case s: Shape             => Some(s)
-          case AmfArray(element, _) => element.collect({ case s: Shape => s })
-          case _                    => None
-        })
-        .foreach(computeContext(_, ctx))
-    }
-    def computeProperties(element: Seq[PropertyShape], ctx: SemanticContext): Unit = {
-      element.foreach { p => computeContext(p.range, ctx, characteristecsAllowed = true) }
-    }
+  def computeTree(shape: Shape, ctx: SemanticContext): Unit = {
+    val (properties, others) = shape.fields
+      .fields()
+      .partition(_.field == NodeShapeModel.Properties)
+
+    computeGeneralShapes(others.map(_.element), ctx)
+    computeProperties(
+      properties
+        .map(_.element)
+        .collectFirst { case arr: AmfArray => arr.values.collect({ case p: PropertyShape => p }) }
+        .getOrElse(Nil),
+      ctx
+    )
+  }
+
+  def computeGeneralShapes(others: Iterable[AmfElement], ctx: SemanticContext): Unit = {
+    others.toList
+      .flatMap({
+        case s: Shape             => Some(s)
+        case AmfArray(element, _) => element.collect({ case s: Shape => s })
+        case _                    => None
+      })
+      .foreach(computeContext(_, ctx))
+  }
+
+  def computeProperties(element: Seq[PropertyShape], ctx: SemanticContext): Unit = {
+    element.foreach { p => computeContext(p.range, ctx, characteristecsAllowed = true) }
   }
 }

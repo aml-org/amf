@@ -3,19 +3,14 @@
   "type": "object",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootObject"
     ],
     "prop1": "alias.prop1Field"
   },
   "properties": {
     "prop1": {
-      "type": "integer",
-      "@context": {
-        "@characteristics": [
-          "alias:integerScalar"
-        ]
-      }
+      "type": "integer"
     }
   }
 }

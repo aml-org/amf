@@ -3,13 +3,13 @@
   "type": "array",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootArray"
     ]
   },
   "items": {
     "@context": {
-      "@characteristics": [
+      "@type": [
         "alias:itemsNode"
       ],
       "name": "amlorg://a.ml/semantics.yaml#nameField"
@@ -17,12 +17,7 @@
     "type": "object",
     "properties": {
       "name": {
-        "type": "string",
-        "@context": {
-          "@characteristics": [
-            "alias:nameScalar"
-          ]
-        }
+        "type": "string"
       }
     }
   }

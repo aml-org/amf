@@ -38,9 +38,9 @@ class JsonLDSchemaSpecParsingTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   goldens.foreach { path =>
-    test(s"Test case $path") {
-      run(path)
-    }
+    if (path.endsWith(".ignore")) ignore(s"Test case $path") { run(path) }
+    else
+      test(s"Test case $path") { run(path) }
   }
 
   def run(schema: String) = {

@@ -3,18 +3,13 @@
   "type": "object",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootObject"
     ],
     "prop1": "alias.prop1Field"
   },
   "properties": {
     "prop1": {
-      "@context": {
-        "@characteristics": [
-          "alias:booleanScalar"
-        ]
-      },
       "type": "boolean"
     }
   }

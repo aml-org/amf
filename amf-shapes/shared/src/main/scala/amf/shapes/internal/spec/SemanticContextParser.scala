@@ -113,8 +113,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
           val compactIri = e.as[YScalar].text
           validateIri(e, compactIri, context)
         }
-      // using context.withOverrideMappings(iris) instead breaks SemanticSchemaTests
-      context.withTypeMappings(iris)
+      context.withOverrideMappings(iris)
     case _ =>
       ctx.eh.violation(
         InvalidCharacteristicsNode,

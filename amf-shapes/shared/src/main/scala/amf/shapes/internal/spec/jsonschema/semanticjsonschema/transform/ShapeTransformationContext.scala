@@ -44,7 +44,7 @@ class ShapeTransformationContext(
       externals,
       idCounter,
       shapeDeclarationNames,
-      semantics.merge(newSemantics).normalize(),
+      newSemantics.normalize(),
       termsToExtract
     )
   }

@@ -3,7 +3,7 @@
   "type": "object",
   "@context": {
     "alias": "amlorg://a.ml/semantics.yaml#",
-    "@characteristics": [
+    "@type": [
       "alias:rootObject"
     ],
     "prop1": "alias.prop1Field"
@@ -12,20 +12,10 @@
     "prop1": {
       "@context": {
         "alias": "amlorg://a.ml/semantics2.yaml#",
-        "@characteristics": [
-          "alias:prop1Node"
-        ],
         "name": "alias.nameField"
       },
       "properties": {
         "name": {
-          "@context": {
-            "alias": "amlorg://a.ml/semantics3.yaml#",
-            "@characteristics": [
-              "alias:stringScalar"
-            ],
-            "name": "alias.nameChanged"
-          },
           "type": "string"
         }
       }
