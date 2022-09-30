@@ -19,7 +19,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@list": [
           "value",
-          "1"
+          {
+            "@value": "1",
+            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+          }
         ]
       },
       "http://a.ml/vocabularies/document#root": true,

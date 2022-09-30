@@ -11,10 +11,12 @@ import amf.core.internal.plugins.document.graph.emitter.{
 }
 import org.yaml.builder.DocBuilder
 import amf.core.client.scala.config
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.internal.metamodel.Type
 import amf.core.internal.parser.domain.{Annotations, Value}
-import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElementModel
+import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElementModel, JsonLDScalar}
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.builder.DocBuilder.Part
 
 object FlattenedJsonLdInstanceEmitter {
@@ -61,6 +63,20 @@ class FlattenedJsonLdInstanceEmitter[T](
         b.list { b =>
           createArrayValues(Type.Array(Type.Any), arr, b, Value(arr, Annotations()))
         }
+    }
+  }
+
+  override protected def emitScalarMember(scalarElement: AmfScalar, b: Part[T]): Unit = {
+    scalarElement match {
+      case scalar: JsonLDScalar =>
+        scalar.dataType match {
+          case DataType.Number  => typedScalar(b, scalar.value.toString, DataType.Number, inArray = true)
+          case DataType.Double  => typedScalar(b, scalar.value.toString, DataType.Double, inArray = true)
+          case DataType.Float   => typedScalar(b, scalar.value.toString, DataType.Float, inArray = true)
+          case DataType.Integer => typedScalar(b, scalar.value.toString, DataType.Integer, inArray = true)
+          case _                => super.emitScalarMember(scalarElement, b)
+        }
+      case _ => super.emitScalarMember(scalarElement, b)
     }
   }
 }
