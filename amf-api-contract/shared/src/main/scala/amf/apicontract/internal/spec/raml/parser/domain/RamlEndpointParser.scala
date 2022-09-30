@@ -81,10 +81,8 @@ abstract class RamlEndpointParser(
     duplicated match {
       case None =>
         entry.value.tagType match {
-          case YType.Null => collector += endpoint
-          case _ =>
-            val map = entry.value.as[YMap]
-            parseEndpoint(endpoint, map)
+          case YType.Null => parseEndpoint(endpoint, YMap.empty)
+          case _          => parseEndpoint(endpoint, entry.value.as[YMap])
         }
       case Some(alreadyDefined) =>
         ctx.eh.violation(DuplicatedEndpointPath, alreadyDefined, "Duplicated resource path " + path, entry.location)
@@ -164,10 +162,10 @@ abstract class RamlEndpointParser(
     var parameters               = Parameters()
     var annotations: Annotations = Annotations()
 
-    val entries = map.regex(uriParametersKey)
-    val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
+    val paramsDefinitionEntries = map.regex(uriParametersKey)
+    val implicitExplicitPathParams = paramsDefinitionEntries.find(isMap) match {
       case None =>
-        implicitPathParamsOrdered(endpoint, isResourceType)
+        parseImplicitPathParams(endpoint, isResourceType, map)
 
       case Some(e) =>
         annotations = Annotations(e.value)
@@ -179,14 +177,15 @@ abstract class RamlEndpointParser(
             val param = ctx.factory
               .parameterParser(entry, (_: Parameter) => Unit, false, "path")
               .parse()
-            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
+            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashesInSchema(schema, entry))
             param
           })
 
-        implicitPathParamsOrdered(
+        parseImplicitPathParams(
           endpoint,
           isResourceType,
-          variable => !explicitParameters.exists(_.name.is(variable)),
+          map,
+          param => !explicitParameters.exists(_.name.is(param.name)),
           explicitParameters
         )
     }
@@ -204,11 +203,16 @@ abstract class RamlEndpointParser(
 
     parameters match {
       case Parameters(query, path, header, _, _, _) if parameters.nonEmpty =>
-        endpoint.setWithoutId(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
+        val allParams = query ++ path ++ header
+        endpoint.setWithoutId(EndPointModel.Parameters, AmfArray(allParams, annotations), annotations)
       case _ =>
     }
 
     endpoint
+  }
+
+  private def isMap(entry: YMapEntry) = {
+    entry.value.tagType == YType.Map
   }
 
   private def parseRequirements(map: YMap, endpoint: EndPoint) = {
@@ -294,7 +298,7 @@ abstract class RamlEndpointParser(
     endpoint
   }
 
-  private def validateSlashsInSchema(shape: Shape, entry: YMapEntry): Unit = {
+  private def validateSlashesInSchema(shape: Shape, entry: YMapEntry): Unit = {
     // default values
     Option(shape.default).foreach(validateSlashInDataNode(_, entry))
     // enum values
@@ -338,31 +342,47 @@ abstract class RamlEndpointParser(
     }
   }
 
-  private def implicitPathParamsOrdered(
+  private def parseImplicitPathParams(
       endpoint: EndPoint,
       isResourceType: Boolean,
-      paramFilter: String => Boolean = _ => true,
+      map: YMap,
+      paramFilter: PathParam => Boolean = _ => true,
       explicitParams: Seq[Parameter] = Nil
   ): Seq[Parameter] = {
     val parentParams: Map[String, Parameter] = parent.fold(Map[String, Parameter]()) { collectPathParametersByName }
-    val pathParams: Seq[String]              = TemplateUri.variables(parsePath())
+    val pathParams: Seq[PathParam]           = getParamsFromPath(map)
     val findExplicitlyDefinedParam = (variable: String, binding: String) =>
       explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals(binding))
 
-    val params: Seq[Parameter] = pathParams.filter(paramFilter).flatMap { variable =>
-      val clonedFatherParameter = parentParams
-        .get(variable)
-        .map(param => cloneAsVirtualParameter(endpoint, param))
+    val params: Seq[Parameter] = pathParams.filter(paramFilter).flatMap {
+      case PathParam(variable, lexical) =>
+        val clonedFatherParameter = parentParams
+          .get(variable)
+          .map(param => cloneAsVirtualParameter(endpoint, param))
 
-      clonedFatherParameter
-        .orElse(findExplicitlyDefinedParam(variable, "path"))
-        .orElse(generateParam(endpoint, variable))
+        clonedFatherParameter
+          .orElse(findExplicitlyDefinedParam(variable, "path"))
+          .orElse(generateParam(endpoint, variable))
+      case _ => Nil // ignore
     }
 
-    if (!isResourceType) checkParamsUsage(endpoint, pathParams, explicitParams)
+    if (!isResourceType) checkParamsUsage(endpoint, pathParams.map(_.name), explicitParams)
     params ++ explicitParams.filter(!params.contains(_))
 
   }
+
+  private def getParamsFromPath(map: YMap) = {
+    val path      = parsePath()
+    val variables = TemplateUri.variables(path)
+    variables.map { v =>
+      PathParam(
+        v,
+        LexicalInformation(0, 0, 0, 0) // TODO: get LexicalInformation for this implicit path param (from the YMap)
+      )
+    }
+  }
+
+  private case class PathParam(name: String, lexical: LexicalInformation)
 
   private def cloneAsVirtualParameter(endpoint: EndPoint, param: Parameter) = {
     val pathParam = param.cloneParameter(endpoint.id)
