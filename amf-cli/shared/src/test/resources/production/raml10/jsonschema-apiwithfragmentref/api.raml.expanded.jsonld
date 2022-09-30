@@ -764,21 +764,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/property/property/location/shape/location/source-map/type-property-lexical-info/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/property/property/location/shape/location"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(27,6)-(27,12)]"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/property/property/location/shape/location/source-map/lexical/element_1",
@@ -803,6 +788,21 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(28,6)-(35,7)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/property/property/location/shape/location/source-map/type-property-lexical-info/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/property/property/location/shape/location"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(27,6)-(27,12)]"
                           }
                         ]
                       }
@@ -892,9 +892,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/external-fragment-ref/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema"
@@ -902,7 +902,22 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "/definitions/address"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/type-property-lexical-info/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,6)-(13,12)]"
                   }
                 ]
               }
@@ -948,9 +963,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema"
@@ -958,22 +973,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(13,6)-(13,12)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema/source-map/external-fragment-ref/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/declares/shape/jsonSchema"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "/definitions/address"
+                    "@value": ""
                   }
                 ]
               }

@@ -36,84 +36,12 @@
               {
                 "@value": "trait description"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "target/tag/traitUser#/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "target/tag/traitUser#/source-map/lexical/element_2",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/core#name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(4,6)-(5,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "target/tag/traitUser#/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/core#description"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(5,6)-(5,36)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "target/tag/traitUser#/source-map/lexical/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "target/tag/traitUser"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(4,6)-(5,36)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://a.ml/vocabularies/apiContract#operationId": [
           {
             "@value": "traitOperationId"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "testId/subscribe/traitOperationId#/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "testId/subscribe/traitOperationId#/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "testId/subscribe/traitOperationId"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(1,0)-(5,34)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

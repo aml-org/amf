@@ -112,29 +112,6 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "true"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -150,29 +127,6 @@
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/supportedOperation/query/Query.a/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(6,7)-(6,13)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               }
                             ]
@@ -185,29 +139,6 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.a"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/web-api/endpoint/%2Fquery%2Fa"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(6,13)]"
-                      }
-                    ]
                   }
                 ]
               }
@@ -277,29 +208,6 @@
                   {
                     "@value": "InputType"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField/shape/default-node/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField/shape/default-node/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField/shape/default-node"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(11,20)-(11,29)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -311,29 +219,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "inputTypeField"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/inputTypeField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(11,4)-(11,29)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -364,29 +249,6 @@
                   {
                     "@value": "Enum"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(12,15)-(12,19)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -398,29 +260,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "enumField"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/enumField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(12,4)-(12,19)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -446,29 +285,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(13,17)-(13,23)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -480,29 +296,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "scalarField"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/scalarField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(13,4)-(13,23)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -533,29 +326,6 @@
                   {
                     "@value": "Pepe"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(14,23)-(14,27)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -568,29 +338,6 @@
               {
                 "@value": "customScalarField"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/property/property/customScalarField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(14,4)-(14,27)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
@@ -602,44 +349,6 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "InputType"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/shape/InputType"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(10,0)-(15,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -688,29 +397,6 @@
                   {
                     "@value": "A"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/A/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/A/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/A"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(18,4)-(18,5)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -736,67 +422,6 @@
                   {
                     "@value": "B"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/B/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/B/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/in/B"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(19,4)-(19,5)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Enum"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(17,0)-(20,1)]"
-                  }
                 ]
               }
             ]
@@ -820,44 +445,6 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Pepe"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Pepe/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Pepe/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Pepe"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Pepe/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-fields.graphql#/declares/scalar/Pepe"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(22,0)-(22,11)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

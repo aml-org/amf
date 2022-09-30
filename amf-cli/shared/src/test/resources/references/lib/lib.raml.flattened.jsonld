@@ -127,11 +127,6 @@
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/synthesized-field/element_0"
 }
 ],
-"http://a.ml/vocabularies/document-source-maps#declared-element": [
-{
-"@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0"
-}
-],
 "http://a.ml/vocabularies/document-source-maps#lexical": [
 {
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/lexical/element_2"
@@ -141,6 +136,11 @@
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/lexical/element_1"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#declared-element": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0"
 }
 ]
 },
@@ -246,11 +246,6 @@
 "http://a.ml/vocabularies/document-source-maps#value": "true"
 },
 {
-"@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0",
-"http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType",
-"http://a.ml/vocabularies/document-source-maps#value": ""
-},
-{
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/lexical/element_2",
 "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
 "http://a.ml/vocabularies/document-source-maps#value": "[(5,15)-(10,0)]"
@@ -264,6 +259,11 @@
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/lexical/element_1",
 "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType",
 "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(10,0)]"
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType",
+"http://a.ml/vocabularies/document-source-maps#value": ""
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1/source-map",

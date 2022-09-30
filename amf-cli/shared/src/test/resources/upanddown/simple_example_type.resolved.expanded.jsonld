@@ -39,11 +39,11 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "#16": "true"
-              },
               "lexical": {
                 "core:urlTemplate": "[(5,0)-(7,0)]"
+              },
+              "synthesized-field": {
+                "#16": "true"
               }
             }
           }
@@ -142,9 +142,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(14,4)-(16,23)]"
-                      },
-                      "virtual-element": {
-                        "#14": "true"
                       }
                     }
                   }
@@ -387,12 +384,12 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "type-property-lexical-info": {
-                "#2": "[(2,0)-(2,4)]"
-              },
               "lexical": {
                 "apiContract:examples": "[(5,0)-(6,10)]",
                 "#2": "[(2,0)-(6,10)]"
+              },
+              "type-property-lexical-info": {
+                "#2": "[(2,0)-(2,4)]"
               }
             }
           }
@@ -601,21 +598,21 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link": {
-            "#9": "amf://id#9"
-          },
           "resolved-link-target": {
             "#9": "amf://id#2"
           },
-          "declared-element": {
-            "#9": ""
+          "type-property-lexical-info": {
+            "#9": "[(2,0)-(2,4)]"
           },
           "lexical": {
             "apiContract:examples": "[(5,0)-(6,10)]",
             "#9": "[(2,0)-(6,10)]"
           },
-          "type-property-lexical-info": {
-            "#9": "[(2,0)-(2,4)]"
+          "resolved-link": {
+            "#9": "amf://id#9"
+          },
+          "declared-element": {
+            "#9": ""
           }
         }
       }

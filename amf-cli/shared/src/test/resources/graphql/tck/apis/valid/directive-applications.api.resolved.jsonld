@@ -112,29 +112,6 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "true"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -149,29 +126,6 @@
                                 "http://www.w3.org/ns/shacl#datatype": [
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/supportedOperation/query/Query.rootField/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(6,15)-(6,21)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
                                   }
                                 ]
                               }
@@ -223,67 +177,6 @@
                     {
                       "@value": "text"
                     }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/text/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(6,37)-(6,44)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "http://a.ml/vocabularies/data#text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(6,31)-(6,44)]"
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/customDomainProperties/example/data-node"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "true"
-                        }
-                      ]
-                    }
                   ]
                 }
               ]
@@ -291,29 +184,6 @@
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/endpoint/%2Fquery%2FrootField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(6,45)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -351,67 +221,6 @@
               "http://a.ml/vocabularies/core#name": [
                 {
                   "@value": "text"
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(1,22)-(1,29)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(1,16)-(1,29)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/web-api/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
                 }
               ]
             }
@@ -533,67 +342,6 @@
                         {
                           "@value": "text"
                         }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#sources": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/text/source-map",
-                          "@type": [
-                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#lexical": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                              "http://a.ml/vocabularies/document-source-maps#element": [
-                                {
-                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/text"
-                                }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#value": [
-                                {
-                                  "@value": "[(26,31)-(26,38)]"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "http://a.ml/vocabularies/data#text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(26,25)-(26,38)]"
-                            }
-                          ]
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/customDomainProperties/example/data-node"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "true"
-                            }
-                          ]
-                        }
                       ]
                     }
                   ]
@@ -601,29 +349,6 @@
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/in/MyEnumValue"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(26,4)-(26,15)]"
-                          }
-                        ]
-                      }
-                    ]
                   }
                 ]
               }
@@ -664,67 +389,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(25,27)-(25,34)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(25,21)-(25,34)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -732,44 +396,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyEnum"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(25,0)-(27,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -805,29 +431,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(20,14)-(20,20)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -840,73 +443,12 @@
               {
                 "@value": "myField2"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(20,4)-(20,20)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "MyObject2"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(19,0)-(21,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -947,29 +489,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(16,13)-(16,20)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -981,29 +500,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "myField"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/property/property/myField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(16,4)-(16,20)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -1047,67 +543,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(15,37)-(15,44)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(15,31)-(15,44)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -1115,44 +550,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInterface"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(15,0)-(17,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -1187,29 +584,6 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(30,13)-(30,20)]"
-                          }
-                        ]
-                      }
-                    ]
                   }
                 ]
               }
@@ -1258,67 +632,6 @@
                     {
                       "@value": "text"
                     }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/text/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(30,36)-(30,43)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "http://a.ml/vocabularies/data#text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(30,30)-(30,43)]"
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/customDomainProperties/example/data-node"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "true"
-                        }
-                      ]
-                    }
                   ]
                 }
               ]
@@ -1326,29 +639,6 @@
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/property/property/myField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(30,4)-(30,44)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -1397,67 +687,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(29,35)-(29,42)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(29,29)-(29,42)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -1465,44 +694,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyInputObject"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(29,0)-(31,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -1559,67 +750,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(9,31)-(9,38)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(9,25)-(9,38)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -1627,44 +757,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/scalar/MyScalar"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(9,0)-(9,39)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -1735,29 +827,6 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,24)-(12,30)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       }
                     ],
@@ -1795,67 +864,6 @@
                             {
                               "@value": "text"
                             }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#sources": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text/source-map",
-                              "@type": [
-                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                {
-                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                                  "http://a.ml/vocabularies/document-source-maps#element": [
-                                    {
-                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text"
-                                    }
-                                  ],
-                                  "http://a.ml/vocabularies/document-source-maps#value": [
-                                    {
-                                      "@value": "[(12,46)-(12,53)]"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#sources": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map",
-                          "@type": [
-                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#lexical": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                              "http://a.ml/vocabularies/document-source-maps#element": [
-                                {
-                                  "@value": "http://a.ml/vocabularies/data#text"
-                                }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#value": [
-                                {
-                                  "@value": "[(12,40)-(12,53)]"
-                                }
-                              ]
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                              "http://a.ml/vocabularies/document-source-maps#element": [
-                                {
-                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node"
-                                }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#value": [
-                                {
-                                  "@value": "true"
-                                }
-                              ]
-                            }
                           ]
                         }
                       ]
@@ -1863,29 +871,6 @@
                     "http://a.ml/vocabularies/document#customDomainProperties": [
                       {
                         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(12,12)-(12,54)]"
-                              }
-                            ]
-                          }
-                        ]
                       }
                     ]
                   }
@@ -1932,29 +917,6 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,57)-(12,64)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       }
                     ]
@@ -1996,67 +958,6 @@
                     {
                       "@value": "text"
                     }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(12,80)-(12,87)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "http://a.ml/vocabularies/data#text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(12,74)-(12,87)]"
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "true"
-                        }
-                      ]
-                    }
                   ]
                 }
               ]
@@ -2064,29 +965,6 @@
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(12,4)-(12,88)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -2130,67 +1008,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(11,29)-(11,36)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(11,23)-(11,36)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -2198,44 +1015,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(11,0)-(13,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -2316,29 +1095,6 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/scalar/default-scalar"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,24)-(12,30)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
@@ -2376,67 +1132,6 @@
                                 {
                                   "@value": "text"
                                 }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#sources": [
-                                {
-                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text/source-map",
-                                  "@type": [
-                                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                  ],
-                                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                    {
-                                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                                      "http://a.ml/vocabularies/document-source-maps#element": [
-                                        {
-                                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/text"
-                                        }
-                                      ],
-                                      "http://a.ml/vocabularies/document-source-maps#value": [
-                                        {
-                                          "@value": "[(12,46)-(12,53)]"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#sources": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map",
-                              "@type": [
-                                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                {
-                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                                  "http://a.ml/vocabularies/document-source-maps#element": [
-                                    {
-                                      "@value": "http://a.ml/vocabularies/data#text"
-                                    }
-                                  ],
-                                  "http://a.ml/vocabularies/document-source-maps#value": [
-                                    {
-                                      "@value": "[(12,40)-(12,53)]"
-                                    }
-                                  ]
-                                }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                {
-                                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                                  "http://a.ml/vocabularies/document-source-maps#element": [
-                                    {
-                                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/customDomainProperties/example/data-node"
-                                    }
-                                  ],
-                                  "http://a.ml/vocabularies/document-source-maps#value": [
-                                    {
-                                      "@value": "true"
-                                    }
-                                  ]
-                                }
                               ]
                             }
                           ]
@@ -2444,29 +1139,6 @@
                         "http://a.ml/vocabularies/document#customDomainProperties": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/expects/request/parameter/parameter/myArgument"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,12)-(12,54)]"
-                                  }
-                                ]
-                              }
-                            ]
                           }
                         ]
                       }
@@ -2513,29 +1185,6 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/returns/response/default/scalar/default-scalar"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,57)-(12,64)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
@@ -2577,67 +1226,6 @@
                         {
                           "@value": "text"
                         }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#sources": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text/source-map",
-                          "@type": [
-                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#lexical": [
-                            {
-                              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                              "http://a.ml/vocabularies/document-source-maps#element": [
-                                {
-                                  "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/text"
-                                }
-                              ],
-                              "http://a.ml/vocabularies/document-source-maps#value": [
-                                {
-                                  "@value": "[(12,80)-(12,87)]"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "http://a.ml/vocabularies/data#text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(12,74)-(12,87)]"
-                            }
-                          ]
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/customDomainProperties/example/data-node"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "true"
-                            }
-                          ]
-                        }
                       ]
                     }
                   ]
@@ -2645,29 +1233,6 @@
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/supportedOperation/myField"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(12,4)-(12,88)]"
-                          }
-                        ]
-                      }
-                    ]
                   }
                 ]
               }
@@ -2711,67 +1276,6 @@
                     {
                       "@value": "text"
                     }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/text"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(11,29)-(11,36)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "http://a.ml/vocabularies/data#text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(11,23)-(11,36)]"
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/customDomainProperties/example/data-node"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "true"
-                        }
-                      ]
-                    }
                   ]
                 }
               ]
@@ -2779,44 +1283,6 @@
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(11,0)-(13,1)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -2852,29 +1318,6 @@
                       {
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/scalar/default-scalar"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(20,14)-(20,20)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
                     ]
                   }
                 ],
@@ -2887,73 +1330,12 @@
                   {
                     "@value": "myField2"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/property/property/myField2"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(20,4)-(20,20)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "MyObject2"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/MyObject2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(19,0)-(21,1)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -2997,67 +1379,6 @@
                 {
                   "@value": "text"
                 }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/text/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/text/source-map/lexical/element_0",
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/text"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(23,29)-(23,36)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "http://a.ml/vocabularies/data#text"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(23,23)-(23,36)]"
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                {
-                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node/source-map/virtual-element/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/customDomainProperties/example/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "true"
-                    }
-                  ]
-                }
               ]
             }
           ]
@@ -3065,44 +1386,6 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/union/MyUnion"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(23,0)-(23,60)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -3185,29 +1468,6 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/nil/default-nil/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/nil/default-nil"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "true"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       },
                       {
@@ -3222,29 +1482,6 @@
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/scalar/default-scalar/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/union/default-union/anyOf/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(33,25)-(33,31)]"
-                                  }
-                                ]
-                              }
-                            ]
                           }
                         ]
                       }
@@ -3267,57 +1504,11 @@
                     "http://a.ml/vocabularies/data#Object",
                     "http://a.ml/vocabularies/data#Node",
                     "http://a.ml/vocabularies/document#DomainElement"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/customDomainProperties/example2/data-node/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                        {
-                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/customDomainProperties/example2/data-node/source-map/virtual-element/element_0",
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/customDomainProperties/example2/data-node"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "true"
-                            }
-                          ]
-                        }
-                      ]
-                    }
                   ]
                 },
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/property/property/text"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(33,19)-(33,41)]"
-                          }
-                        ]
-                      }
-                    ]
                   }
                 ]
               }
@@ -3326,73 +1517,12 @@
               {
                 "@value": true
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node/source-map/virtual-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "example"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(33,0)-(33,191)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -3423,73 +1553,12 @@
               {
                 "@value": true
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/shape/default-node/source-map/virtual-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://a.ml/vocabularies/core#name": [
           {
             "@value": "example2"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(34,0)-(34,42)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

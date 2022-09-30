@@ -22,8 +22,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  private val directory: String                            = "amf-cli/shared/src/test/resources/parser/annotations/"
+  override implicit val executionContext = ExecutionContext.Implicits.global
+  private val directory: String          = "amf-cli/shared/src/test/resources/parser/annotations/"
 
   test("Test raml 1.0 annotations") {
     runTest("raml10.raml", Raml10YamlHint)
@@ -78,7 +78,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   private def checkElement(e: AmfElement, rangesChecker: RangesChecker): Seq[String] =
     e match {
       case o: AmfObject =>
-        if (rangesChecker.insideSynthesized)
+        if (rangesChecker.insideSynthetized)
           // fail?
           Seq()
         else
@@ -88,7 +88,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
             case r                                                 => Seq() // Seq(rangeNotContained(o, r, o.range()))
           }
       case a: AmfArray =>
-        if (rangesChecker.insideSynthesized)
+        if (rangesChecker.insideSynthetized)
           // fail?
           Seq()
         else
@@ -102,7 +102,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     }
 
   private def checkFeRange(fe: FieldEntry, meta: String, rangesChecker: RangesChecker): Seq[String] =
-    if (rangesChecker.insideSynthesized || rangesChecker.lastRange.isEmpty) Seq()
+    if (rangesChecker.insideSynthetized || rangesChecker.lastRange.isEmpty) Seq()
     else {
       if (!fe.range().forall(fR => rangesChecker.lastRange.exists(_.contains(fR))))
         Seq() // Seq(rangeNotContained(fe.field, meta, rangesChecker.lastRange, fe.range()))
@@ -122,7 +122,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
       .toSeq
 
   implicit class FieldEntryIm(fe: FieldEntry) {
-    def isSynthesized: Boolean = fe.value.annotations.isSynthesized
+    def isSynthesized: Boolean = fe.value.annotations.contains(classOf[SynthesizedField])
 
     def isExpression: Boolean = fe.value.annotations.find(_.isInstanceOf[ExpressionMember]).isDefined
 
@@ -167,11 +167,11 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   private def rangeNotContained(f: Field, meta: String, parent: Option[PositionRange], self: Option[PositionRange]) =
     s"range is not contained in parent [$parent - $self] of field ${f.value.iri()} at obj type $meta"
 
-  case class RangesChecker(lastRange: Option[PositionRange], insideSynthesized: Boolean = false) {
+  case class RangesChecker(lastRange: Option[PositionRange], insideSynthetized: Boolean = false) {
     def on(e: AmfElement): RangesChecker =
-      if (insideSynthesized) this
+      if (insideSynthetized) this
       else if (e.annotations.contains(classOf[Inferred])) this
-      else if (e.annotations.isSynthesized) RangesChecker(lastRange, insideSynthesized = true)
+      else if (e.annotations.contains(classOf[SynthesizedField])) RangesChecker(lastRange, true)
       else RangesChecker(e.range())
   }
 }

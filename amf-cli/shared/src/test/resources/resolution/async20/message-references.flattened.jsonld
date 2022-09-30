@@ -137,11 +137,8 @@
         "resolved-link-target": {
           "#11": "amf://id#1"
         },
-        "resolved-link": {
-          "#11": "amf://id#11"
-        },
-        "virtual-element": {
-          "apiContract:payload": "true"
+        "declared-element": {
+          "#11": ""
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -150,8 +147,8 @@
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
-        "declared-element": {
-          "#11": ""
+        "resolved-link": {
+          "#11": "amf://id#11"
         }
       }
     },
@@ -178,11 +175,8 @@
         "resolved-link-target": {
           "#14": "amf://id#1"
         },
-        "resolved-link": {
-          "#14": "amf://id#14"
-        },
-        "virtual-element": {
-          "apiContract:payload": "true"
+        "declared-element": {
+          "#14": ""
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -191,8 +185,8 @@
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
-        "declared-element": {
-          "#14": ""
+        "resolved-link": {
+          "#14": "amf://id#14"
         }
       }
     },
@@ -237,11 +231,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(11,8)-(11,12)]"
-        },
         "lexical": {
           "#2": "[(10,6)-(15,0)]"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(11,8)-(11,12)]"
         }
       }
     },
@@ -361,8 +355,8 @@
         "@id": "#2"
       },
       "smaps": {
-        "virtual-element": {
-          "apiContract:payload": "true"
+        "declared-element": {
+          "#1": ""
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -370,9 +364,6 @@
           "#1": "[(9,4)-(22,0)]",
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
-        },
-        "declared-element": {
-          "#1": ""
         }
       }
     }

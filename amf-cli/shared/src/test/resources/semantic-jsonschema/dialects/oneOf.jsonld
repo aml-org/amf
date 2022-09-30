@@ -103,12 +103,7 @@
           "@id": "/exclusiveOr/shape/item2/property/property/c"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/SchemaNode_2/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/SchemaNode",
@@ -123,12 +118,7 @@
           "@id": "/exclusiveOr/shape/item0/property/property/a"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/SchemaNode/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/Child",
@@ -148,11 +138,6 @@
         {
           "@id": "#/declarations/SchemaNode_2"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/Child/source-map"
-        }
       ]
     },
     {
@@ -168,12 +153,7 @@
           "@id": "/exclusiveOr/shape/item1/property/property/b"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/SchemaNode_1/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "/exclusiveOr/shape/item2/property/property/c",
@@ -187,28 +167,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#boolean"
         }
       ],
-      "shacl:minCount": 0,
-      "sourcemaps:sources": [
-        {
-          "@id": "/exclusiveOr/shape/item2/property/property/c#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode_2/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/SchemaNode_2/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:minCount": 0
     },
     {
       "@id": "/exclusiveOr/shape/item0/property/property/a",
@@ -222,39 +181,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0,
-      "sourcemaps:sources": [
-        {
-          "@id": "/exclusiveOr/shape/item0/property/property/a#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/SchemaNode/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/Child/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/Child/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:minCount": 0
     },
     {
       "@id": "/exclusiveOr/shape/item1/property/property/b",
@@ -268,111 +195,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#long"
         }
       ],
-      "shacl:minCount": 0,
-      "sourcemaps:sources": [
-        {
-          "@id": "/exclusiveOr/shape/item1/property/property/b#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode_1/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/SchemaNode_1/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/exclusiveOr/shape/item2/property/property/c#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/exclusiveOr/shape/item2/property/property/c#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode_2/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode_2",
-      "sourcemaps:value": "[(26,6)-(26,12)]"
-    },
-    {
-      "@id": "#/declarations/SchemaNode_2/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode_2",
-      "sourcemaps:value": "[(25,4)-(32,5)]"
-    },
-    {
-      "@id": "/exclusiveOr/shape/item0/property/property/a#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/exclusiveOr/shape/item0/property/property/a#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode",
-      "sourcemaps:value": "[(10,6)-(10,12)]"
-    },
-    {
-      "@id": "#/declarations/SchemaNode/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode",
-      "sourcemaps:value": "[(9,4)-(16,5)]"
-    },
-    {
-      "@id": "#/declarations/Child/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/Child",
-      "sourcemaps:value": "[(1,0)-(34,1)]"
-    },
-    {
-      "@id": "/exclusiveOr/shape/item1/property/property/b#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/exclusiveOr/shape/item1/property/property/b#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode_1/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode_1",
-      "sourcemaps:value": "[(18,6)-(18,12)]"
-    },
-    {
-      "@id": "#/declarations/SchemaNode_1/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/SchemaNode_1",
-      "sourcemaps:value": "[(17,4)-(24,5)]"
-    },
-    {
-      "@id": "/exclusiveOr/shape/item2/property/property/c#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf.json/exclusiveOr/shape/item2/property/property/c",
-      "sourcemaps:value": "[(28,8)-(30,9)]"
-    },
-    {
-      "@id": "/exclusiveOr/shape/item0/property/property/a#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf.json/exclusiveOr/shape/item0/property/property/a",
-      "sourcemaps:value": "[(12,8)-(14,9)]"
-    },
-    {
-      "@id": "/exclusiveOr/shape/item1/property/property/b#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf.json/exclusiveOr/shape/item1/property/property/b",
-      "sourcemaps:value": "[(20,8)-(22,9)]"
+      "shacl:minCount": 0
     }
   ],
   "@context": {
@@ -380,7 +203,6 @@
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

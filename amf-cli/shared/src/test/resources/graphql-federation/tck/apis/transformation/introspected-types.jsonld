@@ -276,12 +276,7 @@
       "raml-shapes:range": {
         "@id": "#48"
       },
-      "shacl:name": "sdl",
-      "sourcemaps:sources": [
-        {
-          "@id": "#47/source-map"
-        }
-      ]
+      "shacl:name": "sdl"
     },
     {
       "@id": "#12",
@@ -324,22 +319,6 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#48/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#47/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:virtual-element": [
-        {
-          "@id": "#47/source-map/virtual-element/element_0"
-        }
       ]
     },
     {
@@ -366,11 +345,6 @@
       "doc:customDomainProperties": [
         {
           "@id": "#23"
-        }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#13/source-map"
         }
       ]
     },
@@ -399,28 +373,7 @@
         {
           "@id": "#23"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#32/source-map"
-        }
       ]
-    },
-    {
-      "@id": "#48/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:virtual-element": [
-        {
-          "@id": "#48/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#47/source-map/virtual-element/element_0",
-      "sourcemaps:element": "amf://id#47",
-      "sourcemaps:value": "true"
     },
     {
       "@id": "#14",
@@ -434,12 +387,7 @@
         "@id": "#15"
       },
       "shacl:minCount": 1,
-      "shacl:name": "id",
-      "sourcemaps:sources": [
-        {
-          "@id": "#14/source-map"
-        }
-      ]
+      "shacl:name": "id"
     },
     {
       "@id": "#16",
@@ -453,12 +401,7 @@
         "@id": "#17"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "sourcemaps:sources": [
-        {
-          "@id": "#16/source-map"
-        }
-      ]
+      "shacl:name": "name"
     },
     {
       "core:extensionName": "key",
@@ -473,22 +416,6 @@
       }
     },
     {
-      "@id": "#13/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:declared-element": [
-        {
-          "@id": "#13/source-map/declared-element/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#13/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
       "@id": "#33",
       "@type": [
         "shacl:PropertyShape",
@@ -500,12 +427,7 @@
         "@id": "#34"
       },
       "shacl:minCount": 1,
-      "shacl:name": "id",
-      "sourcemaps:sources": [
-        {
-          "@id": "#33/source-map"
-        }
-      ]
+      "shacl:name": "id"
     },
     {
       "@id": "#35",
@@ -519,33 +441,7 @@
         "@id": "#36"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "sourcemaps:sources": [
-        {
-          "@id": "#35/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#32/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:declared-element": [
-        {
-          "@id": "#32/source-map/declared-element/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#32/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#48/source-map/virtual-element/element_0",
-      "sourcemaps:element": "amf://id#48",
-      "sourcemaps:value": "true"
+      "shacl:name": "name"
     },
     {
       "@id": "#15",
@@ -561,23 +457,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#anyType"
         }
       ],
-      "raml-shapes:format": "ID",
-      "sourcemaps:sources": [
-        {
-          "@id": "#15/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#14/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#14/source-map/lexical/element_0"
-        }
-      ]
+      "raml-shapes:format": "ID"
     },
     {
       "@id": "#17",
@@ -591,22 +471,6 @@
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#17/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#16/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#16/source-map/lexical/element_0"
         }
       ]
     },
@@ -626,16 +490,6 @@
       "core:name": "fields"
     },
     {
-      "@id": "#13/source-map/declared-element/element_0",
-      "sourcemaps:element": "amf://id#13",
-      "sourcemaps:value": ""
-    },
-    {
-      "@id": "#13/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#13",
-      "sourcemaps:value": "[(7,0)-(10,1)]"
-    },
-    {
       "@id": "#34",
       "@type": [
         "raml-shapes:ScalarShape",
@@ -649,23 +503,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#anyType"
         }
       ],
-      "raml-shapes:format": "ID",
-      "sourcemaps:sources": [
-        {
-          "@id": "#34/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#33/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#33/source-map/lexical/element_0"
-        }
-      ]
+      "raml-shapes:format": "ID"
     },
     {
       "@id": "#36",
@@ -680,117 +518,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#36/source-map"
-        }
       ]
-    },
-    {
-      "@id": "#35/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#35/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#32/source-map/declared-element/element_0",
-      "sourcemaps:element": "amf://id#32",
-      "sourcemaps:value": ""
-    },
-    {
-      "@id": "#32/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#32",
-      "sourcemaps:value": "[(12,0)-(15,1)]"
-    },
-    {
-      "@id": "#15/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#15/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#14/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#14",
-      "sourcemaps:value": "[(8,4)-(8,11)]"
-    },
-    {
-      "@id": "#17/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#17/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#16/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#16",
-      "sourcemaps:value": "[(9,4)-(9,16)]"
-    },
-    {
-      "@id": "#34/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#34/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#33/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#33",
-      "sourcemaps:value": "[(13,4)-(13,11)]"
-    },
-    {
-      "@id": "#36/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#36/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#35/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#35",
-      "sourcemaps:value": "[(14,4)-(14,16)]"
-    },
-    {
-      "@id": "#15/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#15",
-      "sourcemaps:value": "[(8,8)-(8,11)]"
-    },
-    {
-      "@id": "#17/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#17",
-      "sourcemaps:value": "[(9,10)-(9,16)]"
-    },
-    {
-      "@id": "#34/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#34",
-      "sourcemaps:value": "[(13,8)-(13,11)]"
-    },
-    {
-      "@id": "#36/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#36",
-      "sourcemaps:value": "[(14,10)-(14,16)]"
     },
     {
       "@id": "",
@@ -872,12 +600,7 @@
           "@id": "#56"
         }
       ],
-      "shacl:name": "Romagnoli",
-      "sourcemaps:sources": [
-        {
-          "@id": "#51/source-map"
-        }
-      ]
+      "shacl:name": "Romagnoli"
     },
     {
       "@id": "#26",
@@ -1061,12 +784,7 @@
         "@id": "#53"
       },
       "shacl:minCount": 1,
-      "shacl:name": "id",
-      "sourcemaps:sources": [
-        {
-          "@id": "#52/source-map"
-        }
-      ]
+      "shacl:name": "id"
     },
     {
       "@id": "#54",
@@ -1080,12 +798,7 @@
         "@id": "#55"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "sourcemaps:sources": [
-        {
-          "@id": "#54/source-map"
-        }
-      ]
+      "shacl:name": "name"
     },
     {
       "@id": "#56",
@@ -1099,28 +812,7 @@
         "@id": "#57"
       },
       "shacl:minCount": 1,
-      "shacl:name": "goals",
-      "sourcemaps:sources": [
-        {
-          "@id": "#56/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#51/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:declared-element": [
-        {
-          "@id": "#51/source-map/declared-element/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#51/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:name": "goals"
     },
     {
       "@id": "#59",
@@ -1229,23 +921,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#anyType"
         }
       ],
-      "raml-shapes:format": "ID",
-      "sourcemaps:sources": [
-        {
-          "@id": "#53/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#52/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#52/source-map/lexical/element_0"
-        }
-      ]
+      "raml-shapes:format": "ID"
     },
     {
       "@id": "#55",
@@ -1259,22 +935,6 @@
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#55/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#54/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#54/source-map/lexical/element_0"
         }
       ]
     },
@@ -1291,33 +951,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#57/source-map"
-        }
       ]
-    },
-    {
-      "@id": "#56/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#56/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#51/source-map/declared-element/element_0",
-      "sourcemaps:element": "amf://id#51",
-      "sourcemaps:value": ""
-    },
-    {
-      "@id": "#51/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#51",
-      "sourcemaps:value": "[(1,0)-(5,1)]"
     },
     {
       "@id": "#62",
@@ -1388,54 +1022,6 @@
       "shacl:name": "from"
     },
     {
-      "@id": "#53/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#53/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#52/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#52",
-      "sourcemaps:value": "[(2,4)-(2,11)]"
-    },
-    {
-      "@id": "#55/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#55/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#54/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#54",
-      "sourcemaps:value": "[(3,4)-(3,17)]"
-    },
-    {
-      "@id": "#57/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#57/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#56/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#56",
-      "sourcemaps:value": "[(4,4)-(4,15)]"
-    },
-    {
       "@id": "#29",
       "@type": [
         "raml-shapes:UnionShape",
@@ -1483,21 +1069,6 @@
       ]
     },
     {
-      "@id": "#53/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#53",
-      "sourcemaps:value": "[(2,8)-(2,11)]"
-    },
-    {
-      "@id": "#55/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#55",
-      "sourcemaps:value": "[(3,10)-(3,17)]"
-    },
-    {
-      "@id": "#57/source-map/lexical/element_0",
-      "sourcemaps:element": "amf://id#57",
-      "sourcemaps:value": "[(4,11)-(4,15)]"
-    },
-    {
       "@id": "#30",
       "@type": [
         "raml-shapes:ScalarShape",
@@ -1531,7 +1102,6 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   }
 }

@@ -21,11 +21,6 @@
         {
           "@id": "#/any/schema/and/shape/main"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/source-map"
-        }
       ]
     },
     {
@@ -56,23 +51,7 @@
           "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card"
         }
       ],
-      "shacl:name": "main",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:name": "main"
     },
     {
       "@id": "#/any/schema/and/shape/main/property/property/credit_card",
@@ -91,12 +70,7 @@
         "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card"
       },
       "shacl:minCount": 0,
-      "shacl:name": "credit_card",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/source-map"
-        }
-      ]
+      "shacl:name": "credit_card"
     },
     {
       "@id": "#/any/schema/and/shape/main/property/property/something_else",
@@ -115,12 +89,7 @@
         "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else"
       },
       "shacl:minCount": 0,
-      "shacl:name": "something_else",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/source-map"
-        }
-      ]
+      "shacl:name": "something_else"
     },
     {
       "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card",
@@ -131,11 +100,6 @@
       "raml-shapes:propertySource": "credit_card",
       "raml-shapes:propertyTarget": [
         "something_else"
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map"
-        }
       ]
     },
     {
@@ -147,42 +111,7 @@
       "raml-shapes:propertySource": "credit_card",
       "raml-shapes:schemaTarget": {
         "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/any/schema/and/shape/main/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/source-map/lexical/element_3"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema",
-      "sourcemaps:value": "[(1,0)-(35,1)]"
+      }
     },
     {
       "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card",
@@ -198,23 +127,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "credit_card",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:name": "credit_card"
     },
     {
       "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else",
@@ -230,40 +143,7 @@
           "@id": "http://a.ml/vocabularies/shapes#number"
         }
       ],
-      "shacl:name": "something_else",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_2"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_1"
-        }
-      ]
+      "shacl:name": "something_else"
     },
     {
       "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema",
@@ -280,117 +160,7 @@
           "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address"
         }
       ],
-      "shacl:name": "schema",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_2"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main",
-      "sourcemaps:value": "[(6,6)-(6,12)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map/lexical/element_3",
-      "sourcemaps:element": "raml-shapes:dependencies",
-      "sourcemaps:value": "[(15,6)-(19,7)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map/lexical/element_1",
-      "sourcemaps:element": "shacl:property",
-      "sourcemaps:value": "[(7,6)-(14,7)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map/lexical/element_0",
-      "sourcemaps:element": "raml-shapes:schemaDependencies",
-      "sourcemaps:value": "[(20,6)-(32,7)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/source-map/lexical/element_2",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main",
-      "sourcemaps:value": "[(5,4)-(33,5)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/credit_card",
-      "sourcemaps:value": "[(8,8)-(10,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/something_else",
-      "sourcemaps:value": "[(11,8)-(13,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_2",
-      "sourcemaps:element": "raml-shapes:propertySource",
-      "sourcemaps:value": "[(16,8)-(16,21)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_0",
-      "sourcemaps:element": "raml-shapes:propertyTarget",
-      "sourcemaps:value": "[(16,23)-(18,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/dependencies/dependency/credit_card/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/dependencies/dependency/credit_card",
-      "sourcemaps:value": "[(16,8)-(18,9)]"
+      "shacl:name": "schema"
     },
     {
       "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address",
@@ -409,76 +179,7 @@
         "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address"
       },
       "shacl:minCount": 1,
-      "shacl:name": "billing_address",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_2",
-      "sourcemaps:element": "raml-shapes:propertySource",
-      "sourcemaps:value": "[(21,8)-(21,21)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_0",
-      "sourcemaps:element": "raml-shapes:schemaTarget",
-      "sourcemaps:value": "[(21,23)-(31,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card",
-      "sourcemaps:value": "[(21,8)-(31,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card",
-      "sourcemaps:value": "[(9,10)-(9,16)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card",
-      "sourcemaps:value": "[(8,8)-(10,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/credit_card/scalar/credit_card/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:datatype",
-      "sourcemaps:value": "[(9,10)-(9,26)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/something_else/scalar/something_else",
-      "sourcemaps:value": "[(12,10)-(12,16)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/property/property/something_else/scalar/something_else",
-      "sourcemaps:value": "[(11,8)-(13,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/property/property/something_else/scalar/something_else/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:datatype",
-      "sourcemaps:value": "[(12,10)-(12,26)]"
+      "shacl:name": "billing_address"
     },
     {
       "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address",
@@ -494,85 +195,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "billing_address",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema",
-      "sourcemaps:value": "[(22,10)-(22,16)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema",
-      "sourcemaps:value": "[(21,23)-(31,9)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:property",
-      "sourcemaps:value": "[(26,10)-(30,11)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address",
-      "sourcemaps:value": "[(27,12)-(29,13)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:minCount",
-      "sourcemaps:value": "[(24,12)-(24,29)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address",
-      "sourcemaps:value": "[(28,14)-(28,20)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address",
-      "sourcemaps:value": "[(27,12)-(29,13)]"
-    },
-    {
-      "@id": "#/any/schema/and/shape/main/schemaDependencies/dependencySchema/credit_card/shape/schema/property/property/billing_address/scalar/billing_address/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:datatype",
-      "sourcemaps:value": "[(28,14)-(28,30)]"
+      "shacl:name": "billing_address"
     },
     {
       "@id": "",
@@ -594,7 +217,6 @@
     "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
-    "doc": "http://a.ml/vocabularies/document#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    "doc": "http://a.ml/vocabularies/document#"
   }
 }

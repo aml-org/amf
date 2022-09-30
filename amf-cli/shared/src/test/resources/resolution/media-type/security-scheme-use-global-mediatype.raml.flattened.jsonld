@@ -97,14 +97,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/synthesized-field/element_0"
         }
       ]
     },
@@ -173,14 +173,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(7,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/server/https%3A%2F%2Fexample.com%2Fapi",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
@@ -405,14 +405,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/auto-generated-name/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -479,14 +479,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default",
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,8)-(27,21)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/payload/default/shape/default",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/application%2Fjson",
@@ -593,14 +593,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/auto-generated-name/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -615,14 +615,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(19,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml#/declares/scheme/oauth_2_0/response/resp/401/payload/default/shape/default",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/security-scheme-use-global-mediatype.raml",

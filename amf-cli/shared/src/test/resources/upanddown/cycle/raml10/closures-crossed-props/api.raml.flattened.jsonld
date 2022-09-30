@@ -243,11 +243,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/lexical/element_2"
@@ -257,6 +252,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/declared-element/element_0"
         }
       ]
     },
@@ -394,11 +394,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,15)-(13,0)]"
@@ -412,6 +407,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(13,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declares/shape/crossedNames/property/property/myType1/scalar/myType1/source-map",

@@ -26,12 +26,7 @@
           "@id": "#/shape/schema/property/property/age"
         }
       ],
-      "shacl:name": "schema",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/shape/schema/source-map"
-        }
-      ]
+      "shacl:name": "schema"
     },
     {
       "@id": "#/shape/schema/property/property/name",
@@ -50,12 +45,7 @@
         "@id": "#/shape/schema/property/property/name/any/default-any"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/shape/schema/property/property/name/source-map"
-        }
-      ]
+      "shacl:name": "name"
     },
     {
       "@id": "#/shape/schema/property/property/age",
@@ -74,26 +64,7 @@
         "@id": "#/shape/schema/property/property/age/any/default-any"
       },
       "shacl:minCount": 0,
-      "shacl:name": "age",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/shape/schema/property/property/age/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/shape/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/shape/schema/source-map/lexical/element_0"
-        }
-      ]
+      "shacl:name": "age"
     },
     {
       "@id": "#/shape/schema/property/property/name/any/default-any",
@@ -102,22 +73,6 @@
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/shape/schema/property/property/name/any/default-any/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/property/property/name/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/shape/schema/property/property/name/source-map/lexical/element_0"
-        }
       ]
     },
     {
@@ -130,49 +85,7 @@
       ],
       "shacl:not": {
         "@id": "#/shape/schema/property/property/age/any/default-any/any/default-any"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "#/shape/schema/property/property/age/any/default-any/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/property/property/age/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/shape/schema/property/property/age/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/source-map/lexical/element_1",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json#/shape/schema",
-      "sourcemaps:value": "[(1,0)-(8,1)]"
-    },
-    {
-      "@id": "#/shape/schema/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:property",
-      "sourcemaps:value": "[(4,2)-(7,3)]"
-    },
-    {
-      "@id": "#/shape/schema/property/property/name/any/default-any/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/shape/schema/property/property/name/any/default-any/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/property/property/name/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json#/shape/schema/property/property/name",
-      "sourcemaps:value": "[(5,4)-(5,16)]"
+      }
     },
     {
       "@id": "#/shape/schema/property/property/age/any/default-any/any/default-any",
@@ -182,42 +95,6 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ]
-    },
-    {
-      "@id": "#/shape/schema/property/property/age/any/default-any/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:virtual-element": [
-        {
-          "@id": "#/shape/schema/property/property/age/any/default-any/source-map/virtual-element/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/shape/schema/property/property/age/any/default-any/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/shape/schema/property/property/age/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json#/shape/schema/property/property/age",
-      "sourcemaps:value": "[(6,4)-(6,16)]"
-    },
-    {
-      "@id": "#/shape/schema/property/property/name/any/default-any/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json#/shape/schema/property/property/name/any/default-any",
-      "sourcemaps:value": "[(5,4)-(5,16)]"
-    },
-    {
-      "@id": "#/shape/schema/property/property/age/any/default-any/source-map/virtual-element/element_0",
-      "sourcemaps:element": "shacl:not",
-      "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/shape/schema/property/property/age/any/default-any/source-map/lexical/element_0",
-      "sourcemaps:element": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json#/shape/schema/property/property/age/any/default-any",
-      "sourcemaps:value": "[(6,4)-(6,16)]"
     },
     {
       "@id": "",
@@ -239,7 +116,6 @@
     "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
-    "doc": "http://a.ml/vocabularies/document#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    "doc": "http://a.ml/vocabularies/document#"
   }
 }

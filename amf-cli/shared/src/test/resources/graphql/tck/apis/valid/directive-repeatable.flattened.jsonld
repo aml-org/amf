@@ -69,11 +69,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map"
-        }
       ]
     },
     {
@@ -92,12 +87,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node"
       },
       "http://a.ml/vocabularies/core#name": "doc",
-      "http://a.ml/vocabularies/core#repeatable": true,
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#repeatable": true
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name",
@@ -111,12 +101,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
-      "http://www.w3.org/ns/shacl#name": "name",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "name"
     },
     {
       "http://a.ml/vocabularies/core#extensionName": "doc",
@@ -128,12 +113,7 @@
       ],
       "http://a.ml/vocabularies/data#value": {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map"
-        }
-      ]
+      }
     },
     {
       "http://a.ml/vocabularies/core#extensionName": "doc",
@@ -145,28 +125,7 @@
       ],
       "http://a.ml/vocabularies/data#value": {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node",
@@ -182,28 +141,7 @@
           "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value"
         }
       ],
-      "http://a.ml/vocabularies/shapes#inputOnly": true,
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map/lexical/element_0"
-        }
-      ]
+      "http://a.ml/vocabularies/shapes#inputOnly": true
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar",
@@ -217,22 +155,6 @@
       "http://www.w3.org/ns/shacl#datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/source-map/lexical/element_0"
         }
       ]
     },
@@ -249,28 +171,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map/virtual-element/element_0"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "value"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value",
@@ -285,38 +186,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(3,1)]"
+      "http://a.ml/vocabularies/core#name": "value"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value",
@@ -329,91 +199,7 @@
       "http://a.ml/vocabularies/shapes#range": {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union"
       },
-      "http://www.w3.org/ns/shacl#name": "value",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(5,50)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,4)-(2,16)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,17)-(1,31)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,38)-(1,52)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "http://www.w3.org/ns/shacl#name": "value"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union",
@@ -434,48 +220,12 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,10)-(2,16)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc/data-node/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,24)-(1,31)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/shape/Person/customDomainProperties/doc_1/data-node/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,45)-(1,52)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil",
       "@type": [
         "http://a.ml/vocabularies/shapes#NilShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil/source-map"
-        }
       ]
     },
     {
@@ -491,49 +241,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/scalar/default-scalar/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,15)-(5,28)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/scalar/default-scalar/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/nil/default-nil",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-repeatable.graphql#/declares/doc/shape/default-node/property/property/value/union/default-union/anyOf/scalar/default-scalar",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,22)-(5,28)]"
     }
   ]
 }

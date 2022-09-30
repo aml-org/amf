@@ -72,9 +72,6 @@
         "@id": "#5"
       },
       "smaps": {
-        "virtual-element": {
-          "doc:declares": "true"
-        },
         "lexical": {
           "#1": "[(1,0)-(5,15)]"
         }
@@ -103,14 +100,14 @@
         "resolved-link": {
           "#6": "amf://id#6"
         },
-        "resolved-link-target": {
-          "#6": "amf://id#2"
+        "lexical": {
+          "#6": "[(3,2)-(5,15)]"
         },
         "declared-element": {
           "#6": ""
         },
-        "lexical": {
-          "#6": "[(3,2)-(5,15)]"
+        "resolved-link-target": {
+          "#6": "amf://id#2"
         }
       }
     },
@@ -134,12 +131,12 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "declared-element": {
-          "#2": ""
-        },
         "lexical": {
           "shacl:name": "[(3,2)-(3,3)]",
           "#2": "[(3,2)-(5,15)]"
+        },
+        "declared-element": {
+          "#2": ""
         }
       }
     },

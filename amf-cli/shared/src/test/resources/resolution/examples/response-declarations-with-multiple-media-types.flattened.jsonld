@@ -200,12 +200,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml",
@@ -217,12 +212,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/xml",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/source-map",
@@ -253,12 +243,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml",
@@ -270,12 +255,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/xml",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/source-map",
@@ -342,28 +322,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201",
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,2)-(34,0)]"
@@ -377,28 +335,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201",
       "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml/source-map/virtual-element/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/source-map/lexical/element_1",
@@ -514,9 +450,9 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -530,31 +466,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/lexical/element_1"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/declared-element/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fxml",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fxml",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/property/property/status/scalar/status",
@@ -663,14 +579,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -707,14 +623,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -729,9 +645,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/declared-element/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "http://a.ml/vocabularies/document-source-maps#value": "[(19,4)-(19,8)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/lexical/element_2",
@@ -749,9 +665,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,2)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/type-property-lexical-info/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,4)-(19,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/property/property/status/scalar/status/source-map",
@@ -884,14 +800,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/resp/201_response_object,file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,6)-(34,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson0",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/resp/201_response_object,file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/201/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/resp/202_response_object/examples/example/application%2Fjson/object_1/status",
@@ -966,14 +882,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/resp/202_response_object,file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,6)-(42,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/example/application%2Fjson1",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/resp/202_response_object,file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/202/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-declarations-with-multiple-media-types.yaml#/declares/shape/ResponseObject/property/property/status/scalar/status/source-map/type-property-lexical-info/element_0",

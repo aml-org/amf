@@ -210,14 +210,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/synthesized-field/element_0"
         }
       ]
     },
@@ -530,14 +530,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/server/falsedomain.com%2Fapis",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers/source-map/lexical/element_1",
@@ -736,11 +736,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/source-map/virtual-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/source-map/lexical/element_2"
@@ -800,11 +795,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id/source-map/virtual-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -937,11 +927,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/source-map/virtual-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -1136,11 +1121,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#required",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(11,0)]"
@@ -1179,11 +1159,6 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#binding",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/parameter/parameter/path/customer_id",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -1273,11 +1248,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/source-map/lexical/element_0"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/source-map/virtual-element/element_0"
-        }
       ]
     },
     {
@@ -1314,11 +1284,6 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#binding",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -1510,11 +1475,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,10)-(37,36)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/scalar/schema/source-map/synthesized-field/element_0",

@@ -22,11 +22,6 @@
         {
           "@id": "#/web-api/endpoint/%2Fsample"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "/web-api#/source-map"
-        }
       ]
     },
     {
@@ -39,25 +34,6 @@
       "apiContract:supportedOperation": [
         {
           "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get"
-        }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "/web-api#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/web-api#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "/web-api#/source-map/lexical/element_0"
         }
       ]
     },
@@ -73,36 +49,7 @@
         {
           "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200"
         }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map"
-        }
       ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/web-api#/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml/web-api",
-      "sourcemaps:value": "[(2,0)-(15,0)]"
-    },
-    {
-      "@id": "/web-api#/source-map/lexical/element_0",
-      "sourcemaps:element": "core:name",
-      "sourcemaps:value": "[(2,0)-(3,0)]"
     },
     {
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200",
@@ -117,36 +64,7 @@
       "core:description": "A Response",
       "aml:tag": {
         "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml#/web-api/endpoint/%2Fsample",
-      "sourcemaps:value": "[(6,0)-(15,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/source-map/lexical/element_0",
-      "sourcemaps:element": "apiContract:path",
-      "sourcemaps:value": "[(6,0)-(6,7)]"
+      }
     },
     {
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element",
@@ -159,36 +77,7 @@
       "aml:Type": {
         "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element"
       },
-      "aml:Tag": "SomeTag",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml#/web-api/endpoint/%2Fsample/supportedOperation/get",
-      "sourcemaps:value": "[(7,2)-(15,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/source-map/lexical/element_0",
-      "sourcemaps:element": "apiContract:returns",
-      "sourcemaps:value": "[(8,4)-(15,0)]"
+      "aml:Tag": "SomeTag"
     },
     {
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element",
@@ -198,78 +87,7 @@
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "aml:TagTypeValue": "SomeTagType",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_2"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200",
-      "sourcemaps:value": "[(9,6)-(15,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
-      "sourcemaps:element": "core:description",
-      "sourcemaps:value": "[(14,8)-(15,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_2",
-      "sourcemaps:element": "aml:Type",
-      "sourcemaps:value": "[(12,10)-(14,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_0",
-      "sourcemaps:element": "aml:Tag",
-      "sourcemaps:value": "[(11,10)-(12,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element",
-      "sourcemaps:value": "[(10,14)-(14,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element",
-      "sourcemaps:value": "[(12,15)-(14,0)]"
-    },
-    {
-      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element/source-map/lexical/element_0",
-      "sourcemaps:element": "aml:TagTypeValue",
-      "sourcemaps:value": "[(13,12)-(14,0)]"
+      "aml:TagTypeValue": "SomeTagType"
     },
     {
       "@id": "",
@@ -294,7 +112,6 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "meta": "http://a.ml/vocabularies/meta#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

@@ -23,60 +23,7 @@
       "semantics:key_1_3": "Something",
       "semantics:key_2_4": "SomethingElse",
       "semantics:info_1_1": 4,
-      "semantics:info_2_2": 5,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/encodes/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/encodes/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/encodes/source-map/lexical/element_4"
-        },
-        {
-          "@id": "#/encodes/source-map/lexical/element_2"
-        },
-        {
-          "@id": "#/encodes/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/encodes/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/encodes/source-map/lexical/element_3"
-        }
-      ]
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_4",
-      "sourcemaps:element": "semantics:info_1_1",
-      "sourcemaps:value": "[(5,2)-(5,13)]"
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_2",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/duplicate-semantics.json#/encodes",
-      "sourcemaps:value": "[(1,0)-(7,1)]"
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_0",
-      "sourcemaps:element": "semantics:info_2_2",
-      "sourcemaps:value": "[(6,2)-(6,13)]"
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_1",
-      "sourcemaps:element": "semantics:key_2_4",
-      "sourcemaps:value": "[(4,2)-(4,26)]"
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_3",
-      "sourcemaps:element": "semantics:key_1_3",
-      "sourcemaps:value": "[(3,2)-(3,22)]"
+      "semantics:info_2_2": 5
     },
     {
       "@id": "",
@@ -98,34 +45,12 @@
       "doc:root": true,
       "doc:processingData": {
         "@id": "/BaseUnitProcessingData"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/duplicate-semantics.json",
-      "sourcemaps:value": "[(1,0)-(7,1)]"
+      }
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/duplicate-semantics.json",
     "doc": "http://a.ml/vocabularies/document#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "meta": "http://a.ml/vocabularies/meta#",
     "semantics": "https://a.ml/semantic-json-schema#"
   }

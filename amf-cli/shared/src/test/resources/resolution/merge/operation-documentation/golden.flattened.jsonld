@@ -18,12 +18,7 @@
       "http://a.ml/vocabularies/core#documentation": {
         "@id": "target/creative-work/aTraitUrl"
       },
-      "http://a.ml/vocabularies/apiContract#operationId": "traitOperationId",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "testId/subscribe/traitOperationId#/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/apiContract#operationId": "traitOperationId"
     },
     {
       "@id": "target/creative-work/aTraitUrl",
@@ -36,44 +31,7 @@
           "@id": "aTraitUrl"
         }
       ],
-      "http://a.ml/vocabularies/core#description": "aTraitDescription",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "target/creative-work/aTraitUrl#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "testId/subscribe/traitOperationId#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "testId/subscribe/traitOperationId#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "target/creative-work/aTraitUrl#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "target/creative-work/aTraitUrl#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "testId/subscribe/traitOperationId#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "testId/subscribe/traitOperationId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(4,33)]"
-    },
-    {
-      "@id": "target/creative-work/aTraitUrl#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/creative-work/aTraitUrl",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(4,33)]"
+      "http://a.ml/vocabularies/core#description": "aTraitDescription"
     },
     {
       "@id": "testId",

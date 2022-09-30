@@ -110,12 +110,7 @@
           "@id": "/property/property/info"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/Somesecuritything/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "/property/property/key",
@@ -135,12 +130,7 @@
         }
       ],
       "shacl:minCount": 1,
-      "shacl:pattern": "^[A-Za-z]*$",
-      "sourcemaps:sources": [
-        {
-          "@id": "/property/property/key#/source-map"
-        }
-      ]
+      "shacl:pattern": "^[A-Za-z]*$"
     },
     {
       "@id": "/property/property/info",
@@ -154,70 +144,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#long"
         }
       ],
-      "shacl:minCount": 1,
-      "sourcemaps:sources": [
-        {
-          "@id": "/property/property/info#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/Somesecuritything/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/Somesecuritything/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/Somesecuritything/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/property/property/key#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/property/property/key#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/property/property/info#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/property/property/info#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/Somesecuritything/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/Somesecuritything",
-      "sourcemaps:value": "[(9,2)-(9,8)]"
-    },
-    {
-      "@id": "#/declarations/Somesecuritything/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/Somesecuritything",
-      "sourcemaps:value": "[(1,0)-(28,1)]"
-    },
-    {
-      "@id": "/property/property/key#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic-with-characteristics.json/property/property/key",
-      "sourcemaps:value": "[(15,4)-(23,5)]"
-    },
-    {
-      "@id": "/property/property/info#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic-with-characteristics.json/property/property/info",
-      "sourcemaps:value": "[(24,4)-(26,5)]"
+      "shacl:minCount": 1
     }
   ],
   "@context": {
@@ -225,7 +152,6 @@
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

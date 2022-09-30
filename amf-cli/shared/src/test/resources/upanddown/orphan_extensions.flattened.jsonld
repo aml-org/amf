@@ -139,19 +139,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#host-lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/host-lexical/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/virtual-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
@@ -214,14 +209,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/orphan-oas-extension/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -261,18 +256,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(14,3)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/host-lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -353,14 +343,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "paths"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,25)-(31,30)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/customDomainProperties/paths-extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "paths"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/returns/resp/200/source-map",
@@ -392,14 +382,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/orphan-oas-extension/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -439,14 +429,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "responses"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,35)-(27,40)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/endpoint/%2Flevelzero/supportedOperation/get/customDomainProperties/responses-extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "responses"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json",
@@ -589,11 +579,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/lexical/element_0"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/virtual-element/element_0"
-        }
       ]
     },
     {
@@ -682,14 +667,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/orphan-oas-extension/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -697,11 +682,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,21)-(43,5)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map",
@@ -756,14 +736,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "scopes"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,30)-(39,35)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/customDomainProperties/scopes-extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "scopes"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/orphan_extensions.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map/lexical/element_0",

@@ -34,11 +34,11 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "#32": "true"
-              },
               "lexical": {
                 "core:urlTemplate": "[(4,0)-(6,0)]"
+              },
+              "synthesized-field": {
+                "#32": "true"
               }
             }
           }
@@ -196,12 +196,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
-                                  "inheritance-provenance": {
-                                    "#10": "amf://id#1"
-                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(11,9)-(11,15)]",
                                     "#10": "[(11,6)-(12,0)]"
+                                  },
+                                  "inheritance-provenance": {
+                                    "#10": "amf://id#1"
                                   }
                                 }
                               },
@@ -261,12 +261,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
-                                  "inheritance-provenance": {
-                                    "#27": "amf://id#9"
-                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(16,9)-(16,15)]",
                                     "#27": "[(16,6)-(17,0)]"
+                                  },
+                                  "inheritance-provenance": {
+                                    "#27": "amf://id#9"
                                   }
                                 }
                               },
@@ -388,12 +388,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
-                                  "inheritance-provenance": {
-                                    "#13": "amf://id#1"
-                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(10,9)-(10,15)]",
                                     "#13": "[(10,6)-(11,0)]"
+                                  },
+                                  "inheritance-provenance": {
+                                    "#13": "amf://id#1"
                                   }
                                 }
                               },
@@ -453,12 +453,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
-                                  "inheritance-provenance": {
-                                    "#14": "amf://id#1"
-                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(12,9)-(12,15)]",
                                     "#14": "[(12,6)-(13,0)]"
+                                  },
+                                  "inheritance-provenance": {
+                                    "#14": "amf://id#1"
                                   }
                                 }
                               },
@@ -518,12 +518,12 @@
                                     "shacl:minCount": "true",
                                     "shacl:path": "true"
                                   },
-                                  "inheritance-provenance": {
-                                    "#30": "amf://id#9"
-                                  },
                                   "lexical": {
                                     "raml-shapes:range": "[(17,9)-(17,15)]",
                                     "#30": "[(17,6)-(18,0)]"
+                                  },
+                                  "inheritance-provenance": {
+                                    "#30": "amf://id#9"
                                   }
                                 }
                               }
@@ -540,14 +540,14 @@
                               "inherited-shapes": {
                                 "#26": "amf://id#31"
                               },
-                              "synthesized-field": {
-                                "shacl:closed": "true"
+                              "lexical": {
+                                "#26": "[(24,8)-(27,21)]"
                               },
                               "type-property-lexical-info": {
                                 "#26": "[(25,10)-(25,14)]"
                               },
-                              "lexical": {
-                                "#26": "[(24,8)-(27,21)]"
+                              "synthesized-field": {
+                                "shacl:closed": "true"
                               }
                             }
                           }
@@ -562,9 +562,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(23,6)-(27,21)]"
-                      },
-                      "virtual-element": {
-                        "#24": "true"
                       }
                     }
                   }
@@ -841,18 +838,18 @@
           "resolved-link": {
             "#1": "amf://id#8"
           },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
-          },
-          "declared-element": {
-            "#1": ""
+          "type-property-lexical-info": {
+            "#1": "[(8,4)-(8,8)]"
           },
           "lexical": {
             "shacl:name": "[(7,2)-(7,22)]",
             "#1": "[(7,2)-(13,0)]"
           },
-          "type-property-lexical-info": {
-            "#1": "[(8,4)-(8,8)]"
+          "declared-element": {
+            "#1": ""
+          },
+          "resolved-link-target": {
+            "#1": "amf://id#1"
           }
         }
       },
@@ -927,12 +924,12 @@
                 "shacl:minCount": "true",
                 "shacl:path": "true"
               },
-              "inheritance-provenance": {
-                "#10": "amf://id#1"
-              },
               "lexical": {
                 "raml-shapes:range": "[(11,9)-(11,15)]",
                 "#10": "[(11,6)-(12,0)]"
+              },
+              "inheritance-provenance": {
+                "#10": "amf://id#1"
               }
             }
           },
@@ -1054,12 +1051,12 @@
                 "shacl:minCount": "true",
                 "shacl:path": "true"
               },
-              "inheritance-provenance": {
-                "#13": "amf://id#1"
-              },
               "lexical": {
                 "raml-shapes:range": "[(10,9)-(10,15)]",
                 "#13": "[(10,6)-(11,0)]"
+              },
+              "inheritance-provenance": {
+                "#13": "amf://id#1"
               }
             }
           },
@@ -1119,12 +1116,12 @@
                 "shacl:minCount": "true",
                 "shacl:path": "true"
               },
-              "inheritance-provenance": {
-                "#14": "amf://id#1"
-              },
               "lexical": {
                 "raml-shapes:range": "[(12,9)-(12,15)]",
                 "#14": "[(12,6)-(13,0)]"
+              },
+              "inheritance-provenance": {
+                "#14": "amf://id#1"
               }
             }
           },
@@ -1203,12 +1200,6 @@
           "resolved-link-target": {
             "#9": "amf://id#9"
           },
-          "resolved-link": {
-            "#9": "amf://id#17"
-          },
-          "inherited-shapes": {
-            "#9": "amf://id#18"
-          },
           "declared-element": {
             "#9": ""
           },
@@ -1218,6 +1209,12 @@
           },
           "type-property-lexical-info": {
             "#9": "[(14,4)-(14,8)]"
+          },
+          "resolved-link": {
+            "#9": "amf://id#17"
+          },
+          "inherited-shapes": {
+            "#9": "amf://id#18"
           }
         }
       }

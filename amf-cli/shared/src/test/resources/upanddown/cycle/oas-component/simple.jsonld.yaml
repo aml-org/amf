@@ -6,13 +6,13 @@ paths: {}
 components:
   schemas:
     refSchema:
-      $ref: "#/components/schemas/objectSchema"
+      $ref: objectSchema
     oneOfschema:
       oneOf:
         -
-          $ref: "#/components/schemas/objectSchema"
+          $ref: objectSchema
         -
-          $ref: "#/components/schemas/arraySchema"
+          $ref: arraySchema
       type: object
       discriminator:
         propertyName: a
@@ -41,9 +41,9 @@ components:
     allOfSchema:
       allOf:
         -
-          $ref: "#/components/schemas/objectSchema"
+          $ref: objectSchema
         -
-          $ref: "#/components/schemas/arraySchema"
+          $ref: arraySchema
     arraySchema:
       type: array
       maxItems: 100
@@ -54,9 +54,9 @@ components:
     anyOfSchema:
       anyOf:
         -
-          $ref: "#/components/schemas/objectSchema"
+          $ref: objectSchema
         -
-          $ref: "#/components/schemas/arraySchema"
+          $ref: arraySchema
     objectSchema:
       type: object
       minProperties: 0
@@ -152,7 +152,7 @@ components:
             type: string
       links:
         refLink:
-          $ref: "#/components/links/address"
+          $ref: address
   examples:
     aExample:
       summary: a summary
@@ -189,7 +189,7 @@ components:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/objectSchema"
+                  $ref: objectSchema
           responses:
             "200":
               description: webhook successfully processed and no retries will be performed
