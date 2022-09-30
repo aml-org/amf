@@ -3,7 +3,7 @@ package amf.shapes.internal.annotations
 import amf.core.client.scala.model.domain._
 import org.mulesoft.common.client.lexical.PositionRange
 
-case class TypePropertyLexicalInfo(range: PositionRange) extends EternalSerializedAnnotation {
+case class TypePropertyLexicalInfo(range: PositionRange) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "type-property-lexical-info"
 
   override val value: String = range.toString
