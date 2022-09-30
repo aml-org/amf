@@ -219,9 +219,6 @@
         "resolved-link-target": {
           "#4": "amf://id#4"
         },
-        "resolved-link": {
-          "#4": "amf://id#12"
-        },
         "declared-element": {
           "#4": ""
         },
@@ -229,6 +226,9 @@
           "doc:dataNode": "[(15,4)-(23,0)]",
           "#4": "[(14,2)-(23,0)]",
           "core:name": "[(14,2)-(14,6)]"
+        },
+        "resolved-link": {
+          "#4": "amf://id#12"
         }
       }
     },
@@ -264,9 +264,6 @@
         "resolved-link-target": {
           "#13": "amf://id#13"
         },
-        "resolved-link": {
-          "#13": "amf://id#20"
-        },
         "declared-element": {
           "#13": ""
         },
@@ -274,6 +271,9 @@
           "doc:dataNode": "[(7,4)-(13,0)]",
           "#13": "[(6,2)-(13,0)]",
           "core:name": "[(6,2)-(6,9)]"
+        },
+        "resolved-link": {
+          "#13": "amf://id#20"
         }
       }
     },
@@ -345,20 +345,20 @@
           "doc:recursive": "true",
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#28": "amf://id#32"
-        },
         "resolved-link-target": {
           "#28": "amf://id#28"
-        },
-        "auto-generated-name": {
-          "#28": ""
         },
         "type-property-lexical-info": {
           "#28": "[(6,9)-(6,15)]"
         },
         "lexical": {
           "#28": "[(5,6)-(21,7)]"
+        },
+        "resolved-link": {
+          "#28": "amf://id#32"
+        },
+        "auto-generated-name": {
+          "#28": ""
         },
         "parsed-json-schema": {
           "#28": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -414,14 +414,14 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "auto-generated-name": {
-          "#40": ""
-        },
         "type-property-lexical-info": {
           "#40": "[(6,9)-(6,15)]"
         },
         "lexical": {
           "#40": "[(5,6)-(21,7)]"
+        },
+        "auto-generated-name": {
+          "#40": ""
         },
         "parsed-json-schema": {
           "#40": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -651,20 +651,20 @@
         "synthesized-field": {
           "doc:recursive": "true"
         },
-        "resolved-link": {
-          "#31": "amf://id#32"
-        },
         "resolved-link-target": {
           "#31": "amf://id#28"
-        },
-        "auto-generated-name": {
-          "#31": ""
         },
         "type-property-lexical-info": {
           "#31": "[(6,9)-(6,15)]"
         },
         "lexical": {
           "#31": "[(5,6)-(21,7)]"
+        },
+        "resolved-link": {
+          "#31": "amf://id#32"
+        },
+        "auto-generated-name": {
+          "#31": ""
         },
         "parsed-json-schema": {
           "#31": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"

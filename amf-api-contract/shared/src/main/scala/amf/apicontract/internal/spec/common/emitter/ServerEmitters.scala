@@ -294,7 +294,7 @@ private object Servers {
       case head :: Nil => Servers(Some(head), Nil)
       case _ =>
         val (default, servers) =
-          f.arrayValues(classOf[Server]).partition(_.annotations.isVirtual)
+          f.arrayValues(classOf[Server]).partition(_.annotations.find(classOf[VirtualElement]).isDefined)
         new Servers(default.headOption, servers)
     }
   }

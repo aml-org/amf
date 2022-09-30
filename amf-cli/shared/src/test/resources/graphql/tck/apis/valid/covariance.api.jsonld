@@ -112,29 +112,6 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "true"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -150,29 +127,6 @@
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/supportedOperation/query/Query.text/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(6,10)-(6,16)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               }
                             ]
@@ -185,29 +139,6 @@
                 "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "Query.text"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/web-api/endpoint/%2Fquery%2Ftext"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(6,16)]"
-                      }
-                    ]
                   }
                 ]
               }
@@ -277,29 +208,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(16,10)-(16,16)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -312,73 +220,12 @@
               {
                 "@value": "name"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(16,4)-(16,16)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Pet"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Pet"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(15,0)-(17,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -424,29 +271,6 @@
                   {
                     "@value": "HousePet"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet/union/default-union/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet/union/default-union/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet/union/default-union"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(38,14)-(38,22)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -459,73 +283,12 @@
               {
                 "@value": "housePet"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/property/property/housePet"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(38,4)-(38,22)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "HousePetOwner"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/HousePetOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(37,0)-(39,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -562,29 +325,6 @@
               {
                 "@value": "Dog"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Dog/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Dog/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Dog"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(35,17)-(35,20)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           },
           {
@@ -610,73 +350,12 @@
               {
                 "@value": "Cat"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Cat/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Cat/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/anyOf/shape/Cat"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(35,23)-(35,26)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "HousePet"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/union/HousePet"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(35,0)-(35,26)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -722,29 +401,6 @@
                   {
                     "@value": "Cat"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet/shape/Cat/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet/shape/Cat/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet/shape/Cat"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(42,14)-(42,17)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -756,29 +412,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "housePet"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/property/property/housePet"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(42,4)-(42,17)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -806,67 +439,6 @@
             "http://a.ml/vocabularies/document#link-label": [
               {
                 "@value": "HousePetOwner"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/inherits/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/inherits/shape/default-node/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/inherits/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(41,25)-(41,38)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/CatOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(41,0)-(43,1)]"
-                  }
-                ]
               }
             ]
           }
@@ -904,29 +476,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(31,10)-(31,16)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -938,29 +487,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(31,4)-(31,16)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -986,29 +512,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(32,11)-(32,17)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1020,29 +523,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "color"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/property/property/color"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(32,4)-(32,17)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -1070,67 +550,6 @@
             "http://a.ml/vocabularies/document#link-label": [
               {
                 "@value": "Pet"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/inherits/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/inherits/shape/default-node/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/inherits/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(30,20)-(30,23)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Cat"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(30,0)-(33,1)]"
-                  }
-                ]
               }
             ]
           }
@@ -1168,29 +587,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(26,10)-(26,16)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1202,29 +598,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(26,4)-(26,16)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1250,29 +623,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(27,11)-(27,17)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1284,29 +634,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "breed"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/property/property/breed"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(27,4)-(27,17)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -1334,67 +661,6 @@
             "http://a.ml/vocabularies/document#link-label": [
               {
                 "@value": "Pet"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/inherits/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/inherits/shape/default-node/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/inherits/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(25,20)-(25,23)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/Dog"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(25,0)-(28,1)]"
-                  }
-                ]
               }
             ]
           }
@@ -1437,29 +703,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(10,10)-(10,16)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1471,29 +714,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(10,4)-(10,16)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1524,29 +744,6 @@
                   {
                     "@value": "Pet"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet/shape/default-node/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet/shape/default-node/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet/shape/default-node"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(11,9)-(11,12)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1558,29 +755,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "pet"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/pet"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(11,4)-(11,12)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1620,29 +794,6 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "true"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       },
                       {
@@ -1663,52 +814,6 @@
                           {
                             "@value": "Pet"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,16)-(12,19)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/array/default-array"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(12,15)-(12,20)]"
-                          }
                         ]
                       }
                     ]
@@ -1725,73 +830,12 @@
               {
                 "@value": "otherPets"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/property/property/otherPets"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(12,4)-(12,20)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "PetOwner"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/PetOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(9,0)-(13,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -1827,29 +871,6 @@
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name/scalar/default-scalar/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(20,10)-(20,17)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1861,29 +882,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(20,4)-(20,17)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1914,29 +912,6 @@
                   {
                     "@value": "Dog"
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet/shape/default-node/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet/shape/default-node/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet/shape/default-node"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(21,9)-(21,12)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ]
               }
             ],
@@ -1948,29 +923,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "pet"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/pet"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(21,4)-(21,12)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -2010,29 +962,6 @@
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/nil/default-nil"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "true"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       },
                       {
@@ -2053,52 +982,6 @@
                           {
                             "@value": "Dog"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/union/default-union/anyOf/shape/default-node"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(22,16)-(22,19)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/array/default-array"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(22,15)-(22,20)]"
-                          }
                         ]
                       }
                     ]
@@ -2114,29 +997,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "otherPets"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/property/property/otherPets"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(22,4)-(22,20)]"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -2164,67 +1024,6 @@
             "http://a.ml/vocabularies/document#link-label": [
               {
                 "@value": "PetOwner"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/inherits/shape/default-node/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/inherits/shape/default-node/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/inherits/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(19,25)-(19,33)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/covariance.api.graphql#/declares/shape/DogOwner"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(19,0)-(23,1)]"
-                  }
-                ]
               }
             ]
           }

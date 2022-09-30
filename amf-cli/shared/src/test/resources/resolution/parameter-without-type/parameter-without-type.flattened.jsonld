@@ -44,14 +44,14 @@
       ],
       "core:urlTemplate": "sandbox.przelewy24.pl",
       "smaps": {
-        "synthesized-field": {
-          "core:urlTemplate": "true"
-        },
         "host-lexical": {
           "core:urlTemplate": "[(6,2)-(6,33)]"
         },
         "virtual-element": {
           "#5": "true"
+        },
+        "synthesized-field": {
+          "core:urlTemplate": "true"
         }
       }
     },
@@ -209,15 +209,15 @@
         "parameter-name-for-payload": {
           "core:name": "splitPaymentDetails->[(20,6)-(20,35)]"
         },
-        "declared-element": {
-          "#1": ""
+        "form-body-parameter": {
+          "#1": "true"
         },
         "lexical": {
           "core:name": "[(20,6)-(20,35)]",
           "#1": "[(19,4)-(22,5)]"
         },
-        "form-body-parameter": {
-          "#1": "true"
+        "declared-element": {
+          "#1": ""
         }
       }
     }

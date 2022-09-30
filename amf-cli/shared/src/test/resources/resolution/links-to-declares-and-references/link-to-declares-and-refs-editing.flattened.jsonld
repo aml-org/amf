@@ -433,17 +433,17 @@
         "resolved-link": {
           "#17": "amf://id#24"
         },
-        "resolved-link-target": {
-          "#17": "amf://id#17"
-        },
-        "auto-generated-name": {
-          "#17": ""
+        "type-property-lexical-info": {
+          "#17": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#17": "[(2,0)-(6,10)]"
         },
-        "type-property-lexical-info": {
-          "#17": "[(2,0)-(2,4)]"
+        "auto-generated-name": {
+          "#17": ""
+        },
+        "resolved-link-target": {
+          "#17": "amf://id#17"
         }
       }
     },
@@ -470,18 +470,18 @@
         "resolved-link": {
           "#29": "amf://id#32"
         },
-        "resolved-link-target": {
-          "#29": "amf://id#29"
-        },
-        "declared-element": {
-          "#29": ""
+        "type-property-lexical-info": {
+          "#29": "[(6,4)-(6,8)]"
         },
         "lexical": {
           "shacl:name": "[(5,2)-(5,15)]",
           "#29": "[(5,2)-(10,0)]"
         },
-        "type-property-lexical-info": {
-          "#29": "[(6,4)-(6,8)]"
+        "declared-element": {
+          "#29": ""
+        },
+        "resolved-link-target": {
+          "#29": "amf://id#29"
         }
       }
     },
@@ -508,15 +508,15 @@
         "resolved-link": {
           "#2": "amf://id#5"
         },
-        "resolved-link-target": {
-          "#2": "amf://id#2"
+        "lexical": {
+          "shacl:name": "[(3,2)-(3,3)]",
+          "#2": "[(3,2)-(5,15)]"
         },
         "declared-element": {
           "#2": ""
         },
-        "lexical": {
-          "shacl:name": "[(3,2)-(3,3)]",
-          "#2": "[(3,2)-(5,15)]"
+        "resolved-link-target": {
+          "#2": "amf://id#2"
         }
       }
     },
@@ -548,14 +548,14 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "auto-generated-name": {
-          "#53": ""
-        },
         "type-property-lexical-info": {
           "#53": "[(3,2)-(3,8)]"
         },
         "lexical": {
           "#53": "[(43,10)-(16,1)]"
+        },
+        "auto-generated-name": {
+          "#53": ""
         },
         "parsed-json-schema": {
           "#53": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\"\n  ]\n}"

@@ -18,12 +18,7 @@
       "http://a.ml/vocabularies/core#name": "message",
       "http://a.ml/vocabularies/apiBinding#binding": {
         "@id": "target/message-bindings"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "testId/resp/message#/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "target/message-bindings",
@@ -38,25 +33,6 @@
         {
           "@id": "target/message-bindings/amqp091-message"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "target/message-bindings#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "testId/resp/message#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "testId/resp/message#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "testId/resp/message#/source-map/lexical/element_0"
-        }
       ]
     },
     {
@@ -70,12 +46,7 @@
         "@id": "target/message-bindings/bindings/kafka-message/scalar/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "baseVersion",
-      "http://a.ml/vocabularies/apiBinding#type": "kafka",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "target/message-bindings/kafka-message#/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/apiBinding#type": "kafka"
     },
     {
       "@id": "target/message-bindings/amqp091-message",
@@ -87,33 +58,7 @@
       "http://a.ml/vocabularies/apiBinding#contentEncoding": "traitEncoding",
       "http://a.ml/vocabularies/apiBinding#messageType": "traitType",
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
-      "http://a.ml/vocabularies/apiBinding#type": "amqp",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "target/message-bindings/amqp091-message#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "target/message-bindings#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "target/message-bindings#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "testId/resp/message#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "testId/resp/message",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(7,0)]"
-    },
-    {
-      "@id": "testId/resp/message#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,7)]"
+      "http://a.ml/vocabularies/apiBinding#type": "amqp"
     },
     {
       "@id": "target/message-bindings/bindings/kafka-message/scalar/schema",
@@ -129,131 +74,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "target/message-bindings/kafka-message#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_3"
-        },
-        {
-          "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_0"
-        },
-        {
-          "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "target/message-bindings/amqp091-message#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_3"
-        },
-        {
-          "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_0"
-        },
-        {
-          "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "target/message-bindings#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(7,0)]"
-    },
-    {
-      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(7,0)]"
-    },
-    {
-      "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageKey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,6)-(6,0)]"
-    },
-    {
-      "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(3,9)]"
-    },
-    {
-      "@id": "target/message-bindings/kafka-message#/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/kafka-message",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(7,0)]"
-    },
-    {
-      "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(5,28)]"
-    },
-    {
-      "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#contentEncoding",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,6)-(5,0)]"
-    },
-    {
-      "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(3,8)]"
-    },
-    {
-      "@id": "target/message-bindings/amqp091-message#/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/amqp091-message",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(5,28)]"
-    },
-    {
-      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/bindings/kafka-message/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(5,12)]"
-    },
-    {
-      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message-bindings/bindings/kafka-message/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,10)-(6,0)]"
-    },
-    {
-      "@id": "target/message-bindings/bindings/kafka-message/scalar/schema#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(6,0)]"
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "testId",

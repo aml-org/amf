@@ -53,7 +53,7 @@ class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrderin
 case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering)(implicit
     val spec: OasLikeSpecEmitterContext
 ) extends PartEmitter {
-  protected implicit val shapeCtx: AgnosticShapeEmitterContextAdapter = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     val fs = parameter.fields
@@ -77,9 +77,9 @@ case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: Sp
   }
 
   private def emitLocation(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit =
-    if (!isSynthesized(f.value)) result += ValueEmitter("location", f)
+    if (!isInferred(f.value)) result += ValueEmitter("location", f)
 
-  private def isSynthesized(value: Value) = value.annotations.isSynthesized
+  private def isInferred(value: Value) = value.annotations.contains(classOf[SynthesizedField])
 
   override def position(): Position = pos(parameter.annotations)
 }

@@ -323,21 +323,6 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#type-expression": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/type-expression/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "Person"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/lexical/element_0",
@@ -349,6 +334,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(9,10)-(9,18)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#type-expression": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/type-expression/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "Person"
                       }
                     ]
                   }
@@ -635,21 +635,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/lexical/element_2",
@@ -687,6 +672,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(11,2)-(13,18)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

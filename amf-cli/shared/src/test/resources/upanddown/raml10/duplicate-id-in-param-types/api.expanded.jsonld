@@ -836,9 +836,9 @@
                                     ]
                                   }
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/auto-generated-name/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
@@ -846,7 +846,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": ""
+                                        "@value": "[(21,12)-(21,16)]"
                                       }
                                     ]
                                   }
@@ -866,9 +866,9 @@
                                     ]
                                   }
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
@@ -876,7 +876,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(21,12)-(21,16)]"
+                                        "@value": ""
                                       }
                                     ]
                                   }
@@ -1226,21 +1226,6 @@
                             ]
                           }
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#default-node": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/default-node/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": ""
-                              }
-                            ]
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/lexical/element_1",
@@ -1265,6 +1250,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(6,6)-(7,0)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#default-node": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/default-node/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": ""
                               }
                             ]
                           }

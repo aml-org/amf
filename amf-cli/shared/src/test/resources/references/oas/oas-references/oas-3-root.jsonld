@@ -441,21 +441,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/property/property/animalRef/shape/animal/source-map/type-property-lexical-info/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/property/property/animalRef/shape/animal"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(3,4)-(3,8)]"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/property/property/animalRef/shape/animal/source-map/lexical/element_1",
@@ -480,6 +465,21 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(4,4)-(6,55)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/property/property/animalRef/shape/animal/source-map/type-property-lexical-info/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/property/property/animalRef/shape/animal"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,4)-(3,8)]"
                           }
                         ]
                       }
@@ -564,9 +564,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet"
@@ -574,7 +574,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(8,6)-(8,10)]"
                   }
                 ]
               }
@@ -620,9 +620,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/references/oas/oas-references/oas-3-root.yaml#/declares/shape/pet"
@@ -630,7 +630,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,6)-(8,10)]"
+                    "@value": ""
                   }
                 ]
               }

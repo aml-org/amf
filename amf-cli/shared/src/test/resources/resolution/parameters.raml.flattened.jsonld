@@ -91,14 +91,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/synthesized-field/element_0"
         }
       ]
     },
@@ -156,14 +156,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(16,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(8,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/server/http%3A%2F%2F%7Benv%7D.localhost%3A4567",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request",

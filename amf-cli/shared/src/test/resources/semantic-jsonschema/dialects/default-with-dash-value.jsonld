@@ -81,12 +81,7 @@
           "@id": "/property/property/address"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/Defaultwithdashvalue/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "/property/property/address",
@@ -103,28 +98,7 @@
       "shacl:minCount": 0,
       "shacl:defaultValue": {
         "@id": "/property/property/address/scalar/address/scalar_1"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "/property/property/address#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/Defaultwithdashvalue/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/Defaultwithdashvalue/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/Defaultwithdashvalue/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "/property/property/address/scalar/address/scalar_1",
@@ -139,54 +113,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "sourcemaps:sources": [
-        {
-          "@id": "/property/property/address/scalar/address/scalar_1#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "/property/property/address#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/property/property/address#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/Defaultwithdashvalue/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/Defaultwithdashvalue",
-      "sourcemaps:value": "[(4,2)-(4,8)]"
-    },
-    {
-      "@id": "#/declarations/Defaultwithdashvalue/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/Defaultwithdashvalue",
-      "sourcemaps:value": "[(1,0)-(11,1)]"
-    },
-    {
-      "@id": "/property/property/address/scalar/address/scalar_1#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/property/property/address/scalar/address/scalar_1#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/property/property/address#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/default-with-dash-value.json/property/property/address",
-      "sourcemaps:value": "[(6,4)-(9,5)]"
-    },
-    {
-      "@id": "/property/property/address/scalar/address/scalar_1#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/default-with-dash-value.json/property/property/address/scalar/address/scalar_1",
-      "sourcemaps:value": "[(8,17)-(8,20)]"
+      "core:name": "scalar_1"
     }
   ],
   "@context": {
@@ -195,7 +122,6 @@
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

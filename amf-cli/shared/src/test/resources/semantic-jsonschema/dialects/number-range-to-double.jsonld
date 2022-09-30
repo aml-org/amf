@@ -120,12 +120,7 @@
           "@id": "/property/property/a"
         }
       ],
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/NumbertoDouble/source-map"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "/property/property/a",
@@ -144,54 +139,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#double"
         }
       ],
-      "shacl:minCount": 0,
-      "sourcemaps:sources": [
-        {
-          "@id": "/property/property/a#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/NumbertoDouble/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/NumbertoDouble/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/NumbertoDouble/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "/property/property/a#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "/property/property/a#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/NumbertoDouble/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/NumbertoDouble",
-      "sourcemaps:value": "[(4,2)-(4,8)]"
-    },
-    {
-      "@id": "#/declarations/NumbertoDouble/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/NumbertoDouble",
-      "sourcemaps:value": "[(1,0)-(20,1)]"
-    },
-    {
-      "@id": "/property/property/a#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/number-range-to-double.json/property/property/a",
-      "sourcemaps:value": "[(6,4)-(13,5)]"
+      "shacl:minCount": 0
     }
   ],
   "@context": {
@@ -199,7 +147,6 @@
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

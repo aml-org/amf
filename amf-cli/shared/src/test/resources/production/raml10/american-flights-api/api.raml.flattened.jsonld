@@ -153,14 +153,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/synthesized-field/element_0"
         }
       ]
     },
@@ -391,14 +391,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/server/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request",
@@ -695,14 +695,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/synthesized-field/element_3"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/default-node/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#virtual-element": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/virtual-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/default-node/element_0"
         }
       ]
     },
@@ -1094,14 +1094,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/virtual-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/parameter/parameter/path/ID",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema",
@@ -1495,11 +1495,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/default-node/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/lexical/element_2"
@@ -1509,6 +1504,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/default-node/element_0"
         }
       ]
     },
@@ -1650,11 +1650,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_2"
@@ -1664,6 +1659,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -1694,11 +1694,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
@@ -1710,6 +1705,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
         }
       ]
     },
@@ -1768,11 +1768,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/lexical/element_2"
@@ -1782,6 +1777,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -1812,11 +1812,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
@@ -1828,6 +1823,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
         }
       ]
     },
@@ -1886,11 +1886,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_2"
@@ -1900,6 +1895,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -1930,11 +1930,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
@@ -1946,6 +1941,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
         }
       ]
     },
@@ -2020,11 +2020,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,8)-(16,0)]"
@@ -2040,6 +2035,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(18,0)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -2052,14 +2052,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-expression": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/type-expression/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-expression": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/type-expression/element_0"
         }
       ]
     },
@@ -2099,14 +2099,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -2194,14 +2194,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -2209,11 +2209,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,8)-(28,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_2",
@@ -2229,6 +2224,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,6)-(30,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(28,8)-(28,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/object_1",
@@ -2260,21 +2260,16 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
+        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
@@ -2290,6 +2285,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#examples",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,12)-(36,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/AmericanFlight/source-map",
@@ -2358,14 +2358,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -2373,11 +2373,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(43,14)-(43,18)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/lexical/element_2",
@@ -2393,6 +2388,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(42,12)-(45,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(43,14)-(43,18)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/object_1",
@@ -2424,21 +2424,16 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
+        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
@@ -2454,6 +2449,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#examples",
       "http://a.ml/vocabularies/document-source-maps#value": "[(51,14)-(53,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/AmericanFlight/source-map",
@@ -2519,14 +2519,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0"
         }
       ]
     },
@@ -2534,11 +2534,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(57,10)-(57,14)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_2",
@@ -2554,6 +2549,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(56,8)-(59,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(57,10)-(57,14)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/object_1",
@@ -2585,21 +2585,16 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0"
+        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
@@ -2615,6 +2610,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#examples",
       "http://a.ml/vocabularies/document-source-maps#value": "[(63,14)-(65,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/in/scalar_1/source-map",
@@ -2684,14 +2684,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "AmericanFlight"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,18)-(22,34)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/shape/default-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "AmericanFlight"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/array_1/member/object_2",
@@ -2791,14 +2791,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(25,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson/array/schema/examples/example/value",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/AmericanFlight/source-map/auto-generated-name/element_0",
@@ -2998,14 +2998,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/expects/request/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/object_1/message",
@@ -3057,14 +3057,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,12)-(36,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson/any/schema/examples/example/default-example",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/post/returns/resp/201/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/AmericanFlight/source-map/auto-generated-name/element_0",
@@ -3287,14 +3287,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(12,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/value",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/object_1/message",
@@ -3346,14 +3346,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
       "http://a.ml/vocabularies/document-source-maps#value": "[(51,14)-(53,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/delete/returns/resp/200/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/AmericanFlight/source-map/auto-generated-name/element_0",
@@ -3553,14 +3553,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson/shape/schema/examples/example/value",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/expects/request/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/object_1/message",
@@ -3612,14 +3612,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
       "http://a.ml/vocabularies/document-source-maps#value": "[(63,14)-(65,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights%2F%7BID%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/endpoint/%2Fflights/supportedOperation/get/expects/request/parameter/parameter/query/code/scalar/schema/in/scalar_1/source-map/synthesized-field/element_1",
@@ -6623,9 +6623,9 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/external-fragment-ref/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -6636,9 +6636,9 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/external-fragment-ref/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/declared-element/element_0"
         }
       ]
     },
@@ -6844,17 +6844,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -6884,9 +6884,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/declared-element/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/external-fragment-ref/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "http://a.ml/vocabularies/document-source-maps#value": "AmericanFlight.raml"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/lexical/element_1",
@@ -6899,9 +6899,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/external-fragment-ref/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declares/shape/AmericanFlight",
-      "http://a.ml/vocabularies/document-source-maps#value": "AmericanFlight.raml"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/ID/scalar/ID%3F",
@@ -7257,11 +7257,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(3,4)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(18,0)]"
@@ -7270,6 +7265,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,11)-(18,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(3,4)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/ID/scalar/ID%3F/source-map",
@@ -7567,17 +7567,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -7763,11 +7763,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(18,0)]"
@@ -7776,6 +7771,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,15)-(18,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/references/0/shape/type/property/property/plane/shape/plane/property/property/type/scalar/type/source-map",

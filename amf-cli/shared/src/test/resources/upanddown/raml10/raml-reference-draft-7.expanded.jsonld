@@ -828,21 +828,6 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/shape/anotherMain/source-map/type-property-lexical-info/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/shape/anotherMain"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(5,6)-(5,12)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/shape/anotherMain/source-map/lexical/element_2",
@@ -883,6 +868,21 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/shape/anotherMain/source-map/type-property-lexical-info/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/shape/anotherMain"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,6)-(5,12)]"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -910,21 +910,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "true"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }
@@ -994,6 +979,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,2)-(12,1)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/raml-reference-draft-7.raml#/declares/shape/MyType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

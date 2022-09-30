@@ -115,38 +115,7 @@
         "doc:DomainElement"
       ],
       "core:name": "changeheaders",
-      "shacl:closed": false,
-      "sourcemaps:sources": [
-        {
-          "@id": "#/declarations/changeheaders/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/changeheaders/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:type-property-lexical-info": [
-        {
-          "@id": "#/declarations/changeheaders/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/declarations/changeheaders/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/changeheaders/source-map/type-property-lexical-info/element_0",
-      "sourcemaps:element": "#/declarations/changeheaders",
-      "sourcemaps:value": "[(4,2)-(4,8)]"
-    },
-    {
-      "@id": "#/declarations/changeheaders/source-map/lexical/element_0",
-      "sourcemaps:element": "#/declarations/changeheaders",
-      "sourcemaps:value": "[(1,0)-(16,1)]"
+      "shacl:closed": false
     }
   ],
   "@context": {
@@ -154,7 +123,6 @@
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

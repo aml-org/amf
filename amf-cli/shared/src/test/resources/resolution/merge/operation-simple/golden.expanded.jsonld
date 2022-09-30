@@ -34,42 +34,6 @@
           {
             "@value": "traitOperationId"
           }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "testId/subscribe/traitOperationId#/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "testId/subscribe/traitOperationId#/source-map/lexical/element_1",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "testId/subscribe/traitOperationId"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(1,0)-(4,32)]"
-                  }
-                ]
-              },
-              {
-                "@id": "testId/subscribe/traitOperationId#/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/apiContract#guiSummary"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(3,2)-(4,0)]"
-                  }
-                ]
-              }
-            ]
-          }
         ]
       }
     ],

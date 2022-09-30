@@ -492,11 +492,6 @@
           "@id": "#/references/0/declares/shape/Person/source-map/synthesized-field/element_0"
         }
       ],
-      "sourcemaps:declared-element": [
-        {
-          "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0"
-        }
-      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_2"
@@ -506,6 +501,11 @@
         },
         {
           "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_1"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0"
         }
       ]
     },
@@ -619,11 +619,6 @@
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/oas20-2019.yaml#/references/0/declares/shape/Person",
-      "sourcemaps:value": ""
-    },
-    {
       "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_2",
       "sourcemaps:element": "shacl:property",
       "sourcemaps:value": "[(6,6)-(13,7)]"
@@ -637,6 +632,11 @@
       "@id": "#/references/0/declares/shape/Person/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/oas20-2019.yaml#/references/0/declares/shape/Person",
       "sourcemaps:value": "[(5,4)-(14,5)]"
+    },
+    {
+      "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/oas20-2019.yaml#/references/0/declares/shape/Person",
+      "sourcemaps:value": ""
     },
     {
       "@id": "#/references/0/declares/shape/Person/property/property/name/scalar/name/source-map",

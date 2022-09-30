@@ -363,7 +363,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
     superProperties.foreach(p => commonProps.put(p.path.value(), false))
     baseProperties.foreach { p =>
-      if (commonProps.contains(p.path.value())) {
+      if (commonProps.get(p.path.value()).isDefined) {
         commonProps.put(p.path.value(), true)
       } else {
         commonProps.put(p.path.value(), false)
@@ -556,8 +556,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
     }
 
-    superUnion.annotations.clear()
-    superUnion.annotations ++= baseShape.annotations
+    superUnion.annotations.reject(_ => true) ++= baseShape.annotations
     superUnion.withId(baseShape.id)
   }
 

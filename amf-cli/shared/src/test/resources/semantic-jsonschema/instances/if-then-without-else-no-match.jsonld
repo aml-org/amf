@@ -19,28 +19,7 @@
         "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_2",
         "meta:DialectDomainElement",
         "doc:DomainElement"
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/encodes/source-map"
-        }
       ]
-    },
-    {
-      "@id": "#/encodes/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/encodes/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/encodes/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-without-else-no-match.json#/encodes",
-      "sourcemaps:value": "[(1,0)-(6,1)]"
     },
     {
       "@id": "",
@@ -62,34 +41,12 @@
       "doc:root": true,
       "doc:processingData": {
         "@id": "/BaseUnitProcessingData"
-      },
-      "sourcemaps:sources": [
-        {
-          "@id": "#/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-without-else-no-match.json",
-      "sourcemaps:value": "[(1,0)-(6,1)]"
+      }
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-without-else-no-match.json",
     "doc": "http://a.ml/vocabularies/document#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
     "meta": "http://a.ml/vocabularies/meta#"
   }
 }

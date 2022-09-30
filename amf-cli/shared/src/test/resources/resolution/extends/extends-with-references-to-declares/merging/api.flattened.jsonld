@@ -25,11 +25,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map"
-        }
       ]
     },
     {
@@ -43,11 +38,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map"
-        }
       ]
     },
     {
@@ -60,25 +50,6 @@
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map/lexical/element_0"
         }
       ]
     },
@@ -94,25 +65,6 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map/lexical/element_0"
-        }
       ]
     },
     {
@@ -127,36 +79,7 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(36,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request",
@@ -170,33 +93,7 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(24,0)-(31,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#path",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(24,0)-(24,20)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request",
@@ -210,33 +107,7 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(36,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#path",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(31,13)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
@@ -251,33 +122,7 @@
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,2)-(31,0)]"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
@@ -292,33 +137,7 @@
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(32,2)-(36,0)]"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog",
@@ -341,60 +160,7 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "Dog",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,4)-(31,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,4)-(36,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "http://www.w3.org/ns/shacl#name": "Dog"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name",
@@ -413,12 +179,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "name",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "name"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed",
@@ -437,12 +198,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "breed",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "breed"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job",
@@ -461,48 +217,7 @@
         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "job",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,6)-(31,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,6)-(31,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,6)-(36,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,6)-(36,0)]"
+      "http://www.w3.org/ns/shacl#name": "job"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name",
@@ -518,26 +233,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "name",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "name"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed",
@@ -553,26 +249,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "breed",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "breed"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job",
@@ -588,138 +265,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "job",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(13,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,12)-(10,18)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(13,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,13)-(11,19)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,6)-(8,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,11)-(7,17)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/name/scalar/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,12)-(10,18)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(13,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/property/breed/scalar/breed/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,13)-(11,19)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,6)-(8,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/shape/Dog/property/job/scalar/job/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,11)-(7,17)]"
+      "http://www.w3.org/ns/shacl#name": "job"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml",

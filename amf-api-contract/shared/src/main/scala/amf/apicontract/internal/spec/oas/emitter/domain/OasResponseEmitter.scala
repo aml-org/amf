@@ -61,7 +61,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
     spec: OasSpecEmitterContext
 ) extends PartEmitter {
 
-  protected implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def emit(p: PartBuilder): Unit = {
     val fs = response.fields
@@ -109,7 +109,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
               payload.fields
                 .entry(PayloadModel.Schema)
                 .map { f =>
-                  if (!f.value.annotations.isSynthesized) {
+                  if (!f.value.annotations.contains(classOf[SynthesizedField])) {
                     result += OasSchemaEmitter(f, ordering, references)
                   }
                 }

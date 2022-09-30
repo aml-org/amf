@@ -39,21 +39,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/web-api/server/https%3A%2F%2Fdomain.test.com%2F/source-map/synthesized-field/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/web-api/server/https%3A%2F%2Fdomain.test.com%2F"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/web-api/server/https%3A%2F%2Fdomain.test.com%2F/source-map/lexical/element_0",
@@ -65,6 +50,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(4,0)-(5,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/web-api/server/https%3A%2F%2Fdomain.test.com%2F/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/web-api/server/https%3A%2F%2Fdomain.test.com%2F"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
                       }
                     ]
                   }
@@ -1571,21 +1571,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declares/shape/someSchema/source-map/parsed-json-schema/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declares/shape/someSchema"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Comment describing your JSON Schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"auditDetails\": {\n      \"$ref\": \"#/definitions/auditDetails\"\n    },\n    \"formOfPayments\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/formOfPayment\"\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"definitions\": {\n    \"auditDetails\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"formOfPayment\": {\n          \"$ref\": \"#/definitions/formOfPayment\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"formOfPayment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"auditDetails\": {\n          \"$ref\": \"#/definitions/auditDetails\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    }\n  }\n}"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declares/shape/someSchema/source-map/type-property-lexical-info/element_0",
@@ -1651,6 +1636,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,4)-(7,36)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declares/shape/someSchema/source-map/parsed-json-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declares/shape/someSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Comment describing your JSON Schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"auditDetails\": {\n      \"$ref\": \"#/definitions/auditDetails\"\n    },\n    \"formOfPayments\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/formOfPayment\"\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"definitions\": {\n    \"auditDetails\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"formOfPayment\": {\n          \"$ref\": \"#/definitions/formOfPayment\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"formOfPayment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"auditDetails\": {\n          \"$ref\": \"#/definitions/auditDetails\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    }\n  }\n}"
                   }
                 ]
               }

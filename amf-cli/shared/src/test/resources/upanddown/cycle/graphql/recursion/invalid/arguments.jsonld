@@ -149,29 +149,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -207,96 +184,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(2,12)-(2,27)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -349,29 +242,6 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/nil/default-nil"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "true"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -387,55 +257,9 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/scalar/default-scalar/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/returns/response/default/union/default-union/anyOf/scalar/default-scalar"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(2,30)-(2,36)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(2,4)-(2,36)]"
                       }
                     ]
                   }
@@ -530,29 +354,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -588,96 +389,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(3,13)-(3,29)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -730,29 +447,6 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/nil/default-nil"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "true"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -768,55 +462,9 @@
                               {
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/scalar/default-scalar/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/returns/response/default/union/default-union/anyOf/scalar/default-scalar"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(3,32)-(3,38)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/request2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(3,4)-(3,38)]"
                       }
                     ]
                   }
@@ -881,52 +529,6 @@
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter/scalar/default-scalar/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter/scalar/default-scalar/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(4,21)-(4,27)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(4,13)-(4,27)]"
-                              }
-                            ]
-                          }
                         ]
                       }
                     ]
@@ -978,29 +580,6 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/returns/response/default/union/default-union/anyOf/nil/default-nil"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "true"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -1046,29 +625,6 @@
                                   {
                                     "@value": "continent"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(13,4)-(13,24)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -1104,29 +660,6 @@
                                   {
                                     "@value": "continent2"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(14,4)-(14,26)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               }
                             ],
@@ -1134,70 +667,9 @@
                               {
                                 "@value": "Country"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": ""
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,0)-(15,1)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(4,4)-(4,37)]"
                       }
                     ]
                   }
@@ -1261,52 +733,6 @@
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
                             "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter/scalar/default-scalar/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter/scalar/default-scalar/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(5,22)-(5,28)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(5,14)-(5,28)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -1385,29 +811,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -1443,29 +846,6 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
@@ -1473,68 +853,7 @@
                           {
                             "@value": "Country"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/response2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(5,4)-(5,39)]"
                       }
                     ]
                   }
@@ -1629,29 +948,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -1687,96 +983,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(6,9)-(6,24)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -1829,29 +1041,6 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/returns/response/default/union/default-union/anyOf/nil/default-nil"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "true"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -1897,29 +1086,6 @@
                                   {
                                     "@value": "continent"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(13,4)-(13,24)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -1955,29 +1121,6 @@
                                   {
                                     "@value": "continent2"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(14,4)-(14,26)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               }
                             ],
@@ -1985,70 +1128,9 @@
                               {
                                 "@value": "Country"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": ""
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,0)-(15,1)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(6,34)]"
                       }
                     ]
                   }
@@ -2143,29 +1225,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -2201,96 +1260,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(7,10)-(7,26)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -2343,29 +1318,6 @@
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/returns/response/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/returns/response/default/union/default-union/anyOf/nil/default-nil"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "true"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -2411,29 +1363,6 @@
                                   {
                                     "@value": "continent"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(13,4)-(13,24)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               },
                               {
@@ -2469,29 +1398,6 @@
                                   {
                                     "@value": "continent2"
                                   }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(14,4)-(14,26)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
                                 ]
                               }
                             ],
@@ -2499,70 +1405,9 @@
                               {
                                 "@value": "Country"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": ""
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,0)-(15,1)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(7,4)-(7,36)]"
                       }
                     ]
                   }
@@ -2657,29 +1502,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -2715,96 +1537,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(8,10)-(8,25)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -2883,29 +1621,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -2941,29 +1656,6 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
@@ -2971,68 +1663,7 @@
                           {
                             "@value": "Country"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both3"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(8,4)-(8,36)]"
                       }
                     ]
                   }
@@ -3127,29 +1758,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -3185,96 +1793,12 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
                             "@value": "Country"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4/expects/request/parameter/parameter/filter/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4/expects/request/parameter/parameter/filter/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4/expects/request/parameter/parameter/filter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(9,10)-(9,26)]"
-                              }
-                            ]
                           }
                         ]
                       }
@@ -3353,29 +1877,6 @@
                               {
                                 "@value": "continent"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(13,4)-(13,24)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           },
                           {
@@ -3411,29 +1912,6 @@
                               {
                                 "@value": "continent2"
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(14,4)-(14,26)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ],
@@ -3441,68 +1919,7 @@
                           {
                             "@value": "Country"
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": ""
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,0)-(15,1)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/supportedOperation/both4"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,4)-(9,37)]"
                       }
                     ]
                   }
@@ -3514,44 +1931,6 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Continent"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Continent"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(1,0)-(10,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -3598,29 +1977,6 @@
               {
                 "@value": "continent"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(13,4)-(13,24)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           },
           {
@@ -3656,73 +2012,12 @@
               {
                 "@value": "continent2"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/property/property/continent2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(14,4)-(14,26)]"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Country"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/invalid/arguments.graphql#/declares/shape/Country"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(12,0)-(15,1)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

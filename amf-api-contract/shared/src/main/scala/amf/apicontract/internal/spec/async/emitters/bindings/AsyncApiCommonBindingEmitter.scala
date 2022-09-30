@@ -12,7 +12,7 @@ abstract class AsyncApiCommonBindingEmitter() extends EntryEmitter {
 
   def emitBindingVersion(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
     fs.entry(BindingVersion.BindingVersion).foreach { f =>
-      if (!f.value.isSynthesized) result += ValueEmitter("bindingVersion", f)
+      if (!f.value.annotations.contains(classOf[SynthesizedField])) result += ValueEmitter("bindingVersion", f)
     }
   }
 }

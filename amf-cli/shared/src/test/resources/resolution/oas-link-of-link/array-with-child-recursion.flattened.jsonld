@@ -343,17 +343,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/declared-element/element_0"
         }
       ]
     },
@@ -422,11 +422,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(15,0)]"
@@ -435,6 +430,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(9,3)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive",
@@ -507,14 +507,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/declared-element/element_0"
         }
       ]
     },
@@ -548,14 +548,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(15,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/recursive",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declares/shape/C/property/property/parent/any/parent/and/any/item1/source-map/lexical/element_1",
