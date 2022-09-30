@@ -218,6 +218,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -323,6 +328,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(19,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/explicit-&-implicit-type-object/api.raml#/web-api/endpoint/%2Flevelzero/supportedOperation/get/expects/request/parameter/parameter/query/param1/shape/schema/property/property/name",

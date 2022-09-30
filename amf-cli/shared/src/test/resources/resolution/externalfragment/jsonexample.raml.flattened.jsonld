@@ -170,6 +170,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -212,6 +217,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(8,48)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/examples/example/default-example",

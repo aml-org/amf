@@ -553,6 +553,21 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups/supportedOperation/post/expects/request/source-map/lexical/element_1",
@@ -1264,6 +1279,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/externals.json#/web-api/endpoint/%2Fgroups%2F2/supportedOperation/post/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {

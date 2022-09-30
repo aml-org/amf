@@ -217,6 +217,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/parameter/path/fileId"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/source-map"
+        }
       ]
     },
     {
@@ -514,6 +519,17 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/parameter/path/fileId/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -1139,6 +1155,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/parameter/path/fileId/source-map/lexical/element_1"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2",

@@ -69,6 +69,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/server/petstore.swagger.wordnik.com%2Fapi/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/server/petstore.swagger.wordnik.com%2Fapi"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/server/petstore.swagger.wordnik.com%2Fapi/source-map/base-path-lexical/element_0",
@@ -367,6 +382,21 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(16,12)-(21,13)]"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
                                   }
                                 ]
                               }

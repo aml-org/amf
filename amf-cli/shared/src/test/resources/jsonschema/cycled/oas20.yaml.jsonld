@@ -241,6 +241,11 @@
         {
           "@id": "#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/source-map/lexical/element_0"
         }
+      ],
+      "sourcemaps:virtual-element": [
+        {
+          "@id": "#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -278,6 +283,11 @@
       "@id": "#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/source-map/lexical/element_0",
       "sourcemaps:element": "raml-shapes:schema",
       "sourcemaps:value": "[(12,10)-(14,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/source-map/virtual-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/jsonschema/apis/oas20.yaml#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/endpoint/%2Fsomething/supportedOperation/get/returns/resp/200/payload/default/shape/default/source-map/synthesized-field/element_0",
@@ -391,6 +401,11 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:virtual-element": [
+        {
+          "@id": "#/references/0/source-map/virtual-element/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/references/0/source-map/lexical/element_1"
@@ -493,6 +508,11 @@
           "@id": "#/references/0/declares/shape/Person/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "#/references/0/source-map/virtual-element/element_0",
+      "sourcemaps:element": "doc:declares",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/references/0/source-map/lexical/element_1",

@@ -233,11 +233,11 @@
                       }
                     ],
                     "smaps": {
-                      "resolved-link-target": {
-                        "#11": "amf://id#1"
+                      "virtual-element": {
+                        "apiContract:payload": "true"
                       },
-                      "declared-element": {
-                        "#11": ""
+                      "resolved-link": {
+                        "#11": "amf://id#11"
                       },
                       "lexical": {
                         "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -246,8 +246,11 @@
                         "core:name": "[(9,4)-(9,15)]",
                         "core:title": "[(20,6)-(22,0)]"
                       },
-                      "resolved-link": {
-                        "#11": "amf://id#11"
+                      "declared-element": {
+                        "#11": ""
+                      },
+                      "resolved-link-target": {
+                        "#11": "amf://id#1"
                       }
                     }
                   }
@@ -473,11 +476,11 @@
                       }
                     ],
                     "smaps": {
-                      "resolved-link-target": {
-                        "#14": "amf://id#1"
+                      "virtual-element": {
+                        "apiContract:payload": "true"
                       },
-                      "declared-element": {
-                        "#14": ""
+                      "resolved-link": {
+                        "#14": "amf://id#14"
                       },
                       "lexical": {
                         "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -486,8 +489,11 @@
                         "core:name": "[(9,4)-(9,15)]",
                         "core:title": "[(20,6)-(22,0)]"
                       },
-                      "resolved-link": {
-                        "#14": "amf://id#14"
+                      "declared-element": {
+                        "#14": ""
+                      },
+                      "resolved-link-target": {
+                        "#14": "amf://id#1"
                       }
                     }
                   }
@@ -726,8 +732,8 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#1": ""
+          "virtual-element": {
+            "apiContract:payload": "true"
           },
           "lexical": {
             "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -735,6 +741,9 @@
             "#1": "[(9,4)-(22,0)]",
             "core:name": "[(9,4)-(9,15)]",
             "core:title": "[(20,6)-(22,0)]"
+          },
+          "declared-element": {
+            "#1": ""
           }
         }
       }

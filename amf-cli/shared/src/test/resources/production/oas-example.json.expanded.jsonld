@@ -2056,6 +2056,29 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -4020,6 +4043,29 @@
                                         "@value": ""
                                       }
                                     ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/oas-example.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
                                   }
                                 ]
                               }

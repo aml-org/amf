@@ -6272,6 +6272,21 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/references/0/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#declares"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/references/0/source-map/lexical/element_1",
@@ -6353,6 +6368,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/source-map/aliases-array/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "address->file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/references/0::file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml::../../commons-datatypes/1.0.0/locationTypes.raml"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/source-map/lexical/element_1",
@@ -6381,17 +6411,17 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/source-map/aliases-array/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/source-map/virtual-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0"
+                    "@value": "http://a.ml/vocabularies/document#declares"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "address->file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml#/references/0/references/0::file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml::../../commons-datatypes/1.0.0/locationTypes.raml"
+                    "@value": "true"
                   }
                 ]
               }

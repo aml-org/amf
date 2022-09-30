@@ -182,6 +182,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map"
+        }
       ]
     },
     {
@@ -241,6 +246,17 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -330,6 +346,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map/synthesized-field/element_1",

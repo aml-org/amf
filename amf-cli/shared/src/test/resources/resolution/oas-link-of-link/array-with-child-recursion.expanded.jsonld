@@ -104,6 +104,29 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ],

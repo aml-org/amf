@@ -195,6 +195,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/source-map/lexical/element_0"
@@ -357,6 +362,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B/source-map/type-expression/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#declares",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/source-map/lexical/element_0",

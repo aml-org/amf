@@ -526,6 +526,29 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/resolution/parameters.raml#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ],

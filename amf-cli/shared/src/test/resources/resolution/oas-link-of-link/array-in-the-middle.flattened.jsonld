@@ -230,6 +230,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -295,6 +300,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(24,35)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declares/shape/C/property/property/parent",
