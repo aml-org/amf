@@ -7,6 +7,7 @@ import amf.aml.internal.render.emitters.common.IdCounter
 import amf.aml.internal.transform.steps.DialectCombiningMappingStage
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
+import org.mulesoft.common.collections._
 
 import scala.collection.mutable
 
@@ -39,7 +40,7 @@ class VocabularyGenerator(dialect: Dialect, multipleTerms: Seq[CandidateProperty
   private def generateMapPropToTerms(properties: Seq[PropertyMapping]): Map[String, Seq[PropertyMapping]] =
     properties
       .filter(_.nodePropertyMapping().option().nonEmpty)
-      .groupBy(_.nodePropertyMapping().value())
+      .legacyGroupBy(_.nodePropertyMapping().value())
 
   private def generateCandidates(duplicatedTerms: Map[String, Seq[PropertyMapping]]): Seq[CandidateProperty] =
     duplicatedTerms.flatMap { case (term, properties) =>

@@ -11,27 +11,15 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
-import amf.shapes.internal.domain.metamodel._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.model.domain.UnionShape
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  Example,
-  FileShape,
-  MatrixShape,
-  NilShape,
-  NodeShape,
-  ScalarShape,
-  SchemaShape,
-  TupleShape,
-  UnionShape
-}
+import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
   InvalidTypeInheritanceErrorSpecification,
   InvalidTypeInheritanceWarningSpecification
 }
+import org.mulesoft.common.collections._
 
 import scala.collection.mutable
 
@@ -487,7 +475,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
-    newUnionItems.groupBy(_.id).foreach {
+    newUnionItems.legacyGroupBy(_.id).foreach {
       case (_, shapes) if shapes.size > 1 =>
         val counter = new IdCounter()
         shapes.foreach { shape =>

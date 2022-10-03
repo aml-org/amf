@@ -5,7 +5,7 @@ import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.{OasParameter, Parameters}
-import amf.apicontract.internal.spec.oas.parser.context.{OasSpecVersionFactory, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.OasContentsParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.{OasDefinitions, toOas}
@@ -28,6 +28,7 @@ import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, 
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser._
 import org.mulesoft.common.client.lexical.PositionRange
+import org.mulesoft.common.collections._
 import org.yaml.model._
 
 import scala.language.postfixOps
@@ -862,7 +863,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       }
     })
 
-    val groupedByBinding = paramsInformation.groupBy { case ParameterInformation(_, name, binding) =>
+    val groupedByBinding = paramsInformation.legacyGroupBy { case ParameterInformation(_, name, binding) =>
       (name, binding)
     }.values
     groupedByBinding

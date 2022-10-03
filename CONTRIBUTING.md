@@ -20,8 +20,8 @@ behavior that is not occurring.
 ## Code Contributions
 
 ### Development Requirements
-* Scala 2.12.11
-* sbt 1.6.1
+* Scala 2.12.13
+* sbt 1.7.1
 * Node
 
 ### Version control branching
