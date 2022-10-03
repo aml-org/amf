@@ -12,7 +12,6 @@ object Common {
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
 
   val settings: Seq[Def.Setting[_]] = Seq(
-    scalaVersion             := "2.12.11",
     Test / parallelExecution := false,
     Test / fork              := false,
     scalacOptions ++= Seq("-unchecked", "-target:jvm-1.8", "-feature", "-deprecation", "-Xfatal-warnings"),

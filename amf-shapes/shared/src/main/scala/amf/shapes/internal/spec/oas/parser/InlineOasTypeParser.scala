@@ -5,31 +5,41 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion, SynthesizedField}
+import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion}
 import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
+import amf.core.internal.parser._
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations, SearchScope}
-import amf.core.internal.parser._
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
+import amf.shapes.internal.spec.SemanticContextParser
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser._
-import amf.shapes.internal.spec.jsonschema.parser.{ContentParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, UnevaluatedParser}
+import amf.shapes.internal.spec.jsonschema.parser.{
+  ContentParser,
+  Draft2019ShapeDependenciesParser,
+  Draft4ShapeDependenciesParser,
+  UnevaluatedParser
+}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
-import amf.shapes.internal.spec.SemanticContextParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
+import org.mulesoft.common.collections._
 import org.yaml.model._
+
 import scala.collection.mutable
 import scala.util.Try
 
@@ -815,7 +825,7 @@ case class InlineOasTypeParser(
       val requiredSeq  = field.value.asOption[Seq[YNode]]
       requiredSeq match {
         case Some(required) =>
-          val requiredGroup = required.groupBy(_.as[String])
+          val requiredGroup = required.legacyGroupBy(_.as[String])
           validateRequiredFields(requiredGroup, shape)
           requiredGroup.map { case (key, nodes) =>
             key -> nodes.head

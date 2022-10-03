@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedTags
+import org.mulesoft.common.collections._
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ctx: OasLikeWebApiContext)
@@ -20,7 +21,7 @@ case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ct
       .flatMap { tag =>
         tag.name.option().map(_ -> tag)
       }
-      .groupBy { case (name, _) => name }
+      .legacyGroupBy { case (name, _) => name }
     val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
     namesWithTag.foreach { case (name, tag) =>
       ctx.eh.violation(DuplicatedTags, tag, s"Tag with name '$name' was found duplicated", tag.annotations)
