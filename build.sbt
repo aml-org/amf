@@ -356,3 +356,5 @@ sonarProperties ++= Map(
   "sonar.tests" -> "amf-api-contract/shared/src/test/scala, amf-cli/shared/src/test/scala, amf-grpc/shared/src/test/scala",
   "sonar.userHome" -> "${buildDir}/.sonar"
 )
+
+Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
