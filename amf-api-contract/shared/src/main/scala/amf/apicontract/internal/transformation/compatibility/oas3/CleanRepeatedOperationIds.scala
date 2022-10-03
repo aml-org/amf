@@ -5,6 +5,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
+import org.mulesoft.common.collections._
 
 class CleanRepeatedOperationIds() extends TransformationStep {
   override def transform(
@@ -29,7 +30,7 @@ class CleanRepeatedOperationIds() extends TransformationStep {
   private def operationsWithRepeatedIds(operations: Seq[Operation]): Seq[Seq[Operation]] =
     operations
       .filter(x => x.name.option().isDefined)
-      .groupBy(_.name.value())
+      .legacyGroupBy(_.name.value())
       .filter(isRepeated)
       .values
       .toSeq

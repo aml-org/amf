@@ -10,6 +10,7 @@ import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguratio
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 import amf.shapes.internal.validation.payload.collector.{CollectorsRunner, ValidationCandidateCollector}
+import org.mulesoft.common.collections._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -38,7 +39,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
     // we can order here or order in each json schema validator pair when ask for the exception causes
 
-    val indexedResults: Map[String, List[AMFValidationResult]] = report.results.toList.sorted.groupBy { r =>
+    val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.sorted.legacyGroupBy { r =>
       r.targetNode
     }
 
@@ -57,10 +58,10 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
 
 sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
 
-  def aggregate(indexedResult: Map[String, List[AMFValidationResult]]): Option[AMFValidationResult] = {
+  def aggregate(indexedResult: Map[String, Seq[AMFValidationResult]]): Option[AMFValidationResult] = {
     val sonsResults: Seq[AMFValidationResult] = collectResults(indexedResult)
 
-    indexedResult.get(d.id) match {
+    indexedResult.get(d.id).map(_.toList) match {
       case Some(rootResults) if sonsResults.nonEmpty => Some(buildRootResult(rootResults, sonsToString(sonsResults)))
       case Some(rootResult)                          => Some(buildRootResult(rootResult, None))
       case None if sonsResults.nonEmpty => // there is not root result? create empty result?
@@ -81,7 +82,8 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
     }
   }
 
-  private def sorted(elements: Seq[AMFValidationResult]) = elements.sorted // need order by something of the targetNode
+  private def sorted(elements: Seq[AMFValidationResult]): List[AMFValidationResult] =
+    elements.sorted.toList // need order by something of the targetNode
 
   private def buildRootResult(rootResults: List[AMFValidationResult], additionalMessage: Option[String]) = {
     val sortedResults = sorted(rootResults)
@@ -138,10 +140,10 @@ sealed case class DataNodeIndex(private val dataNodes: Seq[DataNode]) {
       case obj: ObjectNode => obj.allProperties().flatMap(p => p.id +: indexSons(p)).toSeq
       case arr: ArrayNode =>
         arr.members.flatMap(m => { m.id +: indexSons(m) })
-      case _ => Nil // if other type, dont have childrens, and the root id is indexed at data node entry level.
+      case _ => Nil // if other type, dont have children, and the root id is indexed at data node entry level.
     }
   }
 
-  def aggregate(indexedResult: Map[String, List[AMFValidationResult]]): Seq[AMFValidationResult] =
+  def aggregate(indexedResult: Map[String, Seq[AMFValidationResult]]): Seq[AMFValidationResult] =
     index.flatMap { case (id, entry) => entry aggregate indexedResult }.toSeq
 }

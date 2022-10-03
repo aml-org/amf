@@ -9,7 +9,6 @@ import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.{ExtendsEmitter, RamlResponsesEmitter}
 import amf.apicontract.internal.spec.spec.toOas
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.SynthesizedField
@@ -30,6 +29,8 @@ import amf.shapes.internal.spec.common.emitter.{
 }
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.collections._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
@@ -226,7 +227,7 @@ case class OasCallbacksEmitter(
       annotations,
       b.obj { b =>
         // TODO multiple callbacks may have the same name due to inconsistency in the model, pending refactor in APIMF-1771
-        val stringToCallbacks: Map[String, Seq[Callback]] = callbacks.groupBy(_.name.value())
+        val stringToCallbacks: Map[String, Seq[Callback]] = callbacks.legacyGroupBy(_.name.value())
         val emitters = stringToCallbacks.map { case (name, callbacks) =>
           EntryPartEmitter(
             name,
