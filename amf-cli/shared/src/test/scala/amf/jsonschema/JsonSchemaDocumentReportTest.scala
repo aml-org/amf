@@ -22,4 +22,20 @@ class JsonSchemaDocumentReportTest extends UniquePlatformReportGenTest {
       configOverride = Some(baseConfig)
     )
   }
+
+  test("Document with reference to root from declaration should work") {
+    validate(
+      "root-reference-from-declaration.json",
+      None,
+      configOverride = Some(baseConfig)
+    )
+  }
+
+  test("Document with reference to root from root schema should work") {
+    validate(
+      "root-reference-from-root.json",
+      None,
+      configOverride = Some(baseConfig)
+    )
+  }
 }

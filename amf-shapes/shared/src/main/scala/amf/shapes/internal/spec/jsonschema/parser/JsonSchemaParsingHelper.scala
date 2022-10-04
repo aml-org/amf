@@ -3,12 +3,12 @@ package amf.shapes.internal.spec.jsonschema.parser
 import amf.core.client.scala.model.domain.Shape
 import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
-import org.yaml.model.YMapEntry
+import org.yaml.model.YPart
 
 object JsonSchemaParsingHelper {
   def createTemporaryShape(
       adopt: Shape => Unit,
-      schemaEntry: YMapEntry,
+      schemaEntry: YPart,
       ctx: ShapeParserContext,
       fullRef: String
   ): UnresolvedShape = {
