@@ -1,7 +1,6 @@
-package amf.shapes.client.jsonldschema
+package amf.shapes.client.jsonldschema.spec
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.Mimes
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient}
 import org.scalatest.funsuite.AsyncFunSuite

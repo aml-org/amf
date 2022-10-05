@@ -27,5 +27,3 @@ abstract class JsonLDElementBuilder(val location: SourceLocation) {
 
   def getOverridedTerm: Option[String] = overridedTerm
 }
-
-trait JsonLDErrorBuilder

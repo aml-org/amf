@@ -1,6 +1,6 @@
 package amf.shapes.client.scala.model.domain.jsonldinstance
 
-import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.{AmfElement, AmfObject}
 import amf.core.client.scala.vocabulary.Namespace.Document
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
