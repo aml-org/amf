@@ -39,6 +39,6 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
         AnyShape()
     }
 
-    JsonLDSchemaNodeParser(shape, node, "encodes")(new JsonLDParserContext(eh)).parse()
+    JsonLDSchemaNodeParser(shape, node, "encodes", isRoot = true)(new JsonLDParserContext(eh)).parse()
   }
 }

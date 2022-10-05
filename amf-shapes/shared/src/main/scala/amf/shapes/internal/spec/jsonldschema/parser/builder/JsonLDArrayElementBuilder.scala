@@ -59,8 +59,3 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
 
   override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDArrayElementBuilder]
 }
-
-object JsonLDArrayErrorElementBuilder extends JsonLDArrayElementBuilder(SourceLocation.Unknown) with JsonLDErrorBuilder
-object JsonLDArrayElementBuilder {
-  val error = JsonLDArrayErrorElementBuilder
-}

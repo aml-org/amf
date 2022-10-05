@@ -55,6 +55,16 @@ object JsonLDSchemaValidations extends Validations {
     "Characteristics can only be used at inlined types of property ranges. Usage at encodes and declared shapes and array items is not allowed"
   )
 
+  val UnsupportedScalarRootLevel: ValidationSpecification = ValidationSpecification(
+    "unsupported-scalar-root-level",
+    "Scalars are not supported as root element"
+  )
+
+  val UnsupportedRootLevel: ValidationSpecification = ValidationSpecification(
+    "unsupported-root-level",
+    "Unsupported as root element"
+  )
+
   override val specification: String                      = JsonLDSchema.id
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)
