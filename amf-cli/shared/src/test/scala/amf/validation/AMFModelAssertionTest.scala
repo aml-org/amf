@@ -413,7 +413,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-11350149
   test("path parameter location") {
     val ramlApi = s"$basePath/raml/uri-params/missing-definition.raml"
-    modelAssertion(ramlApi) { bu =>
+    modelAssertion(ramlApi, PipelineId.Editing) { bu =>
       val components  = new BaseUnitComponents()
       val serverParam = components.getServers(bu).head
       serverParam.annotations.isSynthesized shouldBe true
@@ -423,7 +423,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val params                    = paramField.values
       val synthesizedParam          = params.head
       val synthesizedLexical        = synthesizedParam.annotations.lexical()
-      val correctSynthesizedLexical = PositionRange((10, 3), (10, 13)) // TODO: should be this lexical
+      val correctSynthesizedLexical = PositionRange((7, 3), (7, 12))
       synthesizedLexical.compareTo(correctSynthesizedLexical) shouldBe 0
     }
   }
