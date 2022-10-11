@@ -48,7 +48,7 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
 
   private def setRequestParameters(op: Operation, params: Parameters)(implicit errorHandler: AMFErrorHandler) = {
     val request           = Option(op.request).getOrElse(op.withRequest())
-    val requestParameters = Parameters(request.queryParameters, request.uriParameters, request.headers)
+    val requestParameters = Parameters(request.queryParameters, request.uriParameters, request.headers, request.cookieParameters)
     checkDuplicatedParameters(params, requestParameters)
     val finalParams = params.merge(requestParameters)
     // set the list of parameters at the operation level in the corresponding fields
@@ -57,6 +57,7 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
     if (finalParams.header.nonEmpty) request.fields.setWithoutId(RequestModel.Headers, AmfArray(finalParams.header))
     val pathParams = finalParams.baseUri08 ++ finalParams.path
     if (pathParams.nonEmpty) request.fields.setWithoutId(RequestModel.UriParameters, AmfArray(pathParams))
+    if (finalParams.cookie.nonEmpty) request.fields.setWithoutId(RequestModel.CookieParameters, AmfArray(finalParams.cookie))
   }
 
   private def checkDuplicatedParameters(endPointParams: Parameters, requestParams: Parameters)(implicit

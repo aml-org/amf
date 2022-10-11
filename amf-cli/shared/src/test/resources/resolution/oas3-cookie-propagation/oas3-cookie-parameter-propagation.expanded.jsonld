@@ -1,0 +1,728 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#11",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "oas30-parameter-cookie"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#12",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/myEndpoint/"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#13",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#15",
+                    "@type": [
+                      "apiContract:Request",
+                      "core:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:cookieParameter": [
+                      {
+                        "@id": "#1",
+                        "@type": [
+                          "apiContract:Parameter",
+                          "core:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "myEndpointCookieParamName"
+                          }
+                        ],
+                        "apiContract:paramName": [
+                          {
+                            "@value": "myEndpointCookieParam"
+                          }
+                        ],
+                        "apiContract:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:style": [
+                          {
+                            "@value": "form"
+                          }
+                        ],
+                        "apiContract:explode": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:binding": [
+                          {
+                            "@value": "cookie"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#2",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "myEndpointCookieParamName"
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#2": ""
+                              },
+                              "lexical": {
+                                "shacl:datatype": "[(11,8)-(12,0)]",
+                                "#2": "[(10,6)-(12,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#2": "[(11,8)-(11,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:style": "true"
+                          },
+                          "resolved-link": {
+                            "#1": "amf://id#3"
+                          },
+                          "lexical": {
+                            "raml-shapes:schema": "[(10,6)-(12,0)]",
+                            "apiContract:required": "[(12,6)-(13,0)]",
+                            "#1": "[(7,4)-(13,0)]",
+                            "apiContract:paramName": "[(8,6)-(9,0)]",
+                            "apiContract:binding": "[(9,6)-(10,0)]"
+                          },
+                          "declared-element": {
+                            "#1": ""
+                          },
+                          "resolved-link-target": {
+                            "#1": "amf://id#1"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "apiContract:Parameter",
+                          "core:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "myEndpointCookieParamNameOne"
+                          }
+                        ],
+                        "apiContract:paramName": [
+                          {
+                            "@value": "myOperationCookieParamOne"
+                          }
+                        ],
+                        "apiContract:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:style": [
+                          {
+                            "@value": "form"
+                          }
+                        ],
+                        "apiContract:explode": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:binding": [
+                          {
+                            "@value": "cookie"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#8",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "myEndpointCookieParamNameOne"
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#8": ""
+                              },
+                              "lexical": {
+                                "shacl:datatype": "[(23,8)-(24,0)]",
+                                "#8": "[(22,6)-(24,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#8": "[(23,8)-(23,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:style": "true"
+                          },
+                          "resolved-link": {
+                            "#7": "amf://id#9"
+                          },
+                          "lexical": {
+                            "raml-shapes:schema": "[(22,6)-(24,0)]",
+                            "apiContract:required": "[(24,6)-(27,0)]",
+                            "#7": "[(19,4)-(27,0)]",
+                            "apiContract:paramName": "[(20,6)-(21,0)]",
+                            "apiContract:binding": "[(21,6)-(22,0)]"
+                          },
+                          "declared-element": {
+                            "#7": ""
+                          },
+                          "resolved-link-target": {
+                            "#7": "amf://id#7"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "#4",
+                        "@type": [
+                          "apiContract:Parameter",
+                          "core:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "myOperationCookieParamName"
+                          }
+                        ],
+                        "apiContract:paramName": [
+                          {
+                            "@value": "myOperationCookieParam"
+                          }
+                        ],
+                        "apiContract:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:style": [
+                          {
+                            "@value": "form"
+                          }
+                        ],
+                        "apiContract:explode": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:binding": [
+                          {
+                            "@value": "cookie"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#5",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "myOperationCookieParamName"
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#5": ""
+                              },
+                              "lexical": {
+                                "shacl:datatype": "[(17,8)-(18,0)]",
+                                "#5": "[(16,6)-(18,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#5": "[(17,8)-(17,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:style": "true"
+                          },
+                          "resolved-link": {
+                            "#4": "amf://id#6"
+                          },
+                          "lexical": {
+                            "raml-shapes:schema": "[(16,6)-(18,0)]",
+                            "apiContract:required": "[(18,6)-(19,0)]",
+                            "#4": "[(13,4)-(19,0)]",
+                            "apiContract:paramName": "[(14,6)-(15,0)]",
+                            "apiContract:binding": "[(15,6)-(16,0)]"
+                          },
+                          "declared-element": {
+                            "#4": ""
+                          },
+                          "resolved-link-target": {
+                            "#4": "amf://id#4"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#14",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "todo liso"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:description": "[(39,10)-(40,0)]",
+                        "#14": "[(38,8)-(40,0)]",
+                        "core:name": "[(38,8)-(38,13)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(37,6)-(40,0)]",
+                    "#13": "[(33,4)-(40,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#12": "[(28,2)-(40,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "apiContract:endpoint": "[(27,0)-(40,0)]",
+            "core:name": "[(4,2)-(5,0)]",
+            "#11": "[(1,0)-(40,0)]",
+            "core:version": "[(3,2)-(4,0)]"
+          }
+        }
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#10",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.7.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "OAS 3.0"
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "apiContract:Parameter",
+          "core:Parameter",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "myEndpointCookieParamName"
+          }
+        ],
+        "apiContract:paramName": [
+          {
+            "@value": "myEndpointCookieParam"
+          }
+        ],
+        "apiContract:required": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:style": [
+          {
+            "@value": "form"
+          }
+        ],
+        "apiContract:explode": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:binding": [
+          {
+            "@value": "cookie"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#2",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "myEndpointCookieParamName"
+              }
+            ],
+            "smaps": {
+              "auto-generated-name": {
+                "#2": ""
+              },
+              "lexical": {
+                "shacl:datatype": "[(11,8)-(12,0)]",
+                "#2": "[(10,6)-(12,0)]"
+              },
+              "type-property-lexical-info": {
+                "#2": "[(11,8)-(11,12)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:style": "true"
+          },
+          "resolved-link": {
+            "#1": "amf://id#3"
+          },
+          "lexical": {
+            "raml-shapes:schema": "[(10,6)-(12,0)]",
+            "apiContract:required": "[(12,6)-(13,0)]",
+            "#1": "[(7,4)-(13,0)]",
+            "apiContract:paramName": "[(8,6)-(9,0)]",
+            "apiContract:binding": "[(9,6)-(10,0)]"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "resolved-link-target": {
+            "#1": "amf://id#1"
+          }
+        }
+      },
+      {
+        "@id": "#4",
+        "@type": [
+          "apiContract:Parameter",
+          "core:Parameter",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "myOperationCookieParamName"
+          }
+        ],
+        "apiContract:paramName": [
+          {
+            "@value": "myOperationCookieParam"
+          }
+        ],
+        "apiContract:required": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:style": [
+          {
+            "@value": "form"
+          }
+        ],
+        "apiContract:explode": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:binding": [
+          {
+            "@value": "cookie"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#5",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "myOperationCookieParamName"
+              }
+            ],
+            "smaps": {
+              "auto-generated-name": {
+                "#5": ""
+              },
+              "lexical": {
+                "shacl:datatype": "[(17,8)-(18,0)]",
+                "#5": "[(16,6)-(18,0)]"
+              },
+              "type-property-lexical-info": {
+                "#5": "[(17,8)-(17,12)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:style": "true"
+          },
+          "resolved-link": {
+            "#4": "amf://id#6"
+          },
+          "lexical": {
+            "raml-shapes:schema": "[(16,6)-(18,0)]",
+            "apiContract:required": "[(18,6)-(19,0)]",
+            "#4": "[(13,4)-(19,0)]",
+            "apiContract:paramName": "[(14,6)-(15,0)]",
+            "apiContract:binding": "[(15,6)-(16,0)]"
+          },
+          "declared-element": {
+            "#4": ""
+          },
+          "resolved-link-target": {
+            "#4": "amf://id#4"
+          }
+        }
+      },
+      {
+        "@id": "#7",
+        "@type": [
+          "apiContract:Parameter",
+          "core:Parameter",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "myEndpointCookieParamNameOne"
+          }
+        ],
+        "apiContract:paramName": [
+          {
+            "@value": "myOperationCookieParamOne"
+          }
+        ],
+        "apiContract:required": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:style": [
+          {
+            "@value": "form"
+          }
+        ],
+        "apiContract:explode": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:binding": [
+          {
+            "@value": "cookie"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#8",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "myEndpointCookieParamNameOne"
+              }
+            ],
+            "smaps": {
+              "auto-generated-name": {
+                "#8": ""
+              },
+              "lexical": {
+                "shacl:datatype": "[(23,8)-(24,0)]",
+                "#8": "[(22,6)-(24,0)]"
+              },
+              "type-property-lexical-info": {
+                "#8": "[(23,8)-(23,12)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:style": "true"
+          },
+          "resolved-link": {
+            "#7": "amf://id#9"
+          },
+          "lexical": {
+            "raml-shapes:schema": "[(22,6)-(24,0)]",
+            "apiContract:required": "[(24,6)-(27,0)]",
+            "#7": "[(19,4)-(27,0)]",
+            "apiContract:paramName": "[(20,6)-(21,0)]",
+            "apiContract:binding": "[(21,6)-(22,0)]"
+          },
+          "declared-element": {
+            "#7": ""
+          },
+          "resolved-link-target": {
+            "#7": "amf://id#7"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

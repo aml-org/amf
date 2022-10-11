@@ -1,0 +1,39 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: oas30-parameter-cookie
+components:
+  parameters:
+    myEndpointCookieParamName:
+      name: myEndpointCookieParam
+      in: cookie
+      schema:
+        type: string
+      required: true
+    myOperationCookieParamName:
+      name: myOperationCookieParam
+      in: cookie
+      schema:
+        type: string
+      required: true
+    myEndpointCookieParamNameOne:
+      name: myOperationCookieParamOne
+      in: cookie
+      schema:
+        type: string
+      required: true
+
+
+paths:
+  /myEndpoint/:
+    parameters:
+      - $ref: '#/components/parameters/myEndpointCookieParamName'
+      - $ref: '#/components/parameters/myEndpointCookieParamNameOne'
+
+    get:
+      parameters:
+        - $ref: '#/components/parameters/myOperationCookieParamName'
+
+      responses:
+        '200':
+          description: "todo liso"
