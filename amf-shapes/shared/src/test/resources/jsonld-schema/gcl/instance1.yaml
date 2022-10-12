@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ApiInstance
+metadata:
+  name: products-users-api
+  labels:
+    # To add. GAV is completed with "api-"
+    flex.mulesoft.com/api-group-id: 1caa0b9b-4f4d-43c4-a1b6-f925a8c77baa
+    flex.mulesoft.com/api-asset-id: assetId
+    flex.mulesoft.com/api-version: 1.0.0
+spec:
+  address: proxyUri
+  deprecated: false
+  deployment:
+    target: CH
+    runtimeVersion: 4.4.0
+    technology: "FlexGateway"
+  policies:
+    - policyRef:
+        name: http-basic-authentication-flex
+    - policyRef:
+        name: rate-limiting-flex

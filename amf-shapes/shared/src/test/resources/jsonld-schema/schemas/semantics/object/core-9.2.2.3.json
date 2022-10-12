@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#",
+    "@type": [
+      "alias:rootObject"
+    ],
+    "prop1": "alias.prop1Field"
+  },
+  "properties": {
+    "prop1": {
+      "type": "string"
+    }
+  },
+  "if": {
+    "prop1": {
+      "maximum": 10
+    }
+  },
+  "else": {
+    "@context": {
+      "@type": [
+        "alias:elseNode"
+      ],
+      "prop1": "alias.propChangeField",
+      "prop2": "alias.prop2Field"
+    },
+    "prop2": {
+      "type": "integer"
+    }
+  }
+}

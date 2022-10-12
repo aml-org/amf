@@ -26,8 +26,8 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
   def withLastWill(lastWill: MqttServerLastWill): this.type = set(LastWill, lastWill)
   def withKeepAlive(keepAlive: Int): this.type              = set(KeepAlive, keepAlive)
 
-  private[amf] override def componentId: String = "/mqtt-server"
-  override def linkCopy(): MqttServerBinding    = MqttServerBinding().withId(id)
+  override def componentId: String           = "/mqtt-server"
+  override def linkCopy(): MqttServerBinding = MqttServerBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     MqttServerBinding.apply
@@ -57,7 +57,7 @@ class MqttServerLastWill(override val fields: Fields, override val annotations: 
   def withRetain(retain: Boolean): this.type  = set(Retain, retain)
   def withMessage(message: String): this.type = set(Message, message)
 
-  private[amf] override def componentId: String = "/mqtt-last-will"
+  override def componentId: String = "/mqtt-last-will"
 }
 
 object MqttServerLastWill {

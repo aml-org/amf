@@ -76,6 +76,8 @@ AMF Model Documentation
 * [HttpOperationBinding](#httpoperationbinding)
 * [HttpSettings](#httpsettings)
 * [IriTemplateMapping](#iritemplatemapping)
+* [JsonLDElement](#jsonldelement)
+* [JsonLDInstanceDocument](#jsonldinstancedocument)
 * [JsonSchemaDocument](#jsonschemadocument)
 * [KafkaMessageBinding](#kafkamessagebinding)
 * [KafkaOperationBinding](#kafkaoperationbinding)
@@ -1485,6 +1487,36 @@ Types:
  | templateVariable | string | Variable defined inside an URL template | `http://a.ml/vocabularies/apiContract#templateVariable` |
  | linkExpression | string | OAS 3 link expression | `http://a.ml/vocabularies/apiContract#linkExpression` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## JsonLDElement
+
+Types:
+* `http://a.ml/vocabularies/document#JsonLDElement`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+
+## JsonLDInstanceDocument
+
+Types:
+* `http://a.ml/vocabularies/document#JsonLDInstanceDocument`
+* `http://a.ml/vocabularies/document#Document`
+* `http://a.ml/vocabularies/document#Fragment`
+* `http://a.ml/vocabularies/document#Module`
+* `http://a.ml/vocabularies/document#Unit`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | encodes | [[JsonLDElement](#jsonldelement)] | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | `http://a.ml/vocabularies/document#encodes` |
+ | version | string | Version of the current model | `http://a.ml/vocabularies/document#version` |
+ | references | [[BaseUnit](#baseunit)] | references across base units | `http://a.ml/vocabularies/document#references` |
+ | usage | string | Human readable description of the unit | `http://a.ml/vocabularies/document#usage` |
+ | describedBy | url | Link to the AML dialect describing a particular subgraph of information | `http://a.ml/vocabularies/meta#describedBy` |
+ | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | `http://a.ml/vocabularies/document#root` |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | `http://a.ml/vocabularies/document#package` |
+ | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | `http://a.ml/vocabularies/document#processingData` |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | `http://a.ml/vocabularies/document#sourceInformation` |
 
 ## JsonSchemaDocument
 A Document that represents a JSON Schema Fragment

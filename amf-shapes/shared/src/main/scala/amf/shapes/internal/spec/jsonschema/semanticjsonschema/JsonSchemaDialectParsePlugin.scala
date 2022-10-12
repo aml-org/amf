@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.common.{HighPriority, PluginPriority}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
@@ -9,7 +10,8 @@ import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, Sy
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchemaDialect, Mimes, Spec}
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
 import amf.shapes.internal.spec.common.JSONSchemaDraft201909SchemaVersion
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
@@ -22,6 +24,7 @@ import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{
   SchemaTransformer,
   SchemaTransformerOptions
 }
+import amf.shapes.internal.transformation.stages.{ContextTransformationStage, SemanticContextResolver}
 import org.yaml.model.YMap
 
 object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
@@ -57,6 +60,7 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
       options: SchemaTransformerOptions,
       parsed: AnyShape
   ): Dialect = {
+    SemanticContextResolver(ctx.eh).computeContext(parsed, SemanticContext())
     val transformed = SchemaTransformer(parsed, options)(ctx.eh).transform()
     val dialect     = DialectWrapper(transformed, options, document.location).wrapTransformationResult()
     val vocabulary  = transform.VocabularyGenerator(dialect, transformed.terms, options).generateVocabulary()

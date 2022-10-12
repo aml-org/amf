@@ -74,8 +74,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
       case None              => temporalContext
     }
     // @characteriscs must be processed later in case of there are new prefixes declared at the same level
-    m.entries
-      .find(_.key.as[YScalar].text == "@characteristics")
+    m.key("@characteristics")
       .foreach(entry => parseCharacteristics(entry.value, finalContext))
 
     finalContext
@@ -114,7 +113,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
           val compactIri = e.as[YScalar].text
           validateIri(e, compactIri, context)
         }
-      context.withTypeMappings(iris)
+      context.withOverrideMappings(iris)
     case _ =>
       ctx.eh.violation(
         InvalidCharacteristicsNode,

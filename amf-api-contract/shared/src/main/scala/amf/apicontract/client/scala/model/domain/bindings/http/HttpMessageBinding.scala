@@ -20,7 +20,7 @@ class HttpMessageBinding(override val fields: Fields, override val annotations: 
 
   def withHeaders(headers: Shape): this.type = set(Headers, headers)
 
-  private[amf] override def componentId: String = "/http-message"
+  override def componentId: String = "/http-message"
 
   override protected def bindingVersionField: Field = BindingVersion
   override def linkCopy(): HttpMessageBinding       = HttpMessageBinding().withId(id)

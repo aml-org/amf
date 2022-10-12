@@ -22,7 +22,7 @@ case class SchemaDependencies private[amf] (fields: Fields, annotations: Annotat
     this
   }
 
-  private[amf] override def componentId: String = {
+  override def componentId: String = {
     val propertySourceName = propertySource.option().map(x => x).getOrElse("unknown").split("/").last
     s"/dependencySchema/$propertySourceName"
   }

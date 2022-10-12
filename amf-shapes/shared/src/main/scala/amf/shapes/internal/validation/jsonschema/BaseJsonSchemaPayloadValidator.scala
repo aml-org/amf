@@ -25,6 +25,7 @@ import amf.shapes.internal.spec.common.emitter.PayloadEmitter
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes
+import org.mulesoft.common.client.lexical.SourceLocation
 import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
@@ -264,6 +265,13 @@ abstract class BaseJsonSchemaPayloadValidator(
       override def fragments: Map[String, FragmentRef]                                                 = Map.empty
 
       override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
+
+      override def violation(
+          specification: ValidationSpecification,
+          node: String,
+          message: String,
+          loc: SourceLocation
+      ): Unit = eh.violation(specification, node, message, loc)
     }
   }
 

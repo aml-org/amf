@@ -4,7 +4,9 @@ import amf.aml.client.scala.model.domain.NodeMappable
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.aml.internal.render.emitters.common.IdCounter
 import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.{CuriePrefix, SemanticContext}
+import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.shapes.client.scala.model.domain.{AnyShape, CuriePrefix, SemanticContext}
+import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler}
 
 import scala.collection.mutable
 
@@ -42,7 +44,7 @@ class ShapeTransformationContext(
       externals,
       idCounter,
       shapeDeclarationNames,
-      semantics.merge(newSemantics).normalize(),
+      newSemantics.normalize(),
       termsToExtract
     )
   }
@@ -93,10 +95,13 @@ class ShapeTransformationContext(
       parts.dropRight(1).mkString("/") + "/"
     }
   }
+  def updateContext(anyShape: AnyShape): ShapeTransformationContext =
+    anyShape.semanticContext.fold(this)(this.updateSemanticContext)
 }
 
 object ShapeTransformationContext {
-  def apply(options: SchemaTransformerOptions): ShapeTransformationContext = createContext(options)
+  def apply(options: SchemaTransformerOptions): ShapeTransformationContext =
+    createContext(options)
 
   private def createContext(options: SchemaTransformerOptions) = {
     val semanticContext = SemanticContext().withId("context").withCuries(Seq(auxiliaryVocabCurie(options)))

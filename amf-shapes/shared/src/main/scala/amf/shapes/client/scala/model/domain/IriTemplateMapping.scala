@@ -18,7 +18,7 @@ case class IriTemplateMapping private[amf] (fields: Fields, annotations: Annotat
   override def meta: IriTemplateMappingModel.type = IriTemplateMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     s"/mapping/${templateVariable.option().getOrElse("unknownVar").urlComponentEncoded}"
 }
 

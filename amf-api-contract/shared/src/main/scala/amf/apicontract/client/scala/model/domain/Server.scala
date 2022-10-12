@@ -38,7 +38,7 @@ case class Server(fields: Fields, annotations: Annotations) extends SecuredEleme
   override def meta: DomainElementModel = ServerModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + url.option().orNull.urlComponentEncoded
+  override def componentId: String = "/" + url.option().orNull.urlComponentEncoded
 }
 
 object Server {

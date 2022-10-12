@@ -21,7 +21,7 @@ case class Organization(fields: Fields, annotations: Annotations) extends NamedD
   override def meta = OrganizationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/organization"
+  override def componentId: String = "/organization"
 
   override def nameField: Field = Name
 }

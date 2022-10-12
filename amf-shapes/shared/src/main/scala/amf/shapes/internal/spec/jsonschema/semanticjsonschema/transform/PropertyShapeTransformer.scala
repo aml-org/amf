@@ -143,17 +143,12 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
     property.range match {
       case any: AnyShape =>
         any.semanticContext.foreach { localContext =>
-          val context = ctx.semantics.merge(localContext).normalize()
-          localContext.typeMappings
-            .flatMap(_.option())
-            .toList match {
+          localContext.normalize().overrideMappings.flatMap(_.option()).toList match {
             // If there is only one semantic, I will set it
-            case List(element) => mapping.withNodePropertyMapping(context.expand(element))
-            case List(Nil)     => // ignore
+            case head :: tail if tail.isEmpty => mapping.withNodePropertyMapping(head)
             // If there is more than one, I will collect it to generate a vocab a the end of the process
-            case elements =>
-              val expandedElements = elements.map(context.expand)
-              ctx.termsToExtract += CandidateProperty(mapping, expandedElements)
+            case list if list.nonEmpty => ctx.termsToExtract += CandidateProperty(mapping, list)
+            case _                     => // ignore
           }
         }
 
