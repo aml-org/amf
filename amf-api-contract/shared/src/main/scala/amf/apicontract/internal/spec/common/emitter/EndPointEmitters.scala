@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
-import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
+import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.spec.oas.emitter.domain.Raml10PayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
@@ -9,7 +9,7 @@ import amf.apicontract.internal.spec.spec.toOas
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
-import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.internal.parser.domain.{FieldEntry, Fields, Value}
 import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
@@ -19,7 +19,6 @@ import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
-
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -130,7 +129,9 @@ abstract class RamlEndPointEmitter(
   protected def keyParameter: String
 
   protected def getExplicitParams(params: Seq[Parameter]): Seq[Parameter] =
-    params.filter(p => !p.fields.getValueAsOption(ParameterModel.Name).exists(_.isSynthesized))
+    params.filter(param => isExplicitParameter(param))
+
+  private def isExplicitParameter(parameter: Parameter): Boolean = !parameter.annotations.isVirtual
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields

@@ -53,8 +53,6 @@ types:
             type: shapes.NewBankAccountRequestData
       /{account_id}:
         uriParameters:
-          customer_id:
-            type: string
           account_id:
             type: string
         get:
@@ -87,8 +85,6 @@ types:
             type: shapes.NewLoanRequestData
       /{loan_id}:
         uriParameters:
-          customer_id:
-            type: string
           loan_id:
             type: string
         get:
@@ -125,8 +121,6 @@ types:
               type: shapes.NewDebitCardRequestData
         /{card_id}:
           uriParameters:
-            customer_id:
-              type: string
             card_id:
               type: string
           get:
@@ -159,8 +153,6 @@ types:
               type: shapes.NewCreditCardRequestData
         /{card_id}:
           uriParameters:
-            customer_id:
-              type: string
             card_id:
               type: string
           get:
