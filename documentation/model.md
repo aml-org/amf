@@ -1499,7 +1499,7 @@ Types:
  | ------ | ------ | ------ | ------ |
 
 ## JsonLDInstanceDocument
-
+A Document that represents a JSON-LD instance document
 Types:
 * `http://a.ml/vocabularies/document#JsonLDInstanceDocument`
 * `http://a.ml/vocabularies/document#Document`
