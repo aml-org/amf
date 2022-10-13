@@ -44,16 +44,14 @@
       "http://a.ml/vocabularies/core#deployment": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/object/"
       },
-      "http://a.ml/vocabularies/core#policies": {
-        "@list": [
-          {
-            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/"
-          },
-          {
-            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9"
-          }
-        ]
-      }
+      "http://a.ml/vocabularies/core#policies": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/"
+        },
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9"
+        }
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/object/",
@@ -120,13 +118,11 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          {
-            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/"
-          }
-        ]
-      },
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/"
+        }
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/BaseUnitProcessingData"

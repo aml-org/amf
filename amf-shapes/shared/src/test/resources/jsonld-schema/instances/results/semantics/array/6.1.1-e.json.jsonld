@@ -16,14 +16,12 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          {
-            "@value": "1.1",
-            "@type": "http://a.ml/vocabularies/shapes#number"
-          }
-        ]
-      },
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@value": "1.1",
+          "@type": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-e.json#/BaseUnitProcessingData"

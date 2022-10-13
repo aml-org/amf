@@ -24,13 +24,11 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          {
-            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-g.json#/encodes/object/"
-          }
-        ]
-      },
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-g.json#/encodes/object/"
+        }
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-g.json#/BaseUnitProcessingData"

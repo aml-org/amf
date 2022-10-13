@@ -97,6 +97,11 @@ class ContextMapping(override val fields: Fields, val annotations: Annotations)
   def withNulled(nulled: Boolean): this.type = set(ContextMappingModel.Nulled, AmfScalar(nulled, Annotations()))
   def nulled: BoolField                      = fields.field(ContextMappingModel.Nulled)
 
+  def withContainer(container: String): this.type =
+    set(ContextMappingModel.Container, AmfScalar(container, Annotations()))
+
+  def container: StrField = fields.field(ContextMappingModel.Container)
+
   override def componentId: String = "/" + alias.value().urlComponentEncoded
 }
 

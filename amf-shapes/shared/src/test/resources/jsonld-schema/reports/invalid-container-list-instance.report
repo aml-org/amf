@@ -1,0 +1,13 @@
+Model: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/invalid-container-list-instance/instance.json
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/data#container-check-list
+  Message: The value must be an array, as it is specified in the associated container '@list'
+  Severity: Violation
+  Target: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/invalid-container-list-instance/schema.json#/shape/schema/property/property/prop1/scalar/prop1
+  Property: 
+  Range: 
+  Location: 

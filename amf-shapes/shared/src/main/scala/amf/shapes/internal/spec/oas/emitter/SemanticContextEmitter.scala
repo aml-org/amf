@@ -7,6 +7,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.client.scala.model.domain.{BaseIri, ContextMapping, DefaultVocabulary, SemanticContext}
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
+import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
 
 import scala.collection.immutable
@@ -52,10 +53,12 @@ case class SemanticContextEmitter(context: SemanticContext, ordering: SpecOrderi
 
   def emitPrefixes(): List[EntryEmitter] = {
     context.curies.map { prefix =>
-      EntryPartEmitter(prefix.alias.value(),
-                       ScalarEmitter(AmfScalar(prefix.iri.value())),
-                       YType.Str,
-                       pos(prefix.annotations))
+      EntryPartEmitter(
+        prefix.alias.value(),
+        ScalarEmitter(AmfScalar(prefix.iri.value())),
+        YType.Str,
+        pos(prefix.annotations)
+      )
     } toList
   }
 
@@ -69,9 +72,9 @@ case class SemanticContextEmitter(context: SemanticContext, ordering: SpecOrderi
 
 }
 
-private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     base.nulled.option().foreach { nulled =>
@@ -90,9 +93,9 @@ private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecO
 
 }
 
-private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     vocab.iri.option().foreach { iri =>
@@ -106,9 +109,9 @@ private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ord
 
 }
 
-private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     if (types.size == 1) {
@@ -131,27 +134,37 @@ private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ord
 
 }
 
-private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
-    extends EntryEmitter {
+private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, ordering: SpecOrdering)(implicit
+    spec: ShapeEmitterContext
+) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
-      mapping.alias.value(), { f =>
-        if (mapping.coercion.nonEmpty && mapping.iri.nonEmpty) {
-          f.obj { obj =>
-            obj.entry("@id", YNode(mapping.iri.value()))
-            obj.entry("@type", YNode(mapping.coercion.value()))
-          }
-        } else if (mapping.coercion.nonEmpty) {
-          f.obj { obj =>
-            obj.entry("@type", YNode(mapping.coercion.value()))
-          }
-        } else if (mapping.iri.nonEmpty) {
+      mapping.alias.value(),
+      { f =>
+        if (mapping.iri.nonEmpty && !existsOtherEntry) {
           f.+=(YNode(mapping.iri.value()))
+        } else if (existsOtherEntry) {
+          f.obj { obj =>
+            if (mapping.iri.nonEmpty) { emitIdEntry(obj) }
+            if (mapping.coercion.nonEmpty) { emitTypeEntry(obj) }
+            if (mapping.container.nonEmpty) { emitContainerEntry(obj) }
+          }
         }
       }
     )
   }
+
+  private def existsOtherEntry: Boolean =
+    mapping.coercion.nonEmpty || mapping.container.nonEmpty
+
+  private def emitTypeEntry(obj: EntryBuilder): Unit =
+    obj.entry("@type", YNode(mapping.coercion.value()))
+
+  private def emitIdEntry(obj: EntryBuilder): Unit =
+    obj.entry("@id", YNode(mapping.iri.value()))
+
+  private def emitContainerEntry(obj: EntryBuilder): Unit =
+    obj.entry("@container", YNode(mapping.container.value()))
 
   override def position(): Position = pos(mapping.annotations)
 }

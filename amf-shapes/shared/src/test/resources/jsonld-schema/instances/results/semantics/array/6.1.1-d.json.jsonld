@@ -16,13 +16,11 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          [
-            "a"
-          ]
+      "http://a.ml/vocabularies/document#encodes": [
+        [
+          "a"
         ]
-      },
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/6.1.1-d.json#/BaseUnitProcessingData"

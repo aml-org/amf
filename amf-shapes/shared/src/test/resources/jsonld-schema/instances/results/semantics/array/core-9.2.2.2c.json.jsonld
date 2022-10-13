@@ -16,12 +16,10 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          "MORETHANTENCHARS",
-          "less"
-        ]
-      },
+      "http://a.ml/vocabularies/document#encodes": [
+        "MORETHANTENCHARS",
+        "less"
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/array/core-9.2.2.2c.json#/BaseUnitProcessingData"

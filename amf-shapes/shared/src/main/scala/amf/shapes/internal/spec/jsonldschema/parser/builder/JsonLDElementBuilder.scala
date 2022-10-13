@@ -6,24 +6,32 @@ import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElement
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import org.mulesoft.common.client.lexical.SourceLocation
 
-import scala.collection.mutable.ListBuffer
-
 abstract class JsonLDElementBuilder(val location: SourceLocation) {
-  private var overridedTerm: Option[String] = None
+
+  private var overriddenTerm: Option[String] = None
+  private var overriddenType: Option[Type]   = None
+
   type THIS <: JsonLDElementBuilder
+
   def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type)
 
   def merge(other: THIS)(implicit ctx: JsonLDParserContext): THIS = {
-    other.getOverridedTerm.foreach(this.withOverridedTerm)
+    other.getOverriddenTerm.foreach(this.withOverriddenTerm)
+    other.getOverriddenType.foreach(this.withOverriddenType)
     this.asInstanceOf[THIS]
   }
 
   def canEquals(other: Any): Boolean
 
-  def withOverridedTerm(term: String): THIS = {
-    overridedTerm = Some(term)
+  def withOverriddenTerm(term: String): THIS = {
+    overriddenTerm = Some(term)
+    this.asInstanceOf[THIS]
+  }
+  def withOverriddenType(`type`: Type): THIS = {
+    overriddenType = Some(`type`)
     this.asInstanceOf[THIS]
   }
 
-  def getOverridedTerm: Option[String] = overridedTerm
+  def getOverriddenTerm: Option[String] = overriddenTerm
+  def getOverriddenType: Option[Type]   = overriddenType
 }

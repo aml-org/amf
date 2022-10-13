@@ -182,6 +182,12 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
             val iri = e.value.as[YScalar].text
             mapping.withCoercion(iri)
           })
+        nestedMapping
+          .key("@container")
+          .foreach(e => {
+            val container = e.value.as[YScalar].text
+            mapping.withContainer(container)
+          })
         val oldMappings = semanticContext.mapping
         semanticContext.withMapping(oldMappings ++ Seq(mapping))
     }
