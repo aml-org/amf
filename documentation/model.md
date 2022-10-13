@@ -729,7 +729,7 @@ Types:
  | iri | url | Base IRI for all the elements in the model | `http://a.ml/vocabularies/meta#iri` |
  | coercion | string | Type to coerce the mapped model | `http://a.ml/vocabularies/meta#coercion` |
  | nulled | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | `http://a.ml/vocabularies/meta#nulled` |
- | container | [string] | Sets the default container type for a term | `http://a.ml/vocabularies/meta#container` |
+ | containers | [string] | Sets the default containers types for a term | `http://a.ml/vocabularies/meta#containers` |
 
 ## CorrelationId
 Model defining an identifier that can used for message tracing and correlation
@@ -1490,7 +1490,7 @@ Types:
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## JsonLDElement
-
+Base class for all the JSON-LD elements
 Types:
 * `http://a.ml/vocabularies/document#JsonLDElement`
 * `http://a.ml/vocabularies/document#DomainElement`

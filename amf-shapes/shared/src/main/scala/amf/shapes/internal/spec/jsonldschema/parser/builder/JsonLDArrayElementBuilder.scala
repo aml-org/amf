@@ -2,7 +2,8 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
-import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement, JsonLDElementModel}
+import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
+import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
 import org.mulesoft.common.client.lexical.SourceLocation

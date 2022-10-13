@@ -8,7 +8,7 @@ import amf.core.internal.metamodel.Type.Array
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
-import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElementModel
+import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 
 object JsonLDInstanceDocumentModel extends BaseUnitModel {
 

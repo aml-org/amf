@@ -5,7 +5,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDObject}
-import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
+import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDEntityModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleNodes
 import org.mulesoft.common.client.lexical.SourceLocation
