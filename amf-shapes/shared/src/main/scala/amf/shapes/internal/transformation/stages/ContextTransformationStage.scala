@@ -10,7 +10,7 @@ import amf.core.internal.annotations.SourceAST
 import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
-import amf.shapes.internal.domain.metamodel.{ContextMappingModel, NodeShapeModel}
+import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
   InvalidCharacteristicsUse,
   UnsupportedContainer
@@ -52,7 +52,11 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
     }
   }
 
-  private def mergeContext(a: AnyShape, parentContext: SemanticContext, characteristicsAllowed: Boolean): SemanticContext = {
+  private def mergeContext(
+      a: AnyShape,
+      parentContext: SemanticContext,
+      characteristicsAllowed: Boolean
+  ): SemanticContext = {
     val context = a.semanticContext.fold(parentContext)(sc =>
       parentContext.merge(semanticContextChecks(sc, characteristicsAllowed))
     )
@@ -83,19 +87,18 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
   private def validateContainerValues(context: SemanticContext): Unit = {
     val supportedContainerValues: Seq[String] = Seq(JsonLdKeywords.List)
     context.mapping.foreach { mapping =>
-      mapping.container.option() match {
-        case Some(container) =>
-          if (!supportedContainerValues.contains(container)) {
-            eh.violation(
-              UnsupportedContainer,
-              context.id,
-              UnsupportedContainer.message + s". Supported values are: " + supportedContainerValues.mkString(", "),
-              context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
-            )
-            mapping.fields.remove(ContextMappingModel.Container.toString)
-          }
-        case None => // nothing to do
+      val cleanContainers: Seq[String] = mapping.containers.map(_.value()).flatMap { container =>
+        if (!supportedContainerValues.contains(container)) {
+          eh.violation(
+            UnsupportedContainer,
+            context.id,
+            UnsupportedContainer.message + s". Supported values are: " + supportedContainerValues.mkString(", "),
+            context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
+          )
+          None
+        } else Some(container)
       }
+      mapping.withContainers(cleanContainers)
     }
   }
 

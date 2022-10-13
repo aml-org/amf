@@ -44,7 +44,7 @@ class FlattenedJsonLdInstanceEmitter[T](
     b.list { b =>
       val seq = v.value.asInstanceOf[AmfArray]
       sources(v)
-      createArrayLikeValues(seq, b, v)
+      createArrayLikeValues(seq, b)
     }
   }
 
@@ -58,13 +58,13 @@ class FlattenedJsonLdInstanceEmitter[T](
     def emitList: Part[T] => Unit = (b: Part[T]) => {
       val seq = v.value.asInstanceOf[AmfArray]
       sources(v)
-      createArrayLikeValues(seq, b, v)
+      createArrayLikeValues(seq, b)
     }
 
     b.obj(_.entry("@list", _.list(emitList)))
   }
 
-  private def createArrayLikeValues(seq: AmfArray, b: Part[T], v: Value): Unit = seq.values.foreach { v =>
+  private def createArrayLikeValues(seq: AmfArray, b: Part[T]): Unit = seq.values.foreach { v =>
     emitArrayMember(v, b)
   }
 

@@ -1,12 +1,12 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ScalarEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.client.scala.model.domain.{BaseIri, ContextMapping, DefaultVocabulary, SemanticContext}
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
 
@@ -147,7 +147,7 @@ private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, or
           f.obj { obj =>
             if (mapping.iri.nonEmpty) { emitIdEntry(obj) }
             if (mapping.coercion.nonEmpty) { emitTypeEntry(obj) }
-            if (mapping.container.nonEmpty) { emitContainerEntry(obj) }
+            if (mapping.containers.nonEmpty) { emitContainerEntry(obj) }
           }
         }
       }
@@ -155,7 +155,7 @@ private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, or
   }
 
   private def existsOtherEntry: Boolean =
-    mapping.coercion.nonEmpty || mapping.container.nonEmpty
+    mapping.coercion.nonEmpty || mapping.containers.nonEmpty
 
   private def emitTypeEntry(obj: EntryBuilder): Unit =
     obj.entry("@type", YNode(mapping.coercion.value()))
@@ -163,8 +163,18 @@ private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, or
   private def emitIdEntry(obj: EntryBuilder): Unit =
     obj.entry("@id", YNode(mapping.iri.value()))
 
-  private def emitContainerEntry(obj: EntryBuilder): Unit =
-    obj.entry("@container", YNode(mapping.container.value()))
+  private def emitContainerEntry(obj: EntryBuilder): Unit = {
+    val key = "@container"
+    if (mapping.containers.size == 1) {
+      obj.entry(key, YNode(mapping.containers.head.value()))
+    } else {
+      val values = mapping.containers.map(c => ScalarEmitter(AmfScalar(c)))
+      obj.entry(
+        key,
+        _.list(b => values.foreach(_.emit(b)))
+      )
+    }
+  }
 
   override def position(): Position = pos(mapping.annotations)
 }

@@ -27,8 +27,12 @@ class JsonSchemaCycleTest extends AsyncFunSuite with FileAssertionTest {
     } yield diff
   }
 
-  test("Context with @container") {
+  test("Context with @container as string") {
     run("context-container.json")
+  }
+
+  test("Context with @container as seq") {
+    run("context-container-seq.json")
   }
 
 }

@@ -99,9 +99,9 @@ object ContextMappingModel extends DomainElementModel with WithIri {
   val Coercion =
     Field(Str, Meta + "coercion", ModelDoc(ModelVocabularies.Meta, "coercion", "Type to coerce the mapped model"))
 
-  val Container =
+  val Containers =
     Field(
-      Str,
+      Array(Str),
       Meta + "container",
       ModelDoc(ModelVocabularies.Meta, "container", "Sets the default container type for a term")
     )
@@ -117,7 +117,7 @@ object ContextMappingModel extends DomainElementModel with WithIri {
       )
     )
 
-  override def fields: List[Field] = List(Alias, IRI, Coercion, Nulled, Container)
+  override def fields: List[Field] = List(Alias, IRI, Coercion, Nulled, Containers)
 
   override def modelInstance: AmfObject = ContextMapping()
 

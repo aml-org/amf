@@ -72,9 +72,9 @@ case class JsonLDObjectElementParser(
     val propertyName                    = p.name.value()
     val mapping: Option[ContextMapping] = findAssociatedContextMapping(semantics, propertyName)
     val term                            = findTerm(semantics, propertyName, mapping)
-    val container                       = findContainer(mapping, p)
+    val containers                      = findContainers(mapping, p)
     val elementBuilder                  = parser.JsonLDSchemaNodeParser(p.range, node, p.path.value()).parse()
-    container.map(elementBuilder.withOverriddenType)
+    applyContainers(containers, elementBuilder)
     (elementBuilder, term)
   }
 
@@ -93,13 +93,26 @@ case class JsonLDObjectElementParser(
       .flatMap(_.iri.option().map(ctx.expand))
       .getOrElse(ctx.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + name)
 
-  private def findContainer(mapping: Option[ContextMapping], p: PropertyShape): Option[Type] =
-    mapping.flatMap(_.container.option()) match {
-      case Some(JsonLdKeywords.List) =>
-        validateListContainer(p.range)
-        Some(Type.SortedArray(JsonLDElementModel))
-      case _ => None
+  private def findContainers(mapping: Option[ContextMapping], p: PropertyShape): Containers = {
+    var c = Containers()
+    mapping match {
+      case Some(m) =>
+        val containers = m.containers.map(_.value())
+        if (containers.contains(JsonLdKeywords.List)) {
+          validateListContainer(p.range)
+          c = c.copy(list = true)
+        }
+      case None => // Nothing to do
     }
+    c
+  }
+
+  private def applyContainers(c: Containers, builder: JsonLDElementBuilder): Unit = {
+    if (c.list) {
+      builder.withOverriddenType(Type.SortedArray(JsonLDElementModel))
+    }
+  }
+
   private def validateListContainer(range: Shape): Unit =
     if (!range.isInstanceOf[ArrayShape])
       ctx.eh.violation(ContainerCheckErrorList, range, ContainerCheckErrorList.message)

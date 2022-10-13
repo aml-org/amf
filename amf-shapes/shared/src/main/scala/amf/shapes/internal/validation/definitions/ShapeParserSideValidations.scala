@@ -297,6 +297,11 @@ object ShapeParserSideValidations extends Validations {
     "@characteristics value must be a sequence of strings"
   )
 
+  val InvalidContainerNode = validation(
+    "@container-must-be-string-or-seq",
+    "@container value must be sequence or string"
+  )
+
   val InvalidPrefixReference = validation(
     "@invalid-prefix-reference",
     "the referenced prefix could not be found in the @context declarations"
