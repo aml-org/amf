@@ -23,7 +23,7 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
 
   def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {
 
-    // TODO: handle terms colitions. Check termIndex registry
+    // TODO: handle terms collisions. Check termIndex registry
     properties += property.key -> property
     termIndex += property.term -> property.key
     this
@@ -73,8 +73,9 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
     val fields = termIndex.map { case (term, key) =>
       val currentBuilder: JsonLDPropertyBuilder = properties(key)
       val (element, elementType)                = currentBuilder.element.build(ctxBuilder)
-      val overridedTerm                         = currentBuilder.element.getOverridedTerm.getOrElse(term)
-      (Field(elementType, ValueType(overridedTerm)) -> element)
+      val finalTerm                             = currentBuilder.element.getOverriddenTerm.getOrElse(term)
+      val finalType                             = currentBuilder.element.getOverriddenType.getOrElse(elementType)
+      (Field(finalType, ValueType(finalTerm)) -> element)
     }
 
     val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList)

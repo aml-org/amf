@@ -2,14 +2,11 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.vocabulary.Namespace.Core
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDElementBuilder
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
-import org.yaml.model.{YNode, YValue}
-import org.yaml.render.JsonRender
+import org.yaml.model.YValue
 
 abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(implicit ctx: JsonLDParserContext) {
 
@@ -18,7 +15,7 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
   def setCharacteristics(topNode: T, shape: Shape): T = {
     shape match {
       case a: AnyShape =>
-        a.semanticContext.flatMap(_.overrideMappings.headOption).foreach(ot => topNode.withOverridedTerm(ot.value()))
+        a.semanticContext.flatMap(_.overrideMappings.headOption).foreach(ot => topNode.withOverriddenTerm(ot.value()))
       case _ => // ignore
     }
     topNode

@@ -2,17 +2,19 @@ package amf.shapes.internal.transformation.stages
 
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.client.scala.traversal.iterator.{DomainElementStrategy, IdCollector}
 import amf.core.internal.annotations.SourceAST
-import amf.core.internal.parser.domain.{FieldEntry, Value}
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, SemanticContext}
+import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.InvalidCharacteristicsUse
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
+  InvalidCharacteristicsUse,
+  UnsupportedContainer
+}
 import org.mulesoft.common.client.lexical.SourceLocation
 
 class ContextTransformationStage extends TransformationStep {
@@ -27,10 +29,10 @@ class ContextTransformationStage extends TransformationStep {
     }
     model
   }
-
 }
 
 case class SemanticContextResolver(eh: AMFErrorHandler) {
+
   def computeDocument(jsonDoc: JsonSchemaDocument): Unit = {
     val encodedCtx = computeContext(jsonDoc.encodes, SemanticContext.default)
     jsonDoc.declares.foreach({ case s: Shape => computeContext(s, encodedCtx) })
@@ -39,29 +41,37 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
   def computeContext(
       shape: Shape,
       parentContext: SemanticContext,
-      characteristecsAllowed: Boolean = false
+      characteristicsAllowed: Boolean = false
   ): SemanticContext = {
 
     shape match {
-      case a: AnyShape => mergeContext(a, parentContext, characteristecsAllowed)
+      case a: AnyShape => mergeContext(a, parentContext, characteristicsAllowed)
       case _ =>
         computeTree(shape, parentContext)
         parentContext
     }
   }
 
-  def mergeContext(a: AnyShape, parentContext: SemanticContext, characteristecsAllowed: Boolean): SemanticContext = {
-    val termCheckFN: SemanticContext => SemanticContext = (a: SemanticContext) => {
-      if (!characteristecsAllowed) cleanOverridedTerms(a)
-      a
-    }
-    val context = a.semanticContext.fold(parentContext)(sc => parentContext.merge(termCheckFN(sc)))
+  private def mergeContext(
+      a: AnyShape,
+      parentContext: SemanticContext,
+      characteristicsAllowed: Boolean
+  ): SemanticContext = {
+    val context = a.semanticContext.fold(parentContext)(sc =>
+      parentContext.merge(semanticContextChecks(sc, characteristicsAllowed))
+    )
     a.withSemanticContext(context)
     computeTree(a, context)
     context
   }
 
-  def cleanOverridedTerms(context: SemanticContext): Any = {
+  private def semanticContextChecks(baseCtx: SemanticContext, characteristicsAllowed: Boolean): SemanticContext = {
+    if (!characteristicsAllowed) cleanOverriddenTerms(baseCtx)
+    validateContainerValues(baseCtx)
+    baseCtx
+  }
+
+  private def cleanOverriddenTerms(context: SemanticContext): Any = {
     val mappings = context.overrideMappings
     if (mappings.nonEmpty) {
       eh.violation(
@@ -74,7 +84,25 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
     }
   }
 
-  def computeTree(shape: Shape, ctx: SemanticContext): Unit = {
+  private def validateContainerValues(context: SemanticContext): Unit = {
+    val supportedContainerValues: Seq[String] = Seq(JsonLdKeywords.List)
+    context.mapping.foreach { mapping =>
+      val cleanContainers: Seq[String] = mapping.containers.map(_.value()).flatMap { container =>
+        if (!supportedContainerValues.contains(container)) {
+          eh.violation(
+            UnsupportedContainer,
+            context.id,
+            UnsupportedContainer.message + s". Supported values are: " + supportedContainerValues.mkString(", "),
+            context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
+          )
+          None
+        } else Some(container)
+      }
+      mapping.withContainers(cleanContainers)
+    }
+  }
+
+  private def computeTree(shape: Shape, ctx: SemanticContext): Unit = {
     val (properties, others) = shape.fields
       .fields()
       .partition(_.field == NodeShapeModel.Properties)
@@ -89,7 +117,7 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
     )
   }
 
-  def computeGeneralShapes(others: Iterable[AmfElement], ctx: SemanticContext): Unit = {
+  private def computeGeneralShapes(others: Iterable[AmfElement], ctx: SemanticContext): Unit = {
     others.toList
       .flatMap({
         case s: Shape             => Some(s)
@@ -99,7 +127,7 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
       .foreach(computeContext(_, ctx))
   }
 
-  def computeProperties(element: Seq[PropertyShape], ctx: SemanticContext): Unit = {
-    element.foreach { p => computeContext(p.range, ctx, characteristecsAllowed = true) }
+  private def computeProperties(element: Seq[PropertyShape], ctx: SemanticContext): Unit = {
+    element.foreach { p => computeContext(p.range, ctx, characteristicsAllowed = true) }
   }
 }

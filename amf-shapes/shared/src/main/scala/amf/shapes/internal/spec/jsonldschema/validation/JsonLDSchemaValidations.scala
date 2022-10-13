@@ -65,6 +65,16 @@ object JsonLDSchemaValidations extends Validations {
     "Unsupported as root element"
   )
 
+  val UnsupportedContainer: ValidationSpecification = ValidationSpecification(
+    "unsupported-container",
+    "Unsupported container value"
+  )
+
+  val ContainerCheckErrorList: ValidationSpecification = ValidationSpecification(
+    "container-check-list",
+    "The value must be an array, as it is specified in the associated container '@list'"
+  )
+
   override val specification: String                      = JsonLDSchema.id
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)

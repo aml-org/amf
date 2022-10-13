@@ -97,6 +97,13 @@ class ContextMapping(override val fields: Fields, val annotations: Annotations)
   def withNulled(nulled: Boolean): this.type = set(ContextMappingModel.Nulled, AmfScalar(nulled, Annotations()))
   def nulled: BoolField                      = fields.field(ContextMappingModel.Nulled)
 
+  def withContainer(container: String): this.type =
+    add(ContextMappingModel.Containers, AmfScalar(container, Annotations()))
+
+  def withContainers(container: Seq[String]): this.type = set(ContextMappingModel.Containers, container)
+
+  def containers: Seq[StrField] = fields.field(ContextMappingModel.Containers)
+
   override def componentId: String = "/" + alias.value().urlComponentEncoded
 }
 
@@ -299,3 +306,5 @@ object SemanticContext {
     .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))
     .withCuries(Seq(CuriePrefix().withAlias("core").withIri(Namespace.Core.base)))
 }
+
+case class Containers(list: Boolean = false)

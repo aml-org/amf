@@ -729,6 +729,7 @@ Types:
  | iri | url | Base IRI for all the elements in the model | `http://a.ml/vocabularies/meta#iri` |
  | coercion | string | Type to coerce the mapped model | `http://a.ml/vocabularies/meta#coercion` |
  | nulled | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | `http://a.ml/vocabularies/meta#nulled` |
+ | container | [string] | Sets the default container type for a term | `http://a.ml/vocabularies/meta#container` |
 
 ## CorrelationId
 Model defining an identifier that can used for message tracing and correlation

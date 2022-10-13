@@ -13,12 +13,10 @@
         "amlorg://a.ml/semantics.yaml#rootObject",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "alias.prop1Field": {
-        "@list": [
-          "a",
-          "b"
-        ]
-      }
+      "alias.prop1Field": [
+        "a",
+        "b"
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.1.1.json",
@@ -29,13 +27,11 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#encodes": {
-        "@list": [
-          {
-            "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.1.1.json#/encodes/object/"
-          }
-        ]
-      },
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.1.1.json#/encodes/object/"
+        }
+      ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.1.1.json#/BaseUnitProcessingData"

@@ -1,11 +1,13 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
-import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Core
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, SemanticContext}
+import amf.core.internal.metamodel.Type
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
+import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElementModel
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.jsonldschema.parser
 import amf.shapes.internal.spec.jsonldschema.parser.builder.{
@@ -14,17 +16,10 @@ import amf.shapes.internal.spec.jsonldschema.parser.builder.{
   JsonLDPropertyBuilder
 }
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
-  IncompatibleItemNodes,
-  IncompatibleNodes,
-  IncompatibleScalarDataType,
+  ContainerCheckErrorList,
   UnsupportedShape
 }
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.ShapeTransformationContext
-import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
-
-import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 case class JsonLDObjectElementParser(
     map: YMap,
@@ -74,8 +69,13 @@ case class JsonLDObjectElementParser(
   }
 
   def parseWithProperty(p: PropertyShape, node: YNode, semantics: SemanticContext): (JsonLDElementBuilder, String) = {
-    val term = findTerm(semantics, p.name.value())
-    (parser.JsonLDSchemaNodeParser(p.range, node, p.path.value()).parse(), term)
+    val propertyName                    = p.name.value()
+    val mapping: Option[ContextMapping] = findAssociatedContextMapping(semantics, propertyName)
+    val term                            = findTerm(semantics, propertyName, mapping)
+    val containers                      = findContainers(mapping, p)
+    val elementBuilder                  = parser.JsonLDSchemaNodeParser(p.range, node, p.path.value()).parse()
+    applyContainers(containers, elementBuilder)
+    (elementBuilder, term)
   }
 
   override def findClassTerm(ctx: SemanticContext): Seq[String] = {
@@ -85,17 +85,37 @@ case class JsonLDObjectElementParser(
     } else terms
   }
 
-  private def findTerm(ctx: SemanticContext, name: String): String = {
-    val strings = ctx.mapping.flatMap { semanticMapping =>
-      semanticMapping.alias
-        .option()
-        .filter(alias => alias == name)
-        .flatMap { _ =>
-          semanticMapping.iri.option()
+  private def findAssociatedContextMapping(ctx: SemanticContext, name: String): Option[ContextMapping] =
+    ctx.mapping.find(mapping => mapping.alias.option().contains(name))
+
+  private def findTerm(ctx: SemanticContext, name: String, mapping: Option[ContextMapping]): String =
+    mapping
+      .flatMap(_.iri.option().map(ctx.expand))
+      .getOrElse(ctx.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + name)
+
+  private def findContainers(mapping: Option[ContextMapping], p: PropertyShape): Containers = {
+    var c = Containers()
+    mapping match {
+      case Some(m) =>
+        val containers = m.containers.map(_.value())
+        if (containers.contains(JsonLdKeywords.List)) {
+          validateListContainer(p.range)
+          c = c.copy(list = true)
         }
+      case None => // Nothing to do
     }
-    strings.headOption.map(ctx.expand).getOrElse(ctx.base.map(_.iri.value()).getOrElse(Namespace.Core.base) + name)
+    c
   }
+
+  private def applyContainers(c: Containers, builder: JsonLDElementBuilder): Unit = {
+    if (c.list) {
+      builder.withOverriddenType(Type.SortedArray(JsonLDElementModel))
+    }
+  }
+
+  private def validateListContainer(range: Shape): Unit =
+    if (!range.isInstanceOf[ArrayShape])
+      ctx.eh.violation(ContainerCheckErrorList, range, ContainerCheckErrorList.message)
 
   override def foldLeft(
       current: JsonLDObjectElementBuilder,
