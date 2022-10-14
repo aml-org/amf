@@ -1,14 +1,10 @@
 package amf.shapes.client.scala.model.document
 
-import amf.aml.client.scala.model.document.DialectInstance
-import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.context.{EntityContext, SelfContainedContext}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDElementModel}
+import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElement
 import amf.shapes.internal.document.metamodel.JsonLDInstanceDocumentModel
-import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
-
-import scala.collection.mutable.ListBuffer
 
 class JsonLDInstanceDocument(
     override val fields: Fields,

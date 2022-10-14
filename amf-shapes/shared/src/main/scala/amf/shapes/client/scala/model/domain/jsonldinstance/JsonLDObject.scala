@@ -3,7 +3,7 @@ package amf.shapes.client.scala.model.domain.jsonldinstance
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.internal.spec.jsonldschema.instance.model.meta.JsonLDEntityModel
+import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDEntityModel
 
 class JsonLDObject(override val fields: Fields, override val annotations: Annotations, model: JsonLDEntityModel)
     extends DomainElement

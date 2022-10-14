@@ -102,8 +102,8 @@ object ContextMappingModel extends DomainElementModel with WithIri {
   val Containers =
     Field(
       Array(Str),
-      Meta + "container",
-      ModelDoc(ModelVocabularies.Meta, "container", "Sets the default container type for a term")
+      Meta + "containers",
+      ModelDoc(ModelVocabularies.Meta, "containers", "Sets the default containers types for a term")
     )
 
   val Nulled =
