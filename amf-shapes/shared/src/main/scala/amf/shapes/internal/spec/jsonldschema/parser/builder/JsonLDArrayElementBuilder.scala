@@ -5,6 +5,7 @@ import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
+import amf.shapes.internal.spec.jsonldschema.parser.builder.ArrayTypeComputation.computeType
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
 import org.mulesoft.common.client.lexical.SourceLocation
 
@@ -52,10 +53,19 @@ class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementB
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
-    val array = new JsonLDArray()
+    val starter = (new JsonLDArray, JsonLDElementModel)
+    val (result, meta) = items.foldLeft[(JsonLDArray, Type)](starter) { (tuple, builder) =>
+      val (array, meta) = tuple
+      build(builder, array, meta, ctxBuilder)
+    }
+    (result, Type.Array(meta))
+  }
 
-    items.foreach { i => array += i.build(ctxBuilder)._1 }
-    (array, Type.Array(JsonLDElementModel))
+  private def build(builder: JsonLDElementBuilder, array: JsonLDArray, meta: Type, ctxBuilder: EntityContextBuilder) = {
+    val (item, elemMeta) = builder.build(ctxBuilder)
+    array += item
+    if (meta == JsonLDElementModel) (array, elemMeta)
+    else (array, computeType(meta, elemMeta))
   }
 
   override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDArrayElementBuilder]
