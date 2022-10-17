@@ -19,7 +19,7 @@ object InlineJsonSchemaParser extends JsonParsing with ScopedJsonContext with Er
       ctx: ShapeParserContext
   ): AnyShape = {
 
-    val node        = getJsonParserFor(text, valueAST).document().node
+    val node        = getJsonParserFor(text, valueAST).document(ctx.parsingOptions.tokens).node
     val schemaEntry = YMapEntry(key, node)
     val shape = withScopedContext(valueAST, schemaEntry) { jsonSchemaContext =>
       parse(value, schemaEntry)(jsonSchemaContext)
