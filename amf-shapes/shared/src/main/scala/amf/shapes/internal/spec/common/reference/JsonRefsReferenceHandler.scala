@@ -3,11 +3,12 @@ package amf.shapes.internal.spec.common.reference
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document._
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
+import amf.shapes.internal.reference.SYamlCompilerReferenceCollector
 import org.yaml.model._
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
-  private val references            = CompilerReferenceCollector()
+  private val references            = SYamlCompilerReferenceCollector()
   private var refUrls: Set[RefNode] = Set()
 
   case class RefNode(node: YNode, nodeValue: String) {
@@ -29,9 +30,9 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
         links(parsed.document)
         refUrls.foreach { ref =>
           if (ref.nodeValue.startsWith("http:") || ref.nodeValue.startsWith("https:"))
-            references += (ref.nodeValue, LinkReference, ref.node.location) // this is not for all scalars, link must be a string
+            references += (ref.node.value.asInstanceOf[YScalar].text, LinkReference, ref.node) // this is not for all scalars, link must be a string
           else
-            references += (ref.nodeValue, InferredLinkReference, ref.node.location) // Is inferred because we don't know how to dereference by default
+            references += (ref.node.value.asInstanceOf[YScalar].text, InferredLinkReference, ref.node) // Is inferred because we don't know how to dereference by default
         }
       case _ => // ignore
     }

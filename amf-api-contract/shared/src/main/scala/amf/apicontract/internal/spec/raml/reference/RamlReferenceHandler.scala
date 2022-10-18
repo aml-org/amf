@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.ExternalDomainElement
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.TaggedReferences.BuReferenceTagger
 import amf.core.client.scala.parse.document._
-import amf.core.internal.annotations.{SourceAST, SourceYPart}
+import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.CompilerContext
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
@@ -46,18 +46,19 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
                 reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach {
-                    case refContainer: SYamlRefContainer =>
-                      refContainer.node match {
-                        case mut: MutRef =>
-                          res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
-                          mut.target = res.ast
-                        case other =>
-                          compilerContext.violation(InvalidFragmentType,
-                                                    "Cannot inline a fragment in a not mutable node",
-                                                    other.location)
-                      }
-                    // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach { case refContainer: SYamlRefContainer =>
+                    refContainer.node match {
+                      case mut: MutRef =>
+                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                        mut.target = res.ast
+                      case other =>
+                        compilerContext.violation(
+                          InvalidFragmentType,
+                          "Cannot inline a fragment in a not mutable node",
+                          other.location
+                        )
+                    }
+                  // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(e), None) =>
@@ -78,9 +79,8 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
-      r.refs.foreach {
-        case ref: ASTRefContainer =>
-          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
+      r.refs.foreach { case ref: ASTRefContainer =>
+        compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
       }
     }
   }
