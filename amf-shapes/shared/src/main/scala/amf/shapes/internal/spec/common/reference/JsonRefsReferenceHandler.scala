@@ -30,9 +30,13 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
         links(parsed.document)
         refUrls.foreach { ref =>
           if (ref.nodeValue.startsWith("http:") || ref.nodeValue.startsWith("https:"))
-            references += (ref.node.value.asInstanceOf[YScalar].text, LinkReference, ref.node) // this is not for all scalars, link must be a string
+            references += (ref.node.value
+              .asInstanceOf[YScalar]
+              .text, LinkReference, ref.node) // this is not for all scalars, link must be a string
           else
-            references += (ref.node.value.asInstanceOf[YScalar].text, InferredLinkReference, ref.node) // Is inferred because we don't know how to dereference by default
+            references += (ref.node.value
+              .asInstanceOf[YScalar]
+              .text, InferredLinkReference, ref.node) // Is inferred because we don't know how to dereference by default
         }
       case _ => // ignore
     }

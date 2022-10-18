@@ -10,8 +10,15 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 import amf.shapes.internal.spec.jsonldschema.parser
-import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDElementBuilder, JsonLDObjectElementBuilder, JsonLDPropertyBuilder}
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{ContainerCheckErrorList, UnsupportedShape}
+import amf.shapes.internal.spec.jsonldschema.parser.builder.{
+  JsonLDElementBuilder,
+  JsonLDObjectElementBuilder,
+  JsonLDPropertyBuilder
+}
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
+  ContainerCheckErrorList,
+  UnsupportedShape
+}
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 case class JsonLDObjectElementParser(

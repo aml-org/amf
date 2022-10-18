@@ -6,6 +6,7 @@ import amf.core.internal.parser.domain.Annotations
 import scala.collection.mutable
 
 case class JsonLDError() extends JsonLDElement {
+
   /** Set of annotations for element. */
   override val annotations: Annotations = Annotations.empty
 
