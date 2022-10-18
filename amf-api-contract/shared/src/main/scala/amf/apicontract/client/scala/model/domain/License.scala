@@ -19,7 +19,7 @@ case class License(fields: Fields, annotations: Annotations) extends NamedDomain
   override def meta = LicenseModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/license"
+  override def componentId: String = "/license"
 
   override def nameField: Field = Name
 }

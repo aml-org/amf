@@ -24,7 +24,7 @@ trait AbstractRequest extends NamedDomainElement {
   override def meta: AbstractRequestModel = AbstractRequestModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] def componentId: String = "/request"
+  def componentId: String = "/request"
 
   override def nameField: Field = Name
 }

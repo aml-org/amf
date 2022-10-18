@@ -61,7 +61,7 @@ abstract class AbstractParameter(override val fields: Fields, override val annot
   override def meta: AbstractParameterModel = AbstractParameterModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     s"/parameter/${encoded(name, "default-name")}"
 
   private def encoded(value: StrField, defaultName: String) =

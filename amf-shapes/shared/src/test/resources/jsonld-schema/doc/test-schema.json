@@ -1,0 +1,37 @@
+{
+
+  "properties": {
+    "prop1": {
+      "type": "string"
+    }
+  },
+  "if": {
+    "prop1": {
+      "cons": "value1"
+    }
+  },
+  "then": {
+    "properties": {
+      "prop2": {
+        "@context": {
+
+          "@term": [":alpha"]
+        }
+      },
+      "prop1": {
+        "@term": [":alpha"],
+        "type": "integer"
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "prop2": {
+        "@context": {
+          "@term": [":beta"]
+        }
+      }
+    }
+  },
+  "prop2": "value2"
+}

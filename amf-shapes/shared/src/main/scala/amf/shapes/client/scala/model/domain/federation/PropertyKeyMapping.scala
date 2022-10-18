@@ -12,7 +12,7 @@ case class PropertyKeyMapping(fields: Fields, annotations: Annotations) extends 
   override type Target = String
 
   override def meta: PropertyKeyMappingModel.type = PropertyKeyMappingModel
-  override private[amf] def componentId           = s"/parameterKeyMapping"
+  override def componentId                        = s"/parameterKeyMapping"
 
   override def source: extensions.PropertyShape = fields.field(PropertyKeyMappingModel.Source)
   override def target: String                   = fields.field(PropertyKeyMappingModel.Target)

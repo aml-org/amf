@@ -36,7 +36,7 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   override def meta: AnyShapeModel = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
+  override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
 
   protected[amf] def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
@@ -69,14 +69,6 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
       !isConditional &&
       !fields.exists(AnyShapeModel.Inherits)
 
-  protected[amf] def isXOne: Boolean = fields.exists(AnyShapeModel.Xone) && xone.nonEmpty
-  protected[amf] def isOr: Boolean   = fields.exists(AnyShapeModel.Or) && or.nonEmpty
-  protected[amf] def isAnd: Boolean  = fields.exists(AnyShapeModel.And) && and.nonEmpty
-  protected[amf] def isNot: Boolean  = fields.exists(AnyShapeModel.Not)
-  protected[amf] def isConditional: Boolean =
-    fields.exists(AnyShapeModel.If) ||
-      fields.exists(AnyShapeModel.Else) ||
-      fields.exists(AnyShapeModel.Then)
 }
 
 object AnyShape {

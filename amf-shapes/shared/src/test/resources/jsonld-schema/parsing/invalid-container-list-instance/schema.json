@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "prop1": {
+      "@container": "@list"
+    }
+  },
+  "type": "object",
+  "properties": {
+    "prop1": {
+      "type": "string"
+    }
+  },
+  "required": [ "prop1" ]
+}

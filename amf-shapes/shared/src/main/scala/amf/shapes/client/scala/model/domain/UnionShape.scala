@@ -20,7 +20,7 @@ case class UnionShape private[amf] (override val fields: Fields, override val an
   override val meta: UnionShapeModel.type = UnionShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/union/" + name.option().getOrElse("default-union").urlComponentEncoded
 
   private[amf] override def ramlSyntaxKey: String = "unionShape"

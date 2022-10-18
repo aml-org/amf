@@ -1,0 +1,13 @@
+Model: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/root-scalar/instance.json
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/data#unsupported-scalar-root-level
+  Message: Scalars are not supported as root element
+  Severity: Violation
+  Target: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/root-scalar/schema.json#/any/schema
+  Property: 
+  Range: [(1,0)-(1,11)]
+  Location: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/root-scalar/instance.json
