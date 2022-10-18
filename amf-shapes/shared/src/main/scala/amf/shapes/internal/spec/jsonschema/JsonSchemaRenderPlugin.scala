@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.jsonschema
 
+import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -43,8 +44,18 @@ object JsonSchemaRenderPlugin extends SYAMLBasedRenderPlugin {
       errorHandler: AMFErrorHandler,
       document: JsonSchemaDocument
   ) = {
-    new JsonSchemaDocumentEmitter(document)(specContext(renderConfig, document.schemaVersion.value(), errorHandler))
+    new JsonSchemaDocumentEmitter(document)(
+      specContext(renderConfig, schemaRenderVersion(renderConfig, document), errorHandler)
+    )
       .emit()
+  }
+
+  private def schemaRenderVersion(renderConfig: RenderConfiguration, document: JsonSchemaDocument) = {
+    val parsedSchemaVersion              = document.schemaVersion.value()
+    val schemaVersionOption              = renderConfig.renderOptions.schemaVersion
+    val hasSpecificVersionToBeRenderedTo = schemaVersionOption != JSONSchemaVersions.Unspecified
+    if (hasSpecificVersionToBeRenderedTo) SchemaVersion.fromClientOptions(schemaVersionOption).url
+    else parsedSchemaVersion
   }
 
   private def specContext(

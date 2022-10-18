@@ -142,6 +142,21 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/post/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/post/expects/request/source-map/lexical/element_1",
@@ -314,7 +329,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

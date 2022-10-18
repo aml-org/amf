@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -86,6 +86,9 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "#15": "[(11,0)-(18,0)]"
         }
@@ -258,8 +261,11 @@
         "synthesized-field": {
           "apiContract:isAbstract": "true"
         },
-        "resolved-link-target": {
-          "#4": "amf://id#10"
+        "declared-element": {
+          "#4": ""
+        },
+        "resolved-link": {
+          "#4": "amf://id#4"
         },
         "lexical": {
           "apiContract:headerSchema": "[(14,2)-(20,0)]",
@@ -270,11 +276,11 @@
           "core:displayName": "[(5,2)-(6,0)]",
           "core:summary": "[(7,2)-(8,0)]"
         },
-        "resolved-link": {
-          "#4": "amf://id#4"
+        "resolved-link-target": {
+          "#4": "amf://id#10"
         },
-        "declared-element": {
-          "#4": ""
+        "virtual-element": {
+          "apiContract:payload": "true"
         }
       }
     },

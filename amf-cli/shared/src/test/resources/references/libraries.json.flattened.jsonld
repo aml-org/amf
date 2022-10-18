@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
@@ -154,13 +154,18 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/source-map/virtual-element/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -255,6 +260,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#declares",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/source-map/lexical/element_1",

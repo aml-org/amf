@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -178,6 +178,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -221,6 +226,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(10,12)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/endpoint/%2Ftest/supportedOperation/post/expects/request/payload/application%2Fjson/union/schema/inherits/union/schema",

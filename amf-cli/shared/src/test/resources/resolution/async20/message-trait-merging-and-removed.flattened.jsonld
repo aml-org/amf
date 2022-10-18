@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -89,6 +89,9 @@
       "core:title": "secondTitle",
       "core:summary": "firstSummary",
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request": "[(9,0)-(15,0)]"
         }

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -175,6 +175,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -246,6 +251,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString/source-map/type-property-lexical-info/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString/source-map/lexical/element_0"
@@ -256,6 +266,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#queryString",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,4)-(23,38)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/declares/shape/paging/property/property/page-size",
@@ -420,9 +435,14 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(23,6)-(23,10)]"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/queryString",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,22)-(23,36)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(22,4)-(23,38)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.raml#/declares/shape/paging/property/property/page-size/scalar/page-size",

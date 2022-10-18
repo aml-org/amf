@@ -48,8 +48,8 @@ class GraphQLFederationTransformationTest extends GraphQLFederationFunSuiteCycle
       val _entity                                         = findInDeclares("_Entity").get.asInstanceOf[UnionShape]
       _entity.anyOf should have size 2
       val findInEntity = findShapeWithName(_entity.anyOf, _)
-      findInEntity("Cat").get.asInstanceOf[NodeShape].keys should not be empty
-      findInEntity("Dog").get.asInstanceOf[NodeShape].keys should not be empty
+      findInEntity("Cat").get.asInstanceOf[NodeShape].keys shouldBe empty
+      findInEntity("Dog").get.asInstanceOf[NodeShape].keys shouldBe empty
       findInDeclares("Romagnoli").get.asInstanceOf[NodeShape].keys shouldBe empty
     }
   }

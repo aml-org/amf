@@ -170,8 +170,10 @@ class OasRefParser(
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullUrl = UriUtils.resolveRelativeTo(ctx.rootContextDocument, ref)
     ctx.findCachedJsonSchema(fullUrl) match {
-      case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
-      case Some(shape)              => createLinkToParsedShape(ref, shape)
+      case Some(u: UnresolvedShape) =>
+        copyUnresolvedShape(ref, fullUrl, e, u)
+      case Some(shape)              =>
+        createLinkToParsedShape(ref, shape)
       case _ =>
         parseRemoteSchema(ref, fullUrl, Annotations(e.value)) match {
           case None =>

@@ -383,6 +383,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -1032,7 +1047,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

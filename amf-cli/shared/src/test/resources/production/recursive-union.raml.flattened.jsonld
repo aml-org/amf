@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -170,6 +170,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -218,6 +223,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(24,0)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType_0",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
@@ -260,12 +270,22 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -359,14 +379,24 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(8,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,10)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(6,8)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/items/AnotherType/recursive/source-map",

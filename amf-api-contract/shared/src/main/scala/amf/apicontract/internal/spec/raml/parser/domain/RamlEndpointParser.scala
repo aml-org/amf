@@ -27,7 +27,6 @@ import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
-
 import scala.collection.mutable
 
 /** */
@@ -81,10 +80,8 @@ abstract class RamlEndpointParser(
     duplicated match {
       case None =>
         entry.value.tagType match {
-          case YType.Null => collector += endpoint
-          case _ =>
-            val map = entry.value.as[YMap]
-            parseEndpoint(endpoint, map)
+          case YType.Null => parseEndpoint(endpoint, YMap.empty)
+          case _          => parseEndpoint(endpoint, entry.value.as[YMap])
         }
       case Some(alreadyDefined) =>
         ctx.eh.violation(DuplicatedEndpointPath, alreadyDefined, "Duplicated resource path " + path, entry.location)
@@ -164,31 +161,21 @@ abstract class RamlEndpointParser(
     var parameters               = Parameters()
     var annotations: Annotations = Annotations()
 
-    val entries = map.regex(uriParametersKey)
-    val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
+    val paramsDefinitionEntries = map.regex(uriParametersKey)
+    val implicitExplicitPathParams = paramsDefinitionEntries.find(isMap) match {
       case None =>
-        implicitPathParamsOrdered(endpoint, isResourceType)
+        parseImplicitPathParams(endpoint, isResourceType)
 
       case Some(e) =>
         annotations = Annotations(e.value)
-
-        val explicitParameters = e.value
-          .as[YMap]
-          .entries
-          .map(entry => {
-            val param = ctx.factory
-              .parameterParser(entry, (_: Parameter) => Unit, false, "path")
-              .parse()
-            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
-            param
-          })
-
-        implicitPathParamsOrdered(
+        val explicitParameters = parseExplicitParameters(e)
+        val implicitParameters = parseImplicitPathParams(
           endpoint,
           isResourceType,
-          variable => !explicitParameters.exists(_.name.is(variable)),
+          param => !explicitParameters.exists(_.name.is(param)),
           explicitParameters
         )
+        implicitParameters ++ explicitParameters
     }
 
     parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
@@ -202,14 +189,32 @@ abstract class RamlEndpointParser(
       }
     )
 
+    setParameters(endpoint,parameters, annotations)
+  }
+
+  private def setParameters(endpoint: EndPoint, parameters: Parameters, annotations: Annotations): EndPoint = {
     parameters match {
       case Parameters(query, path, header, _, _, _) if parameters.nonEmpty =>
-        endpoint.setWithoutId(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
-      case _ =>
+        val allParams = query ++ path ++ header
+        endpoint.setWithoutId(EndPointModel.Parameters, AmfArray(allParams, annotations), annotations)
+      case _ => endpoint
     }
-
-    endpoint
   }
+
+  private def parseExplicitParameters(e: YMapEntry) = {
+    e.value
+      .as[YMap]
+      .entries
+      .map(entry => {
+        val param = ctx.factory
+          .parameterParser(entry, (_: Parameter) => Unit, false, "path")
+          .parse()
+        param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashesInSchema(schema, entry))
+        param
+      })
+  }
+
+  private def isMap(entry: YMapEntry) = entry.value.tagType == YType.Map
 
   private def parseRequirements(map: YMap, endpoint: EndPoint) = {
     val idCounter         = new IdCounter()
@@ -294,7 +299,7 @@ abstract class RamlEndpointParser(
     endpoint
   }
 
-  private def validateSlashsInSchema(shape: Shape, entry: YMapEntry): Unit = {
+  private def validateSlashesInSchema(shape: Shape, entry: YMapEntry): Unit = {
     // default values
     Option(shape.default).foreach(validateSlashInDataNode(_, entry))
     // enum values
@@ -326,8 +331,11 @@ abstract class RamlEndpointParser(
 
     if (operationsDefineParam) None
     else {
-      val pathParam = Parameter(Annotations.virtual() += DefaultNode())
-        .withSynthesizeName(variable)
+      val lexical     = getLexicalOfImplicitParameter(variable)
+      val nameLexical = getNameLexicalOfImplicitParameter(lexical)
+
+      val pathParam = Parameter(Annotations.virtual() += DefaultNode() += lexical)
+        .withName(variable, Annotations.virtual() += nameLexical)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
         .syntheticBinding("path")
         .set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
@@ -338,14 +346,14 @@ abstract class RamlEndpointParser(
     }
   }
 
-  private def implicitPathParamsOrdered(
+  private def parseImplicitPathParams(
       endpoint: EndPoint,
       isResourceType: Boolean,
       paramFilter: String => Boolean = _ => true,
       explicitParams: Seq[Parameter] = Nil
   ): Seq[Parameter] = {
     val parentParams: Map[String, Parameter] = parent.fold(Map[String, Parameter]()) { collectPathParametersByName }
-    val pathParams: Seq[String]              = TemplateUri.variables(parsePath())
+    val pathParams: Seq[String]              = getParamsFromPath
     val findExplicitlyDefinedParam = (variable: String, binding: String) =>
       explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals(binding))
 
@@ -353,15 +361,18 @@ abstract class RamlEndpointParser(
       val clonedFatherParameter = parentParams
         .get(variable)
         .map(param => cloneAsVirtualParameter(endpoint, param))
-
       clonedFatherParameter
         .orElse(findExplicitlyDefinedParam(variable, "path"))
         .orElse(generateParam(endpoint, variable))
     }
 
     if (!isResourceType) checkParamsUsage(endpoint, pathParams, explicitParams)
-    params ++ explicitParams.filter(!params.contains(_))
+    params
+  }
 
+  private def getParamsFromPath = {
+    val path = parsePath()
+    TemplateUri.variables(path)
   }
 
   private def cloneAsVirtualParameter(endpoint: EndPoint, param: Parameter) = {
@@ -396,4 +407,28 @@ abstract class RamlEndpointParser(
   protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[YScalar].text
 
   protected def uriParametersKey: String
+
+  private def getLexicalOfImplicitParameter(parameter: String) = {
+    val implicitParameter = s"{$parameter}"
+    val path              = entry.key.as[YScalar].text
+    val pathLexical       = entry.key.range
+    val startOfParameter  = path.indexOfSlice(implicitParameter)
+    val endOfParameter    = startOfParameter + implicitParameter.length
+    LexicalInformation(
+      pathLexical.lineFrom,
+      pathLexical.columnFrom + startOfParameter,
+      pathLexical.lineTo,
+      pathLexical.columnFrom + endOfParameter
+    )
+  }
+
+  private def getNameLexicalOfImplicitParameter(lexical: LexicalInformation) = {
+    val range = lexical.range
+    LexicalInformation(
+      range.lineFrom,
+      range.columnFrom + 1,
+      range.lineTo,
+      range.columnTo - 1
+    )
+  }
 }

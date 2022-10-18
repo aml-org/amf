@@ -990,6 +990,21 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/post/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/post/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/post/expects/request/source-map/lexical/element_2",
@@ -3076,6 +3091,29 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
                       {
@@ -5045,6 +5083,29 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/examples/response-examples.json#/web-api/endpoint/%2Forganization/supportedOperation/get/returns/resp/201/application%2Fxml"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ],
@@ -5226,7 +5287,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [

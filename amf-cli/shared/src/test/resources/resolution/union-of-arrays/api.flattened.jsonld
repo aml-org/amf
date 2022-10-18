@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -84,6 +84,9 @@
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(13,4)-(16,0)]"
+        },
+        "virtual-element": {
+          "#18": "true"
         }
       }
     },
@@ -126,9 +129,21 @@
         "inherited-shapes": {
           "#9": "amf://id#13"
         },
+        "resolved-link": {
+          "#9": "amf://id#11"
+        },
+        "type-property-lexical-info": {
+          "#9": "[(10,4)-(10,8)]"
+        },
         "lexical": {
           "shacl:name": "[(9,2)-(9,11)]",
-          "#9": "[(10,4)-(11,0)]"
+          "#9": "[(9,2)-(11,0)]"
+        },
+        "declared-element": {
+          "#9": ""
+        },
+        "resolved-link-target": {
+          "#9": "amf://id#9"
         }
       }
     },

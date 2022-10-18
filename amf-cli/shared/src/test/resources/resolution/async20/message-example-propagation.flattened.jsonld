@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -89,6 +89,9 @@
         "@id": "#6"
       },
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "apiContract:headerSchema": "[(9,8)-(14,0)]",
           "#5": "[(9,0)-(31,0)]"

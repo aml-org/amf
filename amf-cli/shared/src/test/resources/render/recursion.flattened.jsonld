@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -170,6 +170,11 @@
         {
           "@id": "amf://id#17/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "amf://id#17/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -217,6 +222,11 @@
       "@id": "amf://id#17/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,4)-(21,15)]"
+    },
+    {
+      "@id": "amf://id#17/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#17",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "amf://id#4",

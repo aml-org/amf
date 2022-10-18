@@ -137,7 +137,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -229,6 +229,29 @@
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/base/union/base/anyOf/nil/default-nil/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/base/union/base/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/base/union/base/anyOf/nil/default-nil"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -249,6 +272,21 @@
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/shapes#anyOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/base/union/base/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/base/union/base"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -413,6 +451,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/ignored/union/ignored/inherits/union/default-union/anyOf/nil/default-nil/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/ignored/union/ignored/inherits/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declares/ignored/union/ignored/inherits/union/default-union/anyOf/nil/default-nil"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {

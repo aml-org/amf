@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
@@ -81,6 +81,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla/source-map/base-path-lexical/element_0"
@@ -115,6 +120,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/oas_foward_definitions.json#/web-api/server/localhost%2Fbla",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 0.8"
     },
     {
@@ -233,6 +233,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -285,6 +290,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#header",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,8)-(12,24)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items",

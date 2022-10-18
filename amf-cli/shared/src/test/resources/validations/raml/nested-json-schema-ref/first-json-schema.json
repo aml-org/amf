@@ -1,0 +1,9 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type":"object",
+	"title":"first-json-schema",
+	"description":"The first json schema, points to another one by id",
+  "properties": {
+    "TestProperty": { "$ref": "second-json-schema.json#/second-json-schema-id"}
+  }
+}

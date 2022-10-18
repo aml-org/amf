@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -627,6 +627,11 @@
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/anyOf/nil/default-nil/source-map"
+        }
       ]
     },
     {
@@ -637,6 +642,11 @@
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -769,6 +779,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -864,6 +879,11 @@
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -972,8 +992,24 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/anyOf/nil/default-nil/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#anyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -1098,6 +1134,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(19,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/returns/resp/200/payload/default/scalar/default",
@@ -1236,6 +1277,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,4)-(30,0)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/returns/resp/200/payload/default/scalar/default",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
@@ -1325,6 +1371,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1/union/schema/anyOf/nil/default-nil",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str2/union/schema/anyOf/scalar/default-scalar/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str2/union/schema/anyOf/scalar/default-scalar",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,10)-(6,16)]"
@@ -1362,6 +1413,11 @@
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/anyOf/nil/default-nil/source-map"
+        }
       ]
     },
     {
@@ -1372,6 +1428,11 @@
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -1517,6 +1578,11 @@
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/nil/default-nil/source-map"
+        }
       ]
     },
     {
@@ -1527,6 +1593,11 @@
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -1679,8 +1750,24 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/anyOf/nil/default-nil/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#anyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -1750,8 +1837,24 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/nil/default-nil/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#anyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -1817,6 +1920,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1/union/schema/anyOf/nil/default-nil",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str2/union/schema/anyOf/scalar/default-scalar/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str2/union/schema/anyOf/scalar/default-scalar",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,12)-(18,18)]"
@@ -1835,6 +1943,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/scalar/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1/union/schema/anyOf/nil/default-nil",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str2/union/schema/anyOf/scalar/default-scalar/source-map/lexical/element_0",

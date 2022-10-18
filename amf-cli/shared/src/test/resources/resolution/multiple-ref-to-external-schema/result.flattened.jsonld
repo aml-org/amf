@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "OAS 2.0"
     },
@@ -184,6 +184,11 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#10"
+      },
+      "smaps": {
+        "virtual-element": {
+          "#9": "true"
+        }
       }
     },
     {
@@ -196,6 +201,11 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#10"
+      },
+      "smaps": {
+        "virtual-element": {
+          "#23": "true"
+        }
       }
     },
     {

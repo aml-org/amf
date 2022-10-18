@@ -9,7 +9,7 @@ object ReferenceFinder {
 
   def findJsonReferencedUnit(fileUrl: String, rawRef: String, references: Seq[ParsedReference]): Option[BaseUnit] = {
     val baseFileUrl = fileUrl.split("#").head
-    val baseRawRef  = rawRef.split("#").head
+    val baseRawRef  = rawRef.split("#").headOption.getOrElse("")
     references
       .filter(r => r.unit.location().isDefined)
       .find(ref => ref.unit.location().get == baseFileUrl)

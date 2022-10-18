@@ -6,8 +6,11 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.GraphQLFederationHint
 import amf.core.internal.remote.Mimes.`application/graphql`
 import amf.graphql.client.scala.GraphQLConfiguration
+import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 
-class GraphQLFederationTCKInstrospectionTest extends GraphQLFederationFunSuiteCycleTests {
+import scala.concurrent.Future
+
+class GraphQLFederationTCKIntrospectionTest extends GraphQLFederationFunSuiteCycleTests {
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/"
 
   // Test valid APIs
@@ -16,6 +19,22 @@ class GraphQLFederationTCKInstrospectionTest extends GraphQLFederationFunSuiteCy
       test(s"GraphQL Federation TCK > Apis > Valid > $api: introspected GraphQL matches golden") {
         cycle(api, api.replace(".graphql", ".dumped.graphql"), GraphQLFederationHint, GraphQLFederationHint)
       }
+
+      test(s"GraphQL Federation TCK > Apis > Valid > $api: introspected GraphQL should be valid") {
+        val fedClient     = GraphQLFederationConfiguration.GraphQLFederation().baseUnitClient()
+        val graphqlClient = GraphQLConfiguration.GraphQL().baseUnitClient()
+        for {
+          parsing       <- fedClient.parse(s"file://$basePath/$api")
+          introspection <- Future.successful(fedClient.transform(parsing.baseUnit, PipelineId.Introspection))
+          report        <- graphqlClient.validate(introspection.baseUnit)
+        } yield {
+          if (!report.conforms) {
+            println(report.toString)
+          }
+          assert(report.conforms)
+        }
+      }
+
     }
   }
 

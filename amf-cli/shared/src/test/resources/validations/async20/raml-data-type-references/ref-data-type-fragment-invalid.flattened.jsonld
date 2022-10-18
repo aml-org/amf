@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -86,6 +86,9 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "#9": "[(15,0)-(18,0)]"
         }
@@ -204,7 +207,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:sourceSpec": "RAML 1.0"
     }
   ],

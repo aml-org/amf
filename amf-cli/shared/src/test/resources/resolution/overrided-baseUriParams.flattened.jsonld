@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 0.8"
     },
@@ -559,21 +559,28 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_3"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_2"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#default-node": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/default-node/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/virtual-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/lexical/element_0"
         }
       ]
     },
@@ -669,13 +676,8 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(17,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#required",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#paramName",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -684,14 +686,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#paramName",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/default-node/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version",
       "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/parameter/parameter/path/version",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,9)-(12,18)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/endpoint/%2Fhistory%2F%7Bversion%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",

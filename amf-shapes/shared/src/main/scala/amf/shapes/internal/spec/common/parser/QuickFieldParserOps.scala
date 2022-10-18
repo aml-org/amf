@@ -142,7 +142,7 @@ trait QuickFieldParserOps {
       result
     }
 
-    private def collectDomainExtensions(parent: Option[DomainElement], n: ScalarNode): Seq[DomainExtension] = {
+    private def collectDomainExtensions(parent: Option[AmfObject], n: ScalarNode): Seq[DomainExtension] = {
       n match {
         case n: RamlScalarValuedNode =>
           AnnotationParser.parseExtensions(parent, n.obj)
@@ -155,21 +155,21 @@ trait QuickFieldParserOps {
   implicit class FieldOps(field: Field)(implicit
       iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler
   ) {
-    def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
+    def in(elem: AmfObject): ObjectField = in(SingleTarget(elem))
 
     def in(target: Target): ObjectField = new ObjectField(target, field)
   }
 
   trait Target {
-    def foreach(fn: DomainElement => Unit)
+    def foreach(fn: AmfObject => Unit)
   }
 
-  private case class SingleTarget(elem: DomainElement) extends Target {
-    override def foreach(fn: DomainElement => Unit): Unit = fn(elem)
+  private case class SingleTarget(elem: AmfObject) extends Target {
+    override def foreach(fn: AmfObject => Unit): Unit = fn(elem)
   }
 
   case object EmptyTarget extends Target {
-    override def foreach(fn: DomainElement => Unit): Unit = {}
+    override def foreach(fn: AmfObject => Unit): Unit = {}
   }
 }
 

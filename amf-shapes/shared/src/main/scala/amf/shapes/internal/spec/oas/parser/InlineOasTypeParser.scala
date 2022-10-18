@@ -17,28 +17,19 @@ import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
-  DiscriminatorValue,
-  DiscriminatorValueTarget
-}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser._
-import amf.shapes.internal.spec.jsonschema.parser.{
-  ContentParser,
-  Draft2019ShapeDependenciesParser,
-  Draft4ShapeDependenciesParser,
-  UnevaluatedParser
-}
+import amf.shapes.internal.spec.jsonschema.parser.{ContentParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, UnevaluatedParser}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
 import amf.shapes.internal.spec.SemanticContextParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import org.yaml.model._
-
 import scala.collection.mutable
 import scala.util.Try
 
@@ -307,8 +298,7 @@ case class InlineOasTypeParser(
           if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {
-            map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
-            map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+            parseBooleanExclusive(map, shape)
           }
         case _ => // Nothing to do
       }
@@ -316,14 +306,13 @@ case class InlineOasTypeParser(
     }
 
     private def parseNumericExclusive(map: YMap, shape: Shape): Unit = {
-      if (map.key("exclusiveMinimum").isDefined) {
-        setValue("exclusiveMinimum", map, ScalarShapeModel.Minimum, shape)
-        shape.setWithoutId(ScalarShapeModel.ExclusiveMinimum, AmfScalar(true), Annotations(SynthesizedField()))
-      }
-      if (map.key("exclusiveMaximum").isDefined) {
-        setValue("exclusiveMaximum", map, ScalarShapeModel.Maximum, shape)
-        shape.setWithoutId(ScalarShapeModel.ExclusiveMaximum, AmfScalar(true), Annotations(SynthesizedField()))
-      }
+      map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimumNumeric in shape)
+      map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximumNumeric in shape)
+    }
+
+    private def parseBooleanExclusive(map: YMap, shape: Shape): Unit = {
+      map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
+      map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
     }
 
     private def setValue(key: String, map: YMap, field: Field, shape: Shape): Unit =

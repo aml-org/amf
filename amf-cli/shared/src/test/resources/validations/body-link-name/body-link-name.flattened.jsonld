@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -133,7 +133,12 @@
         {
           "@id": "#13"
         }
-      ]
+      ],
+      "smaps": {
+        "virtual-element": {
+          "#12": "true"
+        }
+      }
     },
     {
       "@id": "#16",
@@ -147,7 +152,12 @@
         {
           "@id": "#17"
         }
-      ]
+      ],
+      "smaps": {
+        "virtual-element": {
+          "#16": "true"
+        }
+      }
     },
     {
       "@id": "#13",

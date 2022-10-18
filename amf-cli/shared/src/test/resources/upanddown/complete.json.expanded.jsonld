@@ -74,6 +74,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/complete.json#/web-api/server/api.example.com%2Fpath/source-map/virtual-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/complete.json#/web-api/server/api.example.com%2Fpath"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/complete.json#/web-api/server/api.example.com%2Fpath/source-map/base-path-lexical/element_0",
@@ -368,6 +383,21 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/complete.json#/web-api/source-map/virtual-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#documentation"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/complete.json#/web-api/source-map/lexical/element_10",
@@ -530,7 +560,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

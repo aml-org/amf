@@ -40,11 +40,25 @@ trait CommonShapeFields {
     ModelDoc(ExternalModelVocabularies.Shacl, "max. exclusive", "Maximum exclusive constraint")
   )
 
+  val ExclusiveMinimumNumeric = Field(
+    Double,
+    Shapes + "exclusiveMinimumNumeric",
+    ModelDoc(ModelVocabularies.Shapes, "min. exclusive numeric", "Minimum exclusive constraint"),
+    deprecated = true
+  )
+
+  val ExclusiveMaximumNumeric = Field(
+    Double,
+    Shapes + "exclusiveMaximumNumeric",
+    ModelDoc(ModelVocabularies.Shapes, "max. exclusive numeric", "Maximum exclusive constraint"),
+    deprecated = true
+  )
+
   val Format = Field(Str, Shapes + "format", ModelDoc(ModelVocabularies.Shapes, "format", "Format constraint"))
 
   val MultipleOf =
     Field(Double, Shapes + "multipleOf", ModelDoc(ModelVocabularies.Shapes, "multiple of", "Multiple of constraint"))
 
   val commonOASFields =
-    List(Pattern, MinLength, MaxLength, Minimum, Maximum, ExclusiveMinimum, ExclusiveMaximum, Format, MultipleOf)
+    List(Pattern, MinLength, MaxLength, Minimum, Maximum, ExclusiveMinimum, ExclusiveMaximum, ExclusiveMinimumNumeric, ExclusiveMaximumNumeric, Format, MultipleOf)
 }

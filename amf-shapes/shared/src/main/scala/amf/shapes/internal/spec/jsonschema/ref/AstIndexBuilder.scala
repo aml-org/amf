@@ -14,19 +14,10 @@ object AstIndexBuilder {
   def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit
       ctx: ShapeParserContext
   ): AstIndex = {
-    val locationUri             = getBaseUri(ctx)
-    val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
-    val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
-    val resolvers               = Seq(FragmentTraversingResolver)
+    val scopes    = Seq(LexicalResolutionScope()) ++ getResolutionScope(version, new URI("/"))
+    val resolvers = Seq(FragmentTraversingResolver)
     new AstIndexBuilder(refCounter).build(node, scopes, resolvers)
   }
-
-  private def getBaseUri(ctx: ShapeParserContext): Option[URI] =
-    try {
-      Some(new URI(ctx.getJsonSchemaRefGuide.currentLoc))
-    } catch {
-      case _: Throwable => None
-    }
 
   private def getResolutionScope(version: SchemaVersion, baseUri: URI): Option[ResolutionScope] = version match {
     case JSONSchemaDraft3SchemaVersion | JSONSchemaDraft4SchemaVersion | JSONSchemaDraft6SchemaVersion =>

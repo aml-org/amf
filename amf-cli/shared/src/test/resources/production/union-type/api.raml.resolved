@@ -290,7 +290,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [
@@ -800,9 +800,9 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#inline-element": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/declares/shape/c/source-map/inline-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/declares/shape/c/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/declares/shape/c"
@@ -825,7 +825,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(13,4)-(16,0)]"
+                    "@value": "[(12,2)-(16,0)]"
                   }
                 ]
               },
@@ -839,6 +839,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(12,2)-(12,3)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/declares/shape/c/source-map/type-property-lexical-info/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/declares/shape/c"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,4)-(13,8)]"
                   }
                 ]
               }

@@ -1,16 +1,16 @@
 {
   "@graph": [
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -22,7 +22,7 @@
       "smaps": {
         "lexical": {
           "core:version": "[(4,0)-(5,0)]",
-          "#15": "[(3,0)-(19,42)]",
+          "#16": "[(3,0)-(19,42)]",
           "core:name": "[(3,0)-(4,0)]"
         }
       }
@@ -37,7 +37,7 @@
           "@id": "#3"
         },
         {
-          "@id": "#13"
+          "@id": "#14"
         },
         {
           "@id": "#5"
@@ -50,11 +50,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#15"
+        "@id": "#16"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#14"
+        "@id": "#15"
       }
     },
     {
@@ -134,7 +134,7 @@
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -153,22 +153,22 @@
           "doc:recursive": "true"
         },
         "resolved-link-target": {
-          "#13": "amf://id#3"
+          "#14": "amf://id#3"
         },
         "declared-element": {
-          "#13": ""
+          "#14": ""
         },
         "lexical": {
-          "#13": "[(11,2)-(16,0)]"
+          "#14": "[(11,2)-(16,0)]"
         },
         "type-property-lexical-info": {
-          "#13": "[(12,4)-(12,8)]"
+          "#14": "[(12,4)-(12,8)]"
         },
         "resolved-link": {
-          "#13": "amf://id#8"
+          "#14": "amf://id#8"
         },
         "inherited-shapes": {
-          "#13": "amf://id#9"
+          "#14": "amf://id#9"
         }
       }
     },
@@ -192,11 +192,23 @@
       "shacl:name": "Value",
       "smaps": {
         "inherited-shapes": {
+          "#5": "amf://id#13"
+        },
+        "resolved-link": {
           "#5": "amf://id#12"
+        },
+        "type-property-lexical-info": {
+          "#5": "[(19,4)-(19,8)]"
         },
         "lexical": {
           "shacl:name": "[(18,2)-(18,7)]",
-          "#5": "[(19,4)-(19,42)]"
+          "#5": "[(18,2)-(19,42)]"
+        },
+        "declared-element": {
+          "#5": ""
+        },
+        "resolved-link-target": {
+          "#5": "amf://id#5"
         }
       }
     },

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 0.8"
     },
@@ -198,6 +198,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -297,6 +302,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(11,49)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/endpoint/%2Fparam/supportedOperation/get/request/parameter/query/element/scalar/schema/source-map",

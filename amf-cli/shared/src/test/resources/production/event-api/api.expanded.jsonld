@@ -127,11 +127,16 @@
                           "synthesized-field": {
                             "apiContract:binding": "true",
                             "apiContract:paramName": "true",
-                            "core:name": "true",
                             "apiContract:required": "true"
                           },
                           "default-node": {
                             "#46": ""
+                          },
+                          "virtual-element": {
+                            "#46": "true"
+                          },
+                          "lexical": {
+                            "#46": "[(34,3)-(34,7)]"
                           }
                         }
                       }
@@ -825,7 +830,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "doc:transformed": [

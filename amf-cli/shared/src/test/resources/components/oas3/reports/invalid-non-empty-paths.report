@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/components/oas3/invalid-non-empty-paths.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#mandatory-empty-paths
+  Message: 'paths' must be an empty object
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/invalid-non-empty-paths.yaml
+  Property: 
+  Range: 
+  Location: 

@@ -556,6 +556,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
     }
 
+    superUnion.annotations.reject(_ => true) ++= baseShape.annotations
     superUnion.withId(baseShape.id)
   }
 

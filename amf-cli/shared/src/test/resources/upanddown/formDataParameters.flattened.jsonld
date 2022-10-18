@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
@@ -207,6 +207,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map/lexical/element_2"
@@ -279,6 +284,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/payload/formData/source-map/form-body-parameter/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/endpoint/%2Fa%2F%7Ba%7D/supportedOperation/get/expects/request/source-map/lexical/element_2",

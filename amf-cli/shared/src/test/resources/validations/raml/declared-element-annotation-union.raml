@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Customer API
+
+types:
+  CustomerUnion:
+    type: Customer | InternalCustomer
+  Customer:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      birthday:
+        type: string
+
+  InternalCustomer:
+    properties:
+      id:
+        type: string
+      employeeId:
+        type: string
+
+/endpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: CustomerUnion

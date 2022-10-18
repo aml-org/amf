@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -86,6 +86,9 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "apiContract:payload": "true"
+        },
         "lexical": {
           "#16": "[(9,0)-(12,0)]"
         }
@@ -250,6 +253,9 @@
         "@id": "#11"
       },
       "smaps": {
+        "virtual-element": {
+          "doc:declares": "true"
+        },
         "lexical": {
           "#1": "[(1,0)-(9,0)]"
         }
@@ -300,7 +306,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:sourceSpec": "RAML 1.0"
     }
   ],

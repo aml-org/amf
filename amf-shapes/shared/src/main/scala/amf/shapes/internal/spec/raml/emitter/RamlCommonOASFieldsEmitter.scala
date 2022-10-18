@@ -7,7 +7,6 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
-
 import scala.collection.mutable.ListBuffer
 import amf.core.internal.utils._
 
@@ -22,6 +21,12 @@ trait RamlCommonOASFieldsEmitter {
       .map(f => result += ValueEmitter("exclusiveMinimum".asRamlAnnotation, f))
 
     fs.entry(ScalarShapeModel.ExclusiveMaximum)
+      .map(f => result += ValueEmitter("exclusiveMaximum".asRamlAnnotation, f))
+
+    fs.entry(ScalarShapeModel.ExclusiveMinimumNumeric)
+      .map(f => result += ValueEmitter("exclusiveMinimum".asRamlAnnotation, f))
+
+    fs.entry(ScalarShapeModel.ExclusiveMaximumNumeric)
       .map(f => result += ValueEmitter("exclusiveMaximum".asRamlAnnotation, f))
   }
 

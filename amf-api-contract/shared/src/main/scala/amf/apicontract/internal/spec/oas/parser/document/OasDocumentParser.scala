@@ -17,7 +17,7 @@ import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray}
 import amf.core.internal.metamodel.Field
@@ -325,7 +325,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)
-      case None        => ctx.eh.violation(MandatoryPathsProperty, api, "'paths' is mandatory in OAS spec")
+      case None        => mandatoryPathsError(api)
     }
 
     AnnotationParser(api, map).parse()
@@ -530,5 +530,9 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
             }
         }
       )
+  }
+
+  protected def mandatoryPathsError(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
+    ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
   }
 }

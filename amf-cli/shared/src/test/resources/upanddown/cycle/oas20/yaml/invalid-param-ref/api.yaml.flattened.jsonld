@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
@@ -180,6 +180,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request/source-map/virtual-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request/source-map/lexical/element_1"
@@ -217,6 +222,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request/parameter/parameter/default-binding/parameter_1/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/endpoint/%2Fresource/supportedOperation/get/expects/request/source-map/lexical/element_1",

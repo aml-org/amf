@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "OAS 2.0"
     },
@@ -196,6 +196,11 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#1"
+      },
+      "smaps": {
+        "virtual-element": {
+          "#11": "true"
+        }
       }
     },
     {
@@ -208,6 +213,11 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#1"
+      },
+      "smaps": {
+        "virtual-element": {
+          "#12": "true"
+        }
       }
     },
     {
@@ -529,6 +539,9 @@
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(29,4)-(31,0)]"
+        },
+        "virtual-element": {
+          "#14": "true"
         }
       }
     }

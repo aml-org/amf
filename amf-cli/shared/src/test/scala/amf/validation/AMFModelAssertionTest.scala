@@ -3,13 +3,13 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
-import amf.apicontract.internal.metamodel.domain.OperationModel
+import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
-import amf.core.internal.annotations.{Inferred, VirtualElement, VirtualNode}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
@@ -62,6 +62,10 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
+    def getEndpoints(bu: BaseUnit): Seq[EndPoint] = getApi(bu).endPoints
+
+    def getServers(bu: BaseUnit): Seq[Server] = getApi(bu).servers
+
     def getFirstEndpoint(bu: BaseUnit): EndPoint = getApi(bu).endPoints.head
 
     def getFirstOperation(bu: BaseUnit): Operation = getFirstEndpoint(bu).operations.head
@@ -74,7 +78,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
     def getFirstResponsePayload(bu: BaseUnit): Payload = getFirstResponse(bu).payloads.head
 
-    def getFirstPayloadSchema(bu: BaseUnit): ScalarShape = getFirstResponsePayload(bu).schema.asInstanceOf[ScalarShape]
+    def getFirstPayloadSchema(bu: BaseUnit): Shape = getFirstResponsePayload(bu).schema
   }
 
   test("AMF should persist and restore the raw XML schema") {
@@ -313,7 +317,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       isTheOnlyAnnotation(classOf[Inferred], op.fields.getValue(expectsField).annotations) shouldBe true
       isTheOnlyAnnotation(classOf[VirtualElement], op.fields.get(expectsField).annotations) shouldBe true
 
-      hasAnnotation(classOf[VirtualElement], op.request.annotations) shouldBe true
+      op.request.annotations.isVirtual shouldBe true
       hasAnnotation(classOf[BaseVirtualNode], op.request.annotations) shouldBe true
 
       val requestBodyAnnotations = op.request.annotations.find(classOf[BaseVirtualNode]).get
@@ -395,6 +399,32 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
         // both lexicals should start in column 4
         lexicals map (_.start.column) exists (_ != 4) shouldBe false
       }
+    }
+  }
+
+  test("Declared union should have DeclaredElement annotation") {
+    val api = s"$basePath/raml/declared-element-annotation-union.raml"
+    modelAssertion(api, PipelineId.Editing) { bu =>
+      val union = bu.asInstanceOf[Document].declares.head
+      union.annotations.contains(classOf[DeclaredElement]) shouldBe true
+    }
+  }
+
+  // W-11350149
+  test("path parameter location") {
+    val ramlApi = s"$basePath/raml/uri-params/missing-definition.raml"
+    modelAssertion(ramlApi, PipelineId.Editing) { bu =>
+      val components  = new BaseUnitComponents()
+      val serverParam = components.getServers(bu).head
+      serverParam.annotations.isSynthesized shouldBe true
+
+      val endPoint                  = components.getEndpoints(bu).last
+      val paramField                = endPoint.fields.get(EndPointModel.Parameters).asInstanceOf[AmfArray]
+      val params                    = paramField.values
+      val synthesizedParam          = params.head
+      val synthesizedLexical        = synthesizedParam.annotations.lexical()
+      val correctSynthesizedLexical = PositionRange((7, 3), (7, 12))
+      synthesizedLexical.compareTo(correctSynthesizedLexical) shouldBe 0
     }
   }
 }

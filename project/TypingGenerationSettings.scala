@@ -4,7 +4,8 @@ import org.mulesoft.typings.plugin.ScalaJsTypingsPlugin.autoImport.{
   namespaceReplacer,
   namespaceTopLevelExports,
   scalaFilteredClasses,
-  typingModuleName
+  typingModuleName,
+  formattingCmd
 }
 import org.mulesoft.typings.resolution.BuiltInMappings.{dictionary, option, overwrite}
 import org.mulesoft.typings.resolution.MappingFactory
@@ -18,6 +19,7 @@ object TypingGenerationSettings {
     customMappings           := typingsCustomMappings,
     namespaceReplacer        := typingsNamespaceReplacer,
     scalaFilteredClasses     := typingsFilters,
+    formattingCmd            := Some("npx prettier --write amf-cli/js/@types/amf.d.ts"),
     namespaceTopLevelExports := false
   )
 
@@ -66,4 +68,5 @@ object TypingGenerationSettings {
       .withTypeFilter("^.*$", "AmfObjectWrapper")
       .withTypeFilter("^.*$", "StringBuffer")
       .withMethodFilter("^.*\\.ValidationReport$", "toString")
+      .withMethodFilter("^.*$", "+")
 }

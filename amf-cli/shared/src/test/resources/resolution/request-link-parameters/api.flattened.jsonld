@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "OAS 3.0"
     },
@@ -113,6 +113,9 @@
       "smaps": {
         "declared-element": {
           "#21": ""
+        },
+        "virtual-element": {
+          "#21": "true"
         }
       }
     },
@@ -591,6 +594,9 @@
       "smaps": {
         "lexical": {
           "core:name": "[(8,4)-(8,13)]"
+        },
+        "virtual-element": {
+          "#12": "true"
         },
         "declared-element": {
           "#12": ""

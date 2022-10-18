@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -173,6 +173,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -236,6 +241,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(6,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/endpoint/%2Ftestrequest/supportedOperation/get/request/parameter/query/testType/scalar/schema/scalar_1",

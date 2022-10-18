@@ -124,6 +124,9 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:parameter": "[(5,6)-(6,12)]"
+                      },
+                      "virtual-element": {
+                        "#14": "true"
                       }
                     }
                   }
@@ -322,7 +325,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.7.0"
+            "@value": "3.8.0"
           }
         ],
         "doc:transformed": [
@@ -499,7 +502,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.7.0"
+                "@value": "3.8.0"
               }
             ],
             "doc:sourceSpec": [
@@ -510,6 +513,9 @@
           }
         ],
         "smaps": {
+          "virtual-element": {
+            "doc:declares": "true"
+          },
           "lexical": {
             "#1": "[(1,0)-(6,12)]"
           }

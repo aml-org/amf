@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.7.0",
+      "apiContract:modelVersion": "3.8.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -249,11 +249,16 @@
         "synthesized-field": {
           "apiContract:binding": "true",
           "apiContract:paramName": "true",
-          "core:name": "true",
           "apiContract:required": "true"
         },
         "default-node": {
           "#46": ""
+        },
+        "virtual-element": {
+          "#46": "true"
+        },
+        "lexical": {
+          "#46": "[(34,3)-(34,7)]"
         }
       }
     },

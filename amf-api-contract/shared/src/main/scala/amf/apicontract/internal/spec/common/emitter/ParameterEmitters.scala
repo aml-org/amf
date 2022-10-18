@@ -358,11 +358,9 @@ case class OasParametersEmitter(
   }
 }
 
-case class ParameterEmitter(parameter: Parameter,
-                            ordering: SpecOrdering,
-                            references: Seq[BaseUnit],
-                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
+    implicit val spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 

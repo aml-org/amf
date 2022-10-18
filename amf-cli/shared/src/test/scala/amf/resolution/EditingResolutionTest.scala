@@ -1268,5 +1268,43 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Generated uri parameters") {
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "uri-params/",
+      renderOptions = Some(RenderOptions().withSourceMaps.withPrettyPrint.withSourceInformation),
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("Generated uri parameters with operation") {
+    cycle(
+      "api-operation.raml",
+      "api-operation.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "uri-params/",
+      renderOptions = Some(RenderOptions().withSourceMaps.withPrettyPrint.withSourceInformation),
+      transformWith = Some(Raml10)
+    )
+  }
+
+
+  multiGoldenTest("propagate Endpoint cookie parameters to Operations", "oas3-cookie-parameter-propagation.%s") { config =>
+    cycle(
+      "oas3-cookie-parameter-propagation.yaml",
+      config.golden,
+      Oas30JsonHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "oas3-cookie-propagation/",
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Oas30)
+    )
+  }
+
+
   override val basePath: String = ""
 }

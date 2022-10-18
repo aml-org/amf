@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.7.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.0",
       "http://a.ml/vocabularies/document#sourceSpec": "ASYNC 2.0"
     },
     {
@@ -1530,6 +1530,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/server/https%3A%2F%2Fgoogle.com/security/requirement_6/schemes/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/server/https%3A%2F%2Fgoogle.com/security/requirement_6/schemes/oauth2/settings/oauth2/flows/default-flow/source-map/virtual-element/element_0"
+        }
       ]
     },
     {
@@ -1858,6 +1863,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/server/https%3A%2F%2Fgoogle.com/security/requirement_6/schemes/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
       "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/server/https%3A%2F%2Fgoogle.com/security/requirement_6/schemes/oauth2/settings/oauth2/flows/default-flow/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/server/https%3A%2F%2Fgoogle.com/security/requirement_6/schemes/oauth2/settings/oauth2/flows/default-flow",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/security-schemes.yaml#/declares/scheme/openIdConnect/settings/open-id-connect/source-map/lexical/element_1",

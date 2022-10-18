@@ -1360,6 +1360,8 @@ Types:
  | maxInclusive | double | Maximum inclusive constraint | `http://www.w3.org/ns/shacl#maxInclusive` |
  | minExclusive | boolean | Minimum exclusive constraint | `http://www.w3.org/ns/shacl#minExclusive` |
  | maxExclusive | boolean | Maximum exclusive constraint | `http://www.w3.org/ns/shacl#maxExclusive` |
+ | exclusiveMinimumNumeric | double | Minimum exclusive constraint | `http://a.ml/vocabularies/shapes#exclusiveMinimumNumeric` |
+ | exclusiveMaximumNumeric | double | Maximum exclusive constraint | `http://a.ml/vocabularies/shapes#exclusiveMaximumNumeric` |
  | format | string | Format constraint | `http://a.ml/vocabularies/shapes#format` |
  | multipleOf | double | Multiple of constraint | `http://a.ml/vocabularies/shapes#multipleOf` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
@@ -2588,6 +2590,8 @@ Types:
  | maxInclusive | double | Maximum inclusive constraint | `http://www.w3.org/ns/shacl#maxInclusive` |
  | minExclusive | boolean | Minimum exclusive constraint | `http://www.w3.org/ns/shacl#minExclusive` |
  | maxExclusive | boolean | Maximum exclusive constraint | `http://www.w3.org/ns/shacl#maxExclusive` |
+ | exclusiveMinimumNumeric | double | Minimum exclusive constraint | `http://a.ml/vocabularies/shapes#exclusiveMinimumNumeric` |
+ | exclusiveMaximumNumeric | double | Maximum exclusive constraint | `http://a.ml/vocabularies/shapes#exclusiveMaximumNumeric` |
  | format | string | Format constraint | `http://a.ml/vocabularies/shapes#format` |
  | multipleOf | double | Multiple of constraint | `http://a.ml/vocabularies/shapes#multipleOf` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
