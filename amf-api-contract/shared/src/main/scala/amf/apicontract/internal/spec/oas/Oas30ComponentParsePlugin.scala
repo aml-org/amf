@@ -3,13 +3,13 @@ package amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasHeader.Oas30Header
 import amf.apicontract.internal.spec.oas.parser.context.{Oas30ComponentSyntax, Oas3WebApiContext, OasWebApiContext}
-import amf.apicontract.internal.spec.oas.parser.document.{Oas3ComponentParser, Oas3DocumentParser, OasFragmentParser}
+import amf.apicontract.internal.spec.oas.parser.document.Oas3ComponentParser
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Oas30, Spec}
+import amf.core.internal.remote.{Mimes, Oas30, Spec}
 
 object Oas30ComponentParsePlugin extends OasParsePlugin {
 
@@ -17,7 +17,7 @@ object Oas30ComponentParsePlugin extends OasParsePlugin {
 
   override def applies(element: Root): Boolean = OasHeader(element).contains(Oas30Header)
 
-  override def mediaTypes: Seq[String] = Seq()
+  override def mediaTypes: Seq[String] = Seq(Mimes.`application/json`, Mimes.`application/yaml`)
 
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {

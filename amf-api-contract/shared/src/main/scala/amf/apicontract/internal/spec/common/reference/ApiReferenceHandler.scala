@@ -1,33 +1,18 @@
 package amf.apicontract.internal.spec.common.reference
 
+import amf.apicontract.internal.spec.raml.RamlHeader
 import amf.apicontract.internal.spec.raml.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
-import amf.apicontract.internal.spec.raml.{RamlHeader, parser}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document._
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.remote._
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.shapes.internal.reference.SYamlCompilerReferenceCollector
 import org.yaml.model._
 
 import scala.util.matching.Regex
-
-class SYamlCompilerReferenceCollector() extends CompilerReferenceCollector {
-
-  def +=(key: String, kind: ReferenceKind, node: YPart): Unit = {
-    val (url, fragment) = ReferenceFragmentPartition(key)
-    collector.get(url) match {
-      case Some(reference: Reference) => collector += (url, reference + SYamlRefContainer(kind, node, fragment))
-      case None => collector += (url, new Reference(url, Seq(SYamlRefContainer(kind, node, fragment))))
-    }
-  }
-
-}
-
-object SYamlCompilerReferenceCollector {
-  def apply(): SYamlCompilerReferenceCollector = new SYamlCompilerReferenceCollector()
-}
 
 class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
