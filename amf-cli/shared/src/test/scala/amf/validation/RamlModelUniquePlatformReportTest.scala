@@ -1,6 +1,8 @@
 package amf.validation
 
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.common.validation.{Raml08Profile, Raml10Profile}
+import amf.core.client.scala.config.ParsingOptions
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -173,7 +175,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Test null value in json when expecting scalar value") {
     validate(
       "/null-value-json.raml",
-      Some("null-value-json.report")
+      Some("null-value-json.report"),
+      configOverride = Some(RAMLConfiguration.RAML08().withParsingOptions(ParsingOptions().withTokens))
     )
   }
 
