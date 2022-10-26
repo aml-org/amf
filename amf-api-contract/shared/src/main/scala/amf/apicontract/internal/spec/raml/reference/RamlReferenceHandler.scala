@@ -90,7 +90,9 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
-          YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(new SYamlAMFParserErrorHandler(ctx.eh))
+          YamlParser(e.encodes.raw.value(), e.location().getOrElse(""), ctx.parsingOptions.getMaxJsonYamlDepth)(
+            new SYamlAMFParserErrorHandler(ctx.eh)
+          )
             .withIncludeTag("!include")
             .document()
         )

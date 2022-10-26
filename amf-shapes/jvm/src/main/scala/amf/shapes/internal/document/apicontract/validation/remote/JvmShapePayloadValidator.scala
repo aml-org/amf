@@ -22,6 +22,7 @@ import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
+import org.mulesoft.lexer.BaseLexer
 
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
@@ -33,7 +34,7 @@ class JvmShapePayloadValidator(
     private val configuration: ShapeValidationConfiguration
 ) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
 
-  private val DEFAULT_MAX_NESTING_LIMIT: Int = 2000 // Because of Raml Java Parser compatibility
+  private val DEFAULT_MAX_NESTING_LIMIT: Int = BaseLexer.DEFAULT_MAX_DEPTH
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)

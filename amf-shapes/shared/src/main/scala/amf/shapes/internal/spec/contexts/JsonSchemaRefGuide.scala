@@ -22,7 +22,7 @@ case class JsonSchemaRefGuide(currentLoc: String, currentUnit: Option[BaseUnit],
 
   def getRootYNode(ref: String): Option[YNode] = {
     findJsonReferenceFragment(ref) map { case (fragment, _) =>
-      getYNodeFrom(fragment, context.eh)
+      getYNodeFrom(fragment, context)
     }
   }
 

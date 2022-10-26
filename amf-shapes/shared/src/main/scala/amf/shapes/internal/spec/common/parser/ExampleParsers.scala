@@ -340,12 +340,13 @@ case class NodeDataNodeParser(
 
   private def jsonParser(scalar: YScalar, errorHandler: AMFErrorHandler): JsonParser =
     if (fromExternal)
-      JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
+      JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName, ctx.options.getMaxJsonYamlDepth)(ctx.eh)
     else
       JsonParserFactory.fromCharsWithSource(
         scalar.text,
         scalar.sourceName,
-        Position(node.range.lineFrom, node.range.columnFrom)
+        Position(node.range.lineFrom, node.range.columnFrom),
+        ctx.options.getMaxJsonYamlDepth
       )(errorHandler)
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
