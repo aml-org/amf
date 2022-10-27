@@ -17,9 +17,10 @@ import amf.core.internal.remote.{GraphQL, Spec, Syntax}
 import amf.graphql.internal.spec.document.GraphQLBaseDocumentParser
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.DEFINITION
+import amf.graphql.internal.spec.plugins.parse.GraphQLBasedParsePlugin
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 
-object GraphQLFederationParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
+object GraphQLFederationParsePlugin extends GraphQLBasedParsePlugin {
   override def spec: Spec = GraphQL
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
@@ -42,17 +43,6 @@ object GraphQLFederationParsePlugin extends ApiParsePlugin with GraphQLASTParser
   /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Syntax.graphQLMimes.toSeq
-
-  override def applies(element: Root): Boolean = {
-    element.parsed match {
-      case antlrDoc: AntlrParsedDocument =>
-        isGraphQL(antlrDoc)
-      case _ =>
-        false
-    }
-  }
-
-  private def isGraphQL(doc: AntlrParsedDocument): Boolean = collect(doc.ast.root(), Seq(DEFINITION)).nonEmpty
 
   override def withIdAdoption: Boolean = true // TODO pending analysis and parsing cleanup
 }

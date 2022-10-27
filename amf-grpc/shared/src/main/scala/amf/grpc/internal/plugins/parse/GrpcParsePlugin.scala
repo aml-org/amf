@@ -40,18 +40,22 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
   }
 
   private def isProto3(doc: AntlrParsedDocument): Boolean = {
-    path(doc.ast.root(), Seq(SYNTAX)) match {
-      case Some(syntaxNode: Node) =>
-        syntaxNode.children.exists {
-          case t: Terminal => t.value == "\"proto3\""
-          case _           => false
+    doc.ast
+      .rootOption()
+      .exists(root => {
+        path(root, Seq(SYNTAX)) match {
+          case Some(syntaxNode: Node) =>
+            syntaxNode.children.exists {
+              case t: Terminal => t.value == "\"proto3\""
+              case _           => false
+            }
+          case _ => false
         }
-      case _ => false
-    }
+      })
   }
 
   def context(document: Root, ctx: ParserContext): GrpcWebApiContext = {
-    val ast = document.parsed.asInstanceOf[AntlrParsedDocument].ast.root().asInstanceOf[Node]
+
     val grpcCtx = new GrpcWebApiContext(
       ctx.rootContextDocument,
       ctx.refs,
@@ -59,8 +63,9 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
       ctx,
       Some(WebApiDeclarations(Nil, UnhandledErrorHandler, ctx.futureDeclarations, DotQualifiedNameExtractor))
     )
+    val ast = document.parsed.asInstanceOf[AntlrParsedDocument].ast.rootOption().collect({ case n: Node => n })
     // setup the package path
-    GrpcPackageParser(ast, Document())(grpcCtx).parseName() match {
+    ast.flatMap(GrpcPackageParser(_, Document())(grpcCtx).parseName()) match {
       case Some((pkg, _)) => grpcCtx.nestedMessage(pkg)
       case _              => grpcCtx
     }
