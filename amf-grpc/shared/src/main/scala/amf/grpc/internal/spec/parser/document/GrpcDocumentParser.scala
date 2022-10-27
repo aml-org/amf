@@ -42,14 +42,8 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
     loadReferences(root.references)
-    ast.root() match {
-      case node: Node =>
-        parseWebAPI(node)
-        parseMessages(node)
-        parseEnums(node)
-        parseServices(node)
-        parseExtensions(node)
-    }
+    ast.rootOption().collect({ case n: Node => parseRootNode(n) })
+
     ctx.declarations.futureDeclarations.resolve()
     doc
       .withDeclares(
@@ -57,6 +51,14 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRPC))
+  }
+
+  private def parseRootNode(node: Node): Unit = {
+    parseWebAPI(node)
+    parseMessages(node)
+    parseEnums(node)
+    parseServices(node)
+    parseExtensions(node)
   }
 
   def parseWebAPI(node: Node): Unit = {
@@ -67,34 +69,32 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
   def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
   def parseMessages(node: Node): Unit = {
-    collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach {
-      case (element: ASTNode, idx: Int) =>
-        withNode(element) { node =>
-          val shape = GrpcMessageParser(node).parse(shape => {
-            shape.name.option() match {
-              case None => shape.withName(s"Message${idx}")
-              case _    =>
-            }
-            shape.adopted(webapi.id + "/types")
-          })
-          ctx.declarations += shape.add(DeclaredElement())
-        }
+    collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach { case (element: ASTNode, idx: Int) =>
+      withNode(element) { node =>
+        val shape = GrpcMessageParser(node).parse(shape => {
+          shape.name.option() match {
+            case None => shape.withName(s"Message${idx}")
+            case _    =>
+          }
+          shape.adopted(webapi.id + "/types")
+        })
+        ctx.declarations += shape.add(DeclaredElement())
+      }
     }
   }
 
   def parseEnums(node: Node): Unit = {
-    collect(node, Seq(TOP_LEVEL_DEF, ENUM_DEF)).zipWithIndex.foreach {
-      case (element: ASTNode, idx: Int) =>
-        withNode(element) { node =>
-          val shape = GrpcEnumParser(node).parse(shape => {
-            shape.name.option() match {
-              case None => shape.withName(s"Enum${idx}")
-              case _    =>
-            }
-            shape.adopted(webapi.id + "/types")
-          })
-          ctx.declarations += shape.add(DeclaredElement())
-        }
+    collect(node, Seq(TOP_LEVEL_DEF, ENUM_DEF)).zipWithIndex.foreach { case (element: ASTNode, idx: Int) =>
+      withNode(element) { node =>
+        val shape = GrpcEnumParser(node).parse(shape => {
+          shape.name.option() match {
+            case None => shape.withName(s"Enum${idx}")
+            case _    =>
+          }
+          shape.adopted(webapi.id + "/types")
+        })
+        ctx.declarations += shape.add(DeclaredElement())
+      }
     }
   }
 

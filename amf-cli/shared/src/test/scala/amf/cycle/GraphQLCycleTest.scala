@@ -125,7 +125,7 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
-  test("Can parse API wit repeatable directive from Embedded JSON-LD"){
+  test("Can parse API wit repeatable directive from Embedded JSON-LD") {
     cycle(
       "repeatable/repeatable.expanded.jsonld",
       "repeatable/repeatable.dumped.expanded.jsonld",
@@ -135,11 +135,21 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     )
   }
 
-  test("Can parse API wit repeatable directive from Flattened JSON-LD"){
+  test("Can parse API wit repeatable directive from Flattened JSON-LD") {
     cycle(
       "repeatable/repeatable.flattened.jsonld",
       "repeatable/repeatable.dumped.flattened.jsonld",
       AmfJsonHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint.withSourceMaps)
+    )
+  }
+
+  test("Api api does not throw exception") {
+    cycle(
+      "empty-api/empty.graphql",
+      "empty-api/empty.jsonld",
+      GraphQLHint,
       AmfJsonHint,
       renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint.withSourceMaps)
     )
