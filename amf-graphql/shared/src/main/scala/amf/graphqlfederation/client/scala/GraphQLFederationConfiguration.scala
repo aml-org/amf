@@ -1,12 +1,18 @@
 package amf.graphqlfederation.client.scala
 
-import amf.antlr.internal.plugins.syntax.{AntlrSyntaxRenderPlugin, GraphQLFederationSyntaxParsePlugin, SyamlForJsonLDSyntaxParsePlugin}
+import amf.antlr.client.scala.parse.AntlrBasedDocumentsFallbackPlugin
+import amf.antlr.internal.plugins.syntax.{
+  AntlrSyntaxRenderPlugin,
+  GraphQLFederationSyntaxParsePlugin,
+  SyamlForJsonLDSyntaxParsePlugin
+}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.transformation.{GraphQLCachePipeline, GraphQLEditingPipeline}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLFederationEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLFederationValidationProfile
 import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
-import amf.core.client.common.validation.ProfileNames
+import amf.core.client.common.validation.{ProfileNames, SeverityLevels}
+import amf.core.internal.remote.Spec
 import amf.graphqlfederation.internal.plugins.GraphQLFederationParsePlugin
 import amf.graphqlfederation.internal.spec.transformation.GraphQLFederationIntrospectionPipeline
 
@@ -33,5 +39,6 @@ object GraphQLFederationConfiguration extends APIConfigurationBuilder {
       )
       .withValidationProfile(GraphQLFederationValidationProfile, GraphQLFederationEffectiveValidations)
       .withPlugin(SyamlForJsonLDSyntaxParsePlugin) // override SYAML
+      .withFallback(AntlrBasedDocumentsFallbackPlugin(false, false, SeverityLevels.WARNING, Spec.GRAPHQL))
   }
 }
