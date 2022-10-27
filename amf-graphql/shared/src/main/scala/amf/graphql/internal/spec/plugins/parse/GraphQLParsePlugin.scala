@@ -1,7 +1,5 @@
 package amf.graphql.internal.spec.plugins.parse
 
-import amf.antlr.client.scala.parse.document.AntlrParsedDocument
-import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
@@ -16,11 +14,8 @@ import amf.core.internal.parser.domain.DotQualifiedNameExtractor
 import amf.core.internal.remote.{GraphQL, Spec, Syntax}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.document.GraphQLBaseDocumentParser
-import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{DEFINITION, DOCUMENT, TYPE_SYSTEM_DEFINITION}
-import org.mulesoft.antlrast.ast.Node
 
-object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
+object GraphQLParsePlugin extends GraphQLBasedParsePlugin {
   override def spec: Spec = GraphQL
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
@@ -43,17 +38,6 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
   /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Syntax.graphQLMimes.toSeq
-
-  override def applies(element: Root): Boolean = {
-    element.parsed match {
-      case antlrDoc: AntlrParsedDocument =>
-        isGraphQL(antlrDoc)
-      case _ =>
-        false
-    }
-  }
-
-  private def isGraphQL(doc: AntlrParsedDocument): Boolean = collect(doc.ast.root(), Seq(DEFINITION)).nonEmpty
 
   override def withIdAdoption: Boolean = true // TODO pending analysis and parsing cleanup
 }

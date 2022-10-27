@@ -1,21 +1,12 @@
 package amf.antlr.internal.plugins.syntax
 
-import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.core.client.common.{LowPriority, PluginPriority}
-import amf.core.client.scala.parse.AMFSyntaxParsePlugin
-import amf.core.client.scala.parse.document.{ParsedDocument, ParserContext}
 import amf.core.internal.remote.Mimes.`application/graphql`
 import amf.core.internal.remote.Syntax
+import org.mulesoft.antlrast.ast.Parser
 import org.mulesoft.antlrast.platform.PlatformGraphQLParser
 
-object GraphQLSyntaxParsePlugin extends AMFSyntaxParsePlugin {
-
-  override def parse(text: CharSequence, mediaType: String, ctx: ParserContext): ParsedDocument = {
-    val input  = text.toString
-    val parser = new PlatformGraphQLParser()
-    val ast    = parser.parse(ctx.rootContextDocument, input)
-    AntlrParsedDocument(ast, None)
-  }
+object GraphQLSyntaxParsePlugin extends BaseAntlrSyntaxParsePlugin {
 
   override def mediaTypes: Seq[String] = Syntax.graphQLMimes.toSeq
 
@@ -26,4 +17,6 @@ object GraphQLSyntaxParsePlugin extends AMFSyntaxParsePlugin {
   override def priority: PluginPriority = LowPriority
 
   override def mainMediaType: String = `application/graphql`
+
+  override def parser(): Parser = new PlatformGraphQLParser()
 }

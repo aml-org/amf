@@ -17,14 +17,14 @@ class GrpcReferenceHandler() extends ReferenceHandler with GrpcASTParserHelper {
   }
 
   def collectImports(antlr: AntlrParsedDocument): CompilerReferenceCollector = {
-    val root = antlr.ast.root()
-    collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach {
-      case stmt: Node =>
+    antlr.ast.rootOption().foreach { root =>
+      collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach { case stmt: Node =>
         collector.+=(
           stmt.children.head.asInstanceOf[Terminal].value.replaceAll("\"", ""),
           LibraryReference,
           stmt.location
         )
+      }
     }
     collector
   }
