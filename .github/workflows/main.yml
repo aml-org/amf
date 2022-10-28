@@ -14,8 +14,8 @@ jobs:
           node-version: 16
       - name: Install Scoop
         run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-          irm get.scoop.sh | iex
+          iwr get.scoop.sh -outfile 'install.ps1'
+          .\install.ps1 -RunAsAdmin
         shell: pwsh
       - name: Install SBT
         shell: pwsh
