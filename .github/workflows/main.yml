@@ -1,0 +1,14 @@
+name: Windows Tests
+on: [schedule]
+jobs:
+  test:
+    name: Run Windows Tests
+    runs-on: [windows-latest]
+    container: 
+      image: hseeberger/scala-sbt:eclipse-temurin-11.0.13_1.6.1_2.12.15
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: sbt -mem 6000 test
