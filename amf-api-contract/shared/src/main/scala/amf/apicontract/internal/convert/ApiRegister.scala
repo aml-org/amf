@@ -29,6 +29,7 @@ import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model
+import amf.shapes.client.scala.model.document.{DataTypeFragment => ShapeDataTypeFragment}
 import amf.shapes.internal.convert.ShapesRegister
 import amf.shapes.internal.document.metamodel.{DataTypeFragmentModel, JsonSchemaDocumentModel}
 
@@ -47,8 +48,10 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) { case s: AnnotationTypeDeclarationFragment =>
       AnnotationTypeDeclaration(s)
     }
-    platform.registerWrapper(DataTypeFragmentModel) { case s: DataTypeFragment =>
-      DataType(s)
+    // TODO Change this when we can break interface
+    platform.registerWrapper(DataTypeFragmentModel) {
+      case d: DataTypeFragment => DataType(d)
+      case sd: ShapeDataTypeFragment => new DataType(sd)
     }
     platform.registerWrapper(PayloadFragmentModel) { case s: amf.core.client.scala.model.document.PayloadFragment =>
       PayloadFragment(s)

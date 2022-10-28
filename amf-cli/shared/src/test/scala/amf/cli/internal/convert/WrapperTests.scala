@@ -23,11 +23,7 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{
-  ArrayNode => InternalArrayNode,
-  ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
-}
+import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -2141,6 +2137,21 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       assert(!parsingResult.conforms && validationReport.conforms && !merged.conforms)
     }
   }
+
+  test("Cycle API with DataType Fragment") {
+    val client = OASConfiguration.OAS20().baseUnitClient()
+    val path = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      val references = resolutionResult.baseUnit.references()
+      references.asSeq.size shouldBe 1
+      parsingResult.conforms shouldBe true
+      resolutionResult.conforms shouldBe true
+    }
+  }
+
 
 //
 //  // todo: move to common (file system)
