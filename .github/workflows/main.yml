@@ -1,0 +1,39 @@
+name: Run Windows Tests
+on:
+  workflow_dispatch: {}
+env:
+  JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
+jobs:
+  test:
+    name: Run Windows Tests
+    runs-on: [windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Scoop
+        run: |
+          iwr get.scoop.sh -outfile 'install.ps1'
+          .\install.ps1 -RunAsAdmin
+          Join-Path (Resolve-Path ~).Path "scoop\shims" >> $Env:GITHUB_PATH
+        shell: pwsh
+      - name: Install SBT
+        shell: pwsh
+        run: scoop install sbt
+      - name: Compile
+        shell: pwsh
+        run: sbt -mem 6000 compile "test:compile"
+      - name: Run JVM Tests
+        shell: pwsh
+        run: sbt -mem 6000 "cliJVM/testOnly"
+        if: success() || failure()
+      - name: Run Test fastOptJS
+        shell: pwsh
+        run: sbt -mem 6000 "cliJS:fastOptJS"
+        continue-on-error: true
+        if: success() || failure()
+      - name: Run JS Tests
+        shell: pwsh
+        run: sbt -mem 6000 "cliJS/testOnly"
+        if: success() || failure()
