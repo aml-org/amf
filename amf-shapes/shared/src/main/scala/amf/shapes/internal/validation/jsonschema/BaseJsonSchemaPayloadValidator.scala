@@ -232,13 +232,12 @@ abstract class BaseJsonSchemaPayloadValidator(
   }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
-    val options = ParsingOptions()
-    configuration.maxYamlReferences.foreach(options.setMaxYamlReferences)
-    val ctx = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences)
+    val options = generateParsingOptions()
+    val ctx     = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences, options.getMaxJsonYamlDepth)
 
     val parser = mediaType match {
-      case `application/json` => JsonParserFactory.fromChars(payload)(errorHandler)
-      case _                  => YamlParser(payload)(new SYamlAMFParserErrorHandler(errorHandler))
+      case `application/json` => JsonParserFactory.fromChars(payload, options.getMaxJsonYamlDepth)(errorHandler)
+      case _ => YamlParser(payload, options.getMaxJsonYamlDepth)(new SYamlAMFParserErrorHandler(errorHandler))
     }
     val node = parser.document().node
     val parsedNode =
@@ -247,9 +246,21 @@ abstract class BaseJsonSchemaPayloadValidator(
     PayloadFragment(parsedNode, mediaType)
   }
 
+  private def generateParsingOptions(): ParsingOptions = {
+    var po = ParsingOptions()
+    po = configuration.maxYamlReferences.foldLeft(po) { (options, myr) =>
+      options.setMaxYamlReferences(myr)
+    }
+    po = configuration.maxJsonYamlDepth.foldLeft(po) { (options, md) =>
+      options.setMaxJsonYamlDepth(md)
+    }
+    po
+  }
+
   private def dataNodeParsingCtx(
       errorHandler: AMFErrorHandler,
-      maxYamlRefs: Option[Int]
+      maxYamlRefs: Option[Int],
+      maxYamlJsonDepth: Option[Int]
   ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
     new ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler {
 
@@ -262,7 +273,8 @@ abstract class BaseJsonSchemaPayloadValidator(
       override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
       override def refs: Seq[ParsedReference]                                                          = Seq.empty
       override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
-      override def fragments: Map[String, FragmentRef]                                                 = Map.empty
+      override def getMaxYamlJsonDepth: Option[Int]    = maxYamlJsonDepth
+      override def fragments: Map[String, FragmentRef] = Map.empty
 
       override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
 

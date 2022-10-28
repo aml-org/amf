@@ -17,7 +17,9 @@ case class RamlExternalOasLibParser(ctx: ShapeParserContext, text: String, value
   private implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(ctx.eh)
 
   def parse(): Unit = {
-    val schemaEntry       = JsonParserFactory.fromCharsWithSource(text, valueAST.sourceName)(ctx.eh).document()
+    val schemaEntry = JsonParserFactory
+      .fromCharsWithSource(text, valueAST.sourceName, ctx.options.getMaxJsonYamlDepth)(ctx.eh)
+      .document()
     val jsonSchemaContext = toSchemaContext(ctx, valueAST)
     jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
 

@@ -35,5 +35,7 @@ abstract class ExtensionsContext(
 
   override def getMaxYamlReferences: Option[Int] = options.getMaxYamlReferences
 
+  override def getMaxYamlJsonDepth: Option[Int] = options.getMaxJsonYamlDepth
+
   override def fragments: Map[String, FragmentRef] = declarations.fragments
 }

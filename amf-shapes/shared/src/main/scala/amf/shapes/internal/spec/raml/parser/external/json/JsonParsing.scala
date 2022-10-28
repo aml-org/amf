@@ -12,7 +12,8 @@ trait JsonParsing {
     JsonParserFactory.fromCharsWithSource(
       text,
       valueAST.value.sourceName,
-      Position(valueAST.range.lineFrom, valueAST.range.columnFrom)
+      Position(valueAST.range.lineFrom, valueAST.range.columnFrom),
+      ctx.options.getMaxJsonYamlDepth
     )(ctx.eh)
   }
 
@@ -21,7 +22,7 @@ trait JsonParsing {
   ): JsonParser = {
     val url = extLocation.flatMap(ctx.fragments.get).flatMap(_.location)
     url
-      .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
+      .map { JsonParserFactory.fromCharsWithSource(text, _, ctx.options.getMaxJsonYamlDepth)(ctx.eh) }
       .getOrElse(getJsonParserFor(text, valueAST))
   }
 }
