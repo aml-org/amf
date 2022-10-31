@@ -28,8 +28,8 @@
         "http://a.ml/vocabularies/core#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "products-users-api",
-      "http://a.ml/vocabularies/core#labels": {
+      "http://a.ml/vocabularies/core#metadata/name": "products-users-api",
+      "http://a.ml/vocabularies/core#metadata/labels": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/object/"
       }
     },
@@ -39,12 +39,12 @@
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#address": "proxyUri",
-      "http://a.ml/vocabularies/core#deprecated": false,
-      "http://a.ml/vocabularies/core#deployment": {
+      "http://a.ml/vocabularies/core#spec/address": "proxyUri",
+      "http://a.ml/vocabularies/core#spec/deprecated": false,
+      "http://a.ml/vocabularies/core#spec/deployment": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/object/"
       },
-      "http://a.ml/vocabularies/core#policies": [
+      "http://a.ml/vocabularies/core#spec/policies": [
         {
           "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/"
         },
@@ -56,58 +56,58 @@
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/object/",
       "@type": [
-        "http://a.ml/vocabularies/core#labels",
+        "http://a.ml/vocabularies/core#metadata/labels",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#flex.mulesoft.com/api-group-id": "1caa0b9b-4f4d-43c4-a1b6-f925a8c77baa",
-      "http://a.ml/vocabularies/core#flex.mulesoft.com/api-asset-id": "assetId",
-      "http://a.ml/vocabularies/core#flex.mulesoft.com/api-version": "1.0.0"
+      "http://a.ml/vocabularies/core#metadata/labels/flex.mulesoft.com/api-group-id": "1caa0b9b-4f4d-43c4-a1b6-f925a8c77baa",
+      "http://a.ml/vocabularies/core#metadata/labels/flex.mulesoft.com/api-asset-id": "assetId",
+      "http://a.ml/vocabularies/core#metadata/labels/flex.mulesoft.com/api-version": "1.0.0"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/object/",
       "@type": [
-        "http://a.ml/vocabularies/core#deployment",
+        "http://a.ml/vocabularies/core#spec/deployment",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#target": "CH",
-      "http://a.ml/vocabularies/core#runtimeVersion": "4.4.0",
-      "http://a.ml/vocabularies/core#technology": "FlexGateway"
+      "http://a.ml/vocabularies/core#spec/deployment/target": "CH",
+      "http://a.ml/vocabularies/core#spec/deployment/runtimeVersion": "4.4.0",
+      "http://a.ml/vocabularies/core#spec/deployment/technology": "FlexGateway"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/",
       "@type": [
-        "http://a.ml/vocabularies/core#0",
+        "http://a.ml/vocabularies/core#spec/policies/0",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#policyRef": {
+      "http://a.ml/vocabularies/core#spec/policies/0/policyRef": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/object/"
       }
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9",
       "@type": [
-        "http://a.ml/vocabularies/core#1",
+        "http://a.ml/vocabularies/core#spec/policies/1",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#policyRef": {
+      "http://a.ml/vocabularies/core#spec/policies/1/policyRef": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9/object/"
       }
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/object/",
       "@type": [
-        "http://a.ml/vocabularies/core#policyRef",
+        "http://a.ml/vocabularies/core#spec/policies/0/policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "http-basic-authentication-flex"
+      "http://a.ml/vocabularies/core#spec/policies/0/policyRef/name": "http-basic-authentication-flex"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9/object/",
       "@type": [
-        "http://a.ml/vocabularies/core#policyRef",
+        "http://a.ml/vocabularies/core#spec/policies/1/policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "rate-limiting-flex"
+      "http://a.ml/vocabularies/core#spec/policies/1/policyRef/name": "rate-limiting-flex"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml",

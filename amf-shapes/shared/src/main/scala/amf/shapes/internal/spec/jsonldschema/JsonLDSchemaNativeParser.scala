@@ -10,7 +10,7 @@ import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDObject}
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDElementBuilder
-import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDSchemaNodeParser}
+import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonLDSchemaNodeParser, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleDomainElement
 import org.yaml.model.YNode
 
@@ -39,6 +39,8 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
         AnyShape()
     }
 
-    JsonLDSchemaNodeParser(shape, node, "encodes", isRoot = true)(new JsonLDParserContext(eh)).parse()
+    JsonLDSchemaNodeParser(shape, node, "encodes", JsonPath.empty, isRoot = true)(
+      new JsonLDParserContext(eh)
+    ).parse()
   }
 }

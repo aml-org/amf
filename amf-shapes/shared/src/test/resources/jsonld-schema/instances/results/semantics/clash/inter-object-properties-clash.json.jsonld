@@ -1,0 +1,61 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/",
+      "@type": [
+        "http://a.ml/vocabularies/core#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#a": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/"
+      },
+      "http://a.ml/vocabularies/core#b": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/_1"
+      }
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/",
+      "@type": [
+        "http://a.ml/vocabularies/core#a",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#a/c": true,
+      "http://a.ml/vocabularies/core#a/d": "true"
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/_1",
+      "@type": [
+        "http://a.ml/vocabularies/core#b",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#b/c": false,
+      "http://a.ml/vocabularies/core#b/d": "false"
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

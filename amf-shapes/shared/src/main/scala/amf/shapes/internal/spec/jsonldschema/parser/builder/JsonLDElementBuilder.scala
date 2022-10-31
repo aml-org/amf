@@ -3,10 +3,10 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDElement
-import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
+import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import org.mulesoft.common.client.lexical.SourceLocation
 
-abstract class JsonLDElementBuilder(val location: SourceLocation) {
+abstract class JsonLDElementBuilder(val location: SourceLocation, val path: JsonPath) {
 
   private var overriddenTerm: Option[String] = None
   private var overriddenType: Option[Type]   = None

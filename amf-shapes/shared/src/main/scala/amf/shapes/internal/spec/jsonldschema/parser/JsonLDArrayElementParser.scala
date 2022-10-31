@@ -7,7 +7,7 @@ import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDArrayElementB
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.UnsupportedShape
 import org.yaml.model.{YSequence, YType}
 
-case class JsonLDArrayElementParser(seq: YSequence)(implicit val ctx: JsonLDParserContext)
+case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val ctx: JsonLDParserContext)
     extends JsonLDBaseElementParser[JsonLDArrayElementBuilder](seq)(ctx) {
   override def foldLeft(
       current: JsonLDArrayElementBuilder,
@@ -36,10 +36,10 @@ case class JsonLDArrayElementParser(seq: YSequence)(implicit val ctx: JsonLDPars
   }
 
   def parseItems(items: Shape): JsonLDArrayElementBuilder = {
-    val builder = new JsonLDArrayElementBuilder(seq.location)
+    val builder = new JsonLDArrayElementBuilder(seq.location, path)
 
     builder.withItems(seq.nodes.zipWithIndex.map({ case (node, index) =>
-      JsonLDSchemaNodeParser(items, node, index.toString).parse()
+      JsonLDSchemaNodeParser(items, node, index.toString, path.concat(index.toString)).parse()
     }))
   }
 }

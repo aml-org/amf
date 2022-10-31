@@ -9,23 +9,32 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
 }
 import org.yaml.model._
 
-case class JsonLDSchemaNodeParser(shape: Shape, node: YNode, key: String, isRoot: Boolean = false)(implicit
-    ctx: JsonLDParserContext
+object JsonPath {
+  val empty: JsonPath = JsonPath()
+}
+case class JsonPath private (segments: List[String] = Nil) {
+
+  private lazy val path       = segments.mkString("/")
+  override def toString       = path
+  def concat(segment: String) = copy(segments :+ segment)
+}
+case class JsonLDSchemaNodeParser(shape: Shape, node: YNode, key: String, path: JsonPath, isRoot: Boolean = false)(
+    implicit ctx: JsonLDParserContext
 ) {
 
   // TODO native-jsonld: key is only used to generate default class term for objects. Shall we analyse another way?
   def parse(): JsonLDElementBuilder = {
     node.tagType match {
-      case YType.Map => JsonLDObjectElementParser(node.as[YMap], key)(ctx).parse(shape)
-      case YType.Seq => JsonLDArrayElementParser(node.as[YSequence])(ctx).parse(shape)
+      case YType.Map => JsonLDObjectElementParser(node.as[YMap], key, path)(ctx).parse(shape)
+      case YType.Seq => JsonLDArrayElementParser(node.as[YSequence], path)(ctx).parse(shape)
       case _ if isScalarNode && !isRoot =>
-        JsonLDScalarElementParser(node.as[YScalar], node.tagType).parse(shape)
+        JsonLDScalarElementParser(node.as[YScalar], node.tagType, path).parse(shape)
       case _ if isScalarNode && isRoot =>
         ctx.eh.violation(UnsupportedScalarRootLevel, shape, UnsupportedScalarRootLevel.message, Annotations(node))
-        JsonLDErrorBuilder()
+        JsonLDErrorBuilder(path)
       case _ =>
         ctx.eh.violation(UnsupportedRootLevel, shape, UnsupportedRootLevel.message, Annotations(node))
-        JsonLDErrorBuilder()
+        JsonLDErrorBuilder(path)
     }
   }
 

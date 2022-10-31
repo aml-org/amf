@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "@context": {
+    "aml": "http://a.ml/vocabularies/aml#",
+    "b": "aml:b"
+  },
+  "properties": {
+    "a": {
+      "type": "boolean"
+    },
+    "b": {
+      "type": "string"
+    }
+  },
+  "if": {
+    "a": true
+  },
+  "then": {
+    "@context": {
+      "c": "aml:b"
+    },
+    "properties": {
+      "c": {
+        "type": "number"
+      }
+    }
+  }
+}

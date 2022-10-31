@@ -12,8 +12,9 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
 }
 import org.yaml.model.{YScalar, YType}
 
-case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit val ctx: JsonLDParserContext)
-    extends JsonLDBaseElementParser[JsonLDScalarElementBuilder](scalar)(ctx) {
+case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType, path: JsonPath)(implicit
+    val ctx: JsonLDParserContext
+) extends JsonLDBaseElementParser[JsonLDScalarElementBuilder](scalar)(ctx) {
   override def foldLeft(
       current: JsonLDScalarElementBuilder,
       other: JsonLDScalarElementBuilder
@@ -65,8 +66,9 @@ case class JsonLDScalarElementParser(scalar: YScalar, tagType: YType)(implicit v
     */
   def parseScalar(semanticContext: Option[SemanticContext]): JsonLDScalarElementBuilder = {
     val builder =
-      if (dataType == DataTypes.Nil) new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location)
-      else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location)
+      if (dataType == DataTypes.Nil)
+        new JsonLDScalarElementBuilder(dataType, "null", location = scalar.location, path = path)
+      else new JsonLDScalarElementBuilder(dataType, scalar.value, location = scalar.location, path = path)
 
     builder
   }
