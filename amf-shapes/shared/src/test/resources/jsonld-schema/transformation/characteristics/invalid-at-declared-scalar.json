@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#"
+  },
+  "type": "object",
+  "properties": {
+    "a": {
+      "$ref": "#/$defs/declaredScalar"
+    }
+  },
+  "$defs": {
+    "declaredScalar": {
+      "type": "string",
+      "@context": {
+        "@characteristics": [
+          "alias:A"
+        ]
+      }
+    }
+  }
+}
