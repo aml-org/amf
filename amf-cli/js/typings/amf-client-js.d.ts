@@ -440,9 +440,9 @@ declare module "amf-client-js" {
     method: StrField;
     name: StrField;
     position: Range;
-    request: RequestType;
-    response: ResponseType;
-    responses: Array<ResponseType>;
+    request: AbstractRequest;
+    response: AbstractResponse;
+    responses: Array<AbstractResponse>;
 
     annotations(): Annotations;
 
@@ -462,13 +462,13 @@ declare module "amf-client-js" {
 
     withName(name: string): this;
 
-    withRequest(name: string): RequestType;
+    withRequest(name: string): AbstractRequest;
 
-    withRequest(request: RequestType): this;
+    withRequest(request: AbstractRequest): this;
 
-    withResponse(name: string): ResponseType;
+    withResponse(name: string): AbstractResponse;
 
-    withResponses(responses: Array<ResponseType>): this;
+    withResponses(responses: Array<AbstractResponse>): this;
   }
   export class AbstractParameter implements DomainElement {
     binding: StrField;
@@ -565,21 +565,21 @@ declare module "amf-client-js" {
   }
   export interface AbstractRequest extends DomainElement {
     name: StrField;
-    queryParameters: Array<ParameterType>;
+    queryParameters: Array<AbstractParameter>;
 
     withName(name: string): this;
 
-    withQueryParameter(name: string): ParameterType;
+    withQueryParameter(name: string): AbstractParameter;
 
-    withQueryParameters(parameters: Array<ParameterType>): this;
+    withQueryParameters(parameters: Array<AbstractParameter>): this;
   }
   export interface AbstractResponse extends DomainElement {
     name: StrField;
-    payload: PayloadType;
+    payload: AbstractPayload;
 
     withName(name: string): this;
 
-    withPayload(payload: PayloadType): this;
+    withPayload(payload: AbstractPayload): AbstractPayload;
   }
   export class Ajv {
     readonly errors: undefined;
@@ -2021,7 +2021,7 @@ declare module "amf-client-js" {
     id: string;
     location: string;
     modelVersion: StrField;
-    processingData: BaseUnitProcessingData;
+    processingData: DialectInstanceProcessingData;
     raw: undefined | string;
     sourceInformation: BaseUnitSourceInformation;
     sourceSpec: undefined | Spec;
@@ -2089,7 +2089,7 @@ declare module "amf-client-js" {
     id: string;
     location: string;
     modelVersion: StrField;
-    processingData: BaseUnitProcessingData;
+    processingData: DialectInstanceProcessingData;
     raw: undefined | string;
     sourceInformation: BaseUnitSourceInformation;
     sourceSpec: undefined | Spec;
@@ -2151,7 +2151,7 @@ declare module "amf-client-js" {
     id: string;
     location: string;
     modelVersion: StrField;
-    processingData: BaseUnitProcessingData;
+    processingData: DialectInstanceProcessingData;
     raw: undefined | string;
     sourceInformation: BaseUnitSourceInformation;
     sourceSpec: undefined | Spec;
@@ -2215,7 +2215,7 @@ declare module "amf-client-js" {
     id: string;
     location: string;
     modelVersion: StrField;
-    processingData: BaseUnitProcessingData;
+    processingData: DialectInstanceProcessingData;
     raw: undefined | string;
     sourceInformation: BaseUnitSourceInformation;
     sourceSpec: undefined | Spec;
@@ -3412,12 +3412,12 @@ declare module "amf-client-js" {
     withResolvable(isResolvable: boolean): this;
   }
   export interface KeyMapping extends DomainElement {
-    source: Source;
-    target: Target;
+    source: any;
+    target: any;
 
-    withSource(source: Source): this;
+    withSource(source: any): this;
 
-    withTarget(target: Target): this;
+    withTarget(target: any): this;
   }
   export class License implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -4101,9 +4101,9 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
     operationId: StrField;
-    request: RequestType;
+    request: AbstractRequest;
     requests: Array<Request>;
-    response: ResponseType;
+    response: Response;
     responses: Array<Response>;
     schemes: Array<StrField>;
     security: Array<SecurityRequirement>;
@@ -4145,7 +4145,7 @@ declare module "amf-client-js" {
 
     withOperationId(operationId: string): this;
 
-    withRequest(request: RequestType): this;
+    withRequest(request: AbstractRequest): this;
 
     withRequest(): Request;
 
@@ -4306,13 +4306,9 @@ declare module "amf-client-js" {
 
     withIsExternalLink(isExternalLink: boolean): DomainElement;
 
-    withSource(source: Source): this;
-
     withSource(source: Parameter): this;
 
     withTarget(target: PropertyShapePath): this;
-
-    withTarget(target: Target): this;
   }
   export interface ParametrizedDeclaration extends DomainElement {
     name: StrField;
@@ -4644,11 +4640,7 @@ declare module "amf-client-js" {
 
     withSource(source: PropertyShape): this;
 
-    withSource(source: Source): this;
-
     withTarget(target: string): this;
-
-    withTarget(target: Target): this;
   }
   export class PropertyMapping implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -5174,7 +5166,7 @@ declare module "amf-client-js" {
     isExternalLink: BoolField;
     name: StrField;
     position: Range;
-    queryParameters: Array<ParameterType>;
+    queryParameters: Array<Parameter>;
     queryString: Shape;
     required: BoolField;
     uriParameters: Array<Parameter>;
@@ -5207,7 +5199,7 @@ declare module "amf-client-js" {
 
     withQueryParameter(name: string): Parameter;
 
-    withQueryParameters(parameters: Array<ParameterType>): this;
+    withQueryParameters(parameters: Array<Parameter>): this;
 
     withQueryString(queryString: Shape): this;
 
@@ -5277,7 +5269,13 @@ declare module "amf-client-js" {
 
     withName(name: string): this;
 
-    withPayload(payload: PayloadType): this;
+    withPayload(payload: Payload): Payload;
+
+    withPayload(): Payload;
+
+    withPayload(mediaType: string): Payload;
+
+    withPayload(mediaType: undefined | string): Payload;
 
     withStatusCode(statusCode: string): this;
   }
@@ -5860,8 +5858,8 @@ declare module "amf-client-js" {
   }
   export class ShapeOperation extends AbstractOperation {
     federationMetadata: ShapeFederationMetadata;
-    request: RequestType;
-    response: ResponseType;
+    request: ShapeRequest;
+    response: ShapeResponse;
     responses: Array<ShapeResponse>;
 
     constructor();
@@ -5869,7 +5867,7 @@ declare module "amf-client-js" {
     withFederationMetadata(metadata: ShapeFederationMetadata): this;
 
     // @ts-ignore
-    withRequest(request: RequestType): this;
+    withRequest(request: AbstractRequest): this;
 
     withResponse(name: string): ShapeResponse;
 
@@ -5894,7 +5892,7 @@ declare module "amf-client-js" {
     isExternalLink: BoolField;
     name: StrField;
     position: Range;
-    queryParameters: Array<ParameterType>;
+    queryParameters: Array<ShapeParameter>;
 
     constructor();
 
@@ -5912,9 +5910,9 @@ declare module "amf-client-js" {
 
     withName(name: string): this;
 
-    withQueryParameter(name: string): ParameterType;
+    withQueryParameter(name: string): ShapeParameter;
 
-    withQueryParameters(parameters: Array<ParameterType>): this;
+    withQueryParameters(parameters: Array<ShapeParameter>): this;
   }
   export class ShapeResponse implements AbstractResponse {
     customDomainProperties: Array<DomainExtension>;
@@ -5922,7 +5920,7 @@ declare module "amf-client-js" {
     id: string;
     isExternalLink: BoolField;
     name: StrField;
-    payload: PayloadType;
+    payload: ShapePayload;
     position: Range;
 
     constructor();
@@ -5941,7 +5939,7 @@ declare module "amf-client-js" {
 
     withName(name: string): this;
 
-    withPayload(payload: PayloadType): this;
+    withPayload(payload: ShapePayload): ShapePayload;
   }
   export class ShapeValidationConfiguration {
     readonly maxYamlReferences: undefined | number;
