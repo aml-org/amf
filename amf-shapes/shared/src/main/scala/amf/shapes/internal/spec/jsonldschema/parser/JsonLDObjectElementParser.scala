@@ -29,10 +29,9 @@ case class JsonLDObjectElementParser(
 
   override def parseNode(s: Shape): JsonLDObjectElementBuilder = {
     s match {
-      case n: NodeShape => parseWithObject(n)
-      case anyShape: AnyShape if anyShape.meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-        parseDynamic(Seq.empty, anyShape.semanticContext)
-      case other => unsupported(other)
+      case n: NodeShape                                   => parseWithObject(n)
+      case anyShape: AnyShape if anyShape.isStrictAnyMeta => parseDynamic(Seq.empty, anyShape.semanticContext)
+      case other                                          => unsupported(other)
     }
   }
 
@@ -41,54 +40,10 @@ case class JsonLDObjectElementParser(
     JsonLDObjectElementBuilder.empty(key, path)
   }
 
-  def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder = parseDynamic(n.properties, n.semanticContext)
-
-  def parseDynamic(p: Seq[PropertyShape], semanticContext: Option[SemanticContext]): JsonLDObjectElementBuilder = {
-    val builder = new JsonLDObjectElementBuilder(map.location, key, computeBase(semanticContext), path)
-    setClassTerm(builder, semanticContext)
-    map.entries.foreach { e =>
-      val sc  = semanticContext.getOrElse(SemanticContext.default)
-      val key = e.key.asScalar.map(_.text).getOrElse("")
-      val (element, term) =
-        p.find(_.name.value() == key)
-          .fold(parseEntry(e, sc))(
-            parseWithProperty(_, e.value, sc)
-          )
-      builder + JsonLDPropertyBuilder(term, e.key, None, element, element.path, e.location)
-    }
-    builder
-  }
-
-  private def computeTerm(ctx: SemanticContext, fragment: String): String = computeBase(ctx) + fragment
-  private def computeTerm(ctx: SemanticContext, path: JsonPath): String   = computeTerm(ctx, path.toString)
-
-  private def computeBase(ctx: Option[SemanticContext]): String = ctx.map(computeBase).getOrElse(baseIri)
-  private def computeBase(ctx: SemanticContext): String         = ctx.base.flatMap(_.iri.option()).getOrElse(baseIri)
-
-  private def setClassTerm(builder: JsonLDObjectElementBuilder, semantics: Option[SemanticContext]) =
-    builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
-
-  def parseEntry(e: YMapEntry, semantics: SemanticContext): (JsonLDElementBuilder, String) = {
-    val entryKey = e.key.as[YScalar].text
-    val nextPath = path.concat(entryKey)
-    val term     = computeTerm(semantics, nextPath)
-    (
-      parser
-        .JsonLDSchemaNodeParser(buildEmptyAnyShape(semantics), e.value, entryKey, nextPath)
-        .parse(),
-      term
-    )
-  }
-
-  def parseWithProperty(p: PropertyShape, node: YNode, semantics: SemanticContext): (JsonLDElementBuilder, String) = {
-    val propertyName                    = p.name.value()
-    val mapping: Option[ContextMapping] = findAssociatedContextMapping(semantics, propertyName)
-    val term                            = findTerm(semantics, path.concat(propertyName), mapping)
-    val containers                      = findContainers(mapping, p)
-    val elementBuilder = parser.JsonLDSchemaNodeParser(p.range, node, p.path.value(), path.concat(propertyName)).parse()
-    applyContainers(containers, elementBuilder)
-    (elementBuilder, term)
-  }
+  override def foldLeft(
+      current: JsonLDObjectElementBuilder,
+      other: JsonLDObjectElementBuilder
+  ): JsonLDObjectElementBuilder = current.merge(other)(ctx)
 
   override def findClassTerm(ctx: SemanticContext): Seq[String] = {
     val terms = super.findClassTerm(ctx)
@@ -96,6 +51,48 @@ case class JsonLDObjectElementParser(
       val fragment = if (path.toString.isEmpty) key else path.toString
       Seq(computeTerm(ctx, fragment))
     } else terms
+  }
+
+  private def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder = parseDynamic(n.properties, n.semanticContext)
+
+  private def parseDynamic(
+      p: Seq[PropertyShape],
+      semanticContext: Option[SemanticContext]
+  ): JsonLDObjectElementBuilder = {
+    val builder = new JsonLDObjectElementBuilder(map.location, key, computeBase(semanticContext), path)
+    setClassTerm(builder, semanticContext)
+    map.entries.foreach { e =>
+      val sc              = semanticContext.getOrElse(SemanticContext.default)
+      val key             = getKeyOrEmpty(e)
+      val (element, term) = p.find(_.name.value() == key).fold(parseEntry(e, sc))(parseWithProperty(_, e.value, sc))
+      builder + JsonLDPropertyBuilder(term, e.key, None, element, element.path, e.location)
+    }
+    builder
+  }
+
+  private def setClassTerm(builder: JsonLDObjectElementBuilder, semantics: Option[SemanticContext]) =
+    builder.classTerms ++= findClassTerm(semantics.getOrElse(SemanticContext.default))
+
+  private def parseEntry(e: YMapEntry, semantics: SemanticContext): (JsonLDElementBuilder, String) = {
+    val entryKey = e.key.as[YScalar].text
+    val nextPath = path.concat(entryKey)
+    val term     = computeTerm(semantics, nextPath)
+    val builder  = JsonLDSchemaNodeParser(buildEmptyAnyShape(semantics), e.value, entryKey, nextPath).parse()
+    (builder, term)
+  }
+
+  private def parseWithProperty(
+      p: PropertyShape,
+      node: YNode,
+      semantics: SemanticContext
+  ): (JsonLDElementBuilder, String) = {
+    val propertyName                    = p.name.value()
+    val mapping: Option[ContextMapping] = findAssociatedContextMapping(semantics, propertyName)
+    val term                            = findTerm(semantics, path.concat(propertyName), mapping)
+    val containers                      = findContainers(mapping, p)
+    val elementBuilder = JsonLDSchemaNodeParser(p.range, node, p.path.value(), path.concat(propertyName)).parse()
+    applyContainers(containers, elementBuilder)
+    (elementBuilder, term)
   }
 
   private def findAssociatedContextMapping(ctx: SemanticContext, name: String): Option[ContextMapping] =
@@ -106,18 +103,15 @@ case class JsonLDObjectElementParser(
       .flatMap(_.iri.option().map(ctx.expand))
       .getOrElse(computeTerm(ctx, path))
 
-  private def findContainers(mapping: Option[ContextMapping], p: PropertyShape): Containers = {
-    var c = Containers()
-    mapping match {
-      case Some(m) =>
-        val containers = m.containers.map(_.value())
-        if (containers.contains(JsonLdKeywords.List)) {
-          validateListContainer(p.range)
-          c = c.copy(list = true)
-        }
-      case None => // Nothing to do
+  private def findContainers(maybeMapping: Option[ContextMapping], p: PropertyShape): Containers = {
+    val base = Containers()
+    maybeMapping.fold(base) { mapping =>
+      val containers = mapping.containers.map(_.value())
+      if (containers.contains(JsonLdKeywords.List)) {
+        validateListContainer(p.range)
+        base.copy(list = true)
+      } else base
     }
-    c
   }
 
   private def applyContainers(c: Containers, builder: JsonLDElementBuilder): Unit = {
@@ -130,8 +124,14 @@ case class JsonLDObjectElementParser(
     if (!range.isInstanceOf[ArrayShape])
       ctx.eh.violation(ContainerCheckErrorList, range, ContainerCheckErrorList.message)
 
-  override def foldLeft(
-      current: JsonLDObjectElementBuilder,
-      other: JsonLDObjectElementBuilder
-  ): JsonLDObjectElementBuilder = current.merge(other)(ctx)
+  private def getKeyOrEmpty(e: YMapEntry) = e.key.asScalar.map(_.text).getOrElse("")
+
+  private def computeTerm(ctx: SemanticContext, path: JsonPath): String = computeTerm(ctx, path.toString)
+
+  private def computeTerm(ctx: SemanticContext, fragment: String): String = computeBase(ctx) + fragment
+
+  private def computeBase(ctx: Option[SemanticContext]): String = ctx.map(computeBase).getOrElse(baseIri)
+
+  private def computeBase(ctx: SemanticContext): String = ctx.base.flatMap(_.iri.option()).getOrElse(baseIri)
+
 }

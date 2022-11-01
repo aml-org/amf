@@ -59,6 +59,8 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
 
   override def copyShape(): this.type = super.copyShape().withId(id)
 
+  protected[amf] def isStrictAnyMeta = meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri())
+
   // Method to check that the AnyShape is an any type
   protected[amf] def isAnyType: Boolean =
     this.getClass == classOf[AnyShape] &&
