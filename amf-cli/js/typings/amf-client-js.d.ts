@@ -1620,6 +1620,7 @@ declare module "amf-client-js" {
   export class Content {
     constructor(stream: string, url: string);
     constructor(stream: string, url: string, mime: string);
+    readonly url: string;
   }
   export class CorrelationId implements DomainElement, Linkable {
     customDomainProperties: Array<DomainExtension>;
