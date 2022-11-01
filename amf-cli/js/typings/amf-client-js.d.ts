@@ -5258,6 +5258,7 @@ declare module "amf-client-js" {
 
     graph(): Graph;
 
+    // @ts-ignore
     linkCopy(): Response;
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
@@ -5867,6 +5868,7 @@ declare module "amf-client-js" {
 
     withFederationMetadata(metadata: ShapeFederationMetadata): this;
 
+    // @ts-ignore
     withRequest(request: RequestType): this;
 
     withResponse(name: string): ShapeResponse;
