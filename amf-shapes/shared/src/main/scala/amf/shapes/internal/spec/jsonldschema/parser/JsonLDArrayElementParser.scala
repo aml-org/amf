@@ -29,13 +29,12 @@ case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val
       // case t:TupleShape =>
 //      case m:MatrixShape if seq.nodes.headOption.exists(_.tagType == YType.Seq) =>
 //        seq.nodes.collect({ s => s.as}).map(n => JsonLDArrayElementBuilder)
-      case a: AnyShape if a.meta.`type`.headOption.exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-        parseItems(a)
-      case _ => unsupported(shape)
+      case a: AnyShape if a.isStrictAnyMeta => parseItems(a)
+      case _                                => unsupported(shape)
     }
   }
 
-  def parseItems(items: Shape): JsonLDArrayElementBuilder = {
+  private def parseItems(items: Shape): JsonLDArrayElementBuilder = {
     val builder = new JsonLDArrayElementBuilder(seq.location, path)
 
     builder.withItems(seq.nodes.zipWithIndex.map({ case (node, index) =>

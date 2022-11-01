@@ -31,7 +31,7 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
     instance
   }
 
-  def getRootBuilder(node: YNode, jsonSchema: Document): JsonLDElementBuilder = {
+  private def getRootBuilder(node: YNode, jsonSchema: Document): JsonLDElementBuilder = {
     val shape: Shape = jsonSchema.encodes match {
       case s: Shape => s
       case other =>
