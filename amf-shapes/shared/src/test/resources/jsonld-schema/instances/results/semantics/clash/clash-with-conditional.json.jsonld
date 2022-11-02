@@ -1,0 +1,40 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/encodes/",
+      "@type": [
+        "http://a.ml/vocabularies/core#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#a": true,
+      "http://a.ml/vocabularies/core#c": 5,
+      "http://a.ml/vocabularies/core#b": "something"
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

@@ -37,7 +37,7 @@ class JsonLDParserContext(val eh: AMFErrorHandler, val yValueCache: RenderedYVal
 }
 
 case class RenderedYValues() {
-  private var map: mutable.Map[YValue, String] = mutable.Map()
+  private val map: mutable.Map[YValue, String] = mutable.Map()
 
   def get(value: YValue): String = map.get(value) match {
     case Some(raw) => raw

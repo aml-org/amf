@@ -4,12 +4,16 @@ import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDScalar}
-import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
+import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleScalarDataType
 import org.mulesoft.common.client.lexical.SourceLocation
 
-class JsonLDScalarElementBuilder(var dataType: String, var value: Any, override val location: SourceLocation)
-    extends JsonLDElementBuilder(location) {
+class JsonLDScalarElementBuilder(
+    var dataType: String,
+    var value: Any,
+    override val location: SourceLocation,
+    path: JsonPath
+) extends JsonLDElementBuilder(location, path) {
 
   override type THIS = JsonLDScalarElementBuilder
 
@@ -50,5 +54,5 @@ class JsonLDScalarElementBuilder(var dataType: String, var value: Any, override 
 }
 
 object JsonLDScalarElementBuilder {
-  def empty() = new JsonLDScalarElementBuilder(DataTypes.Nil, null, SourceLocation.Unknown)
+  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, SourceLocation.Unknown, path)
 }

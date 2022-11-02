@@ -301,10 +301,12 @@ object SemanticContext {
 
   def apply(annotations: Annotations): SemanticContext = new SemanticContext(Fields(), annotations)
 
+  val baseIri: String = Namespace.Core.base
+
   val default: SemanticContext = apply()
-    .withBase(BaseIri().withIri(Namespace.Core.base))
-    .withVocab(DefaultVocabulary().withIri(Namespace.Core.base))
-    .withCuries(Seq(CuriePrefix().withAlias("core").withIri(Namespace.Core.base)))
+    .withBase(BaseIri().withIri(baseIri))
+    .withVocab(DefaultVocabulary().withIri(baseIri))
+    .withCuries(Seq(CuriePrefix().withAlias("core").withIri(baseIri)))
 }
 
 case class Containers(list: Boolean = false)

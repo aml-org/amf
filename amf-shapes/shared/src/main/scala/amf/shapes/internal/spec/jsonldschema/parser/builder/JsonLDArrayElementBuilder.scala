@@ -4,12 +4,12 @@ import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
-import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
 import amf.shapes.internal.spec.jsonldschema.parser.builder.ArrayTypeComputation.computeType
+import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
 import org.mulesoft.common.client.lexical.SourceLocation
 
-class JsonLDArrayElementBuilder(location: SourceLocation) extends JsonLDElementBuilder(location) {
+class JsonLDArrayElementBuilder(location: SourceLocation, path: JsonPath) extends JsonLDElementBuilder(location, path) {
   private var items: Seq[JsonLDElementBuilder] = Seq.empty
   override type THIS = JsonLDArrayElementBuilder
 

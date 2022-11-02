@@ -8,22 +8,22 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#prop1": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/prop1"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/prop1",
       "@type": [
         "http://a.ml/vocabularies/core#prop1",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#propInner": "value1"
+      "http://a.ml/vocabularies/core#prop1/propInner": "value1"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json",
@@ -36,7 +36,7 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/object/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/simple/object/6.1.1-c.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,

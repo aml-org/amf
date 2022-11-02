@@ -2,30 +2,33 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.domain.ModelDoc
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.shapes.client.scala.model.domain.SemanticContext
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDObject}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDEntityModel
-import amf.shapes.internal.spec.jsonldschema.parser.JsonLDParserContext
+import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleNodes
 import org.mulesoft.common.client.lexical.SourceLocation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends JsonLDElementBuilder(location) {
+class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: String, path: JsonPath)
+    extends JsonLDElementBuilder(location, path) {
   override type THIS = JsonLDObjectElementBuilder
   type KEY           = String
   type TERM          = String
   val properties: mutable.Map[KEY, JsonLDPropertyBuilder] = mutable.Map()
   val termIndex: mutable.LinkedHashMap[TERM, KEY]         = mutable.LinkedHashMap()
+  val termExtends: mutable.LinkedHashMap[TERM, TERM]      = mutable.LinkedHashMap()
   val classTerms: ListBuffer[String]                      = ListBuffer()
 
   def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {
 
-    // TODO: handle terms collisions. Check termIndex registry
-    properties += property.key -> property
-    termIndex += property.term -> property.key
+    addProperty(property)
+    addTerm(property)
     this
   }
 
@@ -73,23 +76,66 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String) extends 
     val fields = termIndex.map { case (term, key) =>
       val currentBuilder: JsonLDPropertyBuilder = properties(key)
       val (element, elementType)                = currentBuilder.element.build(ctxBuilder)
-      val finalTerm                             = currentBuilder.element.getOverriddenTerm.getOrElse(term)
-      val finalType                             = currentBuilder.element.getOverriddenType.getOrElse(elementType)
-      (Field(finalType, ValueType(finalTerm)) -> element)
+      createField(currentBuilder, elementType, term) -> element
     }
 
-    val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList)
+    val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList, path)
     ctxBuilder + entityModel
-    val dObject = new JsonLDObject(Fields(), Annotations(), entityModel)
+    val dObject = new JsonLDObject(Fields(), Annotations(), entityModel, path.last)
     fields.foreach { f => dObject.set(f._1, f._2) }
     dObject
   }
 
+  private def createField(builder: JsonLDPropertyBuilder, elementType: Type, term: String): Field = {
+    val finalTerm = builder.element.getOverriddenTerm.getOrElse(term)
+    val finalType = builder.element.getOverriddenType.getOrElse(elementType)
+    Field(finalType, ValueType(finalTerm), ModelDoc(displayName = builder.key))
+  }
+
   override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDObjectElementBuilder]
+
+  private def addProperty(property: JsonLDPropertyBuilder) = properties += property.key -> property
+
+  private def addTerm(property: JsonLDPropertyBuilder): Unit = {
+    val hasToExtend = hasDifferentKeyForTerm(property)
+    if (hasToExtend) {
+      solveTermClash(property)
+    } else addTerm(property.term, property.key)
+  }
+
+  private def hasDifferentKeyForTerm(property: JsonLDPropertyBuilder) = {
+    termIndex.contains(property.term) && !termIndex.get(property.term).contains(property.key)
+  }
+
+  private def solveTermClash(property: JsonLDPropertyBuilder) = {
+    val createdTerms = replaceTermsWithPath(property)
+    createdTerms.foreach { term => addTermExtension(term, property.term) }
+  }
+
+  private def addTerm(term: TERM, key: KEY): Unit = termIndex += term -> key
+
+  private def addTermExtension(term: TERM, key: TERM) = termExtends += term -> key
+
+  private def replaceTermsWithPath(property: JsonLDPropertyBuilder): List[String] = {
+    val anotherTerm = termIndex.get(property.term).map { key =>
+      termIndex.remove(property.term)
+      addTermForProperty(properties(key))
+    }
+    val aTerm = addTermForProperty(property)
+    List(aTerm) ++ anotherTerm.toList
+  }
+
+  private def addTermForProperty(property: JsonLDPropertyBuilder): String = {
+    val nextTerm = computeTerm(property)
+    addTerm(nextTerm, property.key)
+    nextTerm
+  }
+  private def computeTerm(property: JsonLDPropertyBuilder) = base + property.path.toString
 }
 
 object JsonLDObjectElementBuilder {
-  def empty(key: String) = new JsonLDObjectElementBuilder(SourceLocation.Unknown, key)
+  def empty(key: String, path: JsonPath) =
+    new JsonLDObjectElementBuilder(SourceLocation.Unknown, key, SemanticContext.baseIri, path)
 }
 
 case class JsonLDPropertyBuilder(
@@ -97,5 +143,6 @@ case class JsonLDPropertyBuilder(
     key: String,
     father: Option[String],
     element: JsonLDElementBuilder,
+    path: JsonPath,
     location: SourceLocation
 )
