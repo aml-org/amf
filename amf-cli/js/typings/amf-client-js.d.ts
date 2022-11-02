@@ -590,9 +590,6 @@ declare module "amf-client-js" {
 
     validate(schema: undefined, data: undefined): boolean;
   }
-  export interface AmfObjectWrapper extends Annotable {
-    annotations(): Annotations;
-  }
   export class AmlDomainElementEmitter {
     static emitToBuilder<T>(
         element: DomainElement,
@@ -1388,7 +1385,7 @@ declare module "amf-client-js" {
 
     toRamlDatatype(element: AnyShape): string;
   }
-  export interface BaseUnit extends AmfObjectWrapper {
+  export interface BaseUnit {
     id: string;
     location: string;
     modelVersion: StrField;
@@ -1397,6 +1394,8 @@ declare module "amf-client-js" {
     sourceInformation: BaseUnitSourceInformation;
     sourceSpec: undefined | Spec;
     usage: StrField;
+
+    annotations(): Annotations;
 
     cloneUnit(): BaseUnit;
 
@@ -1429,7 +1428,7 @@ declare module "amf-client-js" {
 
     withUsage(usage: string): this;
   }
-  export class BaseUnitProcessingData implements AmfObjectWrapper {
+  export class BaseUnitProcessingData {
     transformed: BoolField;
 
     constructor();
@@ -1438,7 +1437,7 @@ declare module "amf-client-js" {
 
     withTransformed(value: boolean): this;
   }
-  export class BaseUnitSourceInformation implements AmfObjectWrapper {
+  export class BaseUnitSourceInformation {
     additionalLocations: Array<LocationInformation>;
     rootLocation: StrField;
 
@@ -1798,8 +1797,10 @@ declare module "amf-client-js" {
   export class DatatypePropertyTerm extends PropertyTerm {
     constructor();
   }
-  export interface DeclaresModel extends AmfObjectWrapper {
+  export interface DeclaresModel {
     declares: Array<DomainElement>;
+
+    annotations(): Annotations;
 
     withDeclaredElement(declared: DomainElement): this;
 
@@ -2520,12 +2521,14 @@ declare module "amf-client-js" {
 
     withSelfEncoded(selfEncoded: boolean): DocumentsModel;
   }
-  export interface DomainElement extends AmfObjectWrapper, CustomizableElement {
+  export interface DomainElement extends CustomizableElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
     id: string;
     isExternalLink: BoolField;
     position: Range;
+
+    annotations(): Annotations;
 
     graph(): Graph;
 
@@ -2623,7 +2626,7 @@ declare module "amf-client-js" {
 
     withType(type: string): this;
   }
-  export interface EncodesModel extends AmfObjectWrapper {
+  export interface EncodesModel {
     encodes: DomainElement;
 
     withEncodes(encoded: DomainElement): this;
@@ -3493,7 +3496,7 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
-  export class LocationInformation implements AmfObjectWrapper {
+  export class LocationInformation {
     locationValue: StrField;
 
     constructor();
