@@ -8,17 +8,17 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/",
       "@type": [
         "amlorg://a.ml/semantics.yaml#rootObject",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "alias.prop1Field": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/prop1"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/prop1",
       "@type": [
         "http://a.ml/vocabularies/core#prop1",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -36,7 +36,7 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/object/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/object/core-9.3.2.1.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,

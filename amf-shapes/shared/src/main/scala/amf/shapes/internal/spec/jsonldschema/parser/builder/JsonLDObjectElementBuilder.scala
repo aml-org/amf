@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.domain.ModelDoc
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.SemanticContext
@@ -75,16 +76,20 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: St
     val fields = termIndex.map { case (term, key) =>
       val currentBuilder: JsonLDPropertyBuilder = properties(key)
       val (element, elementType)                = currentBuilder.element.build(ctxBuilder)
-      val finalTerm                             = currentBuilder.element.getOverriddenTerm.getOrElse(term)
-      val finalType                             = currentBuilder.element.getOverriddenType.getOrElse(elementType)
-      (Field(finalType, ValueType(finalTerm)) -> element)
+      createField(currentBuilder, elementType, term) -> element
     }
 
-    val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList)
+    val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList, path)
     ctxBuilder + entityModel
-    val dObject = new JsonLDObject(Fields(), Annotations(), entityModel)
+    val dObject = new JsonLDObject(Fields(), Annotations(), entityModel, path.last)
     fields.foreach { f => dObject.set(f._1, f._2) }
     dObject
+  }
+
+  private def createField(builder: JsonLDPropertyBuilder, elementType: Type, term: String): Field = {
+    val finalTerm = builder.element.getOverriddenTerm.getOrElse(term)
+    val finalType = builder.element.getOverriddenType.getOrElse(elementType)
+    Field(finalType, ValueType(finalTerm), ModelDoc(displayName = builder.key))
   }
 
   override def canEquals(other: Any): Boolean = other.isInstanceOf[JsonLDObjectElementBuilder]

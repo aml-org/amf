@@ -6,10 +6,11 @@ import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 
 import scala.collection.mutable
 
-class JsonLDArray() extends AmfArray(Nil) with JsonLDElement {
+class JsonLDArray extends AmfArray(Nil) with JsonLDElement {
 
   /** Set of annotations for element. */
   override val annotations: Annotations = Annotations.virtual()
@@ -25,4 +26,5 @@ class JsonLDArray() extends AmfArray(Nil) with JsonLDElement {
 //    values.map(_.cloneElement(branch)).foreach({ case v:JsonLDElement => cloned += v})
 //    cloned
 //  }
+
 }

@@ -7,4 +7,5 @@ class JsonLDScalar(override val value: Any, val dataType: String) extends AmfSca
 
   /** Set of annotations for element. */
   override val annotations: Annotations = Annotations.virtual()
+
 }

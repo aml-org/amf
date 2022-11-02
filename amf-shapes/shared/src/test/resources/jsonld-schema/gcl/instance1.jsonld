@@ -8,7 +8,7 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -16,25 +16,25 @@
       "http://a.ml/vocabularies/core#apiVersion": "v1",
       "http://a.ml/vocabularies/core#kind": "ApiInstance",
       "http://a.ml/vocabularies/core#metadata": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/metadata"
       },
       "http://a.ml/vocabularies/core#spec": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/metadata",
       "@type": [
         "http://a.ml/vocabularies/core#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#metadata/name": "products-users-api",
       "http://a.ml/vocabularies/core#metadata/labels": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/metadata/labels"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec",
       "@type": [
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -42,19 +42,19 @@
       "http://a.ml/vocabularies/core#spec/address": "proxyUri",
       "http://a.ml/vocabularies/core#spec/deprecated": false,
       "http://a.ml/vocabularies/core#spec/deployment": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/deployment"
       },
       "http://a.ml/vocabularies/core#spec/policies": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/0"
         },
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/1"
         }
       ]
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/metadata/labels",
       "@type": [
         "http://a.ml/vocabularies/core#metadata/labels",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -64,7 +64,7 @@
       "http://a.ml/vocabularies/core#metadata/labels/flex.mulesoft.com/api-version": "1.0.0"
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/deployment",
       "@type": [
         "http://a.ml/vocabularies/core#spec/deployment",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -74,27 +74,27 @@
       "http://a.ml/vocabularies/core#spec/deployment/technology": "FlexGateway"
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/0",
       "@type": [
         "http://a.ml/vocabularies/core#spec/policies/0",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#spec/policies/0/policyRef": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/0/policyRef"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/1",
       "@type": [
         "http://a.ml/vocabularies/core#spec/policies/1",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#spec/policies/1/policyRef": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/1/policyRef"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/0/policyRef",
       "@type": [
         "http://a.ml/vocabularies/core#spec/policies/0/policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -102,7 +102,7 @@
       "http://a.ml/vocabularies/core#spec/policies/0/policyRef/name": "http-basic-authentication-flex"
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/object/_2/_4/object/_9/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/spec/policies/1/policyRef",
       "@type": [
         "http://a.ml/vocabularies/core#spec/policies/1/policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -120,7 +120,7 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/object/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/gcl/instance1.yaml#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,

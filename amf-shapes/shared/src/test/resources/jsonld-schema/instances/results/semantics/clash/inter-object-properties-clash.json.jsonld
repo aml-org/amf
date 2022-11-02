@@ -8,20 +8,20 @@
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#a": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/a"
       },
       "http://a.ml/vocabularies/core#b": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/_1"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/b"
       }
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/a",
       "@type": [
         "http://a.ml/vocabularies/core#a",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -30,7 +30,7 @@
       "http://a.ml/vocabularies/core#a/d": "true"
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/object/_1",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/b",
       "@type": [
         "http://a.ml/vocabularies/core#b",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -49,7 +49,7 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/object/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
