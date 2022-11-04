@@ -1,0 +1,16 @@
+#%RAML 1.0
+
+title: Scheduling API
+
+types:
+  a:
+    type: string
+    enum: ["a"]
+
+  b:
+    type: string
+    enum: ["b"]
+
+  unionType:
+    type: a | b
+    example: "c"
