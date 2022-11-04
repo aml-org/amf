@@ -495,7 +495,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       superUnionElement <- superUnion.anyOf
     } yield {
       try {
-        val newShape = unionContext.minShape(baseShape, superUnionElement)
+        val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
         setValuesOfUnionElement(newShape, superUnionElement)
         Some(newShape)
       } catch {
@@ -510,20 +510,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                                   baseShape.position())
     }
 
-    var accExamples = List[Example]()
-
     newUnionItems.zipWithIndex.foreach {
       case (shape, i) =>
         shape.id = shape.id + s"_$i"
-        shape match {
-          case any: AnyShape =>
-            accExamples ++= any.examples
-            any.fields.removeField(AnyShapeModel.Examples)
-            any.fields.removeField(AnyShapeModel.DefaultValueString)
-            any.fields.removeField(AnyShapeModel.Default)
-            any.fields.removeField(AnyShapeModel.Values)
-          case _ => // ignore
-        }
         shape
     }
 
@@ -539,10 +528,22 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         }
     }
 
-    if (accExamples.nonEmpty)
-      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
-
     superUnion.withId(baseShape.id)
+  }
+
+  private def filterBaseShape(baseShape: Shape): Shape = {
+    // There are some fields of the union that we don't want to propagate to it's members
+    val filteredFields =
+      Seq(
+        AnyShapeModel.Values,
+        AnyShapeModel.DefaultValueString,
+        AnyShapeModel.Default,
+        AnyShapeModel.Examples,
+        AnyShapeModel.Description
+      )
+    val filteredBase = baseShape.copyShape()
+    filteredBase.fields.filter(f => !filteredFields.contains(f._1))
+    filteredBase
   }
 
   private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
