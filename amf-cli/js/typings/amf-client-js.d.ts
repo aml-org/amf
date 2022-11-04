@@ -3064,6 +3064,8 @@ declare module "amf-client-js" {
     scalarByProperty(uri: string): Array<any>;
 
     types(): Array<string>;
+
+    propertyLexical(uri: String): Range;
   }
   export class GraphQLFederationConfiguration {
     static GraphQLFederation(): AMFConfiguration;
