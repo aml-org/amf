@@ -6,6 +6,7 @@ import amf.shapes.internal.domain.metamodel.federation.KeyMappingModel
 trait KeyMapping extends DomainElement {
   type Source
   type Target
+  type WithTarget
 
   override def meta: KeyMappingModel
 
@@ -13,5 +14,5 @@ trait KeyMapping extends DomainElement {
   def target: Target
 
   def withSource(source: Source): this.type
-  def withTarget(target: Target): this.type
+  def withTarget(target: WithTarget): this.type
 }

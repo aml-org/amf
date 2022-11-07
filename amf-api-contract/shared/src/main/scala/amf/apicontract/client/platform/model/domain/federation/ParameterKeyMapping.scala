@@ -26,7 +26,8 @@ case class ParameterKeyMapping(override private[amf] val _internal: InternalPara
   @JSExportTopLevel("ParameterKeyMapping")
   def this() = this(InternalParameterKeyMapping())
 
-  override type Source = Parameter
-  override type Target = PropertyShapePath
+  override type Source     = Parameter
+  override type Target     = PropertyShapePath
+  override type WithTarget = PropertyShapePath
 
 }
