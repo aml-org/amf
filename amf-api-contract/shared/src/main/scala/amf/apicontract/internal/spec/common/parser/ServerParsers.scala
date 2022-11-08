@@ -11,20 +11,60 @@ import amf.apicontract.internal.spec.spec.{toOas, toRaml}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
+import amf.core.internal.annotations.{
+  BasePathLexicalInformation,
+  HostLexicalInformation,
+  LexicalInformation,
+  SynthesizedField
+}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
 import amf.shapes.internal.spec.common.parser.{RamlScalarNode, YMapEntryLike}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.mulesoft.common.client.lexical.PositionRange
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
+
+  var baseUriVars: Map[String, (LexicalInformation, LexicalInformation)] = Map()
+
+  private def setBaseUriVars(entry: YMapEntry): Unit = {
+    val path = entry.value.tagType match {
+      case YType.Map => entry.value.as[YMap].key("value").get.value.as[YScalar].text
+      case _         => entry.value.as[YScalar].text
+    }
+    val pathParams  = TemplateUri.variables(path)
+    val pathLexical = entry.value.range
+
+    baseUriVars = pathParams.map { paramName =>
+      val paramTemplate    = s"{$paramName}"
+      val startOfParameter = getParamStart(path, paramTemplate)
+      val endOfParameter   = startOfParameter + paramTemplate.length
+
+      val lexicalWithBraces    = getLexicalPortion(pathLexical, startOfParameter, endOfParameter)
+      val lexicalWithoutBraces = getLexicalPortion(pathLexical, startOfParameter + 1, endOfParameter - 1)
+
+      paramName -> (lexicalWithBraces, lexicalWithoutBraces)
+    }.toMap
+  }
+
+  private def getLexicalPortion(pathLexical: PositionRange, from: Int, to: Int): LexicalInformation = {
+    LexicalInformation(
+      pathLexical.lineFrom,
+      pathLexical.columnFrom + from,
+      pathLexical.lineTo,
+      pathLexical.columnFrom + to
+    )
+  }
+
+  private def getParamStart(path: String, paramTemplate: String) = path.indexOfSlice(paramTemplate)
 
   def parse(): Unit = {
     map.key("baseUri") match {
       case Some(entry) =>
+        setBaseUriVars(entry)
         val node   = RamlScalarNode(entry.value)
         val value  = node.text().toString
         val server = api.withServer(value)
@@ -32,6 +72,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         (ServerModel.Url in server).allowingAnnotations(entry)
 
         checkBalancedParams(value, entry.value, server, ServerModel.Url.value.iri(), ctx)
+
         if (!TemplateUri.isValid(value))
           ctx.eh.violation(InvalidServerPath, api, TemplateUri.invalidMsg(value), entry.value.location)
 
@@ -86,19 +127,21 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         checkIfVersionParameterIsDefined(orderedVariables, definedParams, entry)
         val allParams = parseAllParams(orderedVariables, definedParams)
         server.setWithoutId(ServerModel.Variables, AmfArray(allParams, Annotations(entry.value)), Annotations(entry))
+
       case None if orderedVariables.nonEmpty =>
         val implicitParams = orderedVariables.map(parseImplicitPathParam)
         server.setWithoutId(ServerModel.Variables, AmfArray(implicitParams))
+
       case _ => // ignore
     }
 
   }
 
-  private def parseAllParams(orderedVariables: Seq[String], definedParams: Seq[Parameter]) = {
+  private def parseAllParams(orderedVariables: Seq[String], definedParams: Seq[Parameter]): Seq[Parameter] = {
     val baseUriParams = orderedVariables.map(varName =>
       definedParams.find(_.name.value().equals(varName)) match {
-        case Some(parameter) => parameter
-        case _               => parseImplicitPathParam(varName)
+        case Some(parameter) => parameter                       // ignore defined params (already parsed)
+        case _               => parseImplicitPathParam(varName) // parse implicit params
 
       }
     )
@@ -133,7 +176,11 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 
   private def parseImplicitPathParam(varName: String): Parameter = {
-    val param = Parameter().withName(varName).syntheticBinding("path").withRequired(true)
+    val (lexical, nameLexical) = baseUriVars(varName)
+    val param = Parameter(Annotations(lexical))
+      .withName(varName, Annotations(nameLexical))
+      .syntheticBinding("path")
+      .withRequired(true)
     param.withScalarSchema(varName).withDataType(DataType.String)
     param.annotations += SynthesizedField()
     param
@@ -207,7 +254,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         "baseUriParameters".asOasExtension,
         entry => {
           val uriParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(toRaml(ctx)).parse()
+            RamlParametersParser(entry.value.as[YMap], _ => Unit, binding = "path")(toRaml(ctx)).parse()
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }
