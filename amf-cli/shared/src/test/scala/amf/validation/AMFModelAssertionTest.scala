@@ -426,4 +426,18 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       virtualLexical.compareTo(correctVirtualLexical) shouldBe 0
     }
   }
+
+  // W-11928480
+  test("explicit & implicit baseUri path params in RAML") {
+    val ramlApi = s"$basePath/raml/uri-params/base-uri-params.raml"
+    modelAssertion(ramlApi, PipelineId.Editing) { bu =>
+      val components         = new BaseUnitComponents()
+      val server             = components.getServers(bu).head
+      val virtualServerParam = server.variables.find(_.annotations.isSynthesized).get // TODO: change to virtual
+
+      val serverParamLexical        = virtualServerParam.annotations.lexical()
+      val correctServerParamLexical = PositionRange((6, 33), (6, 48))
+      serverParamLexical.compareTo(correctServerParamLexical) shouldBe 0
+    }
+  }
 }

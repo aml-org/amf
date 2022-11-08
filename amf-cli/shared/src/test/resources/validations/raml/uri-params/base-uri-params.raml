@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: GitHub API
+
+version: v3
+
+baseUri: https://{explicitParam}-{implicitParam}.com/{version}
+
+baseUriParameters:
+  unusedParam:
+    description: should raise a warning
+  explicitParam:
+    description: The name of the bucket
