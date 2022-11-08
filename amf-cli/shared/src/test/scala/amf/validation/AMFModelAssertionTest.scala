@@ -433,7 +433,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(ramlApi, PipelineId.Editing) { bu =>
       val components         = new BaseUnitComponents()
       val server             = components.getServers(bu).head
-      val virtualServerParam = server.variables.find(_.annotations.isSynthesized).get // TODO: change to virtual
+      val virtualServerParam = server.variables.find(_.annotations.isVirtual).get
 
       val serverParamLexical        = virtualServerParam.annotations.lexical()
       val correctServerParamLexical = PositionRange((6, 33), (6, 48))

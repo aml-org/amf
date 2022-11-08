@@ -11,12 +11,7 @@ import amf.apicontract.internal.spec.spec.{toOas, toRaml}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.internal.annotations.{
-  BasePathLexicalInformation,
-  HostLexicalInformation,
-  LexicalInformation,
-  SynthesizedField
-}
+import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
@@ -182,7 +177,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
       .syntheticBinding("path")
       .withRequired(true)
     param.withScalarSchema(varName).withDataType(DataType.String)
-    param.annotations += SynthesizedField()
+    param.annotations += VirtualElement()
     param
   }
 
