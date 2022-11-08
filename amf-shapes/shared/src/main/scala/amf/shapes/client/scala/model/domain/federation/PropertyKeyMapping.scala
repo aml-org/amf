@@ -1,5 +1,6 @@
 package amf.shapes.client.scala.model.domain.federation
 
+import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.extensions
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -8,14 +9,15 @@ import org.yaml.model.YMap
 
 case class PropertyKeyMapping(fields: Fields, annotations: Annotations) extends KeyMapping {
 
-  override type Source = PropertyShape
-  override type Target = String
+  override type Source     = PropertyShape
+  override type Target     = StrField
+  override type WithTarget = String
 
   override def meta: PropertyKeyMappingModel.type = PropertyKeyMappingModel
   override def componentId                        = s"/parameterKeyMapping"
 
   override def source: extensions.PropertyShape = fields.field(PropertyKeyMappingModel.Source)
-  override def target: String                   = fields.field(PropertyKeyMappingModel.Target)
+  override def target: StrField                 = fields.field(PropertyKeyMappingModel.Target)
 
   override def withSource(source: extensions.PropertyShape): this.type = set(PropertyKeyMappingModel.Source, source)
   override def withTarget(target: String): this.type                   = set(PropertyKeyMappingModel.Target, target)

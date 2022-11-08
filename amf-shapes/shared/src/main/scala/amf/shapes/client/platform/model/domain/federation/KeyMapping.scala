@@ -9,6 +9,7 @@ import scala.scalajs.js.annotation.JSExportAll
 trait KeyMapping extends DomainElement {
   type Source
   type Target
+  type WithTarget
 
   private[amf] val _internal: InternalKeyMapping
 
@@ -17,5 +18,5 @@ trait KeyMapping extends DomainElement {
 
   def withSource(source: Source): this.type
 
-  def withTarget(target: Target): this.type
+  def withTarget(target: WithTarget): this.type
 }
