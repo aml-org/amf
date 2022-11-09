@@ -798,7 +798,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
             )
         }
 
-        Option(payload.schema).foreach(property.withRange(_))
+        Option(payload.schema).foreach(property.withRange)
       }
 
       Some(
