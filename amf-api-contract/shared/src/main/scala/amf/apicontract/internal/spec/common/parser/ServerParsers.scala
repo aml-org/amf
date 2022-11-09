@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.{Parameter, Server}
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.oas.parser.context.{Oas3Syntax, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, OasServersParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.{toOas, toRaml}
@@ -82,43 +82,48 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val maybeEntry = map.key("baseUriParameters")
     maybeEntry match {
       case Some(entry) =>
-        val parameters = parseExplicitParameters(entry, server)
-        checkIfVersionParameterIsDefined(orderedVariables, parameters, entry)
-        val flatten: Seq[Parameter] = getOrCreateVariableParams(orderedVariables, parameters, server)
-        val (_, unused)             = parameters.partition(flatten.contains(_))
-        val finalParams             = flatten ++ unused
-        server.setWithoutId(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
-        unused.foreach { p =>
-          ctx.eh.warning(
-            UnusedBaseUriParameter,
-            p,
-            None,
-            s"Unused base uri parameter ${p.name.value()}",
-            p.position(),
-            p.location()
-          )
-        }
+        val definedParams = parseParameterDefinitions(entry)
+        checkIfVersionParameterIsDefined(orderedVariables, definedParams, entry)
+        val allParams = parseAllParams(orderedVariables, definedParams)
+        server.setWithoutId(ServerModel.Variables, AmfArray(allParams, Annotations(entry.value)), Annotations(entry))
       case None if orderedVariables.nonEmpty =>
-        server.setWithoutId(ServerModel.Variables, AmfArray(orderedVariables.map(buildParamFromVar(_, server.id))))
+        val implicitParams = orderedVariables.map(parseImplicitPathParam)
+        server.setWithoutId(ServerModel.Variables, AmfArray(implicitParams))
       case _ => // ignore
     }
 
   }
 
-  private def getOrCreateVariableParams(orderedVariables: Seq[String], parameters: Seq[Parameter], server: Server) = {
-    orderedVariables.map(v =>
-      parameters.find(_.name.value().equals(v)) match {
-        case Some(p) => p
-        case _       => buildParamFromVar(v, server.id)
+  private def parseAllParams(orderedVariables: Seq[String], definedParams: Seq[Parameter]) = {
+    val baseUriParams = orderedVariables.map(varName =>
+      definedParams.find(_.name.value().equals(varName)) match {
+        case Some(parameter) => parameter
+        case _               => parseImplicitPathParam(varName)
 
       }
     )
+    val unusedParams = definedParams.diff(baseUriParams)
+    warnUnusedParams(unusedParams)
+    baseUriParams ++ unusedParams
   }
 
-  private def parseExplicitParameters(entry: YMapEntry, server: Server) = {
+  private def warnUnusedParams(unusedParams: Seq[Parameter]): Unit = {
+    unusedParams.foreach { p =>
+      ctx.eh.warning(
+        UnusedBaseUriParameter,
+        p,
+        None,
+        s"Unused base uri parameter ${p.name.value()}",
+        p.position(),
+        p.location()
+      )
+    }
+  }
+
+  private def parseParameterDefinitions(entry: YMapEntry): Seq[Parameter] = {
     entry.value.tagType match {
       case YType.Map =>
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")
+        RamlParametersParser(entry.value.as[YMap], _ => Unit, binding = "path")
           .parse()
       case YType.Null => Nil
       case _ =>
@@ -127,9 +132,9 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
   }
 
-  private def buildParamFromVar(v: String, serverId: String) = {
-    val param = Parameter().withName(v).syntheticBinding("path").withRequired(true)
-    param.withScalarSchema(v).withDataType(DataType.String)
+  private def parseImplicitPathParam(varName: String): Parameter = {
+    val param = Parameter().withName(varName).syntheticBinding("path").withRequired(true)
+    param.withScalarSchema(varName).withDataType(DataType.String)
     param.annotations += SynthesizedField()
     param
   }
