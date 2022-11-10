@@ -48,23 +48,29 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: St
   def mergeAndReplaceProperty(current: JsonLDPropertyBuilder, other: JsonLDPropertyBuilder)(implicit
       ctx: JsonLDParserContext
   ): Any = {
-    val merged: JsonLDElementBuilder = current.element match {
-      case _: JsonLDErrorBuilder                               => other.element
-      case _ if other.element.isInstanceOf[JsonLDErrorBuilder] => current.element
-      case obj: JsonLDObjectElementBuilder if other.element.isInstanceOf[JsonLDObjectElementBuilder] =>
-        obj.merge(other.element.asInstanceOf[JsonLDObjectElementBuilder])
-      case array: JsonLDArrayElementBuilder if other.element.isInstanceOf[JsonLDArrayElementBuilder] =>
-        array.merge(other.element.asInstanceOf[JsonLDArrayElementBuilder])
-      case scalar: JsonLDScalarElementBuilder if other.element.isInstanceOf[JsonLDScalarElementBuilder] =>
-        scalar.merge(other.element.asInstanceOf[JsonLDScalarElementBuilder])
-      case other =>
-        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
-        other
-    }
-
+    val merged: JsonLDElementBuilder = mergeAndReplaceProperty(current.element, other.element)
     properties.remove(current.key)
     this + other.copy(element = merged)
     this
+  }
+
+  private def mergeAndReplaceProperty(current: JsonLDElementBuilder, other: JsonLDElementBuilder)(implicit
+      ctx: JsonLDParserContext
+  ) = {
+    (current, other) match {
+      case (currObj: JsonLDObjectElementBuilder, otherObj: JsonLDObjectElementBuilder) => currObj.merge(otherObj)
+      case (currArr: JsonLDArrayElementBuilder, otherArr: JsonLDArrayElementBuilder)   => currArr.merge(otherArr)
+      case (currScalar: JsonLDScalarElementBuilder, otherScalar: JsonLDScalarElementBuilder) =>
+        currScalar.merge(otherScalar)
+      case (_: JsonLDErrorBuilder, _: JsonLDErrorBuilder) =>
+        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
+        other
+      case (_: JsonLDErrorBuilder, _) => other
+      case (_, _: JsonLDErrorBuilder) => current
+      case _ =>
+        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
+        other
+    }
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
@@ -81,8 +87,8 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: St
 
     val entityModel = new JsonLDEntityModel(classTerms.map(ValueType.apply).toList, fields.keys.toList, path)
     ctxBuilder + entityModel
-    val dObject = new JsonLDObject(Fields(), Annotations(), entityModel, path.last)
-    fields.foreach { f => dObject.set(f._1, f._2) }
+    val dObject = JsonLDObject.empty(entityModel, path.last)
+    fields.foreach { case (field, value) => dObject.set(field, value) }
     dObject
   }
 
