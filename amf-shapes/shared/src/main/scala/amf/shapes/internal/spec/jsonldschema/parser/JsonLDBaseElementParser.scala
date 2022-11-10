@@ -28,13 +28,6 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
     val oneOf = if (shape.isXOne) shape.xone.find(isValid(_, node)).map(parse) else None
     (conditional ++ oneOf).toSeq
-
-//    if (anyShape.isXOne) {
-//      anyShape.xone.collectFirst({ case a: AnyShape if isValid(a, map) => a }) match {
-//        case Some(nodeShape: NodeShape) =>
-//        case Some(anyShape: AnyShape) =>
-//      }
-//    }
   }
 
   protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option()).map(t => ctx.expand(t))
