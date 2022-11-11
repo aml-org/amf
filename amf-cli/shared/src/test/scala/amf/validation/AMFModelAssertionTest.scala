@@ -411,20 +411,33 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   // W-11350149
-  test("path parameter location") {
-    val ramlApi = s"$basePath/raml/uri-params/missing-definition.raml"
+  test("implicit path parameter location in RAML") {
+    val ramlApi = s"$basePath/raml/uri-params/implicit-path-param.raml"
     modelAssertion(ramlApi, PipelineId.Editing) { bu =>
-      val components  = new BaseUnitComponents()
-      val serverParam = components.getServers(bu).head
-      serverParam.annotations.isSynthesized shouldBe true
+      val components   = new BaseUnitComponents()
+      val endPoint     = components.getEndpoints(bu).last
+      val paramField   = endPoint.fields.get(EndPointModel.Parameters).asInstanceOf[AmfArray]
+      val params       = paramField.values
+      val virtualParam = params.head
+      virtualParam.annotations.isVirtual shouldBe true
 
-      val endPoint                  = components.getEndpoints(bu).last
-      val paramField                = endPoint.fields.get(EndPointModel.Parameters).asInstanceOf[AmfArray]
-      val params                    = paramField.values
-      val synthesizedParam          = params.head
-      val synthesizedLexical        = synthesizedParam.annotations.lexical()
-      val correctSynthesizedLexical = PositionRange((7, 3), (7, 12))
-      synthesizedLexical.compareTo(correctSynthesizedLexical) shouldBe 0
+      val virtualLexical        = virtualParam.annotations.lexical()
+      val correctVirtualLexical = PositionRange((6, 3), (6, 12))
+      virtualLexical.compareTo(correctVirtualLexical) shouldBe 0
+    }
+  }
+
+  // W-11928480
+  test("explicit & implicit baseUri path params in RAML") {
+    val ramlApi = s"$basePath/raml/uri-params/base-uri-params.raml"
+    modelAssertion(ramlApi, PipelineId.Editing) { bu =>
+      val components         = new BaseUnitComponents()
+      val server             = components.getServers(bu).head
+      val virtualServerParam = server.variables.find(_.annotations.isVirtual).get
+
+      val serverParamLexical        = virtualServerParam.annotations.lexical()
+      val correctServerParamLexical = PositionRange((6, 33), (6, 48))
+      serverParamLexical.compareTo(correctServerParamLexical) shouldBe 0
     }
   }
 }
