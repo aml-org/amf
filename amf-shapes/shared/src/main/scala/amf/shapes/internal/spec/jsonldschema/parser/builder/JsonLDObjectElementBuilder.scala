@@ -106,7 +106,7 @@ object JsonLDObjectElementBuilder {
     val fields = termIndex.map {
       case (term, List(builder)) =>
         val (element, elementType) = builder.element.build(ctxBuilder)
-        createField(builder, elementType, term) -> element
+        createField(builder, elementType) -> element
       case (term, builders) =>
         val (elements, types) = TupleOps.reduce(builders.map(_.element.build(ctxBuilder)))
         val element           = JsonLDArray(elements)
@@ -138,10 +138,9 @@ object JsonLDObjectElementBuilder {
   private def displayNameForMultipleValuedTerm(builders: List[JsonLDPropertyBuilder]) =
     builders.map(_.key).mkString("_")
 
-  private def createField(builder: JsonLDPropertyBuilder, elementType: Type, term: String): Field = {
-    val finalTerm = builder.element.getOverriddenTerm.getOrElse(term)
+  private def createField(builder: JsonLDPropertyBuilder, elementType: Type): Field = {
     val finalType = builder.element.getOverriddenType.getOrElse(elementType)
-    Field(finalType, ValueType(finalTerm), ModelDoc(displayName = builder.key))
+    Field(finalType, ValueType(builder.term), ModelDoc(displayName = builder.key))
   }
 
 }
