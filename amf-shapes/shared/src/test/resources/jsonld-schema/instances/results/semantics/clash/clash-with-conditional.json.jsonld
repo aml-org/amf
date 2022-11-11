@@ -14,8 +14,13 @@
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#a": true,
-      "http://a.ml/vocabularies/core#c": 5,
-      "http://a.ml/vocabularies/core#b": "something"
+      "http://a.ml/vocabularies/aml#b": [
+        {
+          "@value": "5",
+          "@type": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        "something"
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json",
