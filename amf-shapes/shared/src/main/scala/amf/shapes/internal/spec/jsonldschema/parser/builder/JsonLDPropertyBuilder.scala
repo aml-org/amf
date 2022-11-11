@@ -5,7 +5,7 @@ import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 import org.mulesoft.common.client.lexical.SourceLocation
 
 case class JsonLDPropertyBuilder(
-    term: String,
+    keyTerm: String,
     key: String,
     father: Option[String],
     element: JsonLDElementBuilder,
@@ -13,7 +13,7 @@ case class JsonLDPropertyBuilder(
     location: SourceLocation
 ) {
   def hasTermWithDefaultBase = term.startsWith(SemanticContext.baseIri)
-
+  def term                   = element.getOverriddenTerm.getOrElse(keyTerm)
   override def equals(obj: Any): Boolean = obj match {
     case builder: JsonLDPropertyBuilder => builder.key == key && builder.term == term
   }
