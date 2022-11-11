@@ -49,7 +49,7 @@ case class JsonLDObjectElementParser(
     val terms = super.findClassTerm(ctx)
     if (terms.isEmpty) {
       val fragment = if (path.toString.isEmpty) key else path.toString
-      Seq(computeTerm(ctx, fragment))
+      Seq(computeDefaultTerm(ctx, fragment))
     } else terms
   }
 
@@ -126,9 +126,12 @@ case class JsonLDObjectElementParser(
 
   private def getKeyOrEmpty(e: YMapEntry) = e.key.asScalar.map(_.text).getOrElse("")
 
-  private def computeTerm(ctx: SemanticContext, path: JsonPath): String = computeTerm(ctx, path.toString)
+  private def computeTerm(ctx: SemanticContext, path: JsonPath): String = {
+    propertyName(path).flatMap(ctx.getTermFor).map(ctx.expand).getOrElse(computeDefaultTerm(ctx, path.toString))
+  }
+  private def propertyName(path: JsonPath) = path.lastSegment
 
-  private def computeTerm(ctx: SemanticContext, fragment: String): String = computeBase(ctx) + fragment
+  private def computeDefaultTerm(ctx: SemanticContext, fragment: String): String = computeBase(ctx) + fragment
 
   private def computeBase(ctx: Option[SemanticContext]): String = ctx.map(computeBase).getOrElse(baseIri)
 
