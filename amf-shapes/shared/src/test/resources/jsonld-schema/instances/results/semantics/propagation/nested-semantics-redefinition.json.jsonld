@@ -1,0 +1,61 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/",
+      "@type": [
+        "http://a.ml/vocabularies/core#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#a": true,
+      "http://a.ml/vocabularies/aml#b": "should have redifined semantics",
+      "http://a.ml/vocabularies/aml#c": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/c"
+      }
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/c",
+      "@type": [
+        "http://a.ml/vocabularies/core#c",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#c/d": "d property",
+      "http://a.ml/vocabularies/aml#e": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/c/e"
+      }
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/c/e",
+      "@type": [
+        "http://a.ml/vocabularies/core#c/e",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/aml#f": "f-property"
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/nested-semantics-redefinition.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}
