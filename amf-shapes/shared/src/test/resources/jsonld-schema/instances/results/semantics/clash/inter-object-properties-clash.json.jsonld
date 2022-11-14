@@ -26,8 +26,13 @@
         "http://a.ml/vocabularies/core#a",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#a/c": true,
-      "http://a.ml/vocabularies/core#a/d": "true"
+      "http://a.ml/vocabularies/aml#z": [
+        "true",
+        {
+          "@value": "true",
+          "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json#/encodes/b",
@@ -35,8 +40,13 @@
         "http://a.ml/vocabularies/core#b",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#b/c": false,
-      "http://a.ml/vocabularies/core#b/d": "false"
+      "http://a.ml/vocabularies/aml#y": [
+        "false",
+        {
+          "@value": "false",
+          "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/inter-object-properties-clash.json",

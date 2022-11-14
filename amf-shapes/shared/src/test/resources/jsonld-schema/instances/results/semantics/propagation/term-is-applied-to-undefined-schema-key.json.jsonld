@@ -1,29 +1,23 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/BaseUnitProcessingData",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/term-is-applied-to-undefined-schema-key.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/encodes/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/term-is-applied-to-undefined-schema-key.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#a": true,
-      "http://a.ml/vocabularies/aml#b": [
-        {
-          "@value": "5",
-          "@type": "http://www.w3.org/2001/XMLSchema#integer"
-        },
-        "something"
-      ]
+      "http://a.ml/vocabularies/aml#b": "b wasn't defined in schema"
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/term-is-applied-to-undefined-schema-key.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -33,12 +27,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/encodes/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/term-is-applied-to-undefined-schema-key.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-conditional.json#/BaseUnitProcessingData"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/term-is-applied-to-undefined-schema-key.json#/BaseUnitProcessingData"
       }
     }
   ]
