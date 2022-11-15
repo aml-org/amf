@@ -6,6 +6,7 @@ import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
+import org.mulesoft.common.collections._
 
 import java.util.regex.Pattern
 
@@ -137,7 +138,7 @@ object ShapesCustomShaclFunctions extends BaseCustomShaclFunctions {
           val duplicatedNames = properties
             .map(_.asInstanceOf[PropertyShape])
             .flatMap(_.name.option())
-            .groupBy(identity)
+            .legacyGroupBy(identity)
             .filter(_._2.size > 1)
             .keys
             .toSeq

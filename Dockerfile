@@ -1,1 +1,1 @@
-FROM ghcr.io/aml-org/amf-ci-tools-base-image:1.0.0
+FROM ghcr.io/aml-org/amf-ci-tools-base-image:1.2.0
