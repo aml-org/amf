@@ -87,6 +87,7 @@ lazy val shapesJVM =
   shapes.jvm
     .in(file("./amf-shapes/jvm"))
     .sourceDependency(amlJVMRef, amlLibJVM)
+    .disablePlugins(SonarPlugin)
 
 lazy val shapesJS =
   shapes.js
@@ -170,6 +171,7 @@ lazy val antlrJVM =
   antlr.jvm
     .in(file("./amf-antlr-syntax/jvm"))
     .sourceDependency(antlrv4JVMRef, antlrv4LibJVM)
+    .disablePlugins(SonarPlugin)
 
 lazy val antlrJS =
   antlr.js
@@ -204,6 +206,7 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
 lazy val grpcJVM =
   grpc.jvm
     .in(file("./amf-grpc/jvm"))
+    .disablePlugins(SonarPlugin)
 
 lazy val grpcJS =
   grpc.js
@@ -237,6 +240,7 @@ lazy val graphql = crossProject(JSPlatform, JVMPlatform)
 lazy val graphqlJVM =
   graphql.jvm
     .in(file("./amf-graphql/jvm"))
+    .disablePlugins(SonarPlugin)
 
 lazy val graphqlJS =
   graphql.js
