@@ -18,6 +18,7 @@ case class JsonPath private (segments: List[String] = Nil) {
   override def toString       = path
   def concat(segment: String) = copy(segments :+ segment)
   def last                    = JsonPath(segments.lastOption.toList)
+  def lastSegment             = segments.lastOption
 }
 case class JsonLDSchemaNodeParser(shape: Shape, node: YNode, key: String, path: JsonPath, isRoot: Boolean = false)(
     implicit ctx: JsonLDParserContext

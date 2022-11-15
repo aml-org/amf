@@ -1,20 +1,20 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json#/BaseUnitProcessingData",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-characteristics-only-props.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
       "http://a.ml/vocabularies/document#transformed": false
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json#/encodes/",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-characteristics-only-props.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#prop2": [
-        "false",
+      "http://a.ml/vocabularies/aml#b": [
+        "shouldn't have a, should have an array of b",
         {
           "@value": "true",
           "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json",
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-characteristics-only-props.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -32,12 +32,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json#/encodes/"
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-characteristics-only-props.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json#/BaseUnitProcessingData"
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/clash-with-characteristics-only-props.json#/BaseUnitProcessingData"
       }
     }
   ]

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "@context": {
+    "aml": "http://a.ml/vocabularies/aml#",
+    "b": "aml:b"
+  },
+  "properties": {
+    "a": {
+      "type": "boolean"
+    },
+    "b": {
+      "type": "string"
+    },
+    "c": {
+      "@context": {
+        "e": "aml:e"
+      },
+      "properties": {
+        "d": {
+          "type": "string"
+        },
+        "e": {
+          "@context": {
+            "f": "aml:f"
+          },
+          "properties": {
+            "f": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "if": {
+    "a": true
+  },
+  "then": {
+    "@context": {
+      "c": "aml:c"
+    },
+    "properties": {
+      "c": {
+        "type": "object",
+        "properties": {
+          "d": {
+            "type": "string"
+          },
+          "e": {
+            "@context": {
+              "redefine": "http://a.ml/vocabularies/aml-redefined#",
+              "e": "redefine:e"
+            },
+            "properties": {
+              "f": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
