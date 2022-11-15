@@ -37,7 +37,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
-    "org.mule.common" %%% "scala-common-test" % "0.0.10" % Test,
+    "org.mule.common" %%% "scala-common-test" % "0.1.12" % Test,
     "org.slf4j"         % "slf4j-nop"         % "1.7.36" % Test
   ),
   Test / logBuffered := false
