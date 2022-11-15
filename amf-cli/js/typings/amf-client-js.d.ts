@@ -3067,6 +3067,9 @@ declare module "amf-client-js" {
 
     propertyLexical(uri: String): Range;
   }
+  export class GraphQLConfiguration {
+    static GraphQL(): AMFConfiguration;
+  }
   export class GraphQLFederationConfiguration {
     static GraphQLFederation(): AMFConfiguration;
   }
@@ -4107,7 +4110,7 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
     operationId: StrField;
-    request: AbstractRequest;
+    request: Request;
     requests: Array<Request>;
     response: Response;
     responses: Array<Response>;
@@ -4151,7 +4154,7 @@ declare module "amf-client-js" {
 
     withOperationId(operationId: string): this;
 
-    withRequest(request: AbstractRequest): this;
+    withRequest(request: Request): this;
 
     withRequest(): Request;
 
@@ -5873,7 +5876,7 @@ declare module "amf-client-js" {
     withFederationMetadata(metadata: ShapeFederationMetadata): this;
 
     // @ts-ignore
-    withRequest(request: AbstractRequest): this;
+    withRequest(request: ShapeRequest): this;
 
     withResponse(name: string): ShapeResponse;
 
