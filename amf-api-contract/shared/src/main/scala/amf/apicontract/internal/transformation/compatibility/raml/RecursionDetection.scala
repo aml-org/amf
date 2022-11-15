@@ -7,8 +7,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.DataArrangementShape
-
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.HashSet
 
 class RecursionDetection() extends TransformationStep {
 
@@ -18,13 +17,14 @@ class RecursionDetection() extends TransformationStep {
       configuration: AMFGraphConfiguration
   ): BaseUnit = {
     model match {
-      case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
+      case doc: Document => doc.fields.fields().foreach(f => advance(f.element, HashSet[String](), HashSet[String]()))
       case _             => // Nothing
     }
     model
   }
 
-  private def advance(element: AmfElement, general: ListBuffer[String], branch: Set[String]): AmfElement =
+  // Lists were previously used to store ids. Changed to HashSet to maximize performance.
+  private def advance(element: AmfElement, general: HashSet[String], branch: HashSet[String]): AmfElement =
     element match {
       case rec: RecursiveShape => rec
       case obj: AmfObject =>
