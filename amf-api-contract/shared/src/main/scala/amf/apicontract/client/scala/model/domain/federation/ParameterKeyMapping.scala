@@ -10,8 +10,9 @@ import org.yaml.model.YMap
 
 case class ParameterKeyMapping(fields: Fields, annotations: Annotations) extends KeyMapping {
 
-  override type Source = Parameter
-  override type Target = PropertyShapePath
+  override type Source     = Parameter
+  override type Target     = PropertyShapePath
+  override type WithTarget = PropertyShapePath
 
   override def source: Parameter         = fields.field(Source)
   override def target: PropertyShapePath = fields.field(Target)
@@ -20,7 +21,7 @@ case class ParameterKeyMapping(fields: Fields, annotations: Annotations) extends
   override def withTarget(target: PropertyShapePath): this.type = set(Target, target)
 
   override def meta: ParameterKeyMappingModel.type = ParameterKeyMappingModel
-  override private[amf] def componentId            = s"/parameterKeyMapping"
+  override def componentId                         = s"/parameterKeyMapping"
 }
 
 object ParameterKeyMapping {

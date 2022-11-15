@@ -1,0 +1,16 @@
+openapi: 3.0.0
+info:
+  title: test test
+  version: "1.0"
+
+paths:
+  /something:
+    get:
+      description: something
+      responses:
+        "200":
+          description: something else
+          content:
+            application/json:
+              schema:
+                $ref: schemas/subschema.json#/definitions/dog

@@ -3,7 +3,12 @@ package amf.client.model.domain
 import amf.apicontract.client.platform.model.domain._
 import amf.apicontract.client.platform.model.domain.api.WebApi
 import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
-import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.domain
@@ -11,7 +16,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.platform.model.domain.operations._
-import amf.shapes.client.scala.model.domain.federation.Key
+import amf.shapes.client.scala.model.domain.federation.{Key, PropertyKeyMapping}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -560,5 +565,11 @@ class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll 
   test("Test Key.isResolvable defaults to true") {
     val k = Key()
     k.isResolvable.value() shouldBe true
+  }
+
+  test("PropertyKeyMapping test") {
+    val k = PropertyKeyMapping()
+      .withTarget("test")
+    k.target.value() shouldBe "test"
   }
 }

@@ -166,7 +166,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   override def meta: SecuritySchemeModel.type = SecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/scheme/" + name.option().getOrElse("fragment").urlComponentEncoded
+  override def componentId: String = "/scheme/" + name.option().getOrElse("fragment").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SecurityScheme.apply

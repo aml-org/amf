@@ -90,6 +90,8 @@ abstract class JsonLdSchemaContext(ctx: ParserContext, settings: SpecSettings)
 
   override def getMaxYamlReferences: Option[Int] = None
 
+  override def getMaxYamlJsonDepth: Option[Int] = None
+
   override def fragments: Map[String, FragmentRef] = Map()
 
   override def toOas: ShapeParserContext = this

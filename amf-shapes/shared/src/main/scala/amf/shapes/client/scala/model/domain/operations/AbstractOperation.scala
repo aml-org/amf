@@ -41,7 +41,7 @@ abstract class AbstractOperation(fields: Fields, annotations: Annotations) exten
   override def meta: AbstractOperationModel = AbstractOperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = {
+  override def componentId: String = {
     "/" + name.value()
   }
   override def nameField: Field = Name

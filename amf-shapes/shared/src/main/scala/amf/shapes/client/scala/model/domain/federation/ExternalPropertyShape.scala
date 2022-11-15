@@ -18,7 +18,7 @@ case class ExternalPropertyShape(fields: Fields, annotations: Annotations) exten
   def withRangeName(rangeName: String): this.type                      = set(RangeName, rangeName)
 
   override def meta: ExternalPropertyShapeModel.type = ExternalPropertyShapeModel
-  override private[amf] def componentId = s"/external-property/${name.option().getOrElse("default-external-property")}"
+  override def componentId = s"/external-property/${name.option().getOrElse("default-external-property")}"
 }
 
 object ExternalPropertyShape {

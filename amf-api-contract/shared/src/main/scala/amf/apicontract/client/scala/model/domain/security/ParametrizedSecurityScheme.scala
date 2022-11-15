@@ -70,7 +70,7 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
   override def meta: ParametrizedSecuritySchemeModel.type = ParametrizedSecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
+  override def componentId: String =
     "/" + name.option().getOrElse("default-parametrized").urlComponentEncoded
 }
 

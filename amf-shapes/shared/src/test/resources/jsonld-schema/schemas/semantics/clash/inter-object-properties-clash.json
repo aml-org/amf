@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "properties": {
+    "a": {
+      "@context": {
+        "aml": "http://a.ml/vocabularies/aml#",
+        "c": "aml:z",
+        "d": "aml:z"
+      },
+      "properties": {
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "type": "string"
+        }
+      }
+    },
+    "b": {
+      "@context": {
+        "aml": "http://a.ml/vocabularies/aml#",
+        "c": "aml:y",
+        "d": "aml:y"
+      },
+      "properties": {
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

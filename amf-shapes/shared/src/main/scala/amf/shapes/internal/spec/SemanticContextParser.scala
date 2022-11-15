@@ -12,6 +12,7 @@ import amf.shapes.client.scala.model.domain.{
 }
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   InvalidCharacteristicsNode,
+  InvalidContainerNode,
   InvalidContextNode,
   InvalidIri,
   InvalidPrefixReference
@@ -74,8 +75,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
       case None              => temporalContext
     }
     // @characteriscs must be processed later in case of there are new prefixes declared at the same level
-    m.entries
-      .find(_.key.as[YScalar].text == "@characteristics")
+    m.key("@characteristics")
       .foreach(entry => parseCharacteristics(entry.value, finalContext))
 
     finalContext
@@ -114,7 +114,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
           val compactIri = e.as[YScalar].text
           validateIri(e, compactIri, context)
         }
-      context.withTypeMappings(iris)
+      context.withOverrideMappings(iris)
     case _ =>
       ctx.eh.violation(
         InvalidCharacteristicsNode,
@@ -183,8 +183,24 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
             val iri = e.value.as[YScalar].text
             mapping.withCoercion(iri)
           })
+        nestedMapping
+          .key("@container")
+          .foreach(e => parseContainers(e.value, mapping))
         val oldMappings = semanticContext.mapping
         semanticContext.withMapping(oldMappings ++ Seq(mapping))
+    }
+  }
+
+  private def parseContainers(value: YNode, mapping: ContextMapping): Unit = {
+    value.tagType match {
+      case YType.Seq =>
+        val containers = value.as[YSequence].nodes.map(e => e.as[YScalar].text)
+        mapping.withContainers(containers)
+      case YType.Str =>
+        val container = value.as[YScalar].text
+        mapping.withContainer(container)
+      case _ =>
+        ctx.eh.violation(InvalidContainerNode, shape, InvalidContainerNode.message, value)
     }
   }
 

@@ -26,7 +26,7 @@ class HttpOperationBinding(override val fields: Fields, override val annotations
   def withMethod(method: String): this.type        = set(Method, method)
   def withQuery(query: Shape): this.type           = set(Query, query)
 
-  private[amf] override def componentId: String = "/http-operation"
+  override def componentId: String = "/http-operation"
 
   override def linkCopy(): HttpOperationBinding = HttpOperationBinding().withId(id)
 

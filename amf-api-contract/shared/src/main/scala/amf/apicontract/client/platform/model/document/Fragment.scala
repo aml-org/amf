@@ -1,5 +1,6 @@
 package amf.apicontract.client.platform.model.document
 
+import amf.shapes.client.scala.model.document.{DataTypeFragment => InternalShapeDataTypeFragment}
 import amf.apicontract.client.scala.model.document.{
   AnnotationTypeDeclarationFragment => InternalAnnotationTypeDeclarationFragment,
   DataTypeFragment => InternalDataTypeFragment,
@@ -28,6 +29,7 @@ case class DocumentationItem(override private[amf] val _internal: InternalDocume
 case class DataType(override private[amf] val _internal: InternalDataTypeFragment) extends Fragment(_internal) {
   @JSExportTopLevel("DataType")
   def this() = this(InternalDataTypeFragment())
+  private[amf] def this(sd: InternalShapeDataTypeFragment) = this(InternalDataTypeFragment(sd.fields, sd.annotations))
 }
 
 @JSExportAll

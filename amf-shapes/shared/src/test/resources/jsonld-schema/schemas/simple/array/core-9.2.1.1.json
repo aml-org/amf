@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "array",
+  "items": {
+    "allOf": [
+      {
+        "type": "string",
+        "maximum": 10
+      },
+      {
+        "type": "string",
+        "minimum": 1
+      }
+    ]
+  }
+}

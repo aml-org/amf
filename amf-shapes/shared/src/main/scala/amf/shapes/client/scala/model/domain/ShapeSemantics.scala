@@ -2,6 +2,7 @@ package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -96,6 +97,13 @@ class ContextMapping(override val fields: Fields, val annotations: Annotations)
   def withNulled(nulled: Boolean): this.type = set(ContextMappingModel.Nulled, AmfScalar(nulled, Annotations()))
   def nulled: BoolField                      = fields.field(ContextMappingModel.Nulled)
 
+  def withContainer(container: String): this.type =
+    add(ContextMappingModel.Containers, AmfScalar(container, Annotations()))
+
+  def withContainers(container: Seq[String]): this.type = set(ContextMappingModel.Containers, container)
+
+  def containers: Seq[StrField] = fields.field(ContextMappingModel.Containers)
+
   override def componentId: String = "/" + alias.value().urlComponentEncoded
 }
 
@@ -127,6 +135,9 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
 
   def withTypeMappings(typeMappings: Seq[String]): this.type = set(SemanticContextModel.TypeMapping, typeMappings)
   def typeMappings: Seq[StrField]                            = fields.field(SemanticContextModel.TypeMapping)
+
+  def withOverrideMappings(mappings: Seq[String]): this.type = set(SemanticContextModel.OverrideMappings, mappings)
+  def overrideMappings: Seq[StrField]                        = fields.field(SemanticContextModel.OverrideMappings)
 
   override def componentId: String = "/" + "@context".urlComponentEncoded
 
@@ -171,6 +182,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
       }
       newMapping
     })
+    newContext.withOverrideMappings(overrideMappings.flatMap(_.option().map(expand)))
 
     newContext
   }
@@ -247,6 +259,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     }
     merged.withMapping(accTypings.values.toList)
 
+    merged.withOverrideMappings(toMerge.overrideMappings.flatMap(_.option()))
     merged
   }
 
@@ -286,6 +299,14 @@ object SemanticContext {
 
   def apply(ast: YPart): SemanticContext = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): SemanticContext =
-    new SemanticContext(Fields(), annotations)
+  def apply(annotations: Annotations): SemanticContext = new SemanticContext(Fields(), annotations)
+
+  val baseIri: String = Namespace.Core.base
+
+  val default: SemanticContext = apply()
+    .withBase(BaseIri().withIri(baseIri))
+    .withVocab(DefaultVocabulary().withIri(baseIri))
+    .withCuries(Seq(CuriePrefix().withAlias("core").withIri(baseIri)))
 }
+
+case class Containers(list: Boolean = false)

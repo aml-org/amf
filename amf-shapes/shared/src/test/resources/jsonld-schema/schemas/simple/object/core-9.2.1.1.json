@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "properties": {
+    "prop1": {
+      "allOf": [
+        {
+          "type": "string",
+          "maximum": 10
+        },
+        {
+          "type": "string",
+          "minimum": 1
+        }
+      ]
+    }
+  }
+}

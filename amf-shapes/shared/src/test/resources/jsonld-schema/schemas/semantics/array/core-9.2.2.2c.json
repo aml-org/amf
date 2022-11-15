@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "array",
+  "@context": {
+    "alias": "amlorg://a.ml/semantics.yaml#",
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "@type": [
+      "alias:rootArray"
+    ]
+  },
+  "items": {
+    "if": {
+      "type": "string",
+      "maximum": 10
+    },
+    "then": {
+      "pattern": "[a-z]"
+    },
+    "else": {
+      "pattern": "[A-Z]"
+    }
+  }
+}

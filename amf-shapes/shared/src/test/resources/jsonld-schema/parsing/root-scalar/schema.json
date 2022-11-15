@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "oneOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "a1": {
+          "type": "integer"
+        },
+        "a2": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package amf.graphql.client.scala
 
+import amf.antlr.client.scala.parse.AntlrBasedDocumentsFallbackPlugin
 import amf.antlr.internal.plugins.syntax.{
   AntlrSyntaxRenderPlugin,
   GraphQLSyntaxParsePlugin,
@@ -10,7 +11,8 @@ import amf.apicontract.internal.transformation.{GraphQLCachePipeline, GraphQLEdi
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLValidationProfile
 import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
-import amf.core.client.common.validation.ProfileNames
+import amf.core.client.common.validation.{ProfileNames, SeverityLevels}
+import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin
 import amf.graphql.internal.spec.plugins.render.GraphQLRenderPlugin
 
@@ -35,5 +37,6 @@ object GraphQLConfiguration extends APIConfigurationBuilder {
       )
       .withValidationProfile(GraphQLValidationProfile, GraphQLEffectiveValidations)
       .withPlugin(SyamlForJsonLDSyntaxParsePlugin) // override SYAML
+      .withFallback(AntlrBasedDocumentsFallbackPlugin(false, false, SeverityLevels.WARNING, Spec.GRAPHQL))
   }
 }

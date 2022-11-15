@@ -1,30 +1,27 @@
 package amf.shapes.internal.spec.jsonschema.ref
 
-import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
 import amf.core.client.scala.parse.document.{ParsedReference, Reference, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
-import amf.shapes.internal.spec.common
 import amf.shapes.internal.spec.common.parser
-import amf.shapes.internal.spec.common.parser.JsonYamlParser
+import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model.{YDocument, YMap, YNode}
 
 object JsonSchemaRootCreator {
 
-  def createRootFrom(inputFragment: BaseUnit, pointer: Option[String], errorHandler: AMFErrorHandler): Root = {
-    val encoded: YNode = getYNodeFrom(inputFragment, errorHandler)
+  def createRootFrom(inputFragment: BaseUnit, pointer: Option[String], ctx: ShapeParserContext): Root = {
+    val encoded: YNode = getYNodeFrom(inputFragment, ctx)
     createRoot(inputFragment, pointer, encoded)
   }
 
-  def getYNodeFrom(inputFragment: BaseUnit, errorHandler: AMFErrorHandler): YNode = {
+  def getYNodeFrom(inputFragment: BaseUnit, ctx: ShapeParserContext): YNode = {
     inputFragment match {
-      case fragment: ExternalFragment => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
-      case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, errorHandler)
+      case fragment: ExternalFragment => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, ctx))
+      case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, ctx)
       case _ =>
-        errorHandler.violation(
+        ctx.eh.violation(
           UnableToParseJsonSchema,
           inputFragment,
           None,
@@ -34,8 +31,8 @@ object JsonSchemaRootCreator {
     }
   }
 
-  private def parsedFragment(inputFragment: BaseUnit, eh: AMFErrorHandler) =
-    parser.JsonYamlParser(inputFragment)(eh).document().node
+  private def parsedFragment(inputFragment: BaseUnit, ctx: ShapeParserContext) =
+    parser.JsonYamlParser(inputFragment)(ctx).document().node
 
   private def createRoot(inputFragment: BaseUnit, pointer: Option[String], encoded: YNode): Root = {
     Root(

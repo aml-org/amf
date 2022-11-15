@@ -1,17 +1,18 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.ResourceType
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.apicontract.client.scala.transform.AbstractElementTransformer
+import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
+import amf.core.internal.remote.{Oas20YamlHint, Oas30YamlHint, Raml10YamlHint}
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import org.mulesoft.common.client.lexical.PositionRange
@@ -304,6 +305,38 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val annotation = shape.annotations.find(classOf[ExternalJsonSchemaShape])
       assert(annotation.nonEmpty)
       assert(annotation.get.original != null)
+
+      succeed
+    }
+  }
+
+  test("test JSON Schema Document ReferenceTarget annotations - range should be substring") {
+    val uri    = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/json-schema"
+    val config = JsonSchemaConfiguration.JsonSchema()
+    for {
+      unit <- config.baseUnitClient().parse(s"$uri/schema.json").map(_.baseUnit)
+    } yield {
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
+
+      assert(targets.size == 1)
+      assert(targets.head._1 == s"$uri/schemas/subschema.json")
+      assert(targets.head._2 == List(PositionRange((7, 15), (7, 37))))
+
+      succeed
+    }
+  }
+
+  test("test OAS API ReferenceTarget annotations - range should be substring") {
+    val uri    = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/oas3"
+    val config = OASConfiguration.OAS30()
+    for {
+      unit <- build(s"$uri/api.yaml", Oas30YamlHint)
+    } yield {
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
+
+      assert(targets.size == 1)
+      assert(targets.head._1 == s"$uri/schemas/subschema.json")
+      assert(targets.head._2 == List(PositionRange((16, 22), (16, 44))))
 
       succeed
     }

@@ -75,7 +75,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   override def meta: EndPointModel.type = EndPointModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + {
+  override def componentId: String = "/" + {
     path.option() match {
       case Some(value) => value.urlComponentEncoded
       case _           => name.value().urlComponentEncoded
