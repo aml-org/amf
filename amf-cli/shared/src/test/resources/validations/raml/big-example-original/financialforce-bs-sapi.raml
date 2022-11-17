@@ -1,0 +1,69 @@
+#%RAML 1.0
+title: financialforce-bs-sapi
+description: This API is used to perform CRUD operations on headers and lines entities in D365.
+version: v1
+mediaType: application/json
+protocols: http
+baseUri: http://financialforce-bs-sapi.us-e2.cloudhub.io/financialforce-bs-sapi/{version}
+
+securitySchemes:
+  basicAuth: !include exchange_modules/555d56e5-5907-4f1e-b331-7a9dc88fe1b4/basic-authentication/1.0.3/basic-authentication.raml
+
+traits:
+  errorResponse: !include exchange_modules/555d56e5-5907-4f1e-b331-7a9dc88fe1b4/error-responses/1.0.5/error-responses.raml
+
+/heartbeat:
+  get:
+    description: Fetch the health of API
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "status": "active"
+              }
+
+/headers:
+  securedBy: [basicAuth]
+  is: [errorResponse]
+  get:
+    description: Retrieves the Headers details for the given JournalBatchNumber
+    queryParameters: !include search_parameters/queryparams.raml    
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: !include examples/GetJournalHeadersResponse.json
+  post:
+    description: To insert a record in Headers entity
+    body:
+      application/json:
+        example: !include /examples/InsertJournalHeadersRequest.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include /examples/InsertJournalHeadersResponse.json
+
+/lines:
+  securedBy: [basicAuth]
+  is: [errorResponse]
+  get:
+    description: Retrieves the Lines details for the given JournalBatchNumber.
+    queryParameters: !include search_parameters/queryparams.raml 
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: !include /examples/GetJournalLinesResponse.json
+  post:
+    description: To insert a record in Lines entity
+    body:
+      application/json:
+        example: !include /examples/InsertJournalLinesRequest.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include /examples/InsertJournalLinesResponse.json    

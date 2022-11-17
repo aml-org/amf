@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  correlationId:
+    required: false
+    type: string
+    example: '0d6c4cd0-d082-11ec-a5ad-606d3c6c6031'
+  timestamp:
+    required: false
+    type: string
+    example: '2022-05-10T22:25:53.479+05:30'
+  errorType:
+    required: false
+    type: string
+    example: 'METHOD_NOT_ALLOWED'
+  errorCode:
+    required: false
+    type: integer
+    example: 405
+  errorMessage:
+    required: false
+    type: string
+    example: 'HTTP Method post not allowed'

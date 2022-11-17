@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: test-api
+description: big example test api
+version: v1
+baseUri: http://financialforce-bs-sapi.us-e2.cloudhub.io/financialforce-bs-sapi/{version}
+
+/lines:
+  get:
+    description: Retrieves the Lines details for the given JournalBatchNumber.
+    responses:
+      200:
+        body: 
+          application/json:
+           example: !include /examples.json
