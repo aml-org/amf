@@ -13,7 +13,7 @@ trait ExemplifiedDomainElement extends DomainElement {
 
   def withExample(name: Option[String]): Example = {
     val example = Example()
-    name.foreach { example.withName(_) }
+    name.foreach { example.withName }
     add(Examples, example)
     example
   }

@@ -12,7 +12,7 @@ import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceE
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
 import amf.shapes.internal.annotations.BaseVirtualNode
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
@@ -403,6 +403,16 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val serverParamLexical        = virtualServerParam.annotations.lexical()
       val correctServerParamLexical = PositionRange((6, 33), (6, 48))
       serverParamLexical.compareTo(correctServerParamLexical) shouldBe 0
+    }
+  }
+
+  // W-11337671
+  test("CRI OAS Union examples") {
+    val oasApi = s"$basePath/oas3/nullable-example.yaml"
+    modelAssertion(oasApi, PipelineId.Editing) { bu =>
+      val payloadSchema = getFirstResponsePayload(bu).schema.asInstanceOf[UnionShape]
+      payloadSchema.examples.size shouldBe 1
+      payloadSchema.anyOf.head.asInstanceOf[ScalarShape].examples.size shouldBe 0
     }
   }
 }
