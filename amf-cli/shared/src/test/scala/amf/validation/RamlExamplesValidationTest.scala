@@ -1,7 +1,5 @@
 package amf.validation
 
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
 class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
@@ -334,6 +332,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
       "/api-with-xml-examples/api.raml",
       Some("api-with-xml-examples.report")
     )
+  }
+
+  test("String xml like in enum and example") {
+    validate("/xml-like-example.raml")
   }
 
 }
