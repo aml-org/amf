@@ -23,6 +23,7 @@ import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
 }
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.SemanticContextParser
 import amf.shapes.internal.spec.common.TypeDef._
@@ -74,11 +75,11 @@ case class InlineOasTypeParser(
       parsedShape match {
         case Some(shape: AnyShape) =>
           version match {
-            case oas: OASSchemaVersion if (oas.position != SchemaPosition.Other) =>
+            case oas: OASSchemaVersion if oas.position != SchemaPosition.Other =>
               ctx.closedShape(shape, map, oas.position.toString)
             case _ => // Nothing to do
           }
-          if (isOas3) Some(checkNilUnion(shape))
+          if (isOas3) Some(checkOas3Nullable(shape))
           else Some(shape)
         case None => None
       }
@@ -99,7 +100,15 @@ case class InlineOasTypeParser(
   protected def isOas: Boolean  = version.isInstanceOf[OASSchemaVersion]
   protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
 
-  def checkNilUnion(parsed: AnyShape): AnyShape = {
+  protected def moveExamplesToUnion(parsed: AnyShape, union: UnionShape): Unit = {
+    val AmfArray(values, fieldAnnotations) = parsed.fields.get(ExamplesField.Examples)
+    if (values.nonEmpty) {
+      union.setWithoutId(ExamplesField.Examples, AmfArray(values), fieldAnnotations)
+      parsed.fields.removeField(ExamplesField.Examples)
+    }
+  }
+
+  def checkOas3Nullable(parsed: AnyShape): AnyShape = {
     map.key("nullable") match {
       case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
         val union = UnionShape().withName(name, nameAnnotations).withId(parsed.id + "/nilUnion")
@@ -111,6 +120,7 @@ case class InlineOasTypeParser(
           ),
           synthesized()
         )
+        moveExamplesToUnion(parsed, union)
         union
       case _ =>
         parsed
