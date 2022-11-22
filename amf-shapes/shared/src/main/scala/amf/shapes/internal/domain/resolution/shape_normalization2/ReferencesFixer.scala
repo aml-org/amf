@@ -18,40 +18,20 @@ private[resolution] object ReferencesFixer {
 }
 
 sealed case class ReferencesFixer()(implicit val context: NormalizationContext2) {
-
-  val visitedIds         = mutable.ArrayBuffer[String]()
-  val allowedIds         = mutable.ArrayBuffer[String]()
-  val watchlist          = mutable.ArrayBuffer[String]()
-  var possibleRecursions = mutable.Map[Shape, String]()
+  val recursionAnalyzer = new RecursionAnalyzer(context.errorHandler)
 
   protected def normalize(shape: Shape): Shape = {
     val lastVersion = retrieveLastVersionOf(shape)
-    if (recursionDetected(lastVersion)) handleRecursion(lastVersion) else fixReferences(lastVersion)
+    if (recursionAnalyzer.recursionDetected(lastVersion)) handleRecursion(lastVersion) else fixReferences(lastVersion)
   }
 
-  private def fixReferences(lastVersion: Shape) = {
-    visitedIds.append(lastVersion.id)
-    val fixedShape = fixReferencesIn(lastVersion)
-    visitedIds.remove(visitedIds.size - 1)
-    fixedShape
-  }
+  private def fixReferences(shape: Shape): Shape =
+    recursionAnalyzer.executeWhileDetectingRecursion(shape, fixReferencesIn)
 
-  private def handleRecursion(shape: Shape) = {
-    // Special Case
-    detectRecursionsFromUnions(shape)
-
-    if (isInvalidRecursion(shape)) reportInvalidRecursionError(shape)
+  private def handleRecursion(shape: Shape): RecursiveShape = {
+    recursionAnalyzer.detectRecursionsFromUnions(shape)
+    if (recursionAnalyzer.isInvalidRecursion(shape)) reportInvalidRecursionError(shape)
     RecursiveShape(shape)
-  }
-
-  private def detectRecursionsFromUnions(shape: Shape) = {
-    val cycle            = recursionCycle(shape)
-    val lastPossibleExit = watchlist.find(w => cycle.contains(w))
-    lastPossibleExit.map(exit => possibleRecursions += (shape -> exit))
-  }
-
-  private def recursionCycle(shape: Shape) = {
-    visitedIds.slice(visitedIds.indexOf(shape.id), visitedIds.size)
   }
 
   private def retrieveLastVersionOf(shape: Shape) = {
@@ -126,7 +106,7 @@ sealed case class ReferencesFixer()(implicit val context: NormalizationContext2)
     fixReferencesInLogicalConstraints(array)
     array.items match {
       case items: Shape =>
-        val newItems = fixReferencesAllowingRecursionIn(items, canBeEmpty(array))
+        val newItems = normalizeAllowingRecursionIn(items, canBeEmpty(array))
         array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
         array
       case _ => array
@@ -188,72 +168,39 @@ sealed case class ReferencesFixer()(implicit val context: NormalizationContext2)
 
   private def fixReferencesInProperties(node: NodeShape): Unit = {
     val fixedProperties = node.properties.map { prop =>
-      fixReferencesAllowingRecursionIn(prop, isOptionalProperty(prop))
+      normalizeAllowingRecursionIn(prop, isOptionalProperty(prop))
     }
     node.setArrayWithoutId(NodeShapeModel.Properties, fixedProperties)
   }
 
   private def fixReferencesInAdditionalPropertiesSchema(node: NodeShape): Unit = {
     Option(node.additionalPropertiesSchema).foreach { schema =>
-      val fixed = fixReferencesAllowingRecursionIn(schema)
+      val fixed = normalizeAllowingRecursionIn(schema)
       node.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, fixed)
     }
   }
 
   private def fixReferencesInUnionMembers(union: UnionShape) = {
-    val flattenedAnyOf: ListBuffer[Shape] = ListBuffer()
+    recursionAnalyzer.executeAndAnalyzeRecursionInUnion(
+      union, { union =>
+        val flattenedAnyOf: ListBuffer[Shape] = ListBuffer()
 
-    watchlist.append(union.id)
-    allowedIds.append(union.id)
-
-    union.anyOf.foreach { unionMember: Shape =>
-      val fixedUnionMember = normalize(unionMember)
-      fixedUnionMember match {
-        case nestedUnion: UnionShape => nestedUnion.anyOf.foreach(member => flattenedAnyOf += member)
-        case other: Shape            => flattenedAnyOf += other
+        union.anyOf.foreach { unionMember: Shape =>
+          recursionAnalyzer.traversedUnionMembers.append(unionMember.id)
+          val fixedUnionMember = normalize(unionMember)
+          recursionAnalyzer.traversedUnionMembers.remove(recursionAnalyzer.traversedUnionMembers.size - 1)
+          fixedUnionMember match {
+            case nestedUnion: UnionShape => nestedUnion.anyOf.foreach(member => flattenedAnyOf += member)
+            case other: Shape            => flattenedAnyOf += other
+          }
+        }
+        flattenedAnyOf
       }
-    }
-
-    allowedIds.remove(allowedIds.size - 1)
-    watchlist.remove(watchlist.size - 1)
-
-    analyzePossibleRecursions(union)
-    flattenedAnyOf
+    )
   }
 
-  private def analyzePossibleRecursions(union: UnionShape) = {
-    val numberOfRecursiveMembers  = possibleRecursions.count(_._2 == union.id)
-    val numberOfMembers           = union.anyOf.size
-    val existsPathWithNoRecursion = numberOfRecursiveMembers != numberOfMembers
-
-    if (existsPathWithNoRecursion) discardPossibleRecursions() else reportRecursionsRelatedTo(union)
-  }
-
-  private def reportRecursionsRelatedTo(union: UnionShape) = {
-    possibleRecursions.find(_._2 == union.id).foreach(r => reportInvalidRecursionError(r._1))
-    possibleRecursions.retain((_, m) => m != union.id)
-  }
-
-  private def discardPossibleRecursions(): Unit = {
-    // There is an exit (a traversal from a member of this union with no recursion)
-    // All recursions found are now valid
-    possibleRecursions.clear()
-  }
-
-  private def recursionDetected(shape: Shape) = hasBeenVisited(shape) && !isAProperty(shape)
-
-  private def hasBeenVisited(lastVersion: Shape) = visitedIds.contains(lastVersion.id)
-
-  private def isAProperty(lastVersion: Shape) = lastVersion.isInstanceOf[PropertyShape]
-
-  private def isInvalidRecursion(shape: Shape) = recursionCycle(shape).intersect(allowedIds).isEmpty
-
-  private def fixReferencesAllowingRecursionIn(shape: Shape, condition: Boolean = true) = {
-    if (condition) allowedIds.append(shape.id)
-    val fixedReferences = normalize(shape)
-    if (condition) allowedIds.remove(allowedIds.size - 1)
-    fixedReferences
-  }
+  private def normalizeAllowingRecursionIn(shape: Shape, condition: Boolean = true) =
+    recursionAnalyzer.executeAllowingRecursionIn(shape, normalize, condition)
 
   private def isOptionalProperty(prop: PropertyShape) = prop.minCount.option().forall(_ == 0)
 
