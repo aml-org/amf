@@ -4,7 +4,7 @@ import amf.core.client.scala.model.DataType
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.FederationMetadataParser
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.mulesoft.antlrast.ast.Node
 
@@ -17,7 +17,7 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
     parseName()
     parseDescription(customScalarTypeDef, scalar, scalar.meta)
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, SCALAR_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, SCALAR_FEDERATION_DIRECTIVE)).parse()
       GraphQLDirectiveApplicationsParser(customScalarTypeDef, scalar, Seq(SCALAR_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(customScalarTypeDef, scalar).parse()

@@ -1,19 +1,26 @@
 package amf.apicontract.internal.metamodel.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
+import amf.apicontract.client.scala.model.domain.federation.ParameterFederationMetadata
 import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.model.domain.federation.HasFederationMetadata
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core, Document, Shapes}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain._
+import amf.core.internal.metamodel.domain.federation.HasFederationMetadataModel
 import amf.core.internal.metamodel.domain.templates.OptionalField
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 
 /** Parameter metaModel.
   */
-object ParameterModel extends AbstractParameterModel with OptionalField with ExamplesField {
+object ParameterModel
+    extends AbstractParameterModel
+    with OptionalField
+    with ExamplesField
+    with HasFederationMetadataModel {
 
   override val ParameterName: Field = Field(
     Str,
@@ -83,7 +90,8 @@ object ParameterModel extends AbstractParameterModel with OptionalField with Exa
       Schema,
       Payloads,
       Examples,
-      Default
+      Default,
+      FederationMetadata
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = Parameter()

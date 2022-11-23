@@ -2,7 +2,7 @@ package amf.graphql.internal.spec.domain
 
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.FederationMetadataParser
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.InputTypeField
 import org.mulesoft.antlrast.ast.Node
@@ -18,7 +18,7 @@ case class GraphQLInputTypeParser(objTypeNode: Node)(implicit val ctx: GraphQLBa
     addInputTypeFieldAnnotation()
     parseDescription(objTypeNode, obj, obj.meta)
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, INPUT_OBJECT_FEDERATION_DIRECTIVE))
+      FederationMetadataParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, INPUT_OBJECT_FEDERATION_DIRECTIVE))
         .parse()
       GraphQLDirectiveApplicationsParser(objTypeNode, obj, Seq(INPUT_OBJECT_DIRECTIVE, DIRECTIVE)).parse()
     }

@@ -4,11 +4,11 @@ import amf.core.client.scala.vocabulary.Namespace.{Core, Federation, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.internal.metamodel.domain.federation.{HasShapeFederationMetadataModel, ShapeFederationMetadataModel}
+import amf.core.internal.metamodel.domain.federation.{HasFederationMetadataModel, ShapeFederationMetadataModel}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 
-object ShapeOperationModel extends AbstractOperationModel with HasShapeFederationMetadataModel {
+object ShapeOperationModel extends AbstractOperationModel with HasFederationMetadataModel {
 
   override val key: Field = Name
 

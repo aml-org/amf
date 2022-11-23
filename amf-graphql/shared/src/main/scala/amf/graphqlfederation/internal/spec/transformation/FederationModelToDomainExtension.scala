@@ -1,5 +1,6 @@
 package amf.graphqlfederation.internal.spec.transformation
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -29,6 +30,20 @@ case class FederationModelToDomainExtension() extends TransformationStep {
         val declarations = FederationDirectiveDeclarations.extractFrom(doc)
         val builder      = FederationDirectiveApplicationsBuilder(declarations)
         val setExtension = DomainExtensionSetter(builder)
+
+        doc.encodes.asInstanceOf[WebApi].endPoints.foreach { endpoint =>
+          val operation = endpoint.operations.head
+          setExtension
+            .fromOverrideIn(operation)
+            .fromInaccessibleIn(operation)
+            .fromShareableIn(operation)
+          operation.request.queryParameters.foreach { param =>
+            setExtension
+              .fromOverrideIn(param)
+              .fromInaccessibleIn(param)
+              .fromShareableIn(param)
+          }
+        }
 
         doc.declares.foreach {
           case node: NodeShape =>

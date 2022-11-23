@@ -4,7 +4,7 @@ import amf.core.internal.parser.domain.Annotations.inferred
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.FederationMetadataParser
 import amf.shapes.client.scala.model.domain.{AnyShape, UnionShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
@@ -17,7 +17,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
     parseMembers()
     parseDescription(unionTypeDef, union, union.meta)
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE)).parse()
       GraphQLDirectiveApplicationsParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(unionTypeDef, union).parse()

@@ -1,8 +1,10 @@
 package amf.apicontract.client.scala.model.domain
 
+import amf.apicontract.client.scala.model.domain.federation.ParameterFederationMetadata
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.metamodel.domain.ParameterModel._
 import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.federation.HasFederationMetadata
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -17,7 +19,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     extends AbstractParameter(fields, annotations)
     with Linkable
     with SchemaContainer
-    with ExemplifiedDomainElement {
+    with ExemplifiedDomainElement
+    with HasFederationMetadata[ParameterFederationMetadata] {
 
   override def parameterName: StrField = fields.field(ParameterName)
   override def required: BoolField     = fields.field(Required)
@@ -28,6 +31,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def allowReserved: BoolField         = fields.field(AllowReserved)
   override def binding: StrField       = fields.field(Binding)
   def payloads: Seq[Payload]           = fields.field(Payloads)
+
+  override def emptyMetadata() = ParameterFederationMetadata()
 
   override def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
     set(ParameterName, name, annots)

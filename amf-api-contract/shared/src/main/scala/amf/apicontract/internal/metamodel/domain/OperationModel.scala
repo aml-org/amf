@@ -5,11 +5,12 @@ import amf.apicontract.internal.metamodel.domain.bindings.OperationBindingsModel
 import amf.apicontract.internal.metamodel.domain.federation.OperationFederationMetadataModel
 import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
 import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.model.domain.federation.HasFederationMetadata
 import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core, Federation}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Str}
-import amf.core.internal.metamodel.domain.federation.ShapeFederationMetadataModel
+import amf.core.internal.metamodel.domain.federation.{HasFederationMetadataModel, ShapeFederationMetadataModel}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.common.DocumentationField
 import amf.shapes.internal.domain.metamodel.operations.AbstractOperationModel
@@ -21,7 +22,8 @@ object OperationModel
     with DocumentationField
     with TagsModel
     with AbstractModel
-    with LinkableElementModel {
+    with LinkableElementModel
+    with HasFederationMetadataModel {
 
   override val Method: Field = Field(
     Str,
@@ -108,10 +110,14 @@ object OperationModel
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )
 
-  val FederationMetadata: Field = Field(
+  override val FederationMetadata: Field = Field(
     OperationFederationMetadataModel,
     Federation + "federationMetadata",
-    ModelDoc(ModelVocabularies.Federation, "federationMetadata", "Metadata about how this Operation should be federated")
+    ModelDoc(
+      ModelVocabularies.Federation,
+      "federationMetadata",
+      "Metadata about how this Operation should be federated"
+    )
   )
 
   override val key: Field = Method

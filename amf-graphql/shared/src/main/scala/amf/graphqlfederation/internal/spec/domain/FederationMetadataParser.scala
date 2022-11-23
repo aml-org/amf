@@ -1,14 +1,14 @@
 package amf.graphqlfederation.internal.spec.domain
 
-import amf.core.client.scala.model.domain.federation.{HasShapeFederationMetadata, ShapeFederationMetadata}
+import amf.core.client.scala.model.domain.federation.{FederationMetadata, HasFederationMetadata, ShapeFederationMetadata}
 import amf.core.internal.metamodel.domain.federation.FederationMetadataModel.OverrideFrom
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import org.mulesoft.antlrast.ast.Node
 
-case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMetadata, basePath: Seq[String])(implicit
-    val ctx: GraphQLFederationWebApiContext
+case class FederationMetadataParser[T <: FederationMetadata](ast: Node, target: HasFederationMetadata[T], basePath: Seq[String])(implicit
+                                                                                                                                 val ctx: GraphQLFederationWebApiContext
 ) extends GraphQLASTParserHelper {
   def parse(): Unit = {
     parseOverride()
@@ -44,11 +44,11 @@ case class ShapeFederationMetadataParser(ast: Node, target: HasShapeFederationMe
       }
   }
 
-  protected def in(fn: (ShapeFederationMetadata) => Unit): Unit = {
+  protected def in(fn: T => Unit): Unit = {
     Option(target.federationMetadata) match {
       case Some(metadata) => fn(metadata)
       case None =>
-        val metadata = ShapeFederationMetadata()
+        val metadata = target.emptyMetadata()
         target.withFederationMetadata(metadata)
         fn(metadata)
     }

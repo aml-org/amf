@@ -8,7 +8,7 @@ import amf.graphqlfederation.internal.spec.domain.{
   ExternalDirectiveParser,
   ProvidesParser,
   RequiresParser,
-  ShapeFederationMetadataParser
+  FederationMetadataParser
 }
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
@@ -23,8 +23,8 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
     parseDescription(ast, property, property.meta)
     parseRange()
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
-      ShapeFederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
       GraphQLDirectiveApplicationsParser(ast, property, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
       GraphQLDirectiveApplicationsParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
       ExternalDirectiveParser(ast, property).parse()
