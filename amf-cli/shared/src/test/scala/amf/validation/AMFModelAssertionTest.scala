@@ -407,7 +407,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   // W-11337671
-  test("CRI OAS Union examples") {
+  test("OAS 3 nullable schema should have examples at union level") {
     val oasApi = s"$basePath/oas3/nullable-example.yaml"
     modelAssertion(oasApi, PipelineId.Editing) { bu =>
       val payloadSchema = getFirstResponsePayload(bu).schema.asInstanceOf[UnionShape]

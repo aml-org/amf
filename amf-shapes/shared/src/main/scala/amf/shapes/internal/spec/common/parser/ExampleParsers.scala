@@ -188,7 +188,6 @@ case class RamlSingleExampleParser(
           node.tagType match {
             case YType.Map =>
               Option(RamlSingleExampleValueParser(entry, newProducer, options).parse())
-            case YType.Null => None
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
                 ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
