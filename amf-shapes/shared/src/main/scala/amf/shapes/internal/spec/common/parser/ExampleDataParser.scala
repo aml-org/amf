@@ -38,8 +38,9 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
     }
 
     node.toOption[YScalar] match {
-      case Some(_) if node.tagType == YType.Null =>
-        example.setWithoutId(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
+      case Some(value) if node.tagType == YType.Null =>
+        if (isNullLiteral(value))
+          example.setWithoutId(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
       case Some(scalar) =>
         example.setWithoutId(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
       case _ =>
@@ -55,6 +56,8 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
 
     example
   }
+
+  private def isNullLiteral(value: YScalar) = value.text.nonEmpty
 }
 
 case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(implicit

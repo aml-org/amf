@@ -188,14 +188,26 @@ case class RamlSingleExampleParser(
           node.tagType match {
             case YType.Map =>
               Option(RamlSingleExampleValueParser(entry, newProducer, options).parse())
+            case YType.Null => checkEmptyExample(newProducer, entry, node)
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
-              Option(
-                ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
-                  .parse()
-              )
+              parseExample(newProducer, entry, node)
           }
       }
     }
+  }
+
+  private def checkEmptyExample(newProducer: () => Example, entry: YMapEntry, node: YNode): Option[Example] = {
+    node.value match {
+      case value: YScalar if value.text.nonEmpty => parseExample(newProducer, entry, node)
+      case _                                     => None
+    }
+  }
+
+  private def parseExample(newProducer: () => Example, entry: YMapEntry, node: YNode): Option[Example] = {
+    Option(
+      ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
+        .parse()
+    )
   }
 }
 

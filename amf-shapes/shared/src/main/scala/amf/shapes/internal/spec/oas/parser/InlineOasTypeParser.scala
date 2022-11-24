@@ -101,9 +101,9 @@ case class InlineOasTypeParser(
   protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
 
   protected def moveExamplesToUnion(parsed: AnyShape, union: UnionShape): Unit = {
-    val AmfArray(values, fieldAnnotations) = parsed.fields.get(ExamplesField.Examples)
+    val AmfArray(values, annotations) = parsed.fields.get(ExamplesField.Examples)
     if (values.nonEmpty) {
-      union.setWithoutId(ExamplesField.Examples, AmfArray(values), fieldAnnotations)
+      union.setWithoutId(ExamplesField.Examples, AmfArray(values, annotations), annotations)
       parsed.fields.removeField(ExamplesField.Examples)
     }
   }
