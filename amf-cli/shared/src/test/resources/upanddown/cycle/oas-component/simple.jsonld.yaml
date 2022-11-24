@@ -22,6 +22,9 @@ components:
       not:
         type: string
     common:
+      example:
+        strict: true
+        value: a
       anyOf:
         -
           title: common schema
@@ -30,9 +33,6 @@ components:
             url: https://example.com
             description: Find more info here
           deprecated: false
-          example:
-            strict: true
-            value: a
           type: string
           minLength: 0
           maxLength: 100
