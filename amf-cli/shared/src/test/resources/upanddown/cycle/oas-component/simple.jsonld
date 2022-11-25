@@ -177,7 +177,12 @@
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/nil/default-nil"
 }
 ],
-"http://www.w3.org/ns/shacl#name": "common"
+"http://www.w3.org/ns/shacl#name": "common",
+"http://a.ml/vocabularies/apiContract#examples": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/examples/example/default-example"
+}
+]
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema",
@@ -608,12 +613,7 @@
 "http://a.ml/vocabularies/shapes#deprecated": false,
 "http://a.ml/vocabularies/core#documentation": {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/creative-work/https%3A%2F%2Fexample.com"
-},
-"http://a.ml/vocabularies/apiContract#examples": [
-{
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example"
 }
-]
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/nil/default-nil",
@@ -623,6 +623,18 @@
 "http://a.ml/vocabularies/shapes#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
 ]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/examples/example/default-example",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": true,
+"http://a.ml/vocabularies/document#structuredValue": {
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/examples/example/default-example/scalar_1"
+},
+"http://a.ml/vocabularies/document#raw": "a"
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/any/allOfSchema/and/shape/item0",
@@ -1045,16 +1057,19 @@
 "http://a.ml/vocabularies/core#description": "Find more info here"
 },
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/examples/example/default-example/scalar_1",
 "@type": [
-"http://a.ml/vocabularies/apiContract#Example",
+"http://a.ml/vocabularies/data#Scalar",
+"http://a.ml/vocabularies/data#Node",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
-"http://a.ml/vocabularies/document#strict": true,
-"http://a.ml/vocabularies/document#structuredValue": {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example/scalar_1"
-},
-"http://a.ml/vocabularies/document#raw": "a"
+"http://a.ml/vocabularies/data#value": "a",
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": "scalar_1"
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/shape/objectSchema/property/property/a/any/a",
@@ -1207,21 +1222,6 @@
 },
 {
 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/parameter/header/aHeader/examples/example/default-example/scalar_1",
-"@type": [
-"http://a.ml/vocabularies/data#Scalar",
-"http://a.ml/vocabularies/data#Node",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://a.ml/vocabularies/data#value": "a",
-"http://www.w3.org/ns/shacl#datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"http://a.ml/vocabularies/core#name": "scalar_1"
-},
-{
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/simple.yaml#/declares/union/common/anyOf/scalar/common/examples/example/default-example/scalar_1",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar",
 "http://a.ml/vocabularies/data#Node",
