@@ -103,7 +103,7 @@ case class InlineOasTypeParser(
   protected def moveExamplesToUnion(parsed: AnyShape, union: UnionShape): Unit = {
     val AmfArray(values, annotations) = parsed.fields.get(ExamplesField.Examples)
     if (values.nonEmpty) {
-      union.setWithoutId(ExamplesField.Examples, AmfArray(values, annotations), annotations)
+      union.setWithoutId(ExamplesField.Examples, AmfArray(values, annotations), annotations ++= inferred())
       parsed.fields.removeField(ExamplesField.Examples)
     }
   }
