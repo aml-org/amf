@@ -53,7 +53,8 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
 
     fs.entry(NodeShapeModel.Properties).map { f =>
-      typeEmitted = true
+      if (spec.options.implicitRamlTypes)
+        typeEmitted = true
       result += RamlPropertiesShapeEmitter(f, ordering, references)
     }
 
