@@ -5,15 +5,12 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.federation.ShapeFederationMetadata
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.{FederationMetadata, IsStub}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel.{Provides, Requires}
-import amf.graphqlfederation.internal.spec.transformation.introspection.directives.{
-  DomainExtensionSetter,
-  FederationDirectiveApplicationsBuilder,
-  FederationDirectiveDeclarations
-}
+import amf.graphqlfederation.internal.spec.transformation.introspection.directives.{DomainExtensionSetter, FederationDirectiveApplicationsBuilder, FederationDirectiveDeclarations}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Keys
 
