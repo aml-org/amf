@@ -1,5 +1,7 @@
 package amf.graphqlfederation.internal.spec.transformation
 
+import amf.apicontract.client.scala.model.domain.Parameter
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -26,6 +28,8 @@ case class FederationModelToDomainExtension() extends TransformationStep {
         val declarations = FederationDirectiveDeclarations.extractFrom(doc)
         val builder      = FederationDirectiveApplicationsBuilder(declarations)
         val setExtension = DomainExtensionSetter(builder)
+
+        propagateExtensions(doc, setExtension)
 
         doc.declares.foreach {
           case node: NodeShape =>
@@ -88,6 +92,25 @@ case class FederationModelToDomainExtension() extends TransformationStep {
       case _ => // skip
     }
     model
+  }
+
+  private def propagateExtensions(doc: Document, setExtension: DomainExtensionSetter): Unit = {
+    doc.encodes match {
+      case api: Api => api.endPoints.foreach { endpoint =>
+        endpoint.operations.foreach { operation =>
+          operation.requests.foreach { request =>
+            request.queryParameters.foreach { parameter =>
+              propagateForQueryParameters(parameter, setExtension)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private def propagateForQueryParameters(parameter: Parameter, setExtension: DomainExtensionSetter): Unit = {
+    setExtension
+      .fromInaccessibleIn(parameter)
   }
 
   private def removeFields(e: DomainElement)(fields: Field*): Unit = fields.foreach(f => e.fields.removeField(f))

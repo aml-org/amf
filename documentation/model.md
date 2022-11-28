@@ -113,6 +113,7 @@ AMF Model Documentation
 * [Organization](#organization)
 * [Overlay](#overlay)
 * [Parameter](#parameter)
+* [ParameterFederationMetadata](#parameterfederationmetadata)
 * [ParameterKeyMapping](#parameterkeymapping)
 * [ParametrizedDeclaration](#parametrizeddeclaration)
 * [ParametrizedResourceType](#parametrizedresourcetype)
@@ -2206,9 +2207,26 @@ Types:
  | payload | [[Payload](#payload)] |  | `http://a.ml/vocabularies/apiContract#payload` |
  | examples | [[Example](#example)] | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | `http://a.ml/vocabularies/core#defaultValue` |
+ | federationMetadata | [ParameterFederationMetadata](#parameterfederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## ParameterFederationMetadata
+Model that contains data about how the Shape should be federated
+Types:
+* `http://a.ml/vocabularies/federation#ParameterFederationMetadata`
+* `http://a.ml/vocabularies/federation#FederationMetadata`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name element in the federated graph | `http://a.ml/vocabularies/federation#name` |
+ | tags | [string] | Federation tags of the element | `http://a.ml/vocabularies/federation#tags` |
+ | shareable | boolean | Element can be defined by more than one component of the federated graph | `http://a.ml/vocabularies/federation#shareable` |
+ | inaccessible | boolean | Element cannot be accessed by the federated graph | `http://a.ml/vocabularies/federation#inaccessible` |
+ | overrideFrom | string | Indicates that the current subgraph is taking responsibility for resolving the marked field away from the subgraph specified in the from argument | `http://a.ml/vocabularies/federation#overrideFrom` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ParameterKeyMapping

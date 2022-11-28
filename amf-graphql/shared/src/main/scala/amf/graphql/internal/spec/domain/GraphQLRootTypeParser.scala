@@ -5,13 +5,9 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.{FieldBuilder, GraphqlArgument, OperationMethod}
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
-  ARGUMENTS_DEFINITION,
-  FIELDS_DEFINITION,
-  FIELD_DEFINITION,
-  INPUT_VALUE_DEFINITION
-}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, DIRECTIVE, FIELDS_DEFINITION, FIELD_DEFINITION, INPUT_FIELD_FEDERATION_DIRECTIVE, INPUT_VALUE_DEFINITION, INPUT_VALUE_DIRECTIVE}
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
+import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ParameterFederationMetadataFactory}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -56,6 +52,10 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
     val queryParam = GraphqlArgument(toAnnotations(argument), AmfScalar(fieldName, annotations))
     parseDescription(argument, queryParam, queryParam.meta)
+    inFederation { implicit fCtx =>
+      FederationMetadataParser(argument, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE), ParameterFederationMetadataFactory).parse()
+      GraphQLDirectiveApplicationsParser(argument, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
+    }
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
         setDefaultValue(argument, queryParam)

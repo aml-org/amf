@@ -1,0 +1,4 @@
+type Query {
+    books(count: Int @inaccessible): [String]
+    authors: [String]
+}
