@@ -23,7 +23,8 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     fs.entry(ArrayShapeModel.Items)
       .foreach(_ => {
-        typeEmitted = true
+        if (spec.options.implicitRamlTypes)
+          typeEmitted = true
         result += RamlItemsShapeEmitter(array, ordering, references)
       })
 
