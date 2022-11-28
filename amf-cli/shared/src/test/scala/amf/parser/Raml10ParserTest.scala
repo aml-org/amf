@@ -57,4 +57,24 @@ class Raml10ParserTest extends FunSuiteCycleTests with Matchers {
     )
   }
 
+  test("Render with implicit types") {
+    cycle(
+      "explicit-implicit-types/input.raml",
+      "explicit-implicit-types/output-implicit-types.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      renderOptions = Some(RenderOptions())
+    )
+  }
+
+  test("Render with explicit types") {
+    cycle(
+      "explicit-implicit-types/input.raml",
+      "explicit-implicit-types/output-explicit-types.raml",
+      Raml10YamlHint,
+      Raml10YamlHint,
+      renderOptions = Some(RenderOptions().withoutImplicitRamlTypes)
+    )
+  }
+
 }
