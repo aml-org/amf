@@ -1,7 +1,7 @@
 package amf.graphqlfederation.internal.spec.transformation.introspection.directives
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.federation.HasShapeFederationMetadata
+import amf.core.client.scala.model.domain.federation.{FederationMetadata, HasFederationMetadata}
 import amf.shapes.client.scala.model.domain.NodeShape
 
 case class DomainExtensionSetter(build: FederationDirectiveApplicationsBuilder) {
@@ -41,7 +41,7 @@ case class DomainExtensionSetter(build: FederationDirectiveApplicationsBuilder) 
     this
   }
 
-  def fromShareableIn(elem: HasShapeFederationMetadata): this.type = {
+  def fromShareableIn[T <: FederationMetadata](elem: HasFederationMetadata[T]): this.type = {
     elem.federationMetadata match {
       case null => // skip
       case federationMetadata if federationMetadata.shareable.value() =>
@@ -52,7 +52,7 @@ case class DomainExtensionSetter(build: FederationDirectiveApplicationsBuilder) 
     this
   }
 
-  def fromInaccessibleIn(elem: HasShapeFederationMetadata): this.type = {
+  def fromInaccessibleIn[T <: FederationMetadata](elem: HasFederationMetadata[T]): this.type = {
     elem.federationMetadata match {
       case null => // skip
       case federationMetadata if federationMetadata.inaccessible.value() =>
@@ -63,7 +63,7 @@ case class DomainExtensionSetter(build: FederationDirectiveApplicationsBuilder) 
     this
   }
 
-  def fromOverrideIn(elem: HasShapeFederationMetadata): this.type = {
+  def fromOverrideIn[T <: FederationMetadata](elem: HasFederationMetadata[T]): this.type = {
     elem.federationMetadata match {
       case null => // skip
       case federationMetadata if federationMetadata.overrideFrom.nonEmpty =>

@@ -1,14 +1,16 @@
 package amf.shapes.client.scala.model.domain.operations
 
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.federation.HasShapeFederationMetadata
+import amf.core.client.scala.model.domain.federation.{HasFederationMetadata, ShapeFederationMetadata}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel._
 import org.yaml.model.YPart
 
-case class ShapeOperation(fields: Fields, annotations: Annotations) extends AbstractOperation(fields, annotations) with HasShapeFederationMetadata {
+case class ShapeOperation(fields: Fields, annotations: Annotations) extends AbstractOperation(fields, annotations) with
+  HasFederationMetadata[ShapeFederationMetadata] {
+
   override type RequestType  = ShapeRequest
   override type ResponseType = ShapeResponse
 
