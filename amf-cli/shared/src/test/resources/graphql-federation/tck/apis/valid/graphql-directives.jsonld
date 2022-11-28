@@ -205,6 +205,24 @@
                               }
                             ]
                           }
+                        ],
+                        "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/graphql-directives.graphql#/declares/Directive": {
+                          "http://a.ml/vocabularies/core#extensionName": [
+                            {
+                              "@value": "Directive"
+                            }
+                          ],
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/graphql-directives.graphql#/web-api/endpoint/%2Fquery%2Foperation/supportedOperation/query/Query.operation/expects/request/parameter/parameter/query/arg/customDomainProperties/Directive/data-node",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Object",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ]
+                        },
+                        "http://a.ml/vocabularies/document#customDomainProperties": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/graphql-directives.graphql#/declares/Directive"
+                          }
                         ]
                       }
                     ]

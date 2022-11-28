@@ -4,7 +4,7 @@ import amf.apicontract.internal.metamodel.document.ComponentModuleModel
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, WebApiModel}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.metamodel.domain.federation.{OperationFederationMetadataModel, ParameterKeyMappingModel}
+import amf.apicontract.internal.metamodel.domain.federation.{OperationFederationMetadataModel, ParameterFederationMetadataModel, ParameterKeyMappingModel}
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.metamodel.domain.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 import amf.core.internal.entities.Entities
@@ -82,6 +82,7 @@ private[amf] object APIEntities extends Entities {
     OperationFederationMetadataModel,
     PropertyKeyMappingModel,
     ParameterKeyMappingModel,
-    ComponentModuleModel
+    ComponentModuleModel,
+    ParameterFederationMetadataModel
   )
 }
