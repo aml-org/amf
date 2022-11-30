@@ -2329,6 +2329,7 @@ Types:
  | schema | [Shape](#shape) | Schema associated to this payload | `http://a.ml/vocabularies/shapes#schema` |
  | examples | [[Example](#example)] | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | encoding | [[Encoding](#encoding)] | An array of properties and its encoding information. The key, being the property name, must exist in the schema as a property | `http://a.ml/vocabularies/apiContract#encoding` |
+ | required | boolean | Marks the payload as required | `http://a.ml/vocabularies/apiContract#required` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |

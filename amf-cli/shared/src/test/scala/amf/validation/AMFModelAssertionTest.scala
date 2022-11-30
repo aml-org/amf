@@ -3,7 +3,7 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
-import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
+import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, PayloadModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -15,6 +15,7 @@ import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
 import amf.shapes.internal.annotations.BaseVirtualNode
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.testing.BaseUnitUtils
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
@@ -413,6 +414,14 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val payloadSchema = getFirstResponsePayload(bu).schema.asInstanceOf[UnionShape]
       payloadSchema.examples.size shouldBe 1
       payloadSchema.anyOf.head.asInstanceOf[ScalarShape].examples.size shouldBe 0
+    }
+  }
+
+  test("parsing parameters in oas2") {
+    val api = s"$basePath/oas2/payload-required-field.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val payload = BaseUnitUtils.getFirstRequestPayload(bu)
+      payload.required.value() shouldBe true
     }
   }
 }

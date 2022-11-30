@@ -424,6 +424,7 @@
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "amf://id#1"
       },
+      "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "amf://id#39/source-map"
@@ -620,13 +621,16 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#39/source-map/lexical/element_2"
+          "@id": "amf://id#39/source-map/lexical/element_3"
+        },
+        {
+          "@id": "amf://id#39/source-map/lexical/element_1"
         },
         {
           "@id": "amf://id#39/source-map/lexical/element_0"
         },
         {
-          "@id": "amf://id#39/source-map/lexical/element_1"
+          "@id": "amf://id#39/source-map/lexical/element_2"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
@@ -905,17 +909,22 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#39/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,12)-(25,29)]"
-    },
-    {
-      "@id": "amf://id#39/source-map/lexical/element_0",
+      "@id": "amf://id#39/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,12)-(30,13)]"
     },
     {
       "@id": "amf://id#39/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(25,12)-(25,29)]"
+    },
+    {
+      "@id": "amf://id#39/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#required",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(27,12)-(27,28)]"
+    },
+    {
+      "@id": "amf://id#39/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#39",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(31,11)]"
     },

@@ -1,0 +1,21 @@
+swagger: "2.0"
+info:
+  title: Simple API overview
+  version: 2.0.0
+paths:
+  /pets:
+    post:
+      summary: Add a new pet
+      description: Optional description in *Markdown*
+      produces:
+        - application/json
+      parameters:
+        -
+          name: parameterName
+          required: true
+          schema:
+            type: string
+          in: body
+      responses:
+        "200":
+          description: OK

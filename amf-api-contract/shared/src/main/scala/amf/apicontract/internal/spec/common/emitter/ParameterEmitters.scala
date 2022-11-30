@@ -15,6 +15,7 @@ import amf.apicontract.internal.spec.raml
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
 import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.core.client.scala.model.BoolField
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -603,11 +604,16 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
   }
 
   private def requiredFieldEmitter(): Option[EntryEmitter] = {
-    payload.annotations.find(classOf[RequiredParamPayload]).flatMap { a =>
-      if (a.required)
-        Some(MapEntryEmitter("required", a.required.toString, YType.Bool, a.range.start))
-      else None
-    }
+    if (payload.required.value()) {
+      Some(
+        MapEntryEmitter(
+          "required",
+          payload.required.toString,
+          YType.Bool,
+          payload.required.annotations().lexical().start
+        )
+      )
+    } else None
   }
 
   private def emitPayloadDescription(result: mutable.ListBuffer[EntryEmitter]) = {
@@ -641,11 +647,15 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       val result = mutable.ListBuffer[EntryEmitter]()
       emitPayloadName(result)
       result += MapEntryEmitter("in", "formData", position = bindingPos(payload.schema))
-      payload.annotations.find(classOf[RequiredParamPayload]) match {
-        case Some(a) =>
-          result += MapEntryEmitter("in", a.required.toString, position = a.range.start)
-        case None => // ignore
+
+      if (payload.required.value()) {
+        result += MapEntryEmitter(
+          "required",
+          payload.required.toString,
+          position = payload.required.annotations().lexical().start
+        )
       }
+
       result += MapEntryEmitter("type", "object", position = bindingPos(payload.schema))
       traverse(ordering.sorted(result), b)
     }

@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.templates.OptionalField
 import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
@@ -30,12 +30,19 @@ object PayloadModel extends AbstractPayloadModel with OptionalField with Linkabl
       )
     )
 
+  val Required: Field =
+    Field(
+      Bool,
+      ApiContract + "required",
+      ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the payload as required")
+    )
+
   override val key: Field = MediaType
 
   override val `type`: List[ValueType] = ApiContract + "Payload" :: Core + "Payload" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
-    Name :: MediaType :: SchemaMediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
+    Name :: MediaType :: SchemaMediaType :: Schema :: Examples :: Encoding :: Required :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance: AmfObject = Payload()
 
