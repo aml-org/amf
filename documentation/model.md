@@ -59,6 +59,7 @@ AMF Model Documentation
 * [EmptyBinding](#emptybinding)
 * [Encoding](#encoding)
 * [EndPoint](#endpoint)
+* [EndpointFederationMetadata](#endpointfederationmetadata)
 * [Example](#example)
 * [Extension](#extension)
 * [ExtensionLike](#extensionlike)
@@ -1186,6 +1187,23 @@ Types:
  | server | [[Server](#server)] | Specific information about the server where the endpoint is accessible | `http://a.ml/vocabularies/apiContract#server` |
  | security | [[SecurityRequirement](#securityrequirement)] | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | binding | [ChannelBindings](#channelbindings) | Bindings for this endpoint | `http://a.ml/vocabularies/apiBinding#binding` |
+ | federationMetadata | [EndpointFederationMetadata](#endpointfederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## EndpointFederationMetadata
+Model that contains data about how the Shape should be federated
+Types:
+* `http://a.ml/vocabularies/federation#EndpointFederationMetadata`
+* `http://a.ml/vocabularies/federation#FederationMetadata`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name element in the federated graph | `http://a.ml/vocabularies/federation#name` |
+ | tags | [string] | Federation tags of the element | `http://a.ml/vocabularies/federation#tags` |
+ | shareable | boolean | Element can be defined by more than one component of the federated graph | `http://a.ml/vocabularies/federation#shareable` |
+ | inaccessible | boolean | Element cannot be accessed by the federated graph | `http://a.ml/vocabularies/federation#inaccessible` |
+ | overrideFrom | string | Indicates that the current subgraph is taking responsibility for resolving the marked field away from the subgraph specified in the from argument | `http://a.ml/vocabularies/federation#overrideFrom` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## Example

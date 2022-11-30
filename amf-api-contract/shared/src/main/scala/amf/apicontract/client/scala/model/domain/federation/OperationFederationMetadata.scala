@@ -9,10 +9,9 @@ import amf.shapes.client.scala.model.domain.NodeShape
 import org.yaml.model.YMap
 
 case class OperationFederationMetadata(fields: Fields, annotations: Annotations) extends FederationMetadata {
-  def providedEntity: NodeShape             = fields.field(ProvidedEntity)
-  def federationMethod: StrField            = fields.field(FederationMethod)
-  def keyMappings: Seq[ParameterKeyMapping] = fields.field(KeyMappings)
-
+  def providedEntity: NodeShape                                         = fields.field(ProvidedEntity)
+  def federationMethod: StrField                                        = fields.field(FederationMethod)
+  def keyMappings: Seq[ParameterKeyMapping]                             = fields.field(KeyMappings)
   def withProvidedEntity(providedEntity: NodeShape): this.type          = set(ProvidedEntity, providedEntity)
   def withFederationMethod(federationMethod: String): this.type         = set(FederationMethod, federationMethod)
   def withKeyMappings(keyMappings: Seq[ParameterKeyMapping]): this.type = setArray(KeyMappings, keyMappings)

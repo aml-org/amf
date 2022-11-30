@@ -12,7 +12,11 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.{FederationMetadata, IsStub}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel.{Provides, Requires}
-import amf.graphqlfederation.internal.spec.transformation.introspection.directives.{DomainExtensionSetter, FederationDirectiveApplicationsBuilder, FederationDirectiveDeclarations}
+import amf.graphqlfederation.internal.spec.transformation.introspection.directives.{
+  DomainExtensionSetter,
+  FederationDirectiveApplicationsBuilder,
+  FederationDirectiveDeclarations
+}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Keys
 
@@ -29,7 +33,7 @@ case class FederationModelToDomainExtension() extends TransformationStep {
         val builder      = FederationDirectiveApplicationsBuilder(declarations)
         val setExtension = DomainExtensionSetter(builder)
 
-        propagateExtensions(doc, setExtension)
+        propagateExtensionsInRootTypes(doc, setExtension)
 
         doc.declares.foreach {
           case node: NodeShape =>
@@ -94,17 +98,22 @@ case class FederationModelToDomainExtension() extends TransformationStep {
     model
   }
 
-  private def propagateExtensions(doc: Document, setExtension: DomainExtensionSetter): Unit = {
+  private def propagateExtensionsInRootTypes(doc: Document, setExtension: DomainExtensionSetter): Unit = {
     doc.encodes match {
-      case api: Api => api.endPoints.foreach { endpoint =>
-        endpoint.operations.foreach { operation =>
-          operation.requests.foreach { request =>
-            request.queryParameters.foreach { parameter =>
-              propagateForQueryParameters(parameter, setExtension)
+      case api: Api =>
+        api.endPoints.foreach { endpoint =>
+          setExtension
+            .fromInaccessibleIn(endpoint)
+            .fromShareableIn(endpoint)
+            .fromOverrideIn(endpoint)
+          endpoint.operations.foreach { operation =>
+            operation.requests.foreach { request =>
+              request.queryParameters.foreach { parameter =>
+                propagateForQueryParameters(parameter, setExtension)
+              }
             }
           }
         }
-      }
     }
   }
 
