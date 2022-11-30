@@ -1,7 +1,7 @@
 package amf.apicontract.client.scala.model.domain
 
 import amf.apicontract.client.scala.model.domain.bindings.ChannelBindings
-import amf.apicontract.client.scala.model.domain.federation.EndpointFederationMetadata
+import amf.apicontract.client.scala.model.domain.federation.EndPointFederationMetadata
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.apicontract.internal.annotations.ParentEndPoint
 import amf.apicontract.internal.metamodel.domain.EndPointModel
@@ -20,7 +20,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     with SecuredElement
     with ExtensibleWebApiDomainElement
     with ServerContainer
-    with HasFederationMetadata[EndpointFederationMetadata] {
+    with HasFederationMetadata[EndPointFederationMetadata] {
 
   def description: StrField      = fields.field(Description)
   def summary: StrField          = fields.field(Summary)

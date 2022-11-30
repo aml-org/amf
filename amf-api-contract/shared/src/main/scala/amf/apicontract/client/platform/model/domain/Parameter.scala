@@ -1,5 +1,6 @@
 package amf.apicontract.client.platform.model.domain
 
+import amf.apicontract.client.platform.model.domain.federation.{EndPointFederationMetadata, ParameterFederationMetadata}
 import amf.apicontract.client.scala.model.domain.{Parameter => InternalParameter}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.{BoolField, StrField}
@@ -23,6 +24,8 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   def allowReserved: BoolField      = _internal.allowReserved
   def payloads: ClientList[Payload] = _internal.payloads.asClient
   def examples: ClientList[Example] = _internal.examples.asClient
+
+  def federationMetadata: ParameterFederationMetadata = _internal.federationMetadata
 
   /** Set deprecated property of this Parameter. */
   def withDeprecated(deprecated: Boolean): this.type = {

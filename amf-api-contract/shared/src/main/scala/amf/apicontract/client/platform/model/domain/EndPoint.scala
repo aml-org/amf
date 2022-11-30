@@ -1,11 +1,13 @@
 package amf.apicontract.client.platform.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings.ChannelBindings
+import amf.apicontract.client.platform.model.domain.federation.EndPointFederationMetadata
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.apicontract.client.scala.model.domain.{EndPoint => InternalEndPoint}
+import amf.core.client.platform.model.domain.federation.ShapeFederationMetadata
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -34,6 +36,8 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
 
   /** Get the part of the path property that was defined by this EndPoint. */
   def relativePath: String = _internal.relativePath
+
+  def federationMetadata: EndPointFederationMetadata = _internal.federationMetadata
 
   /** Set name property of this EndPoint */
   override def withName(name: String): this.type = {
