@@ -1,6 +1,6 @@
 package amf.graphqlfederation.internal.spec.domain
 
-import amf.apicontract.client.scala.model.domain.federation.ParameterFederationMetadata
+import amf.apicontract.client.scala.model.domain.federation.{EndpointFederationMetadata, ParameterFederationMetadata}
 import amf.core.client.scala.model.domain.federation.{FederationMetadata, ShapeFederationMetadata}
 
 trait FederationMetadataFactory[T <: FederationMetadata] {
@@ -13,4 +13,8 @@ object ShapeFederationMetadataFactory extends FederationMetadataFactory[ShapeFed
 
 object ParameterFederationMetadataFactory extends FederationMetadataFactory[ParameterFederationMetadata] {
   override def create(): ParameterFederationMetadata = ParameterFederationMetadata()
+}
+
+object EndpointFederationMetadataFactory extends FederationMetadataFactory[EndpointFederationMetadata] {
+  override def create(): EndpointFederationMetadata = EndpointFederationMetadata()
 }
