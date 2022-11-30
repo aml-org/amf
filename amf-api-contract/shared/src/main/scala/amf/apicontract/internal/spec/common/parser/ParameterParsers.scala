@@ -501,6 +501,7 @@ case class Oas2ParameterParser(
       entry => {
         val req: Boolean = entry.value.as[Boolean]
         payload.annotations += RequiredParamPayload(req, entry.range)
+        payload.set(PayloadModel.Required, AmfScalar(req, Annotations(entry.value)), Annotations(entry) )
       }
     )
     map.key("description", PayloadModel.Description in payload)
@@ -798,6 +799,8 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
               AmfScalar(1, Annotations() += LexicalInformation(a.range) += ExplicitField())
             )
         }
+
+
 
         Option(payload.schema).foreach(property.withRange)
       }
