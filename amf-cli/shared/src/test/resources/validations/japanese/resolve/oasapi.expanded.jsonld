@@ -311,6 +311,11 @@
                             ]
                           }
                         ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
                             "@id": "amf://id#39/source-map",
@@ -334,6 +339,32 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
+                                "@id": "amf://id#39/source-map/lexical/element_2",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/core#name"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(25,12)-(25,29)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "amf://id#39/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(27,12)-(27,28)]"
+                                  }
+                                ]
+                              },
+                              {
                                 "@id": "amf://id#39/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -343,19 +374,6 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(23,10)-(31,11)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "amf://id#39/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/core#name"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(25,12)-(25,29)]"
                                   }
                                 ]
                               }

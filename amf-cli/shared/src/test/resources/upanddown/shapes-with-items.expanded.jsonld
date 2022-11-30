@@ -469,6 +469,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#required": [
+                  {
+                    "@value": true
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map",
@@ -492,7 +497,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(38,10)-(43,11)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -508,17 +526,17 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/shapes#schema"
+                            "@value": "http://a.ml/vocabularies/apiContract#required"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(38,10)-(43,11)]"
+                            "@value": "[(37,10)-(37,26)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user"
