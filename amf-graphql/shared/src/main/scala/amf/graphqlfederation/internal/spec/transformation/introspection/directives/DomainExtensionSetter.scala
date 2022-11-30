@@ -1,5 +1,6 @@
 package amf.graphqlfederation.internal.spec.transformation.introspection.directives
 
+import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.federation.{FederationMetadata, HasFederationMetadata}
 import amf.shapes.client.scala.model.domain.NodeShape

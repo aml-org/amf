@@ -1,0 +1,11 @@
+type Query {
+    books(count: Int): [String] @shareable
+    authors2: [String] @override(from: "authors")
+    authors3: [String] @requires(fields: "authors2")
+    authors4: [Person] @provides(fields: "name")
+    authors5: [String] @inaccessible
+}
+
+type Person {
+    name: String
+}
