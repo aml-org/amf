@@ -1,12 +1,14 @@
 package amf.apicontract.client.scala.model.domain
 
 import amf.apicontract.client.scala.model.domain.bindings.ChannelBindings
+import amf.apicontract.client.scala.model.domain.federation.EndPointFederationMetadata
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.apicontract.internal.annotations.ParentEndPoint
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.metamodel.domain.EndPointModel._
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.client.scala.model.domain.federation.{FederationMetadata, HasFederationMetadata}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -17,7 +19,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     extends NamedDomainElement
     with SecuredElement
     with ExtensibleWebApiDomainElement
-    with ServerContainer {
+    with ServerContainer
+    with HasFederationMetadata[EndPointFederationMetadata] {
 
   def description: StrField      = fields.field(Description)
   def summary: StrField          = fields.field(Summary)

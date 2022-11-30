@@ -59,6 +59,7 @@ AMF Model Documentation
 * [EmptyBinding](#emptybinding)
 * [Encoding](#encoding)
 * [EndPoint](#endpoint)
+* [EndpointFederationMetadata](#endpointfederationmetadata)
 * [Example](#example)
 * [Extension](#extension)
 * [ExtensionLike](#extensionlike)
@@ -113,6 +114,7 @@ AMF Model Documentation
 * [Organization](#organization)
 * [Overlay](#overlay)
 * [Parameter](#parameter)
+* [ParameterFederationMetadata](#parameterfederationmetadata)
 * [ParameterKeyMapping](#parameterkeymapping)
 * [ParametrizedDeclaration](#parametrizeddeclaration)
 * [ParametrizedResourceType](#parametrizedresourcetype)
@@ -447,7 +449,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -484,7 +486,7 @@ Types:
  | member | [[DataNode](#datanode)] |  | `http://www.w3.org/2000/01/rdf-schema#member` |
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ArrayShape
@@ -531,7 +533,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -808,7 +810,7 @@ Types:
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## DataTypeFragment
@@ -1185,6 +1187,23 @@ Types:
  | server | [[Server](#server)] | Specific information about the server where the endpoint is accessible | `http://a.ml/vocabularies/apiContract#server` |
  | security | [[SecurityRequirement](#securityrequirement)] | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | binding | [ChannelBindings](#channelbindings) | Bindings for this endpoint | `http://a.ml/vocabularies/apiBinding#binding` |
+ | federationMetadata | [EndpointFederationMetadata](#endpointfederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## EndpointFederationMetadata
+Model that contains data about how the Shape should be federated
+Types:
+* `http://a.ml/vocabularies/federation#EndpointFederationMetadata`
+* `http://a.ml/vocabularies/federation#FederationMetadata`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name element in the federated graph | `http://a.ml/vocabularies/federation#name` |
+ | tags | [string] | Federation tags of the element | `http://a.ml/vocabularies/federation#tags` |
+ | shareable | boolean | Element can be defined by more than one component of the federated graph | `http://a.ml/vocabularies/federation#shareable` |
+ | inaccessible | boolean | Element cannot be accessed by the federated graph | `http://a.ml/vocabularies/federation#inaccessible` |
+ | overrideFrom | string | Indicates that the current subgraph is taking responsibility for resolving the marked field away from the subgraph specified in the from argument | `http://a.ml/vocabularies/federation#overrideFrom` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## Example
@@ -1390,7 +1409,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -1607,7 +1626,7 @@ Types:
  | value | string |  | `http://a.ml/vocabularies/data#value` |
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## LinkableElement
@@ -1677,7 +1696,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -1872,7 +1891,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -1963,7 +1982,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -2036,7 +2055,7 @@ Types:
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
 
@@ -2206,9 +2225,26 @@ Types:
  | payload | [[Payload](#payload)] |  | `http://a.ml/vocabularies/apiContract#payload` |
  | examples | [[Example](#example)] | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | `http://a.ml/vocabularies/core#defaultValue` |
+ | federationMetadata | [ParameterFederationMetadata](#parameterfederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## ParameterFederationMetadata
+Model that contains data about how the Shape should be federated
+Types:
+* `http://a.ml/vocabularies/federation#ParameterFederationMetadata`
+* `http://a.ml/vocabularies/federation#FederationMetadata`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name element in the federated graph | `http://a.ml/vocabularies/federation#name` |
+ | tags | [string] | Federation tags of the element | `http://a.ml/vocabularies/federation#tags` |
+ | shareable | boolean | Element can be defined by more than one component of the federated graph | `http://a.ml/vocabularies/federation#shareable` |
+ | inaccessible | boolean | Element cannot be accessed by the federated graph | `http://a.ml/vocabularies/federation#inaccessible` |
+ | overrideFrom | string | Indicates that the current subgraph is taking responsibility for resolving the marked field away from the subgraph specified in the from argument | `http://a.ml/vocabularies/federation#overrideFrom` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ParameterKeyMapping
@@ -2416,7 +2452,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -2477,7 +2513,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -2598,7 +2634,7 @@ Types:
  | datatype | url | Data type of value for an scalar dynamic node | `http://www.w3.org/ns/shacl#datatype` |
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | name | string | Name of the shape | `http://a.ml/vocabularies/core#name` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ScalarShape
@@ -2650,7 +2686,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -2708,7 +2744,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -2896,7 +2932,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
 
 ## ShapeExtension
@@ -2940,7 +2976,7 @@ Types:
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | expects | [[ShapeRequest](#shaperequest)] | Request information required by the operation | `http://a.ml/vocabularies/shapes#expects` |
  | returns | [[ShapeResponse](#shaperesponse)] | Response data returned by the operation | `http://a.ml/vocabularies/shapes#returns` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ShapeParameter
@@ -2958,7 +2994,7 @@ Types:
  | description | string | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
  | required | boolean | Marks the parameter as required | `http://a.ml/vocabularies/shapes#required` |
  | schema | [Shape](#shape) | Schema the parameter value must validate | `http://a.ml/vocabularies/shapes#schema` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | defaultValue | [DataNode](#datanode) | Default value parsed for a parameter | `http://a.ml/vocabularies/core#defaultValue` |
  | link-target | url | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
@@ -3127,7 +3163,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
@@ -3197,7 +3233,7 @@ Types:
  | serializationSchema | [Shape](#shape) | Serialization schema for a shape | `http://a.ml/vocabularies/shapes#serializationSchema` |
  | deprecated | boolean | Deprecated annotation for a property constraint | `http://a.ml/vocabularies/shapes#deprecated` |
  | isExtension | boolean | Indicates if a Shape is an extension of another shape or a standalone shape | `http://a.ml/vocabularies/shapes#isExtension` |
- | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this Shape should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
+ | federationMetadata | [ShapeFederationMetadata](#shapefederationmetadata) | Metadata about how this DomainElement should be federated | `http://a.ml/vocabularies/federation#federationMetadata` |
  | isStub | boolean | Indicates if an element is a stub from an external component from another component of the federated graph | `http://a.ml/vocabularies/federation#isStub` |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |

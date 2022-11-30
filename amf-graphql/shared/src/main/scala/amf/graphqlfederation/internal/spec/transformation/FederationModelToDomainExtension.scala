@@ -1,10 +1,13 @@
 package amf.graphqlfederation.internal.spec.transformation
 
+import amf.apicontract.client.scala.model.domain.Parameter
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.federation.ShapeFederationMetadata
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.{FederationMetadata, IsStub}
@@ -29,6 +32,8 @@ case class FederationModelToDomainExtension() extends TransformationStep {
         val declarations = FederationDirectiveDeclarations.extractFrom(doc)
         val builder      = FederationDirectiveApplicationsBuilder(declarations)
         val setExtension = DomainExtensionSetter(builder)
+
+        propagateExtensionsInRootTypes(doc, setExtension)
 
         doc.declares.foreach {
           case node: NodeShape =>
@@ -91,6 +96,30 @@ case class FederationModelToDomainExtension() extends TransformationStep {
       case _ => // skip
     }
     model
+  }
+
+  private def propagateExtensionsInRootTypes(doc: Document, setExtension: DomainExtensionSetter): Unit = {
+    doc.encodes match {
+      case api: Api =>
+        api.endPoints.foreach { endpoint =>
+          setExtension
+            .fromInaccessibleIn(endpoint)
+            .fromShareableIn(endpoint)
+            .fromOverrideIn(endpoint)
+          endpoint.operations.foreach { operation =>
+            operation.requests.foreach { request =>
+              request.queryParameters.foreach { parameter =>
+                propagateForQueryParameters(parameter, setExtension)
+              }
+            }
+          }
+        }
+    }
+  }
+
+  private def propagateForQueryParameters(parameter: Parameter, setExtension: DomainExtensionSetter): Unit = {
+    setExtension
+      .fromInaccessibleIn(parameter)
   }
 
   private def removeFields(e: DomainElement)(fields: Field*): Unit = fields.foreach(f => e.fields.removeField(f))

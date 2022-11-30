@@ -5,7 +5,7 @@ import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
@@ -28,10 +28,11 @@ case class GraphQLDirectiveApplicationInDeclarationParser(node: Node)(implicit v
   private def parseArgumentDirectiveApplications(argNode: Node, argument: PropertyShape): Unit = {
     GraphQLDirectiveApplicationsParser(argNode, argument).parse()
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(
+      FederationMetadataParser(
         argNode,
         argument,
-        Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)
+        Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
       ).parse()
       GraphQLDirectiveApplicationsParser(argNode, argument, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
