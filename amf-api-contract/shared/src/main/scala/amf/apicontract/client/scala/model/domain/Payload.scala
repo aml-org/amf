@@ -2,7 +2,7 @@ package amf.apicontract.client.scala.model.domain
 
 import amf.apicontract.internal.metamodel.domain.PayloadModel.{Encoding => EncodingModel, _}
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel}
-import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -21,9 +21,11 @@ case class Payload(override val fields: Fields, override val annotations: Annota
 
   def schemaMediaType: StrField = fields.field(SchemaMediaType)
   def encodings: Seq[Encoding]  = fields.field(EncodingModel)
+  def required: BoolField =  fields.field(Required)
 
   def withSchemaMediaType(mediaType: String): this.type = set(SchemaMediaType, mediaType)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
+  def withRequired(required: Boolean): this.type  = set(Required, required)
 
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)
