@@ -42,13 +42,13 @@ object DateTimeOnlyFormatValidator extends FormatValidator {
 }
 
 object PartialTimeFormatValidator extends FormatValidator {
-  private val PATTERN = "^([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)$"
+  private val PATTERN = "^([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
 
   override def formatName = "time"
 
   override def validate(value: String): Optional[String] = {
     if (!value.matches(PATTERN)) {
-      Optional.of(String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "HH:mm:ss"))
+      Optional.of(String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "HH:mm:ss[.ff...]"))
     } else {
       Optional.empty()
     }
