@@ -36,7 +36,7 @@ object DateTimeOnlyFormatValidator extends FormatValidator {
   override def validate(value: String): Optional[String] =
     if (!value.matches(pattern)) {
       Optional.of(
-        String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "yyyy-MM-dd'T'HH:mm:ss")
+        String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "yyyy-MM-dd'T'HH:mm:ss[.ff...]")
       )
     } else Optional.empty()
 }
