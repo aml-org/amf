@@ -70,6 +70,13 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("operation/query_string_parameters.raml", Some("query_string_parameters.report"))
   }
 
+  test("Exclusive queryString vs queryParameters validation - One inherited from trait ") {
+    validate(
+      "operation/query_string_parameters_one_in_trait.raml",
+      Some("query_string_parameters_one_in_trait.report")
+    )
+  }
+
   test("float numeric constraints") {
     validate("/shapes/floats.raml", Some("shapes-floats.report"))
   }
