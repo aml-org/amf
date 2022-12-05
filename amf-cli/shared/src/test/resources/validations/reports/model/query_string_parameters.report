@@ -1,14 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/operation/query_string_parameters.raml
-Profile: 
+Profile: RAML 1.0
 Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/parser#exclusive-properties-error
+- Constraint: http://a.ml/vocabularies/amf/parser#request-exclusive-queryString-queryParameters-properties
   Message: Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/operation/query_string_parameters.raml#/web-api/endpoint/%2Flocation%2F%7Bid%7D/supportedOperation/get/expects/request
-  Property: 
-  Range: [(7,0)-(15,16)]
-  Location: file://amf-cli/shared/src/test/resources/validations/operation/query_string_parameters.raml
+  Property: http://a.ml/vocabularies/apiContract#expects
+  Range: 
+  Location: 
