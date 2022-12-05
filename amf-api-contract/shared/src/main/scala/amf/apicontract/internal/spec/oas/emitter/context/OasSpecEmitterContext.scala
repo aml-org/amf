@@ -187,6 +187,7 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRe
 
 class Oas2SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
     extends OasSpecEmitterContext(eh, refEmitter, config) {
+  override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val spec: Spec                      = Oas20

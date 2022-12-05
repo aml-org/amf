@@ -1,0 +1,59 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test raml union conversion",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/something": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "$ref": "#/definitions/otherUnion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "otherUnion": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/complexType"
+        }
+      ]
+    },
+    "complexType": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "p1",
+        "p2"
+      ],
+      "properties": {
+        "p1": {
+          "type": "string"
+        },
+        "p2": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
