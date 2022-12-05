@@ -21,7 +21,7 @@ import amf.apicontract.internal.validation.shacl.oas.{
 }
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
-import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
@@ -659,8 +659,11 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         ): Unit = {
           val queryString    = elem.fields.getValueAsOption(ParametersFieldModel.QueryString)
           val queryParameter = elem.fields.getValueAsOption(ParametersFieldModel.QueryParameters)
-          if (queryString.isDefined && queryParameter.isDefined)
-            validate(exclusiveFieldsError(field, elem.annotations))
+          if (queryString.isDefined && queryParameter.isDefined) {
+            val hasLexical  = elem.annotations.contains(classOf[LexicalInformation])
+            val annotations = if (hasLexical) elem.annotations else queryString.get.annotations
+            validate(exclusiveFieldsError(field, annotations))
+          }
         }
 
         private def exclusiveFieldsError(field: Field, annotations: Annotations): Option[ValidationInfo] = {
@@ -668,7 +671,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             ValidationInfo(
               field,
               Option(
-                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together"
+                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be specified, explicitly or implicitly, on the same method of the same resource."
               ),
               Option(annotations)
             )

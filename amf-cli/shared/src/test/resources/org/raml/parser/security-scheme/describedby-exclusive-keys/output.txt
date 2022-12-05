@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#security-scheme-exclusive-queryString-queryParameters-properties
-  Message: Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together
+  Message: Properties 'queryString' and 'queryParameters' are exclusive and cannot be specified, explicitly or implicitly, on the same method of the same resource.
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml#/declares/scheme/custom_with_query_param
   Property: http://a.ml/vocabularies/security#scheme
