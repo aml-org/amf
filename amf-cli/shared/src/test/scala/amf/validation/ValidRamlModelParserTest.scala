@@ -220,6 +220,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("fraction-date-only/fraction-date-only.raml")
   }
 
+  test("Time only with fraction example") {
+    validate("fraction-time-only/fraction-time-only.raml")
+  }
+
   test("Annotation type definition forward referencing data type with same name") {
     checkValid("annotations/forward-ref-to-type.raml")
   }

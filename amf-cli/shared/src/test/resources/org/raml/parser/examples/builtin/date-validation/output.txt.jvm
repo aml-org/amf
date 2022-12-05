@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: [25:61:61] is not a valid time. Expected HH:mm:ss
+  Message: [25:61:61] is not a valid time. Expected HH:mm:ss[.ff...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml#/declares/scalar/lunchtime/examples/example/bad
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml#/declares/scalar/lunchtime/examples/example/bad
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: [2015-13-33T25:61:61] is not a valid date-time-only. Expected yyyy-MM-dd'T'HH:mm:ss
+  Message: [2015-13-33T25:61:61] is not a valid date-time-only. Expected yyyy-MM-dd'T'HH:mm:ss[.ff...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml#/declares/scalar/fireworks/examples/example/bad
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/date-validation/input.raml#/declares/scalar/fireworks/examples/example/bad
