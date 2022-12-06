@@ -98,7 +98,7 @@ public class JSONObject extends org.json.JSONObject {
         char initial = string.charAt(0);
         if ((initial >= '0' && initial <= '9') || initial == '-') {
             try {
-                return stringToNumber(string);
+                return org.json.JSONObject.stringToNumber(string);
             } catch (Exception ignore) {
                 throw new InvalidJSONValueException("Unquoted string value");
             }
