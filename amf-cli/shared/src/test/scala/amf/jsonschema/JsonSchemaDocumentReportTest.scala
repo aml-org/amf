@@ -38,4 +38,12 @@ class JsonSchemaDocumentReportTest extends UniquePlatformReportGenTest {
       configOverride = Some(baseConfig)
     )
   }
+
+  test("Document with reference to definition from another definition") {
+    validate(
+      "reference-to-def-inside-def.json",
+      None,
+      configOverride = Some(baseConfig)
+    )
+  }
 }

@@ -45,6 +45,8 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
     document.set(BaseUnitModel.Location, root.location)
 
     doc.toOption[YMap].foreach { rootMap =>
+      ctx.setJsonSchemaAST(rootMap)
+
       val fullRef = normalizeRef()
 
       val tempShape = temporalShape(rootMap, fullRef)
