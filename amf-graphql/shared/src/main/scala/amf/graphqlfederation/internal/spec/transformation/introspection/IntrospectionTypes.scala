@@ -6,7 +6,8 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.{FieldBuilder, GraphqlArgument}
 import TypeBuilders.{array, nullable}
-import amf.core.internal.parser.domain.Annotations.virtual
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, UnionShape}
 
 object IntrospectionTypes {
@@ -83,7 +84,7 @@ object IntrospectionTypes {
   private def queryField(name: String) = {
     FieldBuilder
       .empty()
-      .withName(name)
+      .withName(AmfScalar(name, inferred()))
       .withTypeName("Query")
       .withOperationType(RootTypes.Query)
   }

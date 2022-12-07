@@ -1,7 +1,8 @@
 package amf.graphql.internal.spec.domain
 
-import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
@@ -14,7 +15,7 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
 
   def parse(): Option[Shape] = {
     invokeAppropriateParser()
-      .map(_.withIsExtension(true))
+      .map(_.set(ShapeModel.IsExtension, AmfScalar(true, inferred()), inferred()))
   }
 
   private def invokeAppropriateParser(): Option[AnyShape] = {
@@ -55,7 +56,7 @@ case class GraphQLTypeExtensionParser(typeExtensionDef: Node)(implicit
   def parseObjectTypeExtension(node: Node): Option[NodeShape] = {
     searchName(node) match {
       case Some("Query") | Some("Mutation") | Some("Subscription") => None
-      case _ => Some(new GraphQLNestedTypeParser(node).parse())
+      case _                                                       => Some(new GraphQLNestedTypeParser(node).parse())
     }
   }
 

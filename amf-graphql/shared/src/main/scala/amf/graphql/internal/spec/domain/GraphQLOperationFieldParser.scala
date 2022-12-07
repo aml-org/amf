@@ -1,10 +1,16 @@
 package amf.graphql.internal.spec.domain
 
+import amf.apicontract.client.scala.model.domain.Request
+import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
+import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload, ShapeRequest}
+import amf.shapes.internal.domain.metamodel.operations.{ShapeOperationModel, ShapeParameterModel, ShapeRequestModel}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -18,35 +24,53 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseArguments()
     parseRange()
     inFederation { implicit fCtx =>
-      FederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        ast,
+        operation,
+        Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(ast, operation).parse()
   }
 
   private def parseArguments(): Unit = {
-    val request = operation.withRequest()
+    val request = ShapeRequest(virtual()).set(RequestModel.Name, "default", synthesized())
+    operation.set(ShapeOperationModel.Request, request, inferred())
+
     val arguments = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
       parseArgument(argument)
     }
-    if (arguments.nonEmpty) request.withQueryParameters(arguments)
+    if (arguments.nonEmpty) request.set(ShapeRequestModel.QueryParameters, AmfArray(arguments, inferred()), inferred())
   }
 
   private def parseArgument(n: Node): ShapeParameter = {
     val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
-    val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
+    val queryParam = ShapeParameter(toAnnotations(n))
+      .withName(name, annotations)
+      .set(ShapeParameterModel.Binding, "query", synthesized())
     parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
-      FederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        n,
+        queryParam,
+        Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
     unpackNilUnion(parseType(n)) match {
       case NullableShape(true, shape) =>
         setDefaultValue(n, queryParam)
-        queryParam.withSchema(shape).withRequired(false)
+        queryParam
+          .set(ShapeParameterModel.Schema, shape, inferred())
+          .set(ShapeParameterModel.Required, AmfScalar(false, inferred()), inferred())
       case NullableShape(false, shape) =>
         setDefaultValue(n, queryParam)
-        queryParam.withSchema(shape).withRequired(true)
+        queryParam
+          .set(ShapeParameterModel.Schema, shape, inferred())
+          .set(ShapeParameterModel.Required, AmfScalar(false, inferred()), inferred())
     }
     GraphQLDirectiveApplicationsParser(n, queryParam).parse()
     queryParam
@@ -59,8 +83,10 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
 
   private def parseRange(): Unit = {
     val response = operation.withResponse()
-    val payload  = ShapePayload().withName("default")
-    payload.withSchema(parseType(ast))
-    response.withPayload(payload)
+    response.annotations ++= synthesized()
+    val payload = ShapePayload(synthesized())
+      .withName("default", synthesized())
+      .set(PayloadModel.Schema, parseType(ast), inferred())
+    response.set(ResponseModel.Payload, payload, inferred())
   }
 }

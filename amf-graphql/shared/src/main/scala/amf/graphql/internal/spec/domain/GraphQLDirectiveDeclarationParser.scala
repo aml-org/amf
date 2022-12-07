@@ -2,14 +2,17 @@ package amf.graphql.internal.spec.domain
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
-import amf.core.internal.parser.domain.Annotations.virtual
+import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.remote.{GraphQL, GraphQLFederation}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.annotations.DirectiveArguments
+import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import org.mulesoft.antlrast.ast.{Error, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
 
@@ -37,7 +40,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
       case GraphQLFederation => "REPEATABLE_KEYWORD"
     }
     if (pathToTerminal(node, Seq(tokenName)).isDefined) {
-      directive.withRepeatable(true)
+      directive.set(CustomDomainPropertyModel.Repeatable, AmfScalar(true, inferred()), inferred())
     }
   }
 
@@ -47,10 +50,10 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         parseArgument(argument)
     }
     val schema = NodeShape(virtual())
-    schema.withIsInputOnly(true)
-    schema.withProperties(properties)
+      .set(NodeShapeModel.InputOnly, AmfScalar(true), synthesized())
+      .set(NodeShapeModel.Properties, AmfArray(properties, virtual()), inferred())
     schema.annotations += DirectiveArguments()
-    directive.withSchema(schema)
+    directive.set(CustomDomainPropertyModel.Schema, schema, inferred())
   }
 
   private def parseArgument(n: Node): PropertyShape = {
@@ -62,11 +65,11 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
     val argumentType = parseType(n)
     setDefaultValue(n, propertyShape)
     propertyShape.annotations += DirectiveArguments()
-    propertyShape.withRange(argumentType)
+    propertyShape.set(PropertyShapeModel.Range, argumentType)
   }
 
   private def parseLocations(): Unit = {
-    var domains = Seq[String]()
+    var domains = Seq[AmfScalar]()
     collect(node, Seq(DIRECTIVE_LOCATIONS, DIRECTIVE_LOCATION)).foreach { n =>
       lazy val typeSystemLocation = path(n, Seq(TYPE_SYSTEM_DIRECTIVE_LOCATION))
       lazy val executableLocation = path(n, Seq(EXECUTABLE_DIRECTIVE_LOCATION))
@@ -75,7 +78,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
           val locationName = rawLocation.children.head.asInstanceOf[Terminal].value
           toLocationIri(locationName) match {
             case Some(locationIri) =>
-              domains = domains :+ locationIri
+              domains = domains :+ AmfScalar(locationIri, toAnnotations(rawLocation))
             case None => // unreachable, will fail first on ANTLR parsing
           }
         case _ =>
@@ -85,7 +88,8 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
           }
       }
     }
-    directive.withDomain(domains.distinct)
+    val domainsArray = AmfArray(domains.distinct, inferred())
+    directive.set(CustomDomainPropertyModel.Domain, domainsArray, inferred())
   }
 
   private def checkErrorNode(children: Seq[ASTElement]): Unit = {

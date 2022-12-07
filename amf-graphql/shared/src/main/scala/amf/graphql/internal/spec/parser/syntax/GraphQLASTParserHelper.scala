@@ -2,7 +2,8 @@ package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, DomainElement, Shape}
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
@@ -12,6 +13,8 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
+import amf.shapes.internal.domain.metamodel.{ScalarShapeModel, UnionShapeModel}
+import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 import scala.reflect.ClassTag
@@ -79,7 +82,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
         (name, toAnnotations(effectivePath.get))
       case _ =>
         astError(error, toAnnotations(n))
-        (default, Annotations())
+        (default, synthesized())
     }
   }
 
@@ -136,19 +139,23 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     val parseFn: (Node, String) => AnyShape = (t, typeName) => {
       val scalar = ScalarShape(toAnnotations(t))
       typeName match {
-        case INT     => scalar.withDataType(DataType.Integer)
-        case FLOAT   => scalar.withDataType(DataType.Float)
-        case STRING  => scalar.withDataType(DataType.String)
-        case BOOLEAN => scalar.withDataType(DataType.Boolean)
+        case INT     => setScalarDatatype(scalar, DataType.Integer)
+        case FLOAT   => setScalarDatatype(scalar, DataType.Float)
+        case STRING  => setScalarDatatype(scalar, DataType.String)
+        case BOOLEAN => setScalarDatatype(scalar, DataType.Boolean)
         case ID =>
-          scalar.withDataType(DataType.Any)
-          scalar.withFormat("ID")
+          setScalarDatatype(scalar, DataType.Any)
+          scalar.set(ScalarShapeModel.Format, AmfScalar("ID", inferred()), inferred())
         case _ =>
           astError(s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
       }
       scalar
     }
     maybeNullable(t, parseFn)
+  }
+
+  def setScalarDatatype(scalar: ScalarShape, dataType: String): scalar.type = {
+    scalar.set(ScalarShapeModel.DataType, AmfScalar(dataType, inferred()), inferred())
   }
 
   def parseListType(t: Node)(implicit
@@ -159,6 +166,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       path(t, Seq(LIST_TYPE)) match {
         case Some(n: Node) =>
           val range = parseType(n)
+//          array.set(array.id + "/items", ArrayShapeModel.Items, range, inferred())
           array.withItems(range)
         case _ =>
           astError(s"Unknown listType range", toAnnotations(t))
@@ -178,13 +186,14 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def findOrLinkType(typeName: String, t: ASTNode)(implicit ctx: GraphQLBaseWebApiContext): AnyShape = {
+    val ann = toAnnotations(t)
     ctx.declarations.findType(typeName, SearchScope.All) match {
       case Some(s: ScalarShape) =>
-        s.link(typeName, toAnnotations(t)).asInstanceOf[ScalarShape].withName(typeName, toAnnotations(t))
+        s.link(AmfScalar(typeName, ann), ann, inferred()).asInstanceOf[ScalarShape].withName(typeName, ann)
       case Some(s: NodeShape) =>
-        s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
+        s.link(AmfScalar(typeName, ann), ann, inferred()).asInstanceOf[NodeShape].withName(typeName, ann)
       case Some(s: UnionShape) =>
-        s.link(typeName, toAnnotations(t)).asInstanceOf[UnionShape].withName(typeName, toAnnotations(t))
+        s.link(AmfScalar(typeName, ann), ann, inferred()).asInstanceOf[UnionShape].withName(typeName, ann)
       case _ =>
         unresolvedShape(typeName, t)
     }
@@ -202,14 +211,9 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   ): AnyShape = {
     val shape = parse(t, typeName)
     if (isNullable(t)) {
-      UnionShape()
-        .withAnyOf(
-          Seq(
-            NilShape(virtual()),
-            shape
-          ),
-          synthesized()
-        )
+      val nilItems = Seq(NilShape(synthesized()), shape)
+      UnionShape(virtual())
+        .set(UnionShapeModel.AnyOf, AmfArray(nilItems, virtual()), inferred())
     } else {
       shape
     }
@@ -250,9 +254,11 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     contextually[GraphQLWebApiContext](fn)
 
   def setDefaultValue(n: Node, parameter: AbstractParameter)(implicit ctx: GraphQLBaseWebApiContext): Unit = {
-    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => parameter.withDefaultValue(value))
+    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map((value: DataNode) =>
+      parameter.set(AbstractParameterModel.Default, value, inferred())
+    )
   }
 
   def setDefaultValue(n: Node, shape: Shape)(implicit ctx: GraphQLBaseWebApiContext): Unit =
-    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => shape.withDefault(value, inferred()))
+    parseValue(n, Seq(DEFAULT_VALUE, VALUE)).map(value => shape.set(ShapeModel.Default, value, inferred()))
 }

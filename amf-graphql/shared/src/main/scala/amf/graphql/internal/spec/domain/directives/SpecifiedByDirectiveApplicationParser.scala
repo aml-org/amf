@@ -1,6 +1,9 @@
 package amf.graphql.internal.spec.domain.directives
 
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidArgumentValue, InvalidDirectiveLocation}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidArgumentValue,
+  InvalidDirectiveLocation
+}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DomainElement, ScalarNode}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
@@ -32,8 +35,7 @@ class SpecifiedByDirectiveApplicationParser(override implicit val ctx: GraphQLBa
 
   private def setDataTypeField(element: DomainElement, dataTypeNode: ScalarNode) = {
     element match {
-      case scalarShape: ScalarShape =>
-        scalarShape.withDataType(dataTypeNode.value.value())
+      case scalarShape: ScalarShape => setScalarDatatype(scalarShape, dataTypeNode.value.value())
       case _ =>
         ctx.eh.violation(
           InvalidDirectiveLocation,

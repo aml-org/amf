@@ -1,11 +1,20 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphqlfederation.internal.spec.domain.{ExternalDirectiveParser, FederationMetadataParser, ProvidesParser, RequiresParser, ShapeFederationMetadataFactory}
-import amf.shapes.client.scala.model.domain.NodeShape
+import amf.graphqlfederation.internal.spec.domain.{
+  ExternalDirectiveParser,
+  FederationMetadataParser,
+  ProvidesParser,
+  RequiresParser,
+  ShapeFederationMetadataFactory
+}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -18,8 +27,18 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
     parseDescription(ast, property, property.meta)
     parseRange()
     inFederation { implicit fCtx =>
-      FederationMetadataParser(ast, property, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
-      FederationMetadataParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        ast,
+        property,
+        Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
+      FederationMetadataParser(
+        ast,
+        property,
+        Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(ast, property, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
       GraphQLDirectiveApplicationsParser(ast, property, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
       ExternalDirectiveParser(ast, property).parse()
@@ -37,8 +56,15 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   private def parseRange(): Unit = {
     val range = parseType(ast)
     unpackNilUnion(range) match {
-      case NullableShape(true, shape)  => property.withRange(shape).withMinCount(0)
-      case NullableShape(false, shape) => property.withRange(shape).withMinCount(1)
+      case NullableShape(true, shape)  => makeNullable(shape, nullable = true)
+      case NullableShape(false, shape) => makeNullable(shape, nullable = false)
     }
+  }
+
+  private def makeNullable(shape: AnyShape, nullable: Boolean): Unit = {
+    val minCount = if (nullable) 0 else 1
+    property
+      .set(PropertyShapeModel.Range, shape, inferred())
+      .set(PropertyShapeModel.MinCount, AmfScalar(minCount, synthesized()), synthesized())
   }
 }

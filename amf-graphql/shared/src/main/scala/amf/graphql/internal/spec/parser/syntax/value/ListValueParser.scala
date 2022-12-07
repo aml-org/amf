@@ -1,6 +1,8 @@
 package amf.graphql.internal.spec.parser.syntax.value
 
-import amf.core.client.scala.model.domain.ArrayNode
+import amf.core.client.scala.model.domain.{AmfArray, ArrayNode}
+import amf.core.internal.metamodel.domain.ArrayNodeModel
+import amf.core.internal.parser.domain.Annotations.inferred
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, ValueParser}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{LIST_VALUE, VALUE}
@@ -15,6 +17,10 @@ object ListValueParser extends AbstractValueParser[ArrayNode] with GraphQLASTPar
 
   private def parseListValue(listAst: Node)(implicit ctx: GraphQLBaseWebApiContext): ArrayNode = {
     val members = collectNodes(listAst, Seq(VALUE)).flatMap(member => ValueParser.parseValue(member))
-    ArrayNode(toAnnotations(listAst)).withMembers(members)
+    ArrayNode(toAnnotations(listAst)).set(
+      ArrayNodeModel.Member,
+      AmfArray(members, toAnnotations(listAst)),
+      toAnnotations(listAst)
+    )
   }
 }

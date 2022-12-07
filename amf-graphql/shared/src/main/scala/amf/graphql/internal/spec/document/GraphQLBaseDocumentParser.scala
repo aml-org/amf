@@ -4,13 +4,16 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{AntlrError, DuplicatedDeclaration}
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.client.scala.model.domain.{AmfArray, NamedDomainElement}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.metamodel.document.{BaseUnitModel, BaseUnitProcessingDataModel, FragmentModel, ModuleModel}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.Annotations.inferred
 import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
@@ -52,12 +55,16 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
     declarations.foreach(_.annotations += DeclaredElement())
-    doc.withDeclares(declarations)
+    doc.set(ModuleModel.Declares, AmfArray(declarations, Annotations()), inferred())
     inFederation { _ =>
-      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
+      val processingData =
+        APIContractProcessingData().set(BaseUnitProcessingDataModel.SourceSpec, Spec.GRAPHQL_FEDERATION.id, inferred())
+      doc.set(BaseUnitModel.ProcessingData, processingData, inferred())
     }
     inGraphQL { _ =>
-      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+      val processingData =
+        APIContractProcessingData().set(BaseUnitProcessingDataModel.SourceSpec, Spec.GRAPHQL.id, inferred())
+      doc.set(BaseUnitModel.ProcessingData, processingData, inferred())
     }
     doc
   }
@@ -68,8 +75,9 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseWebAPI(ast: AST): Unit = {
     val webApi = WebApi(Annotations(SourceASTElement(ast.current())))
-    webApi.withName(root.location.split("/").last)
-    doc.withLocation(root.location).withEncodes(webApi)
+    webApi.withName(root.location.split("/").last, inferred())
+    doc.set(FragmentModel.Encodes, webApi, Annotations.inferred())
+    doc.withLocation(root.location)
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
@@ -247,7 +255,8 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Api = {
     val endpoints    = GraphQLRootTypeParser(objTypeDef, queryType).parse()
     val oldEndpoints = webapi.endPoints
-    webapi.withEndPoints(oldEndpoints ++ endpoints)
+    val allEndpoints = webapi.endPoints ++ endpoints
+    webapi.set(WebApiModel.EndPoints, AmfArray(allEndpoints, inferred()), inferred())
   }
 
   private def getRootType(typeName: String): Option[RootTypes.Value] = {

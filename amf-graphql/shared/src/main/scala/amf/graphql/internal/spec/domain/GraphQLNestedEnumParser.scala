@@ -1,26 +1,34 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, ScalarNode}
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
-import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.ScalarShape
+import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
-  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef)).withDataType(DataType.Any)
+  val enum: ScalarShape = ScalarShape(toAnnotations(enumTypeDef))
+    .set(ScalarShapeModel.DataType, AmfScalar(DataType.Any, inferred()), inferred())
 
   def parse(): ScalarShape = {
     parseName()
     parseValues()
     parseDescription(enumTypeDef, enum, enum.meta)
     inFederation { implicit fCtx =>
-      FederationMetadataParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        enumTypeDef,
+        enum,
+        Seq(ENUM_DIRECTIVE, ENUM_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(enumTypeDef, enum, Seq(ENUM_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(enumTypeDef, enum).parse()
@@ -52,8 +60,8 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
             case None => ScalarNode(virtual())
           }
         }
-        enum.withValues(values)
-      case _ => enum.withValues(Seq())
+        enum.set(ShapeModel.Values, AmfArray(values, toAnnotations(valuesNode)), toAnnotations(valuesNode))
+      case _ => enum.set(ShapeModel.Values, AmfArray(Seq(), synthesized()), synthesized())
     }
   }
 

@@ -1,10 +1,14 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized}
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, KeyParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
+import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit
@@ -19,16 +23,26 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     collectFields()
     parseDescription(objTypeNode, obj, obj.meta)
     if (isInterface) {
-      obj.withIsAbstract(true)
+      obj.set(NodeShapeModel.IsAbstract, AmfScalar(true), synthesized())
       inFederation { implicit fCtx =>
-        FederationMetadataParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory)
+        FederationMetadataParser(
+          objTypeNode,
+          obj,
+          Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE),
+          ShapeFederationMetadataFactory
+        )
           .parse()
         GraphQLDirectiveApplicationsParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, DIRECTIVE)).parse()
         KeyParser(objTypeNode, obj, Seq(INTERFACE_DIRECTIVE, INTERFACE_FEDERATION_DIRECTIVE)).parse()
       }
     }
     inFederation { implicit fCtx =>
-      FederationMetadataParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, OBJECT_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        objTypeNode,
+        obj,
+        Seq(OBJECT_DIRECTIVE, OBJECT_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, DIRECTIVE)).parse()
       KeyParser(objTypeNode, obj, Seq(OBJECT_DIRECTIVE, OBJECT_FEDERATION_DIRECTIVE)).parse()
     }
@@ -43,17 +57,16 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
       parseInheritance(ifaceName.children.head.asInstanceOf[Terminal])
     }
     if (ifaces.nonEmpty) {
-      obj.withInherits(ifaces)
+      obj.set(ShapeModel.Inherits, AmfArray(ifaces, inferred()), inferred())
     }
   }
 
   def parseInheritance(t: Terminal): AnyShape = {
     val typeName = t.value
     ctx.declarations.findType(typeName, SearchScope.All) match {
-      case Some(i: NodeShape) if i.isAbstract.value() =>
-        i.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
       case Some(n: NodeShape) =>
-        n.link(t.value, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
+        val ann = toAnnotations(t)
+        n.link(AmfScalar(t.value, ann), ann, ann).asInstanceOf[NodeShape].withName(typeName, ann)
       case _ =>
         unresolvedShape(typeName, t)
     }

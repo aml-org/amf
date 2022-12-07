@@ -2,6 +2,7 @@ package amf.graphql.internal.spec.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.{FieldBuilder, GraphqlArgument, OperationMethod}
@@ -15,17 +16,15 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
   INPUT_FIELD_FEDERATION_DIRECTIVE,
   INPUT_VALUE_DEFINITION,
   INPUT_VALUE_DIRECTIVE,
-  OBJECT_DIRECTIVE,
-  OBJECT_FEDERATION_DIRECTIVE
+  OBJECT_DIRECTIVE
 }
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{
   EndpointFederationMetadataFactory,
   FederationMetadataParser,
-  KeyParser,
-  ParameterFederationMetadataFactory,
-  ShapeFederationMetadataFactory
+  ParameterFederationMetadataFactory
 }
+import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -41,11 +40,12 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     }
   }
 
-  private def parseField(f: Node) = {
+  private def parseField(f: Node): EndPoint = {
     val (fieldName, annotations) = findName(f, "AnonymousField", "Missing name for root type field")
     val initialBuilder = parseDescription(f).foldLeft(FieldBuilder.empty(toAnnotations(f))) { (builder, description) =>
       builder.withDescription(description)
     }
+
     val method = OperationMethod(queryType)
     val endpoint = initialBuilder
       .withName(AmfScalar(fieldName, annotations))
@@ -91,10 +91,14 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
     unpackNilUnion(parseType(argument)) match {
       case NullableShape(true, shape) =>
         setDefaultValue(argument, queryParam)
-        queryParam.withSchema(shape).withRequired(false)
+        queryParam
+          .set(AbstractParameterModel.Schema, shape, inferred())
+          .set(AbstractParameterModel.Required, AmfScalar(false), synthesized())
       case NullableShape(false, shape) =>
         setDefaultValue(argument, queryParam)
-        queryParam.withSchema(shape).withRequired(true)
+        queryParam
+          .set(AbstractParameterModel.Schema, shape, inferred())
+          .set(AbstractParameterModel.Required, AmfScalar(true), synthesized())
     }
     GraphQLDirectiveApplicationsParser(argument, queryParam).parse()
     queryParam
