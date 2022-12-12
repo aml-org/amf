@@ -22,22 +22,16 @@ components:
       not:
         type: string
     common:
-      example:
-        strict: true
-        value: a
-      anyOf:
-        -
-          title: common schema
-          description: common test case
-          externalDocs:
-            url: https://example.com
-            description: Find more info here
-          deprecated: false
-          type: string
-          minLength: 0
-          maxLength: 100
-        -
-          type: "null"
+      title: common schema
+      description: common test case
+      externalDocs:
+        url: https://example.com
+        description: Find more info here
+      nullable: true
+      deprecated: false
+      type: string
+      minLength: 0
+      maxLength: 100
     allOfSchema:
       allOf:
         -
