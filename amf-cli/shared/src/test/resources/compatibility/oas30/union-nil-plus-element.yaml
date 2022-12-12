@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: test raml union + type conversion
+  version: 0.1.0
+paths:
+  /something:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/someUnionType"
+      responses:
+        "200":
+          description: ""
+components:
+  schemas:
+    someUnionType:
+      nullable: true
+      type: string

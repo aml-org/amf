@@ -1,11 +1,12 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.internal.annotations.{DeclaredElement, NilUnion}
 import amf.core.internal.metamodel.Field
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
@@ -66,6 +67,10 @@ case class OasTypeEmitter(
         OasNodeShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case union: UnionShape if nilUnion(union) =>
         OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
+      case union: UnionShape if oas30WithNull(union) =>
+        // null type is not valid in OAS 3.0.x. We will reformat the union with nil in a nullable like type
+        val nullableType = processNullableLikeUnion(union)
+        OasTypeEmitter(nullableType, ordering, ignored, references).emitters()
       case union: UnionShape =>
         val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
         OasUnionShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath).emitters()
@@ -112,6 +117,24 @@ case class OasTypeEmitter(
 
   def nilUnion(union: UnionShape): Boolean =
     union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
+
+  private def oas30WithNull(union: UnionShape): Boolean =
+    spec.spec == Spec.OAS30 && union.anyOf.exists(_.isInstanceOf[NilShape])
+
+  private def processNullableLikeUnion(union: UnionShape): Shape = {
+    val (nilShape, nonNullElements) = union.anyOf.partition(_.isInstanceOf[NilShape])
+    if (nonNullElements.size == 1) { // union of null and a single value
+      val nullableType = nonNullElements.head.copyShape()
+      nullableType.annotations += NilUnion(PositionRange.ZERO.toString())
+      nullableType
+    } else if (nonNullElements.size > 1) { // union of null and multiple values
+      val nullableUnion = UnionShape(union.annotations).withAnyOf(nonNullElements)
+      nullableUnion.annotations += NilUnion(PositionRange.ZERO.toString())
+      nullableUnion
+    } else { // single null value in an union type, could be emitted directly as a single value (IDK if it is possible anyway)
+      nilShape.head
+    }
+  }
 
   private def isBooleanSchema(shape: Shape): Boolean = shape.annotations.contains(classOf[BooleanSchema])
 
