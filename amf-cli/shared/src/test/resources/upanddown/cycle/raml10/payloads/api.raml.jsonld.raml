@@ -1,25 +1,9 @@
 #%RAML 1.0
 title: API
-/levelzero:
-  /level-one:
-    displayName: One display name
-    description: and this description!
-    get:
-      displayName: Some title
-      responses:
-        "200":
-          description: 200 descr
-          headers:
-            Time-Ago:
-              type: integer
-        "404":
-          description: Not found!
-          body:
-            application/json:
-              type: any
-            application/xml:
-              type: any
-      body:
-        application/json:
-          type: string
 baseUri: /some/uri
+/levelzero: {}
+/levelzero/level-one:
+  displayName: One display name
+  description: and this description!
+  get:
+    displayName: Some title

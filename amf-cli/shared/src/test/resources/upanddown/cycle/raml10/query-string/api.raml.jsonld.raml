@@ -1,25 +1,16 @@
 #%RAML 1.0
 title: Illustrate query parameter variations
-types:
-  lat-long:
-    properties:
-      lat:
-        type: number
-      long:
-        type: number
-  loc:
-    properties:
-      location:
-        type: nil
-  paging:
-    properties:
-      start:
-        type: number
-      page-size:
-        type: number
 /locations:
   get:
     queryString:
       type:
-        - paging
+        -
+          type: nil
         - lat-long | loc
+types:
+  schema:
+    properties:
+      lat:
+        type: number
+      "null":
+        type: number
