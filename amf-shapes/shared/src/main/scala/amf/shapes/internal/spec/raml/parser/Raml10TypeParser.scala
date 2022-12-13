@@ -542,12 +542,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
       }
     )
 
-    val isParamString = shape.isInstanceOf[ScalarShape] && shape
-      .asInstanceOf[ScalarShape]
-      .dataType
-      .option()
-      .getOrElse("") == DataType.String
-
     Raml08ExampleParser(shape, map).parse()
 
     map.key(
@@ -1184,7 +1178,13 @@ sealed abstract class RamlTypeParser(
       map.key(
         "not".asRamlAnnotation,
         { entry =>
-          typeParser(YMapEntryLike(entry), "not", (s: Shape) => s.withId(shape.id + "/not"), false, defaultType)
+          typeParser(
+            YMapEntryLike(entry),
+            "not",
+            (s: Shape) => s.withId(shape.id + "/not"),
+            isAnnotation = false,
+            defaultType
+          )
             .parse() match {
             case Some(negated) => shape.setWithoutId(ShapeModel.Not, negated, Annotations(entry.value))
             case _             => // ignore
@@ -1356,7 +1356,7 @@ sealed abstract class RamlTypeParser(
           .map { typeEntry =>
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
-              val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
+              val typeExpression = typeEntry.value.toString.replaceFirst("\\[]", "")
               RamlExpressionParser
                 .parse(items => Unit, expression = typeExpression, part = typeEntry.value.value)
                 .foreach { value =>
@@ -1652,7 +1652,7 @@ sealed abstract class RamlTypeParser(
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        typeParser(entry, s => Unit, true, defaultType)
+        typeParser(entry, s => Unit, isAnnotation = true, defaultType)
           .parse()
           .foreach { parsed =>
             shape.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, parsed, Annotations(entry))
