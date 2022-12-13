@@ -2677,6 +2677,7 @@ declare module "amf-client-js" {
     customDomainProperties: Array<DomainExtension>;
     description: StrField;
     extendsNode: Array<DomainElement>;
+    federationMetadata: EndPointFederationMetadata;
     id: string;
     isExternalLink: BoolField;
     name: StrField;
@@ -2732,6 +2733,9 @@ declare module "amf-client-js" {
     withServers(servers: Array<Server>): this;
 
     withSummary(summary: string): this;
+  }
+  export class EndPointFederationMetadata {
+    constructor();
   }
   export class ErrorHandler {
     static handler(obj: JsErrorHandler): ClientErrorHandler;
@@ -3058,6 +3062,8 @@ declare module "amf-client-js" {
     getObjectByProperty(uri: string): Array<DomainElement>;
 
     properties(): Array<string>;
+
+    propertyLexical(uri: string): Range;
 
     removeField(uri: string): this;
 
@@ -4269,6 +4275,7 @@ declare module "amf-client-js" {
     deprecated: BoolField;
     examples: Array<Example>;
     explode: BoolField;
+    federationMetadata: ParameterFederationMetadata;
     payloads: Array<Payload>;
     style: StrField;
 
@@ -4291,6 +4298,9 @@ declare module "amf-client-js" {
     withPayloads(payloads: Array<Payload>): this;
 
     withStyle(style: string): this;
+  }
+  export class ParameterFederationMetadata {
+    constructor();
   }
   export class ParameterKeyMapping implements KeyMapping {
     customDomainProperties: Array<DomainExtension>;
@@ -4496,6 +4506,7 @@ declare module "amf-client-js" {
     encoding: Array<Encoding>;
     encodings: Array<Encoding>;
     examples: Array<Example>;
+    required: BoolField;
     schemaMediaType: StrField;
 
     constructor();
@@ -4511,6 +4522,8 @@ declare module "amf-client-js" {
     withExample(name: string): Example;
 
     withExamples(examples: Array<Example>): this;
+
+    withRequired(required: boolean): this;
 
     withSchemaMediaType(mediaType: string): this;
   }
@@ -4631,7 +4644,7 @@ declare module "amf-client-js" {
     isExternalLink: BoolField;
     position: Range;
     source: PropertyShape;
-    target: string;
+    target: StrField;
 
     constructor();
 
@@ -5159,6 +5172,8 @@ declare module "amf-client-js" {
     withoutCompactedEmission(): RenderOptions;
 
     withoutDocumentation(): RenderOptions;
+
+    withoutImplicitRamlTypes(): RenderOptions;
 
     withoutPrettyPrint(): RenderOptions;
 
