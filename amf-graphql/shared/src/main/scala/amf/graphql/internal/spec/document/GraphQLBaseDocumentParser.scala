@@ -7,9 +7,10 @@ import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{AntlrError, DuplicatedDeclaration}
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.model.domain.{AmfArray, NamedDomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar, NamedDomainElement}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, BaseUnitProcessingDataModel, FragmentModel, ModuleModel}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
@@ -22,6 +23,8 @@ import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node, Terminal}
+
+import scala.language.postfixOps
 
 case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
@@ -55,16 +58,18 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
     declarations.foreach(_.annotations += DeclaredElement())
-    doc.set(ModuleModel.Declares, AmfArray(declarations, Annotations()), inferred())
+    doc set declarations as ModuleModel.Declares
+
     inFederation { _ =>
-      val processingData =
-        APIContractProcessingData().set(BaseUnitProcessingDataModel.SourceSpec, Spec.GRAPHQL_FEDERATION.id, inferred())
-      doc.set(BaseUnitModel.ProcessingData, processingData, inferred())
+      val processingData = APIContractProcessingData()
+      processingData synthetically () set Spec.GRAPHQL_FEDERATION.id as BaseUnitProcessingDataModel.SourceSpec
+      doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
     inGraphQL { _ =>
       val processingData =
         APIContractProcessingData().set(BaseUnitProcessingDataModel.SourceSpec, Spec.GRAPHQL.id, inferred())
-      doc.set(BaseUnitModel.ProcessingData, processingData, inferred())
+
+      doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
     doc
   }
@@ -75,9 +80,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseWebAPI(ast: AST): Unit = {
     val webApi = WebApi(Annotations(SourceASTElement(ast.current())))
-    webApi.withName(root.location.split("/").last, inferred())
-    doc.set(FragmentModel.Encodes, webApi, Annotations.inferred())
-    doc.withLocation(root.location)
+
+    webApi set root.location.split("/").last as WebApiModel.Name
+    doc set webApi as FragmentModel.Encodes
+    doc set root.location as BaseUnitModel.Location
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
