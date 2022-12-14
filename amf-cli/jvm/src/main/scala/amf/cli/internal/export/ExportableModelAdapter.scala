@@ -11,7 +11,7 @@ object ExportableModelAdapter {
     ExportableModel(formatModelName(model.name), fields, model.obj.doc.description, types(model))
   }
 
-  private def types(model: Model) = model.obj.`type`.map(_.iri())
+  private def types(model: Model): List[String] = model.obj.`type`.map(_.iri())
 
   private def adapt(name: String, attribute: Attribute): ExportableField = {
     attribute match {
@@ -20,6 +20,7 @@ object ExportableModelAdapter {
           name,
           formatModelName(att.name),
           isArray = false,
+          isSorted = false,
           linkToValue = true,
           doc = att.docDescription,
           att.namespace
@@ -29,14 +30,31 @@ object ExportableModelAdapter {
           name,
           formatModelName(att.toString),
           isArray = true,
+          isSorted = att.sorted,
           linkToValue = true,
           att.docDescription,
           att.namespace
         )
       case att: ArrayAttribute if !att.isTraversable =>
-        ExportableField(name, att.toString, isArray = true, linkToValue = false, att.docDescription, att.namespace)
+        ExportableField(
+          name,
+          att.toString,
+          isArray = true,
+          isSorted = att.sorted,
+          linkToValue = false,
+          att.docDescription,
+          att.namespace
+        )
       case att: AttributeType =>
-        ExportableField(name, att.name, isArray = false, linkToValue = false, att.docDescription, att.namespace)
+        ExportableField(
+          name,
+          att.name,
+          isArray = false,
+          isSorted = false,
+          linkToValue = false,
+          att.docDescription,
+          att.namespace
+        )
     }
   }
 
@@ -48,6 +66,7 @@ case class ExportableField(
     name: String,
     value: String,
     isArray: Boolean,
+    isSorted: Boolean,
     linkToValue: Boolean,
     doc: String,
     namespace: String
