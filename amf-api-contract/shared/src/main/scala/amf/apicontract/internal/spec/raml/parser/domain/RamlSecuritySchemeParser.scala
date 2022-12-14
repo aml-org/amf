@@ -18,7 +18,6 @@ import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -130,15 +129,6 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                 )
               }
             )
-
-            if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
-              ctx.eh.violation(
-                ExclusivePropertiesSpecification,
-                scheme,
-                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                value.location
-              )
-            }
 
             value.key(
               "queryParameters",
