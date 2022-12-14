@@ -10,6 +10,14 @@ import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 
 import scala.collection.mutable
 
+object JsonLDArray {
+  def apply(elements: Seq[JsonLDElement]): JsonLDArray = {
+    val result = new JsonLDArray
+    elements.foreach(elem => result += elem)
+    result
+  }
+}
+
 class JsonLDArray extends AmfArray(Nil) with JsonLDElement {
 
   /** Set of annotations for element. */

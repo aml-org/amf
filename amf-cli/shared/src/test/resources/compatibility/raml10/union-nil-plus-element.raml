@@ -1,0 +1,14 @@
+#%RAML 1.0
+
+title: test raml union + type conversion
+version: 0.1.0
+
+types:
+  someUnionType:
+    type: nil | string
+
+/something:
+  get:
+    body:
+      "application/json":
+        type: someUnionType

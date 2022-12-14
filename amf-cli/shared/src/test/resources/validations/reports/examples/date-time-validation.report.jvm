@@ -6,7 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: [2015-13-33T25:61:61] is not a valid date-time-only. Expected yyyy-MM-dd'T'HH:mm:ss
+  Message: [2015-13-33T25:61:61] is not a valid date-time-only. Expected yyyy-MM-dd'T'HH:mm:ss[.ff...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declares/scalar/fireworks/examples/example/bad
   Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declares/scalar/fireworks/examples/example/bad
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: [34:80:90] is not a valid time. Expected HH:mm:ss
+  Message: [34:80:90] is not a valid time. Expected HH:mm:ss[.ff...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declares/scalar/lunchtime/examples/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declares/scalar/lunchtime/examples/example/default-example

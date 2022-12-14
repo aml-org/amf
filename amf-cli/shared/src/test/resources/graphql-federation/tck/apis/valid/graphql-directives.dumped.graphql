@@ -1,5 +1,5 @@
 type Query {
-  operation(arg: String!): String!
+  operation(arg: String! @Directive): String!
   _service: _Service
   property: String!
 }

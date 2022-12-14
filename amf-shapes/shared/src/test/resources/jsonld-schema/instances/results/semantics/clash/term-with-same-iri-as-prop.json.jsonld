@@ -13,8 +13,13 @@
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#prop1": true,
-      "http://a.ml/vocabularies/core#prop2": "false"
+      "http://a.ml/vocabularies/core#prop2": [
+        "false",
+        {
+          "@value": "true",
+          "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ]
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/clash/term-with-same-iri-as-prop.json",

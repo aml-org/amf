@@ -10,6 +10,12 @@ import scala.collection.SeqLike
 
 object ArrayTypeComputation {
 
+  def computeType(types: List[Type]): Type = types match {
+    case Nil          => Type.Any
+    case head :: Nil  => head
+    case head :: tail => tail.foldLeft(head) { (acc, curr) => computeType(acc, curr) }
+  }
+
   def computeType(prev: Type, next: Type): Type = {
     (prev, next) match {
       case (Type.Array(prev), Type.Array(next)) => Type.Array(computeType(prev, next))

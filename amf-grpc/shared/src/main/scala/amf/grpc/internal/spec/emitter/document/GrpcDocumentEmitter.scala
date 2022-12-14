@@ -3,19 +3,12 @@ package amf.grpc.internal.spec.emitter.document
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.{SourceCodeBlock, StringDocBuilder}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
-import amf.grpc.internal.spec.emitter.domain.{
-  GrpcEmitter,
-  GrpcEnumEmitter,
-  GrpcExtensionEmitter,
-  GrpcMessageEmitter,
-  GrpcServiceEmitter
-}
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
+import amf.grpc.internal.spec.emitter.domain._
+import org.mulesoft.common.collections._
 
 class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GrpcEmitter {
 
@@ -95,7 +88,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   }
 
   private def emitExtensions(l: StringDocBuilder): Unit = {
-    ctx.extensions.groupBy(c => c.domain.head.value()).foreach { case (domain, extensions) =>
+    ctx.extensions.legacyGroupBy(c => c.domain.head.value()).foreach { case (domain, extensions) =>
       GrpcExtensionEmitter(extensions, l, domain, ctx).emit()
     }
   }

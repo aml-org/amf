@@ -3,7 +3,7 @@ package amf.graphql.internal.spec.domain
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphqlfederation.internal.spec.domain.ShapeFederationMetadataParser
+import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import org.mulesoft.antlrast.ast.Node
 
@@ -18,7 +18,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseArguments()
     parseRange()
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
       GraphQLDirectiveApplicationsParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(ast, operation).parse()
@@ -37,7 +37,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
     parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
-      ShapeFederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE)).parse()
+      FederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
       GraphQLDirectiveApplicationsParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
     unpackNilUnion(parseType(n)) match {

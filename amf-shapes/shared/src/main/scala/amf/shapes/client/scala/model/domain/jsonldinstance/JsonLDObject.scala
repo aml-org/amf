@@ -6,6 +6,10 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDEntityModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 
+object JsonLDObject {
+  def empty(model: JsonLDEntityModel, path: JsonPath): JsonLDObject =
+    new JsonLDObject(Fields(), Annotations(), model, path)
+}
 class JsonLDObject(
     override val fields: Fields,
     override val annotations: Annotations,

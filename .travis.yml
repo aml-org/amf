@@ -1,5 +1,5 @@
 language: scala
 scala:
-  - 2.12.11
+  - 2.12.13
 sbt_args: -mem 4096 -Dfile.encoding=UTF-8
 script: sbt ++$TRAVIS_SCALA_VERSION clean test

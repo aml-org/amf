@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.{Payload => InternalPayload}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Linkable
+import amf.core.client.scala.model.BoolField
 import amf.shapes.client.platform.model.domain.Example
 import amf.shapes.client.platform.model.domain.operations.AbstractPayload
 
@@ -22,6 +23,8 @@ case class Payload(override private[amf] val _internal: InternalPayload) extends
   def examples: ClientList[Example]   = _internal.examples.asClient
   def encodings: ClientList[Encoding] = _internal.encodings.asClient
 
+  def required: BoolField = _internal.required
+
   /** Set specific media type of schema. */
   def withSchemaMediaType(mediaType: String): this.type = {
     _internal.withSchemaMediaType(mediaType)
@@ -37,6 +40,11 @@ case class Payload(override private[amf] val _internal: InternalPayload) extends
   /** Set encoding property of this Payload. */
   def withEncodings(encoding: ClientList[Encoding]): this.type = {
     _internal.withEncodings(encoding.asInternal)
+    this
+  }
+  /** Set Required property of this Payload */
+  def withRequired(required: Boolean): this.type = {
+    _internal.withRequired(required)
     this
   }
 
