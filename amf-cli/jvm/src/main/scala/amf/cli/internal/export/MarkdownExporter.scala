@@ -25,10 +25,12 @@ object MarkdownExporter {
       .addText(model.doc)
       .addText("Types:")
       .addBullet(model.types.map(formatToCode))
-      .startTable(List("Name", "Value", "Documentation", "Namespace"))
+      .startTable(List("Name", "Value", "Sorted", "Documentation", "Namespace"))
     model.fields
       .foldLeft(tempBuilder) { (builder, field) =>
-        builder.addRow(List(field.name, formatFieldValue(field), field.doc, formatToCode(field.namespace)))
+        builder.addRow(
+          List(field.name, formatFieldValue(field), formatFieldSorted(field), field.doc, formatToCode(field.namespace))
+        )
       }
       .addText("")
   }
@@ -40,6 +42,12 @@ object MarkdownExporter {
     if (field.linkToValue) value = s"[$value](#${formatToAnchor(value)})"
     if (field.isArray) value = s"[$value]"
     value
+  }
+
+  private def formatFieldSorted(field: ExportableField): String = {
+    if (field.isArray) {
+      field.isSorted.toString
+    } else "-"
   }
 
   private def formatToCode(value: String): String = s"`$value`"

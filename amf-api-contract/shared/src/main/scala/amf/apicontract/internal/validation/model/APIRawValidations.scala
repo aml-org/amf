@@ -528,7 +528,20 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object Raml10Validations extends RamlValidations {
-    private lazy val result = super.validations() ++ Raml10ShapeValidations.validations()
+    private lazy val result = super.validations() ++ Raml10ShapeValidations.validations() ++ Seq(
+      AMFValidation(
+        uri = amfParser("request-exclusive-queryString-queryParameters-properties"),
+        owlClass = apiContract("Request"),
+        owlProperty = doc("-"),
+        constraint = shape("exclusiveQueryStringAndQueryParametersProperties")
+      ),
+      AMFValidation(
+        uri = amfParser("security-scheme-exclusive-queryString-queryParameters-properties"),
+        owlClass = security("SecurityScheme"),
+        owlProperty = doc("-"),
+        constraint = shape("exclusiveQueryStringAndQueryParametersProperties")
+      )
+    )
 
     override def validations(): Seq[AMFValidation] = result
   }

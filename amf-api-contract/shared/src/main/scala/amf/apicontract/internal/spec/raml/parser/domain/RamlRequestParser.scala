@@ -12,7 +12,6 @@ import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.core.internal.validation.CoreParserValidations.UnsupportedExampleMediaTypeErrorSpecification
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.raml.parser.{AnyDefaultType, DefaultType, Raml10TypeParser}
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -30,14 +29,6 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
           .parse()
           .map(q => {
             val finalRequest = request.getOrCreate
-            if (map.key("queryParameters").isDefined) {
-              ctx.eh.violation(
-                ExclusivePropertiesSpecification,
-                finalRequest,
-                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                map.location
-              )
-            }
             finalRequest.setWithoutId(RequestModel.QueryString, tracking(q, finalRequest), Annotations(queryEntry))
           })
       }

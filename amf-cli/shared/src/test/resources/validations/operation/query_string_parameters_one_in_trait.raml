@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Title
+version: v1
+
+traits:
+  aTrait:
+    queryParameters:
+      aParam:
+        description: A description
+        type: string
+        required: false
+
+/endPoint:
+  get:
+    is: [ aTrait ]
+    queryString:
+      type: object
+    responses:
+      200:
+        body:
+          application/json:
