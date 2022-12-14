@@ -32,11 +32,11 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): AMFConfiguration;
 
     withShapePayloadPlugin(
-        plugin: AMFShapePayloadValidationPlugin
+      plugin: AMFShapePayloadValidationPlugin
     ): AMFConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): AMFConfiguration;
 
     withUnitCache(cache: UnitCache): AMFConfiguration;
@@ -53,15 +53,15 @@ declare module "amf-client-js" {
     getConfiguration(): AMFConfiguration;
 
     renderToBuilder<T>(
-        element: DomainElement,
-        builder: org.yaml.builder.JsOutputBuilder
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder
     ): void;
   }
   export class AMFElementRenderer {
     static renderToBuilder<T>(
-        element: DomainElement,
-        builder: org.yaml.builder.JsOutputBuilder,
-        config: AMFGraphConfiguration
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder,
+      config: AMFGraphConfiguration
     ): void;
   }
   export interface AMFEvent {
@@ -87,8 +87,8 @@ declare module "amf-client-js" {
     render(baseUnit: BaseUnit, mediaType: string): string;
 
     renderGraphToBuilder<T>(
-        baseUnit: BaseUnit,
-        builder: org.yaml.builder.JsOutputBuilder
+      baseUnit: BaseUnit,
+      builder: org.yaml.builder.JsOutputBuilder
     ): T;
 
     setBaseUri(unit: BaseUnit, base: string): void;
@@ -109,7 +109,7 @@ declare module "amf-client-js" {
     static predefined(): AMFGraphConfiguration;
 
     withErrorHandlerProvider(
-        provider: ErrorHandlerProvider
+      provider: ErrorHandlerProvider
     ): AMFGraphConfiguration;
 
     withEventListener(listener: AMFEventListener): AMFGraphConfiguration;
@@ -123,11 +123,11 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): AMFGraphConfiguration;
 
     withShapePayloadPlugin(
-        plugin: AMFShapePayloadValidationPlugin
+      plugin: AMFShapePayloadValidationPlugin
     ): AMFGraphConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): AMFGraphConfiguration;
 
     withUnitCache(cache: UnitCache): AMFGraphConfiguration;
@@ -136,14 +136,14 @@ declare module "amf-client-js" {
     getConfiguration(): AMFGraphConfiguration;
 
     payloadValidatorFor(
-        shape: Shape,
-        mediaType: string,
-        mode: ValidationMode
+      shape: Shape,
+      mediaType: string,
+      mode: ValidationMode
     ): AMFShapePayloadValidator;
 
     payloadValidatorFor(
-        shape: Shape,
-        fragment: PayloadFragment
+      shape: Shape,
+      fragment: PayloadFragment
     ): AMFShapePayloadValidator;
   }
   export class AMFLibraryResult extends AMFResult {
@@ -157,48 +157,48 @@ declare module "amf-client-js" {
   }
   export class AMFParser {
     static parse(
-        url: string,
-        configuration: AMFGraphConfiguration
+      url: string,
+      configuration: AMFGraphConfiguration
     ): Promise<AMFParseResult>;
 
     static parseContent(
-        content: string,
-        configuration: AMFGraphConfiguration
+      content: string,
+      configuration: AMFGraphConfiguration
     ): Promise<AMFParseResult>;
 
     static parseContent(
-        content: string,
-        mediaType: string,
-        configuration: AMFGraphConfiguration
+      content: string,
+      mediaType: string,
+      configuration: AMFGraphConfiguration
     ): Promise<AMFParseResult>;
 
     static parseStartingPoint(
-        graphUrl: string,
-        startingPoint: string,
-        configuration: AMFGraphConfiguration
+      graphUrl: string,
+      startingPoint: string,
+      configuration: AMFGraphConfiguration
     ): Promise<AMFObjectResult>;
   }
   export class AMFPayloadValidationPluginConverter {
     static toAMF(
-        plugin: JsAMFPayloadValidationPlugin
+      plugin: JsAMFPayloadValidationPlugin
     ): AMFShapePayloadValidationPlugin;
   }
   export class AMFRenderer {
     static render(
-        baseUnit: BaseUnit,
-        configuration: AMFGraphConfiguration
+      baseUnit: BaseUnit,
+      configuration: AMFGraphConfiguration
     ): string;
 
     static render(
-        baseUnit: BaseUnit,
-        mediaType: string,
-        configuration: AMFGraphConfiguration
+      baseUnit: BaseUnit,
+      mediaType: string,
+      configuration: AMFGraphConfiguration
     ): string;
 
     static renderGraphToBuilder<T>(
-        baseUnit: BaseUnit,
-        builder: org.yaml.builder.JsOutputBuilder,
-        configuration: AMFGraphConfiguration
+      baseUnit: BaseUnit,
+      builder: org.yaml.builder.JsOutputBuilder,
+      configuration: AMFGraphConfiguration
     ): T;
   }
   export class AMFResult extends AMFObjectResult {
@@ -220,10 +220,10 @@ declare module "amf-client-js" {
     applies(element: ValidatePayloadRequest): boolean;
 
     validator(
-        shape: Shape,
-        mediaType: string,
-        config: ShapeValidationConfiguration,
-        validationMode: ValidationMode
+      shape: Shape,
+      mediaType: string,
+      config: ShapeValidationConfiguration,
+      validationMode: ValidationMode
     ): AMFShapePayloadValidator;
   }
   export interface AMFShapePayloadValidator {
@@ -235,14 +235,14 @@ declare module "amf-client-js" {
   }
   export class AMFTransformer {
     static transform(
-        unit: BaseUnit,
-        configuration: AMFGraphConfiguration
+      unit: BaseUnit,
+      configuration: AMFGraphConfiguration
     ): AMFResult;
 
     static transform(
-        unit: BaseUnit,
-        pipelineName: string,
-        configuration: AMFGraphConfiguration
+      unit: BaseUnit,
+      pipelineName: string,
+      configuration: AMFGraphConfiguration
     ): AMFResult;
   }
   export class AMFValidationReport {
@@ -252,9 +252,9 @@ declare module "amf-client-js" {
     results: Array<AMFValidationResult>;
 
     constructor(
-        model: string,
-        profile: ProfileName,
-        results: Array<AMFValidationResult>
+      model: string,
+      profile: ProfileName,
+      results: Array<AMFValidationResult>
     );
 
     toString(): string;
@@ -272,19 +272,19 @@ declare module "amf-client-js" {
     validationId: string;
 
     constructor(
-        message: string,
-        level: string,
-        targetNode: string,
-        targetProperty: string,
-        validationId: string,
-        range: Range,
-        location: string
+      message: string,
+      level: string,
+      targetNode: string,
+      targetProperty: string,
+      validationId: string,
+      range: Range,
+      location: string
     );
   }
   export class AMFValidator {
     static validate(
-        baseUnit: BaseUnit,
-        conf: AMFGraphConfiguration
+      baseUnit: BaseUnit,
+      conf: AMFGraphConfiguration
     ): Promise<AMFValidationReport>;
   }
   export class AMLBaseUnitClient extends BaseAMLBaseUnitClient {
@@ -320,11 +320,11 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): AMLConfiguration;
 
     withShapePayloadPlugin(
-        plugin: AMFShapePayloadValidationPlugin
+      plugin: AMFShapePayloadValidationPlugin
     ): AMLConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): AMLConfiguration;
 
     withUnitCache(cache: UnitCache): AMLConfiguration;
@@ -348,8 +348,8 @@ declare module "amf-client-js" {
     getConfiguration(): AMLConfiguration;
 
     renderToBuilder<T>(
-        element: DomainElement,
-        builder: org.yaml.builder.JsOutputBuilder
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder
     ): void;
   }
   export class AMLVocabularyResult extends AMFResult {
@@ -416,19 +416,19 @@ declare module "amf-client-js" {
   }
   export class AbstractElementTransformer {
     static asEndpoint<T>(
-        unit: T,
-        rt: ResourceType,
-        errorHandler: ClientErrorHandler,
-        configuration: AMFGraphConfiguration,
-        profile: ProfileName
+      unit: T,
+      rt: ResourceType,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName
     ): EndPoint;
 
     static asOperation<T>(
-        unit: T,
-        tr: Trait,
-        errorHandler: ClientErrorHandler,
-        configuration: AMFGraphConfiguration,
-        profile: ProfileName
+      unit: T,
+      tr: Trait,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration,
+      profile: ProfileName
     ): Operation;
   }
   export class AbstractOperation implements DomainElement {
@@ -592,9 +592,9 @@ declare module "amf-client-js" {
   }
   export class AmlDomainElementEmitter {
     static emitToBuilder<T>(
-        element: DomainElement,
-        amlConfig: BaseAMLConfiguration,
-        builder: org.yaml.builder.JsOutputBuilder
+      element: DomainElement,
+      amlConfig: BaseAMLConfiguration,
+      builder: org.yaml.builder.JsOutputBuilder
     ): void;
   }
   export class Amqp091ChannelBinding implements ChannelBinding {
@@ -1051,13 +1051,13 @@ declare module "amf-client-js" {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
 
     withCustomShapeProperties(
-        customShapeProperties: Array<ShapeExtension>
+      customShapeProperties: Array<ShapeExtension>
     ): this;
 
     withCustomShapePropertyDefinition(name: string): PropertyShape;
 
     withCustomShapePropertyDefinitions(
-        propertyDefinitions: Array<PropertyShape>
+      propertyDefinitions: Array<PropertyShape>
     ): this;
 
     withDefaultStr(value: string): this;
@@ -1311,7 +1311,7 @@ declare module "amf-client-js" {
     withDialect(dialect: Dialect): BaseAMLConfiguration;
 
     withErrorHandlerProvider(
-        provider: ErrorHandlerProvider
+      provider: ErrorHandlerProvider
     ): BaseAMLConfiguration;
 
     withEventListener(listener: AMFEventListener): BaseAMLConfiguration;
@@ -1325,15 +1325,15 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): BaseAMLConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): BaseAMLConfiguration;
 
     withUnitCache(cache: UnitCache): BaseAMLConfiguration;
   }
   export class BaseAMLElementClient extends AMFGraphElementClient {
     renderToBuilder<T>(
-        element: DomainElement,
-        builder: org.yaml.builder.JsOutputBuilder
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder
     ): void;
   }
   export interface BaseFileResourceLoader extends ResourceLoader {
@@ -1352,7 +1352,7 @@ declare module "amf-client-js" {
     withDialect(dialect: Dialect): BaseShapesConfiguration;
 
     withErrorHandlerProvider(
-        provider: ErrorHandlerProvider
+      provider: ErrorHandlerProvider
     ): BaseShapesConfiguration;
 
     withEventListener(listener: AMFEventListener): BaseShapesConfiguration;
@@ -1366,7 +1366,7 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): BaseShapesConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): BaseShapesConfiguration;
 
     withUnitCache(cache: UnitCache): BaseShapesConfiguration;
@@ -1377,8 +1377,8 @@ declare module "amf-client-js" {
     renderExample(example: Example, mediaType: string): string;
 
     renderToBuilder<T>(
-        element: DomainElement,
-        builder: org.yaml.builder.JsOutputBuilder
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder
     ): void;
 
     toJsonSchema(element: AnyShape): string;
@@ -1418,10 +1418,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -1875,10 +1875,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -1955,8 +1955,8 @@ declare module "amf-client-js" {
     withLiteralProperty(propertyIri: string, value: string): this;
 
     withObjectCollectionProperty(
-        propertyIri: string,
-        value: Array<DialectDomainElement>
+      propertyIri: string,
+      value: Array<DialectDomainElement>
     ): this;
 
     withObjectProperty(iri: string, value: DialectDomainElement): this;
@@ -2004,10 +2004,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2015,7 +2015,7 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class DialectInstance
-      implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit
+    implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit
   {
     declares: Array<DomainElement>;
     encodes: DialectDomainElement;
@@ -2074,10 +2074,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2085,7 +2085,7 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class DialectInstanceFragment
-      implements BaseUnit, EncodesModel, DialectInstanceUnit
+    implements BaseUnit, EncodesModel, DialectInstanceUnit
   {
     encodes: DialectDomainElement;
     id: string;
@@ -2136,10 +2136,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2147,7 +2147,7 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class DialectInstanceLibrary
-      implements BaseUnit, DeclaresModel, DialectInstanceUnit
+    implements BaseUnit, DeclaresModel, DialectInstanceUnit
   {
     declares: Array<DomainElement>;
     id: string;
@@ -2198,10 +2198,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2209,7 +2209,7 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class DialectInstancePatch
-      implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit
+    implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit
   {
     declares: Array<DomainElement>;
     encodes: DialectDomainElement;
@@ -2268,10 +2268,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2349,10 +2349,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2430,10 +2430,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -2588,7 +2588,7 @@ declare module "amf-client-js" {
     value(): number;
   }
   export class EmptyBinding
-      implements ServerBinding, OperationBinding, ChannelBinding, MessageBinding
+    implements ServerBinding, OperationBinding, ChannelBinding, MessageBinding
   {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -2677,6 +2677,7 @@ declare module "amf-client-js" {
     customDomainProperties: Array<DomainExtension>;
     description: StrField;
     extendsNode: Array<DomainElement>;
+    federationMetadata: EndPointFederationMetadata;
     id: string;
     isExternalLink: BoolField;
     name: StrField;
@@ -2732,6 +2733,9 @@ declare module "amf-client-js" {
     withServers(servers: Array<Server>): this;
 
     withSummary(summary: string): this;
+  }
+  export class EndPointFederationMetadata {
+    constructor();
   }
   export class ErrorHandler {
     static handler(obj: JsErrorHandler): ClientErrorHandler;
@@ -3042,10 +3046,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -3058,6 +3062,8 @@ declare module "amf-client-js" {
     getObjectByProperty(uri: string): Array<DomainElement>;
 
     properties(): Array<string>;
+
+    propertyLexical(uri: string): Range;
 
     removeField(uri: string): this;
 
@@ -3238,10 +3244,10 @@ declare module "amf-client-js" {
     applies(element: ValidatePayloadRequest): boolean;
 
     validator(
-        shape: Shape,
-        mediaType: string,
-        config: ShapeValidationConfiguration,
-        validationMode: ValidationMode
+      shape: Shape,
+      mediaType: string,
+      config: ShapeValidationConfiguration,
+      validationMode: ValidationMode
     ): JsPayloadValidator;
   }
   export interface JsAMFPlugin {
@@ -3285,9 +3291,9 @@ declare module "amf-client-js" {
   }
   export interface JsTransformationStep {
     transform(
-        model: BaseUnit,
-        errorHandler: ClientErrorHandler,
-        configuration: AMFGraphConfiguration
+      model: BaseUnit,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration
     ): BaseUnit;
   }
   export class JsonSchemaConfiguration {
@@ -3303,13 +3309,13 @@ declare module "amf-client-js" {
   export class JsonSchemaDraft7 implements JSONSchemaVersion {}
   export class JsonSchemaShapeRenderer {
     static buildJsonSchema(
-        element: AnyShape,
-        config: AMFGraphConfiguration
+      element: AnyShape,
+      config: AMFGraphConfiguration
     ): string;
 
     static toJsonSchema(
-        element: AnyShape,
-        config: AMFGraphConfiguration
+      element: AnyShape,
+      config: AMFGraphConfiguration
     ): string;
   }
   export class KafkaMessageBinding implements MessageBinding {
@@ -3695,10 +3701,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
@@ -3932,7 +3938,7 @@ declare module "amf-client-js" {
     linkCopy(): NodeShape;
 
     withAdditionalPropertiesKeySchema(
-        additionalPropertiesKeySchema: Shape
+      additionalPropertiesKeySchema: Shape
     ): this;
 
     withAdditionalPropertiesSchema(additionalPropertiesSchema: Shape): this;
@@ -3950,7 +3956,7 @@ declare module "amf-client-js" {
     withDiscriminatorValue(value: string): this;
 
     withExternalProperties(
-        externalProperties: Array<ExternalPropertyShape>
+      externalProperties: Array<ExternalPropertyShape>
     ): this;
 
     withInheritsObject(name: string): NodeShape;
@@ -4145,7 +4151,7 @@ declare module "amf-client-js" {
     withDocumentation(documentation: CreativeWork): this;
 
     withFederationMetadata(
-        federationMetadata: OperationFederationMetadata
+      federationMetadata: OperationFederationMetadata
     ): this;
 
     withLinkLabel(label: string): this;
@@ -4269,6 +4275,7 @@ declare module "amf-client-js" {
     deprecated: BoolField;
     examples: Array<Example>;
     explode: BoolField;
+    federationMetadata: ParameterFederationMetadata;
     payloads: Array<Payload>;
     style: StrField;
 
@@ -4291,6 +4298,9 @@ declare module "amf-client-js" {
     withPayloads(payloads: Array<Payload>): this;
 
     withStyle(style: string): this;
+  }
+  export class ParameterFederationMetadata {
+    constructor();
   }
   export class ParameterKeyMapping implements KeyMapping {
     customDomainProperties: Array<DomainExtension>;
@@ -4496,6 +4506,7 @@ declare module "amf-client-js" {
     encoding: Array<Encoding>;
     encodings: Array<Encoding>;
     examples: Array<Example>;
+    required: BoolField;
     schemaMediaType: StrField;
 
     constructor();
@@ -4511,6 +4522,8 @@ declare module "amf-client-js" {
     withExample(name: string): Example;
 
     withExamples(examples: Array<Example>): this;
+
+    withRequired(required: boolean): this;
 
     withSchemaMediaType(mediaType: string): this;
   }
@@ -4631,7 +4644,7 @@ declare module "amf-client-js" {
     isExternalLink: BoolField;
     position: Range;
     source: PropertyShape;
-    target: string;
+    target: StrField;
 
     constructor();
 
@@ -4800,13 +4813,13 @@ declare module "amf-client-js" {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
 
     withCustomShapeProperties(
-        customShapeProperties: Array<ShapeExtension>
+      customShapeProperties: Array<ShapeExtension>
     ): this;
 
     withCustomShapePropertyDefinition(name: string): PropertyShape;
 
     withCustomShapePropertyDefinitions(
-        propertyDefinitions: Array<PropertyShape>
+      propertyDefinitions: Array<PropertyShape>
     ): this;
 
     withDefaultStr(value: string): this;
@@ -4971,8 +4984,8 @@ declare module "amf-client-js" {
   }
   export class RamlShapeRenderer {
     static toRamlDatatype(
-        element: AnyShape,
-        config: AMFGraphConfiguration
+      element: AnyShape,
+      config: AMFGraphConfiguration
     ): string;
   }
   export class Range {
@@ -4988,10 +5001,10 @@ declare module "amf-client-js" {
     constructor(start: Position, end: Position);
 
     static apply(
-        lineFrom: number,
-        columnFrom: number,
-        lineTo: number,
-        columnTo: number
+      lineFrom: number,
+      columnFrom: number,
+      lineTo: number,
+      columnTo: number
     ): Range;
 
     static apply(start: Position, delta: number): Range;
@@ -5057,13 +5070,13 @@ declare module "amf-client-js" {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
 
     withCustomShapeProperties(
-        customShapeProperties: Array<ShapeExtension>
+      customShapeProperties: Array<ShapeExtension>
     ): this;
 
     withCustomShapePropertyDefinition(name: string): PropertyShape;
 
     withCustomShapePropertyDefinitions(
-        propertyDefinitions: Array<PropertyShape>
+      propertyDefinitions: Array<PropertyShape>
     ): this;
 
     withDefaultStr(value: string): this;
@@ -5159,6 +5172,8 @@ declare module "amf-client-js" {
     withoutCompactedEmission(): RenderOptions;
 
     withoutDocumentation(): RenderOptions;
+
+    withoutImplicitRamlTypes(): RenderOptions;
 
     withoutPrettyPrint(): RenderOptions;
 
@@ -5562,7 +5577,7 @@ declare module "amf-client-js" {
     parseSemanticSchema(url: string): Promise<AMFSemanticSchemaResult>;
 
     parseSemanticSchemaContent(
-        content: string
+      content: string
     ): Promise<AMFSemanticSchemaResult>;
   }
   export class SemanticExtension implements DomainElement {
@@ -5587,7 +5602,7 @@ declare module "amf-client-js" {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
 
     withExtensionMappingDefinition(
-        annotationMapping: string
+      annotationMapping: string
     ): SemanticExtension;
 
     withExtensionName(name: string): SemanticExtension;
@@ -5612,33 +5627,33 @@ declare module "amf-client-js" {
     withDialect(url: string): Promise<SemanticJsonSchemaConfiguration>;
 
     withErrorHandlerProvider(
-        provider: ErrorHandlerProvider
+      provider: ErrorHandlerProvider
     ): SemanticJsonSchemaConfiguration;
 
     withEventListener(
-        listener: AMFEventListener
+      listener: AMFEventListener
     ): SemanticJsonSchemaConfiguration;
 
     withParsingOptions(
-        parsingOptions: ParsingOptions
+      parsingOptions: ParsingOptions
     ): SemanticJsonSchemaConfiguration;
 
     withRenderOptions(
-        renderOptions: RenderOptions
+      renderOptions: RenderOptions
     ): SemanticJsonSchemaConfiguration;
 
     withResourceLoader(rl: ResourceLoader): SemanticJsonSchemaConfiguration;
 
     withResourceLoaders(
-        rl: Array<ResourceLoader>
+      rl: Array<ResourceLoader>
     ): SemanticJsonSchemaConfiguration;
 
     withShapePayloadPlugin(
-        plugin: AMFShapePayloadValidationPlugin
+      plugin: AMFShapePayloadValidationPlugin
     ): SemanticJsonSchemaConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): SemanticJsonSchemaConfiguration;
 
     withUnitCache(cache: UnitCache): SemanticJsonSchemaConfiguration;
@@ -5788,13 +5803,13 @@ declare module "amf-client-js" {
     withAnd(subShapes: Array<Shape>): this;
 
     withCustomShapeProperties(
-        customShapeProperties: Array<ShapeExtension>
+      customShapeProperties: Array<ShapeExtension>
     ): this;
 
     withCustomShapePropertyDefinition(name: string): PropertyShape;
 
     withCustomShapePropertyDefinitions(
-        propertyDefinitions: Array<PropertyShape>
+      propertyDefinitions: Array<PropertyShape>
     ): this;
 
     withDefaultStr(value: string): this;
@@ -5979,7 +5994,7 @@ declare module "amf-client-js" {
     withDialect(url: string): Promise<ShapesConfiguration>;
 
     withErrorHandlerProvider(
-        provider: ErrorHandlerProvider
+      provider: ErrorHandlerProvider
     ): ShapesConfiguration;
 
     withEventListener(listener: AMFEventListener): ShapesConfiguration;
@@ -5993,11 +6008,11 @@ declare module "amf-client-js" {
     withResourceLoaders(rl: Array<ResourceLoader>): ShapesConfiguration;
 
     withShapePayloadPlugin(
-        plugin: AMFShapePayloadValidationPlugin
+      plugin: AMFShapePayloadValidationPlugin
     ): ShapesConfiguration;
 
     withTransformationPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): ShapesConfiguration;
 
     withUnitCache(cache: UnitCache): ShapesConfiguration;
@@ -6203,12 +6218,12 @@ declare module "amf-client-js" {
     static empty(pipelineName: string): TransformationPipelineBuilder;
 
     static fromPipeline(
-        pipeline: TransformationPipeline
+      pipeline: TransformationPipeline
     ): TransformationPipelineBuilder;
 
     static fromPipeline(
-        pipelineName: string,
-        conf: AMFGraphConfiguration
+      pipelineName: string,
+      conf: AMFGraphConfiguration
     ): undefined | TransformationPipelineBuilder;
 
     prepend(newStage: TransformationStep): TransformationPipelineBuilder;
@@ -6217,9 +6232,9 @@ declare module "amf-client-js" {
   }
   export interface TransformationStep {
     transform(
-        model: BaseUnit,
-        errorHandler: ClientErrorHandler,
-        configuration: AMFGraphConfiguration
+      model: BaseUnit,
+      errorHandler: ClientErrorHandler,
+      configuration: AMFGraphConfiguration
     ): BaseUnit;
   }
   export class TransformationStepFactory {
@@ -6318,9 +6333,9 @@ declare module "amf-client-js" {
     defaultSeverity: string;
 
     constructor(
-        candidates: Array<ValidationCandidate>,
-        closure: Array<Shape>,
-        defaultSeverity: string
+      candidates: Array<ValidationCandidate>,
+      closure: Array<Shape>,
+      defaultSeverity: string
     );
   }
   export interface ValueField<T> extends Annotable {
@@ -6424,10 +6439,10 @@ declare module "amf-client-js" {
     withRaw(raw: string): this;
 
     withReferenceAlias(
-        alias: string,
-        id: string,
-        fullUrl: string,
-        relativeUrl: string
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
     ): BaseUnit;
 
     withReferences(references: Array<BaseUnit>): this;
