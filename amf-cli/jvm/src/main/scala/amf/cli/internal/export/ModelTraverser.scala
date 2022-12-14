@@ -1,6 +1,6 @@
 package amf.cli.internal.`export`
 
-import amf.core.internal.metamodel.Type.{Any, ArrayLike, Scalar}
+import amf.core.internal.metamodel.Type.{Any, ArrayLike, Scalar, SortedArray}
 import amf.core.internal.metamodel.{Field, Obj, Type}
 
 object ModelTraverser {
@@ -30,7 +30,7 @@ object ModelTraverser {
   def createAttribute(t: Type, doc: String, namespace: String): Attribute = t match {
     case Scalar(id)         => AttributeType(id, t, doc, namespace: String)
     case Any                => AttributeType("Any", t, doc, namespace: String)
-    case ArrayLike(element) => ArrayAttribute(createAttribute(element, doc, namespace))
+    case ArrayLike(element) => ArrayAttribute(t.isInstanceOf[SortedArray], createAttribute(element, doc, namespace))
     case obj: Obj           => TraversableAttribute(getCleanedObjName(t), obj, doc, namespace: String)
   }
 }
@@ -55,7 +55,7 @@ abstract class Attribute(val name: String) {
   def namespace: String
 }
 
-case class ArrayAttribute(attribute: Attribute) extends Attribute("") {
+case class ArrayAttribute(sorted: Boolean, attribute: Attribute) extends Attribute("") {
   override def toString: String       = attribute.toString
   override def linkedObj: Option[Obj] = attribute.linkedObj
   def isTraversable: Boolean          = linkedObj.nonEmpty
