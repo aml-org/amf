@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "$defs": {
+    "something": {
+      "@context": {
+        "config": "anypoint://vocabulary/security.yaml#",
+        "@type": "config:sensitive"
+      },
+      "type": "object",
+      "properties": {
+        "inner1": {
+          "@context": {
+            "@type": "config:inner1"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "prop1": {
+      "$ref": "#/$defs/something/properties/inner1"
+    }
+  },
+  "required": [ "prop1" ]
+}

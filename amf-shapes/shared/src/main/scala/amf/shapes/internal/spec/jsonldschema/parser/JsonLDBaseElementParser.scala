@@ -12,10 +12,12 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
 
   def parse(shape: Shape): T = checkConditionals(shape).foldLeft(setCharacteristics(parseNode(shape), shape))(foldLeft)
 
-  def setCharacteristics(topNode: T, shape: Shape): T = {
+  private def setCharacteristics(topNode: T, shape: Shape): T = {
     shape match {
       case a: AnyShape =>
-        a.semanticContext.flatMap(_.overrideMappings.headOption).foreach(ot => topNode.withOverriddenTerm(ot.value()))
+        a.semanticContext.foreach(sc =>
+          sc.overrideMappings.headOption.foreach(ot => topNode.withOverriddenTerm(sc.expand(ot.value())))
+        )
       case _ => // ignore
     }
     topNode

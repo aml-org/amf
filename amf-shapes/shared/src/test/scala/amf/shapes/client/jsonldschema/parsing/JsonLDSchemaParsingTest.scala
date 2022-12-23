@@ -35,7 +35,10 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
     def assertions(instance: JsonLDInstanceDocument): Assertion = {
       instance.encodes.headOption.nonEmpty shouldBe true
       instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
-      val propByMetadata = instance.encodes.head.asInstanceOf[JsonLDObject].fields.getValueAsOption("config:sensitive")
+      val propByMetadata = instance.encodes.head
+        .asInstanceOf[JsonLDObject]
+        .fields
+        .getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
       propByMetadata.nonEmpty shouldBe true
       propByMetadata.get.value.toString shouldBe "something"
     }
@@ -46,7 +49,10 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
     def assertions(instance: JsonLDInstanceDocument): Assertion = {
       instance.encodes.headOption.nonEmpty shouldBe true
       instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
-      val propByMetadata = instance.encodes.head.asInstanceOf[JsonLDObject].fields.getValueAsOption("config:sensitive")
+      val propByMetadata = instance.encodes.head
+        .asInstanceOf[JsonLDObject]
+        .fields
+        .getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
       propByMetadata.nonEmpty shouldBe true
       propByMetadata.get.value.isInstanceOf[JsonLDArray] shouldBe true
       val dArray = propByMetadata.get.value.asInstanceOf[JsonLDArray]
