@@ -46,10 +46,10 @@ case class JsonLDObjectElementParser(
   ): JsonLDObjectElementBuilder = current.merge(other)(ctx)
 
   override def findClassTerm(ctx: SemanticContext): Seq[String] = {
-    val terms = super.findClassTerm(ctx)
+    val terms = super.findClassTerm(ctx).map(ctx.expand)
     if (terms.isEmpty) {
       val fragment = if (path.toString.isEmpty) key else path.toString
-      Seq(computeDefaultTerm(ctx, fragment))
+      Seq(ctx.expand(computeDefaultTerm(ctx, fragment)))
     } else terms
   }
 
