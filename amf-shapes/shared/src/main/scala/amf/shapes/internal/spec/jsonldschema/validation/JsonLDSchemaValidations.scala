@@ -75,6 +75,12 @@ object JsonLDSchemaValidations extends Validations {
     "The value must be an array, as it is specified in the associated container '@list'"
   )
 
+  val InvalidTypeUse: ValidationSpecification = ValidationSpecification(
+    "invalid-type-use",
+    "@type can only be used at object schemas"
+  )
+
+
   override val specification: String                      = JsonLDSchema.id
   override val namespace: Namespace                       = AmfParser
   override val validations: List[ValidationSpecification] = List(UnsupportedShape)

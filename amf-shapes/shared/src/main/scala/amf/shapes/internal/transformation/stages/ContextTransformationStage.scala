@@ -9,10 +9,11 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
-import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, SemanticContext}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
   InvalidCharacteristicsUse,
+  InvalidTypeUse,
   UnsupportedContainer
 }
 import org.mulesoft.common.client.lexical.SourceLocation
@@ -58,16 +59,21 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
       characteristicsAllowed: Boolean
   ): SemanticContext = {
     val context = a.semanticContext.fold(parentContext)(sc =>
-      parentContext.merge(semanticContextChecks(sc, characteristicsAllowed))
+      parentContext.merge(semanticContextChecks(sc, a, characteristicsAllowed))
     )
     a.withSemanticContext(context)
     computeTree(a, context)
     context
   }
 
-  private def semanticContextChecks(baseCtx: SemanticContext, characteristicsAllowed: Boolean): SemanticContext = {
+  private def semanticContextChecks(
+      baseCtx: SemanticContext,
+      shape: AnyShape,
+      characteristicsAllowed: Boolean
+  ): SemanticContext = {
     if (!characteristicsAllowed) cleanOverriddenTerms(baseCtx)
     validateContainerValues(baseCtx)
+    validateTypeUsage(baseCtx, shape)
     baseCtx
   }
 
@@ -99,6 +105,18 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
         } else Some(container)
       }
       mapping.withContainers(cleanContainers)
+    }
+  }
+
+  private def validateTypeUsage(context: SemanticContext, shape: AnyShape): Unit = {
+    if (context.typeMappings.nonEmpty && !shape.isInstanceOf[NodeShape]) {
+      eh.violation(
+        InvalidTypeUse,
+        context.id,
+        InvalidTypeUse.message,
+        context.annotations.find(classOf[SourceAST]).map(_.ast.location).getOrElse(SourceLocation.Unknown)
+      )
+      context.withTypeMappings(Nil)
     }
   }
 
