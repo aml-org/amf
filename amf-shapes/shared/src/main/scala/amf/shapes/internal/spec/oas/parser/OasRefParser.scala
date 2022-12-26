@@ -8,7 +8,7 @@ import amf.core.internal.parser.domain._
 import amf.core.internal.remote.JsonSchema
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
-import amf.shapes.internal.annotations.ExternalJsonSchemaShape
+import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, TargetName}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
@@ -64,9 +64,14 @@ class OasRefParser(
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
           case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
         }
+        storeTargetName(referencedShape)
         referencedShape.foreach(adopt)
         referencedShape
     }
+  }
+
+  private def storeTargetName(referencedShape: Option[AnyShape]) = {
+    referencedShape.map(s => s.annotations += TargetName(s.name.value()))
   }
 
   private def createLinkToDeclaration(label: String, s: AnyShape) = {
@@ -172,7 +177,7 @@ class OasRefParser(
     ctx.findCachedJsonSchema(fullUrl) match {
       case Some(u: UnresolvedShape) =>
         copyUnresolvedShape(ref, fullUrl, e, u)
-      case Some(shape)              =>
+      case Some(shape) =>
         createLinkToParsedShape(ref, shape)
       case _ =>
         parseRemoteSchema(ref, fullUrl, Annotations(e.value)) match {

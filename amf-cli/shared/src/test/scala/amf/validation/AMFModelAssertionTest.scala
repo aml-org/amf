@@ -12,7 +12,7 @@ import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement,
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
-import amf.shapes.internal.annotations.BaseVirtualNode
+import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
@@ -420,6 +420,17 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(api, transform = false) { bu =>
       val payload = getFirstRequestPayload(bu)
       payload.required.value() shouldBe true
+    }
+  }
+
+  test("TargetName annotation has the name of the schema in the external file") {
+    val api = s"$basePath/annotations/target-name/api.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val schema     = bu.asInstanceOf[Document].declares.head.asInstanceOf[AnyShape]
+      val newName    = schema.name.value()
+      val targetName = schema.annotations.find(classOf[TargetName]).map(_.name)
+      newName shouldBe "new-name"
+      targetName shouldBe Some("original-name")
     }
   }
 }
