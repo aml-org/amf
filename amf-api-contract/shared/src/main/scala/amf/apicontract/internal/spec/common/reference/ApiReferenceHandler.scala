@@ -16,7 +16,7 @@ import scala.util.matching.Regex
 
 class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
-  private val references = SYamlCompilerReferenceCollector()
+  val references = SYamlCompilerReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     collect(parsed)(ctx.eh)
