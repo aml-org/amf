@@ -20,7 +20,7 @@ import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import amf.testing.BaseUnitUtils._
-
+import org.yaml.model.{YNode, YNodePlain, YScalar}
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
@@ -428,9 +428,9 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(api, transform = false) { bu =>
       val schema     = bu.asInstanceOf[Document].declares.head.asInstanceOf[AnyShape]
       val newName    = schema.name.value()
-      val targetName = schema.annotations.find(classOf[TargetName]).map(_.name)
+      val targetName = schema.annotations.find(classOf[TargetName]).map(_.name.asInstanceOf[YNodePlain].value)
       newName shouldBe "new-name"
-      targetName shouldBe Some("original-name")
+      targetName shouldBe Some(YScalar("original-name"))
     }
   }
 }

@@ -87,4 +87,4 @@ case class InputTypeField() extends Annotation
 /** When getting a schema from and external file, it's original name may be replaced by a new one. That original name is the one
   * stored by this Annotation. Used by ALS to link.
   */
-case class TargetName(name: String) extends Annotation
+case class TargetName(name: YPart) extends Annotation

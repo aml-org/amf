@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.oas.parser
 
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
-import amf.core.internal.annotations.ExternalFragmentRef
+import amf.core.internal.annotations.{ExternalFragmentRef, SourceYPart}
 import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
@@ -71,7 +71,11 @@ class OasRefParser(
   }
 
   private def storeTargetName(referencedShape: Option[AnyShape]) = {
-    referencedShape.map(s => s.annotations += TargetName(s.name.value()))
+    referencedShape match {
+      case Some(shape) =>
+        shape.name.annotations.find(classOf[SourceYPart]).map(name => shape.annotations += TargetName(name.ast))
+      case _ => // Ignore
+    }
   }
 
   private def createLinkToDeclaration(label: String, s: AnyShape) = {
