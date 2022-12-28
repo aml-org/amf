@@ -10,6 +10,7 @@ object JsonLDObject {
   def empty(model: JsonLDEntityModel, path: JsonPath): JsonLDObject =
     new JsonLDObject(Fields(), Annotations(), model, path)
 }
+
 class JsonLDObject(
     override val fields: Fields,
     override val annotations: Annotations,
