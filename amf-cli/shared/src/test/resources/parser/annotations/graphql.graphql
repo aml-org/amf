@@ -1,9 +1,15 @@
+"""
+schema documentation
+"""
 schema @MyDirective(text: "Luke Skywalker") {
     query: Query
     mutation: Mutation
 }
 
 type Query {
+    """
+    field description
+    """
     searchResult: SearchResult
 }
 
@@ -11,6 +17,9 @@ type Mutation {
     changeUserStatus(input_: InputType!): OutputType
 }
 
+"""
+an input type.
+"""
 input InputType {
     randomText: String
 }
@@ -35,9 +44,14 @@ type Dog {
 
 union SearchResult = Person | Dog
 
-directive @MyDirective(text: String) on SCHEMA
+"""A directive."""
+directive @MyDirective(
+    """A directive argument."""
+    text: String
+) on SCHEMA
 
 enum Planet {
+    """A Planet."""
     MERCURY
     VENUS
     EARTH

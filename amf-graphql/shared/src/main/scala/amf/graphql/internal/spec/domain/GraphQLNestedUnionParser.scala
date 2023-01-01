@@ -1,13 +1,15 @@
 package amf.graphql.internal.spec.domain
 
-import amf.core.internal.parser.domain.Annotations.inferred
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.{AnyShape, UnionShape}
+import amf.shapes.internal.domain.metamodel.UnionShapeModel
 import org.mulesoft.antlrast.ast.{Node, Terminal}
-
+import amf.graphql.internal.spec.document._
 class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBaseWebApiContext)
     extends GraphQLASTParserHelper {
   val union: UnionShape = UnionShape(toAnnotations(unionTypeDef))
@@ -17,7 +19,12 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
     parseMembers()
     parseDescription(unionTypeDef, union, union.meta)
     inFederation { implicit fCtx =>
-      FederationMetadataParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        unionTypeDef,
+        union,
+        Seq(UNION_DIRECTIVE, UNION_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(unionTypeDef, union, Seq(UNION_DIRECTIVE, DIRECTIVE)).parse()
     }
     GraphQLDirectiveApplicationsParser(unionTypeDef, union).parse()
@@ -37,7 +44,8 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
     }
 
     val finalMembers: Seq[AnyShape] = members.collect { case Some(t) => t }
-    union.withAnyOf(finalMembers, inferred())
+    // TODO: change annotation to only members
+    union synthetically () set AmfArray(finalMembers, toAnnotations(unionTypeDef)) as UnionShapeModel.AnyOf
   }
 
   private def parseName(): Unit = {

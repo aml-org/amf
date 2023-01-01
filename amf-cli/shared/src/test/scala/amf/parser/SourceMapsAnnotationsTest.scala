@@ -49,7 +49,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("async2.yaml")
   }
 
-  ignore("Test GraphQL annotations") {
+  test("Test GraphQL annotations") {
     runTest("graphql.graphql", Some(GraphQLConfiguration.GraphQL()))
   }
 
@@ -68,7 +68,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
       val strings = checkUnit(bu)
       if (strings.isEmpty) succeed
       else {
-        fail("Missing annotations over:\n" + strings.mkString("\n"))
+        fail(s"Missing annotations in ${strings.size} places:\n" + strings.mkString("\n"))
       }
     }
 
