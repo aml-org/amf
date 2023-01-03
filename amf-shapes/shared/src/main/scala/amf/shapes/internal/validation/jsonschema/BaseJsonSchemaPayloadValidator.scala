@@ -1,6 +1,7 @@
 package amf.shapes.internal.validation.jsonschema
 
 import amf.core.client.common.render.JsonSchemaDraft7
+import amf.core.client.common.validation.ProfileNames.AMF
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
@@ -47,27 +48,25 @@ object BaseJsonSchemaPayloadValidator {
 abstract class BaseJsonSchemaPayloadValidator(
     shape: Shape,
     mediaType: String,
-    configuration: ShapeValidationConfiguration
+    configuration: ShapeValidationConfiguration,
+    shouldFailFast: Boolean
 ) extends AMFShapePayloadValidator {
 
   private val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
+  protected def getReportProcessor: ValidationProcessor     = getReportProcessor(AMF)
   protected implicit val executionContext: ExecutionContext = configuration.executionContext
 
   override def validate(payload: String): Future[AMFValidationReport] = {
-    Future.successful(
-      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+    Future.successful(validateForPayload(payload, getReportProcessor))
   }
 
   override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
-    Future.successful(
-      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+    Future.successful(validateForFragment(fragment, getReportProcessor))
   }
 
   override def syncValidate(payload: String): AMFValidationReport = {
-    validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    validateForPayload(payload, getReportProcessor)
   }
 
   protected type LoadedObj

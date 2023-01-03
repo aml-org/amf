@@ -15,8 +15,9 @@ class JsShapePayloadValidator(
     private val shape: Shape,
     private val mediaType: String,
     protected val validationMode: ValidationMode,
-    private val configuration: ShapeValidationConfiguration
-) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+    private val configuration: ShapeValidationConfiguration,
+    private val shouldFailFast: Boolean = false
+) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration, shouldFailFast) {
 
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]
@@ -65,8 +66,7 @@ class JsShapePayloadValidator(
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
 
-//    val validator = if (fast) LazyAjv.fast else LazyAjv.default
-    val validator = LazyAjv.default
+    val validator = if (shouldFailFast) LazyAjv.fast else LazyAjv.default
     try {
       val correct = validator.validate(schema.asInstanceOf[js.Object], obj)
 

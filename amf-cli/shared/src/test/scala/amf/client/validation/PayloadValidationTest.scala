@@ -10,6 +10,7 @@ import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -235,6 +236,30 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""22021-06-05T00:00:00"""").conforms shouldBe false
     validator.syncValidate(""""2021-06-05T00:00:00"""").conforms shouldBe true
+  }
+
+  test("Fail fast plugin should have less results than complete") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+    val payload =
+      """
+        |{
+        |  "a": true,
+        |  "b": 5
+        |}
+        |""".stripMargin
+
+    val failFast =
+      payloadValidator(node, `application/json`, defaultConfig.withPlugin(FailFastJsonSchemaPayloadValidationPlugin))
+    val slimReport = failFast.syncValidate(payload)
+    slimReport.conforms shouldBe false
+    slimReport.results should have length 1
+
+    val fullValidator = payloadValidator(node, `application/json`)
+    val fullReport    = fullValidator.syncValidate(payload)
+    fullReport.conforms shouldBe false
+    fullReport.results should have length 2
   }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global

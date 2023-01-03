@@ -31,8 +31,9 @@ class JvmShapePayloadValidator(
     private val shape: Shape,
     private val mediaType: String,
     protected val validationMode: ValidationMode,
-    private val configuration: ShapeValidationConfiguration
-) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+    private val configuration: ShapeValidationConfiguration,
+    private val shouldFailFast: Boolean = false
+) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration, shouldFailFast) {
 
   private val DEFAULT_MAX_NESTING_LIMIT: Int = BaseLexer.DEFAULT_MAX_DEPTH
 
@@ -46,11 +47,9 @@ class JvmShapePayloadValidator(
       fragment: Option[PayloadFragment],
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-//    val validator = validationProcessor match {
-//      case BooleanValidationProcessor => Validator.builder().failEarly().build()
-//      case _ => Validator.builder().build()
-//    }
-    val validator = Validator.builder().build()
+
+    val base      = Validator.builder()
+    val validator = if (shouldFailFast) base.failEarly().build() else base.build()
 
     try {
       validator.performValidation(schema, payload)
