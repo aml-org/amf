@@ -9,7 +9,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 
-class JsonLDEntityModel(val terms: List[ValueType], val fields: List[Field], path: JsonPath)
+case class JsonLDEntityModel(val terms: List[ValueType], val fields: List[Field], path: JsonPath)
     extends JsonLDElementModel {
   override def modelInstance: AmfObject = new JsonLDObject(Fields(), Annotations(), this, path)
 
