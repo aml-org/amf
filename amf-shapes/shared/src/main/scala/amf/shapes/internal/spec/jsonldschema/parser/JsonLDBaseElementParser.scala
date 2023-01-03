@@ -44,11 +44,8 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
     if (isValid(shape.ifShape, node)) Option(shape.thenShape) else Option(shape.elseShape)
 
   private def isValid(shape: Shape, node: YValue): Boolean = {
-    // TODO [Native-jsonld]: implement new validator, interface or configuration to invoke with boolean validator processor (fail early)
-    ShapesConfiguration
-      .predefined()
-      .elementClient()
-      .payloadValidatorFor(shape, Mimes.`application/json`, ValidationMode.ScalarRelaxedValidationMode)
+    ctx
+      .validator(shape)
       .syncValidate(ctx.yValueCache.get(node))
       .conforms
   }
