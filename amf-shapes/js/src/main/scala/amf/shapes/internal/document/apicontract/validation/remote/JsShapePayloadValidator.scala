@@ -3,7 +3,7 @@ package amf.shapes.internal.document.apicontract.validation.remote
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema._
@@ -49,7 +49,7 @@ class JsShapePayloadValidator(
       jsonSchema: CharSequence,
       element: DomainElement,
       validationProcessor: ValidationProcessor
-  ): Either[validationProcessor.Return, Option[Dictionary[js.Dynamic]]] = {
+  ): Either[AMFValidationReport, Option[Dictionary[js.Dynamic]]] = {
     var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[Dictionary[js.Dynamic]]
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
@@ -63,37 +63,38 @@ class JsShapePayloadValidator(
       obj: js.Dynamic,
       fragment: Option[PayloadFragment],
       validationProcessor: ValidationProcessor
-  ): validationProcessor.Return = {
+  ): AMFValidationReport = {
 
-    val fast      = validationProcessor.isInstanceOf[BooleanValidationProcessor.type]
-    val validator = if (fast) LazyAjv.fast else LazyAjv.default
-
+//    val validator = if (fast) LazyAjv.fast else LazyAjv.default
+    val validator = LazyAjv.default
     try {
       val correct = validator.validate(schema.asInstanceOf[js.Object], obj)
 
-      if (fast) correct.asInstanceOf[validationProcessor.Return]
-      else {
-        val results: Seq[AMFValidationResult] = if (!correct) {
+      val results: Seq[AMFValidationResult] =
+        if (correct) Nil
+        else {
           validator.errors.getOrElse(js.Array[ValidationResult]()).map { result =>
-            AMFValidationResult(
-              message = makeValidationMessage(result),
-              level = SeverityLevels.VIOLATION,
-              targetNode = fragment.map(_.encodes.id).getOrElse(""),
-              targetProperty = fragment.map(_.encodes.id),
-              validationId = ExampleValidationErrorSpecification.id,
-              position = fragment.flatMap(_.encodes.position()),
-              location = fragment.flatMap(_.encodes.location()),
-              source = result
-            )
+            asAmfResult(result, fragment)
           }
-        } else Nil
-
-        validationProcessor.processResults(results)
-      }
+        }
+      validationProcessor.processResults(results)
     } catch {
       case e: JavaScriptException =>
         validationProcessor.processException(e, fragment.map(_.encodes))
     }
+  }
+
+  private def asAmfResult(result: ValidationResult, fragment: Option[PayloadFragment]) = {
+    AMFValidationResult(
+      message = makeValidationMessage(result),
+      level = SeverityLevels.VIOLATION,
+      targetNode = fragment.map(_.encodes.id).getOrElse(""),
+      targetProperty = fragment.map(_.encodes.id),
+      validationId = ExampleValidationErrorSpecification.id,
+      position = fragment.flatMap(_.encodes.position()),
+      location = fragment.flatMap(_.encodes.location()),
+      source = result
+    )
   }
 
   private def makeValidationMessage(validationResult: ValidationResult): String = {
@@ -111,7 +112,7 @@ case class JsReportValidationProcessor(
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
-  override def processException(r: Throwable, element: Option[DomainElement]): Return = {
+  override def processException(r: Throwable, element: Option[DomainElement]): AMFValidationReport = {
     val results = r match {
       case e: scala.scalajs.js.JavaScriptException =>
         Seq(

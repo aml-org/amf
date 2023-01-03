@@ -1,7 +1,7 @@
 package amf.client.validation
 
 import amf.cli.internal.convert.NativeOps
-import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
+import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -10,7 +10,6 @@ import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -33,9 +32,8 @@ trait PayloadValidationUtils {
   ): AMFShapePayloadValidator =
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 
-  protected def validator(s: Shape,
-                          mediaType: String,
-                          plugin: AMFShapePayloadValidationPlugin) = defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
+  protected def validator(s: Shape, mediaType: String, plugin: AMFShapePayloadValidationPlugin) =
+    defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
 trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
@@ -238,6 +236,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
     validator.syncValidate(""""22021-06-05T00:00:00"""").conforms shouldBe false
     validator.syncValidate(""""2021-06-05T00:00:00"""").conforms shouldBe true
   }
-  
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
