@@ -53,6 +53,7 @@ trait ShapesBaseConverter
     with DefaultVocabularyConverter
     with CuriePrefixConverter
     with ContextMappingConverter
+    with JsonLDObjectConverter
     with JsonLDArrayConverter
     with JsonLDElementConverter
 
