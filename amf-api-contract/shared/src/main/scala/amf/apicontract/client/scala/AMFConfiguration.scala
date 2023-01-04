@@ -31,6 +31,7 @@ import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
+import amf.core.client.scala.vocabulary.NamespaceAliases
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
@@ -412,6 +413,9 @@ class AMFConfiguration private[amf] (
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
     super._withPlugins(plugins)
+
+  override def withAliases(aliases: NamespaceAliases): AMFConfiguration =
+    super._withAliases(aliases)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMFConfiguration =
     super._withEntities(entities)
