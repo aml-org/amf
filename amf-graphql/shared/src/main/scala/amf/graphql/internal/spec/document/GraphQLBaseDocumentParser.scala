@@ -3,12 +3,15 @@ package amf.graphql.internal.spec.document
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
+import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{AntlrError, DuplicatedDeclaration}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.metamodel.document.{BaseUnitModel, BaseUnitProcessingDataModel, FragmentModel, ModuleModel}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
@@ -24,14 +27,14 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     extends GraphQLASTParserHelper {
 
   // default values, can be changed through a schema declaration
-  var QUERY_TYPE        = "Query"
-  var SUBSCRIPTION_TYPE = "Subscription"
-  var MUTATION_TYPE     = "Mutation"
+  private var QUERY_TYPE        = "Query"
+  private var SUBSCRIPTION_TYPE = "Subscription"
+  private var MUTATION_TYPE     = "Mutation"
 
-  val typeSystemDefinitionPath: Seq[String] = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION)
-  val typeSystemExtensionPath: Seq[String]  = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION)
-  val typeDefinitionPath: Seq[String]       = typeSystemDefinitionPath :+ TYPE_DEFINITION
-  val typeExtensionPath: Seq[String]        = typeSystemExtensionPath :+ TYPE_EXTENSION
+  private val typeSystemDefinitionPath: Seq[String] = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION)
+  private val typeSystemExtensionPath: Seq[String]  = Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_EXTENSION)
+  private val typeDefinitionPath: Seq[String]       = typeSystemDefinitionPath :+ TYPE_DEFINITION
+  private val typeExtensionPath: Seq[String]        = typeSystemExtensionPath :+ TYPE_EXTENSION
 
   val doc: Document          = Document()
   private def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
@@ -49,17 +52,29 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     inFederation { implicit fCtx =>
       fCtx.linkingActions.executeAll()
     }
+    setDeclarations()
+    setProcessingData()
+    doc
+  }
+
+  private def setDeclarations(): Unit = {
     val declarations = ctx.declarations.shapes.values.toList ++
       ctx.declarations.annotations.values.toList
     declarations.foreach(_.annotations += DeclaredElement())
-    doc.withDeclares(declarations)
+    doc set declarations as ModuleModel.Declares
+  }
+
+  private def setProcessingData(): Unit = {
     inFederation { _ =>
-      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL_FEDERATION))
+      val processingData = APIContractProcessingData()
+      processingData set Spec.GRAPHQL_FEDERATION.id as BaseUnitProcessingDataModel.SourceSpec
+      doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
     inGraphQL { _ =>
-      doc.withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+      val processingData = APIContractProcessingData()
+      processingData set Spec.GRAPHQL.id as BaseUnitProcessingDataModel.SourceSpec
+      doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
-    doc
   }
 
   private def loadSyntaxErrors(ast: AST): Unit = {
@@ -68,8 +83,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
 
   private def parseWebAPI(ast: AST): Unit = {
     val webApi = WebApi(Annotations(SourceASTElement(ast.current())))
-    webApi.withName(root.location.split("/").last)
-    doc.withLocation(root.location).withEncodes(webApi)
+
+    webApi set root.location.split("/").last as WebApiModel.Name
+    doc set webApi as FragmentModel.Encodes
+    doc set root.location as BaseUnitModel.Location
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
@@ -245,9 +262,10 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   }
 
   private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Api = {
-    val endpoints    = GraphQLRootTypeParser(objTypeDef, queryType).parse()
-    val oldEndpoints = webapi.endPoints
-    webapi.withEndPoints(oldEndpoints ++ endpoints)
+    val endpoints                   = GraphQLRootTypeParser(objTypeDef, queryType).parse()
+    val allEndpoints: Seq[EndPoint] = webapi.endPoints ++ endpoints
+    webapi set allEndpoints as WebApiModel.EndPoints
+    webapi
   }
 
   private def getRootType(typeName: String): Option[RootTypes.Value] = {

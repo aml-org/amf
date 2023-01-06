@@ -64,6 +64,29 @@
                       "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ],
@@ -119,9 +142,9 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/virtual-element/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil"
@@ -182,12 +205,12 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/source-map/virtual-element/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/shapes#anyOf"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,6 +223,80 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/source-map/virtual-element/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/source-map/synthesized-field/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiContract#statusCode"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/core#name"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/source-map/virtual-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -209,6 +306,57 @@
                   {
                     "@value": "Query.name"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/source-map/synthesized-field/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#method"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/source-map/virtual-element/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -217,6 +365,21 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/endpoint/%2Fquery%2Fname/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -231,6 +394,29 @@
                         "@value": "[(2,4)-(2,16)]"
                       }
                     ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/web-api/source-map/synthesized-field/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
                   }
                 ]
               }
@@ -263,6 +449,29 @@
         "http://a.ml/vocabularies/document#sourceSpec": [
           {
             "@value": "GraphQL"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/BaseUnitProcessingData/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/BaseUnitProcessingData/source-map/synthesized-field/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#sourceSpec"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -346,6 +555,21 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/property/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/property/property/name/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -450,6 +674,21 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/property/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/property/property/name/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -590,24 +829,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link-target/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                        "@value": "http://a.ml/vocabularies/shapes#isAbstract"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                        "@value": "true"
                       }
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                "http://a.ml/vocabularies/document-source-maps#resolved-link": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/declared-element/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
@@ -615,7 +854,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": ""
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/inherits/shape/default-node"
                       }
                     ]
                   }
@@ -635,9 +874,9 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#resolved-link": [
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/declared-element/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
@@ -645,7 +884,22 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/inherits/shape/default-node"
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link-target/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
                       }
                     ]
                   }
@@ -660,24 +914,24 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/resolved-link-target/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
+                    "@value": "http://a.ml/vocabularies/shapes#isAbstract"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
+                    "@value": "true"
                   }
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#resolved-link": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/resolved-link/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
@@ -685,7 +939,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/inherits/shape/A"
                   }
                 ]
               }
@@ -705,9 +959,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#resolved-link": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/resolved-link/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
@@ -715,7 +969,22 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/inherits/shape/A"
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/source-map/resolved-link-target/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A"
                   }
                 ]
               }
@@ -801,6 +1070,21 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/property/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/property/property/name/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -941,24 +1225,24 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link-target/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                    "@value": "http://a.ml/vocabularies/shapes#isAbstract"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                    "@value": "true"
                   }
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#resolved-link": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
@@ -966,7 +1250,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/inherits/shape/default-node"
                   }
                 ]
               }
@@ -986,9 +1270,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#resolved-link": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
@@ -996,7 +1280,22 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/A/inherits/shape/default-node"
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B/source-map/resolved-link-target/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursive-inheritance/simple.graphql#/declares/shape/B"
                   }
                 ]
               }

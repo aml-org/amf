@@ -1,7 +1,9 @@
 package amf.graphql.internal.spec.domain.directives
 
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{DomainElement, ObjectNode}
+import amf.core.client.scala.model.domain.{AmfArray, DomainElement, ObjectNode}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
 import amf.core.internal.parser.domain.Annotations.{inferred, virtual}
 import amf.core.internal.parser.domain.SearchScope
@@ -9,7 +11,7 @@ import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.parser.syntax.ValueParser
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENT, ARGUMENTS, VALUE}
 import org.mulesoft.antlrast.ast.Node
-
+import amf.graphql.internal.spec.document._
 class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWebApiContext)
     extends DirectiveApplicationParser {
 
@@ -20,7 +22,8 @@ class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWe
     parseName(directiveApplication, node)
     parseDefinedBy(directiveApplication, node)
     parseArguments(directiveApplication, node)
-    element.withCustomDomainProperty(directiveApplication)
+    val directives = element.customDomainProperties :+ directiveApplication
+    element set directives as DomainElementModel.CustomDomainProperties
   }
 
   protected def parseName(directiveApplication: DomainExtension, node: Node): Unit = {
@@ -34,7 +37,7 @@ class RegularDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWe
     collect(node, Seq(ARGUMENTS, ARGUMENT)).foreach { case argument: Node =>
       parseArgument(argument, schema)
     }
-    directiveApplication.withExtension(schema)
+    directiveApplication set schema as DomainExtensionModel.Extension
   }
 
   protected def parseArgument(n: Node, objectNode: ObjectNode): Unit = {
