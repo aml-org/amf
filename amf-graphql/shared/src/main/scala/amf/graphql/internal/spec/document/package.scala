@@ -47,7 +47,7 @@ package object document {
         new GraphQLModelSetter(AmfScalar(node.toString()), getAnnotation)
     }
 
-    def set(value: Boolean) = new GraphQLModelSetter(AmfScalar(value, Annotations.inferred()), Annotations.inferred())
+    def set(value: Boolean) = new GraphQLModelSetter(AmfScalar(value), Annotations.synthesized())
 
     def set(value: String) = new GraphQLModelSetter(AmfScalar(value), Annotations.synthesized())
 
