@@ -13,7 +13,7 @@ import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
-import amf.shapes.internal.domain.metamodel.{ScalarShapeModel, UnionShapeModel}
+import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
@@ -151,7 +151,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case STRING  => Some(DataType.String)
       case BOOLEAN => Some(DataType.Boolean)
       case ID =>
-        scalar synthetically () set "ID" as ScalarShapeModel.Format
+        scalar set "ID" as ScalarShapeModel.Format
         Some(DataType.Any)
       case _ =>
         astError(s"Unknown GraphQL scalar type $typeName", toAnnotations(t))
@@ -177,8 +177,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       path(t, Seq(LIST_TYPE)) match {
         case Some(n: Node) =>
           val range = parseType(n)
-//          array.set(array.id + "/items", ArrayShapeModel.Items, range, inferred())
-          array.withItems(range) // TODO: how can it be changed?
+          array.withItems(range)
         case _ =>
           astError(s"Unknown listType range", toAnnotations(t))
       }

@@ -1,18 +1,15 @@
 package amf.graphql.internal.spec.domain
 
-import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
-import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
+import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.document.GraphQLFieldSetter
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload, ShapeRequest}
+import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
 import amf.shapes.internal.domain.metamodel.operations.{
   AbstractPayloadModel,
-  ShapeOperationModel,
   ShapeParameterModel,
   ShapeRequestModel,
   ShapeResponseModel
@@ -46,7 +43,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   private def parseArgument(n: Node): ShapeParameter = {
     val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
     val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations)
-    queryParam synthetically () set "query" as ShapeParameterModel.Binding
+    queryParam set "query" as ShapeParameterModel.Binding
     parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
       FederationMetadataParser(
@@ -61,7 +58,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
       case NullableShape(isNullable: Boolean, shape: AnyShape) =>
         setDefaultValue(n, queryParam)
         queryParam set shape as ShapeParameterModel.Schema
-        queryParam synthetically () set AmfScalar(!isNullable) as ShapeParameterModel.Required
+        queryParam set !isNullable as ShapeParameterModel.Required
     }
     GraphQLDirectiveApplicationsParser(n, queryParam).parse()
     queryParam

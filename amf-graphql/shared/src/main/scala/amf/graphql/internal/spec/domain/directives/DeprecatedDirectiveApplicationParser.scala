@@ -1,18 +1,18 @@
 package amf.graphql.internal.spec.domain.directives
 
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel.DefinedBy
-import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
+import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
+import amf.core.internal.parser.domain.Annotations.synthesized
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.apicontract.internal.validation.shacl.graphql.GraphQLLocationHelper.toLocationIri
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
-import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
+import amf.graphql.internal.spec.document._
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{NodeShapeModel, ScalarShapeModel}
 import org.mulesoft.antlrast.ast.Node
-import amf.graphql.internal.spec.document._
 
 class DeprecatedDirectiveApplicationParser(override implicit val ctx: GraphQLBaseWebApiContext)
     extends RegularDirectiveApplicationParser()(ctx) {

@@ -46,7 +46,7 @@ case class GraphQLPropertyFieldParser(ast: Node, parent: NodeShape)(implicit val
   private def makeNullable(shape: AnyShape, nullable: Boolean): Unit = {
     val minCount = if (nullable) 0 else 1
     property set shape as PropertyShapeModel.Range
-    property synthetically () set minCount as PropertyShapeModel.MinCount
+    property set minCount as PropertyShapeModel.MinCount
   }
 
   private def parseFederationMetadata(): Unit = {

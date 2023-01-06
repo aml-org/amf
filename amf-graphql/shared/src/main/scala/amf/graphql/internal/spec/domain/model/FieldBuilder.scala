@@ -76,7 +76,7 @@ case class FieldBuilder[I <: FieldBuilderInfo](
     val endpoint     = EndPoint(endpointAnnotations)
     val endpointPath = EndpointPath(name.toString(), operationType)
     description.foreach(scalar => endpoint set scalar as DescribedElementModel.Description)
-    endpoint set AmfScalar(endpointPath, inferred()) as EndPointModel.Path
+    endpoint set endpointPath as EndPointModel.Path
     endpoint.withName(s"$typeName.$name", name.annotations)
     endpoint set Seq(buildOperation(endpoint)) as EndPointModel.Operations
   }
@@ -86,15 +86,15 @@ case class FieldBuilder[I <: FieldBuilderInfo](
     val method      = OperationMethod(operationType)
 
     val operation = Operation(virtual())
-    operation synthetically () set method as OperationModel.Method
+    operation set method as OperationModel.Method
     operation.withName(operationId.value(), operationId.annotations())
-    operation synthetically () set operationId.value() as OperationModel.OperationId
+    operation set operationId.value() as OperationModel.OperationId
 
     val request = Request(virtual())
     operation set Seq(request) as OperationModel.Request
 
-    val response = Response(virtual()).withName("default", virtual())
-    response synthetically () set "200" as ResponseModel.StatusCode
+    val response = Response(virtual()).withSynthesizeName("default")
+    response set "200" as ResponseModel.StatusCode
     operation set Seq(response) as OperationModel.Responses
 
     val payload = Payload(virtual())

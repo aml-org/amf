@@ -94,7 +94,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
       case NullableShape(isNullable: Boolean, shape: AnyShape) =>
         setDefaultValue(argument, queryParam)
         queryParam set shape as AbstractParameterModel.Schema
-        queryParam synthetically () set AmfScalar(!isNullable) as ParameterModel.Required
+        queryParam set !isNullable as ParameterModel.Required
     }
     GraphQLDirectiveApplicationsParser(argument, queryParam).parse()
     queryParam

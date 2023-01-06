@@ -51,7 +51,7 @@ case class GraphQLDirectiveDeclarationParser(node: Node)(implicit val ctx: Graph
         parseArgument(argument)
     }
     val schema = NodeShape(virtual())
-    schema synthetically () set true as NodeShapeModel.InputOnly
+    schema set true as NodeShapeModel.InputOnly
     schema set properties as NodeShapeModel.Properties
     schema.annotations += DirectiveArguments()
     directive set schema as CustomDomainPropertyModel.Schema

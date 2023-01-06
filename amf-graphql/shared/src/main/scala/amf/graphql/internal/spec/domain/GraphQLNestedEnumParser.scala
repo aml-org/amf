@@ -17,7 +17,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
     extends GraphQLASTParserHelper {
 
   val enum: ScalarShape =
-    ScalarShape(toAnnotations(enumTypeDef)) synthetically () set DataType.Any as ScalarShapeModel.DataType
+    ScalarShape(toAnnotations(enumTypeDef)) set DataType.Any as ScalarShapeModel.DataType
 
   def parse(): ScalarShape = {
     parseName()
@@ -84,7 +84,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
         val t   = n.children.head.asInstanceOf[Terminal]
         val ann = toAnnotations(t)
         val s   = ScalarNode(t.value, None, ann).withName(t.value, ann)
-        s synthetically () set XsdTypes.xsdAnyType.iri() as ScalarNodeModel.DataType
+        s set XsdTypes.xsdAnyType.iri() as ScalarNodeModel.DataType
         Some(s)
       case _ => None
     }

@@ -67,12 +67,12 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   private def setProcessingData(): Unit = {
     inFederation { _ =>
       val processingData = APIContractProcessingData()
-      processingData synthetically () set Spec.GRAPHQL_FEDERATION.id as BaseUnitProcessingDataModel.SourceSpec
+      processingData set Spec.GRAPHQL_FEDERATION.id as BaseUnitProcessingDataModel.SourceSpec
       doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
     inGraphQL { _ =>
       val processingData = APIContractProcessingData()
-      processingData synthetically () set Spec.GRAPHQL.id as BaseUnitProcessingDataModel.SourceSpec
+      processingData set Spec.GRAPHQL.id as BaseUnitProcessingDataModel.SourceSpec
       doc synthetically () set processingData as BaseUnitModel.ProcessingData
     }
   }
@@ -84,9 +84,9 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   private def parseWebAPI(ast: AST): Unit = {
     val webApi = WebApi(Annotations(SourceASTElement(ast.current())))
 
-    webApi synthetically () set root.location.split("/").last as WebApiModel.Name
+    webApi set root.location.split("/").last as WebApiModel.Name
     doc set webApi as FragmentModel.Encodes
-    doc synthetically () set root.location as BaseUnitModel.Location
+    doc set root.location as BaseUnitModel.Location
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {

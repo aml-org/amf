@@ -32,7 +32,7 @@ class SpecifiedByDirectiveApplicationParser(override implicit val ctx: GraphQLBa
     }
   }
 
-  private def setDataTypeField(element: DomainElement, dataTypeNode: ScalarNode) = {
+  private def setDataTypeField(element: DomainElement, dataTypeNode: ScalarNode): Any = {
     element match {
       case scalarShape: ScalarShape => setScalarDatatype(scalarShape, dataTypeNode.value.value())
       case _ =>

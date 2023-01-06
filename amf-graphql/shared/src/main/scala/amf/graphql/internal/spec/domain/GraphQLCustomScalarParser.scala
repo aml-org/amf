@@ -17,7 +17,7 @@ class GraphQLCustomScalarParser(customScalarTypeDef: Node)(implicit val ctx: Gra
   val scalar: ScalarShape = ScalarShape(toAnnotations(customScalarTypeDef))
 
   def parse(): ScalarShape = {
-    scalar synthetically () set DataType.Any as ScalarShapeModel.DataType
+    scalar set DataType.Any as ScalarShapeModel.DataType
     parseName()
     parseDescription(customScalarTypeDef, scalar, scalar.meta)
     inFederation { implicit fCtx =>
