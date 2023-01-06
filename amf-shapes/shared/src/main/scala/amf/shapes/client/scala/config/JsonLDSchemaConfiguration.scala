@@ -10,6 +10,7 @@ import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
+import amf.core.client.scala.vocabulary.NamespaceAliases
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
@@ -166,6 +167,9 @@ class JsonLDSchemaConfiguration private[amf] (
     */
   override def withEventListener(listener: AMFEventListener): JsonLDSchemaConfiguration =
     super._withEventListener(listener)
+
+  override def withAliases(aliases: NamespaceAliases): JsonLDSchemaConfiguration =
+    super._withAliases(aliases)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): JsonLDSchemaConfiguration =
     super._withEntities(entities)
