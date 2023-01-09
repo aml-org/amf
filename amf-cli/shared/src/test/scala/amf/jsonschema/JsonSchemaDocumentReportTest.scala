@@ -46,4 +46,12 @@ class JsonSchemaDocumentReportTest extends UniquePlatformReportGenTest {
       configOverride = Some(baseConfig)
     )
   }
+
+  test("Document with $ref in external with empty value shouldn't conform") {
+    validate("empty-ref-in-external.json", Some("empty-ref-in-external.report"), configOverride = Some(baseConfig))
+  }
+
+  test("Document with $ref with empty value shouldn't conform") {
+    validate("empty-ref-in-root.json", Some("empty-ref-in-root.report"), configOverride = Some(baseConfig))
+  }
 }

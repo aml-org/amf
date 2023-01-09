@@ -5,7 +5,7 @@ import amf.core.internal.annotations.{ExternalFragmentRef, SourceYPart}
 import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
-import amf.core.internal.remote.JsonSchema
+import amf.core.internal.remote.{JsonSchema, Spec}
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, TargetName}
@@ -13,6 +13,7 @@ import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, Sche
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.MalformedJsonReference
 import org.yaml.model.{YMap, YMapEntry, YPart, YType}
 
 /*
@@ -98,7 +99,16 @@ class OasRefParser(
       case None if isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext =>
         handleNotFoundOas(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
       case None =>
-        handleNotFoundJsonSchema(raw, entry, rawOrResolvedRef, declarationNameOrResolvedRef)
+        val shape = handleNotFoundJsonSchema(raw, entry, rawOrResolvedRef, declarationNameOrResolvedRef)
+        if (entry.value.as[String].isEmpty && ctx.spec == JsonSchema) {
+          ctx.eh.violation(
+            MalformedJsonReference,
+            shape,
+            """$ref value should not be an empty string""",
+            Annotations(entry.value)
+          )
+        }
+        Some(shape)
     }
   }
 
@@ -107,7 +117,7 @@ class OasRefParser(
       entry: YMapEntry,
       rawOrResolvedRef: String,
       declarationNameOrResolvedRef: String
-  ) = {
+  ): AnyShape = {
     val tmpShape: UnresolvedShape =
       createAndRegisterUnresolvedShape(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
     ctx.registerJsonSchema(rawOrResolvedRef, tmpShape)
@@ -131,9 +141,9 @@ class OasRefParser(
               }
               link.withName(nextName, annotations)
             } else shape
-          } orElse { Some(tmpShape) }
+          } getOrElse { tmpShape }
 
-      case None => Some(tmpShape)
+      case None => tmpShape
     }
   }
 

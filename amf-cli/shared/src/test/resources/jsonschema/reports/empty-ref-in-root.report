@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/jsonschema/doc/empty-ref-in-root.json
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#malformed-json-reference
+  Message: $ref value should not be an empty string
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/jsonschema/doc/empty-ref-in-root.json#/shape/schema/property/property/x/shape/x
+  Property: 
+  Range: [(6,14)-(6,16)]
+  Location: file://amf-cli/shared/src/test/resources/jsonschema/doc/empty-ref-in-root.json

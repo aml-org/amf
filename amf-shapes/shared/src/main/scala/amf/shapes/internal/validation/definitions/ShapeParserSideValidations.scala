@@ -23,6 +23,11 @@ object ShapeParserSideValidations extends Validations {
     "Invalid type expression"
   )
 
+  val MalformedJsonReference = validation(
+    "malformed-json-reference",
+    "Malformed json reference"
+  )
+
   val InvalidDatetimeFormat = validation(
     "invalid-datetime-format",
     "Invalid format value for datetime"
@@ -442,6 +447,7 @@ object ShapeParserSideValidations extends Validations {
     JsonSchemaDefinitionNotFound,
     InvalidJsonSchemaReference,
     MultipleDefinitionKey,
-    IncorrectDefinitionKey
+    IncorrectDefinitionKey,
+    MalformedJsonReference
   )
 }
