@@ -20,6 +20,7 @@ import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.internal.convert.JsonLDSchemaRegister
 import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
 import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaParsePlugin
 import amf.shapes.internal.transformation.JsonLDSchemaEditingPipeline
@@ -226,6 +227,7 @@ class JsonLDSchemaConfiguration private[amf] (
 
 object JsonLDSchemaConfiguration {
   def JsonLDSchema(): JsonLDSchemaConfiguration = {
+    JsonLDSchemaRegister.register()
     val base = JsonSchemaConfiguration.JsonSchema()
     new JsonLDSchemaConfiguration(
       base.resolvers,
@@ -235,6 +237,5 @@ object JsonLDSchemaConfiguration {
       base.options
     ).withTransformationPipeline(JsonLDSchemaEditingPipeline())
       .withPlugin(AMFJsonLDSchemaGraphRenderPlugin)
-
   }
 }
