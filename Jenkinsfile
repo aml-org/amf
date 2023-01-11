@@ -32,7 +32,7 @@ pipeline {
         NEXUS = credentials('exchange-nexus')
         NEXUSIQ = credentials('nexus-iq')
         GITHUB_ORG = 'aml-org'
-        GITHUB_REPO = 'amf-core'
+        GITHUB_REPO = 'amf'
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
         BRANCH_NAME = "${env.BRANCH_NAME}"
         NPM_TOKEN = credentials('aml-org-bot-npm-token')
