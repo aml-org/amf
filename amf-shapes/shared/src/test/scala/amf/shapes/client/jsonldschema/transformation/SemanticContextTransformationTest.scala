@@ -11,6 +11,7 @@ import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
   InvalidCharacteristicsUse,
+  InvalidTypeUse,
   UnsupportedContainer
 }
 import org.scalatest.Assertion
@@ -112,9 +113,25 @@ class SemanticContextTransformationTest extends AsyncFunSuite with FileAssertion
   test(s"Test invalid @container value") {
     transform("invalid-container-value.json").map { transformationResult =>
       transformationResult.conforms shouldBe false
-      transformationResult.results.length shouldBe (1)
-      transformationResult.results.head.message shouldBe (s"${UnsupportedContainer.message}. Supported values are: @list")
-      transformationResult.results.head.validationId shouldBe (UnsupportedContainer.id)
+      transformationResult.results.length shouldBe 1
+      transformationResult.results.head.message shouldBe s"${UnsupportedContainer.message}. Supported values are: @list"
+      transformationResult.results.head.validationId shouldBe UnsupportedContainer.id
+    }
+  }
+
+  test(s"Test invalid @type use") {
+    transform("invalid-type-use.json").map { transformationResult =>
+      transformationResult.conforms shouldBe false
+      transformationResult.results.length shouldBe 1
+      transformationResult.results.head.message shouldBe InvalidTypeUse.message
+      transformationResult.results.head.validationId shouldBe InvalidTypeUse.id
+    }
+  }
+
+  test(s"Test valid @type use") {
+    transform("valid-type-use.json").map { transformationResult =>
+      transformationResult.conforms shouldBe true
+      transformationResult.results.length shouldBe 0
     }
   }
 

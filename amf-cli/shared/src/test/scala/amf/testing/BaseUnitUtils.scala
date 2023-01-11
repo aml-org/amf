@@ -5,6 +5,9 @@ import amf.apicontract.client.scala.model.domain._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
 
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
+
 object BaseUnitUtils {
   def getApi(bu: BaseUnit, isWebApi: Boolean = true): Api =
     if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
@@ -32,4 +35,8 @@ object BaseUnitUtils {
 
   def getFirstPayloadSchema(bu: BaseUnit, isWebApi: Boolean = true): Shape =
     getFirstResponsePayload(bu, isWebApi).schema
+
+  def await[R](eventualResult: Future[R]): R = {
+    Await.result(eventualResult, Duration.Inf)
+  }
 }

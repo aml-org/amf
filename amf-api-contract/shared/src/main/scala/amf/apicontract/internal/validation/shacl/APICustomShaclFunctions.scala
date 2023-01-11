@@ -1,14 +1,15 @@
 package amf.apicontract.internal.validation.shacl
 
-import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
+import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
+  ParametrizedSecuritySchemeModel,
   SecuritySchemeModel
 }
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
@@ -20,7 +21,7 @@ import amf.apicontract.internal.validation.shacl.oas.{
 }
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
-import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
@@ -644,6 +645,44 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               val directiveApplications = elem.customDomainProperties
               val results               = GraphQLDirectiveLocationValidator(directiveApplications, elem)
               results.foreach(validate(_))
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "exclusiveQueryStringAndQueryParametersProperties"
+
+        private def reportIfExclusiveFieldsDefined(
+            elem: DomainElement,
+            field: Field,
+            validate: Option[ValidationInfo] => Unit
+        ): Unit = {
+          val queryString    = elem.fields.getValueAsOption(ParametersFieldModel.QueryString)
+          val queryParameter = elem.fields.getValueAsOption(ParametersFieldModel.QueryParameters)
+          if (queryString.isDefined && queryParameter.isDefined) {
+            val hasLexical  = elem.annotations.contains(classOf[LexicalInformation])
+            val annotations = if (hasLexical) elem.annotations else queryString.get.annotations
+            validate(exclusiveFieldsError(field, annotations))
+          }
+        }
+
+        private def exclusiveFieldsError(field: Field, annotations: Annotations): Option[ValidationInfo] = {
+          Option(
+            ValidationInfo(
+              field,
+              Option(
+                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be specified, explicitly or implicitly, on the same method of the same resource."
+              ),
+              Option(annotations)
+            )
+          )
+        }
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case request: Request => reportIfExclusiveFieldsDefined(request, OperationModel.Request, validate)
+            case scheme: SecurityScheme =>
+              reportIfExclusiveFieldsDefined(scheme, ParametrizedSecuritySchemeModel.Scheme, validate)
             case _ => // ignore
           }
         }

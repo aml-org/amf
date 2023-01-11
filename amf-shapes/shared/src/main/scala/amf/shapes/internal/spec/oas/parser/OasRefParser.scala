@@ -1,14 +1,14 @@
 package amf.shapes.internal.spec.oas.parser
 
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
-import amf.core.internal.annotations.ExternalFragmentRef
+import amf.core.internal.annotations.{ExternalFragmentRef, SourceYPart}
 import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
 import amf.core.internal.remote.JsonSchema
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
-import amf.shapes.internal.annotations.ExternalJsonSchemaShape
+import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, TargetName}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
@@ -64,8 +64,17 @@ class OasRefParser(
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
           case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
         }
+        storeTargetName(referencedShape)
         referencedShape.foreach(adopt)
         referencedShape
+    }
+  }
+
+  private def storeTargetName(referencedShape: Option[AnyShape]) = {
+    referencedShape match {
+      case Some(shape) =>
+        shape.name.annotations.find(classOf[SourceYPart]).map(name => shape.annotations += TargetName(name.ast))
+      case _ => // Ignore
     }
   }
 
@@ -172,7 +181,7 @@ class OasRefParser(
     ctx.findCachedJsonSchema(fullUrl) match {
       case Some(u: UnresolvedShape) =>
         copyUnresolvedShape(ref, fullUrl, e, u)
-      case Some(shape)              =>
+      case Some(shape) =>
         createLinkToParsedShape(ref, shape)
       case _ =>
         parseRemoteSchema(ref, fullUrl, Annotations(e.value)) match {

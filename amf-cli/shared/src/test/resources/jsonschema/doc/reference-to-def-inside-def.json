@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/MyType",
+  "definitions": {
+    "MyType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "$ref": "#/definitions/LinkedType"
+        }
+      }
+    },
+    "LinkedType": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

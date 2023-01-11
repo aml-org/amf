@@ -1,28 +1,26 @@
 package amf.validation
 
 import amf.apicontract.client.scala._
-import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
-import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, PayloadModel}
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
-import amf.shapes.internal.annotations.BaseVirtualNode
+import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
-import amf.testing.BaseUnitUtils
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import amf.testing.BaseUnitUtils._
-
+import org.yaml.model.{YNode, YNodePlain, YScalar}
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
@@ -220,7 +218,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("inline shapes should not include range of parent key") {
     val api = s"$basePath/annotations/inline-shape.yaml"
     modelAssertion(api, transform = false) { bu =>
-      val payload                = getFirstResponsePayload(bu, false)
+      val payload                = getFirstResponsePayload(bu, isWebApi = false)
       val schema                 = payload.schema.asInstanceOf[NodeShape]
       val ifField                = schema.fields.fields().find(_.field.toString().endsWith("if")).get
       val inlineShape            = ifField.value.value
@@ -417,11 +415,22 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  test("parsing parameters in oas2") {
+  test("OAS2 required parameter should have required field set to true") {
     val api = s"$basePath/oas2/payload-required-field.yaml"
     modelAssertion(api, transform = false) { bu =>
-      val payload = BaseUnitUtils.getFirstRequestPayload(bu)
+      val payload = getFirstRequestPayload(bu)
       payload.required.value() shouldBe true
+    }
+  }
+
+  test("TargetName annotation has the name of the schema in the external file") {
+    val api = s"$basePath/annotations/target-name/api.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val schema     = bu.asInstanceOf[Document].declares.head.asInstanceOf[AnyShape]
+      val newName    = schema.name.value()
+      val targetName = schema.annotations.find(classOf[TargetName]).map(_.name.asInstanceOf[YNodePlain].value)
+      newName shouldBe "new-name"
+      targetName shouldBe Some(YScalar("original-name"))
     }
   }
 }

@@ -20,10 +20,11 @@ import scala.collection.mutable.ListBuffer
 
 class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: String, path: JsonPath)
     extends JsonLDElementBuilder(location, path) {
+
   override type THIS = JsonLDObjectElementBuilder
-  val properties: mutable.Map[Key, JsonLDPropertyBuilder]                 = mutable.Map()
-  val termIndex: mutable.LinkedHashMap[Term, List[JsonLDPropertyBuilder]] = mutable.LinkedHashMap()
-  val classTerms: ListBuffer[String]                                      = ListBuffer()
+  private val termIndex: mutable.LinkedHashMap[Term, List[JsonLDPropertyBuilder]] = mutable.LinkedHashMap()
+  val properties: mutable.Map[Key, JsonLDPropertyBuilder]                         = mutable.Map()
+  val classTerms: ListBuffer[String]                                              = ListBuffer()
 
   def +(property: JsonLDPropertyBuilder): JsonLDObjectElementBuilder = {
     addProperty(property)

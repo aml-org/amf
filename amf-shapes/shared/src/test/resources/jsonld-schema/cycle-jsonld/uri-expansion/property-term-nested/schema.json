@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#",
+    "prop1": "config:sensitive"
+  },
+  "type": "object",
+  "properties": {
+    "prop1": {
+      "@context": {
+        "config": "anypoint://vocabulary/security.yaml#",
+        "inner1": "config:sensitive"
+      },
+      "type": "object",
+      "properties": {
+        "inner1": {
+          "type": "string"
+        }
+      },
+      "required": [ "inner1" ]
+    }
+  },
+  "required": [ "prop1" ]
+}

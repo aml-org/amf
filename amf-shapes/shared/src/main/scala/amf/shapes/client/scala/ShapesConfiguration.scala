@@ -13,6 +13,7 @@ import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
+import amf.core.client.scala.vocabulary.NamespaceAliases
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
@@ -20,6 +21,7 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
+import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.convert.ShapesRegister
@@ -162,6 +164,9 @@ class ShapesConfiguration private[amf] (
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): ShapesConfiguration =
     super._withEntities(entities)
+
+  override def withAliases(aliases: NamespaceAliases): ShapesConfiguration =
+    super._withAliases(aliases)
 
   private[amf] override def withExtensions(dialect: Dialect): ShapesConfiguration = {
     super.withExtensions(dialect).asInstanceOf[ShapesConfiguration]

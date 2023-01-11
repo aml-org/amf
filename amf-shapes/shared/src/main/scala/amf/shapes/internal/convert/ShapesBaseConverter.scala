@@ -3,7 +3,10 @@ package amf.shapes.internal.convert
 import amf.aml.internal.convert.VocabulariesBaseConverter
 import amf.core.internal.convert.BidirectionalMatcher
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult, SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration}
+import amf.shapes.client.platform.config.{
+  AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult,
+  SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration
+}
 import amf.shapes.client.platform.model.document.{JsonSchemaDocument => ClientJsonSchemaDocument}
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.platform.model.domain
@@ -12,6 +15,8 @@ import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.federation._
+import amf.shapes.client.platform.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement, JsonLDObject, JsonLDScalar}
+import amf.shapes.client.scala.model.domain.jsonldinstance
 import amf.shapes.client.scala.model.domain.operations._
 
 trait ShapesBaseConverter
@@ -44,6 +49,13 @@ trait ShapesBaseConverter
     with ExternalPropertyShapeConverter
     with KeyConverter
     with JsonSchemaDocumentConverter
+    with BaseIriConverter
+    with DefaultVocabularyConverter
+    with CuriePrefixConverter
+    with ContextMappingConverter
+    with JsonLDObjectConverter
+    with JsonLDArrayConverter
+    with JsonLDElementConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -280,4 +292,84 @@ trait JsonSchemaDocumentConverter extends PlatformSecrets {
     override def asClient(from: JsonSchemaDocument): ClientJsonSchemaDocument   = ClientJsonSchemaDocument(from)
     override def asInternal(from: ClientJsonSchemaDocument): JsonSchemaDocument = from._internal
   }
+}
+
+trait BaseIriConverter extends PlatformSecrets {
+  implicit object BaseIriMatcher extends BidirectionalMatcher[BaseIri, domain.BaseIri] {
+    override def asInternal(from: domain.BaseIri): BaseIri = from._internal
+
+    override def asClient(from: BaseIri): domain.BaseIri = domain.BaseIri(from)
+  }
+}
+
+trait DefaultVocabularyConverter extends PlatformSecrets {
+  implicit object DefaultVocabularyMatcher extends BidirectionalMatcher[DefaultVocabulary, domain.DefaultVocabulary] {
+    override def asInternal(from: domain.DefaultVocabulary): DefaultVocabulary = from._internal
+
+    override def asClient(from: DefaultVocabulary): domain.DefaultVocabulary = domain.DefaultVocabulary(from)
+  }
+}
+
+trait CuriePrefixConverter extends PlatformSecrets {
+  implicit object CuriePrefixMatcher extends BidirectionalMatcher[CuriePrefix, domain.CuriePrefix] {
+    override def asInternal(from: domain.CuriePrefix): CuriePrefix = from._internal
+
+    override def asClient(from: CuriePrefix): domain.CuriePrefix = domain.CuriePrefix(from)
+  }
+}
+
+trait ContextMappingConverter extends PlatformSecrets {
+  implicit object ContextMappingMatcher extends BidirectionalMatcher[ContextMapping, domain.ContextMapping] {
+    override def asInternal(from: domain.ContextMapping): ContextMapping = from._internal
+
+    override def asClient(from: ContextMapping): domain.ContextMapping = domain.ContextMapping(from)
+  }
+}
+
+trait SemanticContextConverter extends PlatformSecrets {
+  implicit object SemanticContextMatcher extends BidirectionalMatcher[SemanticContext, domain.SemanticContext] {
+    override def asInternal(from: domain.SemanticContext): SemanticContext = from._internal
+
+    override def asClient(from: SemanticContext): domain.SemanticContext = domain.SemanticContext(from)
+  }
+}
+
+trait JsonLDArrayConverter extends PlatformSecrets {
+  implicit object JsonLDArrayConverter extends BidirectionalMatcher[jsonldinstance.JsonLDArray, JsonLDArray] {
+    override def asInternal(from: JsonLDArray): jsonldinstance.JsonLDArray = from._internal
+
+    override def asClient(from: jsonldinstance.JsonLDArray): JsonLDArray = new JsonLDArray(from)
+  }
+}
+
+trait JsonLDObjectConverter extends PlatformSecrets {
+  implicit object JsonLDObjectConverter extends BidirectionalMatcher[jsonldinstance.JsonLDObject, JsonLDObject] {
+    override def asInternal(from: JsonLDObject): jsonldinstance.JsonLDObject = from._internal
+
+    override def asClient(from: jsonldinstance.JsonLDObject): JsonLDObject = new JsonLDObject(from)
+  }
+}
+
+trait JsonLDScalarConverter extends PlatformSecrets {
+  implicit object JsonLDScalarConverter extends BidirectionalMatcher[jsonldinstance.JsonLDScalar, JsonLDScalar] {
+    override def asInternal(from: JsonLDScalar): jsonldinstance.JsonLDScalar = from._internal
+
+    override def asClient(from: jsonldinstance.JsonLDScalar): JsonLDScalar = new JsonLDScalar(from)
+  }
+}
+
+trait JsonLDElementConverter extends PlatformSecrets {
+  implicit object JsonLDElementConverter extends BidirectionalMatcher[jsonldinstance.JsonLDElement, JsonLDElement] {
+    override def asInternal(from: JsonLDElement): jsonldinstance.JsonLDElement = from._internal
+
+    override def asClient(from: jsonldinstance.JsonLDElement): JsonLDElement = fromMatch(from)
+
+    private def fromMatch(from: jsonldinstance.JsonLDElement): JsonLDElement = from match {
+      case obj: jsonldinstance.JsonLDObject    => new JsonLDObject(obj)
+      case array: jsonldinstance.JsonLDArray   => new JsonLDArray(array)
+      case scalar: jsonldinstance.JsonLDScalar => new JsonLDScalar(scalar)
+    }
+
+  }
+
 }
