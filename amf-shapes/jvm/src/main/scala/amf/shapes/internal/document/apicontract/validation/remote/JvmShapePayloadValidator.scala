@@ -3,7 +3,7 @@ package amf.shapes.internal.document.apicontract.validation.remote
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.ScalarShape
@@ -31,8 +31,9 @@ class JvmShapePayloadValidator(
     private val shape: Shape,
     private val mediaType: String,
     protected val validationMode: ValidationMode,
-    private val configuration: ShapeValidationConfiguration
-) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
+    private val configuration: ShapeValidationConfiguration,
+    private val shouldFailFast: Boolean = false
+) extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration, shouldFailFast) {
 
   private val DEFAULT_MAX_NESTING_LIMIT: Int = BaseLexer.DEFAULT_MAX_DEPTH
 
@@ -45,11 +46,10 @@ class JvmShapePayloadValidator(
       payload: LoadedObj,
       fragment: Option[PayloadFragment],
       validationProcessor: ValidationProcessor
-  ): validationProcessor.Return = {
-    val validator = validationProcessor match {
-      case BooleanValidationProcessor => Validator.builder().failEarly().build()
-      case _                          => Validator.builder().build()
-    }
+  ): AMFValidationReport = {
+
+    val base      = Validator.builder()
+    val validator = if (shouldFailFast) base.failEarly().build() else base.build()
 
     try {
       validator.performValidation(schema, payload)
@@ -66,7 +66,7 @@ class JvmShapePayloadValidator(
       jsonSchema: CharSequence,
       element: DomainElement,
       validationProcessor: ValidationProcessor
-  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+  ): Either[AMFValidationReport, Option[LoadedSchema]] = {
 
     loadJsonSchema(jsonSchema.toString.replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
@@ -158,7 +158,7 @@ case class JvmReportValidationProcessor(
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
-  override def processException(r: Throwable, element: Option[DomainElement]): Return = {
+  override def processException(r: Throwable, element: Option[DomainElement]): AMFValidationReport = {
     val results = r match {
 
       case e: MaxNestingValueReached =>

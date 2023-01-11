@@ -1,6 +1,7 @@
 package amf.shapes.internal.validation.jsonschema
 
 import amf.core.client.common.render.JsonSchemaDraft7
+import amf.core.client.common.validation.ProfileNames.AMF
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
@@ -47,27 +48,25 @@ object BaseJsonSchemaPayloadValidator {
 abstract class BaseJsonSchemaPayloadValidator(
     shape: Shape,
     mediaType: String,
-    configuration: ShapeValidationConfiguration
+    configuration: ShapeValidationConfiguration,
+    shouldFailFast: Boolean
 ) extends AMFShapePayloadValidator {
 
   private val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
+  protected def getReportProcessor: ValidationProcessor     = getReportProcessor(AMF)
   protected implicit val executionContext: ExecutionContext = configuration.executionContext
 
   override def validate(payload: String): Future[AMFValidationReport] = {
-    Future.successful(
-      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+    Future.successful(validateForPayload(payload, getReportProcessor))
   }
 
   override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
-    Future.successful(
-      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+    Future.successful(validateForFragment(fragment, getReportProcessor))
   }
 
   override def syncValidate(payload: String): AMFValidationReport = {
-    validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    validateForPayload(payload, getReportProcessor)
   }
 
   protected type LoadedObj
@@ -87,7 +86,7 @@ abstract class BaseJsonSchemaPayloadValidator(
       obj: LoadedObj,
       fragment: Option[PayloadFragment],
       validationProcessor: ValidationProcessor
-  ): validationProcessor.Return
+  ): AMFValidationReport
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj]
 
@@ -99,12 +98,12 @@ abstract class BaseJsonSchemaPayloadValidator(
       jsonSchema: CharSequence,
       element: DomainElement,
       validationProcessor: ValidationProcessor
-  ): Either[validationProcessor.Return, Option[LoadedSchema]]
+  ): Either[AMFValidationReport, Option[LoadedSchema]]
 
   protected def validateForFragment(
       fragment: PayloadFragment,
       validationProcessor: ValidationProcessor
-  ): ValidationProcessor#Return = {
+  ): AMFValidationReport = {
 
     try {
       performValidation(buildCandidate(fragment), validationProcessor)
@@ -119,7 +118,7 @@ abstract class BaseJsonSchemaPayloadValidator(
   protected def validateForPayload(
       payload: String,
       validationProcessor: ValidationProcessor
-  ): validationProcessor.Return = {
+  ): AMFValidationReport = {
     if (!supportedMediaTypes.contains(mediaType)) {
       validationProcessor.processResults(
         Seq(
@@ -151,7 +150,7 @@ abstract class BaseJsonSchemaPayloadValidator(
   private def generateSchema(
       fragmentShape: Shape,
       validationProcessor: ValidationProcessor
-  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+  ): Either[AMFValidationReport, Option[LoadedSchema]] = {
 
     val schemaOption: Option[CharSequence] = generateSchemaString(fragmentShape, validationProcessor)
 
@@ -199,7 +198,7 @@ abstract class BaseJsonSchemaPayloadValidator(
   private def getOrCreateSchema(
       s: AnyShape,
       validationProcessor: ValidationProcessor
-  ): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+  ): Either[AMFValidationReport, Option[LoadedSchema]] = {
     schemas.get(s.id) match {
       case Some(json) => Right(Some(json))
       case _ =>
@@ -304,7 +303,7 @@ abstract class BaseJsonSchemaPayloadValidator(
   private def performValidation(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),
       validationProcessor: ValidationProcessor
-  ): validationProcessor.Return = {
+  ): AMFValidationReport = {
     payload match {
       case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
       case (Some(obj), resultOption) =>
