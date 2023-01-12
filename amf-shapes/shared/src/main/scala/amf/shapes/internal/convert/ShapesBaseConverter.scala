@@ -3,21 +3,19 @@ package amf.shapes.internal.convert
 import amf.aml.internal.convert.VocabulariesBaseConverter
 import amf.core.internal.convert.BidirectionalMatcher
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.platform.config.{
-  AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult,
-  SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration
-}
+import amf.shapes.client.platform.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient, AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult, SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration}
 import amf.shapes.client.platform.model.document.{JsonSchemaDocument => ClientJsonSchemaDocument}
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.platform.model.domain
-import amf.shapes.client.platform.{ShapesConfiguration => ClientShapesConfiguration}
+import amf.shapes.client.platform.{JsonLDInstanceResult, JsonLDSchemaResult, ShapesConfiguration => ClientShapesConfiguration}
 import amf.shapes.client.scala.ShapesConfiguration
-import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
+import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration, JsonLDSchemaConfiguration => InternalJsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient => InternalJsonLDSchemaConfigurationClient}
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.federation._
 import amf.shapes.client.platform.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement, JsonLDObject, JsonLDScalar}
 import amf.shapes.client.scala.model.domain.jsonldinstance
 import amf.shapes.client.scala.model.domain.operations._
+import amf.shapes.client.scala.{JsonLDInstanceResult => InternalJsonLDInstanceResult, JsonLDSchemaResult => InternalJsonLDSchemaResult}
 
 trait ShapesBaseConverter
     extends VocabulariesBaseConverter
@@ -56,6 +54,10 @@ trait ShapesBaseConverter
     with JsonLDObjectConverter
     with JsonLDArrayConverter
     with JsonLDElementConverter
+    with JsonLDSchemaConfigurationConverter
+    with JsonLDSchemaResultConverter
+    with JsonLDInstanceResultConverter
+    with JsonLDSchemaConfigurationClientConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -211,6 +213,7 @@ trait SemanticSchemaConfigurationConverter {
       from._internal
   }
 }
+
 
 trait AMFSemanticSchemaResultConverter {
   implicit object AMFSemanticSchemaResultMatcher
@@ -372,4 +375,36 @@ trait JsonLDElementConverter extends PlatformSecrets {
 
   }
 
+}
+
+trait JsonLDSchemaResultConverter extends PlatformSecrets{
+  implicit object JsonLDSchemaResultConverter extends BidirectionalMatcher[InternalJsonLDSchemaResult, JsonLDSchemaResult]{
+    override def asInternal(from: JsonLDSchemaResult): InternalJsonLDSchemaResult = from._internal
+
+    override def asClient(from: InternalJsonLDSchemaResult): JsonLDSchemaResult = new JsonLDSchemaResult(from)
+  }
+}
+
+trait JsonLDInstanceResultConverter extends PlatformSecrets{
+  implicit object JsonLDInstanceResultConverter extends BidirectionalMatcher[InternalJsonLDInstanceResult, JsonLDInstanceResult]{
+    override def asInternal(from: JsonLDInstanceResult): InternalJsonLDInstanceResult = from._internal
+
+    override def asClient(from: InternalJsonLDInstanceResult): JsonLDInstanceResult = new JsonLDInstanceResult(from)
+  }
+}
+
+trait JsonLDSchemaConfigurationConverter extends PlatformSecrets{
+  implicit object JsonLDSchemaConfigurationConverter extends BidirectionalMatcher[InternalJsonLDSchemaConfiguration, JsonLDSchemaConfiguration]{
+    override def asInternal(from: JsonLDSchemaConfiguration): InternalJsonLDSchemaConfiguration = from._internal
+
+    override def asClient(from: InternalJsonLDSchemaConfiguration): JsonLDSchemaConfiguration = new JsonLDSchemaConfiguration(from)
+  }
+}
+
+trait JsonLDSchemaConfigurationClientConverter extends PlatformSecrets{
+  implicit object JsonLDSchemaConfigurationClientConverter extends BidirectionalMatcher[InternalJsonLDSchemaConfigurationClient, JsonLDSchemaConfigurationClient]{
+    override def asInternal(from: JsonLDSchemaConfigurationClient): InternalJsonLDSchemaConfigurationClient = from._internal
+
+    override def asClient(from: InternalJsonLDSchemaConfigurationClient): JsonLDSchemaConfigurationClient = new JsonLDSchemaConfigurationClient(from)
+  }
 }
