@@ -8,7 +8,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.core.internal.transform.stages.selectors.ShapeSelector
-import amf.shapes.internal.domain.resolution.shape_normalization._
+import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeInheritanceResolver}
 
 /** Computes the canonical form for all the shapes in the model We are assuming certain pre-conditions in the state of
   * the shape:
@@ -31,20 +31,26 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
 
     def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
       m = Some(model)
-      model.transform(ShapeSelector, transform(_, _, configuration)).asInstanceOf[T]
+
+      // Performance?
+      model.iterator().foreach {
+        case s: Shape => ShapeInheritanceResolver(s, context)
+        case _        =>
+      }
+      model.transform(ShapeSelector, transformReferences(_, _, configuration)).asInstanceOf[T]
     }
 
-    protected def transform(
+    protected def transformReferences(
         element: DomainElement,
         isCycle: Boolean,
         configuration: AMFGraphConfiguration
     ): Option[DomainElement] = {
       element match {
-        case shape: Shape => transformer.transform(shape, configuration)
+        case shape: Shape => referencesTransformer.transform(shape, configuration)
         case other        => Some(other)
       }
     }
 
-    def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
+    def referencesTransformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
   }
 }

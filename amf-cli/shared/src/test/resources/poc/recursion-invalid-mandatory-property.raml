@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Api
+
+types:
+  A:
+    properties:
+      a0: string
+      ref: B
+  B:
+    type: A
+    properties:
+      b0: string

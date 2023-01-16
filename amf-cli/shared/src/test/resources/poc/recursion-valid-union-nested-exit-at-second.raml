@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: API
+
+
+types:
+  A:
+    properties:
+     # exit through B -> C or B -> D
+      a: B | A
+
+  B:
+    properties:
+      # exit through C and D
+      a: C | D
+
+  C:
+    type: object
+    properties:
+      c: string
+  D:
+    type: object
+    properties:
+      b: string
+
