@@ -16,12 +16,7 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.ParsedJSONSchema
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
-  InvalidTypeInheritanceErrorSpecification,
-  InvalidTypeInheritanceWarningSpecification
-}
-import org.mulesoft.common.collections._
-
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
 import scala.collection.mutable
 
 class InheritanceIncompatibleShapeError(
@@ -426,7 +421,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         this,
         ctx.keepEditingInfo,
         ctx.profile,
-        ctx.cache
+        ctx.resolvedInheritanceCache
       )
     }
   }
@@ -476,7 +471,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
-    newUnionItems.legacyGroupBy(_.id).foreach {
+    newUnionItems.groupBy(_.id).foreach {
       case (_, shapes) if shapes.size > 1 =>
         val counter = new IdCounter()
         shapes.foreach { shape =>
@@ -511,6 +506,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     } yield {
       try {
         val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
+        newShape.withId(superUnionElement.id)
         setValuesOfUnionElement(newShape, superUnionElement)
         Some(newShape)
       } catch {
@@ -545,7 +541,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
     }
 
-    superUnion.annotations.reject(_ => true) ++= baseShape.annotations
     superUnion.withId(baseShape.id)
   }
 
