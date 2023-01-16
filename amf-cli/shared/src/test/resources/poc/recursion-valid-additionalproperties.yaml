@@ -1,0 +1,15 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Something API
+paths: {}
+definitions:
+  A:
+    type: object
+    properties:
+      a:
+        $ref: '#/definitions/B'
+  B:
+    type: object
+    additionalProperties:
+      $ref: '#/definitions/A'

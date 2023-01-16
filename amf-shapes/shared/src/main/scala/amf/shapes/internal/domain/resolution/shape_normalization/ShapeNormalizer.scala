@@ -1,17 +1,12 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import scala.collection.mutable
 
 private[resolution] trait ShapeNormalizer {
 
-  implicit val context: NormalizationContext
-
-  def normalize(shape: Shape): Shape = {
-    context.cache.get(shape.id) match {
-      case Some(s) => s
-      case _       => normalizeAction(shape)
-    }
-  }
+  protected def normalize(shape: Shape): Shape
 
   protected def normalizeAction(shape: Shape): Shape
 

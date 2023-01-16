@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: array
+    items: B
+    minItems: 1
+  B:
+    type: object
+    properties:
+      b: A
