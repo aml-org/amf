@@ -5,17 +5,13 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
-import amf.shapes.internal.domain.resolution.recursion.RecursionErrorRegister
-import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeCanonizer, ShapeExpander}
+import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ReferencesFixer, ShapeInheritanceResolver}
 
 class ShapeTransformer(context: NormalizationContext) extends ElementStageTransformer[Shape] {
 
-  private val recursionRegister = new RecursionErrorRegister(context.errorHandler)
   override def transform(element: Shape, configuration: AMFGraphConfiguration): Option[Shape] = {
-    val expanded  = ShapeExpander(element, context, recursionRegister)
-    val canonized = ShapeCanonizer(expanded, context)
-    Some(canonized)
-
+    val resolvedInheritance = ReferencesFixer(element, context)
+    Some(resolvedInheritance)
   }
 }
 

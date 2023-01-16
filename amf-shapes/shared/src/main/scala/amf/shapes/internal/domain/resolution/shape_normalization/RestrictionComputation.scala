@@ -1,11 +1,11 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.internal.annotations.{InheritanceProvenance, LexicalInformation, SourceAST, SourceNode}
+import amf.core.client.scala.model.domain._
+import amf.core.internal.annotations.{InheritanceProvenance, LexicalInformation}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.client.scala.model.domain._
-import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel._
 

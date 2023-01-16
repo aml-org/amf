@@ -1,17 +1,8 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.internal.metamodel.Field
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.model.domain.UnionShape
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  FileShape,
-  NodeShape,
-  ScalarShape,
-  SchemaShape,
-  UnionShape
-}
 
 /*
  * Search unique and identifiers fields to guess if tha any shape really its something else
@@ -22,7 +13,7 @@ import amf.shapes.client.scala.model.domain.{
 
 private[shape_normalization] case class AnyShapeAdjuster(any: AnyShape) {
 
-  sealed implicit class AnyShapeConverter(val any: AnyShape) {
+  sealed implicit class AnyShapeConverter2(val any: AnyShape) {
 
     def toNodeShape: NodeShape = {
       NodeShape(any.fields, any.annotations).withId(any.id)

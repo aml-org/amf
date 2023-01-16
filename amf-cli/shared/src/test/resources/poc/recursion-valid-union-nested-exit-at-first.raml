@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: API
+
+
+types:
+  A:
+    properties:
+      a: B | C
+
+  B:
+    properties:
+      # exit in A -> C
+      a: A | B
+
+  C:
+    type: object
+    properties:
+      prop: string
