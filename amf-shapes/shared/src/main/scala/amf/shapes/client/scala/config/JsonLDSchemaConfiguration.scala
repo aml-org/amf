@@ -18,7 +18,7 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.{JsonLDSchemaElementClient, ShapesConfiguration, ShapesElementClient}
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.internal.convert.JsonLDSchemaRegister
 import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
@@ -53,6 +53,7 @@ class JsonLDSchemaConfiguration private[amf] (
     )
   override def baseUnitClient(): JsonLDSchemaConfigurationClient = new JsonLDSchemaConfigurationClient(this)
 
+  override def elementClient(): JsonLDSchemaElementClient = new JsonLDSchemaElementClient(this)
   def withJsonLDSchema(jsonDocument: JsonSchemaDocument): JsonLDSchemaConfiguration = {
     val transformed = if (!jsonDocument.processingData.transformed.value()) transform(jsonDocument) else jsonDocument
 
