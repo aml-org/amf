@@ -16,44 +16,28 @@ import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationC
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
   override def transform(
                           model: BaseUnit,
-                          errorHandler: AMFErrorHandler,
+                          eh: AMFErrorHandler,
                           configuration: AMFGraphConfiguration
-                        ): BaseUnit =
-    new ShapeNormalization(profile, keepEditingInfo)(errorHandler).transform(model, configuration)
+                        ): BaseUnit = {
+    val context = new NormalizationContext(eh, keepEditingInfo, profile)
 
-  private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(implicit
-                                                                                       val errorHandler: AMFErrorHandler
-  ) {
 
-    protected var m: Option[BaseUnit] = None
-    private val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
-
-    def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
-      m = Some(model)
-
-      // Performance?
-      model.iterator().foreach {
-        case s: Shape => ShapeInheritanceResolver(s, context)
-        case _ =>
-      }
-      model.transform(ShapeSelector, updateReferences(_, _, configuration)).asInstanceOf[T]
+    // Step 1: resolve inheritance
+    model.iterator().foreach {
+      case s: Shape => ShapeInheritanceResolver()(context).normalize(s)
+      case _ =>
     }
 
-    private def updateReferences(
-                                  element: DomainElement,
-                                  isCycle: Boolean,
-                                  configuration: AMFGraphConfiguration
-                                ): Option[DomainElement] = {
+    def updateReferences(element: DomainElement, isCycle: Boolean, configuration: AMFGraphConfiguration): Option[DomainElement] = {
       element match {
-
         case shape: Shape =>
           val updater = new ShapeReferencesUpdaterTransformer(context)
           updater.transform(shape, configuration)
-
         case other => Some(other)
       }
     }
 
+    // Step 2: update references & place RecursiveShapes
+    model.transform(ShapeSelector, updateReferences(_, _, configuration))(eh)
   }
-
 }
