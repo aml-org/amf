@@ -13,7 +13,7 @@ private[resolution] object ShapeInheritanceResolver {
   def apply(s: Shape, context: NormalizationContext): Shape = ShapeInheritanceResolver()(context).normalize(s)
 }
 
-sealed case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) extends ShapeNormalizer {
+sealed case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
 
   val visitedIds         = mutable.ArrayBuffer[String]()
   var detectedRecursion  = false
@@ -32,14 +32,14 @@ sealed case class ShapeInheritanceResolver()(implicit val context: Normalization
   private def normalizeWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalize(s))
   private def addToCache(shape: Shape)                 = if (!withoutCaching) context.resolvedInheritanceCache + shape
 
-  override protected def normalize(shape: Shape): Shape = {
+  protected def normalize(shape: Shape): Shape = {
     context.resolvedInheritanceCache.get(shape.id) match {
       case Some(resolvedInheritance) => resolvedInheritance
       case _                         => normalizeAction(shape)
     }
   }
 
-  override protected def normalizeAction(shape: Shape): Shape = {
+  protected def normalizeAction(shape: Shape): Shape = {
     shape match {
       case s if recursionDetected(s) && registerVisit =>
         invalidRecursionError(shape)
