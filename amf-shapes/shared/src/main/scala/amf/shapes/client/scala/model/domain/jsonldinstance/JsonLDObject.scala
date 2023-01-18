@@ -55,7 +55,10 @@ case class JsonLDObject(
 
   private def buildArray(values: Seq[JsonLDElement]) = JsonLDArray(values)
 
-  private def updateModel(field: Field) = model.copy(fields = model.fields.filterNot(_ == field) :+ field)
+  private def updateModel(field: Field) = {
+    if (model.fields.contains(field)) model // preserve initial order
+    else model.copy(fields = model.fields :+ field)
+  }
   private def copyWithProperty(field: Field, element: JsonLDElement) =
     copy(fields = fields.copy(), model = updateModel(field)).set(field, element)
 
