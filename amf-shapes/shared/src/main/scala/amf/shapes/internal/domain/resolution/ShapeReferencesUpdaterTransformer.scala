@@ -5,7 +5,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
-import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeReferencesUpdater, ShapeInheritanceResolver}
+import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeReferencesUpdater}
 
 class ShapeReferencesUpdaterTransformer(context: NormalizationContext) extends ElementStageTransformer[Shape] {
 

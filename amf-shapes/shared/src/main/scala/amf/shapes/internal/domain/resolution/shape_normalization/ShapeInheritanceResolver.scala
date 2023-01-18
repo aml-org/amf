@@ -9,11 +9,7 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 import scala.collection.mutable
 
-private[resolution] object ShapeInheritanceResolver {
-  def apply(s: Shape, context: NormalizationContext): Shape = ShapeInheritanceResolver()(context).normalize(s)
-}
-
-sealed case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
+case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
 
   val visitedIds         = mutable.ArrayBuffer[String]()
   var detectedRecursion  = false
@@ -32,7 +28,7 @@ sealed case class ShapeInheritanceResolver()(implicit val context: Normalization
   private def normalizeWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalize(s))
   private def addToCache(shape: Shape)                 = if (!withoutCaching) context.resolvedInheritanceCache + shape
 
-  protected def normalize(shape: Shape): Shape = {
+  def normalize(shape: Shape): Shape = {
     context.resolvedInheritanceCache.get(shape.id) match {
       case Some(resolvedInheritance) => resolvedInheritance
       case _                         => normalizeAction(shape)
@@ -41,7 +37,7 @@ sealed case class ShapeInheritanceResolver()(implicit val context: Normalization
 
   protected def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case s if recursionDetected(s) && registerVisit =>
+      case s if inheritanceRecursionDetected(s) && registerVisit =>
         invalidRecursionError(shape)
         detectedRecursion = true
         recursionGenerator = shape.id
@@ -151,7 +147,7 @@ sealed case class ShapeInheritanceResolver()(implicit val context: Normalization
     true
   }
 
-  private def recursionDetected(shape: Shape) = visitedIds.contains(shape.id)
+  private def inheritanceRecursionDetected(shape: Shape) = visitedIds.contains(shape.id)
 
   private def invalidRecursionError(lastVersion: Shape): Unit = {
     context.errorHandler.violation(
