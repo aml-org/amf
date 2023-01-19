@@ -10,7 +10,8 @@ import amf.shapes.client.platform.config.{
   SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration
 }
 import amf.shapes.client.platform.model.document.{JsonSchemaDocument => ClientJsonSchemaDocument}
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.document.{JsonLDInstanceDocument, JsonSchemaDocument}
+import amf.shapes.client.platform.model.document.{JsonLDInstanceDocument => ClientJsonLDInstanceDocument}
 import amf.shapes.client.platform.model.domain
 import amf.shapes.client.platform.{
   JsonLDInstanceResult,
@@ -72,6 +73,7 @@ trait ShapesBaseConverter
     with JsonLDSchemaResultConverter
     with JsonLDInstanceResultConverter
     with JsonLDSchemaConfigurationClientConverter
+    with JsonLDInstanceDocumentConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -309,6 +311,14 @@ trait JsonSchemaDocumentConverter extends PlatformSecrets {
     override def asInternal(from: ClientJsonSchemaDocument): JsonSchemaDocument = from._internal
   }
 }
+
+trait JsonLDInstanceDocumentConverter extends PlatformSecrets {
+  implicit object JsonLDInstanceDocumentMatcher extends BidirectionalMatcher[JsonLDInstanceDocument, ClientJsonLDInstanceDocument] {
+    override def asClient(from: JsonLDInstanceDocument): ClientJsonLDInstanceDocument   = new ClientJsonLDInstanceDocument(from)
+    override def asInternal(from: ClientJsonLDInstanceDocument): JsonLDInstanceDocument = from._internal
+  }
+}
+
 
 trait BaseIriConverter extends PlatformSecrets {
   implicit object BaseIriMatcher extends BidirectionalMatcher[BaseIri, domain.BaseIri] {
