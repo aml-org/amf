@@ -3299,6 +3299,8 @@ declare module "amf-client-js" {
   export class JsonSchemaConfiguration {
     static JsonSchema(): ShapesConfiguration;
   }
+
+
   export class JsonSchemaDocument extends Document {
     schemaVersion: StrField;
 
@@ -5658,6 +5660,96 @@ declare module "amf-client-js" {
 
     withUnitCache(cache: UnitCache): SemanticJsonSchemaConfiguration;
   }
+
+  export class JsonLDSchemaConfiguration extends BaseShapesConfiguration{
+    baseUnitClient(): JsonLDSchemaConfigurationClient;
+
+    withParsingOptions(parsingOptions: ParsingOptions): JsonLDSchemaConfiguration
+    withRenderOptions(renderOptions: RenderOptions): JsonLDSchemaConfiguration
+    withResourceLoader(rl: ResourceLoader): JsonLDSchemaConfiguration
+    withResourceLoaders(rl: Array<ResourceLoader>): JsonLDSchemaConfiguration
+    withUnitCache(cache: UnitCache): JsonLDSchemaConfiguration
+    withTransformationPipeline(pipeline: TransformationPipeline): JsonLDSchemaConfiguration
+    withErrorHandlerProvider(provider: ErrorHandlerProvider): JsonLDSchemaConfiguration
+    withEventListener(listener: AMFEventListener): JsonLDSchemaConfiguration
+    withExecutionEnvironment(executionEnv: ExecutionEnvironment): JsonLDSchemaConfiguration
+    withDialect(dialect: Dialect): JsonLDSchemaConfiguration
+    withDialect(url: string): Promise<JsonLDSchemaConfiguration>
+    forInstance(url:string): Promise<JsonLDSchemaConfiguration>
+
+    static JsonLDSchema(): JsonLDSchemaConfiguration;
+  }
+
+  export class JsonLDSchemaConfigurationClient extends BaseAMLBaseUnitClient{
+    getConfiguration(): JsonLDSchemaConfiguration
+    parseJsonLDInstance(url: string, jsonLDSchema: JsonSchemaDocument): Promise<JsonLDInstanceResult>
+    parseJsonLDSchema(url:string): Promise<JsonLDSchemaResult>
+  }
+
+  export class JsonLDSchemaResult extends AMFParseResult{
+    jsonDocument: JsonSchemaDocument;
+  }
+
+  export class JsonLDInstanceResult extends AMFParseResult{
+    instance: JsonLDInstanceDocument;
+  }
+
+  export class JsonLDInstanceDocument implements BaseUnit{
+    id: string;
+    location: string;
+    modelVersion: StrField;
+    processingData: BaseUnitProcessingData;
+    raw: string;
+    sourceInformation: BaseUnitSourceInformation;
+    sourceSpec: Spec;
+    usage: StrField;
+    annotations(): Annotations;
+    cloneUnit(): BaseUnit;
+    findById(id: string): DomainElement;
+    findByType(typeId: string): DomainElement[];
+    pkg(): StrField;
+    references(): BaseUnit[];
+    withId(id: string): this;
+    withLocation(location: string): this;
+    withPkg(pkg: string): this;
+    withProcessingData(data: BaseUnitProcessingData): this;
+    withRaw(raw: string): this;
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit;
+    withReferences(references: BaseUnit[]): this;
+    withUsage(usage: string): this;
+    withEncodes(encodes: Array<JsonLDObject>): JsonLDInstanceDocument;
+    encodes: Array<JsonLDObject>;
+  }
+
+  export class JsonLDObject implements DomainElement{
+    customDomainProperties: DomainExtension[];
+    extendsNode: DomainElement[];
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: DomainExtension[]): this;
+    withExtendsNode(extension: ParametrizedDeclaration[]): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+
+    componentId: string
+    withProperty(property: string, value: string): JsonLDObject
+    withProperty(property: string, value: number): JsonLDObject
+    withProperty(property: string, value: number): JsonLDObject
+    withProperty(property: string, value: Boolean): JsonLDObject
+    withProperty(property: string, value: JsonLDObject): JsonLDObject
+    withStringPropertyCollection(property: string, values: Array<string>): JsonLDObject
+    withIntPropertyCollection(property: string, values: Array<number>): JsonLDObject
+    withFloatPropertyCollection(property: string, values: Array<number>): JsonLDObject
+    withBoolPropertyCollection(property: string, values: Array<Boolean>): JsonLDObject
+    withObjPropertyCollection(property: string, values: Array<JsonLDObject>): JsonLDObject
+
+  }
+
+
   export class Server implements DomainElement {
     bindings: ServerBindings;
     customDomainProperties: Array<DomainExtension>;

@@ -1,6 +1,5 @@
 package amf.shapes.client.platform
 import amf.core.client.platform.AMFParseResult
-import amf.core.client.platform.validation.AMFValidationResult
 import amf.shapes.client.platform.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.{JsonLDInstanceResult => InternalJsonLDInstanceResult, JsonLDSchemaResult => InternalJsonLDSchemaResult}
@@ -18,5 +17,7 @@ class JsonLDSchemaResult(
 class JsonLDInstanceResult(
     private[amf] override val _internal: InternalJsonLDInstanceResult
 ) extends AMFParseResult(_internal) {
+
   val instance: JsonLDInstanceDocument = _internal.instance
+
 }
