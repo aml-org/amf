@@ -1,0 +1,24 @@
+swagger: '2.0'
+info:
+  description: This is a description
+  version: 1.0.0
+  title: apimodel
+
+externalDocs:
+  description: Find more info here
+  url: https://swagger.io
+
+paths:
+  /operations:
+    post:
+      operationId: operationsPost
+      description: This is a description
+      responses:
+        '201':
+          description: Success
+          schema: # this Payload should have lexical in editing transformation
+            type: string
+          headers:
+            content-type:
+              description: This is a description
+              type: string
