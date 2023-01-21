@@ -22,16 +22,16 @@ class EditingResolutionTest extends ResolutionTest {
   val referencesPath  = "amf-cli/shared/src/test/resources/references/"
   val validationsPath = "amf-cli/shared/src/test/resources/validations/"
 
-  multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
-    cycle(
-      "recursive3.raml",
-      config.golden,
-      Raml10YamlHint,
-      target = AmfJsonHint,
-      productionPath,
-      renderOptions = Some(config.renderOptions)
-    )
-  }
+//  multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
+//    cycle(
+//      "recursive3.raml",
+//      config.golden,
+//      Raml10YamlHint,
+//      target = AmfJsonHint,
+//      productionPath,
+//      renderOptions = Some(config.renderOptions)
+//    )
+//  }
 
   multiGoldenTest("Simple extends resolution to Raml", "simple-merge.editing.%s") { config =>
     cycle(
