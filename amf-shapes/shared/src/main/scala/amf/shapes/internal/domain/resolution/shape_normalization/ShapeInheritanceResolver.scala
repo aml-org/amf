@@ -11,12 +11,22 @@ import scala.collection.mutable
 
 case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
 
-  val visitedIds         = mutable.ArrayBuffer[String]()
-  var detectedRecursion  = false
-  var recursionGenerator = "fakeId"
-  var registerVisit      = true
+  private val visitedIds = mutable.ArrayBuffer[String]()
 
+  // This variable is used to back track
+  private var detectedRecursion = false
+
+  // ID of the shape where inheritance recursion was detected
+  private var recursionGenerator = "fakeId"
+
+  /** When resolving inheritance we first normalizeWithoutCaching. Therefore:
+    *   - registerVisit is used to skip checking recursion (since we are normalizing the same shape that we started we
+    *     will always detect recursions)
+    *   - withoutCaching is used to skip adding the resulting normalized shape to the cache
+    */
+  private var registerVisit  = true
   private var withoutCaching = false
+
   private def runWithoutCaching[T](fn: () => T): T = {
     withoutCaching = true
     registerVisit = false
@@ -62,13 +72,14 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
       shape.fields.removeField(ShapeModel.Inherits)
       val resolvedShape = inheritFromSuperTypes(shape, superTypes)
 
+      // Reset when we return to the first Shape of the cycle
       if (detectedRecursion && shape.id == recursionGenerator) detectedRecursion = false
 
       registerVisit = false
       normalize(resolvedShape)
       registerVisit = true
 
-      // This is necessary due to a limitation we have with examples in Restriction Computation
+      // This is necessary due to a limitation we have with examples in Restriction Computation (what is this limitation)
       // Shouldn't be here
       shape match {
         case any: AnyShape if isSimpleInheritance(any, superTypes) =>
@@ -81,6 +92,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
   }
 
   private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]) = {
+    // [SN] TODO why does this start with a NormalizeWithoutCaching? To call the AnyShapeAdjuster?
     superTypes.fold(normalizeWithoutCaching(shape))({ (accShape, superType) =>
       val normalizedSuperType = normalize(superType)
       if (detectedRecursion) accShape else context.minShape(accShape, normalizedSuperType)
