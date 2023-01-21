@@ -11,7 +11,7 @@ class RecursionAnalyzer(errorHandler: AMFErrorHandler) {
   val visitedIds          = mutable.ArrayBuffer[String]()
   val allowedRecursionIds = mutable.ArrayBuffer[String]()
 
-  // These are exclusive used to handle recursions in unions
+  // These are exclusive used to handle recursions in unions (what is so special about unions?)
   val unionsBeingAnalyzed       = mutable.ArrayBuffer[String]()
   val traversedUnionMembers     = mutable.ArrayBuffer[String]()
   var pendingAnalysisRecursions = mutable.ArrayBuffer[UnionRecursionRecord]()
