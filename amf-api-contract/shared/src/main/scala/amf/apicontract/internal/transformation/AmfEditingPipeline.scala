@@ -2,7 +2,11 @@ package amf.apicontract.internal.transformation
 
 import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.common.transformation.stage._
-import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage, WebApiReferenceResolutionStage}
+import amf.apicontract.internal.transformation.stages.{
+  ExtensionsResolutionStage,
+  VirtualElementLexicalStage,
+  WebApiReferenceResolutionStage
+}
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
@@ -22,6 +26,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
   override def steps: Seq[TransformationStep] = {
     Seq(
       references,
+      new VirtualElementLexicalStage(profileName, keepEditingInfo = true),
       new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
       new ShapeNormalizationStage(profileName, keepEditingInfo = true),
       new SecurityResolutionStage(),

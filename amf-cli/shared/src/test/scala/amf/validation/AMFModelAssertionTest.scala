@@ -11,16 +11,17 @@ import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceE
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-import amf.testing.BaseUnitUtils._
-import org.yaml.model.{YNode, YNodePlain, YScalar}
+import org.yaml.model.{YNodePlain, YScalar}
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
@@ -431,6 +432,24 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val targetName = schema.annotations.find(classOf[TargetName]).map(_.name.asInstanceOf[YNodePlain].value)
       newName shouldBe "new-name"
       targetName shouldBe Some(YScalar("original-name"))
+    }
+  }
+
+  test("OAS 2 response schema should have lexical in editing pipeline") {
+    val api = s"$basePath/oas2/response-payload-lexical.yaml"
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val payload        = getFirstResponsePayload(bu)
+      val payloadLexical = payload.annotations.lexical()
+      val schemaLexical  = payload.schema.annotations.lexical()
+      payloadLexical shouldEqual schemaLexical
+    }
+  }
+
+  test("RAML Request and Payload virtual elements should have lexical in editing pipeline") {
+    val api = s"$basePath/raml/optional-scalar.raml"
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      getFirstRequest(bu).annotations.lexical() shouldBe PositionRange(Position(12, 9), Position(15, 0))
+      getFirstRequestPayload(bu).annotations.lexical() shouldBe PositionRange(Position(13, 6), Position(15, 0))
     }
   }
 }

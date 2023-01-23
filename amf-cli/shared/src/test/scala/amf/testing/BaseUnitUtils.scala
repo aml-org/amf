@@ -3,7 +3,7 @@ package amf.testing
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -12,6 +12,8 @@ object BaseUnitUtils {
   def getApi(bu: BaseUnit, isWebApi: Boolean = true): Api =
     if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
+
+  def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[Document].declares
 
   def getEndpoints(bu: BaseUnit, isWebApi: Boolean = true): Seq[EndPoint] = getApi(bu, isWebApi).endPoints
 
