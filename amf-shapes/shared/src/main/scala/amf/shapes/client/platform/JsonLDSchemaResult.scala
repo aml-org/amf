@@ -1,7 +1,7 @@
 package amf.shapes.client.platform
 import amf.core.client.platform.AMFParseResult
 import amf.shapes.client.platform.model.document.JsonSchemaDocument
-import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
+import amf.shapes.client.platform.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.{JsonLDInstanceResult => InternalJsonLDInstanceResult, JsonLDSchemaResult => InternalJsonLDSchemaResult}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
