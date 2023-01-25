@@ -1,0 +1,57 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "missing-field-type-1.graphql"
+          }
+        ],
+        "apiContract:endpoint": []
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.8.1"
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-1.graphql",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

@@ -1,0 +1,21 @@
+type Query {
+    name: String
+}
+
+union UnionType = AType | BType |
+
+type AType {
+    a: String
+}
+
+type BType {
+    b: String
+}
+
+type CType {
+    c: String
+}
+
+type DType {
+    D: String
+}
