@@ -1,30 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-6.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 3
+Number of results: 1
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'name'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-6.graphql#/web-api/endpoint/%2Fquery%2Ftype/supportedOperation/query/Query.type/returns/resp/default/payload/default/union/default-union/anyOf/unresolved
-  Property: 
-  Range: [(3,4)-(3,8)]
-  Location: file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-6.graphql
-
 - Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
-  Message: Syntax error in the following text: ':'
+  Message: Field 'type' missing field type
   Severity: Violation
   Target: 
   Property: 
-  Range: [(3,8)-(3,9)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
-  Message: Syntax error in the following text: '}'
-  Severity: Violation
-  Target: 
-  Property: 
-  Range: [(4,0)-(4,1)]
+  Range: [(2,4)-(2,8)]
   Location: 

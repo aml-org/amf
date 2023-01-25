@@ -182,7 +182,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declares/shape/Person/property/property/String",
+            "@id": "#/declares/shape/Person/property/property/another",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -191,23 +191,29 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declares/shape/Person/property/property/String/any/default-any",
+                "@id": "#/declares/shape/Person/property/property/another/scalar/default-scalar",
                 "@type": [
+                  "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
                 ]
               }
             ],
             "shacl:minCount": [
               {
-                "@value": 1
+                "@value": 0
               }
             ],
             "shacl:name": [
               {
-                "@value": "String"
+                "@value": "another"
               }
             ]
           }
@@ -305,33 +311,12 @@
                     ],
                     "raml-shapes:schema": [
                       {
-                        "@id": "#/declares/shape/Person/supportedOperation/type/returns/response/default/union/default-union",
+                        "@id": "#/declares/shape/Person/supportedOperation/type/returns/response/default/any/default-any",
                         "@type": [
-                          "raml-shapes:UnionShape",
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
-                        ],
-                        "raml-shapes:anyOf": [
-                          {
-                            "@id": "#/declares/shape/Person/supportedOperation/type/returns/response/default/union/default-union/anyOf/nil/default-nil",
-                            "@type": [
-                              "raml-shapes:NilShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ]
-                          },
-                          {
-                            "@id": "#/declares/shape/Person/supportedOperation/type/returns/response/default/union/default-union/anyOf/unresolved",
-                            "@type": [
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ]
-                          }
                         ]
                       }
                     ]

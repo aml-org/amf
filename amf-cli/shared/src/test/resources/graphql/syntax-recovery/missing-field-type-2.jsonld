@@ -21,7 +21,225 @@
             "@value": "missing-field-type-2.graphql"
           }
         ],
-        "apiContract:endpoint": []
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/endpoint/%2Fquery%2Fname",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/query/name"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Query.name"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "core:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "core:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/any/default-any",
+                            "@type": [
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:operationId": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/web-api/endpoint/%2Fquery%2Fanother",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/query/another"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Query.another"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Query.another"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/expects/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "core:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/returns/resp/default",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/returns/resp/default/payload/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "core:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/returns/resp/default/payload/default/union/default-union",
+                            "@type": [
+                              "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "raml-shapes:anyOf": [
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
+                                "@type": [
+                                  "raml-shapes:NilShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Fanother/supportedOperation/query/Query.another/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
+                                "@type": [
+                                  "raml-shapes:ScalarShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:operationId": [
+                  {
+                    "@value": "Query.another"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "doc:root": [
@@ -104,8 +322,8 @@
     ],
     "@context": {
       "@base": "file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-2.graphql",
-      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#"

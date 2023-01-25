@@ -104,10 +104,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
           }
         }
         shape
-      case _ =>
-        astError("Unknown input type syntax", toAnnotations(n))
-        val shape = AnyShape(toAnnotations(n))
-        shape
+      case _ => AnyShape(toAnnotations(n))
     }
   }
 

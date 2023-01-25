@@ -138,33 +138,12 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#/web-api/endpoint/%2Fquery%2Ftype/supportedOperation/query/Query.type/returns/resp/default/payload/default/union/default-union",
+                            "@id": "#/web-api/endpoint/%2Fquery%2Ftype/supportedOperation/query/Query.type/returns/resp/default/payload/default/any/default-any",
                             "@type": [
-                              "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
-                            ],
-                            "raml-shapes:anyOf": [
-                              {
-                                "@id": "#/web-api/endpoint/%2Fquery%2Ftype/supportedOperation/query/Query.type/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
-                                "@type": [
-                                  "raml-shapes:NilShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ]
-                              },
-                              {
-                                "@id": "#/web-api/endpoint/%2Fquery%2Ftype/supportedOperation/query/Query.type/returns/resp/default/payload/default/union/default-union/anyOf/unresolved",
-                                "@type": [
-                                  "raml-shapes:AnyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ]
-                              }
                             ]
                           }
                         ]
@@ -181,24 +160,24 @@
             ]
           },
           {
-            "@id": "#/web-api/endpoint/%2Fquery%2FString",
+            "@id": "#/web-api/endpoint/%2Fquery%2Fname",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
             ],
             "apiContract:path": [
               {
-                "@value": "/query/String"
+                "@value": "/query/name"
               }
             ],
             "core:name": [
               {
-                "@value": "Query.String"
+                "@value": "Query.name"
               }
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#/web-api/endpoint/%2Fquery%2FString/supportedOperation/query/Query.String",
+                "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -211,12 +190,12 @@
                 ],
                 "core:name": [
                   {
-                    "@value": "Query.String"
+                    "@value": "Query.name"
                   }
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#/web-api/endpoint/%2Fquery%2FString/supportedOperation/query/Query.String/expects/request",
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -227,7 +206,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#/web-api/endpoint/%2Fquery%2FString/supportedOperation/query/Query.String/returns/resp/default",
+                    "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -246,7 +225,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#/web-api/endpoint/%2Fquery%2FString/supportedOperation/query/Query.String/returns/resp/default/payload/default",
+                        "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -254,12 +233,39 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#/web-api/endpoint/%2Fquery%2FString/supportedOperation/query/Query.String/returns/resp/default/payload/default/any/default-any",
+                            "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union",
                             "@type": [
+                              "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
+                            ],
+                            "raml-shapes:anyOf": [
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
+                                "@type": [
+                                  "raml-shapes:NilShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
+                                "@type": [
+                                  "raml-shapes:ScalarShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -269,7 +275,7 @@
                 ],
                 "apiContract:operationId": [
                   {
-                    "@value": "Query.String"
+                    "@value": "Query.name"
                   }
                 ]
               }
