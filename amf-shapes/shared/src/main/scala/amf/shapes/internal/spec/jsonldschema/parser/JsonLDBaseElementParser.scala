@@ -32,7 +32,8 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
     (conditional ++ oneOf).toSeq
   }
 
-  protected def findClassTerm(ctx: SemanticContext) = ctx.typeMappings.flatMap(_.option()).map(t => ctx.expand(t))
+  protected def findClassTerm(ctx: SemanticContext): Seq[String] =
+    ctx.typeMappings.flatMap(_.option()).map(t => ctx.expand(t))
 
   private def parseConditional(shape: Shape): Option[T] = selectConditionalShape(shape).map(parse)
 
@@ -49,6 +50,5 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
       .syncValidate(ctx.yValueCache.get(node))
       .conforms
   }
-  protected def buildEmptyAnyShape(parentCtx: SemanticContext): AnyShape =
-    AnyShape().withSemanticContext(parentCtx.copy().withTypeMappings(Nil))
+
 }
