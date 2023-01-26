@@ -63,4 +63,34 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
     run("characteristics-in-property-array", assertions)
   }
 
+  test("Object with characteristics in pattern property with no match") {
+    def assertions(instance: JsonLDInstanceDocument): Assertion = {
+      instance.encodes.headOption.nonEmpty shouldBe true
+      instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
+      val encoded               = instance.encodes.head.asInstanceOf[JsonLDObject]
+      val propByMetadataLiteral = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
+      val propByMetadataPattern = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#pattern")
+      propByMetadataLiteral.nonEmpty shouldBe true
+      propByMetadataPattern.nonEmpty shouldBe false
+      propByMetadataLiteral.get.value.toString shouldBe "something"
+    }
+
+    run("pattern-property-simple-with-semantic", assertions)
+  }
+
+  test("Object with characteristics in pattern property with match") {
+    def assertions(instance: JsonLDInstanceDocument): Assertion = {
+      instance.encodes.nonEmpty shouldBe true
+      instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
+      val encoded               = instance.encodes.head.asInstanceOf[JsonLDObject]
+      val propByMetadataLiteral = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
+      val propByMetadataPattern = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#pattern")
+      propByMetadataPattern.nonEmpty shouldBe true
+      propByMetadataLiteral.nonEmpty shouldBe false
+      propByMetadataPattern.get.value.toString shouldBe "something"
+    }
+
+    run("pattern-property-with-semantic-match", assertions)
+  }
+
 }

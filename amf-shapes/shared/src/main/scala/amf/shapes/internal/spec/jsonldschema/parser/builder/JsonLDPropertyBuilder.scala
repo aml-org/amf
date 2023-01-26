@@ -12,8 +12,8 @@ case class JsonLDPropertyBuilder(
     path: JsonPath,
     location: SourceLocation
 ) {
-  def hasTermWithDefaultBase = term.startsWith(SemanticContext.baseIri)
-  def term                   = element.getOverriddenTerm.getOrElse(keyTerm)
+  def hasTermWithDefaultBase: Boolean = term.startsWith(SemanticContext.baseIri)
+  def term: String                    = element.getOverriddenTerm.getOrElse(keyTerm)
   override def equals(obj: Any): Boolean = obj match {
     case builder: JsonLDPropertyBuilder => builder.key == key && builder.term == term
   }
