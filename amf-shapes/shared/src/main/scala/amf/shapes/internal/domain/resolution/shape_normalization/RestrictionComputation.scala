@@ -1,5 +1,6 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
+import amf.core.client.scala.model.Annotable
 import amf.core.internal.annotations.{InheritanceProvenance, LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.metamodel.{Field, Obj}
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -235,41 +236,43 @@ private[shape_normalization] trait RestrictionComputation {
     }
   }
 
+  object BothNumeric {
+    def unapply(tuple: (AmfElement, AmfElement)): Option[(Number, Number)] = {
+      tuple match {
+        case (left: AmfScalar, right: AmfScalar) => unapply(left, right)
+        case _                                   => None
+      }
+    }
+
+    def unapply(left: AmfScalar, right: AmfScalar): Option[(Number, Number)] = {
+      for {
+        leftNum  <- left.toNumberOption
+        rightNum <- right.toNumberOption
+      } yield {
+        (leftNum, rightNum)
+      }
+    }
+  }
+
+  type IncompatibleError = (String) => InheritanceIncompatibleShapeError
   protected def computeNumericComparison(
       comparison: String,
       lvalue: AmfElement,
       rvalue: AmfElement,
-      property: Option[String] = None,
-      lexicalInformation: Option[LexicalInformation] = None,
-      location: Option[String]
+      onError: IncompatibleError
   ): Boolean = {
-    lvalue match {
-      case scalar: AmfScalar
-          if Option(scalar.value).isDefined && rvalue
-            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
-        val lnum = scalar.toNumber
-        val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
-
+    (lvalue, rvalue) match {
+      case BothNumeric(lnum, rnum) =>
         comparison match {
           case "<=" =>
             lnum.intValue() <= rnum.intValue()
           case ">=" =>
             lnum.intValue() >= rnum.intValue()
           case _ =>
-            throw new InheritanceIncompatibleShapeError(
-              s"Unknown numeric comparison $comparison",
-              property,
-              location,
-              lexicalInformation
-            )
+            throw onError(s"Unknown numeric comparison $comparison")
         }
       case _ =>
-        throw new InheritanceIncompatibleShapeError(
-          "Cannot compare non numeric or missing values",
-          property,
-          location,
-          lexicalInformation
-        )
+        throw onError("Cannot compare non numeric or missing values")
     }
   }
 
@@ -278,8 +281,7 @@ private[shape_normalization] trait RestrictionComputation {
       rcomparison: Boolean,
       lvalue: AmfElement,
       rvalue: AmfElement,
-      property: Option[String] = None,
-      lexicalInformaiton: Option[LexicalInformation] = None
+      onError: IncompatibleError
   ): Boolean = {
     lvalue match {
       case scalar: AmfScalar
@@ -289,8 +291,12 @@ private[shape_normalization] trait RestrictionComputation {
         val rbool = rvalue.asInstanceOf[AmfScalar].toBool
         lbool == lcomparison && rbool == rcomparison
       case _ =>
-        throw new InheritanceIncompatibleShapeError("Cannot compare non boolean or missing values")
+        throw onError("Cannot compare non boolean or missing values")
     }
+  }
+
+  private def incompatibleException(field: Field, annotable: AmfElement) = (message: String) => {
+    new InheritanceIncompatibleShapeError(message, Some(field.value.iri()), annotable.location(), annotable.position())
   }
 
   protected def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
@@ -310,9 +316,7 @@ private[shape_normalization] trait RestrictionComputation {
             "<=",
             superValue,
             derivedValue,
-            Some(NodeShapeModel.MinProperties.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(NodeShapeModel.MinProperties, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -337,9 +341,7 @@ private[shape_normalization] trait RestrictionComputation {
             ">=",
             superValue,
             derivedValue,
-            Some(NodeShapeModel.MaxProperties.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(NodeShapeModel.MaxProperties, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -364,9 +366,7 @@ private[shape_normalization] trait RestrictionComputation {
             "<=",
             superValue,
             derivedValue,
-            Some(ScalarShapeModel.MinLength.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ScalarShapeModel.MinLength, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -391,9 +391,7 @@ private[shape_normalization] trait RestrictionComputation {
             ">=",
             superValue,
             derivedValue,
-            Some(ScalarShapeModel.MaxLength.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ScalarShapeModel.MaxLength, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -418,9 +416,7 @@ private[shape_normalization] trait RestrictionComputation {
             "<=",
             superValue,
             derivedValue,
-            Some(ScalarShapeModel.Minimum.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ScalarShapeModel.Minimum, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -445,9 +441,7 @@ private[shape_normalization] trait RestrictionComputation {
             ">=",
             superValue,
             derivedValue,
-            Some(ScalarShapeModel.Maximum.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ScalarShapeModel.Maximum, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -472,9 +466,7 @@ private[shape_normalization] trait RestrictionComputation {
             "<=",
             superValue,
             derivedValue,
-            Some(ArrayShapeModel.MinItems.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ArrayShapeModel.MinItems, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -500,9 +492,7 @@ private[shape_normalization] trait RestrictionComputation {
             ">=",
             superValue,
             derivedValue,
-            Some(ArrayShapeModel.MaxItems.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(ArrayShapeModel.MaxItems, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -616,24 +606,21 @@ private[shape_normalization] trait RestrictionComputation {
             rcomparison = true,
             superValue,
             derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            incompatibleException(ArrayShapeModel.UniqueItems, derivedValue)
           ) ||
           computeBooleanComparison(
             lcomparison = false,
             rcomparison = false,
             superValue,
             derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            incompatibleException(ArrayShapeModel.UniqueItems, derivedValue)
           ) ||
           computeBooleanComparison(
             lcomparison = false,
             rcomparison = true,
             superValue,
             derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            incompatibleException(ArrayShapeModel.UniqueItems, derivedValue)
           )
         ) {
           derivedValue
@@ -652,9 +639,7 @@ private[shape_normalization] trait RestrictionComputation {
             "<=",
             superValue,
             derivedValue,
-            Some(PropertyShapeModel.MinCount.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(PropertyShapeModel.MinCount, derivedValue)
           )
         ) {
           computeNumericRestriction(
@@ -679,9 +664,7 @@ private[shape_normalization] trait RestrictionComputation {
             ">=",
             superValue,
             derivedValue,
-            Some(PropertyShapeModel.MaxCount.value.iri()),
-            derivedValue.position(),
-            derivedValue.location()
+            incompatibleException(PropertyShapeModel.MaxCount, derivedValue)
           )
         ) {
           computeNumericRestriction(
