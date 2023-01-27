@@ -305,7 +305,7 @@
                                 "shacl:name": "amf://id#4"
                               },
                               "inherited-shapes": {
-                                "#38": "amf://id#42,amf://id#43,amf://id#44"
+                                "#38": "amf://id#4,amf://id#7,amf://id#1"
                               },
                               "type-property-lexical-info": {
                                 "#38": "[(41,12)-(41,16)]"
@@ -613,7 +613,7 @@
             }
           },
           {
-            "@id": "#45",
+            "@id": "#42",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -625,7 +625,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#47",
+                "@id": "#44",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -638,7 +638,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#48",
+                    "@id": "#45",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -657,7 +657,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#49",
+                        "@id": "#46",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -670,7 +670,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#50",
+                            "@id": "#47",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -890,16 +890,16 @@
                                 "shacl:name": "amf://id#4"
                               },
                               "inherited-shapes": {
-                                "#50": "amf://id#42,amf://id#43,amf://id#44"
+                                "#47": "amf://id#4,amf://id#7,amf://id#1"
                               },
                               "type-property-lexical-info": {
-                                "#50": "[(50,12)-(50,16)]"
+                                "#47": "[(50,12)-(50,16)]"
                               },
                               "lexical": {
-                                "#50": "[(49,10)-(51,0)]"
+                                "#47": "[(49,10)-(51,0)]"
                               },
                               "auto-generated-name": {
-                                "#50": ""
+                                "#47": ""
                               },
                               "synthesized-field": {
                                 "shacl:closed": "true"
@@ -909,7 +909,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#49": "[(49,10)-(51,0)]"
+                            "#46": "[(49,10)-(51,0)]"
                           }
                         }
                       }
@@ -917,7 +917,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(48,8)-(51,0)]",
-                        "#48": "[(47,6)-(51,0)]"
+                        "#45": "[(47,6)-(51,0)]"
                       }
                     }
                   }
@@ -925,14 +925,14 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(46,4)-(51,0)]",
-                    "#47": "[(45,2)-(51,0)]"
+                    "#44": "[(45,2)-(51,0)]"
                   }
                 }
               }
             ],
             "doc:extends": [
               {
-                "@id": "#46",
+                "@id": "#43",
                 "@type": [
                   "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -1208,7 +1208,7 @@
                 "smaps": {
                   "lexical": {
                     "core:name": "[(44,8)-(44,28)]",
-                    "#46": "[(44,8)-(44,28)]"
+                    "#43": "[(44,8)-(44,28)]"
                   }
                 }
               }
@@ -1216,7 +1216,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(43,0)-(43,30)]",
-                "#45": "[(43,0)-(51,0)]"
+                "#42": "[(43,0)-(51,0)]"
               }
             }
           }

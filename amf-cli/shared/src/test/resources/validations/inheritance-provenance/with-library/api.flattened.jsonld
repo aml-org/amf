@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#10",
+      "@id": "#9",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#11",
+      "@id": "#10",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#11": "[(2,0)-(7,21)]"
+          "#10": "[(2,0)-(7,21)]"
         }
       }
     },
@@ -44,11 +44,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "#10"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#10"
+        "@id": "#9"
       },
       "smaps": {
         "aliases-array": {
@@ -113,7 +113,7 @@
           "#7": "[(7,4)-(7,8)]"
         },
         "inherited-shapes": {
-          "#7": "amf://id#9"
+          "#7": "amf://id#2"
         }
       }
     },

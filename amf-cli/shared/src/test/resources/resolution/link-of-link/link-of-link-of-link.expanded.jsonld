@@ -12,7 +12,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#9",
+        "@id": "#8",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -185,7 +185,7 @@
             "#3": "amf://id#3"
           },
           "inherited-shapes": {
-            "#3": "amf://id#7"
+            "#3": "amf://id#1"
           }
         }
       },
@@ -295,12 +295,12 @@
             "#6": "amf://id#3"
           },
           "inherited-shapes": {
-            "#6": "amf://id#7"
+            "#6": "amf://id#1"
           }
         }
       },
       {
-        "@id": "#8",
+        "@id": "#7",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -390,17 +390,17 @@
             "shacl:closed": "true"
           },
           "declared-element": {
-            "#8": ""
+            "#7": ""
           },
           "lexical": {
             "shacl:name": "[(12,2)-(12,12)]",
-            "#8": "[(12,2)-(16,20)]"
+            "#7": "[(12,2)-(16,20)]"
           },
           "type-property-lexical-info": {
-            "#8": "[(13,4)-(13,8)]"
+            "#7": "[(13,4)-(13,8)]"
           },
           "inherited-shapes": {
-            "#8": "amf://id#7"
+            "#7": "amf://id#1"
           }
         }
       }
