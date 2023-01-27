@@ -143,10 +143,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
               computeMinAny(derivedShape, superShape.asInstanceOf[AnyShape])
           }
 
-        // Generic inheritance
-        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) && superShape.isInstanceOf[NodeShape] =>
-          computeMinGeneric(baseGeneric, superShape)
-
         case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
           computeMinSchema(superShape, schema)
         // fallback error
