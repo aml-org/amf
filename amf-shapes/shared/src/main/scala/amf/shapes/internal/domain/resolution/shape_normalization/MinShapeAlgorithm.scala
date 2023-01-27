@@ -26,6 +26,7 @@ import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations
 import org.mulesoft.common.collections._
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 class InheritanceIncompatibleShapeError(
     val message: String,
@@ -51,6 +52,15 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
+  private def haveSameDataType(base: ScalarShape, ancestor: ScalarShape) =
+    base.dataType.value() == ancestor.dataType.value()
+  private def hasNumericNarrowing(base: ScalarShape, ancestor: ScalarShape) = {
+    val ancestorDatatype = ancestor.dataType.value()
+    base.dataType.value() == DataType.Integer && (ancestorDatatype == DataType.Float ||
+      ancestorDatatype == DataType.Double ||
+      ancestorDatatype == DataType.Number)
+  }
+
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape = copy(superShapeOri)
     val base       = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
@@ -60,26 +70,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
         // Scalars
         case (baseScalar: ScalarShape, superScalar: ScalarShape) =>
-          val b = baseScalar.dataType.value()
-          val s = superScalar.dataType.value()
-          if (b == s) {
+          val baseDataType  = baseScalar.dataType.value()
+          val superDataType = superScalar.dataType.value()
+          if (haveSameDataType(baseScalar, superScalar)) {
             computeMinScalar(baseScalar, superScalar)
-          } else if (
-            b == DataType.Integer &&
-            (s == DataType.Float ||
-              s == DataType.Double ||
-              s == DataType.Number)
-          ) {
+          } else if (hasNumericNarrowing(baseScalar, superScalar)) {
             computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
           } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
-            computeMinShape(baseScalar.withDataType(s), superScalar)
+            computeMinScalar(baseScalar.withDataType(superDataType), superScalar)
           } else {
-            context.errorHandler.violation(
-              InvalidTypeInheritanceErrorSpecification,
-              base,
-              Some(ShapeModel.Inherits.value.iri()),
-              s"Resolution error: Invalid scalar inheritance base type $b < $s "
-            )
+            invalidScalarInheritanceType(base, baseDataType, superDataType)
             baseScalar
           }
 
@@ -129,6 +129,15 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         }
         base
     }
+  }
+
+  private def invalidScalarInheritanceType(base: Shape, b: String, s: String): Unit = {
+    context.errorHandler.violation(
+      InvalidTypeInheritanceErrorSpecification,
+      base,
+      Some(ShapeModel.Inherits.value.iri()),
+      s"Resolution error: Invalid scalar inheritance base type $b < $s "
+    )
   }
 
   private def incompatibleInheritanceWarning(base: Shape, e: InheritanceIncompatibleShapeError): Unit = {
