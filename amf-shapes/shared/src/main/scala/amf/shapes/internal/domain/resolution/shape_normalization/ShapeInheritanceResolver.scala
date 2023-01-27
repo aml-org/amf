@@ -95,9 +95,21 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     // [SN] TODO why does this start with a NormalizeWithoutCaching? To call the AnyShapeAdjuster?
     superTypes.fold(normalizeWithoutCaching(shape))({ (accShape, superType) =>
       val normalizedSuperType = normalize(superType)
-      if (detectedRecursion) accShape else context.minShape(accShape, normalizedSuperType)
+      if (detectedRecursion) {
+        accShape
+      } else {
+        val r = context.minShape(accShape, normalizedSuperType)
+        if (context.keepEditingInfo) withInheritanceAnnotation(r, normalizedSuperType) else r
+      }
     })
-
+  }
+  private def withInheritanceAnnotation(child: Shape, parent: Shape): Shape = {
+    val startingValue = child.annotations.find(classOf[InheritedShapes]) match {
+      case Some(oldAnnotation) => oldAnnotation.baseIds
+      case None                => Nil
+    }
+    child.annotations.reject(_.isInstanceOf[InheritedShapes]) += InheritedShapes(startingValue :+ parent.id) // maybe optimizable, do no create and reject annotations all the time
+    child
   }
 
   private def resolveSimpleInheritance(shape: Shape) = {
