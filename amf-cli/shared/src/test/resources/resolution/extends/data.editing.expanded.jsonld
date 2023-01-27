@@ -538,7 +538,7 @@
                                 "shacl:name": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
                               },
                               "inherited-shapes": {
-                                "#/web-api/endpoint/%2Fcustomers%2Fcorporate/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank/link-2062940"
+                                "#/web-api/endpoint/%2Fcustomers%2Fcorporate/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
                               },
                               "lexical": {
                                 "#/web-api/endpoint/%2Fcustomers%2Fcorporate/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema": "[(24,8)-(27,21)]"
@@ -1218,7 +1218,7 @@
             "#/declares/shape/Bank": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/web-api/endpoint/%2Fcustomers%2Fcorporate/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/Bank"
           },
           "inherited-shapes": {
-            "#/declares/shape/Bank": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution/link-1071162767"
+            "#/declares/shape/Bank": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
           }
         }
       }
