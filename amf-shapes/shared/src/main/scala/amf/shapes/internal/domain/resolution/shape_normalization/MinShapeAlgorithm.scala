@@ -189,10 +189,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
     computeNarrowRestrictions(
-      ScalarShapeModel.fields,
+      ScalarShapeModel,
       baseScalar,
       superScalar,
-      filteredFields = Seq(ScalarShapeModel.Examples)
+      Seq(ScalarShapeModel.Examples)
     )
     baseScalar
   }

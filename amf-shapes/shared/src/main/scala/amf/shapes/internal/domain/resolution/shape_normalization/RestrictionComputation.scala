@@ -1,7 +1,7 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.internal.annotations.{InheritanceProvenance, LexicalInformation, SourceAST, SourceNode}
-import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.{Field, Obj}
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.client.scala.model.domain._
@@ -80,6 +80,10 @@ private[shape_normalization] trait RestrictionComputation {
     if (not.isDefined) baseShape.set(ShapeModel.Not, not.get)
   }
 
+  protected def computeNarrowRestrictions(meta: Obj, base: Shape, superShape: Shape, ignore: Seq[Field]): Shape = {
+    computeNarrowRestrictions(meta.fields, base, superShape, ignore)
+  }
+
   protected def computeNarrowRestrictions(
       fields: Seq[Field],
       baseShape: Shape,
@@ -88,19 +92,19 @@ private[shape_normalization] trait RestrictionComputation {
   ): Shape = {
     fields.foreach { f =>
       if (!filteredFields.contains(f)) {
-        val baseValue  = Option(baseShape.fields.getValue(f))
-        val superValue = Option(superShape.fields.getValue(f))
-        baseValue match {
-          case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
+        val baseValue  = baseShape.fields.getValueAsOption(f)
+        val superValue = superShape.fields.getValueAsOption(f)
+        (baseValue, superValue) match {
+          case (Some(base), None) => baseShape.set(f, base.value, base.annotations)
 
-          case None if superValue.isDefined =>
-            val finalAnnotations = Annotations(superValue.get.annotations)
+          case (None, Some(superVal)) =>
+            val finalAnnotations = Annotations(superVal.annotations)
             if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
-            baseShape.fields.setWithoutId(f, superValue.get.value, finalAnnotations)
+            baseShape.fields.setWithoutId(f, superVal.value, finalAnnotations)
 
-          case Some(bvalue) if superValue.isDefined =>
+          case (Some(bvalue), Some(superVal)) =>
             val finalAnnotations = Annotations(bvalue.annotations)
-            val finalValue       = computeNarrow(f, bvalue.value, superValue.get.value)
+            val finalValue       = computeNarrow(f, bvalue.value, superVal.value)
             if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
             val effective = finalValue.add(finalAnnotations)
             baseShape.fields.setWithoutId(f, effective, finalAnnotations)
@@ -112,7 +116,7 @@ private[shape_normalization] trait RestrictionComputation {
     baseShape
   }
 
-  def inheritAnnotations(annotations: Annotations, from: Shape) = {
+  private def inheritAnnotations(annotations: Annotations, from: Shape) = {
     if (!annotations.contains(classOf[InheritanceProvenance]))
       annotations += InheritanceProvenance(from.id)
     annotations
@@ -224,13 +228,10 @@ private[shape_normalization] trait RestrictionComputation {
     }
   }
 
-  protected def stringValue(value: AmfElement): Option[String] = {
+  protected def maybeAsString(value: AmfElement): Option[String] = {
     value match {
-      case scalar: AmfScalar
-          if Option(scalar.value).isDefined && value
-            .isInstanceOf[AmfScalar] && Option(value.asInstanceOf[AmfScalar].value).isDefined =>
-        Some(scalar.toString)
-      case _ => None
+      case scalar: AmfScalar => Option(scalar.value).map(_.toString)
+      case _                 => None
     }
   }
 
@@ -296,12 +297,11 @@ private[shape_normalization] trait RestrictionComputation {
     field match {
 
       case ShapeModel.Name =>
-        val derivedStrValue = stringValue(derivedValue)
-        val superStrValue   = stringValue(superValue)
-        if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
-          superValue
-        } else {
-          derivedValue
+        val derivedStrValue = maybeAsString(derivedValue)
+        val superStrValue   = maybeAsString(superValue)
+        (superStrValue, derivedStrValue) match {
+          case (Some(_), None | Some("schema")) => superValue
+          case _                                => derivedValue
         }
 
       case NodeShapeModel.MinProperties =>
