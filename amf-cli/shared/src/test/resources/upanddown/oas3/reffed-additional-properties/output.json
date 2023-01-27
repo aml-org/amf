@@ -18,6 +18,7 @@
             "additionalProperties": {
               "title": "PartyType",
               "type": "object",
+              "additionalProperties": true,
               "required": [
                 "id"
               ],
@@ -25,8 +26,7 @@
                 "id": {
                   "type": "string"
                 }
-              },
-              "additionalProperties": true
+              }
             },
             "type": "object"
           }
