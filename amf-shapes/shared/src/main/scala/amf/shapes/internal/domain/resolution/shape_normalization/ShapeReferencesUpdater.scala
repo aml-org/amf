@@ -26,7 +26,7 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
   private def handleRecursion(shape: Shape): RecursiveShape = {
     recursionAnalyzer.detectRecursionsFromUnions(shape)
     if (recursionAnalyzer.isInvalidRecursion(shape)) reportInvalidRecursionError(shape)
-    RecursiveShape(shape)
+    RecursiveShape(shape).withSupportsRecursion(true)
   }
 
   private def retrieveLatestVersionOf(shape: Shape) = {
