@@ -1,86 +1,17 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.scala.model.Annotable
-import amf.core.internal.annotations.{InheritanceProvenance, LexicalInformation, SourceAST, SourceNode}
-import amf.core.internal.metamodel.{Field, Obj}
+import amf.core.client.scala.model.domain._
+import amf.core.internal.annotations.InheritanceProvenance
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.client.scala.model.domain._
-import amf.core.internal.parser.domain.{Annotations, Value}
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.core.internal.metamodel.{Field, Obj}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.resolution.shape_normalization.AmfElementComparer._
 
 private[shape_normalization] trait RestrictionComputation {
 
   val keepEditingInfo: Boolean
-
-  protected def computeNarrowLogical(baseShape: Shape, superShape: Shape) = {
-    var and: Seq[Shape]    = Seq()
-    var or: Seq[Shape]     = Seq()
-    var xor: Seq[Shape]    = Seq()
-    var not: Option[Shape] = None
-
-    val baseOr  = Option(baseShape.or).getOrElse(Nil)
-    val superOr = Option(baseShape.or).getOrElse(Nil)
-    if (baseOr.nonEmpty && superOr.nonEmpty)
-      and ++= Seq(
-        AnyShape()
-          .withId(baseShape.id + s"/andOr")
-          .withAnd(
-            Seq(
-              AnyShape().withId(baseShape.id + "/andOrBase").withOr(baseOr),
-              AnyShape().withId(baseShape.id + "/andOrSuper").withOr(superOr)
-            )
-          )
-      ) // both constraints must match => AND
-    if (baseOr.nonEmpty || superOr.nonEmpty) or ++= (baseOr ++ superOr)
-
-    // here we just aggregate ands
-    val baseAnd  = Option(baseShape.and).getOrElse(Nil)
-    val superAnd = Option(baseShape.and).getOrElse(Nil)
-    and ++= (baseAnd ++ superAnd)
-
-    val baseXone  = Option(baseShape.xone).getOrElse(Nil)
-    val superXone = Option(baseShape.xone).getOrElse(Nil)
-    if (baseXone.nonEmpty && superXone.nonEmpty)
-      and ++= Seq(
-        AnyShape()
-          .withId(baseShape.id + s"/andXone")
-          .withAnd(
-            Seq(
-              AnyShape().withId(baseShape.id + "/andXoneBase").withXone(baseXone),
-              AnyShape().withId(baseShape.id + "/andXoneSuper").withXone(superXone)
-            )
-          )
-      ) // both constraints must match => AND
-    if (baseXone.nonEmpty || superXone.nonEmpty) or ++= (baseOr ++ superOr)
-
-    val baseNot  = Option(baseShape.not)
-    val superNot = Option(baseShape.not)
-    if (baseNot.isDefined && superNot.isDefined)
-      and ++= Seq(
-        AnyShape()
-          .withId(baseShape.id + s"/andNot")
-          .withAnd(
-            Seq(
-              AnyShape().withId(baseShape.id + "/andNotBase").withNot(baseNot.get),
-              AnyShape().withId(baseShape.id + "/andNotSuper").withNot(superNot.get)
-            )
-          )
-      ) // both constraints must match => AND
-    if (baseNot.isDefined || superNot.isDefined) not = baseNot.orElse(superNot)
-
-    baseShape.fields.removeField(ShapeModel.And)
-    baseShape.fields.removeField(ShapeModel.Or)
-    baseShape.fields.removeField(ShapeModel.Xone)
-    baseShape.fields.removeField(ShapeModel.Not)
-
-    if (and.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.And, and)
-    if (or.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.Or, or)
-    if (xor.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.Xone, xor)
-    if (not.isDefined) baseShape.set(ShapeModel.Not, not.get)
-  }
 
   protected def computeNarrowRestrictions(meta: Obj, base: Shape, superShape: Shape, ignore: Seq[Field]): Shape = {
     computeNarrowRestrictions(meta.fields, base, superShape, ignore)
