@@ -12,6 +12,9 @@ case class FileShape private[amf] (override val fields: Fields, override val ann
     extends AnyShape(fields, annotations)
     with CommonShapeFields {
 
+
+  override private[amf] val isConcreteShape = true
+
   def fileTypes: Seq[StrField] = fields.field(FileTypes)
 
   def withFileTypes(fileTypes: Seq[String]): this.type = set(FileTypes, fileTypes)
