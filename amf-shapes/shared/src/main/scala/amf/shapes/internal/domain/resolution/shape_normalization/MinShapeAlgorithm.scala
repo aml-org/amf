@@ -94,12 +94,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeMinTuple(baseArray, superArray)
         case (baseNode: NodeShape, superNode: NodeShape) =>
           computeMinNode(baseNode, superNode)
-        case (baseUnion: UnionShape, superShape: UnionShape) =>
-          val superUnion = superShape
+        case (baseUnion: UnionShape, superUnion: UnionShape) =>
           computeMinUnion(baseUnion, superUnion)
 
-        case (baseUnion: UnionShape, superShape: NodeShape) =>
-          val superNode = superShape
+        case (baseUnion: UnionShape, superNode: NodeShape) =>
           computeMinUnionNode(baseUnion, superNode)
         case (base: Shape, superUnion: UnionShape) =>
           computeMinSuperUnion(base, superUnion)
@@ -300,17 +298,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val superItemsOption = Option(superArray.items)
     val baseItemsOption  = Option(baseArray.items)
 
-    val newItems = baseItemsOption
-      .map { baseItems =>
-        superItemsOption match {
-          case Some(superItems) => context.minShape(baseItems, superItems)
-          case _                => baseItems
-        }
-      }
-      .orElse(superItemsOption)
-    newItems.foreach { ni =>
-      baseArray.withItems(ni)
+    val newItems = (baseItemsOption, superItemsOption) match {
+      case (Some(baseItems), Some(superItems)) => Some(context.minShape(baseItems, superItems))
+      case (Some(baseItems), _)                => Some(baseItems)
+      case (_, Some(superItems))               => Some(superItems)
+      case (_, _)                              => None
     }
+
+    newItems.foreach(ni => baseArray.withItems(ni))
 
     computeNarrowRestrictions(
       ArrayShapeModel.fields,
@@ -355,14 +350,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
             .getOrElse {
               basePropOption.get.cloneShape(Some(context.errorHandler))
             }
-//            .adopted(baseNode.id)
         } else {
           superPropOption
             .map(_.cloneShape(Some(context.errorHandler)))
             .getOrElse {
               basePropOption.get.cloneShape(Some(context.errorHandler))
             }
-//            .adopted(baseNode.id)
         }
     }
 
