@@ -15,6 +15,9 @@ case class ScalarShape private[amf] (override val fields: Fields, override val a
     with CommonShapeFields
     with SerializableShape {
 
+
+  override private[amf] val isConcreteShape = true
+
   def dataType: StrField  = fields.field(DataType)
   def encoding: StrField  = fields.field(Encoding)
   def mediaType: StrField = fields.field(MediaType)

@@ -16,6 +16,8 @@ import org.yaml.model.YPart
 case class NodeShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
+  override private[amf] val isConcreteShape = true
+
   def isAbstract: BoolField                         = fields.field(IsAbstract)
   def isInputOnly: BoolField                        = fields.field(InputOnly)
   def minProperties: IntField                       = fields.field(MinProperties)
