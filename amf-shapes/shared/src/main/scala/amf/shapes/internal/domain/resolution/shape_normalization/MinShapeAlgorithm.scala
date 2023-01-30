@@ -1,29 +1,27 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.common.validation.SeverityLevels
-import amf.core.client.common.validation.SeverityLevels.WARNING
-import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
-import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.client.scala.model.domain.{AmfArray, RecursiveShape, Shape}
 import amf.core.internal.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, Value}
-import amf.core.internal.utils.IdCounter
-import amf.core.internal.validation.core.ValidationProfile.SeverityLevel
-import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.model.domain.{UnionShape, _}
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.ParsedJSONSchema
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.resolution.shape_normalization.MinShapeAlgorithm.allShapeFields
+import amf.shapes.internal.domain.resolution.shape_normalization.MinUnionShape.{
+  computeMinSuperUnion,
+  computeMinUnion,
+  computeMinUnionNode
+}
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
   InvalidTypeInheritanceErrorSpecification,
   InvalidTypeInheritanceWarningSpecification
 }
-import org.mulesoft.common.collections._
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -36,6 +34,12 @@ class InheritanceIncompatibleShapeError(
     val isViolation: Boolean = false
 ) extends Exception(message)
 
+object MinShapeAlgorithm {
+
+  val allShapeFields =
+    (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
+
+}
 private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext)
     extends RestrictionComputation {
 
@@ -95,12 +99,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         case (baseNode: NodeShape, superNode: NodeShape) =>
           computeMinNode(baseNode, superNode)
         case (baseUnion: UnionShape, superUnion: UnionShape) =>
-          computeMinUnion(baseUnion, superUnion)
+          computeMinUnion(baseUnion, superUnion, computeNarrowRestrictions)
 
         case (baseUnion: UnionShape, superNode: NodeShape) =>
-          computeMinUnionNode(baseUnion, superNode)
+          computeMinUnionNode(baseUnion, superNode, computeNarrowRestrictions)
         case (base: Shape, superUnion: UnionShape) =>
-          computeMinSuperUnion(base, superUnion)
+          computeMinSuperUnion(base, superUnion, computeNarrowRestrictions)
         case (baseProperty: PropertyShape, superProperty: PropertyShape) =>
           computeMinProperty(baseProperty, superProperty)
         case (baseFile: FileShape, superFile: FileShape) =>
@@ -194,9 +198,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     )
     baseScalar
   }
-
-  private val allShapeFields =
-    (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
 
   protected def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
@@ -388,175 +389,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       clonedProp.id = clonedProp.id + "/inherited"
     }
     clonedProp
-  }
-
-  object UnionErrorHandler extends AMFErrorHandler {
-
-    override def report(result: AMFValidationResult): Unit =
-      throw new Exception("raising exceptions in union processing")
-
-    def wrapContext(ctx: NormalizationContext): NormalizationContext = {
-      new NormalizationContext(
-        this,
-        ctx.keepEditingInfo,
-        ctx.profile,
-        ctx.cache
-      )
-    }
-  }
-  protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
-
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val newUnionItems =
-      if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
-        baseUnion.anyOf ++ superUnion.anyOf
-      } else {
-        val minShapes = for {
-          baseUnionElement  <- baseUnion.anyOf
-          superUnionElement <- superUnion.anyOf
-        } yield {
-          try {
-            Some(unionContext.minShape(baseUnionElement, superUnionElement))
-          } catch {
-            case _: Exception => None
-          }
-        }
-        val finalMinShapes = minShapes.collect { case Some(s) => s }
-        if (finalMinShapes.isEmpty)
-          throw new InheritanceIncompatibleShapeError(
-            "Cannot compute inheritance for union",
-            None,
-            baseUnion.location(),
-            baseUnion.position()
-          )
-        finalMinShapes
-      }
-
-    avoidDuplicatedIds(newUnionItems)
-    baseUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
-
-    computeNarrowRestrictions(
-      UnionShapeModel.fields,
-      baseUnion,
-      superUnion,
-      filteredFields = Seq(UnionShapeModel.AnyOf)
-    )
-
-    baseUnion
-  }
-
-  private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
-    newUnionItems.legacyGroupBy(_.id).foreach {
-      case (_, shapes) if shapes.size > 1 =>
-        val counter = new IdCounter()
-        shapes.foreach { shape =>
-          shape.id = counter.genId(shape.id)
-        }
-      case _ =>
-    }
-
-  protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val newUnionItems = for {
-      baseUnionElement <- baseUnion.anyOf
-    } yield {
-      unionContext.minShape(baseUnionElement, superNode)
-    }
-
-    baseUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
-
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
-
-    baseUnion
-  }
-
-  protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val minItems = for {
-      superUnionElement <- superUnion.anyOf
-    } yield {
-      try {
-        val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
-        setValuesOfUnionElement(newShape, superUnionElement)
-        Some(newShape)
-      } catch {
-        case _: Exception => None
-      }
-    }
-    val newUnionItems = minItems collect { case Some(s) => s }
-    if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError(
-        "Cannot compute inheritance from union",
-        None,
-        baseShape.location(),
-        baseShape.position()
-      )
-    }
-
-    newUnionItems.zipWithIndex.foreach { case (shape, i) =>
-      shape.id = shape.id + s"_$i"
-      shape
-    }
-
-    superUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
-
-    computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
-    baseShape.fields foreach { case (field, value) =>
-      if (field != UnionShapeModel.AnyOf) {
-        superUnion.fields.setWithoutId(field, value.value, value.annotations)
-      }
-    }
-
-    superUnion.annotations.reject(_ => true) ++= baseShape.annotations
-    superUnion.withId(baseShape.id)
-  }
-
-  private def filterBaseShape(baseShape: Shape): Shape = {
-    // There are some fields of the union that we don't want to propagate to it's members
-    val filteredFields =
-      Seq(
-        AnyShapeModel.Values,
-        AnyShapeModel.DefaultValueString,
-        AnyShapeModel.Default,
-        AnyShapeModel.Examples,
-        AnyShapeModel.Description
-      )
-    val filteredBase = baseShape.copyShape()
-    filteredBase.fields.filter(f => !filteredFields.contains(f._1))
-    filteredBase
-  }
-
-  private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
-    superUnionElement.name.option().foreach(n => newShape.withName(n))
-    /*
-    overrides additionalProperties value of unionElement to newShape to generate consistency with restrictShape method
-    that is called when a union type is parsed as AnyShape.
-     */
-    (newShape, superUnionElement) match {
-      case (newShape: NodeShape, superUnion: NodeShape) =>
-        newShape.fields
-          .getValueAsOption(NodeShapeModel.Closed)
-          .map(closedValue =>
-            newShape.set(
-              NodeShapeModel.Closed,
-              AmfScalar(superUnion.closed.value(), closedValue.value.annotations),
-              closedValue.annotations
-            )
-          )
-      case _ =>
-    }
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
