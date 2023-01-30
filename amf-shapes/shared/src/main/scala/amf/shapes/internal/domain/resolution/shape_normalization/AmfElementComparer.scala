@@ -137,4 +137,31 @@ object AmfElementComparer {
   def incompatibleException(field: Field, annotable: AmfElement) = (message: String) => {
     new InheritanceIncompatibleShapeError(message, Some(field.value.iri()), annotable.location(), annotable.position())
   }
+
+  def computeNumericRestriction(
+      comparison: String,
+      lvalue: AmfElement,
+      rvalue: AmfElement
+  ): AmfElement = {
+    (lvalue, rvalue) match {
+      case BothNumeric(lnum, rnum) =>
+        comparison match {
+          case "max" =>
+            if (lnum.intValue() <= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case "min" =>
+            if (lnum.intValue() >= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case _ => throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison")
+        }
+      case _ =>
+        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values")
+    }
+  }
 }
