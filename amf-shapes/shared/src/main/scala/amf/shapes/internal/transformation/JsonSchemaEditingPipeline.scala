@@ -4,7 +4,7 @@ import amf.core.client.common.transform._
 import amf.core.client.common.validation.ProfileNames.JSONSCHEMA
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.transform.stages.{ReferenceResolutionStage, SourceInformationStage, UrlShortenerStage}
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 class JsonSchemaEditingPipeline private (urlShortening: Boolean = true, val name: String)
     extends TransformationPipeline {
@@ -14,7 +14,7 @@ class JsonSchemaEditingPipeline private (urlShortening: Boolean = true, val name
   override def steps: Seq[TransformationStep] =
     Seq(
       new ReferenceResolutionStage(true),
-      new ShapeNormalizationStage(JSONSCHEMA, keepEditingInfo = true)
+      new ShapeNormalizationForUnitStage(JSONSCHEMA, keepEditingInfo = true)
     ) ++ url :+ SourceInformationStage
 }
 
