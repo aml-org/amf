@@ -15,7 +15,10 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.ParsedJSONSchema
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 
 import scala.collection.mutable
 
@@ -30,14 +33,14 @@ class InheritanceIncompatibleShapeError(
 private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext) {
 
   protected def computeNarrowRestrictions(
-                                           fields: Seq[Field],
-                                           baseShape: Shape,
-                                           superShape: Shape,
-                                           filteredFields: Seq[Field] = Seq.empty
-                                         ): Shape = {
+      fields: Seq[Field],
+      baseShape: Shape,
+      superShape: Shape,
+      filteredFields: Seq[Field] = Seq.empty
+  ): Shape = {
     fields.foreach { f =>
       if (!filteredFields.contains(f)) {
-        val baseValue = Option(baseShape.fields.getValue(f))
+        val baseValue  = Option(baseShape.fields.getValue(f))
         val superValue = Option(superShape.fields.getValue(f))
         baseValue match {
           case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
@@ -49,7 +52,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
           case Some(bvalue) if superValue.isDefined =>
             val finalAnnotations = Annotations(bvalue.annotations)
-            val finalValue = computeNarrow(f, bvalue.value, superValue.get.value)
+            val finalValue       = computeNarrow(f, bvalue.value, superValue.get.value)
             if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
             val effective = finalValue.add(finalAnnotations)
             baseShape.fields.setWithoutId(f, effective, finalAnnotations)
@@ -73,7 +76,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       if (field != NodeShapeModel.Inherits) {
         Option(shape.fields.getValue(field)) match {
           case Some(superValue) => shape.set(field, computeNarrow(field, derivedValue.value, superValue.value))
-          case None => shape.fields.setWithoutId(field, derivedValue.value, derivedValue.annotations)
+          case None             => shape.fields.setWithoutId(field, derivedValue.value, derivedValue.annotations)
         }
       }
     }
@@ -81,16 +84,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   protected def computeNumericRestriction(
-                                           comparison: String,
-                                           lvalue: AmfElement,
-                                           rvalue: AmfElement,
-                                           property: Option[String] = None,
-                                           lexicalInfo: Option[LexicalInformation] = None
-                                         ): AmfElement = {
+      comparison: String,
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      lexicalInfo: Option[LexicalInformation] = None
+  ): AmfElement = {
     lvalue match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && rvalue
-          .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
         val lnum = scalar.toNumber
         val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
 
@@ -115,10 +118,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   protected def computeEnum(
-                             derivedEnumeration: Seq[AmfElement],
-                             superEnumeration: Seq[AmfElement],
-                             annotations: Annotations
-                           ): Unit = {
+      derivedEnumeration: Seq[AmfElement],
+      superEnumeration: Seq[AmfElement],
+      annotations: Annotations
+  ): Unit = {
     if (derivedEnumeration.nonEmpty && superEnumeration.nonEmpty) {
       val headOption = derivedEnumeration.headOption
       if (headOption.exists(h => superEnumeration.headOption.exists(_.getClass != h.getClass)))
@@ -132,14 +135,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       derivedEnumeration match {
         case Seq(_: ScalarNode) =>
           val superScalars = superEnumeration.collect({ case s: ScalarNode => s.value.value() })
-          val ds = derivedEnumeration.asInstanceOf[Seq[ScalarNode]]
+          val ds           = derivedEnumeration.asInstanceOf[Seq[ScalarNode]]
           ds.foreach { e =>
             if (!superScalars.contains(e.value.value())) {
               throw new InheritanceIncompatibleShapeError(
-                s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${
-                  superScalars
-                    .mkString(",")
-                })",
+                s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${superScalars
+                    .mkString(",")})",
                 Some(ShapeModel.Values.value.iri()),
                 e.location(),
                 e.position()
@@ -152,16 +153,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   protected def computeStringEquality(
-                                       lvalue: AmfElement,
-                                       rvalue: AmfElement,
-                                       property: Option[String] = None,
-                                       position: Option[String],
-                                       lexicalInfo: Option[LexicalInformation] = None
-                                     ): Boolean = {
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      position: Option[String],
+      lexicalInfo: Option[LexicalInformation] = None
+  ): Boolean = {
     lvalue match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && rvalue
-          .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
         val lstr = scalar.toString
         val rstr = rvalue.asInstanceOf[AmfScalar].toString
         lstr == rstr
@@ -178,25 +179,25 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   protected def stringValue(value: AmfElement): Option[String] = {
     value match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && value
-          .isInstanceOf[AmfScalar] && Option(value.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && value
+            .isInstanceOf[AmfScalar] && Option(value.asInstanceOf[AmfScalar].value).isDefined =>
         Some(scalar.toString)
       case _ => None
     }
   }
 
   protected def computeNumericComparison(
-                                          comparison: String,
-                                          lvalue: AmfElement,
-                                          rvalue: AmfElement,
-                                          property: Option[String] = None,
-                                          lexicalInformation: Option[LexicalInformation] = None,
-                                          location: Option[String]
-                                        ): Boolean = {
+      comparison: String,
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      lexicalInformation: Option[LexicalInformation] = None,
+      location: Option[String]
+  ): Boolean = {
     lvalue match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && rvalue
-          .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
         val lnum = scalar.toNumber
         val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
 
@@ -224,17 +225,17 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   protected def computeBooleanComparison(
-                                          lcomparison: Boolean,
-                                          rcomparison: Boolean,
-                                          lvalue: AmfElement,
-                                          rvalue: AmfElement,
-                                          property: Option[String] = None,
-                                          lexicalInformaiton: Option[LexicalInformation] = None
-                                        ): Boolean = {
+      lcomparison: Boolean,
+      rcomparison: Boolean,
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      lexicalInformaiton: Option[LexicalInformation] = None
+  ): Boolean = {
     lvalue match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && rvalue
-          .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
         val lbool = scalar.toBool
         val rbool = rvalue.asInstanceOf[AmfScalar].toBool
         lbool == lcomparison && rbool == rcomparison
@@ -248,7 +249,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
       case ShapeModel.Name =>
         val derivedStrValue = stringValue(derivedValue)
-        val superStrValue = stringValue(superValue)
+        val superStrValue   = stringValue(superValue)
         if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
           superValue
         } else {
@@ -570,22 +571,22 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
             Some(ArrayShapeModel.UniqueItems.value.iri()),
             derivedValue.annotations.find(classOf[LexicalInformation])
           ) ||
-            computeBooleanComparison(
-              lcomparison = false,
-              rcomparison = false,
-              superValue,
-              derivedValue,
-              Some(ArrayShapeModel.UniqueItems.value.iri()),
-              derivedValue.annotations.find(classOf[LexicalInformation])
-            ) ||
-            computeBooleanComparison(
-              lcomparison = false,
-              rcomparison = true,
-              superValue,
-              derivedValue,
-              Some(ArrayShapeModel.UniqueItems.value.iri()),
-              derivedValue.annotations.find(classOf[LexicalInformation])
-            )
+          computeBooleanComparison(
+            lcomparison = false,
+            rcomparison = false,
+            superValue,
+            derivedValue,
+            Some(ArrayShapeModel.UniqueItems.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          ) ||
+          computeBooleanComparison(
+            lcomparison = false,
+            rcomparison = true,
+            superValue,
+            derivedValue,
+            Some(ArrayShapeModel.UniqueItems.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         ) {
           derivedValue
         } else {
@@ -1119,10 +1120,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
 
     avoidDuplicatedIds(newUnionItems)
+
+    val annotations = baseUnion.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
+      case Some(value) => value.annotations
+      case _           => Annotations()
+    }
+
     baseUnion.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+      annotations
     )
 
     computeNarrowRestrictions(
