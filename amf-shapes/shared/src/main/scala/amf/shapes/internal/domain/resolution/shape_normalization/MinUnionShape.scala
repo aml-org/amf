@@ -32,39 +32,11 @@ object MinUnionShape {
   def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape, computeNarrowRestrictions: RestrictFields)(implicit
       context: NormalizationContext
   ): Shape = {
-
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val newUnionItems =
-      if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
-        baseUnion.anyOf ++ superUnion.anyOf
-      } else {
-        val minShapes = for {
-          baseUnionElement  <- baseUnion.anyOf
-          superUnionElement <- superUnion.anyOf
-        } yield {
-          try {
-            Some(unionContext.minShape(baseUnionElement, superUnionElement))
-          } catch {
-            case _: Exception => None
-          }
-        }
-        val finalMinShapes = minShapes.collect { case Some(s) => s }
-        if (finalMinShapes.isEmpty)
-          throw new InheritanceIncompatibleShapeError(
-            "Cannot compute inheritance for union",
-            None,
-            baseUnion.location(),
-            baseUnion.position()
-          )
-        finalMinShapes
-      }
+    val newUnionItems                      = manyToManyMinShape(baseUnion, superUnion, unionContext)
 
     avoidDuplicatedIds(newUnionItems)
-    baseUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
+    setUnionItems(baseUnion, newUnionItems)
 
     computeNarrowRestrictions(
       UnionShapeModel.fields,
@@ -74,6 +46,40 @@ object MinUnionShape {
     )
 
     baseUnion
+  }
+
+  private def manyToManyMinShape(baseUnion: UnionShape, superUnion: UnionShape, unionContext: NormalizationContext) = {
+    if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
+      baseUnion.anyOf ++ superUnion.anyOf
+    } else {
+      val minShapes = for {
+        baseUnionElement  <- baseUnion.anyOf
+        superUnionElement <- superUnion.anyOf
+      } yield {
+        try {
+          Some(unionContext.minShape(baseUnionElement, superUnionElement))
+        } catch {
+          case _: Exception => None
+        }
+      }
+      val finalMinShapes = minShapes.collect { case Some(s) => s }
+      if (finalMinShapes.isEmpty)
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot compute inheritance for union",
+          None,
+          baseUnion.location(),
+          baseUnion.position()
+        )
+      finalMinShapes
+    }
+  }
+
+  private def setUnionItems(baseUnion: UnionShape, newUnionItems: Seq[Shape]) = {
+    baseUnion.fields.setWithoutId(
+      UnionShapeModel.AnyOf,
+      AmfArray(newUnionItems),
+      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+    )
   }
 
   def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape, computeNarrowRestrictions: RestrictFields)(
@@ -86,11 +92,7 @@ object MinUnionShape {
       unionContext.minShape(baseUnionElement, superNode)
     }
 
-    baseUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
+    setUnionItems(baseUnion, newUnionItems)
 
     computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, Seq(UnionShapeModel.AnyOf))
 
@@ -127,11 +129,7 @@ object MinUnionShape {
       shape
     }
 
-    superUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
-    )
+    setUnionItems(superUnion, newUnionItems)
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, Seq(UnionShapeModel.AnyOf))
     baseShape.fields foreach { case (field, value) =>
