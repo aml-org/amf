@@ -17,6 +17,9 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
     with DocumentedElement
     with ExemplifiedDomainElement {
 
+  // This is used in ShapeNormalization to know if a Shape should go through the AnyShapeAdjuster
+  private[amf] val isConcreteShape: Boolean = false
+
   // TODO: should return Option has field can be null
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
