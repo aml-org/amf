@@ -12,7 +12,7 @@ import amf.core.internal.transform.stages.{
   ExternalSourceRemovalStage,
   SourceInformationStage
 }
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 class AmfTransformationPipeline private[amf] (override val name: String) extends TransformationPipeline() {
   def profileName: ProfileName = AmfProfile
@@ -27,7 +27,7 @@ class AmfTransformationPipeline private[amf] (override val name: String) extends
       references,
       new ExternalSourceRemovalStage,
       new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
-      new ShapeNormalizationStage(profileName, keepEditingInfo = false),
+      new ShapeNormalizationForUnitStage(profileName, keepEditingInfo = false),
       new SecurityResolutionStage(),
       parameterNormalizationStage,
       new ServersNormalizationStage(profileName),

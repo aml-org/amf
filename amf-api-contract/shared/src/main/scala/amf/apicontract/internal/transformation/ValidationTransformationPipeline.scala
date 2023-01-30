@@ -26,7 +26,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, SourceInformationStage}
 import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 // Validation pipeline is not registered in AMF configuration, is it only called internally.
 class ValidationTransformationPipeline private[amf] (
@@ -39,7 +39,7 @@ class ValidationTransformationPipeline private[amf] (
       new ReferenceResolutionStage(keepEditingInfo = false),
       new ExternalSourceRemovalStage,
       new ExtensionsResolutionStage(profile, keepEditingInfo = false),
-      new ShapeNormalizationStage(profile, keepEditingInfo = false),
+      new ShapeNormalizationForUnitStage(profile, keepEditingInfo = false),
       parameterNormalizationStageFor(profile),
       new MediaTypeResolutionStage(profile, isValidation = true),
       new ResponseExamplesResolutionStage(),
