@@ -12,6 +12,9 @@ case class SchemaShape private[amf] (override val fields: Fields, override val a
     extends AnyShape(fields, annotations)
     with ExternalSourceElement {
 
+
+  override private[amf] val isConcreteShape = true
+
   def mediaType: StrField = fields.field(MediaType)
 
   def withRaw(text: String): SchemaShape            = set(Raw, text)
