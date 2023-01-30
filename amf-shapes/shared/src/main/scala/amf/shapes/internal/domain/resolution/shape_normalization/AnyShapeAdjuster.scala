@@ -61,5 +61,18 @@ private[shape_normalization] case class AnyShapeAdjuster(any: AnyShape) {
 }
 
 object AnyShapeAdjuster {
-  def apply(any: AnyShape): AnyShape = new AnyShapeAdjuster(any).adjust
+  def apply(any: AnyShape): AnyShape = {
+    /*
+     * This is horrible but necessary. In ShapeInheritanceResolver.normalizeAction every shape goes through `any: AnyShape`
+     * match branch. This causes some TupleShapes to be converted into ArrayShapes. Regardless of the invalid conversions,
+     * we are still duplicating every shape (e.g. a NodeShape will produce a new identical NodeShape) thus increasing our
+     * memory footprint. TODO remove AnyShapeAdjuster
+     * */
+    if (!any.isConcreteShape) {
+      new AnyShapeAdjuster(any).adjust
+    } else {
+      any
+    }
+
+  }
 }

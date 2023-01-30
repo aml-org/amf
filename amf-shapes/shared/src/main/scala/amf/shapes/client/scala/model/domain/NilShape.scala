@@ -9,6 +9,9 @@ import org.yaml.model.YPart
 case class NilShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
+
+  override private[amf] val isConcreteShape = true
+
   override def linkCopy(): NilShape = NilShape().withId(id) // todo review with antonio
 
   override val meta: NilShapeModel.type = NilShapeModel

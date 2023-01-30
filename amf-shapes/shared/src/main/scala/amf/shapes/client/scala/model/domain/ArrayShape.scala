@@ -9,6 +9,9 @@ import org.yaml.model.YPart
 case class ArrayShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
+
+  override private[amf] val isConcreteShape = true
+
   def items: Shape                  = fields.field(Items)
   def contains: Shape               = fields.field(Contains)
   def minContains: Int              = fields.field(MinContains)
