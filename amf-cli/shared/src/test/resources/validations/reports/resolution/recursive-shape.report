@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 Profile: RAML 1.0
 Conforms: false
-Number of results: 3
+Number of results: 4
 
 Level: Violation
 
@@ -16,13 +16,21 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/array/SomeUnion/items/any/AnotherType
+  Property: 
+  Range: [(13,4)-(15,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Cyclic inheritance: SomeTypeb -> SomeTypeb
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/any/SomeTypeb
   Property: 
   Range: [(21,2)-(24,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Cyclic inheritance: OneMoreType2 -> AnotherType2 -> SomeType2 -> OneMoreType2
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/any/OneMoreType2
   Property: 
