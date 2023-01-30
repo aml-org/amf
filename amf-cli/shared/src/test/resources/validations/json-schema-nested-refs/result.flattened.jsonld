@@ -136,7 +136,7 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:closed": false,
+      "shacl:closed": true,
       "shacl:property": [
         {
           "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited"
@@ -164,18 +164,20 @@
       ],
       "smaps": {
         "inheritance-provenance": {
-          "doc:reference-id": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
+          "doc:reference-id": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema",
+          "shacl:closed": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "declared-element": {
           "#/declares/shape/someType": ""
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
+          "shacl:closed": "[(4,2)-(4,31)]",
           "#/declares/shape/someType": "[(10,11)-(16,0)]",
           "shacl:name": "[(10,2)-(10,10)]"
         },
         "inherited-shapes": {
-          "#/declares/shape/someType": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema/link--907987551"
+          "#/declares/shape/someType": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         }
       }
     },
