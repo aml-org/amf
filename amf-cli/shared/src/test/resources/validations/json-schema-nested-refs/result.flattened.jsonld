@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#36",
+      "@id": "#35",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#37",
+      "@id": "#36",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:description": "some description",
       "apiContract:server": [
         {
-          "@id": "#38"
+          "@id": "#37"
         }
       ],
       "apiContract:accepts": [
@@ -40,7 +40,7 @@
           "core:version": "[(5,0)-(6,0)]",
           "apiContract:accepts": "[(6,0)-(7,0)]",
           "core:description": "[(7,0)-(9,0)]",
-          "#37": "[(2,0)-(16,0)]",
+          "#36": "[(2,0)-(16,0)]",
           "core:name": "[(4,0)-(5,0)]",
           "apiContract:server": "[(2,0)-(4,0)]",
           "apiContract:contentType": "[(6,0)-(7,0)]"
@@ -48,7 +48,7 @@
       }
     },
     {
-      "@id": "#38",
+      "@id": "#37",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -59,7 +59,7 @@
           "core:urlTemplate": "[(2,0)-(4,0)]"
         },
         "synthesized-field": {
-          "#38": "true"
+          "#37": "true"
         }
       }
     },
@@ -85,11 +85,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#37"
+        "@id": "#36"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#36"
+        "@id": "#35"
       }
     },
     {
@@ -136,7 +136,7 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:closed": false,
+      "shacl:closed": true,
       "shacl:property": [
         {
           "@id": "#21"
@@ -164,18 +164,20 @@
       ],
       "smaps": {
         "inheritance-provenance": {
-          "doc:reference-id": "amf://id#20"
+          "doc:reference-id": "amf://id#20",
+          "shacl:closed": "amf://id#20"
         },
         "declared-element": {
           "#10": ""
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
+          "shacl:closed": "[(4,2)-(4,31)]",
           "#10": "[(10,11)-(16,0)]",
           "shacl:name": "[(10,2)-(10,10)]"
         },
         "inherited-shapes": {
-          "#10": "amf://id#35"
+          "#10": "amf://id#20"
         }
       }
     },
