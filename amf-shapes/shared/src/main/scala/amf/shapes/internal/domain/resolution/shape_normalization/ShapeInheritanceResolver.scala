@@ -11,7 +11,7 @@ import scala.collection.mutable
 
 case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
 
-  private val visitedIds = mutable.ArrayBuffer[String]()
+  private val visitedIds = mutable.ArrayBuffer[Shape]()
 
   // This variable is used to back track
   private var detectedRecursion = false
@@ -53,7 +53,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
         recursionGenerator = shape.id
         shape
       case s if hasSuperTypes(s) =>
-        visitedIds.append(shape.id)
+        visitedIds.append(shape)
         val resolvedShape = resolveInheritance(s)
         visitedIds.remove(visitedIds.size - 1)
         addToCache(resolvedShape)
@@ -171,14 +171,15 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     true
   }
 
-  private def inheritanceRecursionDetected(shape: Shape) = visitedIds.contains(shape.id)
+  private def inheritanceRecursionDetected(shape: Shape) = visitedIds.exists(_.id == shape.id)
 
   private def invalidRecursionError(lastVersion: Shape): Unit = {
+    val chain = visitedIds.map(_.name.value()).mkString(" -> ") + s" -> ${lastVersion.name.value()}"
     context.errorHandler.violation(
       RecursiveShapeSpecification,
       lastVersion.id,
       None,
-      "Cyclic inheritance",
+      s"Cyclic inheritance: $chain",
       lastVersion.position(),
       lastVersion.location()
     )
