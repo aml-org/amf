@@ -6,9 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references: a -> b -> c -> a
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-chained-ref.yaml#/declares/any/a
   Property: 
-  Range: [(16,2)-(17,27)]
+  Range: [(12,2)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-chained-ref.yaml
