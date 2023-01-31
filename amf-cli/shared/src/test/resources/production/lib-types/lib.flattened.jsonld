@@ -159,21 +159,22 @@
     {
       "@id": "#/declares/any/account",
       "@type": [
-        "raml-shapes:RecursiveShape",
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "raml-shapes:fixPoint": [
+      "shacl:closed": false,
+      "shacl:property": [
         {
-          "@id": "#/declares/shape/organization"
+          "@id": "#/declares/shape/organization/property/property/contact-personnel"
         }
       ],
-      "doc:recursive": true,
       "shacl:name": "account",
       "smaps": {
         "synthesized-field": {
-          "doc:recursive": "true"
+          "shacl:closed": "true"
         },
         "resolved-link-target": {
           "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
@@ -191,7 +192,7 @@
           "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/inherits/shape/default-node"
         },
         "inherited-shapes": {
-          "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization/recursive"
+          "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
         }
       }
     },
@@ -311,22 +312,23 @@
     {
       "@id": "#/declares/shape/membership/property/property/member-account/any/member-account",
       "@type": [
-        "raml-shapes:RecursiveShape",
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "raml-shapes:fixPoint": [
+      "shacl:closed": false,
+      "shacl:property": [
         {
-          "@id": "#/declares/shape/organization"
+          "@id": "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp"
         }
       ],
-      "doc:recursive": true,
       "shacl:name": "member-account",
       "core:name": "Member Account",
       "smaps": {
         "synthesized-field": {
-          "doc:recursive": "true"
+          "shacl:closed": "true"
         },
         "resolved-link-target": {
           "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
@@ -345,7 +347,72 @@
           "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/inherits/shape/default-node"
         },
         "inherited-shapes": {
-          "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/link--1177318867"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization,file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account"
+        }
+      }
+    },
+    {
+      "@id": "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#contact-personnel"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/person/recursive"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "contact-personnel",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:path": "true"
+        },
+        "lexical": {
+          "shacl:minCount": "[(12,8)-(13,0)]",
+          "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp": "[(11,6)-(15,0)]",
+          "raml-shapes:range": "[(11,24)-(15,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/declares/shape/person/recursive",
+      "@type": [
+        "raml-shapes:RecursiveShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:fixPoint": [
+        {
+          "@id": "#/declares/shape/person"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "person",
+      "smaps": {
+        "synthesized-field": {
+          "doc:recursive": "true"
+        },
+        "resolved-link": {
+          "#/declares/shape/person/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization/property/property/contact-personnel/any/contact-personnel/inherits/shape/default-node"
+        },
+        "type-property-lexical-info": {
+          "#/declares/shape/person/recursive": "[(16,4)-(16,8)]"
+        },
+        "lexical": {
+          "#/declares/shape/person/recursive": "[(15,2)-(21,0)]"
+        },
+        "declared-element": {
+          "#/declares/shape/person/recursive": ""
+        },
+        "resolved-link-target": {
+          "#/declares/shape/person/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/person"
         }
       }
     }
