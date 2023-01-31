@@ -711,7 +711,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
-    val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
+    val derivedShape = derivedShapeOrig.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {
@@ -1033,14 +1033,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           superPropOption
             .map(inheritProp(superNode))
             .getOrElse {
-              basePropOption.get.cloneShape(Some(context.errorHandler))
+              basePropOption.get.cloneElement(mutable.Map.empty)
             }
 //            .adopted(baseNode.id)
         } else {
           superPropOption
-            .map(_.cloneShape(Some(context.errorHandler)))
+            .map(_.cloneElement(mutable.Map.empty))
             .getOrElse {
-              basePropOption.get.cloneShape(Some(context.errorHandler))
+              basePropOption.get.cloneElement(mutable.Map.empty)
             }
 //            .adopted(baseNode.id)
         }
@@ -1069,12 +1069,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape(Some(context.errorHandler)) // TODO this might not be working as expected
+    val clonedProp = prop.cloneElement(mutable.Map.empty) // TODO this might not be working as expected
     if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
       clonedProp.annotations += InheritanceProvenance(from.id)
       clonedProp.id = clonedProp.id + "/inherited"
     }
-    clonedProp
+    clonedProp.asInstanceOf[PropertyShape]
   }
 
   object UnionErrorHandler extends AMFErrorHandler {
