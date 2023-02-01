@@ -17,7 +17,8 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
 
   def update(shape: Shape): Shape = {
     val latestVersion = retrieveLatestVersionOf(shape)
-    if (recursionAnalyzer.recursionDetected(latestVersion)) handleRecursion(latestVersion) else updateReferences(latestVersion)
+    if (recursionAnalyzer.hasDetectedRecursion(latestVersion)) handleRecursion(latestVersion)
+    else updateReferences(latestVersion)
   }
 
   private def updateReferences(shape: Shape): Shape =
@@ -66,14 +67,14 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     adjusted
   }
 
-   private def updateReferencesInNode(node: NodeShape): Shape = {
+  private def updateReferencesInNode(node: NodeShape): Shape = {
     updateReferencesInLogicalConstraints(node)
     updateReferencesInProperties(node)
     updateReferencesInAdditionalPropertiesSchema(node)
     node
   }
 
-   private def updateReferencesInProperty(property: PropertyShape): Shape = {
+  private def updateReferencesInProperty(property: PropertyShape): Shape = {
     val updatedRange = update(property.range)
     val updatedProperty = updatedRange match {
       case _: RecursiveShape =>
@@ -92,23 +93,23 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     updatedProperty
   }
 
-   private def updateReferencesInScalar(scalar: ScalarShape): Shape = {
+  private def updateReferencesInScalar(scalar: ScalarShape): Shape = {
     updateReferencesInLogicalConstraints(scalar)
     scalar
   }
 
-   private def updateReferencesInArray(array: ArrayShape): Shape = {
+  private def updateReferencesInArray(array: ArrayShape): Shape = {
     updateReferencesInLogicalConstraints(array)
     array.items match {
       case items: Shape =>
-        val newItems = normalizeAllowingRecursionIn(items, canBeEmpty(array))
+        val newItems = updateMaybeAllowingRecursion(items, canBeEmpty(array))
         array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
         array
       case _ => array
     }
   }
 
-   private def updateReferencesInMatrix(matrix: MatrixShape): Shape = {
+  private def updateReferencesInMatrix(matrix: MatrixShape): Shape = {
     updateReferencesInLogicalConstraints(matrix)
     matrix.items match {
       case items: Shape =>
@@ -119,7 +120,7 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     }
   }
 
-   private def updateReferencesInTuple(tuple: TupleShape): Shape = {
+  private def updateReferencesInTuple(tuple: TupleShape): Shape = {
     updateReferencesInLogicalConstraints(tuple)
     val newItems = tuple.items.map(shape => update(shape))
     tuple.fields.setWithoutId(
@@ -130,7 +131,7 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     tuple
   }
 
-   private def updateReferencesInUnion(union: UnionShape): Shape = {
+  private def updateReferencesInUnion(union: UnionShape): Shape = {
     val updatedAnyOf = updateReferencesInUnionMembers(union)
     val anyOfAnnotations =
       union.fields.getValueAsOption(UnionShapeModel.AnyOf).map(_.annotations).getOrElse(Annotations())
@@ -139,14 +140,14 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
 
   }
 
-   private def updateReferencesInLogicalConstraints(shape: Shape): Unit = {
+  private def updateReferencesInLogicalConstraints(shape: Shape): Unit = {
     updateReferencesInLogicalConstraint(shape, ShapeModel.And)
     updateReferencesInLogicalConstraint(shape, ShapeModel.Or)
     updateReferencesInLogicalConstraint(shape, ShapeModel.Xone)
     updateReferencesInLogicalConstraint(shape, ShapeModel.Not)
   }
 
-   private def updateReferencesInLogicalConstraint(shape: Shape, constraintField: Field): Unit = {
+  private def updateReferencesInLogicalConstraint(shape: Shape, constraintField: Field): Unit = {
     shape.fields.getValueAsOption(constraintField) match {
       case Some(constraint) =>
         constraint.value match {
@@ -163,21 +164,22 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
 
   private def updateReferencesInProperties(node: NodeShape): Unit = {
     val updatedProperties = node.properties.map { prop =>
-      normalizeAllowingRecursionIn(prop, isOptionalProperty(prop))
+      updateMaybeAllowingRecursion(prop, isOptionalProperty(prop))
     }
     node.setArrayWithoutId(NodeShapeModel.Properties, updatedProperties)
   }
 
   private def updateReferencesInAdditionalPropertiesSchema(node: NodeShape): Unit = {
     Option(node.additionalPropertiesSchema).foreach { schema =>
-      val updated = normalizeAllowingRecursionIn(schema)
+      val updated = updateMaybeAllowingRecursion(schema)
       node.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, updated)
     }
   }
 
   private def updateReferencesInUnionMembers(union: UnionShape) = {
     recursionAnalyzer.executeAndAnalyzeRecursionInUnion(
-      union, { union =>
+      union,
+      { union =>
         val flattenedAnyOf: ListBuffer[Shape] = ListBuffer()
 
         union.anyOf.foreach { unionMember: Shape =>
@@ -194,7 +196,7 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     )
   }
 
-  private def normalizeAllowingRecursionIn(shape: Shape, condition: Boolean = true) =
+  private def updateMaybeAllowingRecursion(shape: Shape, condition: Boolean = true) =
     recursionAnalyzer.executeAllowingRecursionIn(shape, update, condition)
 
   private def isOptionalProperty(prop: PropertyShape) = prop.minCount.option().forall(_ == 0)
