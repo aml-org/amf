@@ -4,9 +4,11 @@ import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
+
 import scala.collection.mutable
 
 case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
@@ -24,19 +26,23 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     *     will always detect recursions)
     *   - withoutCaching is used to skip adding the resulting normalized shape to the cache
     */
-  private var registerVisit  = true
-  private var withoutCaching = false
+  private var isTrackingVisits                     = true
+  private def addToCache(shape: Shape, id: String) = context.resolvedInheritanceCache += (shape, id)
+  private def addToCache(shape: Shape)             = context.resolvedInheritanceCache += shape
 
-  private def runWithoutCaching[T](fn: () => T): T = {
-    withoutCaching = true
-    registerVisit = false
-    val t: T = fn()
-    withoutCaching = false
-    registerVisit = true
-    t
+  private def withVisitTracking[T](shape: Shape)(func: () => T) = {
+    visitedIds.append(shape)
+    val result = func()
+    visitedIds.remove(visitedIds.size - 1)
+    result
   }
-  private def normalizeWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalize(s))
-  private def addToCache(shape: Shape)                 = if (!withoutCaching) context.resolvedInheritanceCache + shape
+
+  private def withoutRecursionDetection[T](func: () => T): T = {
+    isTrackingVisits = false
+    val result = func()
+    isTrackingVisits = true
+    result
+  }
 
   def normalize(shape: Shape): Shape = {
     context.resolvedInheritanceCache.get(shape.id) match {
@@ -45,23 +51,26 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     }
   }
 
-  protected def normalizeAction(shape: Shape): Shape = {
+  private def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case s if inheritanceRecursionDetected(s) && registerVisit =>
+      case s if isPartOfCycle(s) && isTrackingVisits =>
         invalidRecursionError(shape)
-        detectedRecursion = true
-        recursionGenerator = shape.id
+        markInheritanceRecursionDetected(shape)
         shape
       case s if hasSuperTypes(s) =>
-        visitedIds.append(shape)
-        val resolvedShape = resolveInheritance(s)
-        visitedIds.remove(visitedIds.size - 1)
+        val resolvedShape = withVisitTracking(shape) { () =>
+          resolveInheritance(s)
+        }
         addToCache(resolvedShape)
-        // context.resolvedInheritanceCache + (resolvedShape, shape.id) // Necessary?
         resolvedShape
       case any: AnyShape => AnyShapeAdjuster(any) // Analyze if it's possible to remove this case. Affects MinShape?
       case _             => shape
     }
+  }
+
+  private def markInheritanceRecursionDetected(shape: Shape): Unit = {
+    detectedRecursion = true
+    recursionGenerator = shape.id
   }
 
   private def resolveInheritance(shape: Shape): Shape = {
@@ -75,9 +84,10 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
       // Reset when we return to the first Shape of the cycle
       if (detectedRecursion && shape.id == recursionGenerator) detectedRecursion = false
 
-      registerVisit = false
-      normalize(resolvedShape)
-      registerVisit = true
+      // we aren't interested in detect recursion here as recursion is only checked in the inheritance chain at this point
+      withoutRecursionDetection { () =>
+        normalize(resolvedShape)
+      }
 
       // This is necessary due to a limitation we have with examples in Restriction Computation (what is this limitation)
       // Shouldn't be here
@@ -93,22 +103,24 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
 
   private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]) = {
     // [SN] TODO why does this start with a NormalizeWithoutCaching? To call the AnyShapeAdjuster?
-    superTypes.fold(normalizeWithoutCaching(shape))({ (accShape, superType) =>
+    val base = withoutRecursionDetection(() => normalize(shape))
+    superTypes.fold(base) { (accShape, superType) =>
       val normalizedSuperType = normalize(superType)
-      if (detectedRecursion) {
-        accShape
-      } else {
+      if (detectedRecursion) accShape
+      else {
         val r = context.minShape(accShape, normalizedSuperType)
         if (context.keepEditingInfo) withInheritanceAnnotation(r, normalizedSuperType) else r
       }
-    })
+    }
   }
   private def withInheritanceAnnotation(child: Shape, parent: Shape): Shape = {
     val startingValue = child.annotations.find(classOf[InheritedShapes]) match {
       case Some(oldAnnotation) => oldAnnotation.baseIds
       case None                => Nil
     }
-    child.annotations.reject(_.isInstanceOf[InheritedShapes]) += InheritedShapes(startingValue :+ parent.id) // maybe optimizable, do no create and reject annotations all the time
+    child.annotations.reject(_.isInstanceOf[InheritedShapes]) += InheritedShapes(
+      startingValue :+ parent.id
+    ) // maybe optimizable, do no create and reject annotations all the time
     child
   }
 
@@ -117,18 +129,19 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     val referencedShape = shape.inherits.head
     shape.fields.removeField(ShapeModel.Inherits)
     val resolvedShape = normalize(referencedShape)
-    if (shape.annotations.contains(classOf[AutoGeneratedName])) referencedShape.add(AutoGeneratedName())
+    if (hasAutoGeneratedName(shape)) referencedShape.add(AutoGeneratedName())
     ExamplesCopier(shape, resolvedShape)
-    context.resolvedInheritanceCache + (resolvedShape, shape.id)
+    addToCache(resolvedShape, shape.id)
     resolvedShape
   }
+
+  private def hasAutoGeneratedName(shape: Shape) = shape.annotations.contains(classOf[AutoGeneratedName])
 
   private def hasSuperTypes(shape: Shape) = shape.inherits.nonEmpty
 
   private def isSimpleInheritance(shape: Shape, superTypes: Seq[Shape] = Seq()): Boolean = {
     shape match {
-      case ns: NodeShape =>
-        superTypes.size == 1 && ns.annotations.contains(classOf[DeclaredElement]) && ns.properties.isEmpty
+      case ns: NodeShape => superTypes.size == 1 && isDeclaredElement(ns) && ns.properties.isEmpty
       case _: AnyShape if superTypes.size == 1 =>
         val superType = superTypes.head
         val ignoredFields =
@@ -141,24 +154,23 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
             AnyShapeModel.Documentation,
             AnyShapeModel.Comment
           )
-        fieldsPresentInSuperType(shape, superType, ignoredFields)
+        allFieldsMatchSuperTypes(shape, superType, ignoredFields)
       case _ => false
     }
   }
 
+  private def isDeclaredElement(ns: DomainElement) = ns.annotations.contains(classOf[DeclaredElement])
+
   private def isEndpointSimpleInheritance(shape: Shape): Boolean = shape match {
-    case anyShape: AnyShape if anyShape.annotations.contains(classOf[DeclaredElement]) => false
-    case anyShape: AnyShape =>
-      anyShape match {
-        case any: AnyShape if any.inherits.size == 1 =>
-          val superType     = any.inherits.head
-          val ignoredFields = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
-          fieldsPresentInSuperType(shape, superType, ignoredFields)
-        case _ => false
-      }
+    case anyShape: AnyShape if isDeclaredElement(anyShape) => false
+    case anyShape: AnyShape if anyShape.inherits.size == 1 =>
+      val superType     = anyShape.inherits.head
+      val ignoredFields = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
+      allFieldsMatchSuperTypes(shape, superType, ignoredFields)
+    case _ => false
   }
 
-  private def fieldsPresentInSuperType(shape: Shape, superType: Shape, ignoredFields: Seq[Field] = Seq()): Boolean = {
+  private def allFieldsMatchSuperTypes(shape: Shape, superType: Shape, ignoredFields: Seq[Field] = Seq()): Boolean = {
     val effectiveFields = shape.fields.fields().filterNot(f => ignoredFields.contains(f.field))
     // To be a simple inheritance, all the effective fields of the shape must be the same in the superType
     effectiveFields.foreach(e => {
@@ -171,7 +183,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     true
   }
 
-  private def inheritanceRecursionDetected(shape: Shape) = visitedIds.exists(_.id == shape.id)
+  private def isPartOfCycle(shape: Shape) = visitedIds.exists(_.id == shape.id)
 
   private def invalidRecursionError(lastVersion: Shape): Unit = {
     val chain = visitedIds.map(_.name.value()).mkString(" -> ") + s" -> ${lastVersion.name.value()}"
