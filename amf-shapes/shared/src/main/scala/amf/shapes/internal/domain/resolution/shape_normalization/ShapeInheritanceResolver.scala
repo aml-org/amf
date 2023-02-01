@@ -1,5 +1,6 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
@@ -21,51 +22,44 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
   // ID of the shape where inheritance recursion was detected
   private var recursionGenerator = "fakeId"
 
-  /** When resolving inheritance we first normalizeWithoutCaching. Therefore:
-    *   - registerVisit is used to skip checking recursion (since we are normalizing the same shape that we started we
-    *     will always detect recursions)
-    *   - withoutCaching is used to skip adding the resulting normalized shape to the cache
-    */
-  private var isTrackingVisits                     = true
   private def addToCache(shape: Shape, id: String) = context.resolvedInheritanceCache += (shape, id)
   private def addToCache(shape: Shape)             = context.resolvedInheritanceCache += shape
 
   private def withVisitTracking[T](shape: Shape)(func: () => T) = {
-    visitedIds.append(shape)
+    visitedIds += shape
     val result = func()
     visitedIds.remove(visitedIds.size - 1)
-    result
-  }
-
-  private def withoutRecursionDetection[T](func: () => T): T = {
-    isTrackingVisits = false
-    val result = func()
-    isTrackingVisits = true
     result
   }
 
   def normalize(shape: Shape): Shape = {
     context.resolvedInheritanceCache.get(shape.id) match {
       case Some(resolvedInheritance) => resolvedInheritance
-      case _                         => normalizeAction(shape)
+      case _ =>
+        val result = normalizeAction(shape)
+        result
     }
   }
 
   private def normalizeAction(shape: Shape): Shape = {
-    shape match {
-      case s if isPartOfCycle(s) && isTrackingVisits =>
-        invalidRecursionError(shape)
-        markInheritanceRecursionDetected(shape)
-        shape
-      case s if hasSuperTypes(s) =>
-        val resolvedShape = withVisitTracking(shape) { () =>
-          resolveInheritance(s)
-        }
-        addToCache(resolvedShape)
-        resolvedShape
-      case any: AnyShape => AnyShapeAdjuster(any) // Analyze if it's possible to remove this case. Affects MinShape?
-      case _             => shape
+    if (isPartOfInheritanceCycle(shape)) {
+      invalidRecursionError(shape)
+      markInheritanceRecursionDetected(shape)
+      shape
+    } else if (hasSuperTypes(shape)) {
+      val resolvedShape = withVisitTracking(shape) { () =>
+        resolveInheritance(shape)
+      }
+      addToCache(resolvedShape)
+      resolvedShape
+    } else {
+      adjustAnyShape(shape)
     }
+  }
+
+  private def adjustAnyShape(shape: Shape) = shape match {
+    case any: AnyShape => AnyShapeAdjuster(any)
+    case _             => shape
   }
 
   private def markInheritanceRecursionDetected(shape: Shape): Unit = {
@@ -74,20 +68,15 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
   }
 
   private def resolveInheritance(shape: Shape): Shape = {
-    if (isEndpointSimpleInheritance(shape)) {
-      resolveSimpleInheritance(shape)
+    if (canReplaceForInherits(shape)) {
+      applySimpleInheritance(shape)
     } else {
-      val superTypes = shape.inherits
-      shape.fields.removeField(ShapeModel.Inherits)
+      val superTypes    = shape.inherits
       val resolvedShape = inheritFromSuperTypes(shape, superTypes)
 
+      // Erasing this has no effect on tests failing / passing (Tomi)
       // Reset when we return to the first Shape of the cycle
       if (detectedRecursion && shape.id == recursionGenerator) detectedRecursion = false
-
-      // we aren't interested in detect recursion here as recursion is only checked in the inheritance chain at this point
-      withoutRecursionDetection { () =>
-        normalize(resolvedShape)
-      }
 
       // This is necessary due to a limitation we have with examples in Restriction Computation (what is this limitation)
       // Shouldn't be here
@@ -102,9 +91,10 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
   }
 
   private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]) = {
-    // [SN] TODO why does this start with a NormalizeWithoutCaching? To call the AnyShapeAdjuster?
-    val base = withoutRecursionDetection(() => normalize(shape))
+    shape.fields.removeField(ShapeModel.Inherits)
+    val base = adjustAnyShape(shape) // we know for a fact that base doesn't have inherits because we just removed it
     superTypes.fold(base) { (accShape, superType) =>
+      // go up the inheritance chain before applying type. We want to apply inheritance with the accumulated super type
       val normalizedSuperType = normalize(superType)
       if (detectedRecursion) accShape
       else {
@@ -124,7 +114,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     child
   }
 
-  private def resolveSimpleInheritance(shape: Shape) = {
+  private def applySimpleInheritance(shape: Shape) = {
     // Check if we should clone here
     val referencedShape = shape.inherits.head
     shape.fields.removeField(ShapeModel.Inherits)
@@ -161,7 +151,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
 
   private def isDeclaredElement(ns: DomainElement) = ns.annotations.contains(classOf[DeclaredElement])
 
-  private def isEndpointSimpleInheritance(shape: Shape): Boolean = shape match {
+  private def canReplaceForInherits(shape: Shape): Boolean = shape match {
     case anyShape: AnyShape if isDeclaredElement(anyShape) => false
     case anyShape: AnyShape if anyShape.inherits.size == 1 =>
       val superType     = anyShape.inherits.head
@@ -183,7 +173,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     true
   }
 
-  private def isPartOfCycle(shape: Shape) = visitedIds.exists(_.id == shape.id)
+  private def isPartOfInheritanceCycle(shape: Shape) = visitedIds.exists(_.id == shape.id)
 
   private def invalidRecursionError(lastVersion: Shape): Unit = {
     val chain = visitedIds.map(_.name.value()).mkString(" -> ") + s" -> ${lastVersion.name.value()}"

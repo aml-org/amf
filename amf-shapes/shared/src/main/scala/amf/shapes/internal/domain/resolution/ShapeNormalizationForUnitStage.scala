@@ -2,11 +2,14 @@ package amf.shapes.internal.domain.resolution
 
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.remote.Mimes
 import amf.core.internal.transform.stages.selectors.ShapeSelector
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.internal.domain.resolution.shape_normalization.{
   NormalizationContext,
   ShapeInheritanceResolver,
@@ -27,15 +30,13 @@ class ShapeNormalizationForUnitStage(profile: ProfileName, val keepEditingInfo: 
 
     // Step 1: resolve inheritance
     model.iterator().foreach {
-      case s: Shape => ShapeInheritanceResolver()(context).normalize(s)
-      case _        =>
+      case s: Shape => {
+        ShapeInheritanceResolver()(context).normalize(s)
+      }
+      case _ =>
     }
 
-    def updateReferences(
-        element: DomainElement,
-        isCycle: Boolean,
-        configuration: AMFGraphConfiguration
-    ): Option[DomainElement] = {
+    def updateReferences(element: DomainElement): Option[DomainElement] = {
       element match {
         case shape: Shape => Some(ShapeReferencesUpdater()(context).update(shape))
         case other        => Some(other)
@@ -43,6 +44,6 @@ class ShapeNormalizationForUnitStage(profile: ProfileName, val keepEditingInfo: 
     }
 
     // Step 2: update references & place RecursiveShapes
-    model.transform(ShapeSelector, updateReferences(_, _, configuration))(eh)
+    model.transform(ShapeSelector, (elem, _) => updateReferences(elem))(eh)
   }
 }
