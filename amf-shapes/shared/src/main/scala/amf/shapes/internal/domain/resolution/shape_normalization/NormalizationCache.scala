@@ -7,12 +7,12 @@ private[shape_normalization] case class NormalizationCache() {
 
   private val cache = mutable.Map[String, Shape]()
 
-  def +(shape: Shape): this.type = {
+  def +=(shape: Shape): this.type = {
     cache.put(shape.id, shape)
     this
   }
 
-  def +(shape: Shape, id: String): this.type = {
+  def +=(shape: Shape, id: String): this.type = {
     cache.put(id, shape)
     this
   }
