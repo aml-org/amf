@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "@context": {
+    "prefix": "http://prefix.com#",
+    "d": "prefix:d"
+  },
+  "properties": {},
+  "if": {},
+  "then": {
+    "properties": {
+      "d": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/D"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "D": {
+      "@context": {
+        "prefix": "http://prefix.com#",
+        "@type": "prefix:D",
+        "e": "prefix:e"
+      },
+      "properties": {
+        "e": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
