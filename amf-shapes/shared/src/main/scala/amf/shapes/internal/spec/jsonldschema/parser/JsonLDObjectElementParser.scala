@@ -31,7 +31,10 @@ case class JsonLDObjectElementParser(
   override def foldLeft(
       current: JsonLDObjectElementBuilder,
       other: JsonLDObjectElementBuilder
-  ): JsonLDObjectElementBuilder = current.merge(other)(ctx)
+  ): JsonLDObjectElementBuilder = {
+    val result = current.merge(other)(ctx)
+    result
+  }
 
   override def findClassTerm(ctx: SemanticContext): Seq[String] = {
     val terms = super.findClassTerm(ctx).map(ctx.expand)
