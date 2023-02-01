@@ -3,6 +3,7 @@ package amf.shapes.internal.domain.resolution
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.shapes.internal.domain.resolution.shape_normalization.{

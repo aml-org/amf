@@ -42,7 +42,7 @@ class RecursionAnalyzer(errorHandler: AMFErrorHandler) {
 
   def isInvalidRecursion(shape: Shape): Boolean = recursionCycle(shape).intersect(allowedRecursionIds).isEmpty
 
-  def recursionDetected(shape: Shape): Boolean = hasBeenVisited(shape) && !isAProperty(shape)
+  def hasDetectedRecursion(shape: Shape): Boolean = hasBeenVisited(shape) && !isAProperty(shape)
 
   private def recursionCycle(shape: Shape) = visitedIds.slice(visitedIds.indexOf(shape.id), visitedIds.size)
 
