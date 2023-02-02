@@ -4,6 +4,9 @@ import amf.core.client.platform.model.{Annotable, Annotations}
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement => InternalJsonLDElement}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
+import scala.scalajs.js.annotation.JSExportAll
+
+@JSExportAll
 trait JsonLDElement extends Annotable {
 
   private[amf] val _internal: InternalJsonLDElement
