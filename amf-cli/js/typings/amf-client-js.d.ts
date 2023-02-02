@@ -590,6 +590,9 @@ declare module "amf-client-js" {
 
     validate(schema: undefined, data: undefined): boolean;
   }
+  export interface AmfObjectWrapper extends Annotable {
+    annotations(): Annotations;
+  }
   export class AmlDomainElementEmitter {
     static emitToBuilder<T>(
       element: DomainElement,
@@ -823,6 +826,9 @@ declare module "amf-client-js" {
     withVHost(vHost: string): this;
   }
   export interface Annotable {
+    annotations(): Annotations;
+  }
+  export interface JsonLDElement extends Annotable {
     annotations(): Annotations;
   }
   export class AnnotationMapping implements DomainElement {
@@ -1348,6 +1354,33 @@ declare module "amf-client-js" {
 
     fetch(resource: string): Promise<Content>;
   }
+  export class BaseIri implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    iri: StrField;
+    isExternalLink: BoolField;
+    nulled: BoolField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIri(iri: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withNulled(nulled: boolean): this;
+  }
   export class BaseShapesConfiguration extends BaseAMLConfiguration {
     withDialect(dialect: Dialect): BaseShapesConfiguration;
 
@@ -1385,7 +1418,7 @@ declare module "amf-client-js" {
 
     toRamlDatatype(element: AnyShape): string;
   }
-  export interface BaseUnit {
+  export interface BaseUnit extends AmfObjectWrapper {
     id: string;
     location: string;
     modelVersion: StrField;
@@ -1428,7 +1461,7 @@ declare module "amf-client-js" {
 
     withUsage(usage: string): this;
   }
-  export class BaseUnitProcessingData {
+  export class BaseUnitProcessingData implements AmfObjectWrapper {
     transformed: BoolField;
 
     constructor();
@@ -1437,7 +1470,7 @@ declare module "amf-client-js" {
 
     withTransformed(value: boolean): this;
   }
-  export class BaseUnitSourceInformation {
+  export class BaseUnitSourceInformation implements AmfObjectWrapper {
     additionalLocations: Array<LocationInformation>;
     rootLocation: StrField;
 
@@ -1621,6 +1654,42 @@ declare module "amf-client-js" {
     constructor(stream: string, url: string, mime: string);
     readonly url: string;
   }
+  export class ContextMapping implements DomainElement {
+    alias: StrField;
+    coercion: StrField;
+    containers: Array<StrField>;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    iri: StrField;
+    isExternalLink: BoolField;
+    nulled: BoolField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withAlias(alias: string): this;
+
+    withCoercion(coersion: string): this;
+
+    withContainers(containers: Array<string>): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIri(iri: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withNulled(nulled: boolean): this;
+  }
   export class CorrelationId implements DomainElement, Linkable {
     customDomainProperties: Array<DomainExtension>;
     description: StrField;
@@ -1693,6 +1762,33 @@ declare module "amf-client-js" {
     withTitle(title: string): this;
 
     withUrl(url: string): this;
+  }
+  export class CuriePrefix implements DomainElement {
+    alias: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    iri: StrField;
+    isExternalLink: BoolField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withAlias(alias: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIri(iri: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class CustomDomainProperty implements DomainElement, Linkable {
     customDomainProperties: Array<DomainExtension>;
@@ -1797,7 +1893,7 @@ declare module "amf-client-js" {
   export class DatatypePropertyTerm extends PropertyTerm {
     constructor();
   }
-  export interface DeclaresModel {
+  export interface DeclaresModel extends AmfObjectWrapper {
     declares: Array<DomainElement>;
 
     annotations(): Annotations;
@@ -1808,6 +1904,30 @@ declare module "amf-client-js" {
   }
   export class DefaultExecutionEnvironment {
     static apply(): ExecutionEnvironment;
+  }
+  export class DefaultVocabulary implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    iri: StrField;
+    isExternalLink: BoolField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIri(iri: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class DetectedSyntaxMediaTypeEvent {}
   export class Dialect implements BaseUnit, EncodesModel, DeclaresModel {
@@ -2626,7 +2746,7 @@ declare module "amf-client-js" {
 
     withType(type: string): this;
   }
-  export interface EncodesModel {
+  export interface EncodesModel extends AmfObjectWrapper {
     encodes: DomainElement;
 
     withEncodes(encoded: DomainElement): this;
@@ -3296,11 +3416,191 @@ declare module "amf-client-js" {
       configuration: AMFGraphConfiguration
     ): BaseUnit;
   }
+  export class JsonLDArray {
+    jsonLDElements: Array<JsonLDElement>;
+
+    constructor();
+  }
+  export class JsonLDError {
+    constructor();
+  }
+  export class JsonLDInstanceDocument implements BaseUnit {
+    encodes: Array<JsonLDElement>;
+    id: string;
+    location: string;
+    modelVersion: StrField;
+    processingData: BaseUnitProcessingData;
+    raw: undefined | string;
+    sourceInformation: BaseUnitSourceInformation;
+    sourceSpec: undefined | Spec;
+    usage: StrField;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    cloneUnit(): BaseUnit;
+
+    findById(id: string): undefined | DomainElement;
+
+    findByType(typeId: string): Array<DomainElement>;
+
+    pkg(): StrField;
+
+    references(): Array<BaseUnit>;
+
+    withEncodes(encodes: Array<JsonLDElement>): this;
+
+    withId(id: string): this;
+
+    withLocation(location: string): this;
+
+    withPkg(pkg: string): this;
+
+    withProcessingData(data: BaseUnitProcessingData): this;
+
+    withRaw(raw: string): this;
+
+    withReferenceAlias(
+      alias: string,
+      id: string,
+      fullUrl: string,
+      relativeUrl: string
+    ): BaseUnit;
+
+    withReferences(references: Array<BaseUnit>): this;
+
+    withUsage(usage: string): this;
+  }
+  export class JsonLDInstanceResult extends AMFParseResult {
+    readonly instance: JsonLDInstanceDocument;
+  }
+  export class JsonLDObject implements DomainElement {
+    componentId: string;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withBoolPropertyCollection(
+      property: string,
+      values: Array<boolean>
+    ): JsonLDObject;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withFloatPropertyCollection(
+      property: string,
+      values: Array<number>
+    ): JsonLDObject;
+
+    withId(id: string): this;
+
+    withIntPropertyCollection(
+      property: string,
+      values: Array<number>
+    ): JsonLDObject;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withObjPropertyCollection(
+      property: string,
+      values: Array<JsonLDObject>
+    ): JsonLDObject;
+
+    withProperty(property: string, value: number): JsonLDObject;
+
+    withProperty(property: string, value: JsonLDObject): JsonLDObject;
+
+    withProperty(property: string, value: boolean): JsonLDObject;
+
+    withProperty(property: string, value: string): JsonLDObject;
+
+    withStringPropertyCollection(
+      property: string,
+      values: Array<string>
+    ): JsonLDObject;
+  }
+  export class JsonLDScalar {
+    readonly dataType: string;
+    readonly value: any;
+
+    constructor(value: any, dataType: string);
+
+    annotations(): any;
+  }
+  export class JsonLDSchemaConfiguration extends BaseShapesConfiguration {
+    static JsonLDSchema(): JsonLDSchemaConfiguration;
+
+    baseUnitClient(): JsonLDSchemaConfigurationClient;
+
+    elementClient(): JsonLDSchemaElementClient;
+
+    forInstance(url: string): Promise<JsonLDSchemaConfiguration>;
+
+    withDialect(dialect: Dialect): JsonLDSchemaConfiguration;
+
+    withDialect(url: string): Promise<JsonLDSchemaConfiguration>;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): JsonLDSchemaConfiguration;
+
+    withEventListener(listener: AMFEventListener): JsonLDSchemaConfiguration;
+
+    withExecutionEnvironment(
+      executionEnv: ExecutionEnvironment
+    ): JsonLDSchemaConfiguration;
+
+    withParsingOptions(
+      parsingOptions: ParsingOptions
+    ): JsonLDSchemaConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): JsonLDSchemaConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): JsonLDSchemaConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): JsonLDSchemaConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): JsonLDSchemaConfiguration;
+
+    withUnitCache(cache: UnitCache): JsonLDSchemaConfiguration;
+  }
+  export class JsonLDSchemaConfigurationClient extends BaseAMLBaseUnitClient {
+    getConfiguration(): JsonLDSchemaConfiguration;
+
+    parseJsonLDInstance(
+      url: string,
+      jsonLDSchema: JsonSchemaDocument
+    ): Promise<JsonLDInstanceResult>;
+
+    parseJsonLDSchema(url: string): Promise<JsonLDSchemaResult>;
+  }
+  export class JsonLDSchemaElementClient extends BaseAMLElementClient {
+    getConfiguration(): JsonLDSchemaConfiguration;
+
+    renderToBuilder<T>(
+      element: DomainElement,
+      builder: org.yaml.builder.JsOutputBuilder
+    ): void;
+  }
+  export class JsonLDSchemaResult extends AMFParseResult {
+    readonly jsonDocument: JsonSchemaDocument;
+  }
   export class JsonSchemaConfiguration {
     static JsonSchema(): ShapesConfiguration;
   }
-
-
   export class JsonSchemaDocument extends Document {
     schemaVersion: StrField;
 
@@ -3509,7 +3809,7 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
-  export class LocationInformation {
+  export class LocationInformation implements AmfObjectWrapper {
     locationValue: StrField;
 
     constructor();
@@ -5582,6 +5882,48 @@ declare module "amf-client-js" {
       content: string
     ): Promise<AMFSemanticSchemaResult>;
   }
+  export class SemanticContext implements DomainElement {
+    base: undefined | BaseIri;
+    curies: Array<CuriePrefix>;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    iri: StrField;
+    isExternalLink: BoolField;
+    mapping: Array<ContextMapping>;
+    overrideMappings: Array<StrField>;
+    position: Range;
+    typeMappings: Array<StrField>;
+    vocab: undefined | DefaultVocabulary;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withBase(base: BaseIri): this;
+
+    withCuries(curies: Array<CuriePrefix>): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIri(iri: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withMapping(mapping: Array<ContextMapping>): this;
+
+    withOverrideMappings(overrideMappings: Array<string>): this;
+
+    withTypeMappings(typeMappings: Array<string>): this;
+
+    withVocab(vocab: DefaultVocabulary): this;
+  }
   export class SemanticExtension implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -5660,96 +6002,6 @@ declare module "amf-client-js" {
 
     withUnitCache(cache: UnitCache): SemanticJsonSchemaConfiguration;
   }
-
-  export class JsonLDSchemaConfiguration extends BaseShapesConfiguration{
-    baseUnitClient(): JsonLDSchemaConfigurationClient;
-
-    withParsingOptions(parsingOptions: ParsingOptions): JsonLDSchemaConfiguration
-    withRenderOptions(renderOptions: RenderOptions): JsonLDSchemaConfiguration
-    withResourceLoader(rl: ResourceLoader): JsonLDSchemaConfiguration
-    withResourceLoaders(rl: Array<ResourceLoader>): JsonLDSchemaConfiguration
-    withUnitCache(cache: UnitCache): JsonLDSchemaConfiguration
-    withTransformationPipeline(pipeline: TransformationPipeline): JsonLDSchemaConfiguration
-    withErrorHandlerProvider(provider: ErrorHandlerProvider): JsonLDSchemaConfiguration
-    withEventListener(listener: AMFEventListener): JsonLDSchemaConfiguration
-    withExecutionEnvironment(executionEnv: ExecutionEnvironment): JsonLDSchemaConfiguration
-    withDialect(dialect: Dialect): JsonLDSchemaConfiguration
-    withDialect(url: string): Promise<JsonLDSchemaConfiguration>
-    forInstance(url:string): Promise<JsonLDSchemaConfiguration>
-
-    static JsonLDSchema(): JsonLDSchemaConfiguration;
-  }
-
-  export class JsonLDSchemaConfigurationClient extends BaseAMLBaseUnitClient{
-    getConfiguration(): JsonLDSchemaConfiguration
-    parseJsonLDInstance(url: string, jsonLDSchema: JsonSchemaDocument): Promise<JsonLDInstanceResult>
-    parseJsonLDSchema(url:string): Promise<JsonLDSchemaResult>
-  }
-
-  export class JsonLDSchemaResult extends AMFParseResult{
-    jsonDocument: JsonSchemaDocument;
-  }
-
-  export class JsonLDInstanceResult extends AMFParseResult{
-    instance: JsonLDInstanceDocument;
-  }
-
-  export class JsonLDInstanceDocument implements BaseUnit{
-    id: string;
-    location: string;
-    modelVersion: StrField;
-    processingData: BaseUnitProcessingData;
-    raw: string;
-    sourceInformation: BaseUnitSourceInformation;
-    sourceSpec: Spec;
-    usage: StrField;
-    annotations(): Annotations;
-    cloneUnit(): BaseUnit;
-    findById(id: string): DomainElement;
-    findByType(typeId: string): DomainElement[];
-    pkg(): StrField;
-    references(): BaseUnit[];
-    withId(id: string): this;
-    withLocation(location: string): this;
-    withPkg(pkg: string): this;
-    withProcessingData(data: BaseUnitProcessingData): this;
-    withRaw(raw: string): this;
-    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit;
-    withReferences(references: BaseUnit[]): this;
-    withUsage(usage: string): this;
-    withEncodes(encodes: Array<JsonLDObject>): JsonLDInstanceDocument;
-    encodes: Array<JsonLDObject>;
-  }
-
-  export class JsonLDObject implements DomainElement{
-    customDomainProperties: DomainExtension[];
-    extendsNode: DomainElement[];
-    id: string;
-    isExternalLink: BoolField;
-    position: Range;
-    annotations(): Annotations;
-    graph(): Graph;
-    withCustomDomainProperties(extensions: DomainExtension[]): this;
-    withExtendsNode(extension: ParametrizedDeclaration[]): this;
-    withId(id: string): this;
-    withIsExternalLink(isExternalLink: boolean): DomainElement;
-
-
-    componentId: string
-    withProperty(property: string, value: string): JsonLDObject
-    withProperty(property: string, value: number): JsonLDObject
-    withProperty(property: string, value: number): JsonLDObject
-    withProperty(property: string, value: Boolean): JsonLDObject
-    withProperty(property: string, value: JsonLDObject): JsonLDObject
-    withStringPropertyCollection(property: string, values: Array<string>): JsonLDObject
-    withIntPropertyCollection(property: string, values: Array<number>): JsonLDObject
-    withFloatPropertyCollection(property: string, values: Array<number>): JsonLDObject
-    withBoolPropertyCollection(property: string, values: Array<Boolean>): JsonLDObject
-    withObjPropertyCollection(property: string, values: Array<JsonLDObject>): JsonLDObject
-
-  }
-
-
   export class Server implements DomainElement {
     bindings: ServerBindings;
     customDomainProperties: Array<DomainExtension>;
