@@ -3199,6 +3199,9 @@ declare module "amf-client-js" {
   export class GraphQLFederationConfiguration {
     static GraphQLFederation(): AMFConfiguration;
   }
+  export class GRPCConfiguration {
+    static GRPC(): AMFConfiguration;
+  }
   export class HighPriority extends PluginPriority {}
   export class HttpApiKeySettings extends Settings {
     in: StrField;
