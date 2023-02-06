@@ -42,7 +42,8 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: St
 
     addClassTerms(other)
     other.properties.foreach { case (_, builder) =>
-      if (!hasBeenParsedWithSameSemantics(builder) && isSubSchemaSemanticDefinition(builder)) {
+      // TODO: this logic needs revisiting and renaming, hard to understand
+      if (isSubSchemaSemanticDefinition(builder)) {
         val current = properties(builder.key)
         val merged  = mergeProperties(current, builder)
         remove(current)
@@ -59,10 +60,6 @@ class JsonLDObjectElementBuilder(location: SourceLocation, key: String, base: St
 
   private def isSubSchemaSemanticDefinition(builder: JsonLDPropertyBuilder) = {
     properties.contains(builder.key) && !builder.hasTermWithDefaultBase
-  }
-
-  private def hasBeenParsedWithSameSemantics(property: JsonLDPropertyBuilder) = {
-    termIndex.getOrElse(property.term, List.empty).contains(property)
   }
 
   private def addClassTerms(other: JsonLDObjectElementBuilder): Unit = {
