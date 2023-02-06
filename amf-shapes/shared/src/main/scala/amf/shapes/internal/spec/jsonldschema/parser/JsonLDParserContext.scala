@@ -1,23 +1,27 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.ErrorHandlingContext
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.validation.core.ValidationSpecification
 import org.mulesoft.common.client.lexical.SourceLocation
-import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError, YValue}
+import org.yaml.model._
 import org.yaml.render.JsonRender
 
 import scala.collection.mutable
 
-class JsonLDParserContext(val eh: AMFErrorHandler, val yValueCache: RenderedYValues = RenderedYValues())
-    extends ErrorHandlingContext
+class JsonLDParserContext(
+    val eh: AMFErrorHandler,
+    val yValueCache: RenderedYValues = RenderedYValues(),
+    val validatorFactory: ValidatorFactory
+) extends ErrorHandlingContext
     with ParseErrorHandler
     with IllegalTypeHandler {
 
   // TODO native-jsonld: unify with shape context (extract to abstract?)
-  def syamleh = new SyamlAMFErrorHandler(eh)
+  def syamleh                 = new SyamlAMFErrorHandler(eh)
+  def validator(shape: Shape) = validatorFactory.failFastValidator(shape)
   override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
     eh.violation(violationId, node, message)
 

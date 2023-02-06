@@ -111,11 +111,14 @@
         }
       ],
       "smaps": {
-        "declared-element": {
-          "#21": ""
+        "lexical": {
+          "#21": "[(10,8)-(50,17)]"
         },
         "virtual-element": {
           "#21": "true"
+        },
+        "declared-element": {
+          "#21": ""
         }
       }
     },
@@ -593,7 +596,8 @@
       ],
       "smaps": {
         "lexical": {
-          "core:name": "[(8,4)-(8,13)]"
+          "core:name": "[(8,4)-(8,13)]",
+          "#12": "[(8,4)-(13,0)]"
         },
         "virtual-element": {
           "#12": "true"

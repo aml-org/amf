@@ -149,9 +149,13 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     acc
   }
 
-  def getTermFor(property: String) = {
+  def getTermFor(property: String): Option[String] = {
     mapping.find(m => m.alias.option().contains(property)).flatMap(_.iri.option())
   }
+
+  def computeBase: String = base.flatMap(_.iri.option()).getOrElse(SemanticContext.baseIri)
+
+  def computeBase(fragment: String): String = computeBase + fragment
 
   def normalize(): SemanticContext = {
     val newContext = new SemanticContext(this.fields, this.annotations)

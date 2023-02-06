@@ -16,4 +16,12 @@ object JsonSchemaValidatorBuilder {
       configuration: ShapeValidationConfiguration
   ): BaseJsonSchemaPayloadValidator =
     new JsShapePayloadValidator(shape, mediaType, validationMode, configuration)
+
+  def failFastValidator(
+      shape: Shape,
+      mediaType: String,
+      validationMode: ValidationMode,
+      configuration: ShapeValidationConfiguration
+  ): BaseJsonSchemaPayloadValidator =
+    new JsShapePayloadValidator(shape, mediaType, validationMode, configuration, true)
 }

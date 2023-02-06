@@ -1,6 +1,7 @@
 package amf.graphql.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
+import amf.core.internal.parser.domain.Annotations.virtual
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
@@ -44,11 +45,11 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
   }
   private def collectArguments = {
     operation.request.queryParameters.map { arg =>
-        GraphQLOperationArgumentGenerator(toApiContractParameter(arg), ctx).generate()
+      GraphQLOperationArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
   }
   private def toApiContractParameter(arg: ShapeParameter): Parameter = {
-    val param = Parameter()
+    val param = Parameter(virtual())
       .withName(arg.name.value())
       .withRequired(arg.required.option().getOrElse(false))
       .withSchema(arg.schema)

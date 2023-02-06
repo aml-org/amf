@@ -1,13 +1,22 @@
 package amf.graphql.internal.spec.domain.model
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Payload, Request, Response}
+import amf.apicontract.internal.metamodel.domain.{
+  EndPointModel,
+  MessageModel,
+  OperationModel,
+  RequestModel,
+  ResponseModel
+}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.domain.Annotations.virtual
+import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.FieldBuilderInfo._
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
+import amf.graphql.internal.spec.document._
 
 trait FieldBuilderInfo
 object FieldBuilderInfo {
@@ -26,7 +35,7 @@ object FieldBuilder {
 }
 
 case class FieldBuilder[I <: FieldBuilderInfo](
-    annotations: Annotations,
+    endpointAnnotations: Annotations,
     name: AmfScalar = EmptyScalar,
     typeName: String = "",
     description: Option[AmfScalar] = None,
@@ -64,21 +73,38 @@ case class FieldBuilder[I <: FieldBuilderInfo](
   }
 
   def build()(implicit ev: I =:= Mandatory): EndPoint = {
-    val endpoint     = EndPoint(annotations)
+    val endpoint     = EndPoint(endpointAnnotations)
     val endpointPath = EndpointPath(name.toString(), operationType)
-    description.foreach(scalar => endpoint.set(DescribedElementModel.Description, scalar.toString(), scalar.annotations))
-    endpoint.withPath(endpointPath).withName(s"$typeName.$name", name.annotations)
-    endpoint.withOperations(Seq(operation(endpoint)))
+    description.foreach(scalar => endpoint set scalar as DescribedElementModel.Description)
+    endpoint set endpointPath as EndPointModel.Path
+    endpoint.withName(s"$typeName.$name", name.annotations)
+    endpoint set Seq(buildOperation(endpoint)) as EndPointModel.Operations
   }
 
-  private def operation(endpoint: EndPoint): Operation = {
-    val operationId = endpoint.name.value()
+  private def buildOperation(endpoint: EndPoint): Operation = {
+    val operationId = endpoint.name
     val method      = OperationMethod(operationType)
-    val result      = Operation().withMethod(method).withName(operationId).withOperationId(operationId)
-    val request     = result.withRequest()
-    if (arguments.nonEmpty) request.withQueryParameters(arguments)
-    result.withResponse().withPayload().withSchema(schema)
-    result
+
+    val operation = Operation(virtual())
+    operation set method as OperationModel.Method
+    operation.withName(operationId.value(), operationId.annotations())
+    operation set operationId.value() as OperationModel.OperationId
+
+    val request = Request(virtual())
+    operation set Seq(request) as OperationModel.Request
+
+    val response = Response(virtual()).withSynthesizeName("default")
+    response set "200" as ResponseModel.StatusCode
+    operation set Seq(response) as OperationModel.Responses
+
+    val payload = Payload(virtual())
+    payload set schema as AbstractPayloadModel.Schema
+    response set Seq(payload) as MessageModel.Payloads
+
+    if (arguments.nonEmpty) {
+      request set AmfArray(arguments, inferred()) as RequestModel.QueryParameters
+    }
+    operation
   }
 }
 

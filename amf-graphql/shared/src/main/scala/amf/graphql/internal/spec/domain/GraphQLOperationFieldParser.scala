@@ -1,10 +1,19 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
+import amf.graphql.internal.spec.document.GraphQLFieldSetter
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
+import amf.shapes.internal.domain.metamodel.operations.{
+  AbstractPayloadModel,
+  ShapeParameterModel,
+  ShapeRequestModel,
+  ShapeResponseModel
+}
 import org.mulesoft.antlrast.ast.Node
 
 case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -17,36 +26,39 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
     parseDescription(ast, operation, operation.meta)
     parseArguments()
     parseRange()
-    inFederation { implicit fCtx =>
-      FederationMetadataParser(ast, operation, Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
-      GraphQLDirectiveApplicationsParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
-    }
+    parseFederationMetadata()
     GraphQLDirectiveApplicationsParser(ast, operation).parse()
   }
 
   private def parseArguments(): Unit = {
     val request = operation.withRequest()
+    request.annotations ++= virtual()
+
     val arguments = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
       parseArgument(argument)
     }
-    if (arguments.nonEmpty) request.withQueryParameters(arguments)
+    if (arguments.nonEmpty) request set arguments as ShapeRequestModel.QueryParameters
   }
 
   private def parseArgument(n: Node): ShapeParameter = {
     val (name, annotations) = findName(n, "AnonymousInputType", "Missing input type name")
-    val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations).withBinding("query")
+    val queryParam          = ShapeParameter(toAnnotations(n)).withName(name, annotations)
+    queryParam set "query" as ShapeParameterModel.Binding
     parseDescription(n, queryParam, queryParam.meta)
     inFederation { implicit fCtx =>
-      FederationMetadataParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE), ShapeFederationMetadataFactory).parse()
+      FederationMetadataParser(
+        n,
+        queryParam,
+        Seq(INPUT_VALUE_DIRECTIVE, INPUT_FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
       GraphQLDirectiveApplicationsParser(n, queryParam, Seq(INPUT_VALUE_DIRECTIVE, DIRECTIVE)).parse()
     }
     unpackNilUnion(parseType(n)) match {
-      case NullableShape(true, shape) =>
+      case NullableShape(isNullable: Boolean, shape: AnyShape) =>
         setDefaultValue(n, queryParam)
-        queryParam.withSchema(shape).withRequired(false)
-      case NullableShape(false, shape) =>
-        setDefaultValue(n, queryParam)
-        queryParam.withSchema(shape).withRequired(true)
+        queryParam set shape as ShapeParameterModel.Schema
+        queryParam set !isNullable as ShapeParameterModel.Required
     }
     GraphQLDirectiveApplicationsParser(n, queryParam).parse()
     queryParam
@@ -59,8 +71,21 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
 
   private def parseRange(): Unit = {
     val response = operation.withResponse()
-    val payload  = ShapePayload().withName("default")
-    payload.withSchema(parseType(ast))
-    response.withPayload(payload)
+    response.annotations ++= virtual()
+    val payload = ShapePayload(virtual()).withName("default", synthesized())
+    payload set parseType(ast) as AbstractPayloadModel.Schema
+    response set payload as ShapeResponseModel.Payload
+  }
+
+  private def parseFederationMetadata(): Unit = {
+    inFederation { implicit fCtx =>
+      FederationMetadataParser(
+        ast,
+        operation,
+        Seq(FIELD_DIRECTIVE, FIELD_FEDERATION_DIRECTIVE),
+        ShapeFederationMetadataFactory
+      ).parse()
+      GraphQLDirectiveApplicationsParser(ast, operation, Seq(FIELD_DIRECTIVE, DIRECTIVE)).parse()
+    }
   }
 }

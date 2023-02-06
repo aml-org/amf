@@ -9,7 +9,6 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-// Test suite for invalid parsing results
 class JsonSchemaCycleTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global

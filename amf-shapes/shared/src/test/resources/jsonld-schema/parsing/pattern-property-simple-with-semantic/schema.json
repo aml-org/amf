@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "type": "object",
+  "properties": {
+    "prop1": {
+      "@context": {
+        "@characteristics": [
+          "config:sensitive"
+        ]
+      },
+      "type": "string"
+    }
+  },
+  "patternProperties": {
+    "^[a-zA-Z0-9]*$": {
+      "@context": {
+        "@characteristics": [
+          "config:pattern"
+        ]
+      },
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
