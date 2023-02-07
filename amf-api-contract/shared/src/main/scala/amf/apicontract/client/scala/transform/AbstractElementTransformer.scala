@@ -1,14 +1,14 @@
 package amf.apicontract.client.scala.transform
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
+import amf.apicontract.internal.transformation.BaseUnitSourceLocationIndex
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DataNode
-import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.YMapEntry
 
 /** Temporally object to respect new domain internfaces. Probably this will be agroupated at some Domain Element client
@@ -30,7 +30,7 @@ object AbstractElementTransformer {
       case _ =>
         Option(rt.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
+            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration, BaseUnitSourceLocationIndex.build(unit))
             extendsHelper.asEndpoint(unit, dataNode, rt.annotations, rt.name.value(), rt.id, configuration)
           }
           .getOrElse(EndPoint())
@@ -46,7 +46,7 @@ object AbstractElementTransformer {
       errorHandler: AMFErrorHandler = UnhandledErrorHandler,
       profile: ProfileName = Raml10Profile
   ): EndPoint = {
-    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
+    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration, BaseUnitSourceLocationIndex.build(unit))
     helper.entryAsEndpoint(unit, node, rt.name.option().getOrElse(""), rt.id, entry, configuration)
   }
 
@@ -67,7 +67,7 @@ object AbstractElementTransformer {
       case _ =>
         Option(tr.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
+            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration, BaseUnitSourceLocationIndex.build(unit))
             extendsHelper.asOperation(
               dataNode,
               unit,
@@ -89,7 +89,7 @@ object AbstractElementTransformer {
       profile: ProfileName = Raml10Profile,
       errorHandler: AMFErrorHandler = UnhandledErrorHandler
   ): Operation = {
-    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
+    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration, BaseUnitSourceLocationIndex.build(unit))
     extendsHelper.entryAsOperation(unit, tr.name.option().getOrElse(""), tr.id, entry, configuration)
   }
 }

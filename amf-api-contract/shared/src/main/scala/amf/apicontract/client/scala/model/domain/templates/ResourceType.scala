@@ -1,15 +1,10 @@
 package amf.apicontract.client.scala.model.domain.templates
 
-import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.core.client.common.validation.{ProfileName, Raml10Profile}
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.templates.AbstractDeclaration
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable}
-import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.templates.ResourceTypeModel
-import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
-import org.yaml.model.{YMapEntry, YPart}
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import org.yaml.model.YPart
 
 class ResourceType(override val fields: Fields, override val annotations: Annotations)
     extends AbstractDeclaration(fields, annotations) {
