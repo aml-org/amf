@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-lbracket-and-lparen.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: 'namea'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(2,4)-(2,9)]
+  Location: 
