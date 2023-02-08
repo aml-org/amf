@@ -1,15 +1,10 @@
 package amf.apicontract.client.scala.model.domain.templates
 
-import amf.apicontract.client.scala.model.domain.Operation
-import amf.core.client.common.validation.{ProfileName, Raml10Profile}
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.client.scala.model.document.BaseUnit
+import amf.apicontract.internal.metamodel.domain.templates.TraitModel
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.apicontract.internal.metamodel.domain.templates.TraitModel
-import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
-import org.yaml.model.{YMapEntry, YPart}
+import org.yaml.model.YPart
 
 class Trait(override val fields: Fields, override val annotations: Annotations)
     extends AbstractDeclaration(fields, annotations) {
