@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Pets API
+
+types:
+  Pet:
+    type: object
+    discriminator: type
+    discriminatorValue: true
+    properties:
+      type: integer
