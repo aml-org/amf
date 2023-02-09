@@ -1,8 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.{Raml08Profile, Raml10Profile}
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
 class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   test("Test non existing include in type def") {
@@ -81,6 +78,13 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate(
       "raml/invalid-example-in-union-with-members-with-enums.raml",
       Some("invalid-example-in-union-with-members-with-enums.report")
+    )
+  }
+
+  test("Validate discriminator value conforms against discriminator property") {
+    validate(
+      "/raml/discriminator-value-conforms-against-discriminator-property/api.raml",
+      Some("discriminator-value-conforms-against-discriminator-property.report")
     )
   }
 

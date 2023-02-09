@@ -2,12 +2,7 @@ package amf.shapes.internal.validation.payload
 
 import amf.core.client.common.validation.{ProfileName, ProfileNames}
 import amf.core.internal.plugins.validation.ValidationInfo
-import amf.shapes.internal.validation.payload.collector.{
-  EnumInShapesCollector,
-  ExtensionsCollector,
-  PayloadsCollector,
-  ValidationCandidateCollector
-}
+import amf.shapes.internal.validation.payload.collector.{DiscriminatorValuesCollector, EnumInShapesCollector, ExtensionsCollector, PayloadsCollector, ValidationCandidateCollector}
 import amf.shapes.internal.validation.plugin.JsonSchemaModelValidationPlugin
 
 object JsonSchemaPayloadValidationPlugin {
@@ -23,7 +18,7 @@ class JsonSchemaPayloadValidationPlugin() extends BasePayloadValidationPlugin wi
   override val profile: ProfileName = ProfileNames.JSONSCHEMA
 
   override val collectors: Seq[ValidationCandidateCollector] =
-    Seq(PayloadsCollector, EnumInShapesCollector, ExtensionsCollector)
+    Seq(PayloadsCollector, EnumInShapesCollector, ExtensionsCollector, DiscriminatorValuesCollector)
 
   override val id: String = JsonSchemaPayloadValidationPlugin.id
 
