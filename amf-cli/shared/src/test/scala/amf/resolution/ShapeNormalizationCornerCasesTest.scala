@@ -18,7 +18,7 @@ class ShapeNormalizationCornerCasesTest extends ResolutionTest {
       Raml10YamlHint,
       target = AmfJsonHint,
       directory = basePath + "cyclic-inheritance/",
-      renderOptions = Some(config.renderOptions),
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
       transformWith = Some(Raml10)
     )
   }
@@ -30,7 +30,7 @@ class ShapeNormalizationCornerCasesTest extends ResolutionTest {
       Raml10YamlHint,
       target = AmfJsonHint,
       directory = basePath + "cyclic-union-members/",
-      renderOptions = Some(config.renderOptions),
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
       transformWith = Some(Raml10)
     )
   }
