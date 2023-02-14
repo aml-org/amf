@@ -5,14 +5,14 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, RecursiveShape, ScalarNode, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, InheritanceProvenance, LexicalInformation}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
@@ -710,8 +710,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
-    val superShape   = copy(superShapeOri)
-    val derivedShape = derivedShapeOrig.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
+    val superShape = copy(superShapeOri)
+    val derivedShape =
+      derivedShapeOrig.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {
@@ -1213,6 +1214,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
     }
 
+    superUnion.annotations ++= baseShape.annotations.copyFiltering {
+      case _: DeclaredElement         => true
+      case _: LexicalInformation      => true
+      case _: TypePropertyLexicalInfo => true
+      case _                          => false
+    }
     superUnion.withId(baseShape.id)
   }
 
