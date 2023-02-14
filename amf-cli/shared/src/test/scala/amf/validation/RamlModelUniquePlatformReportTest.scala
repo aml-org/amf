@@ -719,4 +719,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
       Some("raml/empty-array-in-union-type-expression.report")
     )
   }
+
+  test("Standalone array as type") {
+    validate("/raml/standalone-array-as-type.raml", Some("raml/standalone-array-as-type.report"))
+  }
 }

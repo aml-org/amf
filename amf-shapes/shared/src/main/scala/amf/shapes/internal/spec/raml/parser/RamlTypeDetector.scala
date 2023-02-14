@@ -52,15 +52,18 @@ case class RamlTypeDetector(
 )(implicit ctx: ShapeParserContext)
     extends RamlTypeSyntax {
 
-  def detect(node: YNode): Option[TypeDef] = node.tagType match {
+  def detect(node: YNode): Option[TypeDef] = node.value match {
 
-    case YType.Seq =>
-      val sequence = node.as[Seq[YNode]]
-      InheritsTypeDetecter(collectTypeDefs(sequence), node).orElse(Some(ObjectType)) // type expression type?
+    case sequence: YSequence if sequence.isEmpty =>
+      ctx.eh.violation(EmptyTypeExpressionArray, "", "[] is not a valid type", node.location)
+      Some(ObjectType) // keep compatibility with non empty case
 
-    case YType.Map => detectOrInferType(node)
+    case sequence: YSequence =>
+      InheritsTypeDetecter(collectTypeDefs(sequence.nodes), node).orElse(Some(ObjectType)) // type expression type?
 
-    case YType.Null => Some(defaultType.typeDef)
+    case _: YMap => detectOrInferType(node)
+
+    case _ if node.tagType == YType.Null => Some(defaultType.typeDef)
 
     case _ =>
       val scalar = node.as[YScalar]
