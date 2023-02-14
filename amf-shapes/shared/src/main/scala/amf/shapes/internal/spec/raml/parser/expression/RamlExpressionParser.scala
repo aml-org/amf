@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations

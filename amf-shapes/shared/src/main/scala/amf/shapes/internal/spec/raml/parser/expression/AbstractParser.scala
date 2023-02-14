@@ -9,29 +9,31 @@ private[expression] trait AbstractParser {
     previous()
   }
 
-  protected def check(token: String) = {
+  protected def expect(token: String) = {
     if (isAtEnd) false
-    else peek().token == token
+    else peek().exists(_.token == token)
   }
 
-  protected def peek() = tokens(current)
+  protected def peek() = tokens.lift(current)
 
   protected def previous(): Token = tokens(current - 1)
 
+  protected def expectPrevious(token: String) = tokens.lift(current - 2).exists(_.token == token)
+
   protected def consume(token: String) = {
-    if (check(token)) Some(advance())
+    if (expect(token)) Some(advance())
     else None
   }
 
   protected def consumeToEnd(): Seq[Token] = {
-    val rest = tokens.splitAt(current)._2
+    val (_, rest) = tokens.splitAt(current)
     current = tokens.size
     rest
   }
 
   protected def consumeUntil(token: String): Seq[Token] = {
     var accumulated = Seq[Token]()
-    while (!check(token) && !isAtEnd) {
+    while (!expect(token) && !isAtEnd) {
       accumulated = accumulated :+ advance()
     }
     accumulated

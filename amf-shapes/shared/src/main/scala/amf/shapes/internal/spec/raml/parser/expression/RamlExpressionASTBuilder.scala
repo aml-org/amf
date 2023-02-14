@@ -22,51 +22,52 @@ private[expression] class RamlExpressionASTBuilder(
     extends AbstractParser
     with AnnotationHelper {
 
-  private val parsedShapes = mutable.Stack[Shape]()
-
-  def build(): Option[Shape] = {
-    if (tokens.isEmpty) return None
+  def build(previous: Option[Shape] = None): Option[Shape] = {
+    var result = previous
+    if (tokens.isEmpty) return result
     while (!isAtEnd) {
       val current = advance()
-      val maybeShape = current.token match {
+      result = current.token match {
         case SYMBOL      => Some(parseSymbol(current))
-        case START_ARRAY => Some(parseArray(current))
-        case UNION       => Some(parseUnion(current))
-        case START_GROUP => parseGroup(current)
-        case _           => None
+        case START_ARRAY => Some(parseArray(current, result))
+        case UNION       => Some(parseUnion(current, result))
+        case START_GROUP => parseGroup(current, result)
+        case _           => result
       }
-      maybeShape.foreach(parsedShapes.push)
     }
-    parsedShapes.headOption
+    result
   }
 
-  private def parseGroup(token: Token): Option[Shape] = {
+  private def parseGroup(token: Token, previous: Option[Shape]): Option[Shape] = {
     val tokens        = consumeUntil(END_GROUP)
     val maybeEndGroup = consume(END_GROUP)
-    val optionalShape =
-      new RamlExpressionASTBuilder(tokens, declarationFinder, annotations, unresolvedRegister).build()
+    val optionalShape = parse(tokens, previous)
     optionalShape.foreach(s => s.annotations += GroupedTypeExpression())
     optionalShape.foreach(s => setShapeAnnotation(s, token, maybeEndGroup))
     optionalShape
   }
 
-  private def parseUnion(token: Token): Shape = {
+  private def parseUnion(token: Token, previous: Option[Shape]): Shape = {
     val union = UnionShape()
-    if (parsedShapes.isEmpty) {
-      throwError("Syntax error, cannot create empty Union", token)
-      return union
+    previous match {
+      case None =>
+        throwError("Syntax error, cannot create empty Union", token)
+        union
+      case Some(previousShape) =>
+        val tokens        = consumeToEnd()
+        val optionalShape = parse(tokens, previous)
+        optionalShape match {
+          case Some(shape) =>
+            val nextAnyOf = calculateAnyOf(previousShape, shape)
+            union.setWithoutId(UnionShapeModel.AnyOf, AmfArray(nextAnyOf), Annotations(SingleExpression()))
+            setShapeAnnotation(union, previousShape, shape)
+          case None => union
+        }
     }
-    val tokens = consumeToEnd()
-    val optionalShape =
-      new RamlExpressionASTBuilder(tokens, declarationFinder, annotations, unresolvedRegister).build()
-    val previousShape = parsedShapes.pop()
-    optionalShape match {
-      case Some(shape) =>
-        val nextAnyOf = calculateAnyOf(previousShape, shape)
-        union.setWithoutId(UnionShapeModel.AnyOf, AmfArray(nextAnyOf), Annotations(SingleExpression()))
-        setShapeAnnotation(union, previousShape, shape)
-      case None => union
-    }
+  }
+
+  private def parse(tokens: Seq[Token], previous: Option[Shape]): Option[Shape] = {
+    new RamlExpressionASTBuilder(tokens, declarationFinder, annotations, unresolvedRegister).build(previous)
   }
 
   private def calculateAnyOf(previousShape: Shape, nextShape: Shape): Seq[Shape] = {
@@ -80,26 +81,27 @@ private[expression] class RamlExpressionASTBuilder(
     }
   }
 
-  private def parseArray(token: Token): Shape = {
+  private def parseArray(token: Token, previous: Option[Shape]): Shape = {
     val array = ArrayShape()
-    if (parsedShapes.isEmpty) {
-      throwError("Syntax error, generating empty array", token)
-      return array
+    previous match {
+      case None =>
+        throwError("Syntax error, generating empty array", token)
+        array
+      case Some(previousShape) =>
+        val maybeEndToken = consume(END_ARRAY)
+        if (maybeEndToken.isEmpty) {
+          throwError("Syntax error, expected ]", token)
+          return array
+        }
+        val finalShape = previousShape match {
+          case _: ArrayShape =>
+            ArrayShape()
+              .setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
+              .toMatrixShapeWithoutId
+          case _ => ArrayShape().setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
+        }
+        setShapeAnnotation(finalShape, token, maybeEndToken)
     }
-    val maybeEndToken = consume(END_ARRAY)
-    if (maybeEndToken.isEmpty) {
-      throwError("Syntax error, expected ]", token)
-      return array
-    }
-    val previousShape = parsedShapes.pop()
-    val finalShape = previousShape match {
-      case _: ArrayShape =>
-        ArrayShape()
-          .setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
-          .toMatrixShapeWithoutId
-      case _ => ArrayShape().setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
-    }
-    setShapeAnnotation(finalShape, token, maybeEndToken)
   }
 
   private def parseSymbol(token: Token): Shape = {
