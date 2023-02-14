@@ -55,7 +55,7 @@ private[expression] class RamlExpressionASTBuilder(
         union
       case Some(previousShape) =>
         val tokens        = consumeToEnd()
-        val optionalShape = parse(tokens, previous)
+        val optionalShape = parse(tokens)
         optionalShape match {
           case Some(shape) =>
             val nextAnyOf = calculateAnyOf(previousShape, shape)
@@ -65,6 +65,8 @@ private[expression] class RamlExpressionASTBuilder(
         }
     }
   }
+
+  private def parse(tokens: Seq[Token]): Option[Shape] = parse(tokens, None)
 
   private def parse(tokens: Seq[Token], previous: Option[Shape]): Option[Shape] = {
     new RamlExpressionASTBuilder(tokens, declarationFinder, annotations, unresolvedRegister).build(previous)

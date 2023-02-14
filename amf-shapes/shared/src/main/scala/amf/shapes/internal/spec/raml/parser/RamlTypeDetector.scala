@@ -123,7 +123,7 @@ case class RamlTypeDetector(
 
   private def parseAndMatchTypeExpression(node: YNode, text: String) = {
     RamlExpressionParser
-      .check(shape => shape.withId("/"), text)
+      .check(shape => shape.withId("/"), text, node)
       .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
       .map {
         case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType
