@@ -257,7 +257,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test example inheritance in type declaration with simple inheritance") {
     cycle(
       "api.raml",
-      "api.raml.resolved",
+      "api.raml.resolved.jsonld",
       Raml10YamlHint,
       Raml10YamlHint,
       basePath + "simple-inheritance-example/",
@@ -268,7 +268,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test example inheritance in type declaration with simple chained inheritance") {
     cycle(
       "api.raml",
-      "api.raml.resolved",
+      "api.raml.resolved.jsonld",
       Raml10YamlHint,
       Raml10YamlHint,
       basePath + "simple-inheritance-chained-example/",
@@ -279,7 +279,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test example inheritance in type declaration with link") {
     cycle(
       "api.raml",
-      "api.raml.resolved",
+      "api.raml.resolved.jsonld",
       Raml10YamlHint,
       Raml10YamlHint,
       basePath + "simple-inheritance-link-example/",
@@ -291,7 +291,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test union type anyOf name values") {
     cycle(
       "api.raml",
-      "api.raml.resolved",
+      "api.raml.resolved.jsonld",
       Raml10YamlHint,
       AmfJsonHint,
       basePath + "union-type/",
@@ -303,7 +303,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test complex recursions in type inheritance 1") {
     cycle(
       "healthcare_reduced_v1.raml",
-      "healthcare_reduced_v1.raml.resolved",
+      "healthcare_reduced_v1.raml.resolved.jsonld",
       Raml10YamlHint,
       AmfJsonHint,
       validationPath,
@@ -316,7 +316,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test complex recursions in type inheritance 2") {
     cycle(
       "healthcare_reduced_v2.raml",
-      "healthcare_reduced_v2.raml.resolved",
+      "healthcare_reduced_v2.raml.resolved.jsonld",
       Raml10YamlHint,
       AmfJsonHint,
       validationPath,
@@ -328,7 +328,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test resource type parameters ids") {
     cycle(
       "rt-parameters.raml",
-      "rt-parameters.raml.resolved",
+      "rt-parameters.raml.resolved.jsonld",
       Raml10YamlHint,
       AmfJsonHint,
       validationPath,
@@ -340,7 +340,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test nil type with additional facets") {
     cycle(
       "nil-type.raml",
-      "nil-type.raml.resolved",
+      "nil-type.raml.resolved.jsonld",
       Raml10YamlHint,
       AmfJsonHint,
       validationPath,
