@@ -281,9 +281,15 @@
         "inherited-shapes": {
           "#/declares/any/UnionType": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/any/UnionType/inherits/union/default-union"
         },
+        "type-property-lexical-info": {
+          "#/declares/any/UnionType": "[(5,2)-(5,6)]"
+        },
         "lexical": {
           "shacl:name": "[(4,1)-(4,10)]",
-          "#/declares/any/UnionType": "[(5,2)-(6,0)]"
+          "#/declares/any/UnionType": "[(4,1)-(6,0)]"
+        },
+        "declared-element": {
+          "#/declares/any/UnionType": ""
         }
       }
     },

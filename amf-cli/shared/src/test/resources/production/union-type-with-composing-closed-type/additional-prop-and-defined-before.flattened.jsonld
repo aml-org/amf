@@ -132,9 +132,15 @@
         "inherited-shapes": {
           "#/declares/any/unionShape": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union"
         },
+        "type-property-lexical-info": {
+          "#/declares/any/unionShape": "[(7,4)-(7,8)]"
+        },
         "lexical": {
           "shacl:name": "[(6,2)-(6,12)]",
-          "#/declares/any/unionShape": "[(7,4)-(10,0)]"
+          "#/declares/any/unionShape": "[(6,2)-(10,0)]"
+        },
+        "declared-element": {
+          "#/declares/any/unionShape": ""
         }
       }
     },
