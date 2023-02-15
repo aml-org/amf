@@ -4,31 +4,59 @@ types:
   SomeType:
     anyOf:
       -
-        type: array
-        items:
-          type: object
-          (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
-      -
-        type: array
-        items:
-          type: object
-          (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
-      -
         additionalProperties: true
         properties: {}
-  type: object
-  (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
-  type: object
-  (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
+      -
+        items:
+          anyOf:
+            -
+              additionalProperties: true
+              properties: {}
+            -
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
+      -
+        items:
+          anyOf:
+            -
+              additionalProperties: true
+              properties: {}
+            -
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
   SomeUnion:
     anyOf:
       -
-        type: array
         items:
-          type: object
-          (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
+          anyOf:
+            -
+              additionalProperties: true
+              properties: {}
+            -
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
       -
-        type: array
         items:
-          type: object
-          (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/union/SomeType
+          anyOf:
+            -
+              additionalProperties: true
+              properties: {}
+            -
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
+  AnotherType:
+    anyOf:
+      -
+        additionalProperties: true
+        properties: {}
+      -
+        type: object
+        (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
+  OneMoreType:
+    anyOf:
+      -
+        additionalProperties: true
+        properties: {}
+      -
+        type: object
+        (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion

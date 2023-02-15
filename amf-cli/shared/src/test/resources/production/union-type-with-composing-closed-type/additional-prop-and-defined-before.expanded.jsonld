@@ -177,7 +177,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#/declares/shape/closedShapeType_0",
+            "@id": "#/declares/shape/closedShapeType",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -264,25 +264,26 @@
             ],
             "smaps": {
               "resolved-link-target": {
-                "#/declares/shape/closedShapeType_0": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/shape/closedShapeType"
+                "#/declares/shape/closedShapeType": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/shape/closedShapeType"
               },
               "declared-element": {
-                "#/declares/shape/closedShapeType_0": ""
+                "#/declares/shape/closedShapeType": ""
               },
               "lexical": {
-                "shacl:closed": "[(12,4)-(13,0)]",
-                "#/declares/shape/closedShapeType_0": "[(10,2)-(17,0)]"
+                "shacl:name": "[(10,2)-(10,17)]",
+                "#/declares/shape/closedShapeType": "[(10,2)-(17,0)]",
+                "shacl:closed": "[(12,4)-(13,0)]"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/closedShapeType_0": "[(11,4)-(11,8)]"
+                "#/declares/shape/closedShapeType": "[(11,4)-(11,8)]"
               },
               "resolved-link": {
-                "#/declares/shape/closedShapeType_0": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union/anyOf/shape/default-node"
+                "#/declares/shape/closedShapeType": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union/anyOf/shape/default-node"
               }
             }
           },
           {
-            "@id": "#/declares/shape/openShape_1",
+            "@id": "#/declares/shape/openShape",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -372,19 +373,20 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#/declares/shape/openShape_1": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union/anyOf/shape/default-node_1"
+                "#/declares/shape/openShape": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union/anyOf/shape/default-node_1"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/openShape_1": "[(18,4)-(18,8)]"
+                "#/declares/shape/openShape": "[(18,4)-(18,8)]"
               },
               "lexical": {
-                "#/declares/shape/openShape_1": "[(17,2)-(23,0)]"
+                "shacl:name": "[(17,2)-(17,11)]",
+                "#/declares/shape/openShape": "[(17,2)-(23,0)]"
               },
               "declared-element": {
-                "#/declares/shape/openShape_1": ""
+                "#/declares/shape/openShape": ""
               },
               "resolved-link-target": {
-                "#/declares/shape/openShape_1": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/shape/openShape"
+                "#/declares/shape/openShape": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/shape/openShape"
               }
             }
           }
@@ -395,18 +397,15 @@
           }
         ],
         "smaps": {
-          "inherited-shapes": {
-            "#/declares/any/unionShape": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-before.raml#/declares/any/unionShape/inherits/union/default-union"
-          },
-          "type-property-lexical-info": {
-            "#/declares/any/unionShape": "[(7,4)-(7,8)]"
+          "declared-element": {
+            "#/declares/any/unionShape": ""
           },
           "lexical": {
             "shacl:name": "[(6,2)-(6,12)]",
             "#/declares/any/unionShape": "[(6,2)-(10,0)]"
           },
-          "declared-element": {
-            "#/declares/any/unionShape": ""
+          "type-property-lexical-info": {
+            "#/declares/any/unionShape": "[(7,4)-(7,8)]"
           }
         }
       },

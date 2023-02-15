@@ -71,10 +71,13 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A_0_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B_1_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B/recursive"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "A"
@@ -90,10 +93,10 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A_0_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B_1_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B/recursive"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "B"
@@ -109,63 +112,54 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B/recursive"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B/recursive"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "U"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A_0_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A/recursive",
       "@type": [
-        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://a.ml/vocabularies/shapes#RecursiveShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
+      "http://a.ml/vocabularies/shapes#fixPoint": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A"
+        }
+      ],
+      "http://a.ml/vocabularies/document#recursive": true,
       "http://www.w3.org/ns/shacl#name": "A"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B_1_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B/recursive",
       "@type": [
-        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://a.ml/vocabularies/shapes#RecursiveShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://www.w3.org/ns/shacl#name": "B",
-      "http://a.ml/vocabularies/shapes#inherits": [
+      "http://a.ml/vocabularies/shapes#fixPoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/U"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B"
         }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/A_0",
-      "@type": [
-        "http://a.ml/vocabularies/shapes#AnyShape",
-        "http://www.w3.org/ns/shacl#Shape",
-        "http://a.ml/vocabularies/shapes#Shape",
-        "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://www.w3.org/ns/shacl#name": "A"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/B_1",
-      "@type": [
-        "http://a.ml/vocabularies/shapes#AnyShape",
-        "http://www.w3.org/ns/shacl#Shape",
-        "http://a.ml/vocabularies/shapes#Shape",
-        "http://a.ml/vocabularies/document#DomainElement"
-      ],
-      "http://www.w3.org/ns/shacl#name": "B",
-      "http://a.ml/vocabularies/shapes#inherits": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-union-members/api.raml#/declares/any/U"
-        }
-      ]
+      "http://a.ml/vocabularies/document#recursive": true,
+      "http://www.w3.org/ns/shacl#name": "B"
     }
   ]
 }

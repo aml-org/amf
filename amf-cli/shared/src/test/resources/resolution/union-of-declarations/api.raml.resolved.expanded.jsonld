@@ -365,7 +365,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#/declares/shape/Dog_0",
+            "@id": "#/declares/shape/Dog",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -541,25 +541,26 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#/declares/shape/Dog_0": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node"
+                "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/Dog_0": "[(7,2)-(7,6)]"
+                "#/declares/shape/Dog": "[(7,2)-(7,6)]"
               },
               "lexical": {
                 "apiContract:examples": "[(11,2)-(13,0)]",
-                "#/declares/shape/Dog_0": "[(6,1)-(13,0)]"
+                "#/declares/shape/Dog": "[(6,1)-(13,0)]",
+                "shacl:name": "[(6,1)-(6,4)]"
               },
               "declared-element": {
-                "#/declares/shape/Dog_0": ""
+                "#/declares/shape/Dog": ""
               },
               "resolved-link-target": {
-                "#/declares/shape/Dog_0": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Dog"
+                "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Dog"
               }
             }
           },
           {
-            "@id": "#/declares/shape/Cat_1",
+            "@id": "#/declares/shape/Cat",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -735,20 +736,21 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#/declares/shape/Cat_1": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node_3"
+                "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node_3"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/Cat_1": "[(14,2)-(14,6)]"
+                "#/declares/shape/Cat": "[(14,2)-(14,6)]"
               },
               "lexical": {
                 "apiContract:examples": "[(18,2)-(20,0)]",
-                "#/declares/shape/Cat_1": "[(13,1)-(20,0)]"
+                "#/declares/shape/Cat": "[(13,1)-(20,0)]",
+                "shacl:name": "[(13,1)-(13,4)]"
               },
               "declared-element": {
-                "#/declares/shape/Cat_1": ""
+                "#/declares/shape/Cat": ""
               },
               "resolved-link-target": {
-                "#/declares/shape/Cat_1": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Cat"
+                "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Cat"
               }
             }
           }
@@ -759,18 +761,15 @@
           }
         ],
         "smaps": {
-          "inherited-shapes": {
-            "#/declares/any/UnionType": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/any/UnionType/inherits/union/default-union"
-          },
-          "type-property-lexical-info": {
-            "#/declares/any/UnionType": "[(5,2)-(5,6)]"
+          "declared-element": {
+            "#/declares/any/UnionType": ""
           },
           "lexical": {
             "shacl:name": "[(4,1)-(4,10)]",
             "#/declares/any/UnionType": "[(4,1)-(6,0)]"
           },
-          "declared-element": {
-            "#/declares/any/UnionType": ""
+          "type-property-lexical-info": {
+            "#/declares/any/UnionType": "[(5,2)-(5,6)]"
           }
         }
       },

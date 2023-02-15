@@ -270,26 +270,23 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#/declares/shape/Dog_0"
+          "@id": "#/declares/shape/Dog"
         },
         {
-          "@id": "#/declares/shape/Cat_1"
+          "@id": "#/declares/shape/Cat"
         }
       ],
       "shacl:name": "UnionType",
       "smaps": {
-        "inherited-shapes": {
-          "#/declares/any/UnionType": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/any/UnionType/inherits/union/default-union"
-        },
-        "type-property-lexical-info": {
-          "#/declares/any/UnionType": "[(5,2)-(5,6)]"
+        "declared-element": {
+          "#/declares/any/UnionType": ""
         },
         "lexical": {
           "shacl:name": "[(4,1)-(4,10)]",
           "#/declares/any/UnionType": "[(4,1)-(6,0)]"
         },
-        "declared-element": {
-          "#/declares/any/UnionType": ""
+        "type-property-lexical-info": {
+          "#/declares/any/UnionType": "[(5,2)-(5,6)]"
         }
       }
     },
@@ -378,92 +375,6 @@
         },
         "resolved-link-target": {
           "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Cat"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Dog_0",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#/declares/shape/Dog/property/property/name"
-        }
-      ],
-      "shacl:name": "Dog",
-      "apiContract:examples": [
-        {
-          "@id": "#/declares/shape/Dog/examples/example/default-example"
-        }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#/declares/shape/Dog_0": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node"
-        },
-        "type-property-lexical-info": {
-          "#/declares/shape/Dog_0": "[(7,2)-(7,6)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(11,2)-(13,0)]",
-          "#/declares/shape/Dog_0": "[(6,1)-(13,0)]"
-        },
-        "declared-element": {
-          "#/declares/shape/Dog_0": ""
-        },
-        "resolved-link-target": {
-          "#/declares/shape/Dog_0": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Dog"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Cat_1",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#/declares/shape/Cat/property/property/age"
-        }
-      ],
-      "shacl:name": "Cat",
-      "apiContract:examples": [
-        {
-          "@id": "#/declares/shape/Cat/examples/example/default-example"
-        }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#/declares/shape/Cat_1": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/web-api/endpoint/%2Fexample1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/union/default-union/anyOf/shape/default-node_3"
-        },
-        "type-property-lexical-info": {
-          "#/declares/shape/Cat_1": "[(14,2)-(14,6)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(18,2)-(20,0)]",
-          "#/declares/shape/Cat_1": "[(13,1)-(20,0)]"
-        },
-        "declared-element": {
-          "#/declares/shape/Cat_1": ""
-        },
-        "resolved-link-target": {
-          "#/declares/shape/Cat_1": "file://amf-cli/shared/src/test/resources/resolution/union-of-declarations/api.raml#/declares/shape/Cat"
         }
       }
     },

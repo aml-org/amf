@@ -121,242 +121,24 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#/declares/shape/closedShapeType_0"
+          "@id": "#/declares/shape/closedShapeType"
         },
         {
-          "@id": "#/declares/shape/openShape_1"
+          "@id": "#/declares/shape/openShape"
         }
       ],
       "shacl:name": "unionShape",
       "smaps": {
-        "inherited-shapes": {
-          "#/declares/shape/unionShape": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/declares/shape/unionShape/inherits/union/default-union"
-        },
-        "type-property-lexical-info": {
-          "#/declares/shape/unionShape": "[(20,4)-(20,8)]"
+        "declared-element": {
+          "#/declares/shape/unionShape": ""
         },
         "lexical": {
           "shacl:name": "[(19,2)-(19,12)]",
           "#/declares/shape/unionShape": "[(19,2)-(23,0)]"
         },
-        "declared-element": {
-          "#/declares/shape/unionShape": ""
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/closedShapeType_0",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": true,
-      "shacl:property": [
-        {
-          "@id": "#/declares/shape/closedShapeType/property/property/payment/inherited"
-        }
-      ],
-      "shacl:name": "closedShapeType",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#/declares/shape/closedShapeType_0": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/web-api/endpoint/%2Fevents/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/unionShape"
-        },
         "type-property-lexical-info": {
-          "#/declares/shape/closedShapeType_0": "[(20,4)-(20,8)]"
-        },
-        "lexical": {
-          "#/declares/shape/closedShapeType_0": "[(19,2)-(23,0)]"
-        },
-        "declared-element": {
-          "#/declares/shape/closedShapeType_0": ""
-        },
-        "resolved-link-target": {
-          "#/declares/shape/closedShapeType_0": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/declares/shape/unionShape"
+          "#/declares/shape/unionShape": "[(20,4)-(20,8)]"
         }
-      }
-    },
-    {
-      "@id": "#/declares/shape/openShape_1",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#/declares/shape/openShape/property/property/order/inherited"
-        }
-      ],
-      "shacl:name": "openShape",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#/declares/shape/openShape_1": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/web-api/endpoint/%2Fevents/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/unionShape"
-        },
-        "type-property-lexical-info": {
-          "#/declares/shape/openShape_1": "[(20,4)-(20,8)]"
-        },
-        "lexical": {
-          "#/declares/shape/openShape_1": "[(19,2)-(23,0)]"
-        },
-        "declared-element": {
-          "#/declares/shape/openShape_1": ""
-        },
-        "resolved-link-target": {
-          "#/declares/shape/openShape_1": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/declares/shape/unionShape"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/closedShapeType/property/property/payment/inherited",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#payment"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/closedShapeType/property/property/payment/scalar/payment"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "payment",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(10,14)-(13,0)]",
-          "#/declares/shape/closedShapeType/property/property/payment/inherited": "[(10,6)-(13,0)]"
-        },
-        "inheritance-provenance": {
-          "#/declares/shape/closedShapeType/property/property/payment/inherited": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/declares/shape/closedShapeType"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/openShape/property/property/order/inherited",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#order"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/openShape/property/property/order/scalar/order"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "order",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(16,12)-(19,0)]",
-          "#/declares/shape/openShape/property/property/order/inherited": "[(16,6)-(19,0)]"
-        },
-        "inheritance-provenance": {
-          "#/declares/shape/openShape/property/property/order/inherited": "file://amf-cli/shared/src/test/resources/production/union-type-with-composing-closed-type/additional-prop-and-defined-after.raml#/declares/shape/openShape"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/closedShapeType/property/property/payment/scalar/payment",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "payment",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#/declares/shape/closedShapeType/property/property/payment/scalar/payment": "[(11,8)-(11,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(11,8)-(13,0)]",
-          "#/declares/shape/closedShapeType/property/property/payment/scalar/payment": "[(10,6)-(13,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/openShape/property/property/order/scalar/order",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "order",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#/declares/shape/openShape/property/property/order/scalar/order": "[(17,8)-(17,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(17,8)-(19,0)]",
-          "#/declares/shape/openShape/property/property/order/scalar/order": "[(16,6)-(19,0)]"
-        }
-      }
-    },
-    {
-      "@id": "",
-      "doc:declares": [
-        {
-          "@id": "#/declares/shape/closedShapeType"
-        },
-        {
-          "@id": "#/declares/shape/openShape"
-        },
-        {
-          "@id": "#/declares/shape/unionShape"
-        }
-      ],
-      "@type": [
-        "doc:Document",
-        "doc:Fragment",
-        "doc:Module",
-        "doc:Unit"
-      ],
-      "doc:encodes": {
-        "@id": "/web-api"
-      },
-      "doc:root": true,
-      "doc:processingData": {
-        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
@@ -489,6 +271,83 @@
           "raml-shapes:range": "[(16,12)-(19,0)]",
           "#/declares/shape/openShape/property/property/order": "[(16,6)-(19,0)]"
         }
+      }
+    },
+    {
+      "@id": "#/declares/shape/closedShapeType/property/property/payment/scalar/payment",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "payment",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/declares/shape/closedShapeType/property/property/payment/scalar/payment": "[(11,8)-(11,12)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(11,8)-(13,0)]",
+          "#/declares/shape/closedShapeType/property/property/payment/scalar/payment": "[(10,6)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/declares/shape/openShape/property/property/order/scalar/order",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "order",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/declares/shape/openShape/property/property/order/scalar/order": "[(17,8)-(17,12)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(17,8)-(19,0)]",
+          "#/declares/shape/openShape/property/property/order/scalar/order": "[(16,6)-(19,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declares/shape/closedShapeType"
+        },
+        {
+          "@id": "#/declares/shape/openShape"
+        },
+        {
+          "@id": "#/declares/shape/unionShape"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/web-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
