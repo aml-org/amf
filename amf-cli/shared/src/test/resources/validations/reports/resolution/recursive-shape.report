@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 Profile: RAML 1.0
 Conforms: false
-Number of results: 4
+Number of results: 5
 
 Level: Violation
 
@@ -16,9 +16,17 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/array/SomeUnion/items/any/AnotherType
+  Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array
   Property: 
-  Range: [(13,4)-(15,0)]
+  Range: [(13,21)-(13,23)]
+  Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Error recursive shape
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1
+  Property: 
+  Range: [(13,37)-(13,39)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape

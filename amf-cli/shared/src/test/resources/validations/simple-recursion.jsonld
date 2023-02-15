@@ -1,0 +1,495 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.1",
+      "doc:transformed": true,
+      "doc:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "MyAPI",
+      "apiContract:server": [
+        {
+          "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi"
+        }
+      ],
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "/web-api#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:urlTemplate": "http://com.foo.bar/api",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/test",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/web-api#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/web-api#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "/web-api#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map/synthesized-field/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_3",
+      "sourcemaps:element": "apiContract:server",
+      "sourcemaps:value": "[(4,0)-(6,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_1",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_0",
+      "sourcemaps:element": "core:version",
+      "sourcemaps:value": "[(3,0)-(4,0)]"
+    },
+    {
+      "@id": "/web-api#/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml/web-api",
+      "sourcemaps:value": "[(2,0)-(21,0)]"
+    },
+    {
+      "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map/lexical/element_0",
+      "sourcemaps:element": "core:urlTemplate",
+      "sourcemaps:value": "[(4,0)-(6,0)]"
+    },
+    {
+      "@id": "#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest",
+      "sourcemaps:value": "[(14,0)-(21,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:path",
+      "sourcemaps:value": "[(14,0)-(14,5)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "@type": [
+        "apiContract:Payload",
+        "core:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#/declares/shape/B"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get",
+      "sourcemaps:value": "[(15,2)-(21,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:returns",
+      "sourcemaps:value": "[(16,4)-(21,0)]"
+    },
+    {
+      "@id": "#/declares/shape/B",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp"
+        }
+      ],
+      "shacl:name": "B",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declares/shape/B/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200",
+      "sourcemaps:value": "[(17,6)-(21,0)]"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:payload",
+      "sourcemaps:value": "[(18,8)-(21,0)]"
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#a"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/A/recursive"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "a",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/B/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/declares/shape/B/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declares/shape/B/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declares/shape/B/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/declares/shape/B/source-map/declared-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "sourcemaps:value": "[(19,10)-(21,0)]"
+    },
+    {
+      "@id": "#/declares/shape/A/recursive",
+      "@type": [
+        "raml-shapes:RecursiveShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:fixPoint": [
+        {
+          "@id": "#/declares/shape/A"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "A",
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declares/shape/A/recursive/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/B/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:closed",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/declares/shape/B/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B",
+      "sourcemaps:value": "[(10,2)-(14,0)]"
+    },
+    {
+      "@id": "#/declares/shape/B/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:name",
+      "sourcemaps:value": "[(10,2)-(10,3)]"
+    },
+    {
+      "@id": "#/declares/shape/B/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B",
+      "sourcemaps:value": ""
+    },
+    {
+      "@id": "#/declares/shape/A/recursive/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/declares/shape/A/recursive/source-map/synthesized-field/element_0"
+        }
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declares/shape/A/recursive/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/declares/shape/A/recursive/source-map/declared-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_1",
+      "sourcemaps:element": "shacl:path",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "shacl:minCount",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp",
+      "sourcemaps:value": "[(12,6)-(14,0)]"
+    },
+    {
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_0",
+      "sourcemaps:element": "raml-shapes:range",
+      "sourcemaps:value": "[(12,10)-(12,11)]"
+    },
+    {
+      "@id": "#/declares/shape/A/recursive/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:recursive",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/declares/shape/A/recursive/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/A/recursive",
+      "sourcemaps:value": "[(7,2)-(10,0)]"
+    },
+    {
+      "@id": "#/declares/shape/A/recursive/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/A/recursive",
+      "sourcemaps:value": ""
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/web-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+  }
+}
