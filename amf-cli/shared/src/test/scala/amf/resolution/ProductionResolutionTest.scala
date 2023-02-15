@@ -312,6 +312,17 @@ class ProductionResolutionTest extends RamlResolutionTest {
     )
   }
 
+  test("Simple recursion") {
+    cycle(
+      "simple-recursion.raml",
+      "simple-recursion.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      validationPath,
+      renderOptions = Some(RenderOptions().withPrettyPrint.withoutSourceMaps.withoutRawSourceMaps.withSourceMaps.withCompactUris)
+    )
+  }
+
   // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 2") {
     cycle(

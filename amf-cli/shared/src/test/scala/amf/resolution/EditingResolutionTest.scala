@@ -22,6 +22,7 @@ class EditingResolutionTest extends ResolutionTest {
   val referencesPath  = "amf-cli/shared/src/test/resources/references/"
   val validationsPath = "amf-cli/shared/src/test/resources/validations/"
 
+  // Fixed SOF but API is invalid
 //  multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
 //    cycle(
 //      "recursive3.raml",

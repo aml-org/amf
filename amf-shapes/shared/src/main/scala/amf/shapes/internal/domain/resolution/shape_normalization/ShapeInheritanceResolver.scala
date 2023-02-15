@@ -99,9 +99,17 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
       if (detectedRecursion) accShape
       else {
         val r = context.minShape(accShape, normalizedSuperType)
-        if (context.keepEditingInfo) withInheritanceAnnotation(r, normalizedSuperType) else r
+        if (context.keepEditingInfo && !wasSimpleUnionInheritance(accShape, r, normalizedSuperType))
+          withInheritanceAnnotation(r, normalizedSuperType)
+        else r
       }
     }
+  }
+
+  private def wasSimpleUnionInheritance(original: Shape, newShapeAfterInheritance: Shape, parent: Shape): Boolean = {
+    !original.isInstanceOf[UnionShape] &&
+    newShapeAfterInheritance.isInstanceOf[UnionShape] &&
+    parent.isInstanceOf[UnionShape]
   }
   private def withInheritanceAnnotation(child: Shape, parent: Shape): Shape = {
     val startingValue = child.annotations.find(classOf[InheritedShapes]) match {
@@ -165,9 +173,9 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
     // To be a simple inheritance, all the effective fields of the shape must be the same in the superType
     effectiveFields.foreach(e => {
       superType.fields.entry(e.field) match {
-        case Some(s) if s.value.value.equals(e.value.value)                              => // Valid
-        case _ if e.field == NodeShapeModel.Closed && !superType.isInstanceOf[NodeShape] => // Valid
-        case _                                                                           => return false
+        case Some(s) if s.value.value.equals(e.value.value) => // Valid
+        case _ if e.field == NodeShapeModel.Closed          => // Valid
+        case _                                              => return false
       }
     })
     true

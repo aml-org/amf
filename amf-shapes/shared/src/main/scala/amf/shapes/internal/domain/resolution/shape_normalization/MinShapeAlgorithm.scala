@@ -21,6 +21,7 @@ import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations
 }
 
 import scala.collection.mutable
+import scala.reflect.ClassTag
 
 class InheritanceIncompatibleShapeError(
     val message: String,
@@ -1172,39 +1173,93 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseUnion
   }
 
+  protected def shouldComputeInheritanceForUnionMembers(child: Shape, parent: UnionShape): Boolean = {
+    shouldComputeInheritanceForUnionScalarShapeMembers(
+      child,
+      parent
+    ) || shouldComputeInheritanceForUnionNodeShapeMembers(child, parent)
+  }
+
+  private def existsSome(shape: Shape, fields: Seq[Field]): Boolean =
+    fields.exists(someField => shape.fields.exists(someField))
+
+  private def areAllOfType[T: ClassTag](shapes: Seq[Shape]): Boolean = {
+    shapes.foreach {
+      case _: T => // ignore
+      case _    => return false
+    }
+    true
+  }
+
+  protected def shouldComputeInheritanceForUnionScalarShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+    lazy val childFields = Seq(
+      ScalarShapeModel.Format,
+      ScalarShapeModel.Minimum,
+      ScalarShapeModel.Maximum,
+      ScalarShapeModel.ExclusiveMinimum,
+      ScalarShapeModel.ExclusiveMaximum,
+      ScalarShapeModel.ExclusiveMinimumNumeric,
+      ScalarShapeModel.ExclusiveMaximumNumeric,
+      ScalarShapeModel.MinLength,
+      ScalarShapeModel.MaxLength,
+      ScalarShapeModel.Pattern,
+      ScalarShapeModel.MultipleOf,
+      ScalarShapeModel.Default,
+      ScalarShapeModel.Values
+    )
+
+    areAllOfType[ScalarShape](parent.anyOf) && existsSome(child, childFields)
+  }
+
+  protected def shouldComputeInheritanceForUnionNodeShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+    lazy val childFields = Seq(
+      NodeShapeModel.Properties
+    )
+
+    areAllOfType[NodeShape](parent.anyOf) && existsSome(child, childFields)
+  }
+
   protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val minItems = for {
-      superUnionElement <- superUnion.anyOf
-    } yield {
-      try {
-        val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
-        newShape.withId(superUnionElement.id)
-        setValuesOfUnionElement(newShape, superUnionElement)
-        Some(newShape)
-      } catch {
-        case _: Exception => None
+    var newUnionItems                      = superUnion.anyOf
+    if (shouldComputeInheritanceForUnionMembers(baseShape, superUnion)) {
+      val minItems = for {
+        superUnionElement <- superUnion.anyOf
+      } yield {
+        try {
+          val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
+          newShape.withId(superUnionElement.id)
+          setValuesOfUnionElement(newShape, superUnionElement)
+          Some(newShape)
+        } catch {
+          case _: Exception => None
+        }
+      }
+      newUnionItems = minItems collect { case Some(s) => s }
+      if (newUnionItems.isEmpty) {
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot compute inheritance from union",
+          None,
+          baseShape.location(),
+          baseShape.position()
+        )
+      }
+
+      newUnionItems.zipWithIndex.foreach { case (shape, i) =>
+        shape.id = shape.id + s"_$i"
+        shape
       }
     }
-    val newUnionItems = minItems collect { case Some(s) => s }
-    if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError(
-        "Cannot compute inheritance from union",
-        None,
-        baseShape.location(),
-        baseShape.position()
-      )
-    }
 
-    newUnionItems.zipWithIndex.foreach { case (shape, i) =>
-      shape.id = shape.id + s"_$i"
-      shape
+    val annotations = superUnion.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
+      case Some(value) => value.annotations
+      case _           => Annotations()
     }
 
     superUnion.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
-      superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+      annotations
     )
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
@@ -1268,7 +1323,21 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
       )
     } else {
-      val newRange = context.minShape(baseProperty.range, superProperty.range)
+      val shouldComputeMinRange =
+        (baseProperty.range, superProperty.range) match {
+          case (_: ScalarShape, _: UnionShape) =>
+            // if scalar is not a member of union.anyOf should throw violation
+            // should extend to all shapes?
+            false
+          case _ => true
+        }
+
+      val newRange = if (shouldComputeMinRange) {
+        context.minShape(baseProperty.range, superProperty.range)
+      } else {
+        baseProperty.range
+      }
+
       baseProperty.fields.setWithoutId(
         PropertyShapeModel.Range,
         newRange,
