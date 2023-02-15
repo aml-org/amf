@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/empty-array-in-union-type-expression.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-type-expression
+  Message: Syntax error, generating empty array
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,23)-(9,24)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/empty-array-in-union-type-expression.raml

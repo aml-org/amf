@@ -20,9 +20,9 @@ private[expression] trait AnnotationHelper {
   }
 
   protected def setShapeAnnotation(shapeToAnnotate: Shape, leftShape: Shape, rightShape: Shape): Shape = {
-    val leftLexical     = leftShape.annotations.find(classOf[LexicalInformation]).get
-    val rightLexical    = rightShape.annotations.find(classOf[LexicalInformation]).get
-    val nextAnnotations = annotations.copy() += LexicalInformation(leftLexical.range.start, rightLexical.range.`end`)
+    val leftLexical     = leftShape.annotations.lexical()
+    val rightLexical    = rightShape.annotations.lexical()
+    val nextAnnotations = annotations.copy() += LexicalInformation(leftLexical.start, rightLexical.`end`)
     shapeToAnnotate.annotations ++= nextAnnotations
     shapeToAnnotate
   }

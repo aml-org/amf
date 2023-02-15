@@ -11,15 +11,14 @@ import org.yaml.model._
 object RamlExpressionParser {
 
   def parse(adopt: Shape => Unit, expression: String, part: YPart)(implicit ctx: ShapeParserContext): Option[Shape] = {
-    val node        = getValue(part)
-    val annotations = Annotations(node).reject(a => a.isInstanceOf[LexicalInformation])
-    val position    = Position(node.location.lineFrom, node.location.columnFrom)
-    val tokens      = new RamlExpressionLexer(expression, position).lex()
+    val node     = getValue(part)
+    val position = Position(node.location.lineFrom, node.location.columnFrom)
+    val tokens   = new RamlExpressionLexer(expression, position).lex()
     val builder =
       new RamlExpressionASTBuilder(
         tokens,
         ContextDeclarationFinder(ctx),
-        annotations,
+        annotations(node),
         ContextRegister(ctx, Some(node))
       )(ctx.eh)
     val result = builder
@@ -29,13 +28,25 @@ object RamlExpressionParser {
     result
   }
 
-  def check(adopt: Shape => Unit, expression: String)(implicit ctx: ShapeParserContext): Option[Shape] = {
-    val tokens = new RamlExpressionLexer(expression, Position.ZERO).lex()
+  def check(adopt: Shape => Unit, expression: String, part: YPart = YNode.Empty)(implicit
+      ctx: ShapeParserContext
+  ): Option[Shape] = {
+    val tokens = new RamlExpressionLexer(expression, part.location.from).lex()
     val builder =
-      new RamlExpressionASTBuilder(tokens, ContextDeclarationFinder(ctx), unresolvedRegister = EmptyRegister())(ctx.eh)
+      new RamlExpressionASTBuilder(
+        tokens,
+        ContextDeclarationFinder(ctx),
+        annotations(getValue(part)),
+        unresolvedRegister = EmptyRegister()
+      )(ctx.eh)
     val result = builder.build()
     result.foreach(adopt(_))
     result
+  }
+
+  private def annotations(node: YValue) = {
+    val annotations = Annotations(node).reject(a => a.isInstanceOf[LexicalInformation])
+    annotations
   }
 
   private def addAnnotations(shape: Shape, part: YPart, expression: String): Shape = {
