@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: MyAPI
+version: 1.0
+baseUri: http://com.foo.bar/api
+
+types:
+  A:
+    properties:
+      b?: B
+  B:
+    properties:
+      a?: A
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: B
