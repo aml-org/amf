@@ -56,7 +56,7 @@ case class InlineOasTypeParser(
 
   private val ast: YPart = entryOrNode.ast
 
-  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
+  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations.virtual())
 
   def parse(): Option[AnyShape] = {
 
@@ -450,14 +450,10 @@ case class InlineOasTypeParser(
           entry.value.to[Seq[YNode]] match {
             case Right(seq) =>
               val unionNodes = seq.zipWithIndex
-                .map { case (node, index) =>
-                  val entry = YMapEntry(YNode(s"item$index"), node)
-                  parser
-                    .OasTypeParser(entry, item => Unit, version)
-                    .parse()
+                .flatMap { case (node, index) =>
+                  val entry = YMapEntryLike(node)
+                  OasTypeParser(entry, s"item$index", _ => Unit, version).parse()
                 }
-                .filter(_.isDefined)
-                .map(_.get)
               shape.fields
                 .setWithoutId(ShapeModel.Or, AmfArray(unionNodes, Annotations(entry.value)), Annotations(entry))
             case _ =>
@@ -484,12 +480,10 @@ case class InlineOasTypeParser(
           entry.value.to[Seq[YNode]] match {
             case Right(seq) =>
               val nodes = seq.zipWithIndex
-                .map { case (node, index) =>
-                  val entry = YMapEntry(YNode(s"item$index"), node)
-                  parser.OasTypeParser(entry, item => Unit, version).parse()
+                .flatMap { case (node, index) =>
+                  val entry = YMapEntryLike(node)
+                  OasTypeParser(entry, s"item$index", _ => Unit, version).parse()
                 }
-                .filter(_.isDefined)
-                .map(_.get)
               shape.fields.setWithoutId(ShapeModel.Xone, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
             case _ =>
               ctx.eh.violation(

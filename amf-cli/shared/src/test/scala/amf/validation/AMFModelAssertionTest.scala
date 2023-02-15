@@ -7,10 +7,12 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, SourceYPart, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
@@ -42,7 +44,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       path: String,
       pipelineId: String = PipelineId.Default,
       transform: Boolean = true,
-      client: AMFBaseUnitClient = APIConfiguration.API().baseUnitClient()
+      client: AMFBaseUnitClient = APIConfiguration.APIWithJsonSchema().baseUnitClient()
   )(assertion: BaseUnit => Assertion): Future[Assertion] = {
     client.parse(path) flatMap { parseResult =>
       if (!transform) assertion(parseResult.baseUnit)
@@ -451,5 +453,40 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       getFirstRequest(bu).annotations.lexical() shouldBe PositionRange(Position(12, 9), Position(15, 0))
       getFirstRequestPayload(bu).annotations.lexical() shouldBe PositionRange(Position(13, 6), Position(15, 0))
     }
+  }
+
+  test("Assert ast annotations aren't modified in allOf") {
+    val api = s"$basePath/json-schema-lexical/allOf-sourceypart-is-ast.json"
+    modelAssertion(api, transform = false) { unit =>
+      val obtainedAst: String = sourcePartOf(unit, _.declares(1).asInstanceOf[Shape].and(1))
+      val expectedAst         = """{"properties": {}}"""
+      obtainedAst.trim shouldEqual expectedAst.trim
+    }
+  }
+
+  test("Assert ast annotations aren't modified in anyOf") {
+    val api = s"$basePath/json-schema-lexical/anyOf-sourceypart-is-ast.json"
+    modelAssertion(api, transform = false) { unit =>
+      val obtainedAst: String = sourcePartOf(unit, _.declares(1).asInstanceOf[Shape].or(1))
+      val expectedAst         = """{"properties": {}}"""
+      obtainedAst.trim shouldEqual expectedAst.trim
+    }
+  }
+
+  test("Assert ast annotations aren't modified in oneOf") {
+    val api = s"$basePath/json-schema-lexical/oneOf-sourceypart-is-ast.json"
+    modelAssertion(api, transform = false) { unit =>
+      val obtainedAst: String = sourcePartOf(unit, _.declares(1).asInstanceOf[Shape].xone(1))
+      val expectedAst         = """{"properties": {}}"""
+      obtainedAst.trim shouldEqual expectedAst.trim
+    }
+  }
+
+  private def sourcePartOf(unit: BaseUnit, extract: JsonSchemaDocument => Shape) = {
+    val doc             = unit.asInstanceOf[JsonSchemaDocument]
+    val shapeOfInterest = extract(doc)
+    val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
+    val obtainedAst     = sourceYPart.ast.toString
+    obtainedAst
   }
 }
