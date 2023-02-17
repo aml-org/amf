@@ -186,43 +186,81 @@
             ],
             "raml-shapes:anyOf": [
               {
-                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar",
+                "@id": "#/references/0/declares/union/Other",
                 "@type": [
-                  "raml-shapes:ScalarShape",
+                  "raml-shapes:UnionShape",
                   "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
                 ],
-                "shacl:datatype": [
+                "raml-shapes:anyOf": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar": "[(8,10)-(8,16)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [],
+                    "smaps": {
+                      "lexical": {
+                        "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node": "[(8,19)-(8,25)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "Other"
                   }
                 ],
                 "smaps": {
+                  "inherited-shapes": {
+                    "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other/inherits/union/default-union"
+                  },
+                  "resolved-link": {
+                    "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union/anyOf/union/default-union"
+                  },
+                  "type-property-lexical-info": {
+                    "#/references/0/declares/union/Other": "[(8,4)-(8,8)]"
+                  },
                   "lexical": {
-                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar": "[(8,10)-(8,16)]"
-                  }
-                }
-              },
-              {
-                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node",
-                "@type": [
-                  "shacl:NodeShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:closed": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "shacl:property": [],
-                "smaps": {
-                  "lexical": {
-                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node": "[(8,19)-(8,25)]"
+                    "shacl:name": "[(7,2)-(7,7)]",
+                    "#/references/0/declares/union/Other": "[(7,8)-(9,0)]"
+                  },
+                  "declared-element": {
+                    "#/references/0/declares/union/Other": ""
+                  },
+                  "resolved-link-target": {
+                    "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other"
                   }
                 }
               },
@@ -254,7 +292,7 @@
             ],
             "smaps": {
               "inherited-shapes": {
-                "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union/link-0"
+                "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union"
               },
               "resolved-link": {
                 "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response/payload/default/union/schema"
@@ -333,7 +371,7 @@
             ],
             "smaps": {
               "inherited-shapes": {
-                "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other/inherits/union/default-union/link-0"
+                "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other/inherits/union/default-union"
               },
               "resolved-link": {
                 "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union/anyOf/union/default-union"

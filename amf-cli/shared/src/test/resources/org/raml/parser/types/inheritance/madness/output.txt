@@ -55,32 +55,6 @@ types:
         type: object
         additionalProperties: true
         properties:
-          claw:
-            type: string
-            required: true
-          livesInside:
-            type: boolean
-            required: true
-          discriminator:
-            type: string
-            required: true
-      -
-        type: object
-        additionalProperties: true
-        properties:
-          feathers:
-            type: string
-            required: true
-          livesInside:
-            type: boolean
-            required: true
-          discriminator:
-            type: string
-            required: true
-      -
-        type: object
-        additionalProperties: true
-        properties:
           bite:
             type: string
             required: true
@@ -91,28 +65,58 @@ types:
             type: string
             required: true
       -
-        type: object
-        additionalProperties: true
-        properties:
-          claw:
-            type: string
-            required: true
-          livesOutside:
-            type: boolean
-            required: true
-          discriminator:
-            type: string
-            required: true
+        anyOf:
+          -
+            type: object
+            additionalProperties: true
+            properties:
+              claw:
+                type: string
+                required: true
+              livesInside:
+                type: boolean
+                required: true
+              discriminator:
+                type: string
+                required: true
+          -
+            type: object
+            additionalProperties: true
+            properties:
+              feathers:
+                type: string
+                required: true
+              livesInside:
+                type: boolean
+                required: true
+              discriminator:
+                type: string
+                required: true
       -
-        type: object
-        additionalProperties: true
-        properties:
-          feathers:
-            type: string
-            required: true
-          livesOutside:
-            type: boolean
-            required: true
-          discriminator:
-            type: string
-            required: true
+        anyOf:
+          -
+            type: object
+            additionalProperties: true
+            properties:
+              claw:
+                type: string
+                required: true
+              livesOutside:
+                type: boolean
+                required: true
+              discriminator:
+                type: string
+                required: true
+          -
+            type: object
+            additionalProperties: true
+            properties:
+              feathers:
+                type: string
+                required: true
+              livesOutside:
+                type: boolean
+                required: true
+              discriminator:
+                type: string
+                required: true

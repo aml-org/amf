@@ -4,4 +4,12 @@ title: New API
   post:
     body:
       application/json:
-        type: string | boolean | nil | integer
+        anyOf:
+          -
+            anyOf:
+              -
+                type: string
+              -
+                type: boolean | nil
+          -
+            type: integer
