@@ -53,15 +53,9 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
       addToCache(resolvedShape)
       resolvedShape
     } else {
-      adjustAnyShape(shape)
+      shape
     }
   }
-
-  private def adjustAnyShape(shape: Shape) = shape match {
-    case any: AnyShape => AnyShapeAdjuster(any)
-    case _             => shape
-  }
-
   private def markInheritanceRecursionDetected(shape: Shape): Unit = {
     detectedRecursion = true
     recursionGenerator = shape.id
@@ -92,8 +86,7 @@ case class ShapeInheritanceResolver()(implicit val context: NormalizationContext
 
   private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]) = {
     shape.fields.removeField(ShapeModel.Inherits)
-    val base = adjustAnyShape(shape) // we know for a fact that base doesn't have inherits because we just removed it
-    superTypes.fold(base) { (accShape, superType) =>
+    superTypes.fold(shape) { (accShape, superType) =>
       // go up the inheritance chain before applying type. We want to apply inheritance with the accumulated super type
       val normalizedSuperType = normalize(superType)
       if (detectedRecursion) accShape

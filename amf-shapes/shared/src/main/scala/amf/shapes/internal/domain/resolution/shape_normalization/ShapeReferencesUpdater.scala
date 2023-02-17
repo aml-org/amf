@@ -6,17 +6,15 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.validation.CoreValidations.{RecursiveShapeSpecification, TransformationValidation}
+import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-
-import scala.collection.mutable.ListBuffer
 
 case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) {
   private val recursionAnalyzer = new RecursionAnalyzer(context.errorHandler)
 
   def update(shape: Shape): Shape = {
-    val latestVersion = retrieveLatestVersionOf(shape)
+    val latestVersion = AnyShapeAdjuster(retrieveLatestVersionOf(shape))
     if (recursionAnalyzer.hasDetectedRecursion(latestVersion)) handleRecursion(latestVersion)
     else updateReferences(latestVersion)
   }
@@ -62,9 +60,8 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
   }
 
   private def updateReferencesInAny(any: AnyShape) = {
-    val adjusted = AnyShapeAdjuster(any) // Analyze if it's possible to remove this case
-    updateReferencesInLogicalConstraints(adjusted)
-    adjusted
+    updateReferencesInLogicalConstraints(any)
+    any
   }
 
   private def updateReferencesInNode(node: NodeShape): Shape = {
