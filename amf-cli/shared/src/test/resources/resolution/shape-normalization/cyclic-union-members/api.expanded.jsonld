@@ -106,45 +106,62 @@
             ]
           },
           {
-            "@id": "amf://id#2",
-            "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
-              {
-                "@id": "amf://id#1"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
-              {
-                "@value": true
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "A"
-              }
-            ]
-          },
-          {
             "@id": "amf://id#3",
             "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
+              "http://a.ml/vocabularies/shapes#UnionShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
+            "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "amf://id#4"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
+                "@id": "amf://id#2",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#fixPoint": [
+                  {
+                    "@id": "amf://id#1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "A"
+                  }
+                ]
+              },
               {
-                "@value": true
+                "@id": "amf://id#4",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#fixPoint": [
+                  {
+                    "@id": "amf://id#3"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "B"
+                  }
+                ]
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
@@ -161,7 +178,7 @@
         ]
       },
       {
-        "@id": "amf://id#4",
+        "@id": "amf://id#3",
         "@type": [
           "http://a.ml/vocabularies/shapes#UnionShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -195,7 +212,7 @@
             ]
           },
           {
-            "@id": "amf://id#3",
+            "@id": "amf://id#4",
             "@type": [
               "http://a.ml/vocabularies/shapes#RecursiveShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -204,7 +221,7 @@
             ],
             "http://a.ml/vocabularies/shapes#fixPoint": [
               {
-                "@id": "amf://id#4"
+                "@id": "amf://id#3"
               }
             ],
             "http://a.ml/vocabularies/document#recursive": [
@@ -236,45 +253,103 @@
         ],
         "http://a.ml/vocabularies/shapes#anyOf": [
           {
-            "@id": "amf://id#2",
+            "@id": "amf://id#1",
             "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
+              "http://a.ml/vocabularies/shapes#UnionShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
+            "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "amf://id#1"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
+                "@id": "amf://id#2",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#fixPoint": [
+                  {
+                    "@id": "amf://id#1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "A"
+                  }
+                ]
+              },
               {
-                "@value": true
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "A"
-              }
-            ]
-          },
-          {
-            "@id": "amf://id#2",
-            "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
-              {
-                "@id": "amf://id#1"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
-              {
-                "@value": true
+                "@id": "amf://id#3",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#anyOf": [
+                  {
+                    "@id": "amf://id#2",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#RecursiveShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#fixPoint": [
+                      {
+                        "@id": "amf://id#1"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "A"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#4",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#RecursiveShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#fixPoint": [
+                      {
+                        "@id": "amf://id#3"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "B"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "B"
+                  }
+                ]
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
@@ -286,67 +361,60 @@
           {
             "@id": "amf://id#3",
             "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
+              "http://a.ml/vocabularies/shapes#UnionShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
+            "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "amf://id#4"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
+                "@id": "amf://id#2",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#fixPoint": [
+                  {
+                    "@id": "amf://id#1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "A"
+                  }
+                ]
+              },
               {
-                "@value": true
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "B"
-              }
-            ]
-          },
-          {
-            "@id": "amf://id#2",
-            "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
-              {
-                "@id": "amf://id#1"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
-              {
-                "@value": true
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "A"
-              }
-            ]
-          },
-          {
-            "@id": "amf://id#3",
-            "@type": [
-              "http://a.ml/vocabularies/shapes#RecursiveShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#fixPoint": [
-              {
-                "@id": "amf://id#4"
-              }
-            ],
-            "http://a.ml/vocabularies/document#recursive": [
-              {
-                "@value": true
+                "@id": "amf://id#4",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#fixPoint": [
+                  {
+                    "@id": "amf://id#3"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "B"
+                  }
+                ]
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
