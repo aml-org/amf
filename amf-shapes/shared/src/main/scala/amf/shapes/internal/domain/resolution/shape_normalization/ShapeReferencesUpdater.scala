@@ -180,18 +180,12 @@ case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) 
     recursionAnalyzer.executeAndAnalyzeRecursionInUnion(
       union,
       { union =>
-        val flattenedAnyOf: ListBuffer[Shape] = ListBuffer()
-
-        union.anyOf.foreach { unionMember: Shape =>
+        union.anyOf.map { unionMember: Shape =>
           recursionAnalyzer.traversedUnionMembers.append(unionMember.id)
           val updatedUnionMember = update(unionMember)
           recursionAnalyzer.traversedUnionMembers.remove(recursionAnalyzer.traversedUnionMembers.size - 1)
-          updatedUnionMember match {
-            case nestedUnion: UnionShape => nestedUnion.anyOf.foreach(member => flattenedAnyOf += member)
-            case other: Shape            => flattenedAnyOf += other
-          }
+          updatedUnionMember
         }
-        flattenedAnyOf
       }
     )
   }
