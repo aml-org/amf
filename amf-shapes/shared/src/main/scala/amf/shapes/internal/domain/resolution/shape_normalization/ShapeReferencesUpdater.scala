@@ -10,7 +10,7 @@ import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 
-case class ShapeReferencesUpdater()(implicit val context: NormalizationContext) {
+case class ShapeReferencesUpdater(context: NormalizationContext) {
   private val recursionAnalyzer = new RecursionAnalyzer(context.errorHandler)
 
   def update(shape: Shape): Shape = {

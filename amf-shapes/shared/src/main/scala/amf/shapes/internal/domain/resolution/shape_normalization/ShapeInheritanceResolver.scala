@@ -12,7 +12,7 @@ import amf.shapes.internal.domain.metamodel._
 
 import scala.collection.mutable
 
-case class ShapeInheritanceResolver()(implicit val context: NormalizationContext) {
+case class ShapeInheritanceResolver(context: NormalizationContext) {
 
   private val visitedIds = mutable.ArrayBuffer[Shape]()
 
