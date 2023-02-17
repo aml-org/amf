@@ -1,5 +1,6 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
@@ -73,6 +74,12 @@ object AnyShapeAdjuster {
     } else {
       any
     }
+  }
 
+  def apply(s: Shape): Shape = {
+    s match {
+      case a: AnyShape => apply(a)
+      case shape       => shape
+    }
   }
 }
