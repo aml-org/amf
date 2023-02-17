@@ -7,23 +7,25 @@ types:
         additionalProperties: true
         properties: {}
       -
-        items:
-          anyOf:
-            -
-              additionalProperties: true
-              properties: {}
-            -
-              type: object
-              (amf-recursive): amf://id#6
-      -
-        items:
-          anyOf:
-            -
-              additionalProperties: true
-              properties: {}
-            -
-              type: object
-              (amf-recursive): amf://id#6
+        anyOf:
+          -
+            items:
+              anyOf:
+                -
+                  additionalProperties: true
+                  properties: {}
+                -
+                  type: object
+                  (amf-recursive): amf://id#3
+          -
+            items:
+              anyOf:
+                -
+                  additionalProperties: true
+                  properties: {}
+                -
+                  type: object
+                  (amf-recursive): amf://id#3
   SomeUnion:
     anyOf:
       -
@@ -34,7 +36,7 @@ types:
               properties: {}
             -
               type: object
-              (amf-recursive): amf://id#6
+              (amf-recursive): amf://id#3
       -
         items:
           anyOf:
@@ -43,7 +45,7 @@ types:
               properties: {}
             -
               type: object
-              (amf-recursive): amf://id#6
+              (amf-recursive): amf://id#3
   AnotherType:
     anyOf:
       -
@@ -51,7 +53,7 @@ types:
         properties: {}
       -
         type: object
-        (amf-recursive): amf://id#6
+        (amf-recursive): amf://id#3
   OneMoreType:
     anyOf:
       -
@@ -59,4 +61,4 @@ types:
         properties: {}
       -
         type: object
-        (amf-recursive): amf://id#6
+        (amf-recursive): amf://id#3
