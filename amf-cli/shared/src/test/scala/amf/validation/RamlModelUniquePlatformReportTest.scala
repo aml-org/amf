@@ -723,4 +723,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Standalone array as type") {
     validate("/raml/standalone-array-as-type.raml", Some("raml/standalone-array-as-type.report"))
   }
+
+  // W-11680259
+  test("a json example with @context that points to nowhere should not throw an error") {
+    validate("/raml/raml-with-json-schema/api.raml")
+  }
 }

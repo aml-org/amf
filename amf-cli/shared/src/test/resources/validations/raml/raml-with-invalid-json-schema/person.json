@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "thumb": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "thumb"
+      ]
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "birthday",
+    "gender",
+    "url",
+    "image",
+    "tagline",
+    "language"
+  ]
+}
