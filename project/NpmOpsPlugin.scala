@@ -1,5 +1,5 @@
 import org.scalajs.sbtplugin.ScalaJSPlugin
-import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport.{fastOptJS, fullOptJS}
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.{fastLinkJS, fullLinkJS}
 import sbt.Keys.{baseDirectory, sLog}
 import sbt.util.Logger
 import sbt.{AutoPlugin, Compile, Def, Test, settingKey, taskKey}
@@ -15,9 +15,9 @@ object NpmOpsPlugin extends AutoPlugin {
 
   object autoImport {
     val npmLinkDependencies = settingKey[List[String]]("List of npm dependencies to link")
-    val npmDependencies = settingKey[List[(String, String)]]("List of npm dependencies name and version")
-    val npmInstallDeps  = taskKey[Unit]("Install NPM dependencies if not installed")
-    val npmPackageLoc   = settingKey[File]("Path to the location of the packages' 'package.json'")
+    val npmDependencies     = settingKey[List[(String, String)]]("List of npm dependencies name and version")
+    val npmInstallDeps      = taskKey[Unit]("Install NPM dependencies if not installed")
+    val npmPackageLoc       = settingKey[File]("Path to the location of the packages' 'package.json'")
   }
 
   import autoImport._
@@ -59,13 +59,13 @@ object NpmOpsPlugin extends AutoPlugin {
     deps.map(tuple => s"${tuple._1}@${tuple._2}")
 
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
-    npmInstallDeps      := npmInstallDepsTask.value,
-    npmDependencies     := Nil,
-    npmLinkDependencies := Nil,
-    npmPackageLoc       := baseDirectory.value,
-    Compile / fastOptJS := (Compile / fastOptJS).dependsOn(npmInstallDepsTask).value,
-    Compile / fullOptJS := (Compile / fullOptJS).dependsOn(npmInstallDepsTask).value,
-    Test / fastOptJS    := (Test / fastOptJS).dependsOn(npmInstallDepsTask).value,
-    Test / fullOptJS    := (Test / fullOptJS).dependsOn(npmInstallDepsTask).value
+    npmInstallDeps       := npmInstallDepsTask.value,
+    npmDependencies      := Nil,
+    npmLinkDependencies  := Nil,
+    npmPackageLoc        := baseDirectory.value,
+    Compile / fastLinkJS := (Compile / fastLinkJS).dependsOn(npmInstallDepsTask).value,
+    Compile / fullLinkJS := (Compile / fullLinkJS).dependsOn(npmInstallDepsTask).value,
+    Test / fastLinkJS    := (Test / fastLinkJS).dependsOn(npmInstallDepsTask).value,
+    Test / fullLinkJS    := (Test / fullLinkJS).dependsOn(npmInstallDepsTask).value
   )
 }
