@@ -40,34 +40,34 @@ pipeline {
         CURRENT_VERSION = sh(script: "cat dependencies.properties | grep \"version\" | cut -d '=' -f 2", returnStdout: true)
     }
     stages {
-        stage('Test') {
-            steps {
-                script {
-                    lastStage = env.STAGE_NAME
-                    sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
-                }
-            }
-        }
-        stage('Coverage') {
-            when {
-                anyOf {
-                    branch 'master'
-                    branch 'develop'
-                }
-            }
-            steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
-                    script {
-                        lastStage = env.STAGE_NAME
-                        sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
-                    }
-                }
-            }
-        }
+//         stage('Test') {
+//             steps {
+//                 script {
+//                     lastStage = env.STAGE_NAME
+//                     sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
+//                 }
+//             }
+//         }
+//         stage('Coverage') {
+//             when {
+//                 anyOf {
+//                     branch 'master'
+//                     branch 'develop'
+//                 }
+//             }
+//             steps {
+//                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
+//                     script {
+//                         lastStage = env.STAGE_NAME
+//                         sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
+//                     }
+//                 }
+//             }
+//         }
         stage('Build JS Package') {
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'W-12560400/bump-scala-js'
                     branch 'develop'
                 }
             }
@@ -82,7 +82,7 @@ pipeline {
         stage('Publish JVM Artifact') {
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'W-12560400/bump-scala-js'
                     branch 'develop'
                 }
             }
@@ -96,7 +96,7 @@ pipeline {
         stage("Publish JS Package") {
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'W-12560400/bump-scala-js'
                     branch 'develop'
                 }
             }
