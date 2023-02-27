@@ -7,17 +7,20 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, ScalarNode, Shape}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, SourceYPart, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
+import amf.shapes.client.scala.config.JsonSchemaConfiguration
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
-import org.scalatest.Assertion
+import org.scalatest
+import org.scalatest.{Assertion, Checkpoints}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
@@ -478,5 +481,40 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val expectedAst         = """{"properties": {}}"""
       obtainedAst.trim shouldEqual expectedAst.trim
     }
+  }
+
+  test("Assert union custom domain properties are not propagated to members") {
+
+    def assertForAllTypes(shapes: Shape*)(assertion: Shape => Unit) = {
+      shapes.foreach(assertion)
+    }
+
+    val api = s"$basePath/raml/union-annots-dont-override-member-annots/api.raml"
+    val cp  = new scalatest.Checkpoints.Checkpoint()
+    modelAssertion(api, pipelineId = PipelineId.Editing) { unit =>
+      val doc   = unit.asInstanceOf[Document]
+      val union = doc.declares.collect { case union: UnionShape => union }.head
+      val type1 = doc.declares.collect { case node: NodeShape if node.name.value() == "Type1" => node }.head
+      val type2 = doc.declares.collect { case node: NodeShape if node.name.value() == "Type2" => node }.head
+      union.customDomainProperties.length shouldBe 2
+      assertForAllTypes(type1, union.anyOf.head) { shape =>
+        cp { shape.customDomainProperties.length shouldBe 1 }
+        cp { shape.customDomainProperties.head.extension.asInstanceOf[ScalarNode].value.value() shouldEqual "Type1" }
+      }
+      assertForAllTypes(type2, union.anyOf(1)) { shape =>
+        cp { shape.customDomainProperties.length shouldBe 1 }
+        cp { shape.customDomainProperties.head.name.value() shouldEqual "flag" }
+      }
+      cp.reportAll()
+      succeed
+    }
+  }
+
+  private def sourcePartOf(unit: BaseUnit, extract: JsonSchemaDocument => Shape) = {
+    val doc             = unit.asInstanceOf[JsonSchemaDocument]
+    val shapeOfInterest = extract(doc)
+    val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
+    val obtainedAst     = sourceYPart.ast.toString
+    obtainedAst
   }
 }

@@ -1,5 +1,6 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
+import amf.core.client.platform.model.domain.CustomDomainProperty
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -7,7 +8,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, RecursiveShape, 
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
@@ -392,7 +393,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), annotations)
 
     computeNarrowRestrictions(
-      NodeShapeModel.fields,
+      NodeShapeModel.fields :+ DomainElementModel.CustomDomainProperties, // custom domain isn't part of nodeshape model fields
       baseNode,
       superNode,
       filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples)
@@ -556,7 +557,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         AnyShapeModel.DefaultValueString,
         AnyShapeModel.Default,
         AnyShapeModel.Examples,
-        AnyShapeModel.Description
+        AnyShapeModel.Description,
+        AnyShapeModel.CustomDomainProperties
       )
     val filteredBase = baseShape.copyShape()
     filteredBase.fields.filter(f => !filteredFields.contains(f._1))
