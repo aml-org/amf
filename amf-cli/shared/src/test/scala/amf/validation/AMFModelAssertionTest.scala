@@ -8,11 +8,9 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, Shape}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, SourceYPart, VirtualElement, VirtualNode}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
@@ -43,9 +41,9 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   def modelAssertion(
       path: String,
       pipelineId: String = PipelineId.Default,
-      transform: Boolean = true,
-      client: AMFBaseUnitClient = APIConfiguration.APIWithJsonSchema().baseUnitClient()
+      transform: Boolean = true
   )(assertion: BaseUnit => Assertion): Future[Assertion] = {
+    val client = APIConfiguration.APIWithJsonSchema().baseUnitClient()
     client.parse(path) flatMap { parseResult =>
       if (!transform) assertion(parseResult.baseUnit)
       else {
@@ -480,13 +478,5 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val expectedAst         = """{"properties": {}}"""
       obtainedAst.trim shouldEqual expectedAst.trim
     }
-  }
-
-  private def sourcePartOf(unit: BaseUnit, extract: JsonSchemaDocument => Shape) = {
-    val doc             = unit.asInstanceOf[JsonSchemaDocument]
-    val shapeOfInterest = extract(doc)
-    val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
-    val obtainedAst     = sourceYPart.ast.toString
-    obtainedAst
   }
 }
