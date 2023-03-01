@@ -8,6 +8,7 @@ import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema._
 
+import java.io.{BufferedReader, InputStream, InputStreamReader}
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
@@ -46,6 +47,29 @@ class JsShapePayloadValidator(
     }
   }
 
+  override protected def loadJson(stream: InputStream): js.Dynamic = {
+    try {
+      js.Dynamic.global.JSON.parse(streamToString(stream))
+    } catch {
+      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] => throw new JsonSyntaxError(e)
+    }
+  }
+
+  private def streamToString(is: InputStream) = {
+    val rd: BufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"))
+    val builder            = new StringBuilder()
+    try {
+      var line = rd.readLine
+      while (line != null) {
+        builder.append(line + "\n")
+        line = rd.readLine
+      }
+    } finally {
+      rd.close()
+    }
+    builder.toString
+  }
+
   override protected def loadSchema(
       jsonSchema: CharSequence,
       element: DomainElement,
@@ -81,6 +105,32 @@ class JsShapePayloadValidator(
     } catch {
       case e: JavaScriptException =>
         validationProcessor.processException(e, fragment.map(_.encodes))
+    }
+  }
+
+  override protected def callValidatorForStream(
+      schema: Dictionary[js.Dynamic],
+      stream: InputStream,
+      validationProcessor: ValidationProcessor
+  ): AMFValidationReport = {
+
+    val validator = LazyAjv.fast
+
+    try {
+      val payload = loadJson(stream)
+      val correct = validator.validate(schema.asInstanceOf[js.Object], payload)
+
+      val results: Seq[AMFValidationResult] =
+        if (correct) Nil
+        else {
+          validator.errors.getOrElse(js.Array[ValidationResult]()).map { result =>
+            asAmfResult(result, None)
+          }
+        }
+
+      validationProcessor.processResults(results)
+    } catch {
+      case e: Throwable => validationProcessor.processException(e, None)
     }
   }
 

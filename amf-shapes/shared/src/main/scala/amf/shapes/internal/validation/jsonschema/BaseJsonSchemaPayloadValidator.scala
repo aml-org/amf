@@ -31,15 +31,15 @@ import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
 
-import java.io.StringWriter
+import java.io.{InputStream, StringWriter}
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class InvalidJsonValue(e: Throwable)        extends RuntimeException(e)
+class JsonSyntaxError(e: Throwable)         extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
-class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
 object BaseJsonSchemaPayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
@@ -69,6 +69,10 @@ abstract class BaseJsonSchemaPayloadValidator(
     validateForPayload(payload, getReportProcessor)
   }
 
+  override def syncValidate(stream: InputStream): AMFValidationReport = {
+    validateForStream(stream, getReportProcessor)
+  }
+
   protected type LoadedObj
   protected type LoadedSchema
   protected val validationMode: ValidationMode
@@ -88,9 +92,17 @@ abstract class BaseJsonSchemaPayloadValidator(
       validationProcessor: ValidationProcessor
   ): AMFValidationReport
 
+  protected def callValidatorForStream(
+      schema: LoadedSchema,
+      stream: InputStream,
+      validationProcessor: ValidationProcessor
+  ): AMFValidationReport
+
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj]
 
   protected def loadJson(text: String): LoadedObj
+
+  protected def loadJson(stream: InputStream): LoadedObj
 
   protected def loadJsonSchema(text: String): LoadedObj = loadJson(text)
 
@@ -119,8 +131,45 @@ abstract class BaseJsonSchemaPayloadValidator(
       payload: String,
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
+    validateMediaType(validationProcessor).getOrElse {
+      try {
+        performValidation(buildCandidate(mediaType, payload), validationProcessor)
+      } catch {
+        case e: InvalidJsonObject => validationProcessor.processException(e, None)
+        // if the shape is of type any, any scalar payload should validate against it so the validation is skipped
+        // We don't skip completely the validation because if the payload is an object with an error we want the error
+        case _: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
+        case e: InvalidJsonValue              => validationProcessor.processException(e, None)
+        case e: MaxNestingValueReached        => validationProcessor.processException(e, None)
+      }
+    }
+  }
+
+  protected def validateForStream(
+      stream: InputStream,
+      validationProcessor: ValidationProcessor
+  ): AMFValidationReport = {
+    validateMediaTypeForStream(validationProcessor).getOrElse {
+      try {
+        {
+          shape match {
+            case anyShape: AnyShape => getOrCreateSchema(anyShape, validationProcessor)
+            case _                  => Left(validationProcessor.processResults(notAnyShapeError))
+          }
+        } match {
+          case Right(Some(schema)) => callValidatorForStream(schema, stream, validationProcessor)
+          case Left(result)        => result
+          case _                   => validationProcessor.processResults(Nil)
+        }
+      } catch {
+        case e: UnknownDiscriminator => validationProcessor.processException(e, None)
+      }
+    }
+  }
+
+  private def validateMediaType(validationProcessor: ValidationProcessor): Option[AMFValidationReport] = {
     if (!supportedMediaTypes.contains(mediaType)) {
-      validationProcessor.processResults(
+      val validationReport = validationProcessor.processResults(
         Seq(
           AMFValidationResult(
             s"Unsupported payload media type '$mediaType', only ${supportedMediaTypes.toString()} supported",
@@ -134,18 +183,42 @@ abstract class BaseJsonSchemaPayloadValidator(
           )
         )
       )
-    } else
-      try {
-        performValidation(buildCandidate(mediaType, payload), validationProcessor)
-      } catch {
-        case e: InvalidJsonObject => validationProcessor.processException(e, None)
-        // if the shape is of type any, any scalar payload should validate against it so the validation is skipped
-        // We don't skip completely the validation because if the payload is an object with an error we want the error
-        case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
-        case e: InvalidJsonValue              => validationProcessor.processException(e, None)
-        case e: MaxNestingValueReached        => validationProcessor.processException(e, None)
-      }
+      Some(validationReport)
+    } else None
   }
+
+  private def validateMediaTypeForStream(validationProcessor: ValidationProcessor): Option[AMFValidationReport] = {
+    if (mediaType != `application/json`) {
+      val validationReport = validationProcessor.processResults(
+        Seq(
+          AMFValidationResult(
+            s"Unsupported payload media type '$mediaType', only ${`application/json`} is supported in stream payload validation",
+            SeverityLevels.VIOLATION,
+            "",
+            None,
+            ExampleValidationErrorSpecification.id,
+            None,
+            None,
+            null
+          )
+        )
+      )
+      Some(validationReport)
+    } else None
+  }
+
+  private def notAnyShapeError: Seq[AMFValidationResult] = Seq(
+    AMFValidationResult(
+      "Cannot validate shape that is not an any shape",
+      defaultSeverity,
+      "",
+      Some(shape.id),
+      ExampleValidationErrorSpecification.id,
+      shape.position(),
+      shape.location(),
+      null
+    )
+  )
 
   private def generateSchema(
       fragmentShape: Shape,
@@ -313,23 +386,7 @@ abstract class BaseJsonSchemaPayloadValidator(
             resultOption match {
               case _ if shape.isInstanceOf[AnyShape] =>
                 getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
-              case _ =>
-                Left(
-                  validationProcessor.processResults(
-                    Seq(
-                      AMFValidationResult(
-                        "Cannot validate shape that is not an any shape",
-                        defaultSeverity,
-                        "",
-                        Some(shape.id),
-                        ExampleValidationErrorSpecification.id,
-                        shape.position(),
-                        shape.location(),
-                        null
-                      )
-                    )
-                  )
-                )
+              case _ => Left(validationProcessor.processResults(notAnyShapeError))
             }
           } match {
             case Right(Some(schema)) => callValidator(schema, obj, fragmentOption, validationProcessor)

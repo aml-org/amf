@@ -3,8 +3,8 @@ package amf.shapes.internal.document.apicontract.validation.remote
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.document.apicontract.validation.json.{
@@ -21,9 +21,10 @@ import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
-import org.json.JSONException
+import org.json.{JSONArray, JSONException, JSONTokener, JSONObject => NonAmfJSONObject}
 import org.mulesoft.lexer.BaseLexer
 
+import java.io.InputStream
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
@@ -60,6 +61,28 @@ class JvmShapePayloadValidator(
       case exception: Throwable =>
         validationProcessor.processException(exception, fragment.map(_.encodes))
     }
+  }
+
+  override protected def callValidatorForStream(
+      schema: LoadedSchema,
+      stream: InputStream,
+      validationProcessor: ValidationProcessor
+  ): AMFValidationReport = {
+
+    val base      = Validator.builder()
+    val validator = base.failEarly().build()
+
+    try {
+      val payload = loadJson(stream)
+      validator.performValidation(schema, payload)
+      validationProcessor.processResults(Nil)
+    } catch {
+      case validationException: ValidationException =>
+        validationProcessor.processException(validationException, None)
+      case exception: Throwable =>
+        validationProcessor.processException(exception, None)
+    }
+
   }
 
   override protected def loadSchema(
@@ -136,6 +159,13 @@ class JvmShapePayloadValidator(
     })
   }
 
+  override protected def loadJson(stream: InputStream): Object = {
+    withSyntaxExceptionCatching(() => {
+      val tokener = new JSONTokener(stream)
+      tokener.nextValue()
+    })
+  }
+
   private def getMaxJsonYamlNestingDepth = configuration.maxJsonYamlDepth.getOrElse(DEFAULT_MAX_NESTING_LIMIT)
 
   private def withJsonExceptionCatching(jsonLoading: () => Object): Object = {
@@ -143,6 +173,13 @@ class JvmShapePayloadValidator(
     catch {
       case e: InvalidJSONValueException => throw new InvalidJsonValue(e)
       case e: JSONException             => throw new InvalidJsonObject(e)
+    }
+  }
+
+  private def withSyntaxExceptionCatching(jsonLoading: () => Object): Object = {
+    try jsonLoading()
+    catch {
+      case e: JSONException => throw new JsonSyntaxError(e)
     }
   }
 

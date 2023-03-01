@@ -8,15 +8,17 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator}
 import amf.core.internal.remote.Mimes._
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import java.io.{ByteArrayInputStream, InputStream}
 import scala.concurrent.ExecutionContext
 
-trait PayloadValidationUtils {
+trait PayloadValidationUtils extends PlatformSecrets {
   protected def defaultConfig: ShapesConfiguration = ShapesConfiguration.predefined()
 
   protected def parameterValidator(
@@ -33,7 +35,11 @@ trait PayloadValidationUtils {
   ): AMFShapePayloadValidator =
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 
-  protected def validator(s: Shape, mediaType: String, plugin: AMFShapePayloadValidationPlugin) =
+  protected def validator(
+      s: Shape,
+      mediaType: String,
+      plugin: AMFShapePayloadValidationPlugin
+  ): AMFShapePayloadValidator =
     defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
@@ -260,6 +266,122 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
     val fullReport    = fullValidator.syncValidate(payload)
     fullReport.conforms shouldBe false
     fullReport.results should have length 2
+  }
+
+  test("Test stream validation - Valid stream payload") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload =
+      """
+          |{
+          |  "a": "something",
+          |  "b": true
+          |}
+          |""".stripMargin
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/json`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe true
+    validationReport.results should have length 0
+  }
+
+  test("Test stream validation - Invalid stream payload") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload =
+      """
+          |{
+          |  "a": "something",
+          |  "b": "not a boolean as needed"
+          |}
+          |""".stripMargin
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/json`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe false
+    validationReport.results should have length 1
+  }
+
+  test("Test stream validation - Invalid stream payload with syntax error") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload =
+      """
+          |{
+          |  "a": "something",
+          |  "b"
+          |}
+          |""".stripMargin
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/json`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe false
+    validationReport.results should have length 1
+    validationReport.results.head.message.contains("Syntax error") shouldBe true
+  }
+
+  test("Test stream validation - Scalar string stream") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload             = """"some scalar"""".stripMargin
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/json`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe false
+    validationReport.results should have length 1
+    if (platform.name == "jvm")
+      validationReport.results.head.message.contains("expected type: JSONObject, found: String") shouldBe true
+    else
+      validationReport.results.head.message.contains("should be object") shouldBe true
+  }
+
+  test("Test stream validation - Scalar int stream") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload             = "1654687"
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/json`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe false
+    validationReport.results should have length 1
+    if (platform.name == "jvm")
+      validationReport.results.head.message.contains("expected type: JSONObject, found: Integer") shouldBe true
+    else
+      validationReport.results.head.message.contains("should be object") shouldBe true
+  }
+
+  test("Test stream validation - Invalid mediatype (non JSON)") {
+    val node = NodeShape()
+    node.withProperty("a").withRange(ScalarShape().withDataType(DataTypes.String))
+    node.withProperty("b").withRange(ScalarShape().withDataType(DataTypes.Boolean))
+
+    val payload =
+      """
+        |a: something,
+        |b: true
+        |""".stripMargin
+    val stream: InputStream = new ByteArrayInputStream(payload.getBytes())
+
+    val validator        = payloadValidator(node, `application/yaml`)
+    val validationReport = validator.syncValidate(stream)
+    validationReport.conforms shouldBe false
+    validationReport.results should have length 1
+    validationReport.results.head.message.contains("Unsupported payload media type") shouldBe true
   }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global

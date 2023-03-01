@@ -47,6 +47,19 @@ trait ReportValidationProcessor extends ValidationProcessor {
             source = e
           )
         )
+      case e: JsonSyntaxError => // Syntax error throw by everit, this is for the case of non pre-parsed payload (stream)
+        Seq(
+          AMFValidationResult(
+            message = s"Syntax error: ${e.getCause.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          )
+        )
       case other =>
         Seq(
           AMFValidationResult(
