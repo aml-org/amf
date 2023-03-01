@@ -84,6 +84,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'W-12183350/stream-validation'
                 }
             }
             steps {
