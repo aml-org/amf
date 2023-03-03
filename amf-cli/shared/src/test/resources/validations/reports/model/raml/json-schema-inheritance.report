@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml
+Profile: RAML 1.0
+Conforms: true
+Number of results: 3
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#inheritance-from-json-schema
+  Message: MyJsonType is a JSON Schema and can't be used in type expressions or type inheritance
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml#/declares/union/JsonRamlUnionType
+  Property: http://a.ml/vocabularies/shapes#anyOf
+  Range: [(18,2)-(20,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#inheritance-from-json-schema
+  Message: JSON Schemas can't be used in type expressions or type inheritance
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml#/declares/array/JsonArrayType1
+  Property: http://a.ml/vocabularies/shapes#items
+  Range: [(20,2)-(22,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#inheritance-from-json-schema
+  Message: JSON Schemas can't be used in type expressions or type inheritance
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml#/declares/array/JsonArrayType2
+  Property: http://a.ml/vocabularies/shapes#items
+  Range: [(22,2)-(26,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/raml-with-invalid-types/api.raml

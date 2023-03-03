@@ -1,8 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Raml08Profile
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
 class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   override val basePath = "file://amf-cli/shared/src/test/resources/validations/jsonschema/"
 
@@ -137,6 +134,7 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   test("JSON Schema path with spaces 1") {
     validate("/json-schema-space/api.raml")
   }
+
   test("JSON Schema path with spaces 2") {
     validate("/json-schema-space other/api.raml")
   }

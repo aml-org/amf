@@ -1,9 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.AmfProfile.profile
-import amf.core.client.common.validation._
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/examples/"

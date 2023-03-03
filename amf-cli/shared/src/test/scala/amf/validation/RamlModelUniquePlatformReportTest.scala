@@ -728,4 +728,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("a json example with @context that points to nowhere should not throw an error") {
     validate("/raml/raml-with-json-schema/api.raml")
   }
+
+  // W-11802973: github issue 1559
+  test("JSON schemas should not participate in type inheritance") {
+    validate("/raml/raml-with-invalid-types/api.raml", Some("raml/json-schema-inheritance.report"))
+  }
 }
