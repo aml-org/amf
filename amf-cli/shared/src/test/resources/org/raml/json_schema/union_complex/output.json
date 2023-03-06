@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "value"
       ],
@@ -13,7 +12,6 @@
           "anyOf": [
             {
               "type": "object",
-              "additionalProperties": true,
               "required": [
                 "name",
                 "color"
@@ -29,7 +27,6 @@
             },
             {
               "type": "object",
-              "additionalProperties": true,
               "required": [
                 "name",
                 "fangs"

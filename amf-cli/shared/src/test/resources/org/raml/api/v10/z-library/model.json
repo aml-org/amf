@@ -27,7 +27,6 @@ baseUri: http://localhost:8081/api
       "200":
         body:
           application/json:
-            type: object
             examples:
               single-order:
                 orders:
@@ -60,31 +59,20 @@ baseUri: http://localhost:8081/api
                       -
                         product_id: PRODUCT-7
                         quantity: 2
-            additionalProperties: true
             properties:
               orders:
                 items:
-                  type: object
-                  additionalProperties: true
                   properties:
                     order_id:
                       type: string
-                      required: true
                     creation_date:
                       type: string
-                      required: true
                     items:
                       items:
-                        type: object
-                        additionalProperties: true
                         properties:
                           product_id:
                             type: string
-                            required: true
                           quantity:
                             type: integer
-                            required: true
-                      required: true
-                required: true
 uses:
   assets: assets-lib.raml

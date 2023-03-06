@@ -116,10 +116,8 @@ resourceTypes:
             formParameters:
               description:
                 type: string
-                required: false
               image:
                 type: file
-                required: false
           application/vnd.inline+json: |
             {
                 "$schema": "http://json-schema.org/draft-03/schema",
@@ -167,10 +165,8 @@ resourceTypes:
         formParameters:
           description:
             type: string
-            required: false
           image:
             type: file
-            required: false
       application/vnd.inline+json: |
         {
             "$schema": "http://json-schema.org/draft-03/schema",

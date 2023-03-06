@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "properties": {
         "c1": {
           "$ref": "#/definitions/B"
@@ -19,7 +18,6 @@
     },
     "A": {
       "type": "object",
-      "additionalProperties": true,
       "properties": {
         "a1": {
           "$ref": "#/definitions/root"

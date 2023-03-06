@@ -6,14 +6,11 @@ annotationTypes:
   another-scalar:
     type: string
   object:
-    additionalProperties: true
     properties:
       lat:
         type: number
-        required: true
       long:
         type: number
-        required: true
 (another-scalar): overlay
 (scalar): plain
 /home:

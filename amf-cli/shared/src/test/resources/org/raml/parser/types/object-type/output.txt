@@ -12,8 +12,6 @@ traits:
       application/json:
         example:
           age: 10
-        additionalProperties: true
         properties:
           age:
             type: integer
-            required: true

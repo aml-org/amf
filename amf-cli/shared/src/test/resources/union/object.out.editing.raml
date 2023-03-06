@@ -4,41 +4,29 @@ types:
   UnionType:
     anyOf:
       -
-        type: object
-        additionalProperties: true
         properties:
           a:
             type: string
-            required: true
           b:
             type: integer
-            required: true
       -
         type: integer
   SomeType:
-    type: object
-    additionalProperties: true
     properties:
       a:
         type: string
-        required: true
       b:
         type: integer
-        required: true
 /someEndpoint:
   post:
     body:
       application/json:
         anyOf:
           -
-            type: object
-            additionalProperties: true
             properties:
               a:
                 type: string
-                required: true
               b:
                 type: integer
-                required: true
           -
             type: integer

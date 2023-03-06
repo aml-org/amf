@@ -2,45 +2,32 @@
 title: API
 types:
   SimpleType1:
-    additionalProperties: true
     properties:
       property1:
         type: string
-        required: true
       property2:
         type: string
-        required: true
   SimpleType2:
-    additionalProperties: true
     properties:
       property1:
         type: number
-        required: true
       property2:
         type: number
-        required: true
   SimpleUnion:
     anyOf:
       -
-        additionalProperties: true
         properties:
           property1:
             type: string
-            required: true
           property2:
             type: string
-            required: true
       -
-        additionalProperties: true
         properties:
           property1:
             type: number
-            required: true
           property2:
             type: number
-            required: true
   TypeWithUnionProps:
-    type: object
     example:
       unionArray:
         -
@@ -49,27 +36,19 @@ types:
         -
           property1: 1
           property2: 2
-    additionalProperties: true
     properties:
       unionArray:
         items:
           anyOf:
             -
-              additionalProperties: true
               properties:
                 property1:
                   type: string
-                  required: true
                 property2:
                   type: string
-                  required: true
             -
-              additionalProperties: true
               properties:
                 property1:
                   type: number
-                  required: true
                 property2:
                   type: number
-                  required: true
-        required: true

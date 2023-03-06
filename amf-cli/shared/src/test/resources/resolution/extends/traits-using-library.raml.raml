@@ -7,101 +7,71 @@ baseUri: aaa-bbb.com/apis
   /corporate:
     post:
       body:
-        type: object
-        additionalProperties: true
         properties:
           address_country:
             type: string
-            required: true
           address_locality:
             type: string
-            required: true
           address_region:
             type: string
-            required: true
           postal_code:
             type: string
-            required: true
           street_address:
             type: string
-            required: true
           lei:
             type: string
-            required: true
           tax_id:
             type: string
-            required: true
           email:
             type: string
-            required: true
           telephone:
             type: string
-            required: true
           name:
             type: string
-            required: true
           vat_id:
             type: string
-            required: true
   /commercial:
     post:
       body:
-        type: object
-        additionalProperties: true
         properties:
           address_country:
             type: string
-            required: true
           address_locality:
             type: string
-            required: true
           address_region:
             type: string
-            required: true
           postal_code:
             type: string
-            required: true
           street_address:
             type: string
-            required: true
           lei:
             type: string
-            required: true
           tax_id:
             type: string
-            required: true
           email:
             type: string
-            required: true
           telephone:
             type: string
-            required: true
-          title:
+          title?:
             type: string
             enum:
               - mr
               - mrs
               - ms
               - dr
-            required: false
           given_name:
             type: string
-            required: true
           family_name:
             type: string
-            required: true
           gender:
             type: string
             enum:
               - female
               - male
-            required: true
-          vat_id:
+          vat_id?:
             type: string
-            required: false
           birth_date:
             type: date-only
-            required: true
   /{customer_id}:
     uriParameters:
       customer_id:
@@ -115,178 +85,125 @@ baseUri: aaa-bbb.com/apis
                 -
                   discriminator: type
                   discriminatorValue: Organization
-                  type: object
-                  additionalProperties: true
                   properties:
                     type:
                       type: string
-                      required: true
                     lei:
                       type: string
-                      required: true
                     tax_id:
                       type: string
-                      required: true
                     email:
                       type: string
-                      required: true
                     address:
-                      additionalProperties: true
                       properties:
                         address_country:
                           type: string
-                          required: true
                         address_locality:
                           type: string
-                          required: true
                         address_region:
                           type: string
-                          required: true
                         postal_code:
                           type: string
-                          required: true
                         street_address:
                           type: string
-                          required: true
-                      required: true
                     id:
                       type: string
-                      required: true
                     name:
                       type: string
-                      required: true
                     vat_id:
                       type: string
-                      required: true
                 -
                   discriminator: type
                   discriminatorValue: Person
-                  type: object
-                  additionalProperties: true
                   properties:
                     type:
                       type: string
-                      required: true
                     lei:
                       type: string
-                      required: true
                     tax_id:
                       type: string
-                      required: true
                     email:
                       type: string
-                      required: true
                     address:
-                      additionalProperties: true
                       properties:
                         address_country:
                           type: string
-                          required: true
                         address_locality:
                           type: string
-                          required: true
                         address_region:
                           type: string
-                          required: true
                         postal_code:
                           type: string
-                          required: true
                         street_address:
                           type: string
-                          required: true
-                      required: true
                     id:
                       type: string
-                      required: true
-                    title:
+                    title?:
                       type: string
                       enum:
                         - mr
                         - mrs
                         - ms
                         - dr
-                      required: false
                     given_name:
                       type: string
-                      required: true
                     family_name:
                       type: string
-                      required: true
                     gender:
                       type: string
                       enum:
                         - female
                         - male
-                      required: true
-                    vat_id:
+                    vat_id?:
                       type: string
-                      required: false
                     birth_date:
                       type: date-only
-                      required: true
-                    death_date:
+                    death_date?:
                       type: date-only
-                      required: false
     patch:
       responses:
         "200":
           body:
             application/json:
-              additionalProperties: true
               properties:
-                lei:
+                lei?:
                   type: string
-                  required: false
-                tax_id:
+                tax_id?:
                   type: string
-                  required: false
-                email:
+                email?:
                   type: string
-                  required: false
-                title:
+                title?:
                   type: string
                   enum:
                     - mr
                     - mrs
                     - ms
                     - dr
-                  required: false
-                name:
+                name?:
                   type: string
-                  required: false
-                family_name:
+                family_name?:
                   type: string
-                  required: false
-                gender:
+                gender?:
                   type: string
                   enum:
                     - female
                     - male
-                  required: false
-                vat_id:
+                vat_id?:
                   type: string
-                  required: false
-                birth_date:
+                birth_date?:
                   type: date-only
-                  required: false
-                death_date:
+                death_date?:
                   type: date-only
-                  required: false
-                address_country:
+                address_country?:
                   type: string
-                  required: false
-                address_locality:
+                address_locality?:
                   type: string
-                  required: false
-                address_region:
+                address_region?:
                   type: string
-                  required: false
-                postal_code:
+                postal_code?:
                   type: string
-                  required: false
-                street_address:
+                street_address?:
                   type: string
-                  required: false
     delete: {}
     /accounts:
       get:
@@ -313,38 +230,27 @@ baseUri: aaa-bbb.com/apis
           "200":
             body:
               application/json:
-                type: array
                 items:
-                  additionalProperties: true
                   properties:
                     id:
                       type: string
-                      required: true
                     account_number:
                       type: string
-                      required: true
                     accountType:
                       type: string
                       enum:
                         - standard
                         - saver
-                      required: true
                     amount:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     lei:
                       type: string
-                      required: true
                     fees_and_comissions:
                       type: string
-                      required: true
                     review_state:
                       type: string
                       enum:
@@ -352,44 +258,31 @@ baseUri: aaa-bbb.com/apis
                         - cancelled
                         - opened
                         - closed
-                      required: true
                     interest_rate:
                       type: number
-                      required: true
                     annual_interest_rate:
                       type: number
-                      required: true
                     minimum_inflow:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     overdraft_limit:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
       post:
         body:
           application/json:
-            additionalProperties: true
             properties:
               accountType:
                 type: string
                 enum:
                   - standard
                   - saver
-                required: true
       /{account_id}:
         uriParameters:
           account_id:
@@ -399,36 +292,26 @@ baseUri: aaa-bbb.com/apis
             "200":
               body:
                 application/json:
-                  additionalProperties: true
                   properties:
                     id:
                       type: string
-                      required: true
                     account_number:
                       type: string
-                      required: true
                     accountType:
                       type: string
                       enum:
                         - standard
                         - saver
-                      required: true
                     amount:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     lei:
                       type: string
-                      required: true
                     fees_and_comissions:
                       type: string
-                      required: true
                     review_state:
                       type: string
                       enum:
@@ -436,33 +319,22 @@ baseUri: aaa-bbb.com/apis
                         - cancelled
                         - opened
                         - closed
-                      required: true
                     interest_rate:
                       type: number
-                      required: true
                     annual_interest_rate:
                       type: number
-                      required: true
                     minimum_inflow:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     overdraft_limit:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
         delete: {}
     /loans:
       get:
@@ -489,38 +361,27 @@ baseUri: aaa-bbb.com/apis
           "200":
             body:
               application/json:
-                type: array
                 items:
-                  additionalProperties: true
                   properties:
                     id:
                       type: string
-                      required: true
                     account_number:
                       type: string
-                      required: true
                     accountType:
                       type: string
                       enum:
                         - standard
                         - saver
-                      required: true
                     amount:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     lei:
                       type: string
-                      required: true
                     fees_and_comissions:
                       type: string
-                      required: true
                     review_state:
                       type: string
                       enum:
@@ -531,91 +392,58 @@ baseUri: aaa-bbb.com/apis
                         - opened
                         - failed
                         - closed
-                      required: true
                     interest_rate:
                       type: number
-                      required: true
                     annual_interest_rate:
                       type: number
-                      required: true
                     minimum_inflow:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     overdraft_limit:
-                      additionalProperties: true
                       properties:
                         value:
                           type: number
-                          required: true
                         currency:
                           type: string
-                          required: true
-                      required: true
                     grace_period:
-                      additionalProperties: true
                       properties:
                         value:
                           type: string
-                          required: true
-                      required: true
       post:
         body:
           application/json:
-            additionalProperties: true
             properties:
               category:
                 type: string
-                required: true
               amount:
-                additionalProperties: true
                 properties:
                   value:
                     type: number
-                    required: true
                   currency:
                     type: string
-                    required: true
-                required: true
               term:
-                additionalProperties: true
                 properties:
                   value:
                     type: string
-                    required: true
-                required: true
               interest_rate:
                 type: number
-                required: true
               down_payment:
-                additionalProperties: true
                 properties:
                   value:
                     type: number
-                    required: true
                   currency:
                     type: string
-                    required: true
-                required: true
               payment_amount:
-                additionalProperties: true
                 properties:
                   value:
                     type: number
-                    required: true
                   currency:
                     type: string
-                    required: true
-                required: true
               payment_frequency:
                 type: number
-                required: true
               review_state:
                 type: string
                 enum:
@@ -626,4 +454,3 @@ baseUri: aaa-bbb.com/apis
                   - repaying
                   - failed
                   - closed
-                required: true
