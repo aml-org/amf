@@ -1,7 +1,6 @@
 #%RAML 1.0 AnnotationTypeDeclaration
 displayName: Method handler function path
 allowedTargets: Method
-additionalProperties: true
 properties:
   path:
     type: string
@@ -17,10 +16,6 @@ properties:
         description: |
           Dot separated path to method
         value: server.controllers.user.findUser
-    required: true
-  config:
-    type: object
+  config?:
     description: Config object will be passed as the first parameter to the controller on every call
-    additionalProperties: true
     properties: {}
-    required: false

@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "other"
       ],
@@ -16,7 +15,6 @@
     },
     "default": {
       "type": "object",
-      "additionalProperties": true,
       "properties": {
         "a": {
           "$ref": "#/definitions/default"

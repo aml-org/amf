@@ -24,7 +24,6 @@ components:
           $ref: "#/components/schemas/unionElement2"
     unionElement1:
       type: object
-      additionalProperties: true
       required:
         - u11
         - u12
@@ -35,7 +34,6 @@ components:
           type: integer
     unionElement2:
       type: object
-      additionalProperties: true
       required:
         - u21
         - u22

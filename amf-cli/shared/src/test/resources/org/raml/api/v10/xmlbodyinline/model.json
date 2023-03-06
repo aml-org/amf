@@ -4,16 +4,12 @@ title: xml body inline
   get:
     body:
       application/xml:
-        additionalProperties: true
         properties:
           firstname:
             type: string
-            required: true
           lastname:
             type: string
-            required: true
           age:
             type: integer
             minimum: 0
             maximum: 144
-            required: true

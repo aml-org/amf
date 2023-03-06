@@ -4,65 +4,50 @@ version: "0.1"
 mediaType: application/json
 types:
   order:
-    type: object
     (odata.remote): Orders
-    additionalProperties: true
     properties:
       OrderID:
         type: integer
         (odata.key): true
         (odata.nullable): false
-        required: true
       ShipName:
         type: string
         (odata.nullable): false
         (odata.key): false
-        required: true
       ShipAddress:
         type: string
         (odata.nullable): true
         (odata.key): false
-        required: true
   customer:
-    type: object
     (odata.remote): Customers
-    additionalProperties: true
     properties:
       CustomerID:
         type: integer
         (odata.key): true
         (odata.nullable): false
-        required: true
       CompanyName:
         type: string
         (odata.nullable): true
         (odata.key): false
-        required: true
       ContactName:
         type: string
         (odata.nullable): true
         (odata.key): false
-        required: true
       ContactTitle:
         type: string
         (odata.nullable): true
         (odata.key): false
-        required: true
   Weird-resource_NAME:
-    type: object
     (odata.remote): Weird-resource_NAME
-    additionalProperties: true
     properties:
       just-A_key:
         type: string
         (odata.key): true
         (odata.nullable): true
-        required: true
       ANOTHER-strange_Key:
         type: integer
         (odata.nullable): true
         (odata.key): true
-        required: true
 /orders:
   displayName: orders
   /orderId:
@@ -90,25 +75,20 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Orders
-              additionalProperties: true
               properties:
                 OrderID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 ShipName:
                   type: string
                   (odata.nullable): false
                   (odata.key): false
-                  required: true
                 ShipAddress:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       body: {}
     delete:
       queryParameters:
@@ -133,25 +113,20 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Orders
-              additionalProperties: true
               properties:
                 OrderID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 ShipName:
                   type: string
                   (odata.nullable): false
                   (odata.key): false
-                  required: true
                 ShipAddress:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       body: {}
     put:
       description: Update order
@@ -159,25 +134,20 @@ types:
         "204":
           body:
             application/json:
-              type: object
               (odata.remote): Orders
-              additionalProperties: true
               properties:
                 OrderID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 ShipName:
                   type: string
                   (odata.nullable): false
                   (odata.key): false
-                  required: true
                 ShipAddress:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
@@ -197,25 +167,20 @@ types:
           required: false
       body:
         application/json:
-          type: object
           (odata.remote): Orders
-          additionalProperties: true
           properties:
             OrderID:
               type: integer
               (odata.key): true
               (odata.nullable): false
-              required: true
             ShipName:
               type: string
               (odata.nullable): false
               (odata.key): false
-              required: true
             ShipAddress:
               type: string
               (odata.nullable): true
               (odata.key): false
-              required: true
   get:
     queryParameters:
       orderby:
@@ -255,27 +220,21 @@ types:
       "200":
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Orders
-              type: object
-              additionalProperties: true
               properties:
                 OrderID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 ShipName:
                   type: string
                   (odata.nullable): false
                   (odata.key): false
-                  required: true
                 ShipAddress:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
     body: {}
   post:
     queryParameters:
@@ -316,25 +275,20 @@ types:
       "200":
         body:
           application/json:
-            type: object
             (odata.remote): Orders
-            additionalProperties: true
             properties:
               OrderID:
                 type: integer
                 (odata.key): true
                 (odata.nullable): false
-                required: true
               ShipName:
                 type: string
                 (odata.nullable): false
                 (odata.key): false
-                required: true
               ShipAddress:
                 type: string
                 (odata.nullable): true
                 (odata.key): false
-                required: true
     body: {}
 /customers:
   displayName: customers
@@ -363,30 +317,24 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Customers
-              additionalProperties: true
               properties:
                 CustomerID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 CompanyName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactTitle:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       body: {}
     delete:
       queryParameters:
@@ -411,30 +359,24 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Customers
-              additionalProperties: true
               properties:
                 CustomerID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 CompanyName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactTitle:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       body: {}
     put:
       description: Update customer
@@ -442,30 +384,24 @@ types:
         "204":
           body:
             application/json:
-              type: object
               (odata.remote): Customers
-              additionalProperties: true
               properties:
                 CustomerID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 CompanyName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactTitle:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
@@ -485,30 +421,24 @@ types:
           required: false
       body:
         application/json:
-          type: object
           (odata.remote): Customers
-          additionalProperties: true
           properties:
             CustomerID:
               type: integer
               (odata.key): true
               (odata.nullable): false
-              required: true
             CompanyName:
               type: string
               (odata.nullable): true
               (odata.key): false
-              required: true
             ContactName:
               type: string
               (odata.nullable): true
               (odata.key): false
-              required: true
             ContactTitle:
               type: string
               (odata.nullable): true
               (odata.key): false
-              required: true
   get:
     queryParameters:
       orderby:
@@ -548,32 +478,25 @@ types:
       "200":
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Customers
-              type: object
-              additionalProperties: true
               properties:
                 CustomerID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
-                  required: true
                 CompanyName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactName:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
                 ContactTitle:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
-                  required: true
     body: {}
   post:
     queryParameters:
@@ -614,30 +537,24 @@ types:
       "200":
         body:
           application/json:
-            type: object
             (odata.remote): Customers
-            additionalProperties: true
             properties:
               CustomerID:
                 type: integer
                 (odata.key): true
                 (odata.nullable): false
-                required: true
               CompanyName:
                 type: string
                 (odata.nullable): true
                 (odata.key): false
-                required: true
               ContactName:
                 type: string
                 (odata.nullable): true
                 (odata.key): false
-                required: true
               ContactTitle:
                 type: string
                 (odata.nullable): true
                 (odata.key): false
-                required: true
     body: {}
 /Weird-resource_NAMEs:
   displayName: Weird-resource_NAMEs
@@ -666,20 +583,16 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Weird-resource_NAME
-              additionalProperties: true
               properties:
                 just-A_key:
                   type: string
                   (odata.key): true
                   (odata.nullable): true
-                  required: true
                 ANOTHER-strange_Key:
                   type: integer
                   (odata.nullable): true
                   (odata.key): true
-                  required: true
       body: {}
     delete:
       queryParameters:
@@ -704,20 +617,16 @@ types:
         "200":
           body:
             application/json:
-              type: object
               (odata.remote): Weird-resource_NAME
-              additionalProperties: true
               properties:
                 just-A_key:
                   type: string
                   (odata.key): true
                   (odata.nullable): true
-                  required: true
                 ANOTHER-strange_Key:
                   type: integer
                   (odata.nullable): true
                   (odata.key): true
-                  required: true
       body: {}
     put:
       description: Update Weird-resource_NAME
@@ -725,20 +634,16 @@ types:
         "204":
           body:
             application/json:
-              type: object
               (odata.remote): Weird-resource_NAME
-              additionalProperties: true
               properties:
                 just-A_key:
                   type: string
                   (odata.key): true
                   (odata.nullable): true
-                  required: true
                 ANOTHER-strange_Key:
                   type: integer
                   (odata.nullable): true
                   (odata.key): true
-                  required: true
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
@@ -758,20 +663,16 @@ types:
           required: false
       body:
         application/json:
-          type: object
           (odata.remote): Weird-resource_NAME
-          additionalProperties: true
           properties:
             just-A_key:
               type: string
               (odata.key): true
               (odata.nullable): true
-              required: true
             ANOTHER-strange_Key:
               type: integer
               (odata.nullable): true
               (odata.key): true
-              required: true
   get:
     queryParameters:
       orderby:
@@ -811,22 +712,17 @@ types:
       "200":
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Weird-resource_NAME
-              type: object
-              additionalProperties: true
               properties:
                 just-A_key:
                   type: string
                   (odata.key): true
                   (odata.nullable): true
-                  required: true
                 ANOTHER-strange_Key:
                   type: integer
                   (odata.nullable): true
                   (odata.key): true
-                  required: true
     body: {}
   post:
     queryParameters:
@@ -867,20 +763,16 @@ types:
       "200":
         body:
           application/json:
-            type: object
             (odata.remote): Weird-resource_NAME
-            additionalProperties: true
             properties:
               just-A_key:
                 type: string
                 (odata.key): true
                 (odata.nullable): true
-                required: true
               ANOTHER-strange_Key:
                 type: integer
                 (odata.nullable): true
                 (odata.key): true
-                required: true
     body: {}
 uses:
   odata: libraries/odataLibrary.raml

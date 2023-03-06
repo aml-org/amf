@@ -7,15 +7,11 @@ version: v1
       "200":
         body:
           application/json:
-            type: object
-            additionalProperties: true
             properties:
               name:
                 type: string
-                required: true
               lastName:
                 type: string
-                required: true
   get:
     queryParameters:
       get:
@@ -27,14 +23,9 @@ version: v1
       "200":
         body:
           application/json:
-            type: array
             items:
-              type: object
-              additionalProperties: true
               properties:
                 name:
                   type: string
-                  required: true
                 lastName:
                   type: string
-                  required: true

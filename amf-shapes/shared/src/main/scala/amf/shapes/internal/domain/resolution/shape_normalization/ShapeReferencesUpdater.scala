@@ -37,7 +37,6 @@ case class ShapeReferencesUpdater(context: NormalizationContext) {
 
   private def updateReferencesIn(shape: Shape) = {
     UnnecessaryAnnotationsRemover(shape) // Shouldn't be here
-    ExplicitFieldAnnotationSetter(shape) // Shouldn't be here
 
     shape match {
       case union: UnionShape         => updateReferencesInUnion(union)

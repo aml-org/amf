@@ -12,23 +12,16 @@ title: Sample API
               middleName: Ramiro
               lastName: Funes Mori
               gender: M
-            type: object
-            additionalProperties: true
             properties:
               idNumber:
                 type: integer
-                required: true
               firstName:
                 type: string
-                required: true
-              middleName:
+              middleName?:
                 type: string
-                required: false
               lastName:
                 type: string
-                required: true
               gender:
                 enum:
                   - F
                   - M
-                required: true

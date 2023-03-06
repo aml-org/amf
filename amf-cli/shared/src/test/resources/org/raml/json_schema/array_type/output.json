@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "name",
         "friends"
@@ -16,7 +15,6 @@
         "friends": {
           "items": {
             "type": "object",
-            "additionalProperties": true,
             "required": [
               "name"
             ],

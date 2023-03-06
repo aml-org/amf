@@ -8,11 +8,8 @@ title: hola
       description: Some awesome description!
       queryParameters:
         person:
-          additionalProperties: true
           properties:
             name:
               type: string
-              required: true
             lastName:
               type: string
-              required: true
