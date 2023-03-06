@@ -2,31 +2,22 @@
 title: arrays
 types:
   Human:
-    additionalProperties: true
     properties:
       family:
-        additionalProperties: true
         properties:
           count:
             type: integer
-            required: true
           members:
             items:
               type: object
               (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple/input.raml#/declares/shape/Human
-            required: true
-        required: true
       name:
         type: string
-        required: true
   Address:
     type: string
   Email:
-    additionalProperties: true
     properties:
       base:
         type: string
-        required: true
       domain:
         type: string
-        required: true

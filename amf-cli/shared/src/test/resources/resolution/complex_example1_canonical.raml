@@ -1,134 +1,88 @@
 #%RAML 1.0 Library
 types:
   Phone:
-    additionalProperties: true
     properties:
       manufacturer:
         type: string
-        required: true
       numberOfSIMCards:
         type: number
-        required: true
       kind:
         type: string
-        required: true
   Device:
-    additionalProperties: true
     properties:
       manufacturer:
         type: string
-        required: true
       numberOfUSBPorts:
         type: number
-        required: true
       kind:
         type: string
-        required: true
   Main:
     anyOf:
       -
-        type: object
-        additionalProperties: true
         properties:
           manufacturer:
             type: string
-            required: true
           numberOfSIMCards:
             type: number
-            required: true
           kind:
             type: string
-            required: true
           phone:
-            additionalProperties: true
             properties:
               manufacturer:
                 type: string
-                required: true
               numberOfSIMCards:
                 type: number
-                required: true
               kind:
                 type: string
-                required: true
-            required: true
           device:
             anyOf:
               -
-                additionalProperties: true
                 properties:
                   manufacturer:
                     type: string
-                    required: true
                   numberOfSIMCards:
                     type: number
-                    required: true
                   kind:
                     type: string
-                    required: true
               -
-                additionalProperties: true
                 properties:
                   manufacturer:
                     type: string
-                    required: true
                   numberOfUSBPorts:
                     type: number
-                    required: true
                   kind:
                     type: string
-                    required: true
-            required: true
       -
-        type: object
-        additionalProperties: true
         properties:
           manufacturer:
             type: string
-            required: true
           numberOfUSBPorts:
             type: number
-            required: true
           kind:
             type: string
-            required: true
           phone:
-            additionalProperties: true
             properties:
               manufacturer:
                 type: string
-                required: true
               numberOfSIMCards:
                 type: number
-                required: true
               kind:
                 type: string
-                required: true
-            required: true
           device:
             anyOf:
               -
-                additionalProperties: true
                 properties:
                   manufacturer:
                     type: string
-                    required: true
                   numberOfSIMCards:
                     type: number
-                    required: true
                   kind:
                     type: string
-                    required: true
               -
-                additionalProperties: true
                 properties:
                   manufacturer:
                     type: string
-                    required: true
                   numberOfUSBPorts:
                     type: number
-                    required: true
                   kind:
                     type: string
-                    required: true
-            required: true

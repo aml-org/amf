@@ -2,96 +2,60 @@
 title: My API With Types
 types:
   Cat:
-    type: object
-    additionalProperties: true
     properties:
       cat-prop:
         type: string
-        required: true
   Parrot:
-    type: object
-    additionalProperties: true
     properties:
       parrot-prop:
         type: string
-        required: true
   HasHome:
-    type: object
-    additionalProperties: true
     properties:
       home-prop:
         type: boolean
-        required: true
   IsOnFarm:
-    type: object
-    additionalProperties: true
     properties:
       farm-prop:
         type: boolean
-        required: true
   root:
     anyOf:
       -
-        type: object
-        additionalProperties: true
         properties:
           cat-prop:
             type: string
-            required: true
           home-prop:
             type: boolean
-            required: true
           a:
             type: integer
-            required: true
           b:
             type: string
-            required: true
       -
-        type: object
-        additionalProperties: true
         properties:
           parrot-prop:
             type: string
-            required: true
           home-prop:
             type: boolean
-            required: true
           a:
             type: integer
-            required: true
           b:
             type: string
-            required: true
       -
-        type: object
-        additionalProperties: true
         properties:
           cat-prop:
             type: string
-            required: true
           farm-prop:
             type: boolean
-            required: true
           a:
             type: integer
-            required: true
           b:
             type: string
-            required: true
       -
-        type: object
-        additionalProperties: true
         properties:
           parrot-prop:
             type: string
-            required: true
           farm-prop:
             type: boolean
-            required: true
           a:
             type: integer
-            required: true
           b:
             type: string
-            required: true

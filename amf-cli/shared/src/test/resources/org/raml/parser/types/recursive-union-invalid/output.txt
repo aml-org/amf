@@ -4,7 +4,6 @@ types:
   SomeType:
     anyOf:
       -
-        additionalProperties: true
         properties: {}
       -
         anyOf:
@@ -12,7 +11,6 @@ types:
             items:
               anyOf:
                 -
-                  additionalProperties: true
                   properties: {}
                 -
                   type: object
@@ -21,7 +19,6 @@ types:
             items:
               anyOf:
                 -
-                  additionalProperties: true
                   properties: {}
                 -
                   type: object
@@ -32,7 +29,6 @@ types:
         items:
           anyOf:
             -
-              additionalProperties: true
               properties: {}
             -
               type: object
@@ -41,7 +37,6 @@ types:
         items:
           anyOf:
             -
-              additionalProperties: true
               properties: {}
             -
               type: object
@@ -49,7 +44,6 @@ types:
   AnotherType:
     anyOf:
       -
-        additionalProperties: true
         properties: {}
       -
         type: object
@@ -57,7 +51,6 @@ types:
   OneMoreType:
     anyOf:
       -
-        additionalProperties: true
         properties: {}
       -
         type: object

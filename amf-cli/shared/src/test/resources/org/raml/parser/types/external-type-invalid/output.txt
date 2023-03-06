@@ -4,7 +4,6 @@ types:
   Person:
     displayName: Example Schema
     description: this is a schema describing person
-    additionalProperties: true
     properties:
       firstName:
         type: string
@@ -18,13 +17,11 @@ types:
         minimum: 0
         required: false
   Board:
-    additionalProperties: true
     properties:
       members:
         items:
           displayName: Example Schema
           description: this is a schema describing person
-          additionalProperties: true
           properties:
             firstName:
               type: string
@@ -37,4 +34,3 @@ types:
               type: integer
               minimum: 0
               required: false
-        required: true

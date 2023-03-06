@@ -9,7 +9,6 @@
     "schemas": {
       "Types": {
         "type": "object",
-        "additionalProperties": true,
         "required": [
           "party"
         ],
@@ -18,7 +17,6 @@
             "additionalProperties": {
               "title": "PartyType",
               "type": "object",
-              "additionalProperties": true,
               "required": [
                 "id"
               ],

@@ -9,18 +9,13 @@ types:
     type: string
     maxLength: 5
   Type1:
-    additionalProperties: true
     properties:
       testProperty:
         type: string
         minLength: 0
-        required: true
   Type2:
-    type: object
-    additionalProperties: true
     properties:
       testProperty:
         minLength: 0
         type: string
         maxLength: 5
-        required: true

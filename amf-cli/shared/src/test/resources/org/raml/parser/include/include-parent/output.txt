@@ -14,10 +14,7 @@ mediaType: application/json
       "400":
         body:
           application/json:
-            type: object
             displayName: Platform Fault Datatype
-            additionalProperties: true
             properties:
               message:
                 type: string
-                required: true

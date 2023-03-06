@@ -6,7 +6,6 @@ types:
       someProperty:
         someProperty:
           someProperty: null
-    additionalProperties: true
     properties:
       someProperty:
         anyOf:
@@ -15,4 +14,3 @@ types:
             (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/optional-type/input.raml#/declares/shape/SomeType
           -
             type: nil
-        required: true
