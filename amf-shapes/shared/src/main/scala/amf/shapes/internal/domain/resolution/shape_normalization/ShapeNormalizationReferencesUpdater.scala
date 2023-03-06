@@ -40,7 +40,7 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
     }
   }
 
-  private def isArrayOfShapes(a: AmfArray): Boolean = a.values.forall(v => v.isInstanceOf[Shape])
+  private def isArrayOfShapes(a: AmfArray): Boolean = a.values.nonEmpty && a.values.forall(v => v.isInstanceOf[Shape])
 
   private def updateShapeArrayField(shape: Shape, field: Field, a: AmfArray): Unit = {
     val updatedValues = a.values.map {
