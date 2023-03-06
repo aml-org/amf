@@ -21,7 +21,6 @@
   "definitions": {
     "ErrorModel": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "code"
       ],
@@ -38,7 +37,6 @@
         },
         {
           "type": "object",
-          "additionalProperties": true,
           "required": [
             "rootCause"
           ],

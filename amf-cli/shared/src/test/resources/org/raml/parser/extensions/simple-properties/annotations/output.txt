@@ -6,11 +6,8 @@ baseUri: http://api.com/main
   height: 178
 annotationTypes:
   User:
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
-      age:
+      age?:
         type: integer
-        required: false

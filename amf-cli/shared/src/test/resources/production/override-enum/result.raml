@@ -6,14 +6,11 @@ title: test API to be extended
       "200":
         body:
           application/json:
-            type: object
             example:
               testObjectProperty: A
-            additionalProperties: true
             properties:
               testObjectProperty:
                 enum:
                   - A
                   - B
                 type: string
-                required: true

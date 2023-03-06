@@ -2,121 +2,76 @@
 title: My API With Types
 types:
   Dog:
-    type: object
-    additionalProperties: true
     properties:
       bite:
         type: string
-        required: true
   Cat:
-    type: object
-    additionalProperties: true
     properties:
       claw:
         type: string
-        required: true
   Parrot:
-    type: object
-    additionalProperties: true
     properties:
       feathers:
         type: string
-        required: true
   HasHome:
-    type: object
-    additionalProperties: true
     properties:
       livesInside:
         type: boolean
-        required: true
   IsOnFarm:
-    type: object
-    additionalProperties: true
     properties:
       livesOutside:
         type: boolean
-        required: true
   HomeAnimal:
     anyOf:
       -
-        type: object
-        additionalProperties: true
         properties:
           bite:
             type: string
-            required: true
           livesInside:
             type: boolean
-            required: true
           discriminator:
             type: string
-            required: true
       -
-        type: object
-        additionalProperties: true
+        anyOf:
+          -
+            properties:
+              claw:
+                type: string
+              livesInside:
+                type: boolean
+              discriminator:
+                type: string
+          -
+            properties:
+              feathers:
+                type: string
+              livesInside:
+                type: boolean
+              discriminator:
+                type: string
+      -
         properties:
           bite:
             type: string
-            required: true
           livesOutside:
             type: boolean
-            required: true
           discriminator:
             type: string
-            required: true
       -
         anyOf:
           -
-            type: object
-            additionalProperties: true
             properties:
               claw:
                 type: string
-                required: true
-              livesInside:
+              livesOutside:
                 type: boolean
-                required: true
               discriminator:
                 type: string
-                required: true
           -
-            type: object
-            additionalProperties: true
             properties:
               feathers:
                 type: string
-                required: true
-              livesInside:
-                type: boolean
-                required: true
-              discriminator:
-                type: string
-                required: true
-      -
-        anyOf:
-          -
-            type: object
-            additionalProperties: true
-            properties:
-              claw:
-                type: string
-                required: true
               livesOutside:
                 type: boolean
-                required: true
               discriminator:
                 type: string
-                required: true
-          -
-            type: object
-            additionalProperties: true
-            properties:
-              feathers:
-                type: string
-                required: true
-              livesOutside:
-                type: boolean
-                required: true
-              discriminator:
-                type: string
-                required: true

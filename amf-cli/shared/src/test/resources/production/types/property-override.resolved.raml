@@ -9,41 +9,31 @@ types:
       - DISCRETE
       - CONTINUOUS
   Quantity:
-    type: object
     discriminator: quantityType
-    additionalProperties: true
     properties:
       quantityType:
         type: string
         enum:
           - DISCRETE
           - CONTINUOUS
-        required: true
       amount:
         type: number
         minimum: 0
-        required: true
       unit:
         type: string
         default: EA
-        required: true
   DiscreteQuantity:
     discriminator: quantityType
-    type: object
     discriminatorValue: DISCRETE
-    additionalProperties: true
     properties:
       quantityType:
         type: string
         enum:
           - DISCRETE
           - CONTINUOUS
-        required: true
       unit:
         type: string
         default: EA
-        required: true
       amount:
         minimum: 0
         type: integer
-        required: true

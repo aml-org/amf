@@ -2,7 +2,6 @@
 title: xml body
 types:
   User:
-    type: object
     examples:
       batman:
         firstname: bruce
@@ -12,24 +11,19 @@ types:
         firstname: matt
         lastname: murdock
         age: 52
-    additionalProperties: true
     properties:
       firstname:
         type: string
-        required: true
       lastname:
         type: string
-        required: true
       age:
         type: integer
         minimum: 0
         maximum: 144
-        required: true
 /top:
   get:
     body:
       application/xml:
-        type: object
         examples:
           batman:
             firstname: bruce
@@ -39,24 +33,19 @@ types:
             firstname: matt
             lastname: murdock
             age: 52
-        additionalProperties: true
         properties:
           firstname:
             type: string
-            required: true
           lastname:
             type: string
-            required: true
           age:
             type: integer
             minimum: 0
             maximum: 144
-            required: true
     responses:
       "200":
         body:
           application/xml:
-            type: object
             examples:
               batman:
                 firstname: bruce
@@ -66,16 +55,12 @@ types:
                 firstname: matt
                 lastname: murdock
                 age: 52
-            additionalProperties: true
             properties:
               firstname:
                 type: string
-                required: true
               lastname:
                 type: string
-                required: true
               age:
                 type: integer
                 minimum: 0
                 maximum: 144
-                required: true

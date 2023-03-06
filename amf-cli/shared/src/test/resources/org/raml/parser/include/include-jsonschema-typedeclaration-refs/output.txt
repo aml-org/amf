@@ -14,7 +14,6 @@ types:
           name: Coulson
           hatesYou: false
     displayName: Example Schema
-    additionalProperties: true
     properties:
       firstName:
         type: string
@@ -29,10 +28,7 @@ types:
         required: false
       friends:
         description: A list of friends
-        type: array
         items:
-          type: object
-          additionalProperties: true
           properties:
             hatesYou:
               type: boolean
@@ -58,7 +54,6 @@ types:
                   name: Coulson
                   hatesYou: false
             displayName: Example Schema
-            additionalProperties: true
             properties:
               firstName:
                 type: string
@@ -73,10 +68,7 @@ types:
                 required: false
               friends:
                 description: A list of friends
-                type: array
                 items:
-                  type: object
-                  additionalProperties: true
                   properties:
                     hatesYou:
                       type: boolean

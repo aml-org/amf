@@ -17,21 +17,15 @@ annotationTypes:
     maxLength: 64
     pattern: "[a-zA-Z0-9]{8,32}"
   objectAnnotation:
-    additionalProperties: true
     properties:
       property1:
-        additionalProperties: true
         properties:
-          field1:
+          field1?:
             type: string
-            required: false
           field2:
             type: number
-            required: true
-        required: true
-      property2:
+      property2?:
         type: string
-        required: false
 /resource:
   get:
     (simpleAnnotation): simpleAnnotationValue

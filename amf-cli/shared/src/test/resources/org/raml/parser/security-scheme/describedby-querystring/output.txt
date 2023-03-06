@@ -5,8 +5,6 @@ securitySchemes:
     type: x-custom
     describedBy:
       queryString:
-        additionalProperties: true
         properties:
           authQueryParam:
             type: string
-            required: true

@@ -6,7 +6,6 @@ types:
       someProperty:
         someProperty:
           someProperty: null
-    additionalProperties: true
     properties:
       someProperty:
         anyOf:
@@ -15,4 +14,3 @@ types:
             (amf-recursive): amf://id#1
           -
             type: nil
-        required: true

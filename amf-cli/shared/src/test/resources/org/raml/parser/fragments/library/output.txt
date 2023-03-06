@@ -3,15 +3,11 @@ usage: |
   Use to define some basic file-related constructs.
 types:
   File:
-    type: object
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
       length:
         type: integer
-        required: true
 traits:
   drm:
     headers:

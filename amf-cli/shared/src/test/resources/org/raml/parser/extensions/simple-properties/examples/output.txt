@@ -13,11 +13,8 @@ types:
       tato:
         name: tato
         age: 88
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
-      age:
+      age?:
         type: integer
-        required: false

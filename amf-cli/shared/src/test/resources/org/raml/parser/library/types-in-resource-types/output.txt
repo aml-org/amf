@@ -6,10 +6,8 @@ baseUri: http://localhost:8081/api
   get:
     queryParameters:
       rt:
-        additionalProperties: true
         properties:
           hi:
             type: string
-            required: true
 uses:
   assets: assets-lib.raml

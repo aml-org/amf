@@ -4,14 +4,12 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "internalRef1"
       ],
       "properties": {
         "internalRef1": {
           "type": "object",
-          "additionalProperties": true,
           "required": [
             "a",
             "b"

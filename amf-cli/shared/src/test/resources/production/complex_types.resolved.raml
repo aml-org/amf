@@ -23,70 +23,48 @@ baseUri: https://localhost:8081/api
       "200":
         body:
           application/json:
-            type: array
             items:
-              additionalProperties: true
               properties:
-                id:
+                id?:
                   type: string
-                  required: false
                 customerName:
                   type: string
-                  required: true
                 phone:
                   type: string
-                  required: true
                 email:
                   type: string
-                  required: true
-                billingAddress:
-                  additionalProperties: true
+                billingAddress?:
                   properties:
-                    address:
-                      type: array
+                    address?:
                       minItems: 1
                       items:
                         type: string
-                      required: false
-                    city:
+                    city?:
                       type: string
-                      required: false
-                    state:
+                    state?:
                       type: string
-                      required: false
-                    postalCode:
+                    postalCode?:
                       type: string
-                      required: false
-                    country:
+                    country?:
                       type: string
                       displayName: Country Name
                       description: Country Name
-                      required: false
-                  required: false
-                shippingAddress:
-                  additionalProperties: true
+                shippingAddress?:
                   properties:
-                    address:
-                      type: array
+                    address?:
                       minItems: 1
                       items:
                         type: string
-                      required: false
-                    city:
+                    city?:
                       type: string
-                      required: false
-                    state:
+                    state?:
                       type: string
-                      required: false
-                    postalCode:
+                    postalCode?:
                       type: string
-                      required: false
-                    country:
+                    country?:
                       type: string
                       displayName: Country Name
                       description: Country Name
-                      required: false
-                  required: false
     body: {}
   post:
     description: |
@@ -99,68 +77,47 @@ baseUri: https://localhost:8081/api
             type: any
     body:
       application/json:
-        additionalProperties: true
         properties:
-          id:
+          id?:
             type: string
-            required: false
           customerName:
             type: string
-            required: true
           phone:
             type: string
-            required: true
           email:
             type: string
-            required: true
-          billingAddress:
-            additionalProperties: true
+          billingAddress?:
             properties:
-              address:
-                type: array
+              address?:
                 minItems: 1
                 items:
                   type: string
-                required: false
-              city:
+              city?:
                 type: string
-                required: false
-              state:
+              state?:
                 type: string
-                required: false
-              postalCode:
+              postalCode?:
                 type: string
-                required: false
-              country:
+              country?:
                 type: string
                 displayName: Country Name
                 description: Country Name
-                required: false
-            required: false
-          shippingAddress:
-            additionalProperties: true
+          shippingAddress?:
             properties:
-              address:
-                type: array
+              address?:
                 minItems: 1
                 items:
                   type: string
-                required: false
-              city:
+              city?:
                 type: string
-                required: false
-              state:
+              state?:
                 type: string
-                required: false
-              postalCode:
+              postalCode?:
                 type: string
-                required: false
-              country:
+              country?:
                 type: string
                 displayName: Country Name
                 description: Country Name
-                required: false
-            required: false
   /{id}:
     displayName: Customer ID
     uriParameters:
@@ -184,79 +141,55 @@ baseUri: https://localhost:8081/api
                   message: Bad message
                 example_1:
                   message: Resource not found
-              additionalProperties: true
               properties:
                 message:
                   type: string
-                  required: true
-                code:
+                code?:
                   type: string
-                  required: false
         "200":
           body:
             application/json:
-              additionalProperties: true
               properties:
-                id:
+                id?:
                   type: string
-                  required: false
                 customerName:
                   type: string
-                  required: true
                 phone:
                   type: string
-                  required: true
                 email:
                   type: string
-                  required: true
-                billingAddress:
-                  additionalProperties: true
+                billingAddress?:
                   properties:
-                    address:
-                      type: array
+                    address?:
                       minItems: 1
                       items:
                         type: string
-                      required: false
-                    city:
+                    city?:
                       type: string
-                      required: false
-                    state:
+                    state?:
                       type: string
-                      required: false
-                    postalCode:
+                    postalCode?:
                       type: string
-                      required: false
-                    country:
+                    country?:
                       type: string
                       displayName: Country Name
                       description: Country Name
-                      required: false
-                  required: false
-                shippingAddress:
-                  additionalProperties: true
+                shippingAddress?:
                   properties:
-                    address:
-                      type: array
+                    address?:
                       minItems: 1
                       items:
                         type: string
-                      required: false
-                    city:
+                    city?:
                       type: string
-                      required: false
-                    state:
+                    state?:
                       type: string
-                      required: false
-                    postalCode:
+                    postalCode?:
                       type: string
-                      required: false
-                    country:
+                    country?:
                       type: string
                       displayName: Country Name
                       description: Country Name
-                      required: false
-                  required: false
         "404":
           body:
             application/json:
@@ -265,14 +198,11 @@ baseUri: https://localhost:8081/api
                   message: Bad message
                 example_1:
                   message: Resource not found
-              additionalProperties: true
               properties:
                 message:
                   type: string
-                  required: true
-                code:
+                code?:
                   type: string
-                  required: false
       body: {}
     put:
       responses:
@@ -280,68 +210,47 @@ baseUri: https://localhost:8081/api
           body: {}
       body:
         application/json:
-          additionalProperties: true
           properties:
-            id:
+            id?:
               type: string
-              required: false
             customerName:
               type: string
-              required: true
             phone:
               type: string
-              required: true
             email:
               type: string
-              required: true
-            billingAddress:
-              additionalProperties: true
+            billingAddress?:
               properties:
-                address:
-                  type: array
+                address?:
                   minItems: 1
                   items:
                     type: string
-                  required: false
-                city:
+                city?:
                   type: string
-                  required: false
-                state:
+                state?:
                   type: string
-                  required: false
-                postalCode:
+                postalCode?:
                   type: string
-                  required: false
-                country:
+                country?:
                   type: string
                   displayName: Country Name
                   description: Country Name
-                  required: false
-              required: false
-            shippingAddress:
-              additionalProperties: true
+            shippingAddress?:
               properties:
-                address:
-                  type: array
+                address?:
                   minItems: 1
                   items:
                     type: string
-                  required: false
-                city:
+                city?:
                   type: string
-                  required: false
-                state:
+                state?:
                   type: string
-                  required: false
-                postalCode:
+                postalCode?:
                   type: string
-                  required: false
-                country:
+                country?:
                   type: string
                   displayName: Country Name
                   description: Country Name
-                  required: false
-              required: false
     delete:
       responses:
         "204":
@@ -369,96 +278,67 @@ baseUri: https://localhost:8081/api
                   message: Bad message
                 example_1:
                   message: Resource not found
-              additionalProperties: true
               properties:
                 message:
                   type: string
-                  required: true
-                code:
+                code?:
                   type: string
-                  required: false
         "200":
           body:
             application/json:
               anyOf:
                 -
-                  additionalProperties: true
                   properties:
-                    id:
+                    id?:
                       type: string
-                      required: false
                     customerName:
                       type: string
-                      required: true
                     phone:
                       type: string
-                      required: true
                     email:
                       type: string
-                      required: true
-                    billingAddress:
-                      additionalProperties: true
+                    billingAddress?:
                       properties:
-                        address:
-                          type: array
+                        address?:
                           minItems: 1
                           items:
                             type: string
-                          required: false
-                        city:
+                        city?:
                           type: string
-                          required: false
-                        state:
+                        state?:
                           type: string
-                          required: false
-                        postalCode:
+                        postalCode?:
                           type: string
-                          required: false
-                        country:
+                        country?:
                           type: string
                           displayName: Country Name
                           description: Country Name
-                          required: false
-                      required: false
-                    shippingAddress:
-                      additionalProperties: true
+                    shippingAddress?:
                       properties:
-                        address:
-                          type: array
+                        address?:
                           minItems: 1
                           items:
                             type: string
-                          required: false
-                        city:
+                        city?:
                           type: string
-                          required: false
-                        state:
+                        state?:
                           type: string
-                          required: false
-                        postalCode:
+                        postalCode?:
                           type: string
-                          required: false
-                        country:
+                        country?:
                           type: string
                           displayName: Country Name
                           description: Country Name
-                          required: false
-                      required: false
                 -
-                  additionalProperties: true
                   properties:
-                    id:
+                    id?:
                       type: string
-                      required: false
                     sellerName:
                       type: string
-                      required: true
                     phone:
                       type: string
-                      required: true
                     email:
                       type: string
-                      required: true
         "404":
           body:
             application/json:
@@ -467,12 +347,9 @@ baseUri: https://localhost:8081/api
                   message: Bad message
                 example_1:
                   message: Resource not found
-              additionalProperties: true
               properties:
                 message:
                   type: string
-                  required: true
-                code:
+                code?:
                   type: string
-                  required: false
       body: {}

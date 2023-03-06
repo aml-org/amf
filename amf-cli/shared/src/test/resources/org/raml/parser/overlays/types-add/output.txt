@@ -11,13 +11,10 @@ types:
     example:
       lat: -34.6
       long: -58.4
-    additionalProperties: true
     properties:
       lat:
         type: number
-        required: true
       long:
         type: number
-        required: true
   another-scalar:
     type: string
