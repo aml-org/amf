@@ -4,7 +4,6 @@
   "definitions": {
     "recursive": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "a",
         "b"
@@ -15,7 +14,6 @@
         },
         "b": {
           "type": "object",
-          "additionalProperties": true,
           "properties": {
             "c": {
               "$ref": "#/definitions/recursive"

@@ -11,14 +11,11 @@ types:
         value:
           value1: bb
           value2: 10
-    additionalProperties: true
     properties:
       value1:
         type: string
-        required: true
       value2:
         type: integer
-        required: true
 /endpoint:
   get:
     body:
@@ -32,11 +29,8 @@ types:
             value:
               value1: bb
               value2: 10
-        additionalProperties: true
         properties:
           value1:
             type: string
-            required: true
           value2:
             type: integer
-            required: true

@@ -1550,7 +1550,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                      |  "definitions": {
                      |    "SomeType": {
                      |      "type": "object",
-                     |      "additionalProperties": true,
                      |      "required": [
                      |        "a",
                      |        "b"
@@ -1586,7 +1585,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |  "definitions": {
                         |    "C": {
                         |      "type": "object",
-                        |      "additionalProperties": true,
                         |      "properties": {
                         |        "c1": {
                         |          "items": {
@@ -1598,11 +1596,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |    },
                         |    "A": {
                         |      "type": "object",
-                        |      "additionalProperties": true,
                         |      "properties": {
                         |        "a1": {
                         |          "type": "object",
-                        |          "additionalProperties": true,
                         |          "properties": {
                         |            "c1": {
                         |              "items": {
@@ -1705,7 +1701,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           |  "definitions": {
           |    "A": {
           |      "type": "object",
-          |      "additionalProperties": true,
           |      "required": [
           |        "a1",
           |        "a2",
@@ -1903,71 +1898,71 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit     <- client.parse(api).asFuture
       resolved <- Future(client.transform(unit.baseUnit, PipelineId.Cache))
     } yield {
-      val golden = """{
-                        |  "$schema": "http://json-schema.org/draft-07/schema#",
-                        |  "$ref": "#/definitions/conditional-subschemas",
-                        |  "definitions": {
-                        |    "conditional-subschemas": {
-                        |      "type": "object",
-                        |      "if": {
-                        |        "properties": {
-                        |          "country": {
-                        |            "enum": [
-                        |              "United States of America"
-                        |            ]
-                        |          }
-                        |        },
-                        |        "type": "object"
-                        |      },
-                        |      "then": {
-                        |        "properties": {
-                        |          "postal_code": {
-                        |            "pattern": "[0-9]{5}(-[0-9]{4})?",
-                        |            "type": "string"
-                        |          }
-                        |        },
-                        |        "type": "object"
-                        |      },
-                        |      "else": {
-                        |        "properties": {
-                        |          "postal_code": {
-                        |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
-                        |            "type": "string"
-                        |          }
-                        |        },
-                        |        "type": "object"
-                        |      },
-                        |      "examples": [
-                        |        {
-                        |          "country": "United States of America",
-                        |          "postal_code": "dlkfjslfj"
-                        |        },
-                        |        {
-                        |          "country": "United States of America",
-                        |          "postal_code": "20500"
-                        |        },
-                        |        {
-                        |          "country": "Canada",
-                        |          "postal_code": "K1M 1M4"
-                        |        },
-                        |        {
-                        |          "country": "Canada",
-                        |          "postal_code": "K1M NOT"
-                        |        }
-                        |      ],
-                        |      "additionalProperties": true,
-                        |      "properties": {
-                        |        "country": {
-                        |          "enum": [
-                        |            "United States of America",
-                        |            "Canada"
-                        |          ]
-                        |        }
-                        |      }
-                        |    }
-                        |  }
-                        |}
-                        |""".stripMargin
+      val golden =
+        """{
+          |  "$schema": "http://json-schema.org/draft-07/schema#",
+          |  "$ref": "#/definitions/conditional-subschemas",
+          |  "definitions": {
+          |    "conditional-subschemas": {
+          |      "type": "object",
+          |      "if": {
+          |        "properties": {
+          |          "country": {
+          |            "enum": [
+          |              "United States of America"
+          |            ]
+          |          }
+          |        },
+          |        "type": "object"
+          |      },
+          |      "then": {
+          |        "properties": {
+          |          "postal_code": {
+          |            "pattern": "[0-9]{5}(-[0-9]{4})?",
+          |            "type": "string"
+          |          }
+          |        },
+          |        "type": "object"
+          |      },
+          |      "else": {
+          |        "properties": {
+          |          "postal_code": {
+          |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
+          |            "type": "string"
+          |          }
+          |        },
+          |        "type": "object"
+          |      },
+          |      "examples": [
+          |        {
+          |          "country": "United States of America",
+          |          "postal_code": "dlkfjslfj"
+          |        },
+          |        {
+          |          "country": "United States of America",
+          |          "postal_code": "20500"
+          |        },
+          |        {
+          |          "country": "Canada",
+          |          "postal_code": "K1M 1M4"
+          |        },
+          |        {
+          |          "country": "Canada",
+          |          "postal_code": "K1M NOT"
+          |        }
+          |      ],
+          |      "properties": {
+          |        "country": {
+          |          "enum": [
+          |            "United States of America",
+          |            "Canada"
+          |          ]
+          |        }
+          |      }
+          |    }
+          |  }
+          |}
+          |""".stripMargin
       val options = new RenderOptions().withoutCompactedEmission().withSchemaVersion(JSONSchemaVersions.Draft07)
       val shape =
         resolved.baseUnit

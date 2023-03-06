@@ -1,24 +1,16 @@
 #%RAML 1.0 Library
 types:
   Animal:
-    additionalProperties: true
     properties:
       age:
         type: integer
-        required: true
   Pet:
-    additionalProperties: true
     properties:
       owner:
         type: string
-        required: true
   Cat:
-    type: object
-    additionalProperties: true
     properties:
       age:
         type: integer
-        required: true
       owner:
         type: string
-        required: true

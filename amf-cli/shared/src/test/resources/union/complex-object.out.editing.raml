@@ -2,47 +2,31 @@
 title: Test Union
 types:
   SomeType:
-    type: object
-    additionalProperties: true
     properties:
       a:
         type: string
-        required: true
       b:
         type: integer
-        required: true
   OtherType:
-    type: object
-    additionalProperties: true
     properties:
       c:
         type: number
-        required: true
       d:
         type: string
-        required: true
 /someEndpoint:
   post:
     body:
       application/json:
         anyOf:
           -
-            type: object
-            additionalProperties: true
             properties:
               a:
                 type: string
-                required: true
               b:
                 type: integer
-                required: true
           -
-            type: object
-            additionalProperties: true
             properties:
               c:
                 type: number
-                required: true
               d:
                 type: string
-                required: true

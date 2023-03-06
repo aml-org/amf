@@ -5,56 +5,34 @@ mediaType:
   - application/xml
 types:
   Person:
-    type: object
-    additionalProperties: true
     properties:
       id:
         type: string
-        required: true
   Persona:
-    type: object
-    additionalProperties: true
     properties:
       id:
         type: string
-        required: true
   User:
-    type: object
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
       friend:
-        type: object
-        additionalProperties: true
         properties:
           id:
             type: string
-            required: true
-        required: true
 /foo:
   get:
     body:
       application/json:
-        type: object
-        additionalProperties: true
         properties:
           id:
             type: string
-            required: true
   /tato:
     get:
       body:
         application/json:
-          type: object
-          additionalProperties: true
           properties:
             chango:
-              type: object
-              additionalProperties: true
               properties:
                 id:
                   type: string
-                  required: true
-              required: true

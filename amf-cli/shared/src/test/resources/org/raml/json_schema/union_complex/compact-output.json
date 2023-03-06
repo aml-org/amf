@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "value"
       ],
@@ -23,7 +22,6 @@
     },
     "cat": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "name",
         "color"
@@ -39,7 +37,6 @@
     },
     "dog": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "name",
         "fangs"

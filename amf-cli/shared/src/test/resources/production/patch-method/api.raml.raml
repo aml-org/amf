@@ -8,16 +8,11 @@ baseUri: http://test.com/
       "200":
         body:
           application/json:
-            type: object
-            additionalProperties: true
             properties:
               path:
                 type: string
-                required: true
               op:
                 enum:
                   - add
-                required: true
               value:
                 type: any
-                required: true

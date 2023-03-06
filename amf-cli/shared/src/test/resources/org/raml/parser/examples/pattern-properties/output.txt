@@ -13,6 +13,5 @@ types:
       age:
         type: number
         required: false
-      //^note\d+$//:
+      /^note\d+$/?:
         type: string
-        required: false

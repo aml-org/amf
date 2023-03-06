@@ -3,7 +3,6 @@ title: array error
 version: v1
 types:
   DummyObject:
-    type: object
     examples:
       one:
         id: 1
@@ -36,19 +35,15 @@ types:
             - array
             - 34
             - 3.14
-    additionalProperties: true
     properties:
       id:
         type: integer
-        required: true
       dummyList:
         type: array
-        required: true
 /send:
   post:
     body:
       application/json:
-        type: object
         examples:
           one:
             id: 1
@@ -81,11 +76,8 @@ types:
                 - array
                 - 34
                 - 3.14
-        additionalProperties: true
         properties:
           id:
             type: integer
-            required: true
           dummyList:
             type: array
-            required: true
