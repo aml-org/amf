@@ -828,9 +828,6 @@ declare module "amf-client-js" {
   export interface Annotable {
     annotations(): Annotations;
   }
-  export interface JsonLDElement extends Annotable {
-    annotations(): Annotations;
-  }
   export class AnnotationMapping implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -2641,7 +2638,7 @@ declare module "amf-client-js" {
 
     withSelfEncoded(selfEncoded: boolean): DocumentsModel;
   }
-  export interface DomainElement extends CustomizableElement {
+  export interface DomainElement extends AmfObjectWrapper, CustomizableElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
     id: string;
@@ -3419,13 +3416,19 @@ declare module "amf-client-js" {
       configuration: AMFGraphConfiguration
     ): BaseUnit;
   }
-  export class JsonLDArray {
+  export class JsonLDArray implements JsonLDElement {
     jsonLDElements: Array<JsonLDElement>;
 
     constructor();
+    annotations(): Annotations;
   }
-  export class JsonLDError {
+  export interface JsonLDElement extends Annotable {
+    annotations(): Annotations;
+  }
+  export class JsonLDError implements JsonLDElement {
     constructor();
+
+    annotations(): Annotations;
   }
   export class JsonLDInstanceDocument implements BaseUnit {
     encodes: Array<JsonLDElement>;
@@ -3478,7 +3481,7 @@ declare module "amf-client-js" {
   export class JsonLDInstanceResult extends AMFParseResult {
     readonly instance: JsonLDInstanceDocument;
   }
-  export class JsonLDObject implements DomainElement {
+  export class JsonLDObject implements DomainElement, JsonLDElement {
     componentId: string;
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -3533,7 +3536,7 @@ declare module "amf-client-js" {
       values: Array<string>
     ): JsonLDObject;
   }
-  export class JsonLDScalar {
+  export class JsonLDScalar implements JsonLDElement {
     readonly dataType: string;
     readonly value: any;
 
