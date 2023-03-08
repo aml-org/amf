@@ -387,6 +387,11 @@ object ShapeParserSideValidations extends Validations {
     "The definition key present in the ref is not the correct for the JSON Schema"
   )
 
+  val EmptyTypeExpressionArray = validation(
+    "empty-type-expression-array",
+    "Empty type expression array"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -442,6 +447,7 @@ object ShapeParserSideValidations extends Validations {
     JsonSchemaDefinitionNotFound,
     InvalidJsonSchemaReference,
     MultipleDefinitionKey,
-    IncorrectDefinitionKey
+    IncorrectDefinitionKey,
+    EmptyTypeExpressionArray
   )
 }

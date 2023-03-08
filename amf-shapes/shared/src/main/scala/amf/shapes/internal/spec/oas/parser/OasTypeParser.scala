@@ -150,7 +150,7 @@ case class Draft4TypeParser(
 )(implicit val ctx: ShapeParserContext) {
 
   private val ast: YPart                   = entryOrNode.ast
-  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
+  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations.virtual())
 
   def parse: Option[AnyShape] = {
     val hasLink = LinkCriteria.detect(map).isDefined

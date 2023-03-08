@@ -5,12 +5,7 @@ import amf.apicontract.internal.validation.plugin.BaseApiValidationPlugin
 import amf.core.client.common.validation.ProfileName
 import amf.core.internal.plugins.validation.ValidationInfo
 import amf.shapes.internal.validation.payload.BasePayloadValidationPlugin
-import amf.shapes.internal.validation.payload.collector.{
-  EnumInShapesCollector,
-  ExtensionsCollector,
-  PayloadsCollector,
-  ValidationCandidateCollector
-}
+import amf.shapes.internal.validation.payload.collector.{DiscriminatorValuesCollector, EnumInShapesCollector, ExtensionsCollector, PayloadsCollector, ValidationCandidateCollector}
 
 object APIPayloadValidationPlugin {
 
@@ -25,7 +20,7 @@ class APIPayloadValidationPlugin(override val profile: ProfileName)
     with BaseApiValidationPlugin {
 
   override val collectors: Seq[ValidationCandidateCollector] =
-    Seq(PayloadsCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector)
+    Seq(PayloadsCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector, DiscriminatorValuesCollector)
 
   override val id: String = APIPayloadValidationPlugin.id
 

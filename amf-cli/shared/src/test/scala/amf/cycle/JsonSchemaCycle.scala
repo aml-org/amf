@@ -259,10 +259,10 @@ object JsonSchemaTestEmitters {
   val DRAFT_6_EMITTER: JsonSchemaTestEmitter       = JsonSchemaTestEmitter(JSONSchemaDraft6SchemaVersion)
 }
 
-case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
+case class JsonSchemaTestEmitter(to: JSONSchemaVersion, baseOptions: RenderOptions = RenderOptions())
+    extends SchemaEmitter {
 
-  private val options =
-    RenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
+  private val options = baseOptions.withSchemaVersion(SchemaVersion.toClientOptions(to))
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val config    = EmptyRenderConfiguration(UnhandledErrorHandler, options)

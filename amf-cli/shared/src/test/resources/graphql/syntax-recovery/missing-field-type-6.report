@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/syntax-recovery/missing-field-type-6.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Field 'type' missing field type
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(2,4)-(2,8)]
+  Location: 

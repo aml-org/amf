@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/standalone-array-as-type.raml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-type-expression-array
+  Message: [] is not a valid type
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,14)-(9,16)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/standalone-array-as-type.raml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#empty-type-expression-array
+  Message: [] is not a valid type
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(12,14)-(12,16)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/standalone-array-as-type.raml

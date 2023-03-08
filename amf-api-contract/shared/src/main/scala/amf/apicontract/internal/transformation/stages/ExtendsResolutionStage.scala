@@ -1,11 +1,6 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.templates.{
-  ParametrizedResourceType,
-  ParametrizedTrait,
-  ResourceType,
-  Trait
-}
+import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.apicontract.internal.spec.common.emitter.{Raml10EndPointEmitter, Raml10OperationEmitter}
@@ -13,6 +8,7 @@ import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
 import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMerging
 import amf.apicontract.internal.spec.raml.emitter.context.Raml10SpecEmitterContext
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.transformation.BaseUnitSourceLocationIndex
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
@@ -20,7 +16,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.annotations.{ErrorDeclaration, SourceAST, SourceYPart}
+import amf.core.internal.annotations.{ErrorDeclaration, SourceYPart}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{ParseConfig, YNodeLikeOps}
 import amf.core.internal.plugins.render.RenderConfiguration
@@ -49,16 +45,19 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       model: BaseUnit,
       errorHandler: AMFErrorHandler,
       configuration: AMFGraphConfiguration
-  ): BaseUnit =
-    new ExtendsResolution(profile, keepEditingInfo, fromOverlay, config = configuration)(errorHandler)
+  ): BaseUnit = {
+    val index = BaseUnitSourceLocationIndex.build(model)
+    new ExtendsResolution(profile, keepEditingInfo, fromOverlay, config = configuration, index = index)(errorHandler)
       .transform(model, configuration)
+  }
 
   class ExtendsResolution(
       profile: ProfileName,
       val keepEditingInfo: Boolean,
       val fromOverlay: Boolean = false,
       visited: mutable.Set[String] = mutable.Set(),
-      config: AMFGraphConfiguration
+      config: AMFGraphConfiguration,
+      index: BaseUnitSourceLocationIndex
   )(implicit val errorHandler: AMFErrorHandler) {
 
     /** Default to raml10 context. */
@@ -86,7 +85,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
             apiContext.eh.violation(TransformationValidation, r.id, None, message, r.position(), r.location())
           )
           val extendsHelper =
-            ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, configuration, Some(apiContext))
+            ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, configuration, index, Some(apiContext))
           val result = extendsHelper.asEndpoint(
             context.model,
             node,
@@ -352,7 +351,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                 })
 
                 val extendsHelper =
-                  ExtendsHelper(profile, keepEditingInfo = true, errorHandler, configuration, Some(apiContext))
+                  ExtendsHelper(profile, keepEditingInfo = true, errorHandler, configuration, index, Some(apiContext))
                 val op = extendsHelper.asOperation(
                   node,
                   context.model,

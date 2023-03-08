@@ -712,4 +712,20 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("nested JSON Schema reference by id in draft 4") {
     validate("/raml/nested-json-schema-ref/api.raml", Some("raml/nested-json-schema-ref.report"))
   }
+
+  test("empty array expression in union should be invalid") {
+    validate(
+      "/raml/empty-array-in-union-type-expression.raml",
+      Some("raml/empty-array-in-union-type-expression.report")
+    )
+  }
+
+  test("Standalone array as type") {
+    validate("/raml/standalone-array-as-type.raml", Some("raml/standalone-array-as-type.report"))
+  }
+
+  // W-11680259
+  test("a json example with @context that points to nowhere should not throw an error") {
+    validate("/raml/raml-with-json-schema/api.raml")
+  }
 }

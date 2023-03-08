@@ -6,18 +6,19 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorEndPoint
 import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.transformation.BaseUnitSourceLocationIndex
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.ParseResourceTypeFail
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
-import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.annotations._
 import amf.core.internal.datanode.DataNodeEmitter
-import amf.core.internal.parser.{LimitedParseConfig, ParseConfig}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
+import amf.core.internal.parser.{LimitedParseConfig, ParseConfig}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
@@ -33,6 +34,7 @@ case class ExtendsHelper(
     keepEditingInfo: Boolean,
     errorHandler: AMFErrorHandler,
     config: AMFGraphConfiguration,
+    index: BaseUnitSourceLocationIndex,
     context: Option[RamlWebApiContext] = None
 ) {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
@@ -207,23 +209,6 @@ case class ExtendsHelper(
     }
   }
 
-  private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {
-    case (f: Fragment) :: _ if sourceNameMatch(f, sourceName) => Some(f)
-    case (m: Module) :: _ if sourceNameMatch(m, sourceName)   => Some(m)
-    case unit :: tail =>
-      getDeclaringUnit(tail, sourceName) match {
-        case ref @ Some(_) => ref
-        case _             => getDeclaringUnit(unit.references.toList, sourceName)
-      }
-    case _ => None
-  }
-
-  private def sourceNameMatch(f: AmfElement, sourceName: String): Boolean =
-    f.annotations
-      .find(classOf[SourceLocation])
-      .map(_.location)
-      .contains(sourceName)
-
   private def extractFilteredDeclarations(
       unit: BaseUnit,
       filterCondition: DomainElement => Boolean
@@ -244,7 +229,7 @@ case class ExtendsHelper(
     *   context to populate with declarations
     */
   private def extractContextDeclarationsFrom(root: BaseUnit, sourceName: String)(ctx: RamlWebApiContext): Unit = {
-    val declaringUnit     = getDeclaringUnit(root.references.toList, sourceName).getOrElse(root)
+    val declaringUnit     = index.get(sourceName).getOrElse(root)
     val libraries         = extractFilteredDeclarations(declaringUnit, _.isInstanceOf[Module]).map((_, declaringUnit))
     val otherDeclarations = extractFilteredDeclarations(root, !_.isInstanceOf[Module]).map((_, root))
 

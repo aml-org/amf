@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: API body demo
+version: v1
+baseUri: http://api.domain.com/
+
+types:
+  JsonSchema:
+    type: !include person.json
+    example: !include person-example.json
