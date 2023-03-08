@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
 Profile: RAML 1.0
 Conforms: true
-Number of results: 3
+Number of results: 4
 
 Level: Warning
 
@@ -11,6 +11,14 @@ Level: Warning
   Target: 
   Property: http://a.ml/vocabularies/shapes#inherits
   Range: [(11,0)-(16,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#inheritance-from-json-schema
+  Message: JSON Schemas can't be used in type expressions or type inheritance
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declares/array/PersonArray
+  Property: http://a.ml/vocabularies/shapes#items
+  Range: [(16,2)-(21,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
