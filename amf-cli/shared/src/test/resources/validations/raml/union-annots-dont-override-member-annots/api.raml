@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Something
+annotationTypes:
+  complex:
+    allowedTargets: TypeDeclaration
+    type: string
+  flag:
+    type: nil
+    allowedTargets: TypeDeclaration
+
+types:
+  Type1:
+    (complex): "Type1"
+    type: object
+    properties:
+      type1prop: string
+  Type2:
+    (flag):
+    type: object
+    properties:
+      type2prop: string
+  Union:
+    (flag):
+    (complex): "Union"
+    type: Type1 | Type2
