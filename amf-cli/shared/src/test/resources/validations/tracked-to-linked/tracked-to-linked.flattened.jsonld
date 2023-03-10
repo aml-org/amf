@@ -345,10 +345,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#3"
+          "@id": "#4"
         },
         {
-          "@id": "#5"
+          "@id": "#6"
         }
       ],
       "shacl:name": "Employee",
@@ -362,7 +362,7 @@
           "shacl:closed": "true"
         },
         "resolved-link-target": {
-          "#14": "amf://id#2"
+          "#14": "amf://id#3"
         },
         "type-property-lexical-info": {
           "#14": "[(2,0)-(2,4)]"
@@ -404,7 +404,7 @@
       }
     },
     {
-      "@id": "#3",
+      "@id": "#4",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -417,7 +417,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#4"
+        "@id": "#5"
       },
       "shacl:minCount": 1,
       "shacl:name": "id",
@@ -428,12 +428,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(4,6)-(4,13)]",
-          "#3": "[(4,2)-(5,0)]"
+          "#4": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#6",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -446,7 +446,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#6"
+        "@id": "#7"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
@@ -457,7 +457,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(5,8)-(5,14)]",
-          "#5": "[(5,2)-(5,14)]"
+          "#6": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -510,7 +510,7 @@
       }
     },
     {
-      "@id": "#4",
+      "@id": "#5",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -527,12 +527,12 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(4,6)-(4,13)]",
-          "#4": "[(4,2)-(5,0)]"
+          "#5": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#7",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -549,7 +549,7 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(5,8)-(5,14)]",
-          "#6": "[(5,2)-(5,14)]"
+          "#7": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -812,11 +812,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "#3"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#7"
+        "@id": "#2"
       },
       "smaps": {
         "lexical": {
@@ -865,7 +865,7 @@
       }
     },
     {
-      "@id": "#2",
+      "@id": "#3",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -876,10 +876,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#3"
+          "@id": "#4"
         },
         {
-          "@id": "#5"
+          "@id": "#6"
         }
       ],
       "shacl:name": "type",
@@ -888,15 +888,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#2": "[(2,0)-(5,14)]"
+          "#3": "[(2,0)-(5,14)]"
         },
         "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
+          "#3": "[(2,0)-(2,4)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#2",
       "@type": [
         "doc:APIContractProcessingData"
       ],

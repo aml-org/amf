@@ -69,4 +69,20 @@ types:
               kind:
                 type: string
           device:
-            type: Phone | Device
+            anyOf:
+              -
+                properties:
+                  manufacturer:
+                    type: string
+                  numberOfSIMCards:
+                    type: number
+                  kind:
+                    type: string
+              -
+                properties:
+                  manufacturer:
+                    type: string
+                  numberOfUSBPorts:
+                    type: number
+                  kind:
+                    type: string

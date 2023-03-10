@@ -6,18 +6,18 @@ import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
 
 case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
-  private var visited: Set[String] = Set.empty
+  def update(e: AmfElement): AmfElement = {
+    e match {
+      case s: Shape => updateShape(s)
+      case e        => e
+    }
+  }
 
-  def update(shape: Shape): Shape = {
+  def updateShape(shape: Shape): Shape = {
     val updated = AnyShapeAdjuster(retrieveLatestVersionOf(shape))
 
     // TODO: this is horrible
     UnnecessaryAnnotationsRemover(updated)
-
-    if (!visited.contains(shape.id)) {
-      visited = visited + shape.id
-      updateFields(updated)
-    }
 
     updated
   }
@@ -29,12 +29,12 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
     }
   }
 
-  private def updateFields(shape: Shape): Unit = {
-    val fieldEntries = shape.fields.fields()
+  def updateFields(o: AmfObject): Unit = {
+    val fieldEntries = o.fields.fields()
     fieldEntries.foreach { case FieldEntry(field, value) =>
       value.value match {
-        case s: Shape                          => updateShapeField(shape, field, s)
-        case a: AmfArray if isArrayOfShapes(a) => updateShapeArrayField(shape, field, a)
+        case s: Shape                          => updateShapeField(o, field, s)
+        case a: AmfArray if isArrayOfShapes(a) => updateShapeArrayField(o, field, a)
         case _                                 => // ignore
       }
     }
@@ -42,17 +42,17 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
 
   private def isArrayOfShapes(a: AmfArray): Boolean = a.values.nonEmpty && a.values.forall(v => v.isInstanceOf[Shape])
 
-  private def updateShapeArrayField(shape: Shape, field: Field, a: AmfArray): Unit = {
+  private def updateShapeArrayField(o: AmfObject, field: Field, a: AmfArray): Unit = {
     val updatedValues = a.values.map {
-      case s: Shape => update(s)
+      case s: Shape => updateShape(s)
       case v        => v // ignore
     }
-    setArrayField(shape, field, updatedValues)
+    setArrayField(o, field, updatedValues)
   }
 
-  private def updateShapeField(shape: Shape, field: Field, s: Shape): Unit = {
-    val updatedValue = update(s)
-    setField(shape, field, updatedValue)
+  private def updateShapeField(o: AmfObject, field: Field, s: Shape): Unit = {
+    val updatedValue = updateShape(s)
+    setField(o, field, updatedValue)
   }
 
   private def setField(obj: AmfObject, field: Field, value: AmfElement): Unit = {

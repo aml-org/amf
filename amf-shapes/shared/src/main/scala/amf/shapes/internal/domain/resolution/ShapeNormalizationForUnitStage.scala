@@ -5,13 +5,14 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.FieldsFilter.All
-import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
+import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, DomainElementStrategy, InstanceCollector}
 import amf.core.internal.transform.stages.selectors.ShapeSelector
 import amf.shapes.internal.domain.resolution.shape_normalization.{
   NormalizationContext,
-  ShapeNormalizationRecursionAnalyzer,
   ShapeNormalizationInheritanceResolver,
+  ShapeNormalizationRecursionAnalyzer,
   ShapeNormalizationReferencesUpdater
 }
 
@@ -49,14 +50,11 @@ class ShapeNormalizationForUnitStage(profile: ProfileName, val keepEditingInfo: 
   private def updateReferences(model: BaseUnit)(implicit context: NormalizationContext): Unit = {
     val updater = ShapeNormalizationReferencesUpdater(context)
 
-    def updateReferences(element: DomainElement): Option[DomainElement] = {
-      element match {
-        case shape: Shape => Some(updater.update(shape))
-        case other        => Some(other)
-      }
+    val iterator = AmfUpdaterIterator(model, e => updater.update(e))
+    iterator.foreach {
+      case o: AmfObject => updater.updateFields(o)
+      case _            => // skip
     }
-
-    model.transform(ShapeSelector, (elem, _) => updateReferences(elem))(context.errorHandler)
   }
 
   private def validateAndPlaceRecursions(model: BaseUnit)(implicit context: NormalizationContext): Unit = {

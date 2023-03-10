@@ -11,7 +11,7 @@ class ShapeNormalizationForElementStage(context: NormalizationContext) extends E
 
   override def transform(shape: Shape, configuration: AMFGraphConfiguration): Option[Shape] = {
     val resolvedInheritance = ShapeNormalizationInheritanceResolver(context).normalize(shape)
-    val fixedReferences     = ShapeNormalizationReferencesUpdater(context).update(resolvedInheritance)
+    val fixedReferences     = ShapeNormalizationReferencesUpdater(context).updateShape(resolvedInheritance)
     Some(fixedReferences)
   }
 }
