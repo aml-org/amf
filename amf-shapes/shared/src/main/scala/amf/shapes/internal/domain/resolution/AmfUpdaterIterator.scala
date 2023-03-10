@@ -9,7 +9,16 @@ case class AmfUpdaterIterator private (
 ) extends AmfIterator {
   private val visited: VisitedCollector = InstanceCollector()
 
-  override def hasNext: Boolean = buffer.nonEmpty
+  override def hasNext: Boolean = {
+    if (buffer.nonEmpty) {
+      val current = buffer.head
+      if (visited.visited(current)) {
+        buffer = buffer.tail
+        hasNext
+      } else true
+
+    } else false
+  }
 
   override def next: AmfElement = {
     val current = buffer.head
