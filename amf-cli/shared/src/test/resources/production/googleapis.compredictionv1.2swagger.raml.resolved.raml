@@ -58,7 +58,9 @@ securitySchemes:
                 properties:
                   csvInstance:
                     items: {}
+                    type: array
                     required: false
+                type: object
                 required: false
         responses:
           "200":
@@ -144,6 +146,7 @@ securitySchemes:
             csvInstance:
               description: The input features for this instance
               items: {}
+              type: array
               required: false
       responses:
         "200":
@@ -346,6 +349,7 @@ securitySchemes:
               modelType:
                 type: string
                 required: false
+            type: object
             required: false
           selfLink:
             type: string
@@ -439,7 +443,9 @@ securitySchemes:
                 properties:
                   csvInstance:
                     items: {}
+                    type: array
                     required: false
+                type: object
                 required: false
         responses:
           "200":
