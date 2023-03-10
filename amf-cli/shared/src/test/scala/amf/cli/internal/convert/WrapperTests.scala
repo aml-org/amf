@@ -23,7 +23,11 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
+import amf.core.client.scala.model.domain.{
+  ArrayNode => InternalArrayNode,
+  ObjectNode => InternalObjectNode,
+  ScalarNode => InternalScalarNode
+}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -1906,32 +1910,32 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           |    "conditional-subschemas": {
           |      "type": "object",
           |      "if": {
+          |        "type": "object",
           |        "properties": {
           |          "country": {
           |            "enum": [
           |              "United States of America"
           |            ]
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "then": {
+          |        "type": "object",
           |        "properties": {
           |          "postal_code": {
           |            "pattern": "[0-9]{5}(-[0-9]{4})?",
           |            "type": "string"
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "else": {
+          |        "type": "object",
           |        "properties": {
           |          "postal_code": {
           |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
           |            "type": "string"
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "examples": [
           |        {
@@ -2135,9 +2139,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Cycle API with DataType Fragment") {
     val client = OASConfiguration.OAS20().baseUnitClient()
-    val path = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
+    val path   = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
     for {
-      parsingResult <- client.parse(path).asFuture
+      parsingResult    <- client.parse(path).asFuture
       resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
     } yield {
       val references = resolutionResult.baseUnit.references()
@@ -2146,7 +2150,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       resolutionResult.conforms shouldBe true
     }
   }
-
 
 //
 //  // todo: move to common (file system)
