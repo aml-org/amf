@@ -204,7 +204,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/Value/property/property/mapValue"
+          "@id": "#/declares/shape/Value/property/property/mapValue/recursiveProp"
         }
       ],
       "doc:recursive": true,
@@ -233,7 +233,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/Value/property/property/mapValue",
+      "@id": "#/declares/shape/Value/property/property/mapValue/recursiveProp",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -255,7 +255,7 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#/declares/shape/Value/property/property/mapValue": "[(31,6)-(34,0)]"
+          "#/declares/shape/Value/property/property/mapValue/recursiveProp": "[(31,6)-(34,0)]"
         }
       }
     },
@@ -401,7 +401,6 @@
       "shacl:additionalPropertiesSchema": {
         "@id": "#/declares/shape/Value"
       },
-      "shacl:property": [],
       "shacl:name": "values",
       "smaps": {
         "synthesized-field": {

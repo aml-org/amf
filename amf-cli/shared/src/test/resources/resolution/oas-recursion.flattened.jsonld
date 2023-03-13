@@ -102,7 +102,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/recursiveProp/recursiveProp"
+          "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses"
         }
       ],
       "shacl:name": "ThesaurusSense",
@@ -156,33 +156,6 @@
       }
     },
     {
-      "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/recursiveProp/recursiveProp",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#subsenses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/recursive"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "subsenses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#/declares/shape/ThesaurusSense/property/property/subsenses/recursiveProp/recursiveProp": "[(14,8)-(20,9)]"
-        }
-      }
-    },
-    {
       "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses",
       "@type": [
         "raml-shapes:ArrayShape",
@@ -192,7 +165,7 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#/declares/shape/ThesaurusSense"
+        "@id": "#/declares/shape/ThesaurusSense/recursive"
       },
       "shacl:minCount": 1,
       "shacl:name": "subsenses",
@@ -207,7 +180,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/recursive",
+      "@id": "#/declares/shape/ThesaurusSense/recursive",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -216,20 +189,29 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses"
+          "@id": "#/declares/shape/ThesaurusSense"
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "subsenses",
+      "shacl:name": "ThesaurusSense",
       "smaps": {
         "synthesized-field": {
           "doc:recursive": "true"
         },
-        "lexical": {
-          "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/recursive": "[(14,8)-(20,9)]"
+        "resolved-link": {
+          "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/any/items"
         },
         "type-property-lexical-info": {
-          "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/recursive": "[(19,10)-(19,16)]"
+          "#/declares/shape/ThesaurusSense/recursive": "[(22,6)-(22,12)]"
+        },
+        "lexical": {
+          "#/declares/shape/ThesaurusSense/recursive": "[(12,4)-(23,5)]"
+        },
+        "declared-element": {
+          "#/declares/shape/ThesaurusSense/recursive": ""
+        },
+        "resolved-link-target": {
+          "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense"
         }
       }
     }

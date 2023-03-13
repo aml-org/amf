@@ -263,7 +263,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp"
         }
       ],
       "shacl:name": "B",
@@ -295,7 +295,7 @@
       "sourcemaps:value": "[(18,8)-(21,0)]"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -314,7 +314,7 @@
       "shacl:name": "a",
       "sourcemaps:sources": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map"
         }
       ]
     },
@@ -369,24 +369,24 @@
       ]
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_1"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_0"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_1"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1"
         },
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_0"
+          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0"
         }
       ]
     },
@@ -432,22 +432,22 @@
       ]
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_1",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1",
       "sourcemaps:element": "shacl:path",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/synthesized-field/element_0",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0",
       "sourcemaps:element": "shacl:minCount",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B/property/property/a/recursiveProp",
       "sourcemaps:value": "[(12,6)-(14,0)]"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/recursiveProp/recursiveProp/source-map/lexical/element_0",
+      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0",
       "sourcemaps:element": "raml-shapes:range",
       "sourcemaps:value": "[(12,10)-(12,11)]"
     },

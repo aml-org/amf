@@ -4,14 +4,14 @@ types:
   SomeType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         anyOf:
           -
             items:
               anyOf:
                 -
-                  properties: {}
+                  type: object
                 -
                   type: object
                   (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
@@ -19,7 +19,7 @@ types:
             items:
               anyOf:
                 -
-                  properties: {}
+                  type: object
                 -
                   type: object
                   (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
@@ -29,7 +29,7 @@ types:
         items:
           anyOf:
             -
-              properties: {}
+              type: object
             -
               type: object
               (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
@@ -37,21 +37,21 @@ types:
         items:
           anyOf:
             -
-              properties: {}
+              type: object
             -
               type: object
               (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
   AnotherType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         type: object
         (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
   OneMoreType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         type: object
         (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declares/array/SomeUnion
