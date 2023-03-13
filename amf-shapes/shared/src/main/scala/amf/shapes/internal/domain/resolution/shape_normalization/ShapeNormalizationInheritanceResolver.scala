@@ -1,18 +1,16 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 
 import scala.collection.mutable
 
-case class ShapeInheritanceResolver(context: NormalizationContext) {
+case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) {
 
   private val visitedIds = mutable.ArrayBuffer[Shape]()
 
