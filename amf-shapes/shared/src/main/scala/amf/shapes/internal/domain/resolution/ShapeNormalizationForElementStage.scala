@@ -5,13 +5,13 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
-import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeInheritanceResolver, ShapeReferencesUpdater}
+import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeNormalizationInheritanceResolver, ShapeNormalizationReferencesUpdater}
 
 class ShapeNormalizationForElementStage(context: NormalizationContext) extends ElementStageTransformer[Shape] {
 
   override def transform(shape: Shape, configuration: AMFGraphConfiguration): Option[Shape] = {
-    val resolvedInheritance = ShapeInheritanceResolver(context).normalize(shape)
-    val fixedReferences     = ShapeReferencesUpdater(context).update(resolvedInheritance)
+    val resolvedInheritance = ShapeNormalizationInheritanceResolver(context).normalize(shape)
+    val fixedReferences     = ShapeNormalizationReferencesUpdater(context).updateShape(resolvedInheritance)
     Some(fixedReferences)
   }
 }
