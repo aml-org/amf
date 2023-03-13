@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#15",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -29,7 +29,7 @@
         "smaps": {
           "lexical": {
             "core:version": "[(4,0)-(5,0)]",
-            "#15": "[(3,0)-(20,0)]",
+            "/web-api": "[(3,0)-(20,0)]",
             "core:name": "[(3,0)-(4,0)]"
           }
         }
@@ -42,7 +42,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#14",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -65,7 +65,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/MultiReference",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -80,7 +80,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/MultiReference/property/property/references",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -94,7 +94,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/ReferenceEntry",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -109,7 +109,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#4",
+                    "@id": "#/declares/shape/ReferenceEntry/property/property/values",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -123,7 +123,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#5",
+                        "@id": "#/declares/shape/Value",
                         "@type": [
                           "raml-shapes:UnionShape",
                           "raml-shapes:AnyShape",
@@ -133,7 +133,7 @@
                         ],
                         "raml-shapes:anyOf": [
                           {
-                            "@id": "#6",
+                            "@id": "#/declares/shape/SingleReference",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -148,7 +148,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#7",
+                                "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -162,7 +162,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#8",
+                                    "@id": "#/declares/shape/Value/recursive",
                                     "@type": [
                                       "raml-shapes:RecursiveShape",
                                       "shacl:Shape",
@@ -171,7 +171,7 @@
                                     ],
                                     "raml-shapes:fixPoint": [
                                       {
-                                        "@id": "#5"
+                                        "@id": "#/declares/shape/Value"
                                       }
                                     ],
                                     "doc:recursive": [
@@ -189,13 +189,13 @@
                                         "doc:recursive": "true"
                                       },
                                       "type-property-lexical-info": {
-                                        "#8": "[(19,4)-(19,8)]"
+                                        "#/declares/shape/Value/recursive": "[(19,4)-(19,8)]"
                                       },
                                       "lexical": {
-                                        "#8": "[(18,2)-(20,0)]"
+                                        "#/declares/shape/Value/recursive": "[(18,2)-(20,0)]"
                                       },
                                       "declared-element": {
-                                        "#8": ""
+                                        "#/declares/shape/Value/recursive": ""
                                       }
                                     }
                                   }
@@ -216,10 +216,11 @@
                                     "shacl:path": "true"
                                   },
                                   "lexical": {
-                                    "#7": "[(14,6)-(16,0)]"
+                                    "raml-shapes:range": "[(14,14)-(16,0)]",
+                                    "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "[(14,6)-(16,0)]"
                                   },
                                   "inheritance-provenance": {
-                                    "#7": "amf://id#3"
+                                    "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                                   }
                                 }
                               }
@@ -234,28 +235,28 @@
                                 "shacl:closed": "true"
                               },
                               "resolved-link-target": {
-                                "#6": "amf://id#6"
+                                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference"
                               },
                               "declared-element": {
-                                "#6": ""
+                                "#/declares/shape/SingleReference": ""
                               },
                               "lexical": {
                                 "shacl:name": "[(16,2)-(16,17)]",
-                                "#6": "[(16,2)-(18,0)]"
+                                "#/declares/shape/SingleReference": "[(16,2)-(18,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#6": "[(17,4)-(17,8)]"
+                                "#/declares/shape/SingleReference": "[(17,4)-(17,8)]"
                               },
                               "resolved-link": {
-                                "#6": "amf://id#9"
+                                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node"
                               },
                               "inherited-shapes": {
-                                "#6": "amf://id#3"
+                                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                               }
                             }
                           },
                           {
-                            "@id": "#10",
+                            "@id": "#/declares/shape/MultiReference/recursive",
                             "@type": [
                               "raml-shapes:RecursiveShape",
                               "shacl:Shape",
@@ -264,7 +265,7 @@
                             ],
                             "raml-shapes:fixPoint": [
                               {
-                                "@id": "#1"
+                                "@id": "#/declares/shape/MultiReference"
                               }
                             ],
                             "doc:recursive": [
@@ -282,19 +283,19 @@
                                 "doc:recursive": "true"
                               },
                               "resolved-link": {
-                                "#10": "amf://id#11"
+                                "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node_1"
                               },
                               "type-property-lexical-info": {
-                                "#10": "[(7,4)-(7,8)]"
+                                "#/declares/shape/MultiReference/recursive": "[(7,4)-(7,8)]"
                               },
                               "lexical": {
-                                "#10": "[(6,2)-(11,0)]"
+                                "#/declares/shape/MultiReference/recursive": "[(6,2)-(11,0)]"
                               },
                               "declared-element": {
-                                "#10": ""
+                                "#/declares/shape/MultiReference/recursive": ""
                               },
                               "resolved-link-target": {
-                                "#10": "amf://id#1"
+                                "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/MultiReference"
                               }
                             }
                           }
@@ -306,14 +307,14 @@
                         ],
                         "smaps": {
                           "declared-element": {
-                            "#5": ""
+                            "#/declares/shape/Value": ""
                           },
                           "lexical": {
                             "shacl:name": "[(18,2)-(18,7)]",
-                            "#5": "[(18,2)-(20,0)]"
+                            "#/declares/shape/Value": "[(18,2)-(20,0)]"
                           },
                           "type-property-lexical-info": {
-                            "#5": "[(19,4)-(19,8)]"
+                            "#/declares/shape/Value": "[(19,4)-(19,8)]"
                           }
                         }
                       }
@@ -335,7 +336,7 @@
                       },
                       "lexical": {
                         "raml-shapes:range": "[(14,14)-(16,0)]",
-                        "#4": "[(14,6)-(16,0)]"
+                        "#/declares/shape/ReferenceEntry/property/property/values": "[(14,6)-(16,0)]"
                       }
                     }
                   }
@@ -350,20 +351,20 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link": {
-                    "#3": "amf://id#13"
+                    "#/declares/shape/ReferenceEntry": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference/inherits/shape/ReferenceEntry"
                   },
                   "type-property-lexical-info": {
-                    "#3": "[(12,4)-(12,8)]"
+                    "#/declares/shape/ReferenceEntry": "[(12,4)-(12,8)]"
                   },
                   "lexical": {
                     "shacl:name": "[(11,2)-(11,16)]",
-                    "#3": "[(11,2)-(16,0)]"
+                    "#/declares/shape/ReferenceEntry": "[(11,2)-(16,0)]"
                   },
                   "declared-element": {
-                    "#3": ""
+                    "#/declares/shape/ReferenceEntry": ""
                   },
                   "resolved-link-target": {
-                    "#3": "amf://id#3"
+                    "#/declares/shape/ReferenceEntry": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                   }
                 }
               }
@@ -385,7 +386,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(9,18)-(11,0)]",
-                "#2": "[(9,6)-(11,0)]"
+                "#/declares/shape/MultiReference/property/property/references": "[(9,6)-(11,0)]"
               }
             }
           }
@@ -400,25 +401,25 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#11"
+            "#/declares/shape/MultiReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node_1"
           },
           "type-property-lexical-info": {
-            "#1": "[(7,4)-(7,8)]"
+            "#/declares/shape/MultiReference": "[(7,4)-(7,8)]"
           },
           "lexical": {
             "shacl:name": "[(6,2)-(6,16)]",
-            "#1": "[(6,2)-(11,0)]"
+            "#/declares/shape/MultiReference": "[(6,2)-(11,0)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/MultiReference": ""
           },
           "resolved-link-target": {
-            "#1": "amf://id#1"
+            "#/declares/shape/MultiReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/MultiReference"
           }
         }
       },
       {
-        "@id": "#3",
+        "@id": "#/declares/shape/ReferenceEntry",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -433,7 +434,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#/declares/shape/ReferenceEntry/property/property/values",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -447,7 +448,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/declares/shape/Value",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "raml-shapes:AnyShape",
@@ -457,7 +458,7 @@
                 ],
                 "raml-shapes:anyOf": [
                   {
-                    "@id": "#6",
+                    "@id": "#/declares/shape/SingleReference",
                     "@type": [
                       "shacl:NodeShape",
                       "raml-shapes:AnyShape",
@@ -472,7 +473,7 @@
                     ],
                     "shacl:property": [
                       {
-                        "@id": "#7",
+                        "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp",
                         "@type": [
                           "shacl:PropertyShape",
                           "shacl:Shape",
@@ -486,7 +487,7 @@
                         ],
                         "raml-shapes:range": [
                           {
-                            "@id": "#8",
+                            "@id": "#/declares/shape/Value/recursive",
                             "@type": [
                               "raml-shapes:RecursiveShape",
                               "shacl:Shape",
@@ -495,7 +496,7 @@
                             ],
                             "raml-shapes:fixPoint": [
                               {
-                                "@id": "#5"
+                                "@id": "#/declares/shape/Value"
                               }
                             ],
                             "doc:recursive": [
@@ -513,13 +514,13 @@
                                 "doc:recursive": "true"
                               },
                               "type-property-lexical-info": {
-                                "#8": "[(19,4)-(19,8)]"
+                                "#/declares/shape/Value/recursive": "[(19,4)-(19,8)]"
                               },
                               "lexical": {
-                                "#8": "[(18,2)-(20,0)]"
+                                "#/declares/shape/Value/recursive": "[(18,2)-(20,0)]"
                               },
                               "declared-element": {
-                                "#8": ""
+                                "#/declares/shape/Value/recursive": ""
                               }
                             }
                           }
@@ -540,10 +541,11 @@
                             "shacl:path": "true"
                           },
                           "lexical": {
-                            "#7": "[(14,6)-(16,0)]"
+                            "raml-shapes:range": "[(14,14)-(16,0)]",
+                            "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "[(14,6)-(16,0)]"
                           },
                           "inheritance-provenance": {
-                            "#7": "amf://id#3"
+                            "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                           }
                         }
                       }
@@ -558,28 +560,28 @@
                         "shacl:closed": "true"
                       },
                       "resolved-link-target": {
-                        "#6": "amf://id#6"
+                        "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference"
                       },
                       "declared-element": {
-                        "#6": ""
+                        "#/declares/shape/SingleReference": ""
                       },
                       "lexical": {
                         "shacl:name": "[(16,2)-(16,17)]",
-                        "#6": "[(16,2)-(18,0)]"
+                        "#/declares/shape/SingleReference": "[(16,2)-(18,0)]"
                       },
                       "type-property-lexical-info": {
-                        "#6": "[(17,4)-(17,8)]"
+                        "#/declares/shape/SingleReference": "[(17,4)-(17,8)]"
                       },
                       "resolved-link": {
-                        "#6": "amf://id#9"
+                        "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node"
                       },
                       "inherited-shapes": {
-                        "#6": "amf://id#3"
+                        "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                       }
                     }
                   },
                   {
-                    "@id": "#10",
+                    "@id": "#/declares/shape/MultiReference/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -588,7 +590,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#1"
+                        "@id": "#/declares/shape/MultiReference"
                       }
                     ],
                     "doc:recursive": [
@@ -606,19 +608,19 @@
                         "doc:recursive": "true"
                       },
                       "resolved-link": {
-                        "#10": "amf://id#11"
+                        "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node_1"
                       },
                       "type-property-lexical-info": {
-                        "#10": "[(7,4)-(7,8)]"
+                        "#/declares/shape/MultiReference/recursive": "[(7,4)-(7,8)]"
                       },
                       "lexical": {
-                        "#10": "[(6,2)-(11,0)]"
+                        "#/declares/shape/MultiReference/recursive": "[(6,2)-(11,0)]"
                       },
                       "declared-element": {
-                        "#10": ""
+                        "#/declares/shape/MultiReference/recursive": ""
                       },
                       "resolved-link-target": {
-                        "#10": "amf://id#1"
+                        "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/MultiReference"
                       }
                     }
                   }
@@ -630,14 +632,14 @@
                 ],
                 "smaps": {
                   "declared-element": {
-                    "#5": ""
+                    "#/declares/shape/Value": ""
                   },
                   "lexical": {
                     "shacl:name": "[(18,2)-(18,7)]",
-                    "#5": "[(18,2)-(20,0)]"
+                    "#/declares/shape/Value": "[(18,2)-(20,0)]"
                   },
                   "type-property-lexical-info": {
-                    "#5": "[(19,4)-(19,8)]"
+                    "#/declares/shape/Value": "[(19,4)-(19,8)]"
                   }
                 }
               }
@@ -659,7 +661,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(14,14)-(16,0)]",
-                "#4": "[(14,6)-(16,0)]"
+                "#/declares/shape/ReferenceEntry/property/property/values": "[(14,6)-(16,0)]"
               }
             }
           }
@@ -674,25 +676,25 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#3": "amf://id#13"
+            "#/declares/shape/ReferenceEntry": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference/inherits/shape/ReferenceEntry"
           },
           "type-property-lexical-info": {
-            "#3": "[(12,4)-(12,8)]"
+            "#/declares/shape/ReferenceEntry": "[(12,4)-(12,8)]"
           },
           "lexical": {
             "shacl:name": "[(11,2)-(11,16)]",
-            "#3": "[(11,2)-(16,0)]"
+            "#/declares/shape/ReferenceEntry": "[(11,2)-(16,0)]"
           },
           "declared-element": {
-            "#3": ""
+            "#/declares/shape/ReferenceEntry": ""
           },
           "resolved-link-target": {
-            "#3": "amf://id#3"
+            "#/declares/shape/ReferenceEntry": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
           }
         }
       },
       {
-        "@id": "#6",
+        "@id": "#/declares/shape/SingleReference",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -707,7 +709,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#7",
+            "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -721,7 +723,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#8",
+                "@id": "#/declares/shape/Value/recursive",
                 "@type": [
                   "raml-shapes:RecursiveShape",
                   "shacl:Shape",
@@ -730,7 +732,7 @@
                 ],
                 "raml-shapes:fixPoint": [
                   {
-                    "@id": "#5"
+                    "@id": "#/declares/shape/Value"
                   }
                 ],
                 "doc:recursive": [
@@ -748,13 +750,13 @@
                     "doc:recursive": "true"
                   },
                   "type-property-lexical-info": {
-                    "#8": "[(19,4)-(19,8)]"
+                    "#/declares/shape/Value/recursive": "[(19,4)-(19,8)]"
                   },
                   "lexical": {
-                    "#8": "[(18,2)-(20,0)]"
+                    "#/declares/shape/Value/recursive": "[(18,2)-(20,0)]"
                   },
                   "declared-element": {
-                    "#8": ""
+                    "#/declares/shape/Value/recursive": ""
                   }
                 }
               }
@@ -775,10 +777,11 @@
                 "shacl:path": "true"
               },
               "lexical": {
-                "#7": "[(14,6)-(16,0)]"
+                "raml-shapes:range": "[(14,14)-(16,0)]",
+                "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "[(14,6)-(16,0)]"
               },
               "inheritance-provenance": {
-                "#7": "amf://id#3"
+                "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
               }
             }
           }
@@ -793,28 +796,28 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#6": "amf://id#6"
+            "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference"
           },
           "declared-element": {
-            "#6": ""
+            "#/declares/shape/SingleReference": ""
           },
           "lexical": {
             "shacl:name": "[(16,2)-(16,17)]",
-            "#6": "[(16,2)-(18,0)]"
+            "#/declares/shape/SingleReference": "[(16,2)-(18,0)]"
           },
           "type-property-lexical-info": {
-            "#6": "[(17,4)-(17,8)]"
+            "#/declares/shape/SingleReference": "[(17,4)-(17,8)]"
           },
           "resolved-link": {
-            "#6": "amf://id#9"
+            "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node"
           },
           "inherited-shapes": {
-            "#6": "amf://id#3"
+            "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
           }
         }
       },
       {
-        "@id": "#5",
+        "@id": "#/declares/shape/Value",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -824,7 +827,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#6",
+            "@id": "#/declares/shape/SingleReference",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -839,7 +842,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#7",
+                "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -853,7 +856,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#8",
+                    "@id": "#/declares/shape/Value/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -862,7 +865,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#5"
+                        "@id": "#/declares/shape/Value"
                       }
                     ],
                     "doc:recursive": [
@@ -880,13 +883,13 @@
                         "doc:recursive": "true"
                       },
                       "type-property-lexical-info": {
-                        "#8": "[(19,4)-(19,8)]"
+                        "#/declares/shape/Value/recursive": "[(19,4)-(19,8)]"
                       },
                       "lexical": {
-                        "#8": "[(18,2)-(20,0)]"
+                        "#/declares/shape/Value/recursive": "[(18,2)-(20,0)]"
                       },
                       "declared-element": {
-                        "#8": ""
+                        "#/declares/shape/Value/recursive": ""
                       }
                     }
                   }
@@ -907,10 +910,11 @@
                     "shacl:path": "true"
                   },
                   "lexical": {
-                    "#7": "[(14,6)-(16,0)]"
+                    "raml-shapes:range": "[(14,14)-(16,0)]",
+                    "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "[(14,6)-(16,0)]"
                   },
                   "inheritance-provenance": {
-                    "#7": "amf://id#3"
+                    "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
                   }
                 }
               }
@@ -925,28 +929,28 @@
                 "shacl:closed": "true"
               },
               "resolved-link-target": {
-                "#6": "amf://id#6"
+                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/SingleReference"
               },
               "declared-element": {
-                "#6": ""
+                "#/declares/shape/SingleReference": ""
               },
               "lexical": {
                 "shacl:name": "[(16,2)-(16,17)]",
-                "#6": "[(16,2)-(18,0)]"
+                "#/declares/shape/SingleReference": "[(16,2)-(18,0)]"
               },
               "type-property-lexical-info": {
-                "#6": "[(17,4)-(17,8)]"
+                "#/declares/shape/SingleReference": "[(17,4)-(17,8)]"
               },
               "resolved-link": {
-                "#6": "amf://id#9"
+                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node"
               },
               "inherited-shapes": {
-                "#6": "amf://id#3"
+                "#/declares/shape/SingleReference": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/ReferenceEntry"
               }
             }
           },
           {
-            "@id": "#10",
+            "@id": "#/declares/shape/MultiReference/recursive",
             "@type": [
               "raml-shapes:RecursiveShape",
               "shacl:Shape",
@@ -955,7 +959,7 @@
             ],
             "raml-shapes:fixPoint": [
               {
-                "@id": "#1"
+                "@id": "#/declares/shape/MultiReference"
               }
             ],
             "doc:recursive": [
@@ -973,19 +977,19 @@
                 "doc:recursive": "true"
               },
               "resolved-link": {
-                "#10": "amf://id#11"
+                "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node_1"
               },
               "type-property-lexical-info": {
-                "#10": "[(7,4)-(7,8)]"
+                "#/declares/shape/MultiReference/recursive": "[(7,4)-(7,8)]"
               },
               "lexical": {
-                "#10": "[(6,2)-(11,0)]"
+                "#/declares/shape/MultiReference/recursive": "[(6,2)-(11,0)]"
               },
               "declared-element": {
-                "#10": ""
+                "#/declares/shape/MultiReference/recursive": ""
               },
               "resolved-link-target": {
-                "#10": "amf://id#1"
+                "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive4.raml#/declares/shape/MultiReference"
               }
             }
           }
@@ -997,20 +1001,20 @@
         ],
         "smaps": {
           "declared-element": {
-            "#5": ""
+            "#/declares/shape/Value": ""
           },
           "lexical": {
             "shacl:name": "[(18,2)-(18,7)]",
-            "#5": "[(18,2)-(20,0)]"
+            "#/declares/shape/Value": "[(18,2)-(20,0)]"
           },
           "type-property-lexical-info": {
-            "#5": "[(19,4)-(19,8)]"
+            "#/declares/shape/Value": "[(19,4)-(19,8)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/production/recursive4.raml",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",

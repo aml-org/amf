@@ -130,7 +130,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/person/property/property/memberships"
+          "@id": "#/declares/shape/person/property/property/memberships/recursiveProp"
         }
       ],
       "shacl:name": "person",
@@ -281,7 +281,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/person/property/property/memberships",
+      "@id": "#/declares/shape/person/property/property/memberships/recursiveProp",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -294,7 +294,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/declares/shape/membership"
+        "@id": "#/declares/shape/membership/recursive"
       },
       "shacl:minCount": 1,
       "shacl:name": "memberships",
@@ -305,7 +305,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(18,18)-(21,0)]",
-          "#/declares/shape/person/property/property/memberships": "[(18,6)-(21,0)]"
+          "#/declares/shape/person/property/property/memberships/recursiveProp": "[(18,6)-(21,0)]"
         }
       }
     },
@@ -321,7 +321,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp"
+          "@id": "#/declares/shape/organization/property/property/contact-personnel"
         }
       ],
       "shacl:name": "member-account",
@@ -352,36 +352,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#contact-personnel"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/person/recursive"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "contact-personnel",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "shacl:minCount": "[(12,8)-(13,0)]",
-          "#/declares/shape/organization/property/property/contact-personnel/recursiveProp/recursiveProp/recursiveProp/recursiveProp/recursiveProp": "[(11,6)-(15,0)]",
-          "raml-shapes:range": "[(11,24)-(15,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/person/recursive",
+      "@id": "#/declares/shape/membership/recursive",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -390,29 +361,29 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#/declares/shape/person"
+          "@id": "#/declares/shape/membership"
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "person",
+      "shacl:name": "membership",
       "smaps": {
         "synthesized-field": {
           "doc:recursive": "true"
         },
         "resolved-link": {
-          "#/declares/shape/person/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization/property/property/contact-personnel/any/contact-personnel/inherits/shape/default-node"
+          "#/declares/shape/membership/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/person/property/property/memberships/any/memberships/inherits/shape/default-node"
         },
         "type-property-lexical-info": {
-          "#/declares/shape/person/recursive": "[(16,4)-(16,8)]"
+          "#/declares/shape/membership/recursive": "[(22,4)-(22,8)]"
         },
         "lexical": {
-          "#/declares/shape/person/recursive": "[(15,2)-(21,0)]"
+          "#/declares/shape/membership/recursive": "[(21,2)-(26,21)]"
         },
         "declared-element": {
-          "#/declares/shape/person/recursive": ""
+          "#/declares/shape/membership/recursive": ""
         },
         "resolved-link-target": {
-          "#/declares/shape/person/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/person"
+          "#/declares/shape/membership/recursive": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/membership"
         }
       }
     }

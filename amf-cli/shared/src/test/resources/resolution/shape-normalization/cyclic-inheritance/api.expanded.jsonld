@@ -1,6 +1,6 @@
 [
   {
-    "@id": "amf://id",
+    "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "amf://id#8",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "amf://id#9",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml#/web-api/server/http%3A%2F%2Fcom.foo.bar%2Fapi",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -49,7 +49,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "amf://id#7",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "amf://id#1",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml#/declares/any/A",
         "@type": [
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -86,7 +86,7 @@
         ]
       },
       {
-        "@id": "amf://id#3",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml#/declares/any/B",
         "@type": [
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -100,7 +100,7 @@
         ]
       },
       {
-        "@id": "amf://id#5",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/shape-normalization/cyclic-inheritance/api.raml#/declares/any/C",
         "@type": [
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",

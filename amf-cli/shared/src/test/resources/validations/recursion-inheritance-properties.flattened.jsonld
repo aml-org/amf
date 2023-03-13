@@ -309,7 +309,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b"
+          "@id": "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b/recursiveProp"
         }
       ],
       "shacl:name": "B",
@@ -356,7 +356,7 @@
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b",
+      "@id": "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b/recursiveProp",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -380,7 +380,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(14,10)-(14,11)]",
-          "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b": "[(14,6)-(16,0)]"
+          "#/web-api/endpoint/%2FA/supportedOperation/post/expects/request/payload/application%2Fjson/any/schema/shape/A/property/a/shape/B/property/b/recursiveProp": "[(14,6)-(16,0)]"
         }
       }
     },

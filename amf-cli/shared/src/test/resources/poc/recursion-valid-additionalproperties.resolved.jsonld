@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "amf://id#7",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "amf://id#8",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -22,58 +22,58 @@
       "http://a.ml/vocabularies/apiContract#endpoint": [],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#8/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#8/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#8/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_3"
         },
         {
-          "@id": "amf://id#8/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_1"
         },
         {
-          "@id": "amf://id#8/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_0"
         },
         {
-          "@id": "amf://id#8/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "amf://id#8/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
-      "@id": "amf://id#8/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
-      "@id": "amf://id#8/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
     },
     {
-      "@id": "amf://id#8/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#8",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(15,29)]"
     },
     {
-      "@id": "amf://id",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "amf://id#1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A"
         },
         {
-          "@id": "amf://id#3"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B"
         }
       ],
       "@type": [
@@ -83,15 +83,15 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "amf://id#8"
+        "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml/web-api"
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "amf://id#7"
+        "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "amf://id#1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -102,19 +102,19 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "amf://id#2"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a"
         }
       ],
       "http://a.ml/vocabularies/document#recursive": true,
       "http://www.w3.org/ns/shacl#name": "A",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#3",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -124,18 +124,17 @@
       ],
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#additionalPropertiesSchema": {
-        "@id": "amf://id#4"
+        "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive"
       },
-      "http://www.w3.org/ns/shacl#property": [],
       "http://www.w3.org/ns/shacl#name": "B",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#3/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#2",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -148,60 +147,60 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "amf://id#3"
+        "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "a",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "amf://id#1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "amf://id#1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
-          "@id": "amf://id#1/source-map/resolved-link/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/resolved-link/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "amf://id#1/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/lexical/element_1"
         },
         {
-          "@id": "amf://id#1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "amf://id#1/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
         {
-          "@id": "amf://id#1/source-map/resolved-link-target/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/resolved-link-target/element_0"
         }
       ]
     },
     {
-      "@id": "amf://id#4",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
       "@type": [
         "http://a.ml/vocabularies/shapes#RecursiveShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -210,222 +209,222 @@
       ],
       "http://a.ml/vocabularies/shapes#fixPoint": [
         {
-          "@id": "amf://id#1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A"
         }
       ],
       "http://a.ml/vocabularies/document#recursive": true,
       "http://www.w3.org/ns/shacl#name": "A",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#4/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#3/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "amf://id#3/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
-          "@id": "amf://id#3/source-map/resolved-link/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/resolved-link/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "amf://id#3/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#3/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/lexical/element_1"
         },
         {
-          "@id": "amf://id#3/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "amf://id#3/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
         {
-          "@id": "amf://id#3/source-map/resolved-link-target/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/resolved-link-target/element_0"
         }
       ]
     },
     {
-      "@id": "amf://id#2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "amf://id#2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "amf://id#1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#1/source-map/resolved-link/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#5"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/resolved-link/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/shape/additionalProperties"
     },
     {
-      "@id": "amf://id#1/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(8,8)]"
     },
     {
-      "@id": "amf://id#1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(12,0)]"
     },
     {
-      "@id": "amf://id#1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,3)]"
     },
     {
-      "@id": "amf://id#1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "amf://id#1/source-map/resolved-link-target/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/source-map/resolved-link-target/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A"
     },
     {
-      "@id": "amf://id#4/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "amf://id#4/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
-          "@id": "amf://id#4/source-map/resolved-link/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/resolved-link/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "amf://id#4/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#4/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "amf://id#4/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
         {
-          "@id": "amf://id#4/source-map/resolved-link-target/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/resolved-link-target/element_0"
         }
       ]
     },
     {
-      "@id": "amf://id#3/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#3/source-map/resolved-link/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#3",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#6"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/resolved-link/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/any/a"
     },
     {
-      "@id": "amf://id#3/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#3",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
     },
     {
-      "@id": "amf://id#3/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#3",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(15,29)]"
     },
     {
-      "@id": "amf://id#3/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(12,3)]"
     },
     {
-      "@id": "amf://id#3/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#3",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "amf://id#3/source-map/resolved-link-target/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#3",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#3"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/source-map/resolved-link-target/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B"
     },
     {
-      "@id": "amf://id#2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/property/property/a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(12,0)]"
     },
     {
-      "@id": "amf://id#4/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#4/source-map/resolved-link/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#5"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/resolved-link/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/B/shape/additionalProperties"
     },
     {
-      "@id": "amf://id#4/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(8,8)]"
     },
     {
-      "@id": "amf://id#4/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(12,0)]"
     },
     {
-      "@id": "amf://id#4/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "amf://id#4/source-map/resolved-link-target/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
+      "@id": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive/source-map/resolved-link-target/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A/recursive",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-cli/shared/src/test/resources/poc/recursion-valid-additionalproperties.yaml#/declares/shape/A"
     }
   ]
 }
