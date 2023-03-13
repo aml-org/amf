@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#15",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 3.0"
     },
     {
-      "@id": "#16",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,23 +21,23 @@
       "core:version": "1.4.0",
       "apiContract:endpoint": [
         {
-          "@id": "#17"
+          "@id": "#/web-api/endpoint/%2Fecho"
         },
         {
-          "@id": "#20"
+          "@id": "#/web-api/endpoint/%2Fusers"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(21,0)]",
           "core:name": "[(4,2)-(5,0)]",
-          "#16": "[(1,0)-(40,0)]",
+          "/web-api": "[(1,0)-(40,0)]",
           "core:version": "[(3,2)-(4,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/web-api/endpoint/%2Fecho",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,17 +45,17 @@
       "apiContract:path": "/echo",
       "apiContract:supportedOperation": [
         {
-          "@id": "#18"
+          "@id": "#/web-api/endpoint/%2Fecho/supportedOperation/post"
         }
       ],
       "smaps": {
         "lexical": {
-          "#17": "[(6,2)-(13,0)]"
+          "#/web-api/endpoint/%2Fecho": "[(6,2)-(13,0)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#/web-api/endpoint/%2Fusers",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -63,17 +63,17 @@
       "apiContract:path": "/users",
       "apiContract:supportedOperation": [
         {
-          "@id": "#21"
+          "@id": "#/web-api/endpoint/%2Fusers/supportedOperation/delete"
         }
       ],
       "smaps": {
         "lexical": {
-          "#20": "[(13,2)-(21,0)]"
+          "#/web-api/endpoint/%2Fusers": "[(13,2)-(21,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/web-api/endpoint/%2Fecho/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -82,23 +82,23 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#12"
+          "@id": "#/declares/request%2FmyReqBody"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#19"
+          "@id": "#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/200"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(10,6)-(13,0)]",
-          "#18": "[(7,4)-(13,0)]"
+          "#/web-api/endpoint/%2Fecho/supportedOperation/post": "[(7,4)-(13,0)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#/web-api/endpoint/%2Fusers/supportedOperation/delete",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -107,23 +107,23 @@
       "apiContract:method": "delete",
       "apiContract:expects": [
         {
-          "@id": "#12"
+          "@id": "#/declares/request%2FmyReqBody"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#22"
+          "@id": "#/web-api/endpoint/%2Fusers/supportedOperation/delete/returns/resp/200"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(17,6)-(21,0)]",
-          "#21": "[(14,4)-(21,0)]"
+          "#/web-api/endpoint/%2Fusers/supportedOperation/delete": "[(14,4)-(21,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/declares/request%2FmyReqBody",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -134,31 +134,31 @@
       "core:description": "Accepted",
       "apiContract:payload": [
         {
-          "@id": "#10"
+          "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(32,6)-(33,0)]",
-          "#12": "[(31,4)-(40,0)]",
+          "#/declares/request%2FmyReqBody": "[(31,4)-(40,0)]",
           "core:name": "[(31,4)-(31,13)]"
         },
         "resolved-link": {
-          "#12": "amf://id#14"
+          "#/declares/request%2FmyReqBody": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml#/web-api/endpoint/%2Fusers/supportedOperation/delete/expects/request%2FrequestBody"
         },
         "virtual-element": {
-          "#12": "true"
+          "#/declares/request%2FmyReqBody": "true"
         },
         "declared-element": {
-          "#12": ""
+          "#/declares/request%2FmyReqBody": ""
         },
         "resolved-link-target": {
-          "#12": "amf://id#12"
+          "#/declares/request%2FmyReqBody": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml#/declares/request%2FmyReqBody"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -171,13 +171,13 @@
       "smaps": {
         "lexical": {
           "core:description": "[(12,10)-(13,0)]",
-          "#19": "[(11,8)-(13,0)]",
+          "#/web-api/endpoint/%2Fecho/supportedOperation/post/returns/resp/200": "[(11,8)-(13,0)]",
           "core:name": "[(11,8)-(11,13)]"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#/web-api/endpoint/%2Fusers/supportedOperation/delete/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -190,13 +190,13 @@
       "smaps": {
         "lexical": {
           "core:description": "[(19,10)-(21,0)]",
-          "#22": "[(18,8)-(21,0)]",
+          "#/web-api/endpoint/%2Fusers/supportedOperation/delete/returns/resp/200": "[(18,8)-(21,0)]",
           "core:name": "[(18,8)-(18,13)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -204,18 +204,18 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#1"
+        "@id": "#/declares/shape/ErrorResponse"
       },
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(35,10)-(37,0)]",
-          "#10": "[(34,8)-(40,0)]",
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson": "[(34,8)-(40,0)]",
           "core:mediaType": "[(34,8)-(34,24)]"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/shape/ErrorResponse",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -226,17 +226,17 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#2"
+          "@id": "#/declares/shape/ErrorResponse/property/property/status"
         },
         {
-          "@id": "#4"
+          "@id": "#/declares/shape/ErrorResponse/property/property/text"
         }
       ],
       "doc:recursive": true,
       "shacl:name": "ErrorResponse",
       "apiContract:examples": [
         {
-          "@id": "#6"
+          "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example"
         }
       ],
       "smaps": {
@@ -245,25 +245,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#11"
+          "#/declares/shape/ErrorResponse": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml#/declares/request%2FmyReqBody/payload/application%2Fjson/shape/ErrorResponse"
         },
         "type-property-lexical-info": {
-          "#1": "[(24,6)-(24,10)]"
+          "#/declares/shape/ErrorResponse": "[(24,6)-(24,10)]"
         },
         "lexical": {
           "shacl:name": "[(23,4)-(23,17)]",
-          "#1": "[(23,4)-(30,0)]"
+          "#/declares/shape/ErrorResponse": "[(23,4)-(30,0)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/shape/ErrorResponse": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#/declares/shape/ErrorResponse": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml#/declares/shape/ErrorResponse"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/shape/ErrorResponse/property/property/status",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -276,7 +276,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/declares/shape/ErrorResponse/property/property/status/scalar/status"
       },
       "shacl:minCount": 0,
       "shacl:name": "status",
@@ -285,12 +285,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#2": "[(26,8)-(28,0)]"
+          "#/declares/shape/ErrorResponse/property/property/status": "[(26,8)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/declares/shape/ErrorResponse/property/property/text",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -303,7 +303,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#5"
+        "@id": "#/declares/shape/ErrorResponse/property/property/text/scalar/text"
       },
       "shacl:minCount": 0,
       "shacl:name": "text",
@@ -312,12 +312,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#4": "[(28,8)-(30,0)]"
+          "#/declares/shape/ErrorResponse/property/property/text": "[(28,8)-(30,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -325,7 +325,7 @@
       "doc:strict": true,
       "core:mediaType": "application/json",
       "doc:structuredValue": {
-        "@id": "#7"
+        "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1"
       },
       "doc:raw": "status: \"202\"\ntext: \"Aloha\"",
       "smaps": {
@@ -335,15 +335,15 @@
           "core:mediaType": "true"
         },
         "lexical": {
-          "#6": "[(37,18)-(40,0)]"
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example": "[(37,18)-(40,0)]"
         },
         "tracked-element": {
-          "#6": "amf://id#10"
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml#/declares/request%2FmyReqBody/payload/application%2Fjson"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/shape/ErrorResponse/property/property/status/scalar/status",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -359,16 +359,16 @@
       "shacl:name": "status",
       "smaps": {
         "type-property-lexical-info": {
-          "#3": "[(27,10)-(27,14)]"
+          "#/declares/shape/ErrorResponse/property/property/status/scalar/status": "[(27,10)-(27,14)]"
         },
         "lexical": {
           "shacl:datatype": "[(27,10)-(28,0)]",
-          "#3": "[(26,8)-(28,0)]"
+          "#/declares/shape/ErrorResponse/property/property/status/scalar/status": "[(26,8)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/declares/shape/ErrorResponse/property/property/text/scalar/text",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -384,26 +384,26 @@
       "shacl:name": "text",
       "smaps": {
         "type-property-lexical-info": {
-          "#5": "[(29,10)-(29,14)]"
+          "#/declares/shape/ErrorResponse/property/property/text/scalar/text": "[(29,10)-(29,14)]"
         },
         "lexical": {
           "shacl:datatype": "[(29,10)-(30,0)]",
-          "#5": "[(28,8)-(30,0)]"
+          "#/declares/shape/ErrorResponse/property/property/text/scalar/text": "[(28,8)-(30,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:status": {
-        "@id": "#8"
+        "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/status"
       },
       "data:text": {
-        "@id": "#9"
+        "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/text"
       },
       "core:name": "object_1",
       "smaps": {
@@ -412,13 +412,13 @@
         },
         "lexical": {
           "data:text": "[(39,12)-(40,0)]",
-          "#7": "[(38,0)-(40,0)]",
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1": "[(38,0)-(40,0)]",
           "data:status": "[(38,12)-(39,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/status",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -437,12 +437,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#8": "[(38,20)-(38,25)]"
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/status": "[(38,20)-(38,25)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/text",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -461,7 +461,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#9": "[(39,18)-(39,25)]"
+          "#/declares/request%2FmyReqBody/payload/application%2Fjson/examples/example/default-example/object_1/text": "[(39,18)-(39,25)]"
         }
       }
     },
@@ -469,10 +469,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/ErrorResponse"
         },
         {
-          "@id": "#12"
+          "@id": "#/declares/request%2FmyReqBody"
         }
       ],
       "@type": [
@@ -482,16 +482,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#16"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#15"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/shared-request-body-reference/oas30/api.yaml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "data": "http://a.ml/vocabularies/data#",

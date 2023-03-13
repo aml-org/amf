@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#7",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -24,7 +24,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#7": "[(2,0)-(8,41)]"
+            "/web-api": "[(2,0)-(8,41)]"
           }
         }
       }
@@ -36,7 +36,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#6",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -59,7 +59,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/myTypeWithEncodedUris",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -74,7 +74,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/myTypeWithEncodedUris/property/property/from",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -88,7 +88,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/myTypeWithEncodedUris/property/property/from/scalar/from",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -109,7 +109,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(7,14)-(7,20)]",
-                    "#3": "[(7,6)-(8,0)]"
+                    "#/declares/shape/myTypeWithEncodedUris/property/property/from/scalar/from": "[(7,6)-(8,0)]"
                   }
                 }
               }
@@ -131,12 +131,12 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(7,14)-(7,20)]",
-                "#2": "[(7,6)-(8,0)]"
+                "#/declares/shape/myTypeWithEncodedUris/property/property/from": "[(7,6)-(8,0)]"
               }
             }
           },
           {
-            "@id": "#4",
+            "@id": "#/declares/shape/myTypeWithEncodedUris/property/property/amount%20after%20conversion",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -150,7 +150,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/declares/shape/myTypeWithEncodedUris/property/property/amount%20after%20conversion/scalar/amount%20after%20conversion",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -171,7 +171,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(8,34)-(8,41)]",
-                    "#5": "[(8,6)-(8,41)]"
+                    "#/declares/shape/myTypeWithEncodedUris/property/property/amount%20after%20conversion/scalar/amount%20after%20conversion": "[(8,6)-(8,41)]"
                   }
                 }
               }
@@ -193,7 +193,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(8,34)-(8,41)]",
-                "#4": "[(8,6)-(8,41)]"
+                "#/declares/shape/myTypeWithEncodedUris/property/property/amount%20after%20conversion": "[(8,6)-(8,41)]"
               }
             }
           }
@@ -208,20 +208,20 @@
             "shacl:closed": "true"
           },
           "type-property-lexical-info": {
-            "#1": "[(5,4)-(5,8)]"
+            "#/declares/shape/myTypeWithEncodedUris": "[(5,4)-(5,8)]"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,23)]",
-            "#1": "[(4,2)-(8,41)]"
+            "#/declares/shape/myTypeWithEncodedUris": "[(4,2)-(8,41)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/myTypeWithEncodedUris": ""
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/encoded-uris-in-properties/api.raml",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",

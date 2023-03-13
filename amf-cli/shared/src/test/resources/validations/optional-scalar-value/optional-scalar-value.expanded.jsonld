@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#4",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#5",
+            "@id": "#/web-api/endpoint/%2Fresource",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -38,7 +38,7 @@
                 "@value": ""
               }
             ],
-            "amf://id#5/scalar-valued/1/a": {
+            "file://amf-cli/shared/src/test/resources/validations/optional-scalar-value/optional-scalar-value.raml#/web-api/endpoint/%2Fresource/scalar-valued/1/a": {
               "core:extensionName": [
                 {
                   "@value": "a"
@@ -49,7 +49,7 @@
                   "@value": "http://a.ml/vocabularies/core#description"
                 }
               ],
-              "@id": "#5/scalar-valued/1/a/scalar_1",
+              "@id": "#/web-api/endpoint/%2Fresource/scalar-valued/1/a/scalar_1",
               "@type": [
                 "data:Scalar",
                 "data:Node",
@@ -76,19 +76,19 @@
                   "shacl:datatype": "true"
                 },
                 "lexical": {
-                  "#5/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
+                  "#/web-api/endpoint/%2Fresource/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
                 }
               }
             },
             "doc:customDomainProperties": [
               {
-                "@id": "#5/scalar-valued/1/a"
+                "@id": "#/web-api/endpoint/%2Fresource/scalar-valued/1/a"
               }
             ],
             "smaps": {
               "lexical": {
                 "core:description": "[(8,2)-(9,13)]",
-                "#5": "[(7,0)-(9,13)]",
+                "#/web-api/endpoint/%2Fresource": "[(7,0)-(9,13)]",
                 "apiContract:path": "[(7,0)-(7,9)]"
               }
             }
@@ -97,7 +97,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
-            "#4": "[(2,0)-(9,13)]"
+            "/web-api": "[(2,0)-(9,13)]"
           }
         }
       }
@@ -109,7 +109,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#3",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -132,7 +132,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/a",
         "@type": [
           "doc:DomainProperty",
           "rdf:Property",
@@ -140,7 +140,7 @@
         ],
         "raml-shapes:schema": [
           {
-            "@id": "#2",
+            "@id": "#/declares/a/scalar/a",
             "@type": [
               "raml-shapes:ScalarShape",
               "raml-shapes:AnyShape",
@@ -161,7 +161,7 @@
             "smaps": {
               "lexical": {
                 "shacl:datatype": "[(5,5)-(5,11)]",
-                "#2": "[(5,5)-(5,11)]"
+                "#/declares/a/scalar/a": "[(5,5)-(5,11)]"
               }
             }
           }
@@ -173,17 +173,17 @@
         ],
         "smaps": {
           "declared-element": {
-            "#1": ""
+            "#/declares/a": ""
           },
           "lexical": {
             "core:name": "[(5,2)-(5,3)]",
-            "#1": "[(5,2)-(7,0)]"
+            "#/declares/a": "[(5,2)-(7,0)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/validations/optional-scalar-value/optional-scalar-value.raml",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",

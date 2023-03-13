@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#15",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -13,19 +13,19 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/organization"
         },
         {
-          "@id": "#5"
+          "@id": "#/declares/shape/membership"
         },
         {
-          "@id": "#3"
+          "@id": "#/declares/shape/person"
         },
         {
-          "@id": "#13"
+          "@id": "#/declares/any/account"
         },
         {
-          "@id": "#14"
+          "@id": "#/declares/array/accounts"
         }
       ],
       "@type": [
@@ -34,7 +34,7 @@
       ],
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#15"
+        "@id": "#/BaseUnitProcessingData"
       },
       "smaps": {
         "lexical": {
@@ -43,7 +43,7 @@
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/shape/organization",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -54,7 +54,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#2"
+          "@id": "#/declares/shape/organization/property/property/contact-personnel"
         }
       ],
       "shacl:name": "organization",
@@ -63,25 +63,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#8"
+          "#/declares/shape/organization": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/inherits/shape/default-node"
         },
         "type-property-lexical-info": {
-          "#1": "[(9,4)-(9,8)]"
+          "#/declares/shape/organization": "[(9,4)-(9,8)]"
         },
         "lexical": {
           "shacl:name": "[(8,2)-(8,14)]",
-          "#1": "[(8,2)-(15,0)]"
+          "#/declares/shape/organization": "[(8,2)-(15,0)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/shape/organization": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#/declares/shape/organization": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/declares/shape/membership",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -92,7 +92,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#6"
+          "@id": "#/declares/shape/membership/property/property/member-account"
         }
       ],
       "shacl:name": "membership",
@@ -101,25 +101,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#5": "amf://id#11"
+          "#/declares/shape/membership": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/person/property/property/memberships/any/memberships/inherits/shape/default-node"
         },
         "type-property-lexical-info": {
-          "#5": "[(22,4)-(22,8)]"
+          "#/declares/shape/membership": "[(22,4)-(22,8)]"
         },
         "lexical": {
           "shacl:name": "[(21,2)-(21,12)]",
-          "#5": "[(21,2)-(26,21)]"
+          "#/declares/shape/membership": "[(21,2)-(26,21)]"
         },
         "declared-element": {
-          "#5": ""
+          "#/declares/shape/membership": ""
         },
         "resolved-link-target": {
-          "#5": "amf://id#5"
+          "#/declares/shape/membership": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/membership"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/shape/person",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -130,7 +130,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#4"
+          "@id": "#/declares/shape/person/property/property/memberships"
         }
       ],
       "shacl:name": "person",
@@ -139,25 +139,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#3": "amf://id#12"
+          "#/declares/shape/person": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization/property/property/contact-personnel/any/contact-personnel/inherits/shape/default-node"
         },
         "type-property-lexical-info": {
-          "#3": "[(16,4)-(16,8)]"
+          "#/declares/shape/person": "[(16,4)-(16,8)]"
         },
         "lexical": {
           "shacl:name": "[(15,2)-(15,8)]",
-          "#3": "[(15,2)-(21,0)]"
+          "#/declares/shape/person": "[(15,2)-(21,0)]"
         },
         "declared-element": {
-          "#3": ""
+          "#/declares/shape/person": ""
         },
         "resolved-link-target": {
-          "#3": "amf://id#3"
+          "#/declares/shape/person": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/person"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/declares/any/account",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -166,7 +166,7 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/organization"
         }
       ],
       "doc:recursive": true,
@@ -176,27 +176,27 @@
           "doc:recursive": "true"
         },
         "resolved-link-target": {
-          "#13": "amf://id#1"
+          "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
         },
         "declared-element": {
-          "#13": ""
+          "#/declares/any/account": ""
         },
         "lexical": {
-          "#13": "[(8,2)-(15,0)]"
+          "#/declares/any/account": "[(8,2)-(15,0)]"
         },
         "type-property-lexical-info": {
-          "#13": "[(9,4)-(9,8)]"
+          "#/declares/any/account": "[(9,4)-(9,8)]"
         },
         "resolved-link": {
-          "#13": "amf://id#8"
+          "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/inherits/shape/default-node"
         },
         "inherited-shapes": {
-          "#13": "amf://id#9"
+          "#/declares/any/account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization/recursive"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/declares/array/accounts",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -205,24 +205,24 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#13"
+        "@id": "#/declares/any/account"
       },
       "shacl:name": "accounts",
       "smaps": {
         "declared-element": {
-          "#14": ""
+          "#/declares/array/accounts": ""
         },
         "lexical": {
           "shacl:name": "[(5,2)-(5,10)]",
-          "#14": "[(5,2)-(8,0)]"
+          "#/declares/array/accounts": "[(5,2)-(8,0)]"
         },
         "type-property-lexical-info": {
-          "#14": "[(6,4)-(6,8)]"
+          "#/declares/array/accounts": "[(6,4)-(6,8)]"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/shape/organization/property/property/contact-personnel",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -235,7 +235,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/declares/shape/person"
       },
       "shacl:minCount": 0,
       "shacl:name": "contact-personnel",
@@ -245,13 +245,13 @@
         },
         "lexical": {
           "shacl:minCount": "[(12,8)-(13,0)]",
-          "#2": "[(11,6)-(15,0)]",
+          "#/declares/shape/organization/property/property/contact-personnel": "[(11,6)-(15,0)]",
           "raml-shapes:range": "[(11,24)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/declares/shape/membership/property/property/member-account",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -264,7 +264,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#7"
+        "@id": "#/declares/shape/membership/property/property/member-account/any/member-account"
       },
       "shacl:minCount": 1,
       "shacl:name": "member-account",
@@ -275,12 +275,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(24,21)-(26,21)]",
-          "#6": "[(24,6)-(26,21)]"
+          "#/declares/shape/membership/property/property/member-account": "[(24,6)-(26,21)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/declares/shape/person/property/property/memberships",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -293,7 +293,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#5"
+        "@id": "#/declares/shape/membership"
       },
       "shacl:minCount": 1,
       "shacl:name": "memberships",
@@ -304,12 +304,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(18,18)-(21,0)]",
-          "#4": "[(18,6)-(21,0)]"
+          "#/declares/shape/person/property/property/memberships": "[(18,6)-(21,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/declares/shape/membership/property/property/member-account/any/member-account",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -318,7 +318,7 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/organization"
         }
       ],
       "doc:recursive": true,
@@ -329,29 +329,29 @@
           "doc:recursive": "true"
         },
         "resolved-link-target": {
-          "#7": "amf://id#1"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/shape/organization"
         },
         "declared-element": {
-          "#7": ""
+          "#/declares/shape/membership/property/property/member-account/any/member-account": ""
         },
         "lexical": {
           "core:name": "[(25,8)-(26,0)]",
-          "#7": "[(8,2)-(15,0)]"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "[(8,2)-(15,0)]"
         },
         "type-property-lexical-info": {
-          "#7": "[(9,4)-(9,8)]"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "[(9,4)-(9,8)]"
         },
         "resolved-link": {
-          "#7": "amf://id#8"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/inherits/shape/default-node"
         },
         "inherited-shapes": {
-          "#7": "amf://id#10"
+          "#/declares/shape/membership/property/property/member-account/any/member-account": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml#/declares/any/account/link--1177318867"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/production/lib-types/lib.raml",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",

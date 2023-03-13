@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#31",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#32",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,22 +21,22 @@
       "core:version": "1.0",
       "apiContract:endpoint": [
         {
-          "@id": "#33"
+          "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint"
         },
         {
-          "@id": "#45"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint"
         }
       ],
       "smaps": {
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
-          "#32": "[(2,0)-(51,0)]",
+          "/web-api": "[(2,0)-(51,0)]",
           "core:name": "[(2,0)-(3,0)]"
         }
       }
     },
     {
-      "@id": "#33",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -44,18 +44,18 @@
       "apiContract:path": "/engineersTraitEndpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#34"
+          "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(34,0)-(34,23)]",
-          "#33": "[(34,0)-(43,0)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint": "[(34,0)-(43,0)]"
         }
       }
     },
     {
-      "@id": "#45",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -63,23 +63,23 @@
       "apiContract:path": "/engineersResourceTypeEndpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#47"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#46"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(43,0)-(43,30)]",
-          "#45": "[(43,0)-(51,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint": "[(43,0)-(51,0)]"
         }
       }
     },
     {
-      "@id": "#34",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -88,24 +88,24 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#36"
+          "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#35"
+          "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/extends/employeeTrait"
         }
       ],
       "smaps": {
         "lexical": {
           "doc:extends": "[(36,4)-(37,0)]",
-          "#34": "[(35,2)-(43,0)]",
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post": "[(35,2)-(43,0)]",
           "apiContract:returns": "[(37,4)-(43,0)]"
         }
       }
     },
     {
-      "@id": "#47",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -114,18 +114,18 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#48"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(46,4)-(51,0)]",
-          "#47": "[(45,2)-(51,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post": "[(45,2)-(51,0)]"
         }
       }
     },
     {
-      "@id": "#46",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -133,17 +133,17 @@
       ],
       "core:name": "employeeResourceType",
       "doc:target": {
-        "@id": "#10"
+        "@id": "#/declares/resourceType/employeeResourceType"
       },
       "smaps": {
         "lexical": {
           "core:name": "[(44,8)-(44,28)]",
-          "#46": "[(44,8)-(44,28)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType": "[(44,8)-(44,28)]"
         }
       }
     },
     {
-      "@id": "#36",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -154,18 +154,18 @@
       "core:name": "500",
       "apiContract:payload": [
         {
-          "@id": "#37"
+          "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(39,8)-(43,0)]",
-          "#36": "[(38,6)-(43,0)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500": "[(38,6)-(43,0)]"
         }
       }
     },
     {
-      "@id": "#35",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/extends/employeeTrait",
       "@type": [
         "apiContract:ParametrizedTrait",
         "doc:ParametrizedDeclaration",
@@ -173,17 +173,17 @@
       ],
       "core:name": "employeeTrait",
       "doc:target": {
-        "@id": "#21"
+        "@id": "#/declares/trait/employeeTrait"
       },
       "smaps": {
         "lexical": {
           "core:name": "[(36,9)-(36,22)]",
-          "#35": "[(36,9)-(36,22)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/extends/employeeTrait": "[(36,9)-(36,22)]"
         }
       }
     },
     {
-      "@id": "#48",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -194,18 +194,18 @@
       "core:name": "500",
       "apiContract:payload": [
         {
-          "@id": "#49"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(48,8)-(51,0)]",
-          "#48": "[(47,6)-(51,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500": "[(47,6)-(51,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/declares/resourceType/employeeResourceType",
       "@type": [
         "apiContract:ResourceType",
         "doc:AbstractDeclaration",
@@ -213,27 +213,27 @@
       ],
       "core:name": "employeeResourceType",
       "doc:dataNode": {
-        "@id": "#11"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1"
       },
       "smaps": {
         "resolved-link-target": {
-          "#10": "amf://id#10"
+          "#/declares/resourceType/employeeResourceType": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/resourceType/employeeResourceType"
         },
         "declared-element": {
-          "#10": ""
+          "#/declares/resourceType/employeeResourceType": ""
         },
         "lexical": {
           "doc:dataNode": "[(26,4)-(34,0)]",
-          "#10": "[(25,2)-(34,0)]",
+          "#/declares/resourceType/employeeResourceType": "[(25,2)-(34,0)]",
           "core:name": "[(25,2)-(25,22)]"
         },
         "resolved-link": {
-          "#10": "amf://id#20"
+          "#/declares/resourceType/employeeResourceType": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/resourceType/default-abstract"
         }
       }
     },
     {
-      "@id": "#37",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -241,16 +241,16 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#38"
+        "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema"
       },
       "smaps": {
         "lexical": {
-          "#37": "[(40,10)-(43,0)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson": "[(40,10)-(43,0)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#/declares/trait/employeeTrait",
       "@type": [
         "apiContract:Trait",
         "doc:AbstractDeclaration",
@@ -258,27 +258,27 @@
       ],
       "core:name": "employeeTrait",
       "doc:dataNode": {
-        "@id": "#22"
+        "@id": "#/declares/trait/employeeTrait/object_1"
       },
       "smaps": {
         "resolved-link-target": {
-          "#21": "amf://id#21"
+          "#/declares/trait/employeeTrait": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/trait/employeeTrait"
         },
         "declared-element": {
-          "#21": ""
+          "#/declares/trait/employeeTrait": ""
         },
         "lexical": {
           "doc:dataNode": "[(18,4)-(24,0)]",
-          "#21": "[(17,2)-(24,0)]",
+          "#/declares/trait/employeeTrait": "[(17,2)-(24,0)]",
           "core:name": "[(17,2)-(17,15)]"
         },
         "resolved-link": {
-          "#21": "amf://id#30"
+          "#/declares/trait/employeeTrait": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/extends/employeeTrait/trait/default-abstract"
         }
       }
     },
     {
-      "@id": "#49",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -286,23 +286,23 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#50"
+        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema"
       },
       "smaps": {
         "lexical": {
-          "#49": "[(49,10)-(51,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson": "[(49,10)-(51,0)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:post": {
-        "@id": "#12"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post"
       },
       "core:name": "object_1",
       "smaps": {
@@ -311,12 +311,12 @@
         },
         "lexical": {
           "data:post": "[(26,4)-(34,0)]",
-          "#11": "[(26,4)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1": "[(26,4)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#38",
+      "@id": "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -327,31 +327,31 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#39"
+          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited"
         },
         {
-          "@id": "#40"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited"
         },
         {
-          "@id": "#41"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited"
         }
       ],
       "shacl:name": "Employee",
       "smaps": {
         "inheritance-provenance": {
-          "shacl:name": "amf://id#4"
+          "shacl:name": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
         },
         "inherited-shapes": {
-          "#38": "amf://id#42,amf://id#43,amf://id#44"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/link-1258113742,file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/shape/Engineer/link-1885135503,file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/link--1907849355"
         },
         "type-property-lexical-info": {
-          "#38": "[(41,12)-(41,16)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "[(41,12)-(41,16)]"
         },
         "lexical": {
-          "#38": "[(40,10)-(43,0)]"
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "[(40,10)-(43,0)]"
         },
         "auto-generated-name": {
-          "#38": ""
+          "#/web-api/endpoint/%2FengineersTraitEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": ""
         },
         "synthesized-field": {
           "shacl:closed": "true"
@@ -359,14 +359,14 @@
       }
     },
     {
-      "@id": "#22",
+      "@id": "#/declares/trait/employeeTrait/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:responses": {
-        "@id": "#23"
+        "@id": "#/declares/trait/employeeTrait/object_1/responses"
       },
       "core:name": "object_1",
       "smaps": {
@@ -375,12 +375,12 @@
         },
         "lexical": {
           "data:responses": "[(18,4)-(24,0)]",
-          "#22": "[(18,4)-(24,0)]"
+          "#/declares/trait/employeeTrait/object_1": "[(18,4)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#50",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -391,31 +391,31 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#39"
+          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited"
         },
         {
-          "@id": "#40"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited"
         },
         {
-          "@id": "#41"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited"
         }
       ],
       "shacl:name": "Employee",
       "smaps": {
         "inheritance-provenance": {
-          "shacl:name": "amf://id#4"
+          "shacl:name": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
         },
         "inherited-shapes": {
-          "#50": "amf://id#42,amf://id#43,amf://id#44"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/link-1258113742,file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/shape/Engineer/link-1885135503,file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/link--1907849355"
         },
         "type-property-lexical-info": {
-          "#50": "[(50,12)-(50,16)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "[(50,12)-(50,16)]"
         },
         "lexical": {
-          "#50": "[(49,10)-(51,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": "[(49,10)-(51,0)]"
         },
         "auto-generated-name": {
-          "#50": ""
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema": ""
         },
         "synthesized-field": {
           "shacl:closed": "true"
@@ -423,14 +423,14 @@
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:responses": {
-        "@id": "#13"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses"
       },
       "core:name": "post",
       "smaps": {
@@ -439,12 +439,12 @@
         },
         "lexical": {
           "data:responses": "[(27,6)-(34,0)]",
-          "#12": "[(27,0)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post": "[(27,0)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#39",
+      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -457,7 +457,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#9"
+        "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/scalar/engineeringSkill"
       },
       "shacl:minCount": 1,
       "shacl:name": "engineeringSkill",
@@ -468,15 +468,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#39": "[(14,6)-(16,0)]"
+          "#/declares/shape/Engineer/property/property/engineeringSkill/inherited": "[(14,6)-(16,0)]"
         },
         "inheritance-provenance": {
-          "#39": "amf://id#7"
+          "#/declares/shape/Engineer/property/property/engineeringSkill/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/shape/Engineer"
         }
       }
     },
     {
-      "@id": "#40",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -489,7 +489,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/scalar/name"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
@@ -500,15 +500,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#40": "[(8,6)-(9,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited": "[(8,6)-(9,0)]"
         },
         "inheritance-provenance": {
-          "#40": "amf://id#1"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person"
         }
       }
     },
     {
-      "@id": "#41",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -521,7 +521,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#6"
+        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/scalar/employeeId"
       },
       "shacl:minCount": 1,
       "shacl:name": "employeeId",
@@ -532,22 +532,22 @@
         },
         "lexical": {
           "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#41": "[(11,6)-(12,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited": "[(11,6)-(12,0)]"
         },
         "inheritance-provenance": {
-          "#41": "amf://id#4"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:500": {
-        "@id": "#24"
+        "@id": "#/declares/trait/employeeTrait/object_1/responses/500"
       },
       "core:name": "responses",
       "smaps": {
@@ -556,19 +556,19 @@
         },
         "lexical": {
           "data:500": "[(19,6)-(24,0)]",
-          "#23": "[(19,0)-(24,0)]"
+          "#/declares/trait/employeeTrait/object_1/responses": "[(19,0)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:500": {
-        "@id": "#14"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500"
       },
       "core:name": "responses",
       "smaps": {
@@ -577,12 +577,12 @@
         },
         "lexical": {
           "data:500": "[(28,8)-(34,0)]",
-          "#13": "[(28,0)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses": "[(28,0)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/scalar/engineeringSkill",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -599,12 +599,12 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(14,24)-(14,30)]",
-          "#9": "[(14,6)-(16,0)]"
+          "#/declares/shape/Engineer/property/property/engineeringSkill/scalar/engineeringSkill": "[(14,6)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/scalar/name",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -621,12 +621,12 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(8,12)-(8,18)]",
-          "#3": "[(8,6)-(9,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/scalar/name": "[(8,6)-(9,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/scalar/employeeId",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -643,19 +643,19 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(11,18)-(11,24)]",
-          "#6": "[(11,6)-(12,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/scalar/employeeId": "[(11,6)-(12,0)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:body": {
-        "@id": "#25"
+        "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body"
       },
       "core:name": "500",
       "smaps": {
@@ -664,19 +664,19 @@
         },
         "lexical": {
           "data:body": "[(20,8)-(24,0)]",
-          "#24": "[(20,0)-(24,0)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500": "[(20,0)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:body": {
-        "@id": "#15"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body"
       },
       "core:name": "500",
       "smaps": {
@@ -685,19 +685,19 @@
         },
         "lexical": {
           "data:body": "[(29,10)-(34,0)]",
-          "#14": "[(29,0)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500": "[(29,0)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:application%2Fjson": {
-        "@id": "#26"
+        "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson"
       },
       "core:name": "body",
       "smaps": {
@@ -706,19 +706,19 @@
         },
         "lexical": {
           "data:application%2Fjson": "[(21,10)-(24,0)]",
-          "#25": "[(21,0)-(24,0)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500/body": "[(21,0)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:application%2Fjson": {
-        "@id": "#16"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson"
       },
       "core:name": "body",
       "smaps": {
@@ -727,19 +727,19 @@
         },
         "lexical": {
           "data:application%2Fjson": "[(30,12)-(34,0)]",
-          "#15": "[(30,0)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body": "[(30,0)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:type": {
-        "@id": "#27"
+        "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type"
       },
       "core:name": "application/json",
       "smaps": {
@@ -748,19 +748,19 @@
         },
         "lexical": {
           "data:type": "[(22,12)-(24,0)]",
-          "#26": "[(22,0)-(24,0)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson": "[(22,0)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:type": {
-        "@id": "#17"
+        "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type"
       },
       "core:name": "application/json",
       "smaps": {
@@ -769,12 +769,12 @@
         },
         "lexical": {
           "data:type": "[(31,14)-(34,0)]",
-          "#16": "[(31,0)-(34,0)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson": "[(31,0)-(34,0)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type",
       "@type": [
         "data:Array",
         "rdf:Seq",
@@ -783,21 +783,21 @@
       ],
       "rdfs:member": [
         {
-          "@id": "#28"
+          "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_7"
         },
         {
-          "@id": "#29"
+          "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_8"
         }
       ],
       "core:name": "type",
       "smaps": {
         "lexical": {
-          "#27": "[(22,18)-(22,36)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type": "[(22,18)-(22,36)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type",
       "@type": [
         "data:Array",
         "rdf:Seq",
@@ -806,21 +806,21 @@
       ],
       "rdfs:member": [
         {
-          "@id": "#18"
+          "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_8"
         },
         {
-          "@id": "#19"
+          "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_9"
         }
       ],
       "core:name": "type",
       "smaps": {
         "lexical": {
-          "#17": "[(31,20)-(31,38)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type": "[(31,20)-(31,38)]"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_7",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -839,12 +839,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#28": "[(22,19)-(22,27)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_7": "[(22,19)-(22,27)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_8",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -863,12 +863,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#29": "[(22,29)-(22,35)]"
+          "#/declares/trait/employeeTrait/object_1/responses/500/body/application%2Fjson/type/member/scalar_8": "[(22,29)-(22,35)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_8",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -887,12 +887,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#18": "[(31,21)-(31,29)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_8": "[(31,21)-(31,29)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_9",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -911,7 +911,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#19": "[(31,31)-(31,37)]"
+          "#/declares/resourceType/employeeResourceType/object_1/post/responses/500/body/application%2Fjson/type/member/scalar_9": "[(31,31)-(31,37)]"
         }
       }
     },
@@ -919,19 +919,19 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person"
         },
         {
-          "@id": "#4"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
         },
         {
-          "@id": "#7"
+          "@id": "#/declares/shape/Engineer"
         },
         {
-          "@id": "#10"
+          "@id": "#/declares/resourceType/employeeResourceType"
         },
         {
-          "@id": "#21"
+          "@id": "#/declares/trait/employeeTrait"
         }
       ],
       "@type": [
@@ -941,15 +941,15 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#32"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#31"
+        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -960,7 +960,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#2"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name"
         }
       ],
       "shacl:name": "Person",
@@ -970,15 +970,15 @@
         },
         "lexical": {
           "shacl:name": "[(6,2)-(6,8)]",
-          "#1": "[(6,2)-(9,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person": "[(6,2)-(9,0)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person": ""
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -989,7 +989,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#5"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId"
         }
       ],
       "shacl:name": "Employee",
@@ -999,15 +999,15 @@
         },
         "lexical": {
           "shacl:name": "[(9,2)-(9,10)]",
-          "#4": "[(9,2)-(12,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee": "[(9,2)-(12,0)]"
         },
         "declared-element": {
-          "#4": ""
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee": ""
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/declares/shape/Engineer",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -1018,7 +1018,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#8"
+          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill"
         }
       ],
       "shacl:name": "Engineer",
@@ -1028,15 +1028,15 @@
         },
         "lexical": {
           "shacl:name": "[(12,2)-(12,10)]",
-          "#7": "[(12,2)-(16,0)]"
+          "#/declares/shape/Engineer": "[(12,2)-(16,0)]"
         },
         "declared-element": {
-          "#7": ""
+          "#/declares/shape/Engineer": ""
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -1049,7 +1049,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/scalar/name"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
@@ -1060,12 +1060,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#2": "[(8,6)-(9,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name": "[(8,6)-(9,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -1078,7 +1078,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#6"
+        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/scalar/employeeId"
       },
       "shacl:minCount": 1,
       "shacl:name": "employeeId",
@@ -1089,12 +1089,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#5": "[(11,6)-(12,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId": "[(11,6)-(12,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -1107,7 +1107,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#9"
+        "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/scalar/engineeringSkill"
       },
       "shacl:minCount": 1,
       "shacl:name": "engineeringSkill",
@@ -1118,13 +1118,13 @@
         },
         "lexical": {
           "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#8": "[(14,6)-(16,0)]"
+          "#/declares/shape/Engineer/property/property/engineeringSkill": "[(14,6)-(16,0)]"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",

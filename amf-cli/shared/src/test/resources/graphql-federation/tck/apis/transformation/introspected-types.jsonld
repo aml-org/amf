@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#1",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -11,15 +11,15 @@
       "core:name": "introspected-types.graphql",
       "apiContract:endpoint": [
         {
-          "@id": "#2"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities"
         },
         {
-          "@id": "#41"
+          "@id": "/web-api/endpoint/%2Fquery%2F_service"
         }
       ]
     },
     {
-      "@id": "#49",
+      "@id": "/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -28,7 +28,7 @@
       "doc:sourceSpec": "GraphQLFederation"
     },
     {
-      "@id": "#2",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -37,12 +37,12 @@
       "core:name": "Query._entities",
       "apiContract:supportedOperation": [
         {
-          "@id": "#3"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities"
         }
       ]
     },
     {
-      "@id": "#41",
+      "@id": "/web-api/endpoint/%2Fquery%2F_service",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -51,12 +51,12 @@
       "core:name": "Query._service",
       "apiContract:supportedOperation": [
         {
-          "@id": "#42"
+          "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service"
         }
       ]
     },
     {
-      "@id": "#3",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -66,18 +66,18 @@
       "core:name": "Query._entities",
       "apiContract:expects": [
         {
-          "@id": "#4"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#8"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default"
         }
       ],
       "apiContract:operationId": "Query._entities"
     },
     {
-      "@id": "#42",
+      "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -87,18 +87,18 @@
       "core:name": "Query._service",
       "apiContract:expects": [
         {
-          "@id": "#43"
+          "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/expects/request"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#44"
+          "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/returns/resp/default"
         }
       ],
       "apiContract:operationId": "Query._service"
     },
     {
-      "@id": "#4",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -107,12 +107,12 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#5"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request/parameter/parameter/query/representations"
         }
       ]
     },
     {
-      "@id": "#8",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -123,12 +123,12 @@
       "core:name": "default",
       "apiContract:payload": [
         {
-          "@id": "#9"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default"
         }
       ]
     },
     {
-      "@id": "#43",
+      "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -137,7 +137,7 @@
       ]
     },
     {
-      "@id": "#44",
+      "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/returns/resp/default",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -148,12 +148,12 @@
       "core:name": "default",
       "apiContract:payload": [
         {
-          "@id": "#45"
+          "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/returns/resp/default/payload/default"
         }
       ]
     },
     {
-      "@id": "#5",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request/parameter/parameter/query/representations",
       "@type": [
         "apiContract:Parameter",
         "core:Parameter",
@@ -163,33 +163,33 @@
       "apiContract:required": true,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#6"
+        "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request/parameter/parameter/query/representations/array/default-array"
       }
     },
     {
-      "@id": "#9",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {
-        "@id": "#10"
+        "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array"
       }
     },
     {
-      "@id": "#45",
+      "@id": "/web-api/endpoint/%2Fquery%2F_service/supportedOperation/query/Query._service/returns/resp/default/payload/default",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {
-        "@id": "#46"
+        "@id": "/declares/shape/_Service"
       }
     },
     {
-      "@id": "#6",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/expects/request/parameter/parameter/query/representations/array/default-array",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -198,11 +198,11 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#7"
+        "@id": "/declares/scalar/_Any"
       }
     },
     {
-      "@id": "#10",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -211,11 +211,11 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#11"
+        "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array/union/default-union"
       }
     },
     {
-      "@id": "#46",
+      "@id": "/declares/shape/_Service",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -225,13 +225,13 @@
       ],
       "shacl:property": [
         {
-          "@id": "#47"
+          "@id": "/declares/shape/_Service/property/property/sdl"
         }
       ],
       "shacl:name": "_Service"
     },
     {
-      "@id": "#7",
+      "@id": "/declares/scalar/_Any",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -248,7 +248,7 @@
       "shacl:name": "_Any"
     },
     {
-      "@id": "#11",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array/union/default-union",
       "@type": [
         "raml-shapes:UnionShape",
         "raml-shapes:AnyShape",
@@ -258,15 +258,15 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#12"
+          "@id": "/declares/union/_Entity"
         },
         {
-          "@id": "#40"
+          "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array/union/default-union/anyOf/nil/default-nil"
         }
       ]
     },
     {
-      "@id": "#47",
+      "@id": "/declares/shape/_Service/property/property/sdl",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -274,12 +274,12 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#48"
+        "@id": "/declares/shape/_Service/property/property/sdl/scalar/default-scalar"
       },
       "shacl:name": "sdl"
     },
     {
-      "@id": "#12",
+      "@id": "/declares/union/_Entity",
       "@type": [
         "raml-shapes:UnionShape",
         "raml-shapes:AnyShape",
@@ -289,16 +289,16 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#13"
+          "@id": "null#/shape/Dog"
         },
         {
-          "@id": "#32"
+          "@id": "null#/shape/Cat"
         }
       ],
       "shacl:name": "_Entity"
     },
     {
-      "@id": "#40",
+      "@id": "/web-api/endpoint/%2Fquery%2F_entities/supportedOperation/query/Query._entities/returns/resp/default/payload/default/array/default-array/union/default-union/anyOf/nil/default-nil",
       "@type": [
         "raml-shapes:NilShape",
         "shacl:Shape",
@@ -307,7 +307,7 @@
       ]
     },
     {
-      "@id": "#48",
+      "@id": "/declares/shape/_Service/property/property/sdl/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -322,7 +322,7 @@
       ]
     },
     {
-      "@id": "#13",
+      "@id": "null#/shape/Dog",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -332,24 +332,24 @@
       ],
       "shacl:property": [
         {
-          "@id": "#14"
+          "@id": "null#/shape/Dog/property/id"
         },
         {
-          "@id": "#16"
+          "@id": "null#/shape/Dog/property/name"
         }
       ],
       "shacl:name": "Dog",
-      "amf://id#23": {
-        "@id": "#21"
+      "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/transformation/introspected-types.graphql/declares/key": {
+        "@id": "null/data-node"
       },
       "doc:customDomainProperties": [
         {
-          "@id": "#23"
+          "@id": "/declares/key"
         }
       ]
     },
     {
-      "@id": "#32",
+      "@id": "null#/shape/Cat",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -359,24 +359,24 @@
       ],
       "shacl:property": [
         {
-          "@id": "#33"
+          "@id": "null#/shape/Cat/property/id"
         },
         {
-          "@id": "#35"
+          "@id": "null#/shape/Cat/property/name"
         }
       ],
       "shacl:name": "Cat",
-      "amf://id#23": {
-        "@id": "#21"
+      "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/transformation/introspected-types.graphql/declares/key": {
+        "@id": "null/data-node"
       },
       "doc:customDomainProperties": [
         {
-          "@id": "#23"
+          "@id": "/declares/key"
         }
       ]
     },
     {
-      "@id": "#14",
+      "@id": "null#/shape/Dog/property/id",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -384,13 +384,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#15"
+        "@id": "null#/shape/Dog/property/id/scalar/default-scalar"
       },
       "shacl:minCount": 1,
       "shacl:name": "id"
     },
     {
-      "@id": "#16",
+      "@id": "null#/shape/Dog/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -398,25 +398,25 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#17"
+        "@id": "null#/shape/Dog/property/name/scalar/default-scalar"
       },
       "shacl:minCount": 0,
       "shacl:name": "name"
     },
     {
       "core:extensionName": "key",
-      "@id": "#21",
+      "@id": "null/data-node",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:fields": {
-        "@id": "#22"
+        "@id": "null/fields"
       }
     },
     {
-      "@id": "#33",
+      "@id": "null#/shape/Cat/property/id",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -424,13 +424,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#34"
+        "@id": "null#/shape/Cat/property/id/scalar/default-scalar"
       },
       "shacl:minCount": 1,
       "shacl:name": "id"
     },
     {
-      "@id": "#35",
+      "@id": "null#/shape/Cat/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -438,13 +438,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#36"
+        "@id": "null#/shape/Cat/property/name/scalar/default-scalar"
       },
       "shacl:minCount": 0,
       "shacl:name": "name"
     },
     {
-      "@id": "#15",
+      "@id": "null#/shape/Dog/property/id/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -460,7 +460,7 @@
       "raml-shapes:format": "ID"
     },
     {
-      "@id": "#17",
+      "@id": "null#/shape/Dog/property/name/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -475,7 +475,7 @@
       ]
     },
     {
-      "@id": "#22",
+      "@id": "null/fields",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -490,7 +490,7 @@
       "core:name": "fields"
     },
     {
-      "@id": "#34",
+      "@id": "null#/shape/Cat/property/id/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -506,7 +506,7 @@
       "raml-shapes:format": "ID"
     },
     {
-      "@id": "#36",
+      "@id": "null#/shape/Cat/property/name/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -524,46 +524,46 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#51"
+          "@id": "#/declares/shape/Romagnoli"
         },
         {
-          "@id": "#13"
+          "@id": "null#/shape/Dog"
         },
         {
-          "@id": "#32"
+          "@id": "null#/shape/Cat"
         },
         {
-          "@id": "#7"
+          "@id": "/declares/scalar/_Any"
         },
         {
-          "@id": "#26"
+          "@id": "/declares/scalar/FieldSet"
         },
         {
-          "@id": "#46"
+          "@id": "/declares/shape/_Service"
         },
         {
-          "@id": "#12"
+          "@id": "/declares/union/_Entity"
         },
         {
-          "@id": "#58"
+          "@id": "/declares/external"
         },
         {
-          "@id": "#60"
+          "@id": "/declares/requires"
         },
         {
-          "@id": "#63"
+          "@id": "/declares/provides"
         },
         {
-          "@id": "#23"
+          "@id": "/declares/key"
         },
         {
-          "@id": "#66"
+          "@id": "/declares/shareable"
         },
         {
-          "@id": "#68"
+          "@id": "/declares/inaccessible"
         },
         {
-          "@id": "#70"
+          "@id": "/declares/override"
         }
       ],
       "@type": [
@@ -573,15 +573,15 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#1"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#49"
+        "@id": "/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#51",
+      "@id": "#/declares/shape/Romagnoli",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -591,19 +591,19 @@
       ],
       "shacl:property": [
         {
-          "@id": "#52"
+          "@id": "#/declares/shape/Romagnoli/property/property/id"
         },
         {
-          "@id": "#54"
+          "@id": "#/declares/shape/Romagnoli/property/property/name"
         },
         {
-          "@id": "#56"
+          "@id": "#/declares/shape/Romagnoli/property/property/goals"
         }
       ],
       "shacl:name": "Romagnoli"
     },
     {
-      "@id": "#26",
+      "@id": "/declares/scalar/FieldSet",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -620,7 +620,7 @@
       "shacl:name": "FieldSet"
     },
     {
-      "@id": "#58",
+      "@id": "/declares/external",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -632,12 +632,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#59"
+        "@id": "/declares/external/shape/default-node"
       },
       "core:name": "external"
     },
     {
-      "@id": "#60",
+      "@id": "/declares/requires",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -649,12 +649,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#61"
+        "@id": "/declares/requires/shape/default-node"
       },
       "core:name": "requires"
     },
     {
-      "@id": "#63",
+      "@id": "/declares/provides",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -666,12 +666,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#64"
+        "@id": "/declares/provides/shape/default-node"
       },
       "core:name": "provides"
     },
     {
-      "@id": "#23",
+      "@id": "/declares/key",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -686,13 +686,13 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#24"
+        "@id": "/declares/key/shape/default-node"
       },
       "core:name": "key",
       "core:repeatable": true
     },
     {
-      "@id": "#66",
+      "@id": "/declares/shareable",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -707,12 +707,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#67"
+        "@id": "/declares/shareable/shape/default-node"
       },
       "core:name": "shareable"
     },
     {
-      "@id": "#68",
+      "@id": "/declares/inaccessible",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -751,12 +751,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#69"
+        "@id": "/declares/inaccessible/shape/default-node"
       },
       "core:name": "inaccessible"
     },
     {
-      "@id": "#70",
+      "@id": "/declares/override",
       "@type": [
         "doc:DomainProperty",
         "rdf:Property",
@@ -768,12 +768,12 @@
         }
       ],
       "raml-shapes:schema": {
-        "@id": "#71"
+        "@id": "/declares/override/shape/default-node"
       },
       "core:name": "override"
     },
     {
-      "@id": "#52",
+      "@id": "#/declares/shape/Romagnoli/property/property/id",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -781,13 +781,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#53"
+        "@id": "#/declares/shape/Romagnoli/property/property/id/scalar/default-scalar"
       },
       "shacl:minCount": 1,
       "shacl:name": "id"
     },
     {
-      "@id": "#54",
+      "@id": "#/declares/shape/Romagnoli/property/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -795,13 +795,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#55"
+        "@id": "#/declares/shape/Romagnoli/property/property/name/scalar/default-scalar"
       },
       "shacl:minCount": 1,
       "shacl:name": "name"
     },
     {
-      "@id": "#56",
+      "@id": "#/declares/shape/Romagnoli/property/property/goals",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -809,13 +809,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#57"
+        "@id": "#/declares/shape/Romagnoli/property/property/goals/scalar/default-scalar"
       },
       "shacl:minCount": 1,
       "shacl:name": "goals"
     },
     {
-      "@id": "#59",
+      "@id": "/declares/external/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -825,7 +825,7 @@
       ]
     },
     {
-      "@id": "#61",
+      "@id": "/declares/requires/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -835,12 +835,12 @@
       ],
       "shacl:property": [
         {
-          "@id": "#62"
+          "@id": "/declares/requires/shape/default-node/property/property/fields"
         }
       ]
     },
     {
-      "@id": "#64",
+      "@id": "/declares/provides/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -850,12 +850,12 @@
       ],
       "shacl:property": [
         {
-          "@id": "#65"
+          "@id": "/declares/provides/shape/default-node/property/property/fields"
         }
       ]
     },
     {
-      "@id": "#24",
+      "@id": "/declares/key/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -865,15 +865,15 @@
       ],
       "shacl:property": [
         {
-          "@id": "#25"
+          "@id": "/declares/key/shape/default-node/property/property/fields"
         },
         {
-          "@id": "#27"
+          "@id": "/declares/key/shape/default-node/property/property/resolvable"
         }
       ]
     },
     {
-      "@id": "#67",
+      "@id": "/declares/shareable/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -883,7 +883,7 @@
       ]
     },
     {
-      "@id": "#69",
+      "@id": "/declares/inaccessible/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -893,7 +893,7 @@
       ]
     },
     {
-      "@id": "#71",
+      "@id": "/declares/override/shape/default-node",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -903,12 +903,12 @@
       ],
       "shacl:property": [
         {
-          "@id": "#72"
+          "@id": "/declares/override/shape/default-node/property/property/from"
         }
       ]
     },
     {
-      "@id": "#53",
+      "@id": "#/declares/shape/Romagnoli/property/property/id/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -924,7 +924,7 @@
       "raml-shapes:format": "ID"
     },
     {
-      "@id": "#55",
+      "@id": "#/declares/shape/Romagnoli/property/property/name/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -939,7 +939,7 @@
       ]
     },
     {
-      "@id": "#57",
+      "@id": "#/declares/shape/Romagnoli/property/property/goals/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -954,7 +954,7 @@
       ]
     },
     {
-      "@id": "#62",
+      "@id": "/declares/requires/shape/default-node/property/property/fields",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -962,12 +962,12 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#26"
+        "@id": "/declares/scalar/FieldSet"
       },
       "shacl:name": "fields"
     },
     {
-      "@id": "#65",
+      "@id": "/declares/provides/shape/default-node/property/property/fields",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -975,12 +975,12 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#26"
+        "@id": "/declares/scalar/FieldSet"
       },
       "shacl:name": "fields"
     },
     {
-      "@id": "#25",
+      "@id": "/declares/key/shape/default-node/property/property/fields",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -988,12 +988,12 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#26"
+        "@id": "/declares/scalar/FieldSet"
       },
       "shacl:name": "fields"
     },
     {
-      "@id": "#27",
+      "@id": "/declares/key/shape/default-node/property/property/resolvable",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -1001,15 +1001,15 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#29"
+        "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union"
       },
       "shacl:name": "resolvable",
       "shacl:defaultValue": {
-        "@id": "#28"
+        "@id": "/declares/key/shape/default-node/property/property/resolvable/data-node"
       }
     },
     {
-      "@id": "#72",
+      "@id": "/declares/override/shape/default-node/property/property/from",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -1017,12 +1017,12 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#73"
+        "@id": "/declares/override/shape/default-node/property/property/from/scalar/default-scalar"
       },
       "shacl:name": "from"
     },
     {
-      "@id": "#29",
+      "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union",
       "@type": [
         "raml-shapes:UnionShape",
         "raml-shapes:AnyShape",
@@ -1032,15 +1032,15 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#30"
+          "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union/anyOf/scalar/default-scalar"
         },
         {
-          "@id": "#31"
+          "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union/anyOf/nil/default-nil"
         }
       ]
     },
     {
-      "@id": "#28",
+      "@id": "/declares/key/shape/default-node/property/property/resolvable/data-node",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -1054,7 +1054,7 @@
       ]
     },
     {
-      "@id": "#73",
+      "@id": "/declares/override/shape/default-node/property/property/from/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -1069,7 +1069,7 @@
       ]
     },
     {
-      "@id": "#30",
+      "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union/anyOf/scalar/default-scalar",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -1084,7 +1084,7 @@
       ]
     },
     {
-      "@id": "#31",
+      "@id": "/declares/key/shape/default-node/property/property/resolvable/union/default-union/anyOf/nil/default-nil",
       "@type": [
         "raml-shapes:NilShape",
         "shacl:Shape",
@@ -1094,7 +1094,7 @@
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/transformation/introspected-types.graphql",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",

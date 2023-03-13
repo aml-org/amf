@@ -12,7 +12,7 @@ types:
         anyOf:
           -
             type: object
-            (amf-recursive): amf://id#1
+            (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/optional-type/input.raml#/declares/shape/SomeType
           -
             type: nil
         required: true

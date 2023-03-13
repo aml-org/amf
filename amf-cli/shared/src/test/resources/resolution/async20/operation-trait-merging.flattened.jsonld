@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#5",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "ASYNC 2.0"
     },
     {
-      "@id": "#6",
+      "@id": "#/async-api",
       "@type": [
         "apiContract:AsyncAPI",
         "apiContract:API",
@@ -21,20 +21,20 @@
       "core:version": "asdasd",
       "apiContract:endpoint": [
         {
-          "@id": "#7"
+          "@id": "#/async-api/endpoint/someChannel"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(14,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#6": "[(1,0)-(20,36)]",
+          "#/async-api": "[(1,0)-(20,36)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/async-api/endpoint/someChannel",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -42,18 +42,18 @@
       "apiContract:path": "someChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#8"
+          "@id": "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(7,0)-(14,0)]",
-          "#7": "[(6,2)-(14,0)]"
+          "#/async-api/endpoint/someChannel": "[(6,2)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -65,22 +65,22 @@
       "apiContract:operationId": "baseId",
       "doc:extends": [
         {
-          "@id": "#1"
+          "@id": "#/declares/firstTrait"
         },
         {
-          "@id": "#3"
+          "@id": "#/declares/secondTrait"
         }
       ],
       "smaps": {
         "lexical": {
           "doc:extends": "[(11,6)-(14,0)]",
-          "#8": "[(7,4)-(14,0)]",
+          "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId": "[(7,4)-(14,0)]",
           "apiContract:operationId": "[(8,6)-(9,0)]"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/firstTrait",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -96,24 +96,24 @@
           "apiContract:isAbstract": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#2"
+          "#/declares/firstTrait": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/async-api/endpoint/someChannel/supportedOperation/publish/baseId/extends/default-operation"
         },
         "lexical": {
           "apiContract:guiSummary": "[(17,6)-(18,0)]",
           "core:name": "[(16,4)-(16,14)]",
-          "#1": "[(16,4)-(19,0)]",
+          "#/declares/firstTrait": "[(16,4)-(19,0)]",
           "core:description": "[(18,6)-(19,0)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/firstTrait": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#/declares/firstTrait": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/declares/firstTrait"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/secondTrait",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -128,18 +128,18 @@
           "apiContract:isAbstract": "true"
         },
         "resolved-link": {
-          "#3": "amf://id#4"
+          "#/declares/secondTrait": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/async-api/endpoint/someChannel/supportedOperation/publish/baseId/extends/default-operation_1"
         },
         "lexical": {
           "core:description": "[(20,6)-(20,36)]",
-          "#3": "[(19,4)-(20,36)]",
+          "#/declares/secondTrait": "[(19,4)-(20,36)]",
           "core:name": "[(19,4)-(19,15)]"
         },
         "declared-element": {
-          "#3": ""
+          "#/declares/secondTrait": ""
         },
         "resolved-link-target": {
-          "#3": "amf://id#3"
+          "#/declares/secondTrait": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/declares/secondTrait"
         }
       }
     },
@@ -147,10 +147,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/firstTrait"
         },
         {
-          "@id": "#3"
+          "@id": "#/declares/secondTrait"
         }
       ],
       "@type": [
@@ -160,16 +160,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#6"
+        "@id": "#/async-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#5"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

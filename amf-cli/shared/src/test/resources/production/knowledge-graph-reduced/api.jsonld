@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#5",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:server": [
           {
-            "@id": "#86",
+            "@id": "#/web-api/server/http%3A%2F%2Fang-service.kqa.msap.io%2Fv1",
             "@type": [
               "apiContract:Server",
               "doc:DomainElement"
@@ -38,7 +38,7 @@
                 "core:urlTemplate": "[(2,0)-(4,0)]"
               },
               "synthesized-field": {
-                "#86": "true"
+                "#/web-api/server/http%3A%2F%2Fang-service.kqa.msap.io%2Fv1": "true"
               }
             }
           }
@@ -50,7 +50,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#6",
+            "@id": "#/web-api/endpoint/%2Fvocabulary",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -62,7 +62,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#7",
+                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -80,7 +80,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#8",
+                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -89,7 +89,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#9",
+                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -102,7 +102,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10",
+                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema",
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
@@ -116,7 +116,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#11",
+                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -128,7 +128,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#12",
+                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1",
                                     "@type": [
                                       "data:Object",
                                       "data:Node",
@@ -136,7 +136,7 @@
                                     ],
                                     "data:dialect": [
                                       {
-                                        "@id": "#13",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/dialect",
                                         "@type": [
                                           "data:Scalar",
                                           "data:Node",
@@ -163,14 +163,14 @@
                                             "shacl:datatype": "true"
                                           },
                                           "lexical": {
-                                            "#13": "[(4,9)-(4,19)]"
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/dialect": "[(4,9)-(4,19)]"
                                           }
                                         }
                                       }
                                     ],
                                     "data:version": [
                                       {
-                                        "@id": "#14",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/version",
                                         "@type": [
                                           "data:Scalar",
                                           "data:Node",
@@ -197,14 +197,14 @@
                                             "shacl:datatype": "true"
                                           },
                                           "lexical": {
-                                            "#14": "[(5,9)-(5,14)]"
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/version": "[(5,9)-(5,14)]"
                                           }
                                         }
                                       }
                                     ],
                                     "data:uses": [
                                       {
-                                        "@id": "#15",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/uses",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
@@ -212,7 +212,7 @@
                                         ],
                                         "data:demos": [
                                           {
-                                            "@id": "#16",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/uses/demos",
                                             "@type": [
                                               "data:Scalar",
                                               "data:Node",
@@ -239,7 +239,7 @@
                                                 "shacl:datatype": "true"
                                               },
                                               "lexical": {
-                                                "#16": "[(9,9)-(9,112)]"
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/uses/demos": "[(9,9)-(9,112)]"
                                               }
                                             }
                                           }
@@ -255,14 +255,14 @@
                                           },
                                           "lexical": {
                                             "data:demos": "[(9,2)-(11,0)]",
-                                            "#15": "[(9,0)-(11,0)]"
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/uses": "[(9,0)-(11,0)]"
                                           }
                                         }
                                       }
                                     ],
                                     "data:external": [
                                       {
-                                        "@id": "#17",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/external",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
@@ -270,7 +270,7 @@
                                         ],
                                         "data:schema-org": [
                                           {
-                                            "@id": "#18",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/external/schema-org",
                                             "@type": [
                                               "data:Scalar",
                                               "data:Node",
@@ -297,7 +297,7 @@
                                                 "shacl:datatype": "true"
                                               },
                                               "lexical": {
-                                                "#18": "[(12,14)-(12,32)]"
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/external/schema-org": "[(12,14)-(12,32)]"
                                               }
                                             }
                                           }
@@ -313,14 +313,14 @@
                                           },
                                           "lexical": {
                                             "data:schema-org": "[(12,2)-(14,0)]",
-                                            "#17": "[(12,0)-(14,0)]"
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/external": "[(12,0)-(14,0)]"
                                           }
                                         }
                                       }
                                     ],
                                     "data:documents": [
                                       {
-                                        "@id": "#19",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
@@ -328,7 +328,7 @@
                                         ],
                                         "data:library": [
                                           {
-                                            "@id": "#20",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -336,7 +336,7 @@
                                             ],
                                             "data:declares": [
                                               {
-                                                "@id": "#21",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library/declares",
                                                 "@type": [
                                                   "data:Object",
                                                   "data:Node",
@@ -344,7 +344,7 @@
                                                 ],
                                                 "data:products": [
                                                   {
-                                                    "@id": "#22",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library/declares/products",
                                                     "@type": [
                                                       "data:Scalar",
                                                       "data:Node",
@@ -371,7 +371,7 @@
                                                         "shacl:datatype": "true"
                                                       },
                                                       "lexical": {
-                                                        "#22": "[(17,16)-(17,27)]"
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library/declares/products": "[(17,16)-(17,27)]"
                                                       }
                                                     }
                                                   }
@@ -387,7 +387,7 @@
                                                   },
                                                   "lexical": {
                                                     "data:products": "[(17,6)-(18,0)]",
-                                                    "#21": "[(17,0)-(18,0)]"
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library/declares": "[(17,0)-(18,0)]"
                                                   }
                                                 }
                                               }
@@ -403,14 +403,14 @@
                                               },
                                               "lexical": {
                                                 "data:declares": "[(16,4)-(18,0)]",
-                                                "#20": "[(16,0)-(18,0)]"
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/library": "[(16,0)-(18,0)]"
                                               }
                                             }
                                           }
                                         ],
                                         "data:root": [
                                           {
-                                            "@id": "#23",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/root",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -418,7 +418,7 @@
                                             ],
                                             "data:encodes": [
                                               {
-                                                "@id": "#24",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/root/encodes",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -445,7 +445,7 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#24": "[(19,13)-(19,29)]"
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/root/encodes": "[(19,13)-(19,29)]"
                                                   }
                                                 }
                                               }
@@ -461,7 +461,7 @@
                                               },
                                               "lexical": {
                                                 "data:encodes": "[(19,4)-(21,0)]",
-                                                "#23": "[(19,0)-(21,0)]"
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents/root": "[(19,0)-(21,0)]"
                                               }
                                             }
                                           }
@@ -477,7 +477,7 @@
                                           },
                                           "lexical": {
                                             "data:root": "[(18,2)-(21,0)]",
-                                            "#19": "[(15,0)-(21,0)]",
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/documents": "[(15,0)-(21,0)]",
                                             "data:library": "[(15,2)-(18,0)]"
                                           }
                                         }
@@ -485,7 +485,7 @@
                                     ],
                                     "data:nodeMappings": [
                                       {
-                                        "@id": "#25",
+                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
@@ -493,7 +493,7 @@
                                         ],
                                         "data:PresentationNode": [
                                           {
-                                            "@id": "#26",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -501,7 +501,7 @@
                                             ],
                                             "data:classTerm": [
                                               {
-                                                "@id": "#27",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/classTerm",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -528,14 +528,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#27": "[(24,15)-(24,33)]"
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/classTerm": "[(24,15)-(24,33)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:mapping": [
                                               {
-                                                "@id": "#28",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping",
                                                 "@type": [
                                                   "data:Object",
                                                   "data:Node",
@@ -543,7 +543,7 @@
                                                 ],
                                                 "data:title": [
                                                   {
-                                                    "@id": "#29",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -551,7 +551,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#30",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -578,14 +578,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#30": "[(27,22)-(27,37)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/propertyTerm": "[(27,22)-(27,37)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#31",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -612,14 +612,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#31": "[(28,19)-(28,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/mandatory": "[(28,19)-(28,23)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#32",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -646,7 +646,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#32": "[(29,15)-(29,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title/range": "[(29,15)-(29,21)]"
                                                           }
                                                         }
                                                       }
@@ -663,7 +663,7 @@
                                                       "lexical": {
                                                         "data:range": "[(29,8)-(30,0)]",
                                                         "data:propertyTerm": "[(27,8)-(28,0)]",
-                                                        "#29": "[(27,0)-(30,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/title": "[(27,0)-(30,0)]",
                                                         "data:mandatory": "[(28,8)-(29,0)]"
                                                       }
                                                     }
@@ -671,7 +671,7 @@
                                                 ],
                                                 "data:about": [
                                                   {
-                                                    "@id": "#33",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -679,7 +679,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#34",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -706,14 +706,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#34": "[(31,22)-(31,44)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/propertyTerm": "[(31,22)-(31,44)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#35",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -740,14 +740,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#35": "[(32,19)-(32,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/mandatory": "[(32,19)-(32,23)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#36",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -774,7 +774,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#36": "[(33,15)-(33,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about/range": "[(33,15)-(33,21)]"
                                                           }
                                                         }
                                                       }
@@ -791,7 +791,7 @@
                                                       "lexical": {
                                                         "data:range": "[(33,8)-(34,0)]",
                                                         "data:propertyTerm": "[(31,8)-(32,0)]",
-                                                        "#33": "[(31,0)-(34,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/about": "[(31,0)-(34,0)]",
                                                         "data:mandatory": "[(32,8)-(33,0)]"
                                                       }
                                                     }
@@ -799,7 +799,7 @@
                                                 ],
                                                 "data:date": [
                                                   {
-                                                    "@id": "#37",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -807,7 +807,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#38",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -834,14 +834,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#38": "[(35,22)-(35,36)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/propertyTerm": "[(35,22)-(35,36)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#39",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -868,14 +868,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#39": "[(36,19)-(36,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/mandatory": "[(36,19)-(36,23)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#40",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -902,7 +902,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#40": "[(37,15)-(37,19)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date/range": "[(37,15)-(37,19)]"
                                                           }
                                                         }
                                                       }
@@ -919,7 +919,7 @@
                                                       "lexical": {
                                                         "data:range": "[(37,8)-(38,0)]",
                                                         "data:propertyTerm": "[(35,8)-(36,0)]",
-                                                        "#37": "[(35,0)-(38,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/date": "[(35,0)-(38,0)]",
                                                         "data:mandatory": "[(36,8)-(37,0)]"
                                                       }
                                                     }
@@ -927,7 +927,7 @@
                                                 ],
                                                 "data:recorded": [
                                                   {
-                                                    "@id": "#41",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -935,7 +935,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#42",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -962,14 +962,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#42": "[(39,22)-(39,38)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded/propertyTerm": "[(39,22)-(39,38)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#43",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -996,7 +996,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#43": "[(40,15)-(40,22)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded/range": "[(40,15)-(40,22)]"
                                                           }
                                                         }
                                                       }
@@ -1012,7 +1012,7 @@
                                                       },
                                                       "lexical": {
                                                         "data:range": "[(40,8)-(41,0)]",
-                                                        "#41": "[(39,0)-(41,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/recorded": "[(39,0)-(41,0)]",
                                                         "data:propertyTerm": "[(39,8)-(40,0)]"
                                                       }
                                                     }
@@ -1020,7 +1020,7 @@
                                                 ],
                                                 "data:product": [
                                                   {
-                                                    "@id": "#44",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1028,7 +1028,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#45",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1055,14 +1055,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#45": "[(42,22)-(42,37)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/propertyTerm": "[(42,22)-(42,37)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#46",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1089,14 +1089,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#46": "[(43,15)-(43,26)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/range": "[(43,15)-(43,26)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#47",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1123,7 +1123,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#47": "[(44,19)-(44,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product/mandatory": "[(44,19)-(44,23)]"
                                                           }
                                                         }
                                                       }
@@ -1140,7 +1140,7 @@
                                                       "lexical": {
                                                         "data:mandatory": "[(44,8)-(45,0)]",
                                                         "data:propertyTerm": "[(42,8)-(43,0)]",
-                                                        "#44": "[(42,0)-(45,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/product": "[(42,0)-(45,0)]",
                                                         "data:range": "[(43,8)-(44,0)]"
                                                       }
                                                     }
@@ -1148,7 +1148,7 @@
                                                 ],
                                                 "data:speakers": [
                                                   {
-                                                    "@id": "#48",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1156,7 +1156,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#49",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1183,14 +1183,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#49": "[(46,22)-(46,36)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/propertyTerm": "[(46,22)-(46,36)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#50",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1217,14 +1217,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#50": "[(47,19)-(47,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/mandatory": "[(47,19)-(47,23)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mapKey": [
                                                       {
-                                                        "@id": "#51",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/mapKey",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1251,14 +1251,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#51": "[(48,16)-(48,30)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/mapKey": "[(48,16)-(48,30)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#52",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1285,7 +1285,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#52": "[(49,15)-(49,26)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers/range": "[(49,15)-(49,26)]"
                                                           }
                                                         }
                                                       }
@@ -1302,7 +1302,7 @@
                                                       "lexical": {
                                                         "data:range": "[(49,8)-(51,0)]",
                                                         "data:mandatory": "[(47,8)-(48,0)]",
-                                                        "#48": "[(46,0)-(51,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping/speakers": "[(46,0)-(51,0)]",
                                                         "data:propertyTerm": "[(46,8)-(47,0)]",
                                                         "data:mapKey": "[(48,8)-(49,0)]"
                                                       }
@@ -1322,7 +1322,7 @@
                                                     "data:speakers": "[(45,6)-(51,0)]",
                                                     "data:recorded": "[(38,6)-(41,0)]",
                                                     "data:about": "[(30,6)-(34,0)]",
-                                                    "#28": "[(26,0)-(51,0)]",
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode/mapping": "[(26,0)-(51,0)]",
                                                     "data:title": "[(26,6)-(30,0)]",
                                                     "data:date": "[(34,6)-(38,0)]",
                                                     "data:product": "[(41,6)-(45,0)]"
@@ -1341,7 +1341,7 @@
                                               },
                                               "lexical": {
                                                 "data:mapping": "[(25,4)-(51,0)]",
-                                                "#26": "[(24,0)-(51,0)]",
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/PresentationNode": "[(24,0)-(51,0)]",
                                                 "data:classTerm": "[(24,4)-(25,0)]"
                                               }
                                             }
@@ -1349,7 +1349,7 @@
                                         ],
                                         "data:SpeakerNode": [
                                           {
-                                            "@id": "#53",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -1357,7 +1357,7 @@
                                             ],
                                             "data:classTerm": [
                                               {
-                                                "@id": "#54",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/classTerm",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -1384,14 +1384,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#54": "[(52,15)-(52,28)]"
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/classTerm": "[(52,15)-(52,28)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:mapping": [
                                               {
-                                                "@id": "#55",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping",
                                                 "@type": [
                                                   "data:Object",
                                                   "data:Node",
@@ -1399,7 +1399,7 @@
                                                 ],
                                                 "data:age": [
                                                   {
-                                                    "@id": "#56",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1407,7 +1407,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#57",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1434,14 +1434,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#57": "[(55,22)-(55,36)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age/propertyTerm": "[(55,22)-(55,36)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#58",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1468,7 +1468,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#58": "[(56,15)-(56,22)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age/range": "[(56,15)-(56,22)]"
                                                           }
                                                         }
                                                       }
@@ -1484,7 +1484,7 @@
                                                       },
                                                       "lexical": {
                                                         "data:range": "[(56,8)-(57,0)]",
-                                                        "#56": "[(55,0)-(57,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/age": "[(55,0)-(57,0)]",
                                                         "data:propertyTerm": "[(55,8)-(56,0)]"
                                                       }
                                                     }
@@ -1492,7 +1492,7 @@
                                                 ],
                                                 "data:email": [
                                                   {
-                                                    "@id": "#59",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1500,7 +1500,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#60",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1527,14 +1527,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#60": "[(58,22)-(58,38)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email/propertyTerm": "[(58,22)-(58,38)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#61",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1561,7 +1561,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#61": "[(59,15)-(59,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email/range": "[(59,15)-(59,21)]"
                                                           }
                                                         }
                                                       }
@@ -1577,7 +1577,7 @@
                                                       },
                                                       "lexical": {
                                                         "data:range": "[(59,8)-(60,0)]",
-                                                        "#59": "[(58,0)-(60,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/email": "[(58,0)-(60,0)]",
                                                         "data:propertyTerm": "[(58,8)-(59,0)]"
                                                       }
                                                     }
@@ -1585,7 +1585,7 @@
                                                 ],
                                                 "data:nick": [
                                                   {
-                                                    "@id": "#62",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1593,7 +1593,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#63",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1620,14 +1620,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#63": "[(61,22)-(61,36)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/propertyTerm": "[(61,22)-(61,36)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#64",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1654,14 +1654,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#64": "[(62,19)-(62,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/mandatory": "[(62,19)-(62,23)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#65",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1688,7 +1688,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#65": "[(63,15)-(63,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick/range": "[(63,15)-(63,21)]"
                                                           }
                                                         }
                                                       }
@@ -1705,7 +1705,7 @@
                                                       "lexical": {
                                                         "data:range": "[(63,8)-(65,0)]",
                                                         "data:propertyTerm": "[(61,8)-(62,0)]",
-                                                        "#62": "[(61,0)-(65,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping/nick": "[(61,0)-(65,0)]",
                                                         "data:mandatory": "[(62,8)-(63,0)]"
                                                       }
                                                     }
@@ -1723,7 +1723,7 @@
                                                   "lexical": {
                                                     "data:nick": "[(60,6)-(65,0)]",
                                                     "data:age": "[(54,6)-(57,0)]",
-                                                    "#55": "[(54,0)-(65,0)]",
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode/mapping": "[(54,0)-(65,0)]",
                                                     "data:email": "[(57,6)-(60,0)]"
                                                   }
                                                 }
@@ -1740,7 +1740,7 @@
                                               },
                                               "lexical": {
                                                 "data:mapping": "[(53,4)-(65,0)]",
-                                                "#53": "[(52,0)-(65,0)]",
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/SpeakerNode": "[(52,0)-(65,0)]",
                                                 "data:classTerm": "[(52,4)-(53,0)]"
                                               }
                                             }
@@ -1748,7 +1748,7 @@
                                         ],
                                         "data:ProductNode": [
                                           {
-                                            "@id": "#66",
+                                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -1756,7 +1756,7 @@
                                             ],
                                             "data:classTerm": [
                                               {
-                                                "@id": "#67",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/classTerm",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -1783,14 +1783,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#67": "[(66,15)-(66,33)]"
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/classTerm": "[(66,15)-(66,33)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:mapping": [
                                               {
-                                                "@id": "#68",
+                                                "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping",
                                                 "@type": [
                                                   "data:Object",
                                                   "data:Node",
@@ -1798,7 +1798,7 @@
                                                 ],
                                                 "data:code": [
                                                   {
-                                                    "@id": "#69",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1806,7 +1806,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#70",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1833,14 +1833,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#70": "[(69,22)-(69,32)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/propertyTerm": "[(69,22)-(69,32)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#71",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1867,14 +1867,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#71": "[(70,15)-(70,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/range": "[(70,15)-(70,21)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:mandatory": [
                                                       {
-                                                        "@id": "#72",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/mandatory",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1901,7 +1901,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#72": "[(71,19)-(71,23)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code/mandatory": "[(71,19)-(71,23)]"
                                                           }
                                                         }
                                                       }
@@ -1918,7 +1918,7 @@
                                                       "lexical": {
                                                         "data:mandatory": "[(71,8)-(72,0)]",
                                                         "data:propertyTerm": "[(69,8)-(70,0)]",
-                                                        "#69": "[(69,0)-(72,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/code": "[(69,0)-(72,0)]",
                                                         "data:range": "[(70,8)-(71,0)]"
                                                       }
                                                     }
@@ -1926,7 +1926,7 @@
                                                 ],
                                                 "data:description": [
                                                   {
-                                                    "@id": "#73",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -1934,7 +1934,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#74",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1961,14 +1961,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#74": "[(73,22)-(73,44)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description/propertyTerm": "[(73,22)-(73,44)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#75",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -1995,7 +1995,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#75": "[(74,15)-(74,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description/range": "[(74,15)-(74,21)]"
                                                           }
                                                         }
                                                       }
@@ -2011,7 +2011,7 @@
                                                       },
                                                       "lexical": {
                                                         "data:range": "[(74,8)-(75,0)]",
-                                                        "#73": "[(73,0)-(75,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/description": "[(73,0)-(75,0)]",
                                                         "data:propertyTerm": "[(73,8)-(74,0)]"
                                                       }
                                                     }
@@ -2019,7 +2019,7 @@
                                                 ],
                                                 "data:version": [
                                                   {
-                                                    "@id": "#76",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -2027,7 +2027,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#77",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -2054,14 +2054,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#77": "[(76,22)-(76,44)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version/propertyTerm": "[(76,22)-(76,44)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#78",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -2088,7 +2088,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#78": "[(77,15)-(77,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version/range": "[(77,15)-(77,21)]"
                                                           }
                                                         }
                                                       }
@@ -2104,7 +2104,7 @@
                                                       },
                                                       "lexical": {
                                                         "data:range": "[(77,8)-(78,0)]",
-                                                        "#76": "[(76,0)-(78,0)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/version": "[(76,0)-(78,0)]",
                                                         "data:propertyTerm": "[(76,8)-(77,0)]"
                                                       }
                                                     }
@@ -2112,7 +2112,7 @@
                                                 ],
                                                 "data:resources": [
                                                   {
-                                                    "@id": "#79",
+                                                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources",
                                                     "@type": [
                                                       "data:Object",
                                                       "data:Node",
@@ -2120,7 +2120,7 @@
                                                     ],
                                                     "data:propertyTerm": [
                                                       {
-                                                        "@id": "#80",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/propertyTerm",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -2147,14 +2147,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#80": "[(79,22)-(79,37)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/propertyTerm": "[(79,22)-(79,37)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:range": [
                                                       {
-                                                        "@id": "#81",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/range",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -2181,14 +2181,14 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#81": "[(80,15)-(80,21)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/range": "[(80,15)-(80,21)]"
                                                           }
                                                         }
                                                       }
                                                     ],
                                                     "data:allowMultiple": [
                                                       {
-                                                        "@id": "#82",
+                                                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/allowMultiple",
                                                         "@type": [
                                                           "data:Scalar",
                                                           "data:Node",
@@ -2215,7 +2215,7 @@
                                                             "shacl:datatype": "true"
                                                           },
                                                           "lexical": {
-                                                            "#82": "[(81,23)-(81,27)]"
+                                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources/allowMultiple": "[(81,23)-(81,27)]"
                                                           }
                                                         }
                                                       }
@@ -2232,7 +2232,7 @@
                                                       "lexical": {
                                                         "data:allowMultiple": "[(81,8)-(81,27)]",
                                                         "data:propertyTerm": "[(79,8)-(80,0)]",
-                                                        "#79": "[(79,0)-(81,27)]",
+                                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping/resources": "[(79,0)-(81,27)]",
                                                         "data:range": "[(80,8)-(81,0)]"
                                                       }
                                                     }
@@ -2250,7 +2250,7 @@
                                                   "lexical": {
                                                     "data:resources": "[(78,6)-(81,27)]",
                                                     "data:description": "[(72,6)-(75,0)]",
-                                                    "#68": "[(68,0)-(81,27)]",
+                                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode/mapping": "[(68,0)-(81,27)]",
                                                     "data:code": "[(68,6)-(72,0)]",
                                                     "data:version": "[(75,6)-(78,0)]"
                                                   }
@@ -2268,7 +2268,7 @@
                                               },
                                               "lexical": {
                                                 "data:mapping": "[(67,4)-(81,27)]",
-                                                "#66": "[(66,0)-(81,27)]",
+                                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings/ProductNode": "[(66,0)-(81,27)]",
                                                 "data:classTerm": "[(66,4)-(67,0)]"
                                               }
                                             }
@@ -2286,7 +2286,7 @@
                                           "lexical": {
                                             "data:ProductNode": "[(65,2)-(81,27)]",
                                             "data:PresentationNode": "[(23,2)-(51,0)]",
-                                            "#25": "[(23,0)-(81,27)]",
+                                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1/nodeMappings": "[(23,0)-(81,27)]",
                                             "data:SpeakerNode": "[(51,2)-(65,0)]"
                                           }
                                         }
@@ -2305,7 +2305,7 @@
                                         "data:nodeMappings": "[(21,0)-(81,27)]",
                                         "data:external": "[(11,0)-(14,0)]",
                                         "data:version": "[(5,0)-(8,0)]",
-                                        "#12": "[(4,0)-(81,27)]",
+                                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example/object_1": "[(4,0)-(81,27)]",
                                         "data:dialect": "[(4,0)-(5,0)]",
                                         "data:uses": "[(8,0)-(11,0)]",
                                         "data:documents": "[(14,0)-(21,0)]"
@@ -2315,7 +2315,7 @@
                                 ],
                                 "doc:reference-id": [
                                   {
-                                    "@id": "#3"
+                                    "@id": "#/references/0/external"
                                   }
                                 ],
                                 "doc:location": [
@@ -2328,28 +2328,28 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "#11": "[(17,8)-(19,0)]"
+                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example": "[(17,8)-(19,0)]"
                                   },
                                   "tracked-element": {
-                                    "#11": "amf://id#9"
+                                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema/examples/example/default-example": "file://amf-cli/shared/src/test/resources/production/knowledge-graph-reduced/api.raml#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "auto-generated-name": {
-                                "#10": ""
+                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema": ""
                               },
                               "lexical": {
                                 "apiContract:examples": "[(17,8)-(19,0)]",
-                                "#10": "[(16,6)-(19,0)]"
+                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson/any/schema": "[(16,6)-(19,0)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#9": "[(16,6)-(19,0)]"
+                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request/payload/application%2Fld%2Bjson": "[(16,6)-(19,0)]"
                           }
                         }
                       }
@@ -2357,17 +2357,17 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(15,4)-(19,0)]",
-                        "#8": "[(15,9)-(19,0)]"
+                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request": "[(15,9)-(19,0)]"
                       },
                       "virtual-element": {
-                        "#8": "true"
+                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/expects/request": "true"
                       }
                     }
                   }
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#83",
+                    "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -2386,7 +2386,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#84",
+                        "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -2399,7 +2399,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#85",
+                            "@id": "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson/scalar/schema",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -2419,21 +2419,21 @@
                             ],
                             "smaps": {
                               "auto-generated-name": {
-                                "#85": ""
+                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson/scalar/schema": ""
                               },
                               "lexical": {
                                 "shacl:datatype": "[(14,12)-(15,0)]",
-                                "#85": "[(13,10)-(15,0)]"
+                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson/scalar/schema": "[(13,10)-(15,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#85": "[(14,12)-(14,16)]"
+                                "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson/scalar/schema": "[(14,12)-(14,16)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#84": "[(13,10)-(15,0)]"
+                            "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200/payload/application%2Fjson": "[(13,10)-(15,0)]"
                           }
                         }
                       }
@@ -2441,7 +2441,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(12,8)-(15,0)]",
-                        "#83": "[(11,6)-(15,0)]"
+                        "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post/returns/resp/200": "[(11,6)-(15,0)]"
                       }
                     }
                   }
@@ -2449,7 +2449,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(10,4)-(15,0)]",
-                    "#7": "[(8,2)-(19,0)]",
+                    "#/web-api/endpoint/%2Fvocabulary/supportedOperation/post": "[(8,2)-(19,0)]",
                     "core:description": "[(9,4)-(10,0)]"
                   }
                 }
@@ -2458,7 +2458,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(7,0)-(7,11)]",
-                "#6": "[(7,0)-(19,0)]"
+                "#/web-api/endpoint/%2Fvocabulary": "[(7,0)-(19,0)]"
               }
             }
           }
@@ -2467,7 +2467,7 @@
           "lexical": {
             "core:version": "[(5,0)-(7,0)]",
             "core:name": "[(4,0)-(5,0)]",
-            "#5": "[(2,0)-(19,0)]",
+            "/web-api": "[(2,0)-(19,0)]",
             "apiContract:server": "[(2,0)-(4,0)]"
           }
         }
@@ -2480,7 +2480,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#4",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -2503,7 +2503,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#1",
+        "@id": "#/references/0",
         "@type": [
           "doc:ExternalFragment",
           "doc:Fragment",
@@ -2511,7 +2511,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#3",
+            "@id": "#/references/0/external",
             "@type": [
               "doc:ExternalDomainElement",
               "doc:DomainElement"
@@ -2528,7 +2528,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(1,0)-(81,27)]"
+                "#/references/0/external": "[(1,0)-(81,27)]"
               }
             }
           }
@@ -2540,7 +2540,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#2",
+            "@id": "#/references/0/BaseUnitProcessingData",
             "@type": [
               "doc:BaseUnitProcessingData"
             ],
@@ -2554,7 +2554,7 @@
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/production/knowledge-graph-reduced/api.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "data": "http://a.ml/vocabularies/data#",

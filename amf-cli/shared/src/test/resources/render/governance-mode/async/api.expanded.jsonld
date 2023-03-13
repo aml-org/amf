@@ -1,6 +1,6 @@
 [
   {
-    "@id": "amf://id",
+    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "amf://id#5",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml/async-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#AsyncAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "amf://id#6",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "amf://id#7",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -53,7 +53,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "amf://id#8",
+                    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation/returns/resp/default-response",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -62,7 +62,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "amf://id#9",
+                        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation/returns/resp/default-response/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -70,7 +70,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "amf://id#10",
+                            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation/returns/resp/default-response/payload/default/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -94,13 +94,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "amf://id#8/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation/returns/resp/default-response/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                           {
-                            "@id": "amf://id#8/source-map/virtual-element/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/async-api/endpoint/user%2Fsignedup/supportedOperation/subscribe/subscribe%20operation/returns/resp/default-response/source-map/virtual-element/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#payload"
@@ -135,7 +135,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "amf://id#4",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -158,7 +158,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "amf://id#1",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -173,7 +173,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "amf://id#2",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -187,7 +187,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "amf://id#3",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema/property/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -226,16 +226,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "amf://id#1/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "amf://id#1/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "amf://id#1"
+                    "@value": "file://amf-cli/shared/src/test/resources/render/governance-mode/async/api.yaml#/declares/shape/Schema"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

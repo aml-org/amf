@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#8",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -24,7 +24,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#8": "[(2,0)-(8,13)]"
+            "/web-api": "[(2,0)-(8,13)]"
           }
         }
       }
@@ -36,7 +36,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#7",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -59,7 +59,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/A",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -74,7 +74,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#5",
+            "@id": "#/declares/shape/A/property/property/a",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -88,7 +88,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#6",
+                "@id": "#/declares/shape/A/property/property/a/scalar/a",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -109,7 +109,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(6,9)-(6,15)]",
-                    "#6": "[(6,6)-(7,0)]"
+                    "#/declares/shape/A/property/property/a/scalar/a": "[(6,6)-(7,0)]"
                   }
                 }
               }
@@ -131,7 +131,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(6,9)-(6,15)]",
-                "#5": "[(6,6)-(7,0)]"
+                "#/declares/shape/A/property/property/a": "[(6,6)-(7,0)]"
               }
             }
           }
@@ -143,7 +143,7 @@
         ],
         "apiContract:examples": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/A/examples/example/default-example",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -155,7 +155,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/A/examples/example/default-example/object_1",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -163,7 +163,7 @@
                 ],
                 "data:a": [
                   {
-                    "@id": "#4",
+                    "@id": "#/declares/shape/A/examples/example/default-example/object_1/a",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -190,7 +190,7 @@
                         "shacl:datatype": "true"
                       },
                       "lexical": {
-                        "#4": "[(8,9)-(8,13)]"
+                        "#/declares/shape/A/examples/example/default-example/object_1/a": "[(8,9)-(8,13)]"
                       }
                     }
                   }
@@ -206,7 +206,7 @@
                   },
                   "lexical": {
                     "data:a": "[(8,6)-(8,13)]",
-                    "#3": "[(8,0)-(8,13)]"
+                    "#/declares/shape/A/examples/example/default-example/object_1": "[(8,0)-(8,13)]"
                   }
                 }
               }
@@ -222,7 +222,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "#2": "[(7,4)-(8,13)]"
+                "#/declares/shape/A/examples/example/default-example": "[(7,4)-(8,13)]"
               }
             }
           }
@@ -233,17 +233,17 @@
           },
           "lexical": {
             "apiContract:examples": "[(7,4)-(8,13)]",
-            "#1": "[(4,2)-(8,13)]",
+            "#/declares/shape/A": "[(4,2)-(8,13)]",
             "shacl:name": "[(4,2)-(4,3)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/A": ""
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/examples-shortener.raml",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",

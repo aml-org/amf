@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#5",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:server": [
           {
-            "@id": "#15",
+            "@id": "#/web-api/server/https%3A%2F%2Fjorge.uri.com",
             "@type": [
               "apiContract:Server",
               "doc:DomainElement"
@@ -38,7 +38,7 @@
                 "core:urlTemplate": "[(2,0)-(3,0)]"
               },
               "synthesized-field": {
-                "#15": "true"
+                "#/web-api/server/https%3A%2F%2Fjorge.uri.com": "true"
               }
             }
           }
@@ -50,7 +50,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#6",
+            "@id": "#/web-api/endpoint/%2FjorgeEndpoint",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -62,7 +62,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#7",
+                "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -75,7 +75,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#8",
+                    "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -94,7 +94,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#9",
+                        "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -107,7 +107,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10",
+                            "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
@@ -121,7 +121,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#11",
+                                "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -133,7 +133,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#12",
+                                    "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1",
                                     "@type": [
                                       "data:Array",
                                       "rdf:Seq",
@@ -142,7 +142,7 @@
                                     ],
                                     "rdfs:member": [
                                       {
-                                        "@id": "#13",
+                                        "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1/member/object_2",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
@@ -150,7 +150,7 @@
                                         ],
                                         "data:%40id": [
                                           {
-                                            "@id": "#14",
+                                            "@id": "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1/member/object_2/%40id",
                                             "@type": [
                                               "data:Scalar",
                                               "data:Node",
@@ -177,7 +177,7 @@
                                                 "shacl:datatype": "true"
                                               },
                                               "lexical": {
-                                                "#14": "[(3,11)-(3,73)]"
+                                                "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1/member/object_2/%40id": "[(3,11)-(3,73)]"
                                               }
                                             }
                                           }
@@ -193,7 +193,7 @@
                                           },
                                           "lexical": {
                                             "data:%40id": "[(3,4)-(3,73)]",
-                                            "#13": "[(2,2)-(4,3)]"
+                                            "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1/member/object_2": "[(2,2)-(4,3)]"
                                           }
                                         }
                                       }
@@ -205,17 +205,17 @@
                                     ],
                                     "smaps": {
                                       "parsed-json-example": {
-                                        "#12": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
+                                        "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
                                       },
                                       "lexical": {
-                                        "#12": "[(1,0)-(5,1)]"
+                                        "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example/array_1": "[(1,0)-(5,1)]"
                                       }
                                     }
                                   }
                                 ],
                                 "doc:reference-id": [
                                   {
-                                    "@id": "#3"
+                                    "@id": "#/references/0/external"
                                   }
                                 ],
                                 "doc:location": [
@@ -228,28 +228,28 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "#11": "[(1,0)-(1,0)]"
+                                    "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example": "[(1,0)-(1,0)]"
                                   },
                                   "tracked-element": {
-                                    "#11": "amf://id#9"
+                                    "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example": "file://amf-cli/shared/src/test/resources/resolution/jsonld-example/api.raml#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "auto-generated-name": {
-                                "#10": ""
+                                "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema": ""
                               },
                               "lexical": {
                                 "apiContract:examples": "[(11,12)-(11,51)]",
-                                "#10": "[(10,10)-(11,51)]"
+                                "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema": "[(10,10)-(11,51)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#9": "[(10,10)-(11,51)]"
+                            "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson": "[(10,10)-(11,51)]"
                           }
                         }
                       }
@@ -257,7 +257,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(9,8)-(11,51)]",
-                        "#8": "[(8,6)-(11,51)]"
+                        "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get/returns/resp/200": "[(8,6)-(11,51)]"
                       }
                     }
                   }
@@ -265,7 +265,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(7,4)-(11,51)]",
-                    "#7": "[(6,2)-(11,51)]"
+                    "#/web-api/endpoint/%2FjorgeEndpoint/supportedOperation/get": "[(6,2)-(11,51)]"
                   }
                 }
               }
@@ -273,7 +273,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(5,0)-(5,14)]",
-                "#6": "[(5,0)-(11,51)]"
+                "#/web-api/endpoint/%2FjorgeEndpoint": "[(5,0)-(11,51)]"
               }
             }
           }
@@ -282,7 +282,7 @@
           "lexical": {
             "core:version": "[(4,0)-(5,0)]",
             "core:name": "[(3,0)-(4,0)]",
-            "#5": "[(2,0)-(11,51)]",
+            "/web-api": "[(2,0)-(11,51)]",
             "apiContract:server": "[(2,0)-(3,0)]"
           }
         }
@@ -295,7 +295,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#4",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -318,7 +318,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#1",
+        "@id": "#/references/0",
         "@type": [
           "doc:ExternalFragment",
           "doc:Fragment",
@@ -326,7 +326,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#3",
+            "@id": "#/references/0/external",
             "@type": [
               "doc:ExternalDomainElement",
               "doc:DomainElement"
@@ -343,7 +343,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(1,0)-(6,0)]"
+                "#/references/0/external": "[(1,0)-(6,0)]"
               }
             }
           }
@@ -355,7 +355,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#2",
+            "@id": "#/references/0/BaseUnitProcessingData",
             "@type": [
               "doc:BaseUnitProcessingData"
             ],
@@ -369,7 +369,7 @@
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/jsonld-example/api.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#18",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#19",
+            "@id": "#/web-api/endpoint/%2Finlined",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#20",
+                "@id": "#/web-api/endpoint/%2Finlined/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -53,7 +53,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#21",
+                    "@id": "#/web-api/endpoint/%2Finlined/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -77,7 +77,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#22",
+                        "@id": "#/web-api/endpoint/%2Finlined/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -90,7 +90,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-1965718044",
+                            "@id": "#/declares/shape/Animal/link-1965718044",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -100,7 +100,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#1"
+                                "@id": "#/declares/shape/Animal"
                               }
                             ],
                             "doc:link-label": [
@@ -113,7 +113,7 @@
                         "smaps": {
                           "lexical": {
                             "core:mediaType": "[(12,12)-(12,28)]",
-                            "#22": "[(12,12)-(16,0)]"
+                            "#/web-api/endpoint/%2Finlined/supportedOperation/post/returns/resp/200/payload/application%2Fjson": "[(12,12)-(16,0)]"
                           }
                         }
                       }
@@ -122,7 +122,7 @@
                       "lexical": {
                         "apiContract:payload": "[(11,10)-(16,0)]",
                         "core:name": "[(9,8)-(9,13)]",
-                        "#21": "[(9,8)-(16,0)]",
+                        "#/web-api/endpoint/%2Finlined/supportedOperation/post/returns/resp/200": "[(9,8)-(16,0)]",
                         "core:description": "[(10,10)-(11,0)]"
                       }
                     }
@@ -131,14 +131,14 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(8,6)-(16,0)]",
-                    "#20": "[(7,4)-(16,0)]"
+                    "#/web-api/endpoint/%2Finlined/supportedOperation/post": "[(7,4)-(16,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#19": "[(6,2)-(16,0)]"
+                "#/web-api/endpoint/%2Finlined": "[(6,2)-(16,0)]"
               }
             }
           }
@@ -147,7 +147,7 @@
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(16,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#18": "[(1,0)-(37,0)]",
+            "/web-api": "[(1,0)-(37,0)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
@@ -160,7 +160,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#17",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -183,7 +183,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/Animal",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -203,7 +203,7 @@
         ],
         "raml-shapes:discriminatorMapping": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/Animal/discriminatorMapping/mapping/dog",
             "@type": [
               "apiContract:IriTemplateMapping",
               "doc:DomainElement"
@@ -221,13 +221,13 @@
             "smaps": {
               "lexical": {
                 "apiContract:linkExpression": "[(25,15)-(25,41)]",
-                "#2": "[(25,10)-(26,0)]",
+                "#/declares/shape/Animal/discriminatorMapping/mapping/dog": "[(25,10)-(26,0)]",
                 "apiContract:templateVariable": "[(25,10)-(25,13)]"
               }
             }
           },
           {
-            "@id": "#3",
+            "@id": "#/declares/shape/Animal/discriminatorMapping/mapping/cat",
             "@type": [
               "apiContract:IriTemplateMapping",
               "doc:DomainElement"
@@ -245,7 +245,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:linkExpression": "[(26,15)-(26,41)]",
-                "#3": "[(26,10)-(27,0)]",
+                "#/declares/shape/Animal/discriminatorMapping/mapping/cat": "[(26,10)-(27,0)]",
                 "apiContract:templateVariable": "[(26,10)-(26,13)]"
               }
             }
@@ -253,7 +253,7 @@
         ],
         "raml-shapes:discriminatorValueMapping": [
           {
-            "@id": "#4",
+            "@id": "#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog",
             "@type": [
               "raml-shapes:DiscriminatorValueMapping",
               "doc:DomainElement"
@@ -265,7 +265,7 @@
             ],
             "raml-shapes:discriminatorValueTarget": [
               {
-                "@id": "#5",
+                "@id": "#/declares/shape/Dog",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -280,7 +280,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#6",
+                    "@id": "#/declares/shape/Dog/property/property/bark",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -294,7 +294,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#7",
+                        "@id": "#/declares/shape/Dog/property/property/bark/scalar/bark",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "raml-shapes:AnyShape",
@@ -314,11 +314,11 @@
                         ],
                         "smaps": {
                           "type-property-lexical-info": {
-                            "#7": "[(36,10)-(36,14)]"
+                            "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(36,10)-(36,14)]"
                           },
                           "lexical": {
                             "shacl:datatype": "[(36,10)-(37,0)]",
-                            "#7": "[(35,8)-(37,0)]"
+                            "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(35,8)-(37,0)]"
                           }
                         }
                       }
@@ -338,7 +338,7 @@
                         "shacl:minCount": "true"
                       },
                       "lexical": {
-                        "#6": "[(35,8)-(37,0)]"
+                        "#/declares/shape/Dog/property/property/bark": "[(35,8)-(37,0)]"
                       }
                     }
                   }
@@ -353,20 +353,20 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link": {
-                    "#5": "amf://id#9"
+                    "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog/any/dog"
                   },
                   "type-property-lexical-info": {
-                    "#5": "[(33,6)-(33,10)]"
+                    "#/declares/shape/Dog": "[(33,6)-(33,10)]"
                   },
                   "lexical": {
                     "shacl:name": "[(32,4)-(32,7)]",
-                    "#5": "[(32,4)-(37,0)]"
+                    "#/declares/shape/Dog": "[(32,4)-(37,0)]"
                   },
                   "declared-element": {
-                    "#5": ""
+                    "#/declares/shape/Dog": ""
                   },
                   "resolved-link-target": {
-                    "#5": "amf://id#5"
+                    "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Dog"
                   }
                 }
               }
@@ -374,13 +374,13 @@
             "smaps": {
               "lexical": {
                 "raml-shapes:discriminatorValueTarget": "[(25,15)-(25,41)]",
-                "#4": "[(25,10)-(26,0)]",
+                "#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog": "[(25,10)-(26,0)]",
                 "raml-shapes:discriminatorValue": "[(25,10)-(25,13)]"
               }
             }
           },
           {
-            "@id": "#10",
+            "@id": "#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat",
             "@type": [
               "raml-shapes:DiscriminatorValueMapping",
               "doc:DomainElement"
@@ -392,7 +392,7 @@
             ],
             "raml-shapes:discriminatorValueTarget": [
               {
-                "@id": "#11",
+                "@id": "#/declares/shape/Cat",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -407,7 +407,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#12",
+                    "@id": "#/declares/shape/Cat/property/property/name",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -421,7 +421,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#13",
+                        "@id": "#/declares/shape/Cat/property/property/name/scalar/name",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "raml-shapes:AnyShape",
@@ -441,11 +441,11 @@
                         ],
                         "smaps": {
                           "type-property-lexical-info": {
-                            "#13": "[(31,10)-(31,14)]"
+                            "#/declares/shape/Cat/property/property/name/scalar/name": "[(31,10)-(31,14)]"
                           },
                           "lexical": {
                             "shacl:datatype": "[(31,10)-(32,0)]",
-                            "#13": "[(30,8)-(32,0)]"
+                            "#/declares/shape/Cat/property/property/name/scalar/name": "[(30,8)-(32,0)]"
                           }
                         }
                       }
@@ -465,7 +465,7 @@
                         "shacl:minCount": "true"
                       },
                       "lexical": {
-                        "#12": "[(30,8)-(32,0)]"
+                        "#/declares/shape/Cat/property/property/name": "[(30,8)-(32,0)]"
                       }
                     }
                   }
@@ -480,20 +480,20 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link": {
-                    "#11": "amf://id#15"
+                    "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat/any/cat"
                   },
                   "type-property-lexical-info": {
-                    "#11": "[(28,6)-(28,10)]"
+                    "#/declares/shape/Cat": "[(28,6)-(28,10)]"
                   },
                   "lexical": {
                     "shacl:name": "[(27,4)-(27,7)]",
-                    "#11": "[(27,4)-(32,0)]"
+                    "#/declares/shape/Cat": "[(27,4)-(32,0)]"
                   },
                   "declared-element": {
-                    "#11": ""
+                    "#/declares/shape/Cat": ""
                   },
                   "resolved-link-target": {
-                    "#11": "amf://id#11"
+                    "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Cat"
                   }
                 }
               }
@@ -501,7 +501,7 @@
             "smaps": {
               "lexical": {
                 "raml-shapes:discriminatorValueTarget": "[(26,15)-(26,41)]",
-                "#10": "[(26,10)-(27,0)]",
+                "#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat": "[(26,10)-(27,0)]",
                 "raml-shapes:discriminatorValue": "[(26,10)-(26,13)]"
               }
             }
@@ -520,7 +520,7 @@
         ],
         "shacl:xone": [
           {
-            "@id": "#5",
+            "@id": "#/declares/shape/Dog",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -535,7 +535,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#6",
+                "@id": "#/declares/shape/Dog/property/property/bark",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -549,7 +549,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#7",
+                    "@id": "#/declares/shape/Dog/property/property/bark/scalar/bark",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -569,11 +569,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#7": "[(36,10)-(36,14)]"
+                        "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(36,10)-(36,14)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(36,10)-(37,0)]",
-                        "#7": "[(35,8)-(37,0)]"
+                        "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(35,8)-(37,0)]"
                       }
                     }
                   }
@@ -593,7 +593,7 @@
                     "shacl:minCount": "true"
                   },
                   "lexical": {
-                    "#6": "[(35,8)-(37,0)]"
+                    "#/declares/shape/Dog/property/property/bark": "[(35,8)-(37,0)]"
                   }
                 }
               }
@@ -608,25 +608,25 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#5": "amf://id#9"
+                "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog/any/dog"
               },
               "type-property-lexical-info": {
-                "#5": "[(33,6)-(33,10)]"
+                "#/declares/shape/Dog": "[(33,6)-(33,10)]"
               },
               "lexical": {
                 "shacl:name": "[(32,4)-(32,7)]",
-                "#5": "[(32,4)-(37,0)]"
+                "#/declares/shape/Dog": "[(32,4)-(37,0)]"
               },
               "declared-element": {
-                "#5": ""
+                "#/declares/shape/Dog": ""
               },
               "resolved-link-target": {
-                "#5": "amf://id#5"
+                "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Dog"
               }
             }
           },
           {
-            "@id": "#11",
+            "@id": "#/declares/shape/Cat",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -641,7 +641,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#12",
+                "@id": "#/declares/shape/Cat/property/property/name",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -655,7 +655,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#13",
+                    "@id": "#/declares/shape/Cat/property/property/name/scalar/name",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -675,11 +675,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#13": "[(31,10)-(31,14)]"
+                        "#/declares/shape/Cat/property/property/name/scalar/name": "[(31,10)-(31,14)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(31,10)-(32,0)]",
-                        "#13": "[(30,8)-(32,0)]"
+                        "#/declares/shape/Cat/property/property/name/scalar/name": "[(30,8)-(32,0)]"
                       }
                     }
                   }
@@ -699,7 +699,7 @@
                     "shacl:minCount": "true"
                   },
                   "lexical": {
-                    "#12": "[(30,8)-(32,0)]"
+                    "#/declares/shape/Cat/property/property/name": "[(30,8)-(32,0)]"
                   }
                 }
               }
@@ -714,20 +714,20 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#11": "amf://id#15"
+                "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat/any/cat"
               },
               "type-property-lexical-info": {
-                "#11": "[(28,6)-(28,10)]"
+                "#/declares/shape/Cat": "[(28,6)-(28,10)]"
               },
               "lexical": {
                 "shacl:name": "[(27,4)-(27,7)]",
-                "#11": "[(27,4)-(32,0)]"
+                "#/declares/shape/Cat": "[(27,4)-(32,0)]"
               },
               "declared-element": {
-                "#11": ""
+                "#/declares/shape/Cat": ""
               },
               "resolved-link-target": {
-                "#11": "amf://id#11"
+                "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Cat"
               }
             }
           }
@@ -738,26 +738,26 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#16"
+            "#/declares/shape/Animal": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/web-api/endpoint/%2Finlined/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal"
           },
           "lexical": {
             "shacl:xone": "[(19,6)-(22,0)]",
             "raml-shapes:discriminatorValueMapping": "[(24,8)-(27,0)]",
             "raml-shapes:discriminator": "[(23,8)-(24,0)]",
-            "#1": "[(18,4)-(27,0)]",
+            "#/declares/shape/Animal": "[(18,4)-(27,0)]",
             "raml-shapes:discriminatorMapping": "[(24,8)-(27,0)]",
             "shacl:name": "[(18,4)-(18,10)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/Animal": ""
           },
           "resolved-link-target": {
-            "#1": "amf://id#1"
+            "#/declares/shape/Animal": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal"
           }
         }
       },
       {
-        "@id": "#11",
+        "@id": "#/declares/shape/Cat",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -772,7 +772,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#12",
+            "@id": "#/declares/shape/Cat/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -786,7 +786,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#13",
+                "@id": "#/declares/shape/Cat/property/property/name/scalar/name",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -806,11 +806,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#13": "[(31,10)-(31,14)]"
+                    "#/declares/shape/Cat/property/property/name/scalar/name": "[(31,10)-(31,14)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(31,10)-(32,0)]",
-                    "#13": "[(30,8)-(32,0)]"
+                    "#/declares/shape/Cat/property/property/name/scalar/name": "[(30,8)-(32,0)]"
                   }
                 }
               }
@@ -830,7 +830,7 @@
                 "shacl:minCount": "true"
               },
               "lexical": {
-                "#12": "[(30,8)-(32,0)]"
+                "#/declares/shape/Cat/property/property/name": "[(30,8)-(32,0)]"
               }
             }
           }
@@ -845,25 +845,25 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#11": "amf://id#15"
+            "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat/any/cat"
           },
           "type-property-lexical-info": {
-            "#11": "[(28,6)-(28,10)]"
+            "#/declares/shape/Cat": "[(28,6)-(28,10)]"
           },
           "lexical": {
             "shacl:name": "[(27,4)-(27,7)]",
-            "#11": "[(27,4)-(32,0)]"
+            "#/declares/shape/Cat": "[(27,4)-(32,0)]"
           },
           "declared-element": {
-            "#11": ""
+            "#/declares/shape/Cat": ""
           },
           "resolved-link-target": {
-            "#11": "amf://id#11"
+            "#/declares/shape/Cat": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Cat"
           }
         }
       },
       {
-        "@id": "#5",
+        "@id": "#/declares/shape/Dog",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -878,7 +878,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#6",
+            "@id": "#/declares/shape/Dog/property/property/bark",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -892,7 +892,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#7",
+                "@id": "#/declares/shape/Dog/property/property/bark/scalar/bark",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -912,11 +912,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#7": "[(36,10)-(36,14)]"
+                    "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(36,10)-(36,14)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(36,10)-(37,0)]",
-                    "#7": "[(35,8)-(37,0)]"
+                    "#/declares/shape/Dog/property/property/bark/scalar/bark": "[(35,8)-(37,0)]"
                   }
                 }
               }
@@ -936,7 +936,7 @@
                 "shacl:minCount": "true"
               },
               "lexical": {
-                "#6": "[(35,8)-(37,0)]"
+                "#/declares/shape/Dog/property/property/bark": "[(35,8)-(37,0)]"
               }
             }
           }
@@ -951,26 +951,26 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#5": "amf://id#9"
+            "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog/any/dog"
           },
           "type-property-lexical-info": {
-            "#5": "[(33,6)-(33,10)]"
+            "#/declares/shape/Dog": "[(33,6)-(33,10)]"
           },
           "lexical": {
             "shacl:name": "[(32,4)-(32,7)]",
-            "#5": "[(32,4)-(37,0)]"
+            "#/declares/shape/Dog": "[(32,4)-(37,0)]"
           },
           "declared-element": {
-            "#5": ""
+            "#/declares/shape/Dog": ""
           },
           "resolved-link-target": {
-            "#5": "amf://id#5"
+            "#/declares/shape/Dog": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml#/declares/shape/Dog"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator/api.yaml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

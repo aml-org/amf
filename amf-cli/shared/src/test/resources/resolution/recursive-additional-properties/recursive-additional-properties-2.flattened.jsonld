@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#10",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#11",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -24,7 +24,7 @@
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(6,0)]",
           "core:name": "[(4,2)-(5,0)]",
-          "#11": "[(1,0)-(20,71)]",
+          "/web-api": "[(1,0)-(20,71)]",
           "core:version": "[(3,2)-(4,0)]"
         }
       }
@@ -33,10 +33,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/Something.DataContracts.Push.PushOption"
         },
         {
-          "@id": "#4"
+          "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice"
         }
       ],
       "@type": [
@@ -46,15 +46,15 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#10"
+        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOption",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -65,7 +65,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#2"
+          "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options"
         }
       ],
       "doc:recursive": true,
@@ -76,25 +76,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#8"
+          "#/declares/shape/Something.DataContracts.Push.PushOption": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties/shape/additionalProperties"
         },
         "type-property-lexical-info": {
-          "#1": "[(8,4)-(8,8)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption": "[(8,4)-(8,8)]"
         },
         "lexical": {
           "shacl:name": "[(7,2)-(7,41)]",
-          "#1": "[(7,2)-(14,0)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption": "[(7,2)-(14,0)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/shape/Something.DataContracts.Push.PushOption": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#/declares/shape/Something.DataContracts.Push.PushOption": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOption"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -105,7 +105,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#5"
+          "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties"
         }
       ],
       "shacl:name": "Something.DataContracts.Push.PushOptionChoice",
@@ -114,25 +114,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#4": "amf://id#9"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options/array/options/any/items"
         },
         "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice": "[(15,4)-(15,8)]"
         },
         "lexical": {
           "shacl:name": "[(14,2)-(14,47)]",
-          "#4": "[(14,2)-(20,71)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice": "[(14,2)-(20,71)]"
         },
         "declared-element": {
-          "#4": ""
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice": ""
         },
         "resolved-link-target": {
-          "#4": "amf://id#4"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOptionChoice"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -145,7 +145,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options/array/options"
       },
       "shacl:minCount": 0,
       "shacl:name": "options",
@@ -154,12 +154,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#2": "[(10,6)-(14,0)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options": "[(10,6)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -172,7 +172,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#6"
+        "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties"
       },
       "shacl:minCount": 0,
       "shacl:name": "properties",
@@ -181,12 +181,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#5": "[(17,6)-(20,71)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties": "[(17,6)-(20,71)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options/array/options",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -195,20 +195,20 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#4"
+        "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice"
       },
       "shacl:name": "options",
       "smaps": {
         "type-property-lexical-info": {
-          "#3": "[(11,8)-(11,12)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options/array/options": "[(11,8)-(11,12)]"
         },
         "lexical": {
-          "#3": "[(10,6)-(14,0)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/property/property/options/array/options": "[(10,6)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -218,7 +218,7 @@
       ],
       "shacl:closed": false,
       "shacl:additionalPropertiesSchema": {
-        "@id": "#7"
+        "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/recursive"
       },
       "shacl:property": [],
       "shacl:name": "properties",
@@ -227,15 +227,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#6": "[(17,6)-(20,71)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties": "[(17,6)-(20,71)]"
         },
         "type-property-lexical-info": {
-          "#6": "[(18,8)-(18,12)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties": "[(18,8)-(18,12)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/declares/shape/Something.DataContracts.Push.PushOption/recursive",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -244,7 +244,7 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/Something.DataContracts.Push.PushOption"
         }
       ],
       "doc:recursive": true,
@@ -254,25 +254,25 @@
           "doc:recursive": "true"
         },
         "resolved-link": {
-          "#7": "amf://id#8"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOptionChoice/property/property/properties/shape/properties/shape/additionalProperties"
         },
         "type-property-lexical-info": {
-          "#7": "[(8,4)-(8,8)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/recursive": "[(8,4)-(8,8)]"
         },
         "lexical": {
-          "#7": "[(7,2)-(14,0)]"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/recursive": "[(7,2)-(14,0)]"
         },
         "declared-element": {
-          "#7": ""
+          "#/declares/shape/Something.DataContracts.Push.PushOption/recursive": ""
         },
         "resolved-link-target": {
-          "#7": "amf://id#1"
+          "#/declares/shape/Something.DataContracts.Push.PushOption/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml#/declares/shape/Something.DataContracts.Push.PushOption"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/recursive-additional-properties/recursive-additional-properties-2.yaml",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",

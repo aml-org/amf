@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#1",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "ASYNC 2.0"
     },
     {
-      "@id": "#2",
+      "@id": "#/async-api",
       "@type": [
         "apiContract:AsyncAPI",
         "apiContract:API",
@@ -21,20 +21,20 @@
       "core:version": "1.0.0",
       "apiContract:endpoint": [
         {
-          "@id": "#3"
+          "@id": "#/async-api/endpoint/aChannel"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(31,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#2": "[(1,0)-(31,0)]",
+          "#/async-api": "[(1,0)-(31,0)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/async-api/endpoint/aChannel",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -42,18 +42,18 @@
       "apiContract:path": "aChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#4"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(7,0)-(31,0)]",
-          "#3": "[(6,2)-(31,0)]"
+          "#/async-api/endpoint/aChannel": "[(6,2)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -62,18 +62,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#5"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(8,6)-(31,0)]",
-          "#4": "[(7,4)-(31,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish": "[(7,4)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -82,11 +82,11 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#15"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default"
         }
       ],
       "apiContract:headerSchema": {
-        "@id": "#6"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema"
       },
       "smaps": {
         "virtual-element": {
@@ -94,29 +94,29 @@
         },
         "lexical": {
           "apiContract:headerSchema": "[(9,8)-(14,0)]",
-          "#5": "[(9,0)-(31,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request": "[(9,0)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {
-        "@id": "#16"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema"
       },
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(14,8)-(22,0)]",
-          "#15": "[(9,0)-(31,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default": "[(9,0)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -127,16 +127,16 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#7"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a"
         }
       ],
       "shacl:name": "schema",
       "apiContract:examples": [
         {
-          "@id": "#9"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1"
         },
         {
-          "@id": "#12"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4"
         }
       ],
       "smaps": {
@@ -144,15 +144,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#6": "[(9,8)-(14,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema": "[(9,8)-(14,0)]"
         },
         "type-property-lexical-info": {
-          "#6": "[(10,10)-(10,14)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema": "[(10,10)-(10,14)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -163,22 +163,22 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#17"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name"
         }
       ],
       "shacl:name": "schema",
       "apiContract:examples": [
         {
-          "@id": "#19"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1"
         },
         {
-          "@id": "#22"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2"
         },
         {
-          "@id": "#25"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2"
         },
         {
-          "@id": "#28"
+          "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3"
         }
       ],
       "smaps": {
@@ -186,15 +186,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#16": "[(14,8)-(22,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema": "[(14,8)-(22,0)]"
         },
         "type-property-lexical-info": {
-          "#16": "[(15,10)-(15,14)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema": "[(15,10)-(15,14)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -207,7 +207,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#8"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a/scalar/a"
       },
       "shacl:minCount": 0,
       "shacl:name": "a",
@@ -216,12 +216,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#7": "[(12,12)-(14,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a": "[(12,12)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -229,7 +229,7 @@
       "core:name": "default-example_1",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#10"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1"
       },
       "doc:raw": "a: first header",
       "smaps": {
@@ -238,15 +238,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#9": "[(25,20)-(27,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1": "[(25,20)-(27,0)]"
         },
         "tracked-element": {
-          "#9": "amf://id#5"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -254,7 +254,7 @@
       "core:name": "default-example_4",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#13"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1"
       },
       "doc:raw": "a: second header",
       "smaps": {
@@ -263,15 +263,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#12": "[(29,20)-(31,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4": "[(29,20)-(31,0)]"
         },
         "tracked-element": {
-          "#12": "amf://id#5"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -284,7 +284,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#18"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name/scalar/name"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
@@ -293,12 +293,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#17": "[(17,12)-(19,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name": "[(17,12)-(19,0)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -306,7 +306,7 @@
       "core:name": "default-example_1",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#20"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1"
       },
       "doc:raw": "name: Pipi",
       "smaps": {
@@ -315,15 +315,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#19": "[(20,14)-(21,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1": "[(20,14)-(21,0)]"
         },
         "tracked-element": {
-          "#19": "amf://id#15"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -331,7 +331,7 @@
       "core:name": "default-example_2",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#23"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1"
       },
       "doc:raw": "name: Romagnoli",
       "smaps": {
@@ -340,15 +340,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#22": "[(21,14)-(22,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2": "[(21,14)-(22,0)]"
         },
         "tracked-element": {
-          "#22": "amf://id#15"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -356,7 +356,7 @@
       "core:name": "default-example_2",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#26"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1"
       },
       "doc:raw": "name: Johnny",
       "smaps": {
@@ -365,15 +365,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#25": "[(23,20)-(25,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2": "[(23,20)-(25,0)]"
         },
         "tracked-element": {
-          "#25": "amf://id#5"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -381,7 +381,7 @@
       "core:name": "default-example_3",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#29"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1"
       },
       "doc:raw": "name: Goode",
       "smaps": {
@@ -390,15 +390,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#28": "[(27,20)-(29,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3": "[(27,20)-(29,0)]"
         },
         "tracked-element": {
-          "#28": "amf://id#5"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a/scalar/a",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -414,23 +414,23 @@
       "shacl:name": "a",
       "smaps": {
         "type-property-lexical-info": {
-          "#8": "[(13,14)-(13,18)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a/scalar/a": "[(13,14)-(13,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(13,14)-(14,0)]",
-          "#8": "[(12,12)-(14,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/shape/schema/property/property/a/scalar/a": "[(12,12)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:a": {
-        "@id": "#11"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1/a"
       },
       "core:name": "object_1",
       "smaps": {
@@ -439,19 +439,19 @@
         },
         "lexical": {
           "data:a": "[(26,14)-(27,0)]",
-          "#10": "[(26,0)-(27,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1": "[(26,0)-(27,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:a": {
-        "@id": "#14"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1/a"
       },
       "core:name": "object_1",
       "smaps": {
@@ -460,12 +460,12 @@
         },
         "lexical": {
           "data:a": "[(30,14)-(31,0)]",
-          "#13": "[(30,0)-(31,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1": "[(30,0)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name/scalar/name",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -481,23 +481,23 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#18": "[(18,14)-(18,18)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name/scalar/name": "[(18,14)-(18,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(18,14)-(19,0)]",
-          "#18": "[(17,12)-(19,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/property/property/name/scalar/name": "[(17,12)-(19,0)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#21"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1/name_3"
       },
       "core:name": "object_1",
       "smaps": {
@@ -506,19 +506,19 @@
         },
         "lexical": {
           "data:name": "[(20,14)-(21,0)]",
-          "#20": "[(20,14)-(21,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1": "[(20,14)-(21,0)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#24"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1/name_4"
       },
       "core:name": "object_1",
       "smaps": {
@@ -527,19 +527,19 @@
         },
         "lexical": {
           "data:name": "[(21,14)-(22,0)]",
-          "#23": "[(21,14)-(22,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1": "[(21,14)-(22,0)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#27"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1/name_1"
       },
       "core:name": "object_1",
       "smaps": {
@@ -548,19 +548,19 @@
         },
         "lexical": {
           "data:name": "[(24,14)-(25,0)]",
-          "#26": "[(24,0)-(25,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1": "[(24,0)-(25,0)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#30"
+        "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1/name_2"
       },
       "core:name": "object_1",
       "smaps": {
@@ -569,12 +569,12 @@
         },
         "lexical": {
           "data:name": "[(28,14)-(29,0)]",
-          "#29": "[(28,0)-(29,0)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1": "[(28,0)-(29,0)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1/a",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -593,12 +593,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#11": "[(26,17)-(26,29)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_1/object_1/a": "[(26,17)-(26,29)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1/a",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -617,12 +617,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#14": "[(30,17)-(30,30)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/headerExamples/example/default-example_4/object_1/a": "[(30,17)-(30,30)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1/name_3",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -641,12 +641,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#21": "[(20,20)-(20,24)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_1/object_1/name_3": "[(20,20)-(20,24)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1/name_4",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -665,12 +665,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#24": "[(21,20)-(21,29)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/examples/example/default-example_2/object_1/name_4": "[(21,20)-(21,29)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1/name_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -689,12 +689,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#27": "[(24,20)-(24,26)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_2/object_1/name_1": "[(24,20)-(24,26)]"
         }
       }
     },
     {
-      "@id": "#30",
+      "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1/name_2",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -713,7 +713,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#30": "[(28,20)-(28,25)]"
+          "#/async-api/endpoint/aChannel/supportedOperation/publish/expects/request/examples/example/default-example_3/object_1/name_2": "[(28,20)-(28,25)]"
         }
       }
     },
@@ -726,16 +726,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "#/async-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#1"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/async20/message-example-propagation.yaml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "data": "http://a.ml/vocabularies/data#",

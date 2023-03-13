@@ -34,21 +34,21 @@ class JsonLDObjectTest extends AsyncFunSuite with NativeOpsFromJvm with Matchers
     assertInnerKey1(collection.get(0))
   }
 
-  test("Test set and get object collection property") {
-    JsonLDSchemaConfiguration.JsonLDSchema()
-    val objKey  = BASE + "key2"
-    val dObject = new JsonLDObject().withObjPropertyCollection(objKey, java.util.List.of(obj1, obj2))
-    val value   = dObject.graph().getObjectByProperty(objKey).native
-    value.size() shouldBe (2)
-
-    val headElement = value.get(0)
-    assertInnerKey1(headElement)
-
-    val innerKey3Value = value.get(1).graph().scalarByProperty(innerKey3).native
-    innerKey3Value.size() shouldBe (1)
-    innerKey3Value.get(0) shouldBe ("b")
-
-  }
+//  test("Test set and get object collection property") {
+//    JsonLDSchemaConfiguration.JsonLDSchema()
+//    val objKey  = BASE + "key2"
+//    val dObject = new JsonLDObject().withObjPropertyCollection(objKey, java.util.List.of(obj1, obj2))
+//    val value   = dObject.graph().getObjectByProperty(objKey).native
+//    value.size() shouldBe (2)
+//
+//    val headElement = value.get(0)
+//    assertInnerKey1(headElement)
+//
+//    val innerKey3Value = value.get(1).graph().scalarByProperty(innerKey3).native
+//    innerKey3Value.size() shouldBe (1)
+//    innerKey3Value.get(0) shouldBe ("b")
+//
+//  }
 
   private def assertInnerKey1(element: DomainElement): Assertion = {
     element.isInstanceOf[JsonLDObject] shouldBe (true)

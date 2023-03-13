@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#4",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#5",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,24 +20,24 @@
       "core:name": "Something API",
       "apiContract:endpoint": [
         {
-          "@id": "#6"
+          "@id": "#/web-api/endpoint/%2Fsongs"
         },
         {
-          "@id": "#8"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D"
         },
         {
-          "@id": "#9"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(3,0)-(4,0)]",
-          "#5": "[(3,0)-(16,56)]"
+          "/web-api": "[(3,0)-(16,56)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/web-api/endpoint/%2Fsongs",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,18 +45,18 @@
       "apiContract:path": "/songs",
       "apiContract:supportedOperation": [
         {
-          "@id": "#7"
+          "@id": "#/web-api/endpoint/%2Fsongs/supportedOperation/get"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(4,0)-(4,6)]",
-          "#6": "[(4,0)-(16,56)]"
+          "#/web-api/endpoint/%2Fsongs": "[(4,0)-(16,56)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -64,16 +64,16 @@
       "apiContract:path": "/songs/{songId}",
       "smaps": {
         "parent-end-point": {
-          "#8": "amf://id#6"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/endpoint/%2Fsongs"
         },
         "lexical": {
           "apiContract:path": "[(6,2)-(6,11)]",
-          "#8": "[(6,2)-(16,56)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D": "[(6,2)-(16,56)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -82,22 +82,22 @@
       "core:description": "The file to be reproduced by the client",
       "apiContract:supportedOperation": [
         {
-          "@id": "#10"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get"
         }
       ],
       "smaps": {
         "parent-end-point": {
-          "#9": "amf://id#8"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D"
         },
         "lexical": {
           "core:description": "[(8,6)-(9,0)]",
-          "#9": "[(7,4)-(16,56)]",
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content": "[(7,4)-(16,56)]",
           "apiContract:path": "[(7,4)-(7,17)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/web-api/endpoint/%2Fsongs/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -106,12 +106,12 @@
       "apiContract:method": "get",
       "smaps": {
         "lexical": {
-          "#7": "[(5,2)-(6,0)]"
+          "#/web-api/endpoint/%2Fsongs/supportedOperation/get": "[(5,2)-(6,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -121,24 +121,24 @@
       "core:description": "Get the file content",
       "apiContract:expects": [
         {
-          "@id": "#16"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/request"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#11"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(11,8)-(16,56)]",
-          "#10": "[(9,6)-(16,56)]",
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get": "[(9,6)-(16,56)]",
           "core:description": "[(10,8)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -147,12 +147,12 @@
       ],
       "apiContract:uriParameter": [
         {
-          "@id": "#17"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId"
         }
       ]
     },
     {
-      "@id": "#11",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -163,18 +163,18 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#12"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(13,12)-(16,56)]",
-          "#11": "[(12,10)-(16,56)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200": "[(12,10)-(16,56)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId",
       "@type": [
         "apiContract:Parameter",
         "core:Parameter",
@@ -185,7 +185,7 @@
       "apiContract:required": true,
       "apiContract:binding": "path",
       "raml-shapes:schema": {
-        "@id": "#18"
+        "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId/scalar/songId"
       },
       "smaps": {
         "synthesized-field": {
@@ -195,18 +195,18 @@
           "apiContract:required": "true"
         },
         "default-node": {
-          "#17": ""
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId": ""
         },
         "lexical": {
-          "#17": "[(6,3)-(6,11)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId": "[(6,3)-(6,11)]"
         },
         "virtual-element": {
-          "#17": "true"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId": "true"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -214,16 +214,16 @@
       ],
       "core:mediaType": "application/octet-stream",
       "raml-shapes:schema": {
-        "@id": "#13"
+        "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema"
       },
       "smaps": {
         "lexical": {
-          "#12": "[(14,14)-(16,56)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream": "[(14,14)-(16,56)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/parameter/parameter/path/songId/scalar/songId",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -239,7 +239,7 @@
       "shacl:name": "songId"
     },
     {
-      "@id": "#13",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -255,36 +255,36 @@
       "shacl:name": "schema",
       "apiContract:examples": [
         {
-          "@id": "#14"
+          "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example"
         }
       ],
       "smaps": {
         "auto-generated-name": {
-          "#13": ""
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema": ""
         },
         "lexical": {
           "apiContract:examples": "[(16,16)-(16,56)]",
-          "#13": "[(14,14)-(16,56)]",
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema": "[(14,14)-(16,56)]",
           "shacl:datatype": "[(15,16)-(16,0)]"
         },
         "type-property-lexical-info": {
-          "#13": "[(15,16)-(15,20)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema": "[(15,16)-(15,20)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#15"
+        "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example/scalar_1"
       },
       "doc:reference-id": [
         {
-          "@id": "#3"
+          "@id": "#/references/0/external"
         }
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/binary_resource.binary",
@@ -293,15 +293,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#14": "[(1,0)-(1,0)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example": "[(1,0)-(1,0)]"
         },
         "tracked-element": {
-          "#14": "amf://id#12"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example/scalar_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -320,7 +320,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#15": "[(1,0)-(1,0)]"
+          "#/web-api/endpoint/%2Fsongs%2F%7BsongId%7D%2Ffile-content/supportedOperation/get/returns/resp/200/payload/application%2Foctet-stream/scalar/schema/examples/example/default-example/scalar_1": "[(1,0)-(1,0)]"
         }
       }
     },
@@ -328,7 +328,7 @@
       "@id": "",
       "doc:references": [
         {
-          "@id": "#1"
+          "@id": "#/references/0"
         }
       ],
       "@type": [
@@ -338,30 +338,30 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#5"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#4"
+        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/references/0",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#3"
+        "@id": "#/references/0/external"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#2"
+        "@id": "#/references/0/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/references/0/external",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -369,7 +369,7 @@
       "doc:raw": "\u0003\uFFFD\u0000d{\u0000\u0000\u0000d"
     },
     {
-      "@id": "#2",
+      "@id": "#/references/0/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
@@ -377,7 +377,7 @@
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "data": "http://a.ml/vocabularies/data#",

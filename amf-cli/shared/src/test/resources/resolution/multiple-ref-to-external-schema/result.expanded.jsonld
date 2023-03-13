@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#5",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -33,7 +33,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#6",
+            "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -45,7 +45,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#7",
+                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -68,7 +68,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#8",
+                    "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -92,7 +92,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#9",
+                        "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -105,7 +105,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10",
+                            "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -131,7 +131,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#11",
+                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -143,7 +143,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#12",
+                                    "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1",
                                     "@type": [
                                       "data:Object",
                                       "data:Node",
@@ -151,7 +151,7 @@
                                     ],
                                     "data:errors": [
                                       {
-                                        "@id": "#13",
+                                        "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors",
                                         "@type": [
                                           "data:Array",
                                           "rdf:Seq",
@@ -160,7 +160,7 @@
                                         ],
                                         "rdfs:member": [
                                           {
-                                            "@id": "#14",
+                                            "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -168,7 +168,7 @@
                                             ],
                                             "data:code": [
                                               {
-                                                "@id": "#15",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/code",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -195,14 +195,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#15": "[(8,20)-(8,23)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/code": "[(8,20)-(8,23)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:message": [
                                               {
-                                                "@id": "#16",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/message",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -229,14 +229,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#16": "[(9,23)-(9,36)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/message": "[(9,23)-(9,36)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:more_info": [
                                               {
-                                                "@id": "#17",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/more_info",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -263,14 +263,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#17": "[(10,25)-(10,116)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/more_info": "[(10,25)-(10,116)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:help": [
                                               {
-                                                "@id": "#18",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/help",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -297,7 +297,7 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#18": "[(11,20)-(11,63)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/help": "[(11,20)-(11,63)]"
                                                   }
                                                 }
                                               }
@@ -314,7 +314,7 @@
                                               "lexical": {
                                                 "data:help": "[(11,12)-(11,63)]",
                                                 "data:message": "[(9,12)-(9,36)]",
-                                                "#14": "[(7,10)-(12,11)]",
+                                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3": "[(7,10)-(12,11)]",
                                                 "data:code": "[(8,12)-(8,23)]",
                                                 "data:more_info": "[(10,12)-(10,116)]"
                                               }
@@ -328,7 +328,7 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#13": "[(6,18)-(13,9)]"
+                                            "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors": "[(6,18)-(13,9)]"
                                           }
                                         }
                                       }
@@ -344,7 +344,7 @@
                                       },
                                       "lexical": {
                                         "data:errors": "[(6,8)-(13,9)]",
-                                        "#12": "[(5,17)-(14,7)]"
+                                        "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1": "[(5,17)-(14,7)]"
                                       }
                                     }
                                   }
@@ -360,10 +360,10 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "#11": "[(5,6)-(14,7)]"
+                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example": "[(5,6)-(14,7)]"
                                   },
                                   "tracked-element": {
-                                    "#11": "amf://id#9"
+                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/application%2Fjson"
                                   }
                                 }
                               }
@@ -374,30 +374,30 @@
                                 "shacl:closed": "true"
                               },
                               "resolved-link": {
-                                "#10": "amf://id#19"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400/payload/default/shape/default"
                               },
                               "type-property-lexical-info": {
-                                "#10": "[(4,6)-(4,12)]"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "[(4,6)-(4,12)]"
                               },
                               "lexical": {
                                 "apiContract:examples": "[(5,6)-(14,7)]",
-                                "#10": "[(3,4)-(15,5)]"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "[(3,4)-(15,5)]"
                               },
                               "auto-generated-name": {
-                                "#10": ""
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": ""
                               },
                               "resolved-link-target": {
-                                "#10": "amf://id#10"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#9": "[(3,4)-(15,5)]"
+                            "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/application%2Fjson": "[(3,4)-(15,5)]"
                           },
                           "virtual-element": {
-                            "#9": "true"
+                            "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/application%2Fjson": "true"
                           }
                         }
                       }
@@ -405,7 +405,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(16,12)-(16,76)]",
-                        "#8": "[(15,10)-(20,11)]",
+                        "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400": "[(15,10)-(20,11)]",
                         "core:name": "[(15,10)-(15,15)]"
                       }
                     }
@@ -414,7 +414,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(14,8)-(21,9)]",
-                    "#7": "[(12,6)-(25,7)]",
+                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get": "[(12,6)-(25,7)]",
                     "core:description": "[(13,8)-(13,101)]"
                   }
                 }
@@ -422,12 +422,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#6": "[(11,4)-(26,5)]"
+                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D": "[(11,4)-(26,5)]"
               }
             }
           },
           {
-            "@id": "#20",
+            "@id": "#/web-api/endpoint/%2Fcitypaq",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -439,7 +439,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#21",
+                "@id": "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -462,7 +462,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#22",
+                    "@id": "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -486,7 +486,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#23",
+                        "@id": "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -499,7 +499,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10",
+                            "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -525,7 +525,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#11",
+                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -537,7 +537,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#12",
+                                    "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1",
                                     "@type": [
                                       "data:Object",
                                       "data:Node",
@@ -545,7 +545,7 @@
                                     ],
                                     "data:errors": [
                                       {
-                                        "@id": "#13",
+                                        "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors",
                                         "@type": [
                                           "data:Array",
                                           "rdf:Seq",
@@ -554,7 +554,7 @@
                                         ],
                                         "rdfs:member": [
                                           {
-                                            "@id": "#14",
+                                            "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3",
                                             "@type": [
                                               "data:Object",
                                               "data:Node",
@@ -562,7 +562,7 @@
                                             ],
                                             "data:code": [
                                               {
-                                                "@id": "#15",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/code",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -589,14 +589,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#15": "[(8,20)-(8,23)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/code": "[(8,20)-(8,23)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:message": [
                                               {
-                                                "@id": "#16",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/message",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -623,14 +623,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#16": "[(9,23)-(9,36)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/message": "[(9,23)-(9,36)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:more_info": [
                                               {
-                                                "@id": "#17",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/more_info",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -657,14 +657,14 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#17": "[(10,25)-(10,116)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/more_info": "[(10,25)-(10,116)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:help": [
                                               {
-                                                "@id": "#18",
+                                                "@id": "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/help",
                                                 "@type": [
                                                   "data:Scalar",
                                                   "data:Node",
@@ -691,7 +691,7 @@
                                                     "shacl:datatype": "true"
                                                   },
                                                   "lexical": {
-                                                    "#18": "[(11,20)-(11,63)]"
+                                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3/help": "[(11,20)-(11,63)]"
                                                   }
                                                 }
                                               }
@@ -708,7 +708,7 @@
                                               "lexical": {
                                                 "data:help": "[(11,12)-(11,63)]",
                                                 "data:message": "[(9,12)-(9,36)]",
-                                                "#14": "[(7,10)-(12,11)]",
+                                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors/member/object_3": "[(7,10)-(12,11)]",
                                                 "data:code": "[(8,12)-(8,23)]",
                                                 "data:more_info": "[(10,12)-(10,116)]"
                                               }
@@ -722,7 +722,7 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#13": "[(6,18)-(13,9)]"
+                                            "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1/errors": "[(6,18)-(13,9)]"
                                           }
                                         }
                                       }
@@ -738,7 +738,7 @@
                                       },
                                       "lexical": {
                                         "data:errors": "[(6,8)-(13,9)]",
-                                        "#12": "[(5,17)-(14,7)]"
+                                        "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example/object_1": "[(5,17)-(14,7)]"
                                       }
                                     }
                                   }
@@ -754,10 +754,10 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "#11": "[(5,6)-(14,7)]"
+                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example": "[(5,6)-(14,7)]"
                                   },
                                   "tracked-element": {
-                                    "#11": "amf://id#9"
+                                    "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default/examples/example/default-example": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/application%2Fjson"
                                   }
                                 }
                               }
@@ -768,30 +768,30 @@
                                 "shacl:closed": "true"
                               },
                               "resolved-link": {
-                                "#10": "amf://id#19"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400/payload/default/shape/default"
                               },
                               "type-property-lexical-info": {
-                                "#10": "[(4,6)-(4,12)]"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "[(4,6)-(4,12)]"
                               },
                               "lexical": {
                                 "apiContract:examples": "[(5,6)-(14,7)]",
-                                "#10": "[(3,4)-(15,5)]"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "[(3,4)-(15,5)]"
                               },
                               "auto-generated-name": {
-                                "#10": ""
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": ""
                               },
                               "resolved-link-target": {
-                                "#10": "amf://id#10"
+                                "#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json#/web-api/endpoint/%2Fenvios%2F%7Benvio%7D/supportedOperation/get/returns/resp/400/payload/default/shape/default"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#23": "[(3,4)-(15,5)]"
+                            "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400/application%2Fjson": "[(3,4)-(15,5)]"
                           },
                           "virtual-element": {
-                            "#23": "true"
+                            "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400/application%2Fjson": "true"
                           }
                         }
                       }
@@ -799,7 +799,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(32,12)-(32,116)]",
-                        "#22": "[(31,10)-(36,11)]",
+                        "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get/returns/resp/400": "[(31,10)-(36,11)]",
                         "core:name": "[(31,10)-(31,15)]"
                       }
                     }
@@ -808,7 +808,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(30,8)-(37,9)]",
-                    "#21": "[(28,6)-(41,7)]",
+                    "#/web-api/endpoint/%2Fcitypaq/supportedOperation/get": "[(28,6)-(41,7)]",
                     "core:description": "[(29,8)-(29,273)]"
                   }
                 }
@@ -816,7 +816,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#20": "[(27,4)-(42,5)]"
+                "#/web-api/endpoint/%2Fcitypaq": "[(27,4)-(42,5)]"
               }
             }
           }
@@ -825,7 +825,7 @@
           "lexical": {
             "apiContract:endpoint": "[(10,2)-(43,3)]",
             "apiContract:scheme": "[(7,2)-(9,3)]",
-            "#5": "[(1,0)-(44,1)]",
+            "/web-api": "[(1,0)-(44,1)]",
             "core:name": "[(4,4)-(4,30)]",
             "core:version": "[(5,4)-(5,19)]"
           }
@@ -839,7 +839,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#4",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -862,7 +862,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#1",
+        "@id": "#/references/0",
         "@type": [
           "doc:ExternalFragment",
           "doc:Fragment",
@@ -870,7 +870,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#3",
+            "@id": "#/references/0/external",
             "@type": [
               "doc:ExternalDomainElement",
               "doc:DomainElement"
@@ -887,7 +887,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(1,0)-(18,0)]"
+                "#/references/0/external": "[(1,0)-(18,0)]"
               }
             }
           }
@@ -899,7 +899,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#2",
+            "@id": "#/references/0/BaseUnitProcessingData",
             "@type": [
               "doc:BaseUnitProcessingData"
             ],
@@ -913,7 +913,7 @@
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/multiple-ref-to-external-schema/api.json",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",

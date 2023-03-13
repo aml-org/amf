@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#2",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -48,7 +48,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#3",
+            "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -60,7 +60,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#4",
+                "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -83,7 +83,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#5",
+                    "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -92,7 +92,7 @@
                     ],
                     "apiContract:uriParameter": [
                       {
-                        "@id": "#6",
+                        "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request/uri%20parameter/parameter/path/data_pool_id",
                         "@type": [
                           "apiContract:Parameter",
                           "core:Parameter",
@@ -125,7 +125,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#7",
+                            "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -150,11 +150,11 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "#7": "[(17,8)-(17,12)]"
+                                "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema": "[(17,8)-(17,12)]"
                               },
                               "lexical": {
                                 "core:description": "[(15,8)-(16,0)]",
-                                "#7": "[(14,6)-(18,0)]",
+                                "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema": "[(14,6)-(18,0)]",
                                 "shacl:datatype": "[(17,8)-(18,0)]"
                               }
                             }
@@ -167,7 +167,7 @@
                           "lexical": {
                             "raml-shapes:schema": "[(14,6)-(18,0)]",
                             "core:description": "[(15,8)-(16,0)]",
-                            "#6": "[(14,6)-(18,0)]",
+                            "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request/uri%20parameter/parameter/path/data_pool_id": "[(14,6)-(18,0)]",
                             "apiContract:required": "[(16,8)-(17,0)]"
                           }
                         }
@@ -177,17 +177,17 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:uriParameter": "[(13,4)-(18,0)]",
-                        "#5": "[(13,28)-(18,0)]"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request": "[(13,28)-(18,0)]"
                       },
                       "virtual-element": {
-                        "#5": "true"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/expects/request": "true"
                       }
                     }
                   }
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#8",
+                    "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -213,7 +213,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(20,8)-(21,0)]",
-                        "#8": "[(19,6)-(21,0)]"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get/returns/resp/200": "[(19,6)-(21,0)]"
                       }
                     }
                   }
@@ -222,13 +222,13 @@
                   "lexical": {
                     "apiContract:returns": "[(18,4)-(21,0)]",
                     "core:name": "[(11,4)-(12,0)]",
-                    "#4": "[(10,2)-(21,0)]",
+                    "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/get": "[(10,2)-(21,0)]",
                     "core:description": "[(12,4)-(13,0)]"
                   }
                 }
               },
               {
-                "@id": "#9",
+                "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -251,7 +251,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#10",
+                    "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -260,7 +260,7 @@
                     ],
                     "apiContract:uriParameter": [
                       {
-                        "@id": "#11",
+                        "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request/uri%20parameter/parameter/path/data_pool_id",
                         "@type": [
                           "apiContract:Parameter",
                           "core:Parameter",
@@ -293,7 +293,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#12",
+                            "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -318,11 +318,11 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "#12": "[(28,8)-(28,12)]"
+                                "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema": "[(28,8)-(28,12)]"
                               },
                               "lexical": {
                                 "core:description": "[(26,8)-(27,0)]",
-                                "#12": "[(25,6)-(29,0)]",
+                                "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request/uri%20parameter/parameter/path/data_pool_id/scalar/schema": "[(25,6)-(29,0)]",
                                 "shacl:datatype": "[(28,8)-(29,0)]"
                               }
                             }
@@ -335,7 +335,7 @@
                           "lexical": {
                             "raml-shapes:schema": "[(25,6)-(29,0)]",
                             "core:description": "[(26,8)-(27,0)]",
-                            "#11": "[(25,6)-(29,0)]",
+                            "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request/uri%20parameter/parameter/path/data_pool_id": "[(25,6)-(29,0)]",
                             "apiContract:required": "[(27,8)-(28,0)]"
                           }
                         }
@@ -345,17 +345,17 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:uriParameter": "[(24,4)-(29,0)]",
-                        "#10": "[(24,28)-(29,0)]"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request": "[(24,28)-(29,0)]"
                       },
                       "virtual-element": {
-                        "#10": "true"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/expects/request": "true"
                       }
                     }
                   }
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#13",
+                    "@id": "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/returns/resp/201",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -381,7 +381,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(31,8)-(33,0)]",
-                        "#13": "[(30,6)-(33,0)]"
+                        "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post/returns/resp/201": "[(30,6)-(33,0)]"
                       }
                     }
                   }
@@ -390,7 +390,7 @@
                   "lexical": {
                     "apiContract:returns": "[(29,4)-(33,0)]",
                     "core:name": "[(22,4)-(23,0)]",
-                    "#9": "[(21,2)-(33,0)]",
+                    "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F/supportedOperation/post": "[(21,2)-(33,0)]",
                     "core:description": "[(23,4)-(24,0)]"
                   }
                 }
@@ -399,12 +399,12 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(9,0)-(9,37)]",
-                "#3": "[(9,0)-(33,0)]"
+                "#/web-api/endpoint/%2Fdata-pools%2F%7Bdata_pool_id%7D%2Fdocuments%2F": "[(9,0)-(33,0)]"
               }
             }
           },
           {
-            "@id": "#14",
+            "@id": "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -416,7 +416,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#15",
+                "@id": "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -439,7 +439,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#16",
+                    "@id": "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -465,7 +465,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(39,8)-(40,0)]",
-                        "#16": "[(38,6)-(40,0)]"
+                        "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/supportedOperation/get/returns/resp/200": "[(38,6)-(40,0)]"
                       }
                     }
                   }
@@ -474,7 +474,7 @@
                   "lexical": {
                     "apiContract:returns": "[(37,4)-(40,0)]",
                     "core:name": "[(35,4)-(36,0)]",
-                    "#15": "[(34,2)-(40,0)]",
+                    "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/supportedOperation/get": "[(34,2)-(40,0)]",
                     "core:description": "[(36,4)-(37,0)]"
                   }
                 }
@@ -482,7 +482,7 @@
             ],
             "apiContract:parameter": [
               {
-                "@id": "#17",
+                "@id": "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/parameter/parameter/path/document_id",
                 "@type": [
                   "apiContract:Parameter",
                   "core:Parameter",
@@ -515,7 +515,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#18",
+                    "@id": "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/parameter/parameter/path/document_id/scalar/schema",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -540,11 +540,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#18": "[(43,6)-(43,10)]"
+                        "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/parameter/parameter/path/document_id/scalar/schema": "[(43,6)-(43,10)]"
                       },
                       "lexical": {
                         "core:description": "[(42,6)-(43,0)]",
-                        "#18": "[(41,4)-(44,0)]",
+                        "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/parameter/parameter/path/document_id/scalar/schema": "[(41,4)-(44,0)]",
                         "shacl:datatype": "[(43,6)-(44,0)]"
                       }
                     }
@@ -556,7 +556,7 @@
                   },
                   "lexical": {
                     "raml-shapes:schema": "[(41,4)-(44,0)]",
-                    "#17": "[(41,4)-(44,0)]",
+                    "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F/parameter/parameter/path/document_id": "[(41,4)-(44,0)]",
                     "core:description": "[(42,6)-(43,0)]"
                   }
                 }
@@ -565,7 +565,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:parameter": "[(40,16)-(44,0)]",
-                "#14": "[(33,0)-(44,0)]",
+                "#/web-api/endpoint/%2Fdocuments%2F%7Bdocument_id%7D%2Ffile%2F": "[(33,0)-(44,0)]",
                 "apiContract:path": "[(33,0)-(33,30)]"
               }
             }
@@ -576,7 +576,7 @@
             "core:version": "[(6,0)-(7,0)]",
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:description": "[(3,0)-(4,0)]",
-            "#2": "[(2,0)-(44,0)]",
+            "/web-api": "[(2,0)-(44,0)]",
             "core:name": "[(2,0)-(3,0)]",
             "apiContract:accepts": "[(4,0)-(6,0)]",
             "apiContract:scheme": "[(7,0)-(9,0)]"
@@ -591,7 +591,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#1",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -613,7 +613,7 @@
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/operation-path-parameters/api.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

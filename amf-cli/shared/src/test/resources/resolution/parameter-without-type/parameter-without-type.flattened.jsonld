@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#3",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#4",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,24 +20,24 @@
       "core:name": "Przelewy24 REST API Documentation",
       "apiContract:server": [
         {
-          "@id": "#5"
+          "@id": "#/web-api/server/sandbox.przelewy24.pl"
         }
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#6"
+          "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(7,2)-(17,3)]",
-          "#4": "[(1,0)-(24,1)]",
+          "/web-api": "[(1,0)-(24,1)]",
           "core:name": "[(4,4)-(4,48)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/web-api/server/sandbox.przelewy24.pl",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -48,7 +48,7 @@
           "core:urlTemplate": "[(6,2)-(6,33)]"
         },
         "virtual-element": {
-          "#5": "true"
+          "#/web-api/server/sandbox.przelewy24.pl": "true"
         },
         "synthesized-field": {
           "core:urlTemplate": "true"
@@ -56,7 +56,7 @@
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -64,17 +64,17 @@
       "apiContract:path": "/v1/transaction/register/splitpayment",
       "apiContract:supportedOperation": [
         {
-          "@id": "#7"
+          "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post"
         }
       ],
       "smaps": {
         "lexical": {
-          "#6": "[(8,4)-(16,5)]"
+          "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment": "[(8,4)-(16,5)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -83,18 +83,18 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#8"
+          "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(9,14)-(15,7)]",
-          "#7": "[(9,6)-(15,7)]"
+          "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post": "[(9,6)-(15,7)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -103,21 +103,21 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#9"
+          "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData"
         }
       ],
       "smaps": {
         "virtual-element": {
-          "#8": "true"
+          "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request": "true"
         },
         "lexical": {
           "apiContract:payload": "[(10,8)-(14,9)]",
-          "#8": "[(9,14)-(15,7)]"
+          "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request": "[(9,14)-(15,7)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -125,16 +125,16 @@
       ],
       "core:name": "formData",
       "raml-shapes:schema": {
-        "@id": "#10"
+        "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData/shape/formData"
       },
       "smaps": {
         "form-body-parameter": {
-          "#9": "true"
+          "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData": "true"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData/shape/formData",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -145,13 +145,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#11"
+          "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData/shape/formData/property/property/splitPaymentDetails"
         }
       ],
       "shacl:name": "formData"
     },
     {
-      "@id": "#11",
+      "@id": "#/web-api/endpoint/%2Fv1%2Ftransaction%2Fregister%2Fsplitpayment/supportedOperation/post/expects/request/payload/formData/shape/formData/property/property/splitPaymentDetails",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -159,13 +159,13 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#2"
+        "@id": "#/declares/splitPaymentDetails/any/default-any"
       },
       "shacl:minCount": 0,
       "shacl:name": "splitPaymentDetails"
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/splitPaymentDetails/any/default-any",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -177,7 +177,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/splitPaymentDetails"
         }
       ],
       "@type": [
@@ -187,15 +187,15 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#4"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#3"
+        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/splitPaymentDetails",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -203,27 +203,27 @@
       ],
       "core:name": "splitPaymentDetails",
       "raml-shapes:schema": {
-        "@id": "#2"
+        "@id": "#/declares/splitPaymentDetails/any/default-any"
       },
       "smaps": {
         "parameter-name-for-payload": {
           "core:name": "splitPaymentDetails->[(20,6)-(20,35)]"
         },
         "form-body-parameter": {
-          "#1": "true"
+          "#/declares/splitPaymentDetails": "true"
         },
         "lexical": {
           "core:name": "[(20,6)-(20,35)]",
-          "#1": "[(19,4)-(22,5)]"
+          "#/declares/splitPaymentDetails": "[(19,4)-(22,5)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/splitPaymentDetails": ""
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/parameter-without-type/parameter-without-type.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",

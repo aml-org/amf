@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#13",
+        "@id": "#/async-api",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#14",
+            "@id": "#/async-api/endpoint/users%2Fsignup",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#15",
+                "@id": "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -53,7 +53,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#16",
+                    "@id": "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -62,7 +62,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#17",
+                        "@id": "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response/payload/default",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -75,7 +75,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#2/link-2645995",
+                            "@id": "#/references/0/declares/union/User/link-2645995",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -85,7 +85,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#2"
+                                "@id": "#/references/0/declares/union/User"
                               }
                             ],
                             "doc:link-label": [
@@ -98,7 +98,7 @@
                         "smaps": {
                           "lexical": {
                             "apiContract:schemaMediaType": "[(9,8)-(10,0)]",
-                            "#17": "[(9,0)-(12,0)]"
+                            "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response/payload/default": "[(9,0)-(12,0)]"
                           }
                         }
                       }
@@ -108,7 +108,7 @@
                         "apiContract:payload": "true"
                       },
                       "lexical": {
-                        "#16": "[(9,0)-(12,0)]"
+                        "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response": "[(9,0)-(12,0)]"
                       }
                     }
                   }
@@ -116,7 +116,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(8,6)-(12,0)]",
-                    "#15": "[(7,4)-(12,0)]"
+                    "#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe": "[(7,4)-(12,0)]"
                   }
                 }
               }
@@ -124,7 +124,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:supportedOperation": "[(7,0)-(12,0)]",
-                "#14": "[(6,2)-(12,0)]"
+                "#/async-api/endpoint/users%2Fsignup": "[(6,2)-(12,0)]"
               }
             }
           }
@@ -133,7 +133,7 @@
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(12,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#13": "[(1,0)-(12,0)]",
+            "#/async-api": "[(1,0)-(12,0)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
@@ -146,7 +146,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#12",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -169,14 +169,14 @@
     ],
     "doc:references": [
       {
-        "@id": "#1",
+        "@id": "#/references/0",
         "@type": [
           "doc:Module",
           "doc:Unit"
         ],
         "doc:declares": [
           {
-            "@id": "#2",
+            "@id": "#/references/0/declares/union/User",
             "@type": [
               "raml-shapes:UnionShape",
               "raml-shapes:AnyShape",
@@ -186,7 +186,7 @@
             ],
             "raml-shapes:anyOf": [
               {
-                "@id": "#3",
+                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -201,12 +201,12 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#3": "[(8,10)-(8,16)]"
+                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar": "[(8,10)-(8,16)]"
                   }
                 }
               },
               {
-                "@id": "#4",
+                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -222,12 +222,12 @@
                 "shacl:property": [],
                 "smaps": {
                   "lexical": {
-                    "#4": "[(8,19)-(8,25)]"
+                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node": "[(8,19)-(8,25)]"
                   }
                 }
               },
               {
-                "@id": "#5",
+                "@id": "#/references/0/declares/union/User/inherits/union/default-union/anyOf/scalar/default-scalar",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -242,7 +242,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#5": "[(5,18)-(5,24)]"
+                    "#/references/0/declares/union/User/inherits/union/default-union/anyOf/scalar/default-scalar": "[(5,18)-(5,24)]"
                   }
                 }
               }
@@ -254,28 +254,28 @@
             ],
             "smaps": {
               "inherited-shapes": {
-                "#2": "amf://id#7"
+                "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union/link-0"
               },
               "resolved-link": {
-                "#2": "amf://id#6"
+                "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response/payload/default/union/schema"
               },
               "type-property-lexical-info": {
-                "#2": "[(5,4)-(5,8)]"
+                "#/references/0/declares/union/User": "[(5,4)-(5,8)]"
               },
               "lexical": {
                 "shacl:name": "[(4,2)-(4,6)]",
-                "#2": "[(4,7)-(7,0)]"
+                "#/references/0/declares/union/User": "[(4,7)-(7,0)]"
               },
               "declared-element": {
-                "#2": ""
+                "#/references/0/declares/union/User": ""
               },
               "resolved-link-target": {
-                "#2": "amf://id#2"
+                "#/references/0/declares/union/User": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User"
               }
             }
           },
           {
-            "@id": "#8",
+            "@id": "#/references/0/declares/union/Other",
             "@type": [
               "raml-shapes:UnionShape",
               "raml-shapes:AnyShape",
@@ -285,7 +285,7 @@
             ],
             "raml-shapes:anyOf": [
               {
-                "@id": "#3",
+                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -300,12 +300,12 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#3": "[(8,10)-(8,16)]"
+                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/scalar/default-scalar": "[(8,10)-(8,16)]"
                   }
                 }
               },
               {
-                "@id": "#4",
+                "@id": "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -321,7 +321,7 @@
                 "shacl:property": [],
                 "smaps": {
                   "lexical": {
-                    "#4": "[(8,19)-(8,25)]"
+                    "#/references/0/declares/union/Other/inherits/union/default-union/anyOf/shape/default-node": "[(8,19)-(8,25)]"
                   }
                 }
               }
@@ -333,23 +333,23 @@
             ],
             "smaps": {
               "inherited-shapes": {
-                "#8": "amf://id#10"
+                "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other/inherits/union/default-union/link-0"
               },
               "resolved-link": {
-                "#8": "amf://id#9"
+                "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/User/inherits/union/default-union/anyOf/union/default-union"
               },
               "type-property-lexical-info": {
-                "#8": "[(8,4)-(8,8)]"
+                "#/references/0/declares/union/Other": "[(8,4)-(8,8)]"
               },
               "lexical": {
                 "shacl:name": "[(7,2)-(7,7)]",
-                "#8": "[(7,8)-(9,0)]"
+                "#/references/0/declares/union/Other": "[(7,8)-(9,0)]"
               },
               "declared-element": {
-                "#8": ""
+                "#/references/0/declares/union/Other": ""
               },
               "resolved-link-target": {
-                "#8": "amf://id#8"
+                "#/references/0/declares/union/Other": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml#/references/0/declares/union/Other"
               }
             }
           }
@@ -361,7 +361,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#11",
+            "@id": "#/references/0/BaseUnitProcessingData",
             "@type": [
               "doc:APIContractProcessingData"
             ],
@@ -382,13 +382,13 @@
             "doc:declares": "true"
           },
           "lexical": {
-            "#1": "[(1,0)-(9,0)]"
+            "#/references/0": "[(1,0)-(9,0)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-type-in-library.yaml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

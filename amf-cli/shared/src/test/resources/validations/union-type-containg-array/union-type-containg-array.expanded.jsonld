@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#6",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -24,7 +24,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#6": "[(2,0)-(5,24)]"
+            "/web-api": "[(2,0)-(5,24)]"
           }
         }
       }
@@ -36,7 +36,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#5",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -59,7 +59,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/union/NewDataType",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -69,7 +69,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#2",
+            "@id": "#/declares/union/NewDataType/inherits/union/default-union/anyOf/scalar/default-scalar",
             "@type": [
               "raml-shapes:ScalarShape",
               "raml-shapes:AnyShape",
@@ -84,12 +84,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(5,10)-(5,16)]"
+                "#/declares/union/NewDataType/inherits/union/default-union/anyOf/scalar/default-scalar": "[(5,10)-(5,16)]"
               }
             }
           },
           {
-            "@id": "#3",
+            "@id": "#/declares/union/NewDataType/inherits/union/default-union/anyOf/array/default-array",
             "@type": [
               "raml-shapes:ArrayShape",
               "raml-shapes:AnyShape",
@@ -99,7 +99,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(5,19)-(5,24)]"
+                "#/declares/union/NewDataType/inherits/union/default-union/anyOf/array/default-array": "[(5,19)-(5,24)]"
               }
             }
           }
@@ -111,23 +111,23 @@
         ],
         "smaps": {
           "inherited-shapes": {
-            "#1": "amf://id#4"
+            "#/declares/union/NewDataType": "file://amf-cli/shared/src/test/resources/validations/union-type-containg-array/union-type-containg-array.raml#/declares/union/NewDataType/inherits/union/default-union/link-0"
           },
           "type-property-lexical-info": {
-            "#1": "[(5,4)-(5,8)]"
+            "#/declares/union/NewDataType": "[(5,4)-(5,8)]"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,13)]",
-            "#1": "[(4,14)-(5,24)]"
+            "#/declares/union/NewDataType": "[(4,14)-(5,24)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/union/NewDataType": ""
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/validations/union-type-containg-array/union-type-containg-array.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#8",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -29,7 +29,7 @@
         "smaps": {
           "lexical": {
             "core:version": "[(3,0)-(4,0)]",
-            "#8": "[(2,0)-(6,0)]",
+            "/web-api": "[(2,0)-(6,0)]",
             "core:name": "[(2,0)-(3,0)]"
           }
         }
@@ -42,7 +42,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#7",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -65,7 +65,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#1",
+        "@id": "#/references/0",
         "@type": [
           "raml-shapes:DataTypeFragment",
           "doc:Fragment",
@@ -73,7 +73,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#2",
+            "@id": "#/references/0/shape/type",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -88,7 +88,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#3",
+                "@id": "#/references/0/shape/type/property/property/name",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -102,7 +102,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#4",
+                    "@id": "#/references/0/shape/type/property/property/name/scalar/name",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -122,11 +122,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#4": "[(4,4)-(4,8)]"
+                        "#/references/0/shape/type/property/property/name/scalar/name": "[(4,4)-(4,8)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(4,4)-(5,0)]",
-                        "#4": "[(3,2)-(5,0)]"
+                        "#/references/0/shape/type/property/property/name/scalar/name": "[(3,2)-(5,0)]"
                       }
                     }
                   }
@@ -148,7 +148,7 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(3,7)-(5,0)]",
-                    "#3": "[(3,2)-(5,0)]"
+                    "#/references/0/shape/type/property/property/name": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -163,7 +163,7 @@
                 "shacl:closed": "true"
               },
               "lexical": {
-                "#2": "[(2,0)-(5,0)]"
+                "#/references/0/shape/type": "[(2,0)-(5,0)]"
               }
             }
           }
@@ -175,7 +175,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#5",
+            "@id": "#/references/0/BaseUnitProcessingData",
             "@type": [
               "doc:APIContractProcessingData"
             ],
@@ -193,14 +193,14 @@
         ],
         "smaps": {
           "lexical": {
-            "#1": "[(1,0)-(5,0)]"
+            "#/references/0": "[(1,0)-(5,0)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "#6",
+        "@id": "#/declares/shape/person",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -215,7 +215,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#3",
+            "@id": "#/references/0/shape/type/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -229,7 +229,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#4",
+                "@id": "#/references/0/shape/type/property/property/name/scalar/name",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -249,11 +249,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#4": "[(4,4)-(4,8)]"
+                    "#/references/0/shape/type/property/property/name/scalar/name": "[(4,4)-(4,8)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(4,4)-(5,0)]",
-                    "#4": "[(3,2)-(5,0)]"
+                    "#/references/0/shape/type/property/property/name/scalar/name": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -275,7 +275,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(3,7)-(5,0)]",
-                "#3": "[(3,2)-(5,0)]"
+                "#/references/0/shape/type/property/property/name": "[(3,2)-(5,0)]"
               }
             }
           }
@@ -290,22 +290,22 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#6": "amf://id#2"
+            "#/declares/shape/person": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.reference.raml#/references/0/shape/type"
           },
           "lexical": {
-            "#6": "[(2,0)-(5,0)]"
+            "#/declares/shape/person": "[(2,0)-(5,0)]"
           },
           "resolved-link": {
-            "#6": "amf://id#6"
+            "#/declares/shape/person": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.reference.raml#/declares/shape/person"
           },
           "declared-element": {
-            "#6": ""
+            "#/declares/shape/person": ""
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.reference.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

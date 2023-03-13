@@ -1,6 +1,6 @@
 [
   {
-    "@id": "amf://id",
+    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "amf://id#10",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "amf://id#11",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "amf://id#12",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -48,7 +48,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "amf://id#13",
+                    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -57,7 +57,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "amf://id#7",
+                        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/core#Parameter",
@@ -85,7 +85,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "amf://id#1/link--1907849355",
+                            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person/link--1907849355",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -95,7 +95,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "amf://id#1"
+                                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -109,16 +109,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "amf://id#13/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                           {
-                            "@id": "amf://id#13/source-map/virtual-element/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/source-map/virtual-element/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "amf://id#13"
+                                "@value": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -145,7 +145,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "amf://id#9",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -168,7 +168,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "amf://id#1",
+        "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -183,7 +183,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "amf://id#2",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -197,7 +197,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "amf://id#3",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person/property/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -236,7 +236,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#examples": [
           {
-            "@id": "amf://id#4",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -248,7 +248,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "amf://id#5",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object",
                   "http://a.ml/vocabularies/data#Node",
@@ -256,7 +256,7 @@
                 ],
                 "http://a.ml/vocabularies/data#name": [
                   {
-                    "@id": "amf://id#6",
+                    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example/object_1/name_1",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -293,21 +293,21 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "amf://id#4/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                   {
-                    "@id": "amf://id#4/source-map/tracked-element/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example/source-map/tracked-element/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "amf://id#4"
+                        "@value": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header/shape/schema/examples/example/default-example"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "amf://id#7"
+                        "@value": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/web-api/endpoint/%2FendPoint/supportedOperation/get/expects/request/header/parameter/header/header"
                       }
                     ]
                   }
@@ -318,16 +318,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "amf://id#1/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "amf://id#1/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "amf://id#1"
+                    "@value": "file://amf-cli/shared/src/test/resources/render/governance-mode/raml/api.raml#/declares/shape/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#22",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#1",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,12 +20,12 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#24"
+          "@id": "#/web-api/endpoint/%2Fendpoint1"
         }
       ]
     },
     {
-      "@id": "#24",
+      "@id": "#/web-api/endpoint/%2Fendpoint1",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,15 +33,15 @@
       "apiContract:path": "/endpoint1",
       "apiContract:supportedOperation": [
         {
-          "@id": "#25"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get"
         },
         {
-          "@id": "#27"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post"
         }
       ]
     },
     {
-      "@id": "#25",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -50,12 +50,12 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#26"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request"
         }
       ]
     },
     {
-      "@id": "#27",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -64,12 +64,12 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#28"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request"
         }
       ]
     },
     {
-      "@id": "#26",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -78,12 +78,12 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#14"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson"
         }
       ]
     },
     {
-      "@id": "#28",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -92,12 +92,12 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#19"
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson"
         }
       ]
     },
     {
-      "@id": "#14",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -105,11 +105,11 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#1"
+        "@id": "#/declares/shape/A"
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -117,14 +117,289 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#1"
+        "@id": "#/declares/shape/A"
       }
+    },
+    {
+      "@id": "#/declares/shape/A",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/declares/shape/A/property/property/a"
+        },
+        {
+          "@id": "#/declares/shape/A/property/property/b"
+        }
+      ],
+      "shacl:name": "A",
+      "apiContract:examples": [
+        {
+          "@id": "#/declares/shape/A/examples/example/declared"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/shape/A/property/property/a",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#a"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/A/property/property/a/scalar/a"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "a"
+    },
+    {
+      "@id": "#/declares/shape/A/property/property/b",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#b"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/declares/shape/A/property/property/b/scalar/b"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "b"
+    },
+    {
+      "@id": "#/declares/shape/A/examples/example/declared",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "core:name": "declared",
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#/declares/shape/A/examples/example/declared/object_1"
+      },
+      "doc:raw": "a: cristian\nb: pavon"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "core:name": "endpoint1",
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1"
+      },
+      "doc:raw": "a: roman\nb: riquelme"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "core:name": "endpointP",
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1"
+      },
+      "doc:raw": "a: leonardo\nb: jara"
+    },
+    {
+      "@id": "#/declares/shape/A/property/property/a/scalar/a",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "a"
+    },
+    {
+      "@id": "#/declares/shape/A/property/property/b/scalar/b",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "b"
+    },
+    {
+      "@id": "#/declares/shape/A/examples/example/declared/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:a": {
+        "@id": "#/declares/shape/A/examples/example/declared/object_1/a"
+      },
+      "data:b": {
+        "@id": "#/declares/shape/A/examples/example/declared/object_1/b"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:a": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1/a"
+      },
+      "data:b": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1/b"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:a": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1/a"
+      },
+      "data:b": {
+        "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1/b"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/declares/shape/A/examples/example/declared/object_1/a",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "cristian",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "a"
+    },
+    {
+      "@id": "#/declares/shape/A/examples/example/declared/object_1/b",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "pavon",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "b"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1/a",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "roman",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "a"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpoint1/object_1/b",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "riquelme",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "b"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1/a",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "leonardo",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "a"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/endpointP/object_1/b",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "jara",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "b"
     },
     {
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/A"
         }
       ],
       "@type": [
@@ -134,17 +409,19 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#1"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#22"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml",
+    "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

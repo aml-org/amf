@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "#1",
+      "@id": "null/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": true
     },
     {
-      "@id": "#2",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -80,35 +80,7 @@
       }
     },
     {
-      "@id": "",
-      "doc:declares": [
-        {
-          "@id": "#1"
-        },
-        {
-          "@id": "#11"
-        },
-        {
-          "@id": "#5"
-        }
-      ],
-      "@type": [
-        "doc:Document",
-        "doc:Fragment",
-        "doc:Module",
-        "doc:Unit"
-      ],
-      "doc:encodes": {
-        "@id": "#2"
-      },
-      "doc:version": "3.1.0",
-      "doc:root": true,
-      "doc:processingData": {
-        "@id": "#1"
-      }
-    },
-    {
-      "@id": "#11",
+      "@id": "#1",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -117,12 +89,74 @@
         "doc:DomainElement"
       ],
       "shacl:closed": false,
-      "shacl:property": [
+      "raml-shapes:discriminator": "petType",
+      "raml-shapes:discriminatorMapping": [
         {
-          "@id": "#12"
+          "@id": "#2"
+        },
+        {
+          "@id": "#3"
         }
       ],
-      "shacl:name": "Cat"
+      "raml-shapes:discriminatorValueMapping": [
+        {
+          "@id": "#4"
+        },
+        {
+          "@id": "#10"
+        }
+      ],
+      "shacl:property": [],
+      "doc:recursive": true,
+      "shacl:name": "Animal",
+      "shacl:xone": [
+        {
+          "@id": "#5"
+        },
+        {
+          "@id": "#11"
+        }
+      ]
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:IriTemplateMapping",
+        "doc:DomainElement"
+      ],
+      "apiContract:templateVariable": "dog",
+      "apiContract:linkExpression": "#/components/schemas/Dog"
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:IriTemplateMapping",
+        "doc:DomainElement"
+      ],
+      "apiContract:templateVariable": "cat",
+      "apiContract:linkExpression": "#/components/schemas/Cat"
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "raml-shapes:DiscriminatorValueMapping",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:discriminatorValue": "dog",
+      "raml-shapes:discriminatorValueTarget": {
+        "@id": "#5"
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "raml-shapes:DiscriminatorValueMapping",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:discriminatorValue": "cat",
+      "raml-shapes:discriminatorValueTarget": {
+        "@id": "#11"
+      }
     },
     {
       "@id": "#5",
@@ -142,23 +176,21 @@
       "shacl:name": "Dog"
     },
     {
-      "@id": "#12",
+      "@id": "#11",
       "@type": [
-        "shacl:PropertyShape",
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:path": [
+      "shacl:closed": false,
+      "shacl:property": [
         {
-          "@id": "http://a.ml/vocabularies/data#name"
+          "@id": "#12"
         }
       ],
-      "raml-shapes:range": {
-        "@id": "#13"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "name"
+      "shacl:name": "Cat"
     },
     {
       "@id": "#6",
@@ -180,19 +212,22 @@
       "shacl:name": "bark"
     },
     {
-      "@id": "#13",
+      "@id": "#12",
       "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
+        "shacl:PropertyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:datatype": [
+      "shacl:path": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
+          "@id": "http://a.ml/vocabularies/data#name"
         }
       ],
+      "raml-shapes:range": {
+        "@id": "#13"
+      },
+      "shacl:minCount": 0,
       "shacl:name": "name"
     },
     {
@@ -210,6 +245,50 @@
         }
       ],
       "shacl:name": "bark"
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#11"
+        },
+        {
+          "@id": "#5"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/web-api"
+      },
+      "doc:version": "3.1.0",
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     }
   ],
   "@context": {

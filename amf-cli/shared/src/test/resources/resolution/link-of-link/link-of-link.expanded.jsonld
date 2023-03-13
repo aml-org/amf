@@ -12,7 +12,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#8",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -40,7 +40,7 @@
     },
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/RestrictedObject",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -61,26 +61,26 @@
         ],
         "smaps": {
           "resolved-link-target": {
-            "#1": "amf://id#1"
+            "#/declares/shape/RestrictedObject": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/RestrictedObject"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/RestrictedObject": ""
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,18)]",
-            "#1": "[(4,2)-(8,0)]",
+            "#/declares/shape/RestrictedObject": "[(4,2)-(8,0)]",
             "shacl:closed": "[(6,4)-(8,0)]"
           },
           "type-property-lexical-info": {
-            "#1": "[(5,4)-(5,8)]"
+            "#/declares/shape/RestrictedObject": "[(5,4)-(5,8)]"
           },
           "resolved-link": {
-            "#1": "amf://id#2"
+            "#/declares/shape/RestrictedObject": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/Identifier/inherits/shape/RestrictedObject"
           }
         }
       },
       {
-        "@id": "#3",
+        "@id": "#/declares/shape/User",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -95,7 +95,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#/declares/shape/Identifier/property/property/identifier",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -109,7 +109,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/declares/shape/Identifier/property/property/identifier/scalar/identifier",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -129,11 +129,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#5": "[(14,8)-(14,12)]"
+                    "#/declares/shape/Identifier/property/property/identifier/scalar/identifier": "[(14,8)-(14,12)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(14,8)-(14,20)]",
-                    "#5": "[(13,6)-(14,20)]"
+                    "#/declares/shape/Identifier/property/property/identifier/scalar/identifier": "[(13,6)-(14,20)]"
                   }
                 }
               }
@@ -155,7 +155,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(13,17)-(14,20)]",
-                "#4": "[(13,6)-(14,20)]"
+                "#/declares/shape/Identifier/property/property/identifier": "[(13,6)-(14,20)]"
               }
             }
           }
@@ -170,27 +170,27 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#3": "amf://id#6"
+            "#/declares/shape/User": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/Identifier"
           },
           "declared-element": {
-            "#3": ""
+            "#/declares/shape/User": ""
           },
           "lexical": {
-            "#3": "[(10,2)-(14,20)]"
+            "#/declares/shape/User": "[(10,2)-(14,20)]"
           },
           "type-property-lexical-info": {
-            "#3": "[(11,4)-(11,8)]"
+            "#/declares/shape/User": "[(11,4)-(11,8)]"
           },
           "resolved-link": {
-            "#3": "amf://id#3"
+            "#/declares/shape/User": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/User"
           },
           "inherited-shapes": {
-            "#3": "amf://id#7"
+            "#/declares/shape/User": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/RestrictedObject/link--1765282918"
           }
         }
       },
       {
-        "@id": "#6",
+        "@id": "#/declares/shape/Identifier",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -205,7 +205,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#/declares/shape/Identifier/property/property/identifier",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -219,7 +219,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/declares/shape/Identifier/property/property/identifier/scalar/identifier",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -239,11 +239,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#5": "[(14,8)-(14,12)]"
+                    "#/declares/shape/Identifier/property/property/identifier/scalar/identifier": "[(14,8)-(14,12)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(14,8)-(14,20)]",
-                    "#5": "[(13,6)-(14,20)]"
+                    "#/declares/shape/Identifier/property/property/identifier/scalar/identifier": "[(13,6)-(14,20)]"
                   }
                 }
               }
@@ -265,7 +265,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(13,17)-(14,20)]",
-                "#4": "[(13,6)-(14,20)]"
+                "#/declares/shape/Identifier/property/property/identifier": "[(13,6)-(14,20)]"
               }
             }
           }
@@ -280,23 +280,23 @@
             "shacl:closed": "true"
           },
           "declared-element": {
-            "#6": ""
+            "#/declares/shape/Identifier": ""
           },
           "lexical": {
             "shacl:name": "[(10,2)-(10,12)]",
-            "#6": "[(10,2)-(14,20)]"
+            "#/declares/shape/Identifier": "[(10,2)-(14,20)]"
           },
           "type-property-lexical-info": {
-            "#6": "[(11,4)-(11,8)]"
+            "#/declares/shape/Identifier": "[(11,4)-(11,8)]"
           },
           "inherited-shapes": {
-            "#6": "amf://id#7"
+            "#/declares/shape/Identifier": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml#/declares/shape/RestrictedObject/link--1765282918"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/link-of-link/link-of-link.raml",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",

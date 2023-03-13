@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#6",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#7",
+            "@id": "#/web-api/endpoint/%2Fendpoint",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#8",
+                "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -48,7 +48,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#9",
+                    "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -57,7 +57,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#10",
+                        "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -70,7 +70,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#11",
+                            "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -85,7 +85,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#12",
+                                "@id": "#/declares/shape/Person/property/property/name/inherited",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -99,7 +99,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#3",
+                                    "@id": "#/declares/shape/Person/property/property/name/scalar/name",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -120,7 +120,7 @@
                                     "smaps": {
                                       "lexical": {
                                         "shacl:datatype": "[(6,12)-(6,18)]",
-                                        "#3": "[(6,6)-(7,0)]"
+                                        "#/declares/shape/Person/property/property/name/scalar/name": "[(6,6)-(7,0)]"
                                       }
                                     }
                                   }
@@ -142,15 +142,15 @@
                                   },
                                   "lexical": {
                                     "raml-shapes:range": "[(6,12)-(6,18)]",
-                                    "#12": "[(6,6)-(7,0)]"
+                                    "#/declares/shape/Person/property/property/name/inherited": "[(6,6)-(7,0)]"
                                   },
                                   "inheritance-provenance": {
-                                    "#12": "amf://id#1"
+                                    "#/declares/shape/Person/property/property/name/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
                                   }
                                 }
                               },
                               {
-                                "@id": "#13",
+                                "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/employeeNumber",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -164,7 +164,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#14",
+                                    "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/employeeNumber/scalar/employeeNumber",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -185,7 +185,7 @@
                                     "smaps": {
                                       "lexical": {
                                         "shacl:datatype": "[(13,26)-(13,33)]",
-                                        "#14": "[(13,10)-(14,0)]"
+                                        "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/employeeNumber/scalar/employeeNumber": "[(13,10)-(14,0)]"
                                       }
                                     }
                                   }
@@ -207,7 +207,7 @@
                                   },
                                   "lexical": {
                                     "raml-shapes:range": "[(13,26)-(13,33)]",
-                                    "#13": "[(13,10)-(14,0)]"
+                                    "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/employeeNumber": "[(13,10)-(14,0)]"
                                   }
                                 }
                               }
@@ -219,16 +219,16 @@
                             ],
                             "smaps": {
                               "inheritance-provenance": {
-                                "shacl:name": "amf://id#1"
+                                "shacl:name": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
                               },
                               "inherited-shapes": {
-                                "#11": "amf://id#15"
+                                "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person/link--1907849355"
                               },
                               "lexical": {
-                                "#11": "[(10,6)-(14,0)]"
+                                "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema": "[(10,6)-(14,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#11": "[(11,8)-(11,12)]"
+                                "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema": "[(11,8)-(11,12)]"
                               },
                               "synthesized-field": {
                                 "shacl:closed": "true"
@@ -238,7 +238,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#10": "[(10,6)-(14,0)]"
+                            "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson": "[(10,6)-(14,0)]"
                           }
                         }
                       }
@@ -246,17 +246,17 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(9,4)-(14,0)]",
-                        "#9": "[(9,9)-(14,0)]"
+                        "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request": "[(9,9)-(14,0)]"
                       },
                       "virtual-element": {
-                        "#9": "true"
+                        "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request": "true"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#8": "[(8,2)-(14,0)]"
+                    "#/web-api/endpoint/%2Fendpoint/supportedOperation/get": "[(8,2)-(14,0)]"
                   }
                 }
               }
@@ -264,7 +264,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(7,0)-(7,9)]",
-                "#7": "[(7,0)-(14,0)]"
+                "#/web-api/endpoint/%2Fendpoint": "[(7,0)-(14,0)]"
               }
             }
           }
@@ -272,7 +272,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#6": "[(2,0)-(14,0)]"
+            "/web-api": "[(2,0)-(14,0)]"
           }
         }
       }
@@ -284,7 +284,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#5",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -307,7 +307,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/shape/Person",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -322,7 +322,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/Person/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -336,7 +336,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/Person/property/property/name/scalar/name",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -357,7 +357,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(6,12)-(6,18)]",
-                    "#3": "[(6,6)-(7,0)]"
+                    "#/declares/shape/Person/property/property/name/scalar/name": "[(6,6)-(7,0)]"
                   }
                 }
               }
@@ -379,7 +379,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(6,12)-(6,18)]",
-                "#2": "[(6,6)-(7,0)]"
+                "#/declares/shape/Person/property/property/name": "[(6,6)-(7,0)]"
               }
             }
           }
@@ -394,23 +394,23 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#4"
+            "#/declares/shape/Person": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/Person"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,8)]",
-            "#1": "[(4,2)-(7,0)]"
+            "#/declares/shape/Person": "[(4,2)-(7,0)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/shape/Person": ""
           },
           "resolved-link-target": {
-            "#1": "amf://id#1"
+            "#/declares/shape/Person": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

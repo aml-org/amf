@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#8",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -31,7 +31,7 @@
           "lexical": {
             "apiContract:endpoint": "[(7,2)-(7,13)]",
             "core:name": "[(4,4)-(4,19)]",
-            "#8": "[(1,0)-(26,1)]",
+            "/web-api": "[(1,0)-(26,1)]",
             "core:version": "[(5,4)-(5,20)]"
           }
         }
@@ -44,7 +44,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#7",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -67,7 +67,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/declares/any/Causes",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -82,7 +82,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -96,7 +96,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "raml-shapes:AnyShape",
@@ -106,7 +106,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#4",
+                    "@id": "#/declares/shape/ThesaurusSense/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -115,7 +115,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#5"
+                        "@id": "#/declares/shape/ThesaurusSense"
                       }
                     ],
                     "doc:recursive": [
@@ -133,19 +133,19 @@
                         "doc:recursive": "true"
                       },
                       "resolved-link": {
-                        "#4": "amf://id#6"
+                        "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/any/items"
                       },
                       "type-property-lexical-info": {
-                        "#4": "[(22,6)-(22,12)]"
+                        "#/declares/shape/ThesaurusSense/recursive": "[(22,6)-(22,12)]"
                       },
                       "lexical": {
-                        "#4": "[(12,4)-(23,5)]"
+                        "#/declares/shape/ThesaurusSense/recursive": "[(12,4)-(23,5)]"
                       },
                       "declared-element": {
-                        "#4": ""
+                        "#/declares/shape/ThesaurusSense/recursive": ""
                       },
                       "resolved-link-target": {
-                        "#4": "amf://id#5"
+                        "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense"
                       }
                     }
                   }
@@ -162,11 +162,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#3": "[(19,10)-(19,16)]"
+                    "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses": "[(19,10)-(19,16)]"
                   },
                   "lexical": {
                     "shacl:minCount": "[(18,10)-(18,23)]",
-                    "#3": "[(14,8)-(20,9)]"
+                    "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses": "[(14,8)-(20,9)]"
                   }
                 }
               }
@@ -186,7 +186,7 @@
                 "shacl:minCount": "true"
               },
               "lexical": {
-                "#2": "[(14,8)-(20,9)]"
+                "#/declares/shape/ThesaurusSense/property/property/subsenses": "[(14,8)-(20,9)]"
               }
             }
           }
@@ -201,24 +201,24 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#1"
+            "#/declares/any/Causes": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/any/Causes"
           },
           "type-property-lexical-info": {
-            "#1": "[(22,6)-(22,12)]"
+            "#/declares/any/Causes": "[(22,6)-(22,12)]"
           },
           "lexical": {
-            "#1": "[(12,4)-(23,5)]"
+            "#/declares/any/Causes": "[(12,4)-(23,5)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/declares/any/Causes": ""
           },
           "resolved-link-target": {
-            "#1": "amf://id#5"
+            "#/declares/any/Causes": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense"
           }
         }
       },
       {
-        "@id": "#5",
+        "@id": "#/declares/shape/ThesaurusSense",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -233,7 +233,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -247,7 +247,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "raml-shapes:AnyShape",
@@ -257,7 +257,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#4",
+                    "@id": "#/declares/shape/ThesaurusSense/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -266,7 +266,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#5"
+                        "@id": "#/declares/shape/ThesaurusSense"
                       }
                     ],
                     "doc:recursive": [
@@ -284,19 +284,19 @@
                         "doc:recursive": "true"
                       },
                       "resolved-link": {
-                        "#4": "amf://id#6"
+                        "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/any/items"
                       },
                       "type-property-lexical-info": {
-                        "#4": "[(22,6)-(22,12)]"
+                        "#/declares/shape/ThesaurusSense/recursive": "[(22,6)-(22,12)]"
                       },
                       "lexical": {
-                        "#4": "[(12,4)-(23,5)]"
+                        "#/declares/shape/ThesaurusSense/recursive": "[(12,4)-(23,5)]"
                       },
                       "declared-element": {
-                        "#4": ""
+                        "#/declares/shape/ThesaurusSense/recursive": ""
                       },
                       "resolved-link-target": {
-                        "#4": "amf://id#5"
+                        "#/declares/shape/ThesaurusSense/recursive": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense"
                       }
                     }
                   }
@@ -313,11 +313,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#3": "[(19,10)-(19,16)]"
+                    "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses": "[(19,10)-(19,16)]"
                   },
                   "lexical": {
                     "shacl:minCount": "[(18,10)-(18,23)]",
-                    "#3": "[(14,8)-(20,9)]"
+                    "#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses": "[(14,8)-(20,9)]"
                   }
                 }
               }
@@ -337,7 +337,7 @@
                 "shacl:minCount": "true"
               },
               "lexical": {
-                "#2": "[(14,8)-(20,9)]"
+                "#/declares/shape/ThesaurusSense/property/property/subsenses": "[(14,8)-(20,9)]"
               }
             }
           }
@@ -352,26 +352,26 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#5": "amf://id#6"
+            "#/declares/shape/ThesaurusSense": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense/property/property/subsenses/array/subsenses/any/items"
           },
           "type-property-lexical-info": {
-            "#5": "[(22,6)-(22,12)]"
+            "#/declares/shape/ThesaurusSense": "[(22,6)-(22,12)]"
           },
           "lexical": {
             "shacl:name": "[(12,4)-(12,20)]",
-            "#5": "[(12,4)-(23,5)]"
+            "#/declares/shape/ThesaurusSense": "[(12,4)-(23,5)]"
           },
           "declared-element": {
-            "#5": ""
+            "#/declares/shape/ThesaurusSense": ""
           },
           "resolved-link-target": {
-            "#5": "amf://id#5"
+            "#/declares/shape/ThesaurusSense": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json#/declares/shape/ThesaurusSense"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/oas-recursion.json",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",

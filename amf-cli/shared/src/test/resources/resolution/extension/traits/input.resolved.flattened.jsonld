@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#10",
+      "@id": "/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#11",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,17 +21,17 @@
       "core:description": "some overlaid description",
       "apiContract:endpoint": [
         {
-          "@id": "#12"
+          "@id": "/web-api/%2Fmain"
         }
       ],
       "smaps": {
         "lexical": {
-          "#11": "[(2,0)-(10,6)]"
+          "/web-api": "[(2,0)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "/web-api/%2Fmain",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,23 +39,23 @@
       "apiContract:path": "/main",
       "apiContract:supportedOperation": [
         {
-          "@id": "#14"
+          "@id": "/web-api/endpoint/%2Fmain/get"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#13"
+          "@id": "/web-api/endpoint/%2Fmain/extends/main"
         }
       ],
       "smaps": {
         "lexical": {
           "doc:extends": "[(9,2)-(10,0)]",
-          "#12": "[(8,0)-(10,6)]"
+          "/web-api/%2Fmain": "[(8,0)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "/web-api/endpoint/%2Fmain/get",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -65,17 +65,17 @@
       "core:description": "main description",
       "doc:extends": [
         {
-          "@id": "#15"
+          "@id": "/web-api/endpoint/%2Fmain/supportedOperation/get/secondary"
         }
       ],
       "smaps": {
         "lexical": {
-          "#14": "[(10,2)-(10,6)]"
+          "/web-api/endpoint/%2Fmain/get": "[(10,2)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "/web-api/endpoint/%2Fmain/extends/main",
       "@type": [
         "apiContract:ParametrizedTrait",
         "doc:ParametrizedDeclaration",
@@ -83,17 +83,17 @@
       ],
       "core:name": "main",
       "doc:target": {
-        "@id": "#1"
+        "@id": "/declares/trait/main"
       },
       "smaps": {
         "lexical": {
           "core:name": "[(9,7)-(9,11)]",
-          "#13": "[(9,7)-(9,11)]"
+          "/web-api/endpoint/%2Fmain/extends/main": "[(9,7)-(9,11)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "/web-api/endpoint/%2Fmain/supportedOperation/get/secondary",
       "@type": [
         "apiContract:ParametrizedTrait",
         "doc:ParametrizedDeclaration",
@@ -101,17 +101,17 @@
       ],
       "core:name": "secondary",
       "doc:target": {
-        "@id": "#5"
+        "@id": "#/declarations/trait/secondary"
       },
       "smaps": {
         "lexical": {
           "core:name": "[(12,9)-(12,18)]",
-          "#15": "[(12,9)-(12,18)]"
+          "/web-api/endpoint/%2Fmain/supportedOperation/get/secondary": "[(12,9)-(12,18)]"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "/declares/trait/main",
       "@type": [
         "apiContract:Trait",
         "doc:AbstractDeclaration",
@@ -119,27 +119,27 @@
       ],
       "core:name": "main",
       "doc:dataNode": {
-        "@id": "#2"
+        "@id": "/declares/trait/main/object_1"
       },
       "smaps": {
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "/declares/trait/main": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/references/0/declares/trait/main"
         },
         "declared-element": {
-          "#1": ""
+          "/declares/trait/main": ""
         },
         "lexical": {
           "doc:dataNode": "[(6,4)-(8,0)]",
-          "#1": "[(5,2)-(8,0)]",
+          "/declares/trait/main": "[(5,2)-(8,0)]",
           "core:name": "[(5,2)-(5,6)]"
         },
         "resolved-link": {
-          "#1": "amf://id#4"
+          "/declares/trait/main": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/references/0/web-api/endpoint/%2Fmain/extends/main/trait/default-abstract"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/declarations/trait/secondary",
       "@type": [
         "apiContract:Trait",
         "doc:AbstractDeclaration",
@@ -147,34 +147,34 @@
       ],
       "core:name": "secondary",
       "doc:dataNode": {
-        "@id": "#6"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1"
       },
       "smaps": {
         "resolved-link-target": {
-          "#5": "amf://id#9"
+          "#/declarations/trait/secondary": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary"
         },
         "declared-element": {
-          "#5": ""
+          "#/declarations/trait/secondary": ""
         },
         "lexical": {
           "doc:dataNode": "[(8,4)-(10,0)]",
-          "#5": "[(7,2)-(10,0)]",
+          "#/declarations/trait/secondary": "[(7,2)-(10,0)]",
           "core:name": "[(7,2)-(7,11)]"
         },
         "resolved-link": {
-          "#5": "amf://id#8"
+          "#/declarations/trait/secondary": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/web-api/endpoint/%2Fmain/supportedOperation/get/extends/secondary/trait/default-abstract"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "/declares/trait/main/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:description": {
-        "@id": "#3"
+        "@id": "/declares/trait/main/object_1/description"
       },
       "core:name": "object_1",
       "smaps": {
@@ -183,19 +183,19 @@
         },
         "lexical": {
           "data:description": "[(6,4)-(8,0)]",
-          "#2": "[(6,4)-(8,0)]"
+          "/declares/trait/main/object_1": "[(6,4)-(8,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:description": {
-        "@id": "#7"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1/description"
       },
       "core:name": "object_1",
       "smaps": {
@@ -204,12 +204,12 @@
         },
         "lexical": {
           "data:description": "[(8,4)-(10,0)]",
-          "#6": "[(8,4)-(10,0)]"
+          "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1": "[(8,4)-(10,0)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "/declares/trait/main/object_1/description",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -227,12 +227,12 @@
           "core:name": "true"
         },
         "lexical": {
-          "#3": "[(6,17)-(6,33)]"
+          "/declares/trait/main/object_1/description": "[(6,17)-(6,33)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1/description",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -250,7 +250,7 @@
           "core:name": "true"
         },
         "lexical": {
-          "#7": "[(8,17)-(8,38)]"
+          "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/declares/trait/secondary/object_1/description": "[(8,17)-(8,38)]"
         }
       }
     },
@@ -258,10 +258,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "/declares/trait/main"
         },
         {
-          "@id": "#5"
+          "@id": "#/declarations/trait/secondary"
         }
       ],
       "@type": [
@@ -271,16 +271,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#10"
+        "@id": "/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/input.raml#/references/0",
     "shacl": "http://www.w3.org/ns/shacl#",
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",

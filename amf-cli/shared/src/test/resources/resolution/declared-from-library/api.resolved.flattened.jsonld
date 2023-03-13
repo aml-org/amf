@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#7",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#8",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#8": "[(2,0)-(6,18)]"
+          "/web-api": "[(2,0)-(6,18)]"
         }
       }
     },
@@ -29,12 +29,12 @@
       "@id": "",
       "doc:references": [
         {
-          "@id": "#1"
+          "@id": "#/references/0"
         }
       ],
       "doc:declares": [
         {
-          "@id": "#6"
+          "@id": "#/declares/shape/objectName"
         }
       ],
       "@type": [
@@ -44,44 +44,44 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#8"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#7"
+        "@id": "#/BaseUnitProcessingData"
       },
       "smaps": {
         "aliases-array": {
-          "": "lib->amf://id#1::file://amf-cli/shared/src/test/resources/resolution/declared-from-library/lib.raml::lib.raml"
+          "": "lib->file://amf-cli/shared/src/test/resources/resolution/declared-from-library/api.raml#/references/0::file://amf-cli/shared/src/test/resources/resolution/declared-from-library/lib.raml::lib.raml"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/references/0",
       "@type": [
         "doc:Module",
         "doc:Unit"
       ],
       "doc:declares": [
         {
-          "@id": "#2"
+          "@id": "#/declares/shape/objectName/shape/A"
         }
       ],
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#5"
+        "@id": "#/references/0/BaseUnitProcessingData"
       },
       "smaps": {
         "virtual-element": {
           "doc:declares": "true"
         },
         "lexical": {
-          "#1": "[(1,0)-(5,15)]"
+          "#/references/0": "[(1,0)-(5,15)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/declares/shape/objectName",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -92,7 +92,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#3"
+          "@id": "#/declares/shape/objectName/shape/A/property/property/a"
         }
       ],
       "shacl:name": "objectName",
@@ -101,21 +101,21 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#6": "amf://id#6"
+          "#/declares/shape/objectName": "file://amf-cli/shared/src/test/resources/resolution/declared-from-library/api.raml#/declares/shape/objectName"
         },
         "lexical": {
-          "#6": "[(3,2)-(5,15)]"
+          "#/declares/shape/objectName": "[(3,2)-(5,15)]"
         },
         "declared-element": {
-          "#6": ""
+          "#/declares/shape/objectName": ""
         },
         "resolved-link-target": {
-          "#6": "amf://id#2"
+          "#/declares/shape/objectName": "file://amf-cli/shared/src/test/resources/resolution/declared-from-library/api.raml#/declares/shape/objectName/shape/A"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/shape/objectName/shape/A",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -126,7 +126,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#3"
+          "@id": "#/declares/shape/objectName/shape/A/property/property/a"
         }
       ],
       "shacl:name": "A",
@@ -136,15 +136,15 @@
         },
         "lexical": {
           "shacl:name": "[(3,2)-(3,3)]",
-          "#2": "[(3,2)-(5,15)]"
+          "#/declares/shape/objectName/shape/A": "[(3,2)-(5,15)]"
         },
         "declared-element": {
-          "#2": ""
+          "#/declares/shape/objectName/shape/A": ""
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/references/0/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -152,7 +152,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/shape/objectName/shape/A/property/property/a",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -165,7 +165,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#4"
+        "@id": "#/declares/shape/objectName/shape/A/property/property/a/scalar/a"
       },
       "shacl:minCount": 1,
       "shacl:name": "a",
@@ -176,12 +176,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(5,9)-(5,15)]",
-          "#3": "[(5,6)-(5,15)]"
+          "#/declares/shape/objectName/shape/A/property/property/a": "[(5,6)-(5,15)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/declares/shape/objectName/shape/A/property/property/a/scalar/a",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -198,13 +198,13 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(5,9)-(5,15)]",
-          "#4": "[(5,6)-(5,15)]"
+          "#/declares/shape/objectName/shape/A/property/property/a/scalar/a": "[(5,6)-(5,15)]"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/declared-from-library/api.raml",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",

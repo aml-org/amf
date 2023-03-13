@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#27",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#28",
+            "@id": "#/web-api/endpoint/%2FCodeableConcept",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#30",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/post",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -48,7 +48,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#31",
+                    "@id": "#/web-api/endpoint/%2FCodeableConcept/post/request",
                     "@type": [
                       "apiContract:Request",
                       "core:Request",
@@ -57,7 +57,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#32",
+                        "@id": "#/web-api/endpoint/%2FCodeableConcept/post/request/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -70,7 +70,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3/link--1153521791",
+                            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/link--1153521791",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -80,7 +80,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#3"
+                                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept"
                               }
                             ],
                             "doc:link-label": [
@@ -92,7 +92,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#32": "[(24,8)-(25,36)]"
+                            "#/web-api/endpoint/%2FCodeableConcept/post/request/application%2Fjson": "[(24,8)-(25,36)]"
                           }
                         }
                       }
@@ -102,21 +102,21 @@
                         "apiContract:payload": "[(23,6)-(25,36)]"
                       },
                       "virtual-element": {
-                        "#31": "true"
+                        "#/web-api/endpoint/%2FCodeableConcept/post/request": "true"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#30": "[(22,4)-(25,36)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/post": "[(22,4)-(25,36)]"
                   }
                 }
               }
             ],
             "doc:extends": [
               {
-                "@id": "#29",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType",
                 "@type": [
                   "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -129,7 +129,7 @@
                 ],
                 "doc:target": [
                   {
-                    "@id": "#19",
+                    "@id": "#/declares/resourceType/fhirResourceType",
                     "@type": [
                       "apiContract:ResourceType",
                       "doc:AbstractDeclaration",
@@ -142,7 +142,7 @@
                     ],
                     "doc:dataNode": [
                       {
-                        "@id": "#20",
+                        "@id": "#/declares/resourceType/fhirResourceType/object_1",
                         "@type": [
                           "data:Object",
                           "data:Node",
@@ -150,7 +150,7 @@
                         ],
                         "data:post": [
                           {
-                            "@id": "#21",
+                            "@id": "#/declares/resourceType/fhirResourceType/object_1/post",
                             "@type": [
                               "data:Object",
                               "data:Node",
@@ -158,7 +158,7 @@
                             ],
                             "data:body": [
                               {
-                                "@id": "#22",
+                                "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body",
                                 "@type": [
                                   "data:Object",
                                   "data:Node",
@@ -166,7 +166,7 @@
                                 ],
                                 "data:application%2Fjson": [
                                   {
-                                    "@id": "#23",
+                                    "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson",
                                     "@type": [
                                       "data:Object",
                                       "data:Node",
@@ -174,7 +174,7 @@
                                     ],
                                     "data:type": [
                                       {
-                                        "@id": "#24",
+                                        "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson/type",
                                         "@type": [
                                           "data:Scalar",
                                           "data:Node",
@@ -201,7 +201,7 @@
                                             "shacl:datatype": "true"
                                           },
                                           "lexical": {
-                                            "#24": "[(25,16)-(25,36)]"
+                                            "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson/type": "[(25,16)-(25,36)]"
                                           }
                                         }
                                       }
@@ -217,7 +217,7 @@
                                       },
                                       "lexical": {
                                         "data:type": "[(25,10)-(27,0)]",
-                                        "#23": "[(25,0)-(27,0)]"
+                                        "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson": "[(25,0)-(27,0)]"
                                       }
                                     }
                                   }
@@ -233,7 +233,7 @@
                                   },
                                   "lexical": {
                                     "data:application%2Fjson": "[(24,8)-(27,0)]",
-                                    "#22": "[(24,0)-(27,0)]"
+                                    "#/declares/resourceType/fhirResourceType/object_1/post/body": "[(24,0)-(27,0)]"
                                   }
                                 }
                               }
@@ -249,7 +249,7 @@
                               },
                               "lexical": {
                                 "data:body": "[(23,6)-(27,0)]",
-                                "#21": "[(23,0)-(27,0)]"
+                                "#/declares/resourceType/fhirResourceType/object_1/post": "[(23,0)-(27,0)]"
                               }
                             }
                           }
@@ -265,7 +265,7 @@
                           },
                           "lexical": {
                             "data:post": "[(22,4)-(27,0)]",
-                            "#20": "[(22,4)-(27,0)]"
+                            "#/declares/resourceType/fhirResourceType/object_1": "[(22,4)-(27,0)]"
                           }
                         }
                       }
@@ -277,19 +277,19 @@
                     ],
                     "smaps": {
                       "resolved-link-target": {
-                        "#19": "amf://id#19"
+                        "#/declares/resourceType/fhirResourceType": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/resourceType/fhirResourceType"
                       },
                       "declared-element": {
-                        "#19": ""
+                        "#/declares/resourceType/fhirResourceType": ""
                       },
                       "lexical": {
                         "doc:variable": "[(21,19)-(27,0)]",
                         "core:name": "[(21,2)-(21,18)]",
-                        "#19": "[(21,2)-(27,0)]",
+                        "#/declares/resourceType/fhirResourceType": "[(21,2)-(27,0)]",
                         "doc:dataNode": "[(22,4)-(27,0)]"
                       },
                       "resolved-link": {
-                        "#19": "amf://id#25"
+                        "#/declares/resourceType/fhirResourceType": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/resourceType/default-abstract"
                       }
                     }
                   }
@@ -297,7 +297,7 @@
                 "smaps": {
                   "lexical": {
                     "core:name": "[(28,8)-(28,24)]",
-                    "#29": "[(28,8)-(28,24)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType": "[(28,8)-(28,24)]"
                   }
                 }
               }
@@ -305,7 +305,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(27,0)-(27,16)]",
-                "#28": "[(27,0)-(28,24)]"
+                "#/web-api/endpoint/%2FCodeableConcept": "[(27,0)-(28,24)]"
               }
             }
           }
@@ -313,7 +313,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#27": "[(2,0)-(28,24)]"
+            "/web-api": "[(2,0)-(28,24)]"
           }
         }
       }
@@ -325,7 +325,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#26",
+        "@id": "#/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -348,7 +348,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -363,7 +363,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/property/property/propr",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -377,7 +377,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -392,7 +392,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#4",
+                    "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -406,7 +406,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#5",
+                        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F",
                         "@type": [
                           "raml-shapes:ArrayShape",
                           "raml-shapes:AnyShape",
@@ -416,7 +416,7 @@
                         ],
                         "raml-shapes:items": [
                           {
-                            "@id": "#6",
+                            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive",
                             "@type": [
                               "raml-shapes:RecursiveShape",
                               "shacl:Shape",
@@ -425,7 +425,7 @@
                             ],
                             "raml-shapes:fixPoint": [
                               {
-                                "@id": "#1"
+                                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension"
                               }
                             ],
                             "doc:recursive": [
@@ -443,16 +443,16 @@
                                 "doc:recursive": "true"
                               },
                               "resolved-link": {
-                                "#6": "amf://id#7"
+                                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element/property/property/extension/array/extension%3F/shape/default-node"
                               },
                               "lexical": {
-                                "#6": "[(5,2)-(9,0)]"
+                                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "[(5,2)-(9,0)]"
                               },
                               "declared-element": {
-                                "#6": ""
+                                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": ""
                               },
                               "resolved-link-target": {
-                                "#6": "amf://id#8"
+                                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Extension"
                               }
                             }
                           }
@@ -464,7 +464,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#5": "[(11,6)-(13,0)]"
+                            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F": "[(11,6)-(13,0)]"
                           }
                         }
                       }
@@ -486,15 +486,15 @@
                       },
                       "lexical": {
                         "raml-shapes:range": "[(11,18)-(11,29)]",
-                        "#4": "[(11,6)-(13,0)]"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited": "[(11,6)-(13,0)]"
                       },
                       "inheritance-provenance": {
-                        "#4": "amf://id#9"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element"
                       }
                     }
                   },
                   {
-                    "@id": "#10",
+                    "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -508,7 +508,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#11",
+                        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text/scalar/text%3F",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "raml-shapes:AnyShape",
@@ -529,7 +529,7 @@
                         "smaps": {
                           "lexical": {
                             "shacl:datatype": "[(16,13)-(16,19)]",
-                            "#11": "[(16,6)-(19,0)]"
+                            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text/scalar/text%3F": "[(16,6)-(19,0)]"
                           }
                         }
                       }
@@ -551,7 +551,7 @@
                       },
                       "lexical": {
                         "raml-shapes:range": "[(16,13)-(16,19)]",
-                        "#10": "[(16,6)-(19,0)]"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text": "[(16,6)-(19,0)]"
                       }
                     }
                   }
@@ -566,22 +566,22 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link-target": {
-                    "#3": "amf://id#3"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept"
                   },
                   "declared-element": {
-                    "#3": ""
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": ""
                   },
                   "lexical": {
-                    "#3": "[(13,2)-(19,0)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "[(13,2)-(19,0)]"
                   },
                   "type-property-lexical-info": {
-                    "#3": "[(14,4)-(14,8)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "[(14,4)-(14,8)]"
                   },
                   "resolved-link": {
-                    "#3": "amf://id#14"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept"
                   },
                   "inherited-shapes": {
-                    "#3": "amf://id#15"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/link-1816284"
                   }
                 }
               }
@@ -603,7 +603,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(7,13)-(7,28)]",
-                "#2": "[(7,6)-(9,0)]"
+                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/property/property/propr": "[(7,6)-(9,0)]"
               }
             }
           }
@@ -618,22 +618,22 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#7"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element/property/property/extension/array/extension%3F/shape/default-node"
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,11)]",
-            "#1": "[(5,2)-(9,0)]"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension": "[(5,2)-(9,0)]"
           },
           "declared-element": {
-            "#1": ""
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension": ""
           },
           "resolved-link-target": {
-            "#1": "amf://id#8"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Extension"
           }
         }
       },
       {
-        "@id": "#9",
+        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -648,7 +648,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#16",
+            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -662,7 +662,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "raml-shapes:AnyShape",
@@ -672,7 +672,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#6",
+                    "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -681,7 +681,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#1"
+                        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension"
                       }
                     ],
                     "doc:recursive": [
@@ -699,16 +699,16 @@
                         "doc:recursive": "true"
                       },
                       "resolved-link": {
-                        "#6": "amf://id#7"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element/property/property/extension/array/extension%3F/shape/default-node"
                       },
                       "lexical": {
-                        "#6": "[(5,2)-(9,0)]"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "[(5,2)-(9,0)]"
                       },
                       "declared-element": {
-                        "#6": ""
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": ""
                       },
                       "resolved-link-target": {
-                        "#6": "amf://id#8"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Extension"
                       }
                     }
                   }
@@ -720,7 +720,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#5": "[(11,6)-(13,0)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F": "[(11,6)-(13,0)]"
                   }
                 }
               }
@@ -742,7 +742,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(11,18)-(11,29)]",
-                "#16": "[(11,6)-(13,0)]"
+                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension": "[(11,6)-(13,0)]"
               }
             }
           }
@@ -757,21 +757,21 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#9": "amf://id#17"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/CodeableConcept/inherits/shape/Element"
           },
           "lexical": {
-            "#9": "[(9,2)-(13,0)]"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element": "[(9,2)-(13,0)]"
           },
           "declared-element": {
-            "#9": ""
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element": ""
           },
           "resolved-link-target": {
-            "#9": "amf://id#18"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element"
           }
         }
       },
       {
-        "@id": "#3",
+        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -786,7 +786,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -800,7 +800,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "raml-shapes:AnyShape",
@@ -810,7 +810,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#6",
+                    "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive",
                     "@type": [
                       "raml-shapes:RecursiveShape",
                       "shacl:Shape",
@@ -819,7 +819,7 @@
                     ],
                     "raml-shapes:fixPoint": [
                       {
-                        "@id": "#1"
+                        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension"
                       }
                     ],
                     "doc:recursive": [
@@ -837,16 +837,16 @@
                         "doc:recursive": "true"
                       },
                       "resolved-link": {
-                        "#6": "amf://id#7"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element/property/property/extension/array/extension%3F/shape/default-node"
                       },
                       "lexical": {
-                        "#6": "[(5,2)-(9,0)]"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "[(5,2)-(9,0)]"
                       },
                       "declared-element": {
-                        "#6": ""
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": ""
                       },
                       "resolved-link-target": {
-                        "#6": "amf://id#8"
+                        "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Extension"
                       }
                     }
                   }
@@ -858,7 +858,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#5": "[(11,6)-(13,0)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F": "[(11,6)-(13,0)]"
                   }
                 }
               }
@@ -880,15 +880,15 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(11,18)-(11,29)]",
-                "#4": "[(11,6)-(13,0)]"
+                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited": "[(11,6)-(13,0)]"
               },
               "inheritance-provenance": {
-                "#4": "amf://id#9"
+                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element"
               }
             }
           },
           {
-            "@id": "#10",
+            "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -902,7 +902,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#11",
+                "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text/scalar/text%3F",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -923,7 +923,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(16,13)-(16,19)]",
-                    "#11": "[(16,6)-(19,0)]"
+                    "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text/scalar/text%3F": "[(16,6)-(19,0)]"
                   }
                 }
               }
@@ -945,7 +945,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(16,13)-(16,19)]",
-                "#10": "[(16,6)-(19,0)]"
+                "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text": "[(16,6)-(19,0)]"
               }
             }
           }
@@ -960,27 +960,27 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#3": "amf://id#3"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept"
           },
           "declared-element": {
-            "#3": ""
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": ""
           },
           "lexical": {
-            "#3": "[(13,2)-(19,0)]"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "[(13,2)-(19,0)]"
           },
           "type-property-lexical-info": {
-            "#3": "[(14,4)-(14,8)]"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "[(14,4)-(14,8)]"
           },
           "resolved-link": {
-            "#3": "amf://id#14"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept"
           },
           "inherited-shapes": {
-            "#3": "amf://id#15"
+            "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/link-1816284"
           }
         }
       },
       {
-        "@id": "#19",
+        "@id": "#/declares/resourceType/fhirResourceType",
         "@type": [
           "apiContract:ResourceType",
           "doc:AbstractDeclaration",
@@ -993,7 +993,7 @@
         ],
         "doc:dataNode": [
           {
-            "@id": "#20",
+            "@id": "#/declares/resourceType/fhirResourceType/object_1",
             "@type": [
               "data:Object",
               "data:Node",
@@ -1001,7 +1001,7 @@
             ],
             "data:post": [
               {
-                "@id": "#21",
+                "@id": "#/declares/resourceType/fhirResourceType/object_1/post",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -1009,7 +1009,7 @@
                 ],
                 "data:body": [
                   {
-                    "@id": "#22",
+                    "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body",
                     "@type": [
                       "data:Object",
                       "data:Node",
@@ -1017,7 +1017,7 @@
                     ],
                     "data:application%2Fjson": [
                       {
-                        "@id": "#23",
+                        "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson",
                         "@type": [
                           "data:Object",
                           "data:Node",
@@ -1025,7 +1025,7 @@
                         ],
                         "data:type": [
                           {
-                            "@id": "#24",
+                            "@id": "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson/type",
                             "@type": [
                               "data:Scalar",
                               "data:Node",
@@ -1052,7 +1052,7 @@
                                 "shacl:datatype": "true"
                               },
                               "lexical": {
-                                "#24": "[(25,16)-(25,36)]"
+                                "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson/type": "[(25,16)-(25,36)]"
                               }
                             }
                           }
@@ -1068,7 +1068,7 @@
                           },
                           "lexical": {
                             "data:type": "[(25,10)-(27,0)]",
-                            "#23": "[(25,0)-(27,0)]"
+                            "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson": "[(25,0)-(27,0)]"
                           }
                         }
                       }
@@ -1084,7 +1084,7 @@
                       },
                       "lexical": {
                         "data:application%2Fjson": "[(24,8)-(27,0)]",
-                        "#22": "[(24,0)-(27,0)]"
+                        "#/declares/resourceType/fhirResourceType/object_1/post/body": "[(24,0)-(27,0)]"
                       }
                     }
                   }
@@ -1100,7 +1100,7 @@
                   },
                   "lexical": {
                     "data:body": "[(23,6)-(27,0)]",
-                    "#21": "[(23,0)-(27,0)]"
+                    "#/declares/resourceType/fhirResourceType/object_1/post": "[(23,0)-(27,0)]"
                   }
                 }
               }
@@ -1116,7 +1116,7 @@
               },
               "lexical": {
                 "data:post": "[(22,4)-(27,0)]",
-                "#20": "[(22,4)-(27,0)]"
+                "#/declares/resourceType/fhirResourceType/object_1": "[(22,4)-(27,0)]"
               }
             }
           }
@@ -1128,25 +1128,25 @@
         ],
         "smaps": {
           "resolved-link-target": {
-            "#19": "amf://id#19"
+            "#/declares/resourceType/fhirResourceType": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/resourceType/fhirResourceType"
           },
           "declared-element": {
-            "#19": ""
+            "#/declares/resourceType/fhirResourceType": ""
           },
           "lexical": {
             "doc:variable": "[(21,19)-(27,0)]",
             "core:name": "[(21,2)-(21,18)]",
-            "#19": "[(21,2)-(27,0)]",
+            "#/declares/resourceType/fhirResourceType": "[(21,2)-(27,0)]",
             "doc:dataNode": "[(22,4)-(27,0)]"
           },
           "resolved-link": {
-            "#19": "amf://id#25"
+            "#/declares/resourceType/fhirResourceType": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/resourceType/default-abstract"
           }
         }
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "data": "http://a.ml/vocabularies/data#",

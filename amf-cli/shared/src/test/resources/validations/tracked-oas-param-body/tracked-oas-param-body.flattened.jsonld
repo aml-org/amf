@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#1",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#2",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -22,21 +22,21 @@
       "core:version": "1.0",
       "apiContract:endpoint": [
         {
-          "@id": "#3"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(8,0)-(48,28)]",
           "core:description": "[(5,2)-(6,0)]",
-          "#2": "[(1,0)-(48,28)]",
+          "/web-api": "[(1,0)-(48,28)]",
           "core:name": "[(4,2)-(5,0)]",
           "core:version": "[(6,2)-(8,0)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -44,17 +44,17 @@
       "apiContract:path": "/customers/{id}",
       "apiContract:supportedOperation": [
         {
-          "@id": "#4"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post"
         }
       ],
       "smaps": {
         "lexical": {
-          "#3": "[(9,2)-(48,28)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D": "[(9,2)-(48,28)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -63,18 +63,18 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#5"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(11,0)-(48,28)]",
-          "#4": "[(10,4)-(48,28)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post": "[(10,4)-(48,28)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -83,21 +83,21 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#6"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson"
         }
       ],
       "smaps": {
         "virtual-element": {
-          "#5": "true"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request": "true"
         },
         "lexical": {
           "apiContract:payload": "[(11,6)-(48,28)]",
-          "#5": "[(11,0)-(48,28)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request": "[(11,0)-(48,28)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -106,22 +106,22 @@
       "core:name": "generated",
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#7"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated"
       },
       "smaps": {
         "body-parameter": {
-          "#6": "true"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(16,10)-(48,28)]",
           "core:name": "[(15,10)-(16,0)]",
-          "#6": "[(12,9)-(48,28)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson": "[(12,9)-(48,28)]",
           "core:mediaType": "[(13,10)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -132,38 +132,38 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#15"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address"
         },
         {
-          "@id": "#23"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id"
         },
         {
-          "@id": "#25"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name"
         }
       ],
       "shacl:name": "generated",
       "apiContract:examples": [
         {
-          "@id": "#8"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example"
         }
       ],
       "smaps": {
         "parameter-binding-in-body-lexical-info": {
-          "#7": "[(14,10)-(15,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated": "[(14,10)-(15,0)]"
         },
         "lexical": {
           "apiContract:examples": "[(17,12)-(25,0)]",
           "shacl:closed": "[(26,12)-(27,0)]",
-          "#7": "[(16,10)-(48,28)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated": "[(16,10)-(48,28)]",
           "shacl:name": "[(15,10)-(16,0)]"
         },
         "type-property-lexical-info": {
-          "#7": "[(25,12)-(25,16)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated": "[(25,12)-(25,16)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -176,19 +176,19 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#16"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address"
       },
       "shacl:minCount": 1,
       "shacl:name": "address",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(28,16)-(28,23)]",
-          "#15": "[(32,14)-(44,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address": "[(32,14)-(44,0)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -201,19 +201,19 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#24"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id/scalar/id"
       },
       "shacl:minCount": 1,
       "shacl:name": "id",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(29,16)-(29,18)]",
-          "#23": "[(44,14)-(47,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id": "[(44,14)-(47,0)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -226,26 +226,26 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#26"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name/scalar/name"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(30,16)-(30,20)]",
-          "#25": "[(47,14)-(48,28)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name": "[(47,14)-(48,28)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#9"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1"
       },
       "doc:raw": "address:\n  street: 12 Oxford St.\n  city: London\nid: 1299\nname: Example",
       "smaps": {
@@ -254,16 +254,16 @@
         },
         "lexical": {
           "doc:structuredValue": "[(19,14)-(25,0)]",
-          "#8": "[(17,12)-(25,0)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example": "[(17,12)-(25,0)]",
           "doc:strict": "[(18,14)-(19,0)]"
         },
         "tracked-element": {
-          "#8": "amf://id#6"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example": "file://amf-cli/shared/src/test/resources/validations/tracked-oas-param-body/tracked-oas-param-body.yaml#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -274,25 +274,25 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#17"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street"
         },
         {
-          "@id": "#21"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city"
         }
       ],
       "shacl:name": "address",
       "smaps": {
         "type-property-lexical-info": {
-          "#16": "[(33,16)-(33,20)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address": "[(33,16)-(33,20)]"
         },
         "lexical": {
           "shacl:closed": "[(34,16)-(35,0)]",
-          "#16": "[(32,14)-(44,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address": "[(32,14)-(44,0)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id/scalar/id",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -309,17 +309,17 @@
       "shacl:name": "id",
       "smaps": {
         "type-property-lexical-info": {
-          "#24": "[(45,16)-(45,20)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id/scalar/id": "[(45,16)-(45,20)]"
         },
         "lexical": {
           "raml-shapes:format": "[(46,16)-(47,0)]",
-          "#24": "[(44,14)-(47,0)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/id/scalar/id": "[(44,14)-(47,0)]",
           "shacl:datatype": "[(45,16)-(46,0)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name/scalar/name",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -335,29 +335,29 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#26": "[(48,16)-(48,20)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name/scalar/name": "[(48,16)-(48,20)]"
         },
         "lexical": {
           "shacl:datatype": "[(48,16)-(48,28)]",
-          "#26": "[(47,14)-(48,28)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/name/scalar/name": "[(47,14)-(48,28)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:address": {
-        "@id": "#10"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address"
       },
       "data:id": {
-        "@id": "#13"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/id"
       },
       "data:name": {
-        "@id": "#14"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/name_1"
       },
       "core:name": "object_1",
       "smaps": {
@@ -367,13 +367,13 @@
         "lexical": {
           "data:name": "[(24,16)-(25,0)]",
           "data:address": "[(20,16)-(23,0)]",
-          "#9": "[(20,0)-(25,0)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1": "[(20,0)-(25,0)]",
           "data:id": "[(23,16)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -386,19 +386,19 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#18"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street"
       },
       "shacl:minCount": 1,
       "shacl:name": "street",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(36,20)-(36,26)]",
-          "#17": "[(39,18)-(42,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street": "[(39,18)-(42,0)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -411,29 +411,29 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#22"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city/scalar/city"
       },
       "shacl:minCount": 1,
       "shacl:name": "city",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(37,20)-(37,24)]",
-          "#21": "[(42,18)-(44,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city": "[(42,18)-(44,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:street": {
-        "@id": "#11"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/street"
       },
       "data:city": {
-        "@id": "#12"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/city"
       },
       "core:name": "address",
       "smaps": {
@@ -442,13 +442,13 @@
         },
         "lexical": {
           "data:city": "[(22,18)-(23,0)]",
-          "#10": "[(21,0)-(23,0)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address": "[(21,0)-(23,0)]",
           "data:street": "[(21,18)-(22,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/id",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -467,12 +467,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#13": "[(23,20)-(23,24)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/id": "[(23,20)-(23,24)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/name_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -491,12 +491,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#14": "[(24,22)-(24,29)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/name_1": "[(24,22)-(24,29)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -512,22 +512,22 @@
       "shacl:name": "street",
       "apiContract:examples": [
         {
-          "@id": "#19"
+          "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example"
         }
       ],
       "smaps": {
         "type-property-lexical-info": {
-          "#18": "[(41,20)-(41,24)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street": "[(41,20)-(41,24)]"
         },
         "lexical": {
           "apiContract:examples": "[(40,20)-(41,0)]",
-          "#18": "[(39,18)-(42,0)]",
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street": "[(39,18)-(42,0)]",
           "shacl:datatype": "[(41,20)-(42,0)]"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city/scalar/city",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -543,16 +543,16 @@
       "shacl:name": "city",
       "smaps": {
         "type-property-lexical-info": {
-          "#22": "[(43,20)-(43,24)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city/scalar/city": "[(43,20)-(43,24)]"
         },
         "lexical": {
           "shacl:datatype": "[(43,20)-(44,0)]",
-          "#22": "[(42,18)-(44,0)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/city/scalar/city": "[(42,18)-(44,0)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/street",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -571,12 +571,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#11": "[(21,26)-(21,39)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/street": "[(21,26)-(21,39)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/city",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -595,19 +595,19 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#12": "[(22,24)-(22,30)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/examples/example/default-example/object_1/address/city": "[(22,24)-(22,30)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#20"
+        "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example/scalar_1"
       },
       "doc:raw": "12 Oxford St.",
       "smaps": {
@@ -616,12 +616,12 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#19": "[(40,29)-(40,42)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example": "[(40,29)-(40,42)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example/scalar_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -640,7 +640,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#20": "[(40,29)-(40,42)]"
+          "#/web-api/endpoint/%2Fcustomers%2F%7Bid%7D/supportedOperation/post/expects/request/payload/application%2Fjson/shape/generated/property/property/address/shape/address/property/property/street/scalar/street/examples/example/default-example/scalar_1": "[(40,29)-(40,42)]"
         }
       }
     },
@@ -653,16 +653,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#1"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/validations/tracked-oas-param-body/tracked-oas-param-body.yaml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "data": "http://a.ml/vocabularies/data#",

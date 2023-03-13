@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#36",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#37",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:description": "some description",
       "apiContract:server": [
         {
-          "@id": "#38"
+          "@id": "#/web-api/server/uri"
         }
       ],
       "apiContract:accepts": [
@@ -40,7 +40,7 @@
           "core:version": "[(5,0)-(6,0)]",
           "apiContract:accepts": "[(6,0)-(7,0)]",
           "core:description": "[(7,0)-(9,0)]",
-          "#37": "[(2,0)-(16,0)]",
+          "/web-api": "[(2,0)-(16,0)]",
           "core:name": "[(4,0)-(5,0)]",
           "apiContract:server": "[(2,0)-(4,0)]",
           "apiContract:contentType": "[(6,0)-(7,0)]"
@@ -48,7 +48,7 @@
       }
     },
     {
-      "@id": "#38",
+      "@id": "#/web-api/server/uri",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -59,7 +59,7 @@
           "core:urlTemplate": "[(2,0)-(4,0)]"
         },
         "synthesized-field": {
-          "#38": "true"
+          "#/web-api/server/uri": "true"
         }
       }
     },
@@ -67,15 +67,15 @@
       "@id": "",
       "doc:references": [
         {
-          "@id": "#1"
+          "@id": "#/references/0"
         },
         {
-          "@id": "#7"
+          "@id": "#/references/1"
         }
       ],
       "doc:declares": [
         {
-          "@id": "#10"
+          "@id": "#/declares/shape/someType"
         }
       ],
       "@type": [
@@ -85,50 +85,50 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#37"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#36"
+        "@id": "#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/references/0",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#6"
+        "@id": "#/references/0/external"
       },
       "doc:references": [
         {
-          "@id": "#2"
+          "@id": "#/references/0/references/0"
         }
       ],
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#5"
+        "@id": "#/references/0/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/references/1",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#9"
+        "@id": "#/references/1/external"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#8"
+        "@id": "#/references/1/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#10",
+      "@id": "#/declares/shape/someType",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -139,48 +139,48 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#21"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited"
         },
         {
-          "@id": "#30"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited"
         },
         {
-          "@id": "#31"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited"
         },
         {
-          "@id": "#33"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited"
         }
       ],
       "shacl:name": "someType",
       "apiContract:examples": [
         {
-          "@id": "#11"
+          "@id": "#/declares/shape/someType/examples/example/default-example"
         }
       ],
       "doc:reference-id": [
         {
-          "@id": "#6"
+          "@id": "#/references/0/external"
         }
       ],
       "smaps": {
         "inheritance-provenance": {
-          "doc:reference-id": "amf://id#20"
+          "doc:reference-id": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "declared-element": {
-          "#10": ""
+          "#/declares/shape/someType": ""
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
-          "#10": "[(10,11)-(16,0)]",
+          "#/declares/shape/someType": "[(10,11)-(16,0)]",
           "shacl:name": "[(10,2)-(10,10)]"
         },
         "inherited-shapes": {
-          "#10": "amf://id#35"
+          "#/declares/shape/someType": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema/link--907987551"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/references/0/external",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -189,34 +189,34 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#6": "[(1,0)-(24,1)]"
+          "#/references/0/external": "[(1,0)-(24,1)]"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/references/0/references/0",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#4"
+        "@id": "#/references/0/references/0/external"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#3"
+        "@id": "#/references/0/references/0/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/references/0/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "#9",
+      "@id": "#/references/1/external",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -225,19 +225,19 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#9": "[(1,0)-(12,1)]"
+          "#/references/1/external": "[(1,0)-(12,1)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/references/1/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "#21",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -250,7 +250,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#22"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant"
       },
       "shacl:minCount": 0,
       "shacl:name": "primaryApplicant",
@@ -259,15 +259,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#21": "[(13,4)-(15,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited": "[(13,4)-(15,5)]"
         },
         "inheritance-provenance": {
-          "#21": "amf://id#20"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         }
       }
     },
     {
-      "@id": "#30",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -280,7 +280,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#22"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant"
       },
       "shacl:minCount": 0,
       "shacl:name": "additionalApplicants",
@@ -289,15 +289,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#30": "[(16,4)-(18,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited": "[(16,4)-(18,5)]"
         },
         "inheritance-provenance": {
-          "#30": "amf://id#20"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         }
       }
     },
     {
-      "@id": "#31",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -310,22 +310,22 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#32"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/scalar/merchant"
       },
       "shacl:minCount": 1,
       "shacl:name": "merchant",
       "smaps": {
         "inheritance-provenance": {
-          "#31": "amf://id#20"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "lexical": {
           "shacl:minCount": "[(21,4)-(21,14)]",
-          "#31": "[(6,4)-(8,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited": "[(6,4)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#33",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -338,33 +338,33 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#34"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/scalar/operator"
       },
       "shacl:minCount": 1,
       "shacl:name": "operator",
       "smaps": {
         "inheritance-provenance": {
-          "#33": "amf://id#20"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "lexical": {
           "shacl:minCount": "[(22,4)-(22,14)]",
-          "#33": "[(9,4)-(11,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited": "[(9,4)-(11,5)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#/declares/shape/someType/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#12"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1"
       },
       "doc:reference-id": [
         {
-          "@id": "#9"
+          "@id": "#/references/1/external"
         }
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json",
@@ -373,12 +373,12 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#11": "[(1,0)-(1,0)]"
+          "#/declares/shape/someType/examples/example/default-example": "[(1,0)-(1,0)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/references/0/references/0/external",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -387,19 +387,19 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#4": "[(1,0)-(29,1)]"
+          "#/references/0/references/0/external": "[(1,0)-(29,1)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/references/0/references/0/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "#22",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -410,10 +410,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#23"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses"
         },
         {
-          "@id": "#26"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses"
         }
       ],
       "doc:recursive": true,
@@ -424,21 +424,21 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#22": "amf://id#29"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/shape/additionalApplicants"
         },
         "lexical": {
-          "#22": "[(10,2)-(28,3)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant": "[(10,2)-(28,3)]"
         },
         "type-property-lexical-info": {
-          "#22": "[(11,4)-(11,10)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant": "[(11,4)-(11,10)]"
         },
         "resolved-link-target": {
-          "#22": "amf://id#22"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant"
         }
       }
     },
     {
-      "@id": "#32",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/scalar/merchant",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -454,16 +454,16 @@
       "shacl:name": "merchant",
       "smaps": {
         "type-property-lexical-info": {
-          "#32": "[(7,6)-(7,12)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/scalar/merchant": "[(7,6)-(7,12)]"
         },
         "lexical": {
           "shacl:datatype": "[(7,6)-(7,22)]",
-          "#32": "[(6,4)-(8,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/scalar/merchant": "[(6,4)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#34",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/scalar/operator",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -479,29 +479,29 @@
       "shacl:name": "operator",
       "smaps": {
         "type-property-lexical-info": {
-          "#34": "[(10,6)-(10,12)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/scalar/operator": "[(10,6)-(10,12)]"
         },
         "lexical": {
           "shacl:datatype": "[(10,6)-(10,22)]",
-          "#34": "[(9,4)-(11,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/scalar/operator": "[(9,4)-(11,5)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:additionalApplicants": {
-        "@id": "#13"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants"
       },
       "data:merchant": {
-        "@id": "#18"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/merchant"
       },
       "data:operator": {
-        "@id": "#19"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/operator"
       },
       "core:name": "object_1",
       "smaps": {
@@ -511,16 +511,16 @@
         "lexical": {
           "data:operator": "[(11,2)-(11,31)]",
           "data:additionalApplicants": "[(2,2)-(9,3)]",
-          "#12": "[(1,0)-(12,1)]",
+          "#/declares/shape/someType/examples/example/default-example/object_1": "[(1,0)-(12,1)]",
           "data:merchant": "[(10,2)-(10,30)]"
         },
         "parsed-json-example": {
-          "#12": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+          "#/declares/shape/someType/examples/example/default-example/object_1": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -533,7 +533,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#24"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses"
       },
       "shacl:minCount": 0,
       "shacl:name": "addresses",
@@ -542,12 +542,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#23": "[(13,6)-(19,7)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses": "[(13,6)-(19,7)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -560,7 +560,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#27"
+        "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses"
       },
       "shacl:minCount": 0,
       "shacl:name": "expenses",
@@ -569,22 +569,22 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#26": "[(20,6)-(26,7)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses": "[(20,6)-(26,7)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:addresses": {
-        "@id": "#14"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses"
       },
       "data:expenses": {
-        "@id": "#16"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses"
       },
       "core:name": "additionalApplicants",
       "smaps": {
@@ -593,13 +593,13 @@
         },
         "lexical": {
           "data:expenses": "[(6,4)-(8,5)]",
-          "#13": "[(2,26)-(9,3)]",
+          "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants": "[(2,26)-(9,3)]",
           "data:addresses": "[(3,4)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/merchant",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -618,12 +618,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#18": "[(10,14)-(10,30)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/merchant": "[(10,14)-(10,30)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/operator",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -642,12 +642,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#19": "[(11,14)-(11,31)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/operator": "[(11,14)-(11,31)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -657,18 +657,18 @@
       "shacl:name": "addresses",
       "shacl:and": [
         {
-          "@id": "#25"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses/and/shape/fullAddress"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:and": "[(14,8)-(18,9)]",
-          "#24": "[(13,6)-(19,7)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses": "[(13,6)-(19,7)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -678,25 +678,25 @@
       "shacl:name": "expenses",
       "shacl:or": [
         {
-          "@id": "#28"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses/or/shape/expensesLiving"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:or": "[(21,8)-(25,9)]",
-          "#27": "[(20,6)-(26,7)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses": "[(20,6)-(26,7)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:randomKey": {
-        "@id": "#15"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses/randomKey"
       },
       "core:name": "addresses",
       "smaps": {
@@ -705,19 +705,19 @@
         },
         "lexical": {
           "data:randomKey": "[(4,6)-(4,28)]",
-          "#14": "[(3,17)-(5,5)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses": "[(3,17)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:otherRandomKey": {
-        "@id": "#17"
+        "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses/otherRandomKey"
       },
       "core:name": "expenses",
       "smaps": {
@@ -726,12 +726,12 @@
         },
         "lexical": {
           "data:otherRandomKey": "[(7,6)-(7,31)]",
-          "#16": "[(6,16)-(8,5)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses": "[(6,16)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses/and/shape/fullAddress",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -747,15 +747,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#25": "[(7,2)-(9,3)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses/and/shape/fullAddress": "[(7,2)-(9,3)]"
         },
         "type-property-lexical-info": {
-          "#25": "[(8,4)-(8,10)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/addresses/any/addresses/and/shape/fullAddress": "[(8,4)-(8,10)]"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses/or/shape/expensesLiving",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -771,15 +771,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#28": "[(4,2)-(6,3)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses/or/shape/expensesLiving": "[(4,2)-(6,3)]"
         },
         "type-property-lexical-info": {
-          "#28": "[(5,4)-(5,10)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/shape/applicant/property/property/expenses/any/expenses/or/shape/expensesLiving": "[(5,4)-(5,10)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses/randomKey",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -798,12 +798,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#15": "[(4,19)-(4,28)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/addresses/randomKey": "[(4,19)-(4,28)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses/otherRandomKey",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -822,13 +822,13 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#17": "[(7,24)-(7,31)]"
+          "#/declares/shape/someType/examples/example/default-example/object_1/additionalApplicants/expenses/otherRandomKey": "[(7,24)-(7,31)]"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "data": "http://a.ml/vocabularies/data#",

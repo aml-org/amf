@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#10",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#11",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,14 +21,14 @@
       "core:version": "1.0.0",
       "apiContract:endpoint": [
         {
-          "@id": "#12"
+          "@id": "#/web-api/endpoint/%2Fendpoint"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(7,2)-(20,3)]",
           "core:name": "[(5,4)-(5,33)]",
-          "#11": "[(1,0)-(52,1)]",
+          "/web-api": "[(1,0)-(52,1)]",
           "core:version": "[(4,4)-(4,22)]"
         }
       }
@@ -41,7 +41,7 @@
       "doc:rootLocation": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/type-definitions-with-refs.json"
     },
     {
-      "@id": "#12",
+      "@id": "#/web-api/endpoint/%2Fendpoint",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -49,17 +49,17 @@
       "apiContract:path": "/endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get"
         }
       ],
       "smaps": {
         "lexical": {
-          "#12": "[(8,4)-(19,5)]"
+          "#/web-api/endpoint/%2Fendpoint": "[(8,4)-(19,5)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -68,18 +68,18 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#14"
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(10,8)-(17,9)]",
-          "#13": "[(9,6)-(18,7)]"
+          "#/web-api/endpoint/%2Fendpoint/supportedOperation/get": "[(9,6)-(18,7)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -91,39 +91,39 @@
       "core:description": "",
       "apiContract:payload": [
         {
-          "@id": "#15"
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/default"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(12,12)-(12,29)]",
-          "#14": "[(11,10)-(16,11)]",
+          "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200": "[(11,10)-(16,11)]",
           "core:name": "[(11,10)-(11,15)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/default",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {
-        "@id": "#1"
+        "@id": "#/declares/shape/ErrorModel"
       },
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(13,12)-(15,13)]",
-          "#15": "[(22,4)-(32,5)]"
+          "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/default": "[(22,4)-(32,5)]"
         },
         "virtual-element": {
-          "#15": "true"
+          "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/default": "true"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/declares/shape/ErrorModel",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -134,7 +134,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#2"
+          "@id": "#/declares/shape/ErrorModel/property/property/code"
         }
       ],
       "doc:recursive": true,
@@ -145,25 +145,25 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#5"
+          "#/declares/shape/ErrorModel": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/type-definitions-with-refs.json#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/default/shape/default"
         },
         "type-property-lexical-info": {
-          "#1": "[(23,6)-(23,12)]"
+          "#/declares/shape/ErrorModel": "[(23,6)-(23,12)]"
         },
         "lexical": {
           "shacl:name": "[(22,4)-(22,16)]",
-          "#1": "[(22,4)-(32,5)]"
+          "#/declares/shape/ErrorModel": "[(22,4)-(32,5)]"
         },
         "declared-element": {
-          "#1": ""
+          "#/declares/shape/ErrorModel": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#/declares/shape/ErrorModel": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/type-definitions-with-refs.json#/declares/shape/ErrorModel"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/declares/shape/ErrorModel/property/property/code",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -176,19 +176,19 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#3"
+        "@id": "#/declares/shape/ErrorModel/property/property/code/scalar/code"
       },
       "shacl:minCount": 1,
       "shacl:name": "code",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(25,8)-(25,14)]",
-          "#2": "[(28,8)-(30,9)]"
+          "#/declares/shape/ErrorModel/property/property/code": "[(28,8)-(30,9)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/declares/shape/ErrorModel/property/property/code/scalar/code",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -204,11 +204,11 @@
       "shacl:name": "code",
       "smaps": {
         "type-property-lexical-info": {
-          "#3": "[(29,10)-(29,16)]"
+          "#/declares/shape/ErrorModel/property/property/code/scalar/code": "[(29,10)-(29,16)]"
         },
         "lexical": {
           "shacl:datatype": "[(29,10)-(29,27)]",
-          "#3": "[(28,8)-(30,9)]"
+          "#/declares/shape/ErrorModel/property/property/code/scalar/code": "[(28,8)-(30,9)]"
         }
       }
     },
@@ -216,10 +216,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/ErrorModel"
         },
         {
-          "@id": "#6"
+          "@id": "#/declares/any/ExtendedErrorModel"
         }
       ],
       "@type": [
@@ -229,18 +229,18 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#10"
+        "@id": "#/BaseUnitProcessingData"
       },
       "doc:sourceInformation": {
         "@id": "/BaseUnitSourceInformation"
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/declares/any/ExtendedErrorModel",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -250,25 +250,25 @@
       "shacl:name": "ExtendedErrorModel",
       "shacl:and": [
         {
-          "@id": "#1"
+          "@id": "#/declares/shape/ErrorModel"
         },
         {
-          "@id": "#7"
+          "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1"
         }
       ],
       "smaps": {
         "declared-element": {
-          "#6": ""
+          "#/declares/any/ExtendedErrorModel": ""
         },
         "lexical": {
           "shacl:and": "[(34,6)-(49,7)]",
-          "#6": "[(33,4)-(50,5)]",
+          "#/declares/any/ExtendedErrorModel": "[(33,4)-(50,5)]",
           "shacl:name": "[(33,4)-(33,24)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -279,7 +279,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#8"
+          "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause"
         }
       ],
       "shacl:name": "item1",
@@ -288,15 +288,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#7": "[(38,8)-(48,9)]"
+          "#/declares/any/ExtendedErrorModel/and/shape/item1": "[(38,8)-(48,9)]"
         },
         "type-property-lexical-info": {
-          "#7": "[(39,10)-(39,16)]"
+          "#/declares/any/ExtendedErrorModel/and/shape/item1": "[(39,10)-(39,16)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -309,19 +309,19 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#9"
+        "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause/scalar/rootCause"
       },
       "shacl:minCount": 1,
       "shacl:name": "rootCause",
       "smaps": {
         "lexical": {
           "shacl:minCount": "[(41,12)-(41,23)]",
-          "#8": "[(44,12)-(46,13)]"
+          "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause": "[(44,12)-(46,13)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause/scalar/rootCause",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -337,17 +337,17 @@
       "shacl:name": "rootCause",
       "smaps": {
         "type-property-lexical-info": {
-          "#9": "[(45,14)-(45,20)]"
+          "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause/scalar/rootCause": "[(45,14)-(45,20)]"
         },
         "lexical": {
           "shacl:datatype": "[(45,14)-(45,30)]",
-          "#9": "[(44,12)-(46,13)]"
+          "#/declares/any/ExtendedErrorModel/and/shape/item1/property/property/rootCause/scalar/rootCause": "[(44,12)-(46,13)]"
         }
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/type-definitions-with-refs.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",

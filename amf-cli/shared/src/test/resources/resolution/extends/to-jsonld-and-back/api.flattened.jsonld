@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#1",
+      "@id": "/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#2",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:version": "v1",
       "smaps": {
         "lexical": {
-          "#2": "[(2,0)-(3,12)]"
+          "/web-api": "[(2,0)-(3,12)]"
         }
       }
     },
@@ -34,16 +34,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#1"
+        "@id": "/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/extends/to-jsonld-and-back/extension.raml#/references/0",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

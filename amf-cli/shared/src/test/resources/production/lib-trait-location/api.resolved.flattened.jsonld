@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#9",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#10",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#11"
+          "@id": "#/web-api/endpoint/%2Fresource"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#10": "[(2,0)-(8,14)]"
+          "/web-api": "[(2,0)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#/web-api/endpoint/%2Fresource",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,23 +39,23 @@
       "apiContract:path": "/resource",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#/web-api/endpoint/%2Fresource/post"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#12"
+          "@id": "#/web-api/endpoint/%2Fresource/extends/lib.rt"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(7,0)-(7,9)]",
-          "#11": "[(7,0)-(8,14)]"
+          "#/web-api/endpoint/%2Fresource": "[(7,0)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#/web-api/endpoint/%2Fresource/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -64,17 +64,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#14"
+          "@id": "#/web-api/endpoint/%2Fresource/post/request"
         }
       ],
       "smaps": {
         "lexical": {
-          "#13": "[(4,4)-(6,12)]"
+          "#/web-api/endpoint/%2Fresource/post": "[(4,4)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#/web-api/endpoint/%2Fresource/extends/lib.rt",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -82,17 +82,17 @@
       ],
       "core:name": "lib.rt",
       "doc:target": {
-        "@id": "#2"
+        "@id": "#/references/0/declares/resourceType/rt"
       },
       "smaps": {
         "lexical": {
           "core:name": "[(8,8)-(8,14)]",
-          "#12": "[(8,8)-(8,14)]"
+          "#/web-api/endpoint/%2Fresource/extends/lib.rt": "[(8,8)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#/web-api/endpoint/%2Fresource/post/request",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -101,7 +101,7 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#15"
+          "@id": "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1"
         }
       ],
       "smaps": {
@@ -109,12 +109,12 @@
           "apiContract:parameter": "[(5,6)-(6,12)]"
         },
         "virtual-element": {
-          "#14": "true"
+          "#/web-api/endpoint/%2Fresource/post/request": "true"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#/references/0/declares/resourceType/rt",
       "@type": [
         "apiContract:ResourceType",
         "doc:AbstractDeclaration",
@@ -122,27 +122,27 @@
       ],
       "core:name": "rt",
       "doc:dataNode": {
-        "@id": "#3"
+        "@id": "#/references/0/declares/resourceType/rt/object_1"
       },
       "smaps": {
         "resolved-link-target": {
-          "#2": "amf://id#2"
+          "#/references/0/declares/resourceType/rt": "file://amf-cli/shared/src/test/resources/production/lib-trait-location/api.raml#/references/0/declares/resourceType/rt"
         },
         "declared-element": {
-          "#2": ""
+          "#/references/0/declares/resourceType/rt": ""
         },
         "lexical": {
           "doc:dataNode": "[(4,4)-(6,12)]",
-          "#2": "[(3,2)-(6,12)]",
+          "#/references/0/declares/resourceType/rt": "[(3,2)-(6,12)]",
           "core:name": "[(3,2)-(3,4)]"
         },
         "resolved-link": {
-          "#2": "amf://id#7"
+          "#/references/0/declares/resourceType/rt": "file://amf-cli/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/endpoint/%2Fresource/extends/lib.rt/resourceType/default-abstract"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1",
       "@type": [
         "apiContract:Parameter",
         "core:Parameter",
@@ -153,7 +153,7 @@
       "apiContract:required": true,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#16"
+        "@id": "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1/scalar/schema"
       },
       "smaps": {
         "synthesized-field": {
@@ -161,19 +161,19 @@
         },
         "lexical": {
           "raml-shapes:schema": "[(6,8)-(6,12)]",
-          "#15": "[(6,8)-(6,12)]"
+          "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1": "[(6,8)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#/references/0/declares/resourceType/rt/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:post": {
-        "@id": "#4"
+        "@id": "#/references/0/declares/resourceType/rt/object_1/post"
       },
       "core:name": "object_1",
       "smaps": {
@@ -182,12 +182,12 @@
         },
         "lexical": {
           "data:post": "[(4,4)-(6,12)]",
-          "#3": "[(4,4)-(6,12)]"
+          "#/references/0/declares/resourceType/rt/object_1": "[(4,4)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1/scalar/schema",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -203,19 +203,19 @@
       "shacl:name": "schema",
       "smaps": {
         "lexical": {
-          "#16": "[(6,8)-(6,12)]"
+          "#/web-api/endpoint/%2Fresource/post/request/parameter/query/qp1/scalar/schema": "[(6,8)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#/references/0/declares/resourceType/rt/object_1/post",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:queryParameters": {
-        "@id": "#5"
+        "@id": "#/references/0/declares/resourceType/rt/object_1/post/queryParameters"
       },
       "core:name": "post",
       "smaps": {
@@ -224,19 +224,19 @@
         },
         "lexical": {
           "data:queryParameters": "[(5,6)-(6,12)]",
-          "#4": "[(5,0)-(6,12)]"
+          "#/references/0/declares/resourceType/rt/object_1/post": "[(5,0)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#/references/0/declares/resourceType/rt/object_1/post/queryParameters",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:qp1": {
-        "@id": "#6"
+        "@id": "#/references/0/declares/resourceType/rt/object_1/post/queryParameters/qp1"
       },
       "core:name": "queryParameters",
       "smaps": {
@@ -245,12 +245,12 @@
         },
         "lexical": {
           "data:qp1": "[(6,8)-(6,12)]",
-          "#5": "[(6,0)-(6,12)]"
+          "#/references/0/declares/resourceType/rt/object_1/post/queryParameters": "[(6,0)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#/references/0/declares/resourceType/rt/object_1/post/queryParameters/qp1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -269,7 +269,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#6": "[(6,12)-(6,12)]"
+          "#/references/0/declares/resourceType/rt/object_1/post/queryParameters/qp1": "[(6,12)-(6,12)]"
         }
       }
     },
@@ -277,7 +277,7 @@
       "@id": "",
       "doc:references": [
         {
-          "@id": "#1"
+          "@id": "#/references/0"
         }
       ],
       "@type": [
@@ -287,44 +287,44 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#10"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#9"
+        "@id": "#/BaseUnitProcessingData"
       },
       "smaps": {
         "aliases-array": {
-          "": "lib->amf://id#1::file://amf-cli/shared/src/test/resources/production/lib-trait-location/lib.raml::lib.raml"
+          "": "lib->file://amf-cli/shared/src/test/resources/production/lib-trait-location/api.raml#/references/0::file://amf-cli/shared/src/test/resources/production/lib-trait-location/lib.raml::lib.raml"
         }
       }
     },
     {
-      "@id": "#1",
+      "@id": "#/references/0",
       "@type": [
         "doc:Module",
         "doc:Unit"
       ],
       "doc:declares": [
         {
-          "@id": "#2"
+          "@id": "#/references/0/declares/resourceType/rt"
         }
       ],
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#8"
+        "@id": "#/references/0/BaseUnitProcessingData"
       },
       "smaps": {
         "virtual-element": {
           "doc:declares": "true"
         },
         "lexical": {
-          "#1": "[(1,0)-(6,12)]"
+          "#/references/0": "[(1,0)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#/references/0/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -333,7 +333,7 @@
     }
   ],
   "@context": {
-    "@base": "amf://id",
+    "@base": "file://amf-cli/shared/src/test/resources/production/lib-trait-location/api.raml",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "data": "http://a.ml/vocabularies/data#",

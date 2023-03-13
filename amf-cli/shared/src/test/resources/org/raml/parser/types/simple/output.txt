@@ -13,7 +13,7 @@ types:
           members:
             items:
               type: object
-              (amf-recursive): amf://id#1
+              (amf-recursive): file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple/input.raml#/declares/shape/Human
             required: true
         required: true
       name:

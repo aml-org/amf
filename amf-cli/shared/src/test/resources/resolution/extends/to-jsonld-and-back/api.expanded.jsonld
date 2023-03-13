@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#2",
+        "@id": "/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "smaps": {
           "lexical": {
-            "#2": "[(2,0)-(3,12)]"
+            "/web-api": "[(2,0)-(3,12)]"
           }
         }
       }
@@ -40,7 +40,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#1",
+        "@id": "/BaseUnitProcessingData",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -62,7 +62,7 @@
       }
     ],
     "@context": {
-      "@base": "amf://id",
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/extends/to-jsonld-and-back/extension.raml#/references/0",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#"
