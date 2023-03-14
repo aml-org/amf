@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Invalid cyclic references in shapes: A -> ref -> B -> ref
+  Message: Invalid cyclic references in shapes: ref -> B -> ref
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-mandatory-property.raml#/declares/shape/A/property/property/ref
   Property: 
