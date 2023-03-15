@@ -3,7 +3,12 @@ package amf.shapes.internal.domain.resolution.shape_normalization.recursions.sta
 import amf.core.client.scala.model.domain.Shape
 
 object BottomFrame {
-  def apply(frame: Frame): BottomFrame = BottomFrame(frame.shape)
+  def toBottomFrame(frame: Frame): BottomFrame = {
+    frame match {
+      case b: BottomFrame => b
+      case f: Frame       => BottomFrame(f.shape)
+    }
+  }
 }
 
 case class BottomFrame(shape: Shape) extends Frame {
