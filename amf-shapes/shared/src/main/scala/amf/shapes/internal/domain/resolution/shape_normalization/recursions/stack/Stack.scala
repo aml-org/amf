@@ -11,6 +11,14 @@ abstract class Stack(protected var stack: Seq[Frame] = Seq.empty) {
 
   def contains(id: String): Boolean = stack.exists(frame => frame.shape.id == id)
 
+  def substack(id: String): ReadOnlyStack = {
+    val topFrameOfInterest    = stack.dropWhile(_.shape.id != id)
+    val stackTailOfInterest   = topFrameOfInterest.tail
+    val stackOfInterest       = stackTailOfInterest.takeWhile(_.shape.id != id)
+    val bottomFrameOfInterest = stackTailOfInterest.dropWhile(_.shape.id != id).headOption.toList.map(BottomFrame.toBottomFrame)
+    ReadOnlyStack(topFrameOfInterest.headOption.toList ++ stackOfInterest.toList ++ bottomFrameOfInterest)
+  }
+
   def peek(idx: Int = 0): Frame = stack(idx)
 
   // Push
