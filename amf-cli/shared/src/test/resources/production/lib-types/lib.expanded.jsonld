@@ -12,7 +12,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#15",
+        "@id": "#14",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -100,184 +100,19 @@
                       {
                         "@id": "#5",
                         "@type": [
-                          "shacl:NodeShape",
-                          "raml-shapes:AnyShape",
+                          "raml-shapes:RecursiveShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
                         ],
-                        "shacl:closed": [
+                        "raml-shapes:fixPoint": [
                           {
-                            "@value": false
+                            "@id": "#6"
                           }
                         ],
-                        "shacl:property": [
+                        "doc:recursive": [
                           {
-                            "@id": "#6",
-                            "@type": [
-                              "shacl:PropertyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:path": [
-                              {
-                                "@id": "http://a.ml/vocabularies/data#member-account"
-                              }
-                            ],
-                            "raml-shapes:range": [
-                              {
-                                "@id": "#7",
-                                "@type": [
-                                  "shacl:NodeShape",
-                                  "raml-shapes:AnyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:closed": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "shacl:property": [
-                                  {
-                                    "@id": "#8",
-                                    "@type": [
-                                      "shacl:PropertyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#contact-personnel"
-                                      }
-                                    ],
-                                    "raml-shapes:range": [
-                                      {
-                                        "@id": "#9",
-                                        "@type": [
-                                          "raml-shapes:RecursiveShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape",
-                                          "doc:DomainElement"
-                                        ],
-                                        "raml-shapes:fixPoint": [
-                                          {
-                                            "@id": "#3"
-                                          }
-                                        ],
-                                        "doc:recursive": [
-                                          {
-                                            "@value": true
-                                          }
-                                        ],
-                                        "shacl:name": [
-                                          {
-                                            "@value": "person"
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "doc:recursive": "true"
-                                          },
-                                          "resolved-link": {
-                                            "#9": "amf://id#10"
-                                          },
-                                          "type-property-lexical-info": {
-                                            "#9": "[(16,4)-(16,8)]"
-                                          },
-                                          "lexical": {
-                                            "#9": "[(15,2)-(21,0)]"
-                                          },
-                                          "declared-element": {
-                                            "#9": ""
-                                          },
-                                          "resolved-link-target": {
-                                            "#9": "amf://id#3"
-                                          }
-                                        }
-                                      }
-                                    ],
-                                    "shacl:minCount": [
-                                      {
-                                        "@value": 0
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "contact-personnel"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "synthesized-field": {
-                                        "shacl:path": "true"
-                                      },
-                                      "lexical": {
-                                        "shacl:minCount": "[(12,8)-(13,0)]",
-                                        "#8": "[(11,6)-(15,0)]",
-                                        "raml-shapes:range": "[(11,24)-(15,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "member-account"
-                                  }
-                                ],
-                                "core:name": [
-                                  {
-                                    "@value": "Member Account"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:closed": "true"
-                                  },
-                                  "resolved-link-target": {
-                                    "#7": "amf://id#1"
-                                  },
-                                  "declared-element": {
-                                    "#7": ""
-                                  },
-                                  "lexical": {
-                                    "core:name": "[(25,8)-(26,0)]",
-                                    "#7": "[(8,2)-(15,0)]"
-                                  },
-                                  "type-property-lexical-info": {
-                                    "#7": "[(9,4)-(9,8)]"
-                                  },
-                                  "resolved-link": {
-                                    "#7": "amf://id#11"
-                                  },
-                                  "inherited-shapes": {
-                                    "#7": "amf://id#1,amf://id#12"
-                                  }
-                                }
-                              }
-                            ],
-                            "shacl:minCount": [
-                              {
-                                "@value": 1
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "member-account"
-                              }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "shacl:minCount": "true",
-                                "shacl:path": "true"
-                              },
-                              "lexical": {
-                                "raml-shapes:range": "[(24,21)-(26,21)]",
-                                "#6": "[(24,6)-(26,21)]"
-                              }
-                            }
+                            "@value": true
                           }
                         ],
                         "shacl:name": [
@@ -287,23 +122,22 @@
                         ],
                         "smaps": {
                           "synthesized-field": {
-                            "shacl:closed": "true"
+                            "doc:recursive": "true"
                           },
                           "resolved-link": {
-                            "#5": "amf://id#13"
+                            "#5": "amf://id#7"
                           },
                           "type-property-lexical-info": {
                             "#5": "[(22,4)-(22,8)]"
                           },
                           "lexical": {
-                            "shacl:name": "[(21,2)-(21,12)]",
                             "#5": "[(21,2)-(26,21)]"
                           },
                           "declared-element": {
                             "#5": ""
                           },
                           "resolved-link-target": {
-                            "#5": "amf://id#5"
+                            "#5": "amf://id#6"
                           }
                         }
                       }
@@ -340,7 +174,7 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link": {
-                    "#3": "amf://id#10"
+                    "#3": "amf://id#8"
                   },
                   "type-property-lexical-info": {
                     "#3": "[(16,4)-(16,8)]"
@@ -390,7 +224,7 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#1": "amf://id#11"
+            "#1": "amf://id#9"
           },
           "type-property-lexical-info": {
             "#1": "[(9,4)-(9,8)]"
@@ -408,7 +242,7 @@
         }
       },
       {
-        "@id": "#5",
+        "@id": "#6",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -423,7 +257,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#6",
+            "@id": "#10",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -437,7 +271,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#7",
+                "@id": "#11",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -452,7 +286,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#8",
+                    "@id": "#2",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -466,21 +300,99 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#9",
+                        "@id": "#3",
                         "@type": [
-                          "raml-shapes:RecursiveShape",
+                          "shacl:NodeShape",
+                          "raml-shapes:AnyShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
                         ],
-                        "raml-shapes:fixPoint": [
+                        "shacl:closed": [
                           {
-                            "@id": "#3"
+                            "@value": false
                           }
                         ],
-                        "doc:recursive": [
+                        "shacl:property": [
                           {
-                            "@value": true
+                            "@id": "#4",
+                            "@type": [
+                              "shacl:PropertyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:path": [
+                              {
+                                "@id": "http://a.ml/vocabularies/data#memberships"
+                              }
+                            ],
+                            "raml-shapes:range": [
+                              {
+                                "@id": "#5",
+                                "@type": [
+                                  "raml-shapes:RecursiveShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "raml-shapes:fixPoint": [
+                                  {
+                                    "@id": "#6"
+                                  }
+                                ],
+                                "doc:recursive": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "membership"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:recursive": "true"
+                                  },
+                                  "resolved-link": {
+                                    "#5": "amf://id#7"
+                                  },
+                                  "type-property-lexical-info": {
+                                    "#5": "[(22,4)-(22,8)]"
+                                  },
+                                  "lexical": {
+                                    "#5": "[(21,2)-(26,21)]"
+                                  },
+                                  "declared-element": {
+                                    "#5": ""
+                                  },
+                                  "resolved-link-target": {
+                                    "#5": "amf://id#6"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:minCount": [
+                              {
+                                "@value": 1
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "memberships"
+                              }
+                            ],
+                            "smaps": {
+                              "synthesized-field": {
+                                "shacl:minCount": "true",
+                                "shacl:path": "true"
+                              },
+                              "lexical": {
+                                "raml-shapes:range": "[(18,18)-(21,0)]",
+                                "#4": "[(18,6)-(21,0)]"
+                              }
+                            }
                           }
                         ],
                         "shacl:name": [
@@ -490,22 +402,23 @@
                         ],
                         "smaps": {
                           "synthesized-field": {
-                            "doc:recursive": "true"
+                            "shacl:closed": "true"
                           },
                           "resolved-link": {
-                            "#9": "amf://id#10"
+                            "#3": "amf://id#8"
                           },
                           "type-property-lexical-info": {
-                            "#9": "[(16,4)-(16,8)]"
+                            "#3": "[(16,4)-(16,8)]"
                           },
                           "lexical": {
-                            "#9": "[(15,2)-(21,0)]"
+                            "shacl:name": "[(15,2)-(15,8)]",
+                            "#3": "[(15,2)-(21,0)]"
                           },
                           "declared-element": {
-                            "#9": ""
+                            "#3": ""
                           },
                           "resolved-link-target": {
-                            "#9": "amf://id#3"
+                            "#3": "amf://id#3"
                           }
                         }
                       }
@@ -526,7 +439,7 @@
                       },
                       "lexical": {
                         "shacl:minCount": "[(12,8)-(13,0)]",
-                        "#8": "[(11,6)-(15,0)]",
+                        "#2": "[(11,6)-(15,0)]",
                         "raml-shapes:range": "[(11,24)-(15,0)]"
                       }
                     }
@@ -547,23 +460,23 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link-target": {
-                    "#7": "amf://id#1"
+                    "#11": "amf://id#1"
                   },
                   "declared-element": {
-                    "#7": ""
+                    "#11": ""
                   },
                   "lexical": {
                     "core:name": "[(25,8)-(26,0)]",
-                    "#7": "[(8,2)-(15,0)]"
+                    "#11": "[(8,2)-(15,0)]"
                   },
                   "type-property-lexical-info": {
-                    "#7": "[(9,4)-(9,8)]"
+                    "#11": "[(9,4)-(9,8)]"
                   },
                   "resolved-link": {
-                    "#7": "amf://id#11"
+                    "#11": "amf://id#9"
                   },
                   "inherited-shapes": {
-                    "#7": "amf://id#1,amf://id#12"
+                    "#11": "amf://id#1,amf://id#12"
                   }
                 }
               }
@@ -585,7 +498,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(24,21)-(26,21)]",
-                "#6": "[(24,6)-(26,21)]"
+                "#10": "[(24,6)-(26,21)]"
               }
             }
           }
@@ -600,20 +513,20 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#5": "amf://id#13"
+            "#6": "amf://id#7"
           },
           "type-property-lexical-info": {
-            "#5": "[(22,4)-(22,8)]"
+            "#6": "[(22,4)-(22,8)]"
           },
           "lexical": {
             "shacl:name": "[(21,2)-(21,12)]",
-            "#5": "[(21,2)-(26,21)]"
+            "#6": "[(21,2)-(26,21)]"
           },
           "declared-element": {
-            "#5": ""
+            "#6": ""
           },
           "resolved-link-target": {
-            "#5": "amf://id#5"
+            "#6": "amf://id#6"
           }
         }
       },
@@ -649,184 +562,19 @@
               {
                 "@id": "#5",
                 "@type": [
-                  "shacl:NodeShape",
-                  "raml-shapes:AnyShape",
+                  "raml-shapes:RecursiveShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
                 ],
-                "shacl:closed": [
+                "raml-shapes:fixPoint": [
                   {
-                    "@value": false
+                    "@id": "#6"
                   }
                 ],
-                "shacl:property": [
+                "doc:recursive": [
                   {
-                    "@id": "#6",
-                    "@type": [
-                      "shacl:PropertyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#member-account"
-                      }
-                    ],
-                    "raml-shapes:range": [
-                      {
-                        "@id": "#7",
-                        "@type": [
-                          "shacl:NodeShape",
-                          "raml-shapes:AnyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:closed": [
-                          {
-                            "@value": false
-                          }
-                        ],
-                        "shacl:property": [
-                          {
-                            "@id": "#8",
-                            "@type": [
-                              "shacl:PropertyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:path": [
-                              {
-                                "@id": "http://a.ml/vocabularies/data#contact-personnel"
-                              }
-                            ],
-                            "raml-shapes:range": [
-                              {
-                                "@id": "#9",
-                                "@type": [
-                                  "raml-shapes:RecursiveShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "raml-shapes:fixPoint": [
-                                  {
-                                    "@id": "#3"
-                                  }
-                                ],
-                                "doc:recursive": [
-                                  {
-                                    "@value": true
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "person"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "doc:recursive": "true"
-                                  },
-                                  "resolved-link": {
-                                    "#9": "amf://id#10"
-                                  },
-                                  "type-property-lexical-info": {
-                                    "#9": "[(16,4)-(16,8)]"
-                                  },
-                                  "lexical": {
-                                    "#9": "[(15,2)-(21,0)]"
-                                  },
-                                  "declared-element": {
-                                    "#9": ""
-                                  },
-                                  "resolved-link-target": {
-                                    "#9": "amf://id#3"
-                                  }
-                                }
-                              }
-                            ],
-                            "shacl:minCount": [
-                              {
-                                "@value": 0
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "contact-personnel"
-                              }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "shacl:path": "true"
-                              },
-                              "lexical": {
-                                "shacl:minCount": "[(12,8)-(13,0)]",
-                                "#8": "[(11,6)-(15,0)]",
-                                "raml-shapes:range": "[(11,24)-(15,0)]"
-                              }
-                            }
-                          }
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "member-account"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "Member Account"
-                          }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "shacl:closed": "true"
-                          },
-                          "resolved-link-target": {
-                            "#7": "amf://id#1"
-                          },
-                          "declared-element": {
-                            "#7": ""
-                          },
-                          "lexical": {
-                            "core:name": "[(25,8)-(26,0)]",
-                            "#7": "[(8,2)-(15,0)]"
-                          },
-                          "type-property-lexical-info": {
-                            "#7": "[(9,4)-(9,8)]"
-                          },
-                          "resolved-link": {
-                            "#7": "amf://id#11"
-                          },
-                          "inherited-shapes": {
-                            "#7": "amf://id#1,amf://id#12"
-                          }
-                        }
-                      }
-                    ],
-                    "shacl:minCount": [
-                      {
-                        "@value": 1
-                      }
-                    ],
-                    "shacl:name": [
-                      {
-                        "@value": "member-account"
-                      }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:minCount": "true",
-                        "shacl:path": "true"
-                      },
-                      "lexical": {
-                        "raml-shapes:range": "[(24,21)-(26,21)]",
-                        "#6": "[(24,6)-(26,21)]"
-                      }
-                    }
+                    "@value": true
                   }
                 ],
                 "shacl:name": [
@@ -836,23 +584,22 @@
                 ],
                 "smaps": {
                   "synthesized-field": {
-                    "shacl:closed": "true"
+                    "doc:recursive": "true"
                   },
                   "resolved-link": {
-                    "#5": "amf://id#13"
+                    "#5": "amf://id#7"
                   },
                   "type-property-lexical-info": {
                     "#5": "[(22,4)-(22,8)]"
                   },
                   "lexical": {
-                    "shacl:name": "[(21,2)-(21,12)]",
                     "#5": "[(21,2)-(26,21)]"
                   },
                   "declared-element": {
                     "#5": ""
                   },
                   "resolved-link-target": {
-                    "#5": "amf://id#5"
+                    "#5": "amf://id#6"
                   }
                 }
               }
@@ -889,7 +636,7 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#3": "amf://id#10"
+            "#3": "amf://id#8"
           },
           "type-property-lexical-info": {
             "#3": "[(16,4)-(16,8)]"
@@ -967,184 +714,19 @@
                       {
                         "@id": "#5",
                         "@type": [
-                          "shacl:NodeShape",
-                          "raml-shapes:AnyShape",
+                          "raml-shapes:RecursiveShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
                         ],
-                        "shacl:closed": [
+                        "raml-shapes:fixPoint": [
                           {
-                            "@value": false
+                            "@id": "#6"
                           }
                         ],
-                        "shacl:property": [
+                        "doc:recursive": [
                           {
-                            "@id": "#6",
-                            "@type": [
-                              "shacl:PropertyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:path": [
-                              {
-                                "@id": "http://a.ml/vocabularies/data#member-account"
-                              }
-                            ],
-                            "raml-shapes:range": [
-                              {
-                                "@id": "#7",
-                                "@type": [
-                                  "shacl:NodeShape",
-                                  "raml-shapes:AnyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:closed": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "shacl:property": [
-                                  {
-                                    "@id": "#8",
-                                    "@type": [
-                                      "shacl:PropertyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#contact-personnel"
-                                      }
-                                    ],
-                                    "raml-shapes:range": [
-                                      {
-                                        "@id": "#9",
-                                        "@type": [
-                                          "raml-shapes:RecursiveShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape",
-                                          "doc:DomainElement"
-                                        ],
-                                        "raml-shapes:fixPoint": [
-                                          {
-                                            "@id": "#3"
-                                          }
-                                        ],
-                                        "doc:recursive": [
-                                          {
-                                            "@value": true
-                                          }
-                                        ],
-                                        "shacl:name": [
-                                          {
-                                            "@value": "person"
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "doc:recursive": "true"
-                                          },
-                                          "resolved-link": {
-                                            "#9": "amf://id#10"
-                                          },
-                                          "type-property-lexical-info": {
-                                            "#9": "[(16,4)-(16,8)]"
-                                          },
-                                          "lexical": {
-                                            "#9": "[(15,2)-(21,0)]"
-                                          },
-                                          "declared-element": {
-                                            "#9": ""
-                                          },
-                                          "resolved-link-target": {
-                                            "#9": "amf://id#3"
-                                          }
-                                        }
-                                      }
-                                    ],
-                                    "shacl:minCount": [
-                                      {
-                                        "@value": 0
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "contact-personnel"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "synthesized-field": {
-                                        "shacl:path": "true"
-                                      },
-                                      "lexical": {
-                                        "shacl:minCount": "[(12,8)-(13,0)]",
-                                        "#8": "[(11,6)-(15,0)]",
-                                        "raml-shapes:range": "[(11,24)-(15,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "member-account"
-                                  }
-                                ],
-                                "core:name": [
-                                  {
-                                    "@value": "Member Account"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:closed": "true"
-                                  },
-                                  "resolved-link-target": {
-                                    "#7": "amf://id#1"
-                                  },
-                                  "declared-element": {
-                                    "#7": ""
-                                  },
-                                  "lexical": {
-                                    "core:name": "[(25,8)-(26,0)]",
-                                    "#7": "[(8,2)-(15,0)]"
-                                  },
-                                  "type-property-lexical-info": {
-                                    "#7": "[(9,4)-(9,8)]"
-                                  },
-                                  "resolved-link": {
-                                    "#7": "amf://id#11"
-                                  },
-                                  "inherited-shapes": {
-                                    "#7": "amf://id#1,amf://id#12"
-                                  }
-                                }
-                              }
-                            ],
-                            "shacl:minCount": [
-                              {
-                                "@value": 1
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "member-account"
-                              }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "shacl:minCount": "true",
-                                "shacl:path": "true"
-                              },
-                              "lexical": {
-                                "raml-shapes:range": "[(24,21)-(26,21)]",
-                                "#6": "[(24,6)-(26,21)]"
-                              }
-                            }
+                            "@value": true
                           }
                         ],
                         "shacl:name": [
@@ -1154,23 +736,22 @@
                         ],
                         "smaps": {
                           "synthesized-field": {
-                            "shacl:closed": "true"
+                            "doc:recursive": "true"
                           },
                           "resolved-link": {
-                            "#5": "amf://id#13"
+                            "#5": "amf://id#7"
                           },
                           "type-property-lexical-info": {
                             "#5": "[(22,4)-(22,8)]"
                           },
                           "lexical": {
-                            "shacl:name": "[(21,2)-(21,12)]",
                             "#5": "[(21,2)-(26,21)]"
                           },
                           "declared-element": {
                             "#5": ""
                           },
                           "resolved-link-target": {
-                            "#5": "amf://id#5"
+                            "#5": "amf://id#6"
                           }
                         }
                       }
@@ -1207,7 +788,7 @@
                     "shacl:closed": "true"
                   },
                   "resolved-link": {
-                    "#3": "amf://id#10"
+                    "#3": "amf://id#8"
                   },
                   "type-property-lexical-info": {
                     "#3": "[(16,4)-(16,8)]"
@@ -1269,7 +850,7 @@
             "#12": "[(9,4)-(9,8)]"
           },
           "resolved-link": {
-            "#12": "amf://id#11"
+            "#12": "amf://id#9"
           },
           "inherited-shapes": {
             "#12": "amf://id#1"
@@ -1277,7 +858,7 @@
         }
       },
       {
-        "@id": "#14",
+        "@id": "#13",
         "@type": [
           "raml-shapes:ArrayShape",
           "raml-shapes:AnyShape",
@@ -1347,184 +928,19 @@
                           {
                             "@id": "#5",
                             "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
+                              "raml-shapes:RecursiveShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
                             ],
-                            "shacl:closed": [
+                            "raml-shapes:fixPoint": [
                               {
-                                "@value": false
+                                "@id": "#6"
                               }
                             ],
-                            "shacl:property": [
+                            "doc:recursive": [
                               {
-                                "@id": "#6",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#member-account"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#7",
-                                    "@type": [
-                                      "shacl:NodeShape",
-                                      "raml-shapes:AnyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:closed": [
-                                      {
-                                        "@value": false
-                                      }
-                                    ],
-                                    "shacl:property": [
-                                      {
-                                        "@id": "#8",
-                                        "@type": [
-                                          "shacl:PropertyShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape",
-                                          "doc:DomainElement"
-                                        ],
-                                        "shacl:path": [
-                                          {
-                                            "@id": "http://a.ml/vocabularies/data#contact-personnel"
-                                          }
-                                        ],
-                                        "raml-shapes:range": [
-                                          {
-                                            "@id": "#9",
-                                            "@type": [
-                                              "raml-shapes:RecursiveShape",
-                                              "shacl:Shape",
-                                              "raml-shapes:Shape",
-                                              "doc:DomainElement"
-                                            ],
-                                            "raml-shapes:fixPoint": [
-                                              {
-                                                "@id": "#3"
-                                              }
-                                            ],
-                                            "doc:recursive": [
-                                              {
-                                                "@value": true
-                                              }
-                                            ],
-                                            "shacl:name": [
-                                              {
-                                                "@value": "person"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "synthesized-field": {
-                                                "doc:recursive": "true"
-                                              },
-                                              "resolved-link": {
-                                                "#9": "amf://id#10"
-                                              },
-                                              "type-property-lexical-info": {
-                                                "#9": "[(16,4)-(16,8)]"
-                                              },
-                                              "lexical": {
-                                                "#9": "[(15,2)-(21,0)]"
-                                              },
-                                              "declared-element": {
-                                                "#9": ""
-                                              },
-                                              "resolved-link-target": {
-                                                "#9": "amf://id#3"
-                                              }
-                                            }
-                                          }
-                                        ],
-                                        "shacl:minCount": [
-                                          {
-                                            "@value": 0
-                                          }
-                                        ],
-                                        "shacl:name": [
-                                          {
-                                            "@value": "contact-personnel"
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "shacl:path": "true"
-                                          },
-                                          "lexical": {
-                                            "shacl:minCount": "[(12,8)-(13,0)]",
-                                            "#8": "[(11,6)-(15,0)]",
-                                            "raml-shapes:range": "[(11,24)-(15,0)]"
-                                          }
-                                        }
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "member-account"
-                                      }
-                                    ],
-                                    "core:name": [
-                                      {
-                                        "@value": "Member Account"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "synthesized-field": {
-                                        "shacl:closed": "true"
-                                      },
-                                      "resolved-link-target": {
-                                        "#7": "amf://id#1"
-                                      },
-                                      "declared-element": {
-                                        "#7": ""
-                                      },
-                                      "lexical": {
-                                        "core:name": "[(25,8)-(26,0)]",
-                                        "#7": "[(8,2)-(15,0)]"
-                                      },
-                                      "type-property-lexical-info": {
-                                        "#7": "[(9,4)-(9,8)]"
-                                      },
-                                      "resolved-link": {
-                                        "#7": "amf://id#11"
-                                      },
-                                      "inherited-shapes": {
-                                        "#7": "amf://id#1,amf://id#12"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 1
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "member-account"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true",
-                                    "shacl:path": "true"
-                                  },
-                                  "lexical": {
-                                    "raml-shapes:range": "[(24,21)-(26,21)]",
-                                    "#6": "[(24,6)-(26,21)]"
-                                  }
-                                }
+                                "@value": true
                               }
                             ],
                             "shacl:name": [
@@ -1534,23 +950,22 @@
                             ],
                             "smaps": {
                               "synthesized-field": {
-                                "shacl:closed": "true"
+                                "doc:recursive": "true"
                               },
                               "resolved-link": {
-                                "#5": "amf://id#13"
+                                "#5": "amf://id#7"
                               },
                               "type-property-lexical-info": {
                                 "#5": "[(22,4)-(22,8)]"
                               },
                               "lexical": {
-                                "shacl:name": "[(21,2)-(21,12)]",
                                 "#5": "[(21,2)-(26,21)]"
                               },
                               "declared-element": {
                                 "#5": ""
                               },
                               "resolved-link-target": {
-                                "#5": "amf://id#5"
+                                "#5": "amf://id#6"
                               }
                             }
                           }
@@ -1587,7 +1002,7 @@
                         "shacl:closed": "true"
                       },
                       "resolved-link": {
-                        "#3": "amf://id#10"
+                        "#3": "amf://id#8"
                       },
                       "type-property-lexical-info": {
                         "#3": "[(16,4)-(16,8)]"
@@ -1649,7 +1064,7 @@
                 "#12": "[(9,4)-(9,8)]"
               },
               "resolved-link": {
-                "#12": "amf://id#11"
+                "#12": "amf://id#9"
               },
               "inherited-shapes": {
                 "#12": "amf://id#1"
@@ -1664,14 +1079,14 @@
         ],
         "smaps": {
           "declared-element": {
-            "#14": ""
+            "#13": ""
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,10)]",
-            "#14": "[(5,2)-(8,0)]"
+            "#13": "[(5,2)-(8,0)]"
           },
           "type-property-lexical-info": {
-            "#14": "[(6,4)-(6,8)]"
+            "#13": "[(6,4)-(6,8)]"
           }
         }
       }

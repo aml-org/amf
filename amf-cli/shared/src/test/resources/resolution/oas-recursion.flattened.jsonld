@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#8",
+      "@id": "#7",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -24,7 +24,7 @@
         "lexical": {
           "apiContract:endpoint": "[(7,2)-(7,13)]",
           "core:name": "[(4,4)-(4,19)]",
-          "#9": "[(1,0)-(26,1)]",
+          "#8": "[(1,0)-(26,1)]",
           "core:version": "[(5,4)-(5,20)]"
         }
       }
@@ -36,7 +36,7 @@
           "@id": "#1"
         },
         {
-          "@id": "#4"
+          "@id": "#5"
         }
       ],
       "@type": [
@@ -46,11 +46,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#9"
+        "@id": "#8"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#8"
+        "@id": "#7"
       }
     },
     {
@@ -86,12 +86,12 @@
           "#1": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#4"
+          "#1": "amf://id#5"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#5",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -102,7 +102,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#5"
+          "@id": "#2"
         }
       ],
       "shacl:name": "ThesaurusSense",
@@ -111,20 +111,20 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#4": "amf://id#7"
+          "#5": "amf://id#6"
         },
         "type-property-lexical-info": {
-          "#4": "[(22,6)-(22,12)]"
+          "#5": "[(22,6)-(22,12)]"
         },
         "lexical": {
           "shacl:name": "[(12,4)-(12,20)]",
-          "#4": "[(12,4)-(23,5)]"
+          "#5": "[(12,4)-(23,5)]"
         },
         "declared-element": {
-          "#4": ""
+          "#5": ""
         },
         "resolved-link-target": {
-          "#4": "amf://id#4"
+          "#5": "amf://id#5"
         }
       }
     },
@@ -156,33 +156,6 @@
       }
     },
     {
-      "@id": "#5",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#subsenses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#6"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "subsenses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#5": "[(14,8)-(20,9)]"
-        }
-      }
-    },
-    {
       "@id": "#3",
       "@type": [
         "raml-shapes:ArrayShape",
@@ -207,7 +180,7 @@
       }
     },
     {
-      "@id": "#6",
+      "@id": "#4",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -216,20 +189,29 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#3"
+          "@id": "#5"
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "subsenses",
+      "shacl:name": "ThesaurusSense",
       "smaps": {
         "synthesized-field": {
           "doc:recursive": "true"
         },
-        "lexical": {
-          "#6": "[(14,8)-(20,9)]"
+        "resolved-link": {
+          "#4": "amf://id#6"
         },
         "type-property-lexical-info": {
-          "#6": "[(19,10)-(19,16)]"
+          "#4": "[(22,6)-(22,12)]"
+        },
+        "lexical": {
+          "#4": "[(12,4)-(23,5)]"
+        },
+        "declared-element": {
+          "#4": ""
+        },
+        "resolved-link-target": {
+          "#4": "amf://id#5"
         }
       }
     }

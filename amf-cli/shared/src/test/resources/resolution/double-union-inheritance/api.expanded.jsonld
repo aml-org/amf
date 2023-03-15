@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "/web-api",
+        "@id": "#26",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -29,7 +29,7 @@
         "smaps": {
           "lexical": {
             "core:version": "[(3,0)-(5,0)]",
-            "/web-api": "[(2,0)-(22,0)]",
+            "#26": "[(2,0)-(22,0)]",
             "core:name": "[(2,0)-(3,0)]"
           }
         }
@@ -42,7 +42,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#/BaseUnitProcessingData",
+        "@id": "#25",
         "@type": [
           "doc:APIContractProcessingData"
         ],
@@ -65,7 +65,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#/declares/shape/A",
+        "@id": "#1",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -80,7 +80,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declares/shape/A/property/property/a",
+            "@id": "#2",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -94,7 +94,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declares/shape/A/property/property/a/scalar/a",
+                "@id": "#3",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -115,7 +115,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(8,9)-(8,15)]",
-                    "#/declares/shape/A/property/property/a/scalar/a": "[(8,6)-(9,0)]"
+                    "#3": "[(8,6)-(9,0)]"
                   }
                 }
               }
@@ -137,7 +137,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(8,9)-(8,15)]",
-                "#/declares/shape/A/property/property/a": "[(8,6)-(9,0)]"
+                "#2": "[(8,6)-(9,0)]"
               }
             }
           }
@@ -152,22 +152,22 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#/declares/shape/A": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/UnionY/inherits/union/default-union/anyOf/shape/default-node"
+            "#1": "amf://id#5"
           },
           "lexical": {
             "shacl:name": "[(6,2)-(6,3)]",
-            "#/declares/shape/A": "[(6,2)-(9,0)]"
+            "#1": "[(6,2)-(9,0)]"
           },
           "declared-element": {
-            "#/declares/shape/A": ""
+            "#1": ""
           },
           "resolved-link-target": {
-            "#/declares/shape/A": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/A"
+            "#1": "amf://id#1"
           }
         }
       },
       {
-        "@id": "#/declares/shape/B",
+        "@id": "#6",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -182,7 +182,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declares/shape/B/property/property/b",
+            "@id": "#7",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -196,7 +196,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declares/shape/B/property/property/b/scalar/b",
+                "@id": "#8",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -217,7 +217,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(11,9)-(11,15)]",
-                    "#/declares/shape/B/property/property/b/scalar/b": "[(11,6)-(13,0)]"
+                    "#8": "[(11,6)-(13,0)]"
                   }
                 }
               }
@@ -239,7 +239,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(11,9)-(11,15)]",
-                "#/declares/shape/B/property/property/b": "[(11,6)-(13,0)]"
+                "#7": "[(11,6)-(13,0)]"
               }
             }
           }
@@ -254,22 +254,22 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#/declares/shape/B": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/UnionY/inherits/union/default-union/anyOf/shape/default-node_2"
+            "#6": "amf://id#10"
           },
           "lexical": {
             "shacl:name": "[(9,2)-(9,3)]",
-            "#/declares/shape/B": "[(9,2)-(13,0)]"
+            "#6": "[(9,2)-(13,0)]"
           },
           "declared-element": {
-            "#/declares/shape/B": ""
+            "#6": ""
           },
           "resolved-link-target": {
-            "#/declares/shape/B": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/B"
+            "#6": "amf://id#6"
           }
         }
       },
       {
-        "@id": "#/declares/shape/UnionX",
+        "@id": "#11",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -279,7 +279,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#/declares/shape/A_0",
+            "@id": "#12",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -294,7 +294,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#/declares/shape/A/property/property/a/inherited",
+                "@id": "#13",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -308,7 +308,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/A/property/property/a/scalar/a",
+                    "@id": "#3",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -329,7 +329,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(8,9)-(8,15)]",
-                        "#/declares/shape/A/property/property/a/scalar/a": "[(8,6)-(9,0)]"
+                        "#3": "[(8,6)-(9,0)]"
                       }
                     }
                   }
@@ -351,15 +351,15 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(8,9)-(8,15)]",
-                    "#/declares/shape/A/property/property/a/inherited": "[(8,6)-(9,0)]"
+                    "#13": "[(8,6)-(9,0)]"
                   },
                   "inheritance-provenance": {
-                    "#/declares/shape/A/property/property/a/inherited": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/A"
+                    "#13": "amf://id#1"
                   }
                 }
               },
               {
-                "@id": "#/declares/shape/UnionX/property/property/x",
+                "@id": "#14",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -373,7 +373,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/UnionX/property/property/x/scalar/x",
+                    "@id": "#15",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -394,7 +394,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(16,9)-(16,15)]",
-                        "#/declares/shape/UnionX/property/property/x/scalar/x": "[(16,6)-(18,0)]"
+                        "#15": "[(16,6)-(18,0)]"
                       }
                     }
                   }
@@ -416,7 +416,7 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(16,9)-(16,15)]",
-                    "#/declares/shape/UnionX/property/property/x": "[(16,6)-(18,0)]"
+                    "#14": "[(16,6)-(18,0)]"
                   }
                 }
               }
@@ -431,18 +431,18 @@
                 "shacl:closed": "true"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/A_0": "[(14,4)-(14,8)]"
+                "#12": "[(14,4)-(14,8)]"
               },
               "lexical": {
-                "#/declares/shape/A_0": "[(13,2)-(18,0)]"
+                "#12": "[(13,2)-(18,0)]"
               },
               "declared-element": {
-                "#/declares/shape/A_0": ""
+                "#12": ""
               }
             }
           },
           {
-            "@id": "#/declares/shape/B_1",
+            "@id": "#16",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -457,7 +457,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#/declares/shape/UnionX/property/property/x",
+                "@id": "#14",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -471,7 +471,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/UnionX/property/property/x/scalar/x",
+                    "@id": "#15",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -492,7 +492,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(16,9)-(16,15)]",
-                        "#/declares/shape/UnionX/property/property/x/scalar/x": "[(16,6)-(18,0)]"
+                        "#15": "[(16,6)-(18,0)]"
                       }
                     }
                   }
@@ -514,12 +514,12 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(16,9)-(16,15)]",
-                    "#/declares/shape/UnionX/property/property/x": "[(16,6)-(18,0)]"
+                    "#14": "[(16,6)-(18,0)]"
                   }
                 }
               },
               {
-                "@id": "#/declares/shape/B/property/property/b/inherited",
+                "@id": "#17",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -533,7 +533,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/B/property/property/b/scalar/b",
+                    "@id": "#8",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -554,7 +554,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(11,9)-(11,15)]",
-                        "#/declares/shape/B/property/property/b/scalar/b": "[(11,6)-(13,0)]"
+                        "#8": "[(11,6)-(13,0)]"
                       }
                     }
                   }
@@ -576,10 +576,10 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(11,9)-(11,15)]",
-                    "#/declares/shape/B/property/property/b/inherited": "[(11,6)-(13,0)]"
+                    "#17": "[(11,6)-(13,0)]"
                   },
                   "inheritance-provenance": {
-                    "#/declares/shape/B/property/property/b/inherited": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/B"
+                    "#17": "amf://id#6"
                   }
                 }
               }
@@ -594,13 +594,13 @@
                 "shacl:closed": "true"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/B_1": "[(14,4)-(14,8)]"
+                "#16": "[(14,4)-(14,8)]"
               },
               "lexical": {
-                "#/declares/shape/B_1": "[(13,2)-(18,0)]"
+                "#16": "[(13,2)-(18,0)]"
               },
               "declared-element": {
-                "#/declares/shape/B_1": ""
+                "#16": ""
               }
             }
           }
@@ -612,19 +612,19 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declares/shape/UnionX": ""
+            "#11": ""
           },
           "lexical": {
             "shacl:name": "[(13,2)-(13,8)]",
-            "#/declares/shape/UnionX": "[(13,2)-(18,0)]"
+            "#11": "[(13,2)-(18,0)]"
           },
           "type-property-lexical-info": {
-            "#/declares/shape/UnionX": "[(14,4)-(14,8)]"
+            "#11": "[(14,4)-(14,8)]"
           }
         }
       },
       {
-        "@id": "#/declares/shape/UnionY",
+        "@id": "#20",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -634,7 +634,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#/declares/shape/A_0",
+            "@id": "#12",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -649,7 +649,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#/declares/shape/UnionY/property/property/y",
+                "@id": "#21",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -663,7 +663,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/UnionY/property/property/y/scalar/y",
+                    "@id": "#22",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -684,7 +684,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(21,9)-(21,15)]",
-                        "#/declares/shape/UnionY/property/property/y/scalar/y": "[(21,6)-(22,0)]"
+                        "#22": "[(21,6)-(22,0)]"
                       }
                     }
                   }
@@ -706,12 +706,12 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(21,9)-(21,15)]",
-                    "#/declares/shape/UnionY/property/property/y": "[(21,6)-(22,0)]"
+                    "#21": "[(21,6)-(22,0)]"
                   }
                 }
               },
               {
-                "@id": "#/declares/shape/A/property/property/a/inherited",
+                "@id": "#13",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -725,7 +725,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/A/property/property/a/scalar/a",
+                    "@id": "#3",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -746,7 +746,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(8,9)-(8,15)]",
-                        "#/declares/shape/A/property/property/a/scalar/a": "[(8,6)-(9,0)]"
+                        "#3": "[(8,6)-(9,0)]"
                       }
                     }
                   }
@@ -768,10 +768,10 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(8,9)-(8,15)]",
-                    "#/declares/shape/A/property/property/a/inherited": "[(8,6)-(9,0)]"
+                    "#13": "[(8,6)-(9,0)]"
                   },
                   "inheritance-provenance": {
-                    "#/declares/shape/A/property/property/a/inherited": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/A"
+                    "#13": "amf://id#1"
                   }
                 }
               }
@@ -786,18 +786,18 @@
                 "shacl:closed": "true"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/A_0": "[(19,4)-(19,8)]"
+                "#12": "[(19,4)-(19,8)]"
               },
               "lexical": {
-                "#/declares/shape/A_0": "[(18,2)-(22,0)]"
+                "#12": "[(18,2)-(22,0)]"
               },
               "declared-element": {
-                "#/declares/shape/A_0": ""
+                "#12": ""
               }
             }
           },
           {
-            "@id": "#/declares/shape/B_1",
+            "@id": "#16",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -812,7 +812,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#/declares/shape/UnionY/property/property/y",
+                "@id": "#21",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -826,7 +826,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/UnionY/property/property/y/scalar/y",
+                    "@id": "#22",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -847,7 +847,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(21,9)-(21,15)]",
-                        "#/declares/shape/UnionY/property/property/y/scalar/y": "[(21,6)-(22,0)]"
+                        "#22": "[(21,6)-(22,0)]"
                       }
                     }
                   }
@@ -869,12 +869,12 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(21,9)-(21,15)]",
-                    "#/declares/shape/UnionY/property/property/y": "[(21,6)-(22,0)]"
+                    "#21": "[(21,6)-(22,0)]"
                   }
                 }
               },
               {
-                "@id": "#/declares/shape/B/property/property/b/inherited",
+                "@id": "#17",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -888,7 +888,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#/declares/shape/B/property/property/b/scalar/b",
+                    "@id": "#8",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -909,7 +909,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(11,9)-(11,15)]",
-                        "#/declares/shape/B/property/property/b/scalar/b": "[(11,6)-(13,0)]"
+                        "#8": "[(11,6)-(13,0)]"
                       }
                     }
                   }
@@ -931,10 +931,10 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(11,9)-(11,15)]",
-                    "#/declares/shape/B/property/property/b/inherited": "[(11,6)-(13,0)]"
+                    "#17": "[(11,6)-(13,0)]"
                   },
                   "inheritance-provenance": {
-                    "#/declares/shape/B/property/property/b/inherited": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml#/declares/shape/B"
+                    "#17": "amf://id#6"
                   }
                 }
               }
@@ -949,13 +949,13 @@
                 "shacl:closed": "true"
               },
               "type-property-lexical-info": {
-                "#/declares/shape/B_1": "[(19,4)-(19,8)]"
+                "#16": "[(19,4)-(19,8)]"
               },
               "lexical": {
-                "#/declares/shape/B_1": "[(18,2)-(22,0)]"
+                "#16": "[(18,2)-(22,0)]"
               },
               "declared-element": {
-                "#/declares/shape/B_1": ""
+                "#16": ""
               }
             }
           }
@@ -967,20 +967,20 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declares/shape/UnionY": ""
+            "#20": ""
           },
           "lexical": {
             "shacl:name": "[(18,2)-(18,8)]",
-            "#/declares/shape/UnionY": "[(18,2)-(22,0)]"
+            "#20": "[(18,2)-(22,0)]"
           },
           "type-property-lexical-info": {
-            "#/declares/shape/UnionY": "[(19,4)-(19,8)]"
+            "#20": "[(19,4)-(19,8)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "file://amf-cli/shared/src/test/resources/resolution/double-union-inheritance/api.raml",
+      "@base": "amf://id",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",

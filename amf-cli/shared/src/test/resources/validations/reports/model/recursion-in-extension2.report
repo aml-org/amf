@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: type1 -> type2 -> type2 -> type1 -> type1
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/recursion-in-extension/extension.raml#/references/0/references/0/shape/type
   Property: 
