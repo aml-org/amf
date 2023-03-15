@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-union.raml
 Profile: AMF Graph
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-union.raml#/declares/shape/A
   Property: 
   Range: [(6,2)-(9,0)]
+  Location: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-union.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Invalid cyclic references in shapes: B -> b -> B
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-union.raml#/declares/shape/B
+  Property: 
+  Range: [(9,2)-(13,0)]
   Location: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-union.raml
