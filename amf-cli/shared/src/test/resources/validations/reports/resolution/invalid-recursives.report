@@ -6,7 +6,7 @@ Number of results: 7
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: arr -> arr
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/array/arr
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: arrObj -> arr -> arrObj
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/array/arrObj
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: arrObjProp -> a -> arrObjProp
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/array/arrObjProp
   Property: 
@@ -30,7 +30,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: arr2 -> arr2
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/array/arr2
   Property: 
@@ -38,7 +38,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: obj -> ob -> obj
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/shape/obj
   Property: 
@@ -46,7 +46,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: objComplex -> ob -> ob2 -> objComplex
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/shape/objComplex
   Property: 
@@ -54,7 +54,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: objArr -> arr -> objArr
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declares/shape/objArr
   Property: 

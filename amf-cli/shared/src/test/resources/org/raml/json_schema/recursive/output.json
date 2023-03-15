@@ -1,12 +1,20 @@
 ModelId: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
 Profile: RAML 1.0
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: root -> left -> root
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml#/declares/shape/root
+  Property: 
+  Range: [(4,2)-(9,17)]
+  Location: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Invalid cyclic references in shapes: root -> right -> root
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml#/declares/shape/root
   Property: 

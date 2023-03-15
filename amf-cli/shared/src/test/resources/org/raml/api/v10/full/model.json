@@ -72,18 +72,6 @@ types:
         type: boolean
   SuperUser:
     properties:
-      firstname:
-        type: string
-      lastname:
-        type: string
-      age:
-        type: integer
-        minimum: 0
-        maximum: 144
-      height?:
-        type: number
-      goggles?:
-        type: boolean
       skills:
         maxItems: 3
         items:

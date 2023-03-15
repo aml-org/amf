@@ -4,14 +4,14 @@ types:
   SomeType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         anyOf:
           -
             items:
               anyOf:
                 -
-                  properties: {}
+                  type: object
                 -
                   type: object
                   (amf-recursive): amf://id#3
@@ -19,7 +19,7 @@ types:
             items:
               anyOf:
                 -
-                  properties: {}
+                  type: object
                 -
                   type: object
                   (amf-recursive): amf://id#3
@@ -29,7 +29,7 @@ types:
         items:
           anyOf:
             -
-              properties: {}
+              type: object
             -
               type: object
               (amf-recursive): amf://id#3
@@ -37,21 +37,21 @@ types:
         items:
           anyOf:
             -
-              properties: {}
+              type: object
             -
               type: object
               (amf-recursive): amf://id#3
   AnotherType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         type: object
         (amf-recursive): amf://id#3
   OneMoreType:
     anyOf:
       -
-        properties: {}
+        type: object
       -
         type: object
         (amf-recursive): amf://id#3
