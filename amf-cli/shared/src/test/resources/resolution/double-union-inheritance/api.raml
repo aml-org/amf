@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: MyAPI
+version: 1.0
+
+types:
+  A:
+    properties:
+      a: string
+  B:
+    properties:
+      b: string
+
+  UnionX:
+    type: A | B
+    properties:
+      x: string
+
+  UnionY:
+    type: A | B
+    properties:
+      y: string
