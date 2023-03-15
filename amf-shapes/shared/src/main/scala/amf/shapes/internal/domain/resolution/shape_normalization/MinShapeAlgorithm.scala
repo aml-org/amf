@@ -1247,7 +1247,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
 
       newUnionItems.zipWithIndex.foreach { case (shape, i) =>
-        shape.id = shape.id + s"_$i"
+        shape.id = baseShape.id + s"_$i"
         shape
       }
     }
