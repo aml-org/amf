@@ -15,7 +15,7 @@ abstract class Stack(protected var stack: Seq[Frame] = Seq.empty) {
     val topFrameOfInterest    = stack.dropWhile(_.shape.id != id)
     val stackTailOfInterest   = topFrameOfInterest.tail
     val stackOfInterest       = stackTailOfInterest.takeWhile(_.shape.id != id)
-    val bottomFrameOfInterest = stackTailOfInterest.dropWhile(_.shape.id != id).headOption.toList
+    val bottomFrameOfInterest = stackTailOfInterest.dropWhile(_.shape.id != id).headOption.toList.map(BottomFrame.toBottomFrame)
     ReadOnlyStack(topFrameOfInterest.headOption.toList ++ stackOfInterest.toList ++ bottomFrameOfInterest)
   }
 
