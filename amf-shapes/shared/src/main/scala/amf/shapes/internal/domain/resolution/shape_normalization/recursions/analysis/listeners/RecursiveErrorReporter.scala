@@ -10,18 +10,22 @@ import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stac
 
 case class RecursiveErrorReporter(eh: AMFErrorHandler) extends AnalysisListener {
   override def onRecursion(stack: ReadOnlyStack)(implicit analysis: Analysis): Unit = {
-    val shape           = stack.peek().shape
-    val stackOfInterest = stack.substack(shape.id)
-    val cycleIsValid    = StackValidator.containsValidCycle(stackOfInterest)
-    if (!cycleIsValid) {
-      eh.violation(
-        RecursiveShapeSpecification,
-        shape.id,
-        None,
-        s"Invalid cyclic references in shapes: ${stackTrace(stackOfInterest)}",
-        shape.position(),
-        shape.location()
-      )
+    stack.peek().shape match {
+      case _: PropertyShape =>
+      // skip we should not detect recursions on property shapes
+      case shape =>
+        val stackOfInterest = stack.substack(shape.id)
+        val cycleIsValid    = StackValidator.containsValidCycle(stackOfInterest)
+        if (!cycleIsValid) {
+          eh.violation(
+            RecursiveShapeSpecification,
+            shape.id,
+            None,
+            s"Invalid cyclic references in shapes: ${stackTrace(stackOfInterest)}",
+            shape.position(),
+            shape.location()
+          )
+        }
     }
   }
 
