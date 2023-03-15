@@ -46,6 +46,17 @@ class EditingResolutionTest extends ResolutionTest {
 //    )
 //  }
 
+  multiGoldenTest("Double union inheritance with same members", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      s"${resolutionPath}double-union-inheritance/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   multiGoldenTest("Simple extends resolution to Raml", "simple-merge.editing.%s") { config =>
     cycle(
       "simple-merge.raml",
