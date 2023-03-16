@@ -6,8 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: feathers should NOT be longer than 5 characters
-livesInside should be boolean
+  Message: livesInside should be boolean
 should have required property 'bite'
 should have required property 'claw'
 should have required property 'livesOutside'
