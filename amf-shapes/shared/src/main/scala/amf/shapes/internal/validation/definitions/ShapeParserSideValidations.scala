@@ -42,9 +42,15 @@ object ShapeParserSideValidations extends Validations {
     "invalid-value-in-properties-facet",
     "Properties facet must be a map of key and values"
   )
+
   val DiscriminatorOnExtendedUnionSpecification = validation(
     "discriminator-on-extended-union",
     "Property 'discriminator' not supported in a node extending a unionShape"
+  )
+
+  val DiscriminatorOnInlineSchema = validation(
+    "discriminator-on-inline-schema",
+    "Property 'discriminator' not supported in a RAML 1.0 inline schema"
   )
 
   val InvalidPropertyType = validation(
@@ -410,6 +416,7 @@ object ShapeParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
+    DiscriminatorOnInlineSchema.id            -> all(WARNING), // TODO: should be violation
     ClosedShapeSpecificationWarning.id        -> all(WARNING),
     SchemaDeprecated.id                       -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id         -> all(WARNING),

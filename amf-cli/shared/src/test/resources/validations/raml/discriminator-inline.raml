@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: Pets API
+
+# https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md#using-discriminator
+types:
+  Pet:
+    type: object
+    properties:
+      stats:
+        type: object
+        discriminator: valid # valid because there is a key name that can identify a type
+        properties:
+          valid: string
+
+  PersonOrDog:
+    type: string | Pet
+    discriminator: stats # Should not be valid --> union type
+
+/pet:
+  post:
+    body:
+      application/json:
+        type: object
+        discriminator: kind # Should not be valid --> doesn't have an identifier key
+        properties:
+          kind: string

@@ -1577,7 +1577,7 @@ sealed abstract class RamlTypeParser(
 
       super.parse()
 
-      checkExtendedUnionDiscriminator()
+      checkDiscriminatorUsage()
 
       map.key("minProperties", (NodeShapeModel.MinProperties in shape).allowingAnnotations)
       map.key("maxProperties", (NodeShapeModel.MaxProperties in shape).allowingAnnotations)
@@ -1669,7 +1669,7 @@ sealed abstract class RamlTypeParser(
       shape
     }
 
-    def checkExtendedUnionDiscriminator(): Unit = {
+    def checkDiscriminatorUsage(): Unit = {
       if (shape.inherits.length == 1 && shape.inherits.head.isInstanceOf[UnionShape]) {
         map.key("discriminator").foreach { k =>
           ctx.eh.violation(
@@ -1685,6 +1685,17 @@ sealed abstract class RamlTypeParser(
             DiscriminatorOnExtendedUnionSpecification,
             shape,
             "Property discriminatorValue forbidden in a node extending a unionShape",
+            k.location
+          )
+        }
+      }
+
+      if (!typeInfo.isDeclaredType && !typeInfo.isPropertyOrParameter) {
+        map.key("discriminator").foreach { k =>
+          ctx.eh.warning(
+            DiscriminatorOnInlineSchema,
+            shape,
+            "Property 'discriminator' not supported in a RAML 1.0 inline schema",
             k.location
           )
         }
