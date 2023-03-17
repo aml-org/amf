@@ -1906,32 +1906,32 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           |    "conditional-subschemas": {
           |      "type": "object",
           |      "if": {
+          |        "type": "object",
           |        "properties": {
           |          "country": {
           |            "enum": [
           |              "United States of America"
           |            ]
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "then": {
+          |        "type": "object",
           |        "properties": {
           |          "postal_code": {
           |            "pattern": "[0-9]{5}(-[0-9]{4})?",
           |            "type": "string"
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "else": {
+          |        "type": "object",
           |        "properties": {
           |          "postal_code": {
           |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
           |            "type": "string"
           |          }
-          |        },
-          |        "type": "object"
+          |        }
           |      },
           |      "examples": [
           |        {
