@@ -244,7 +244,7 @@
       "core:description": "A longer description",
       "apiContract:payload": [
         {
-          "@id": "#6"
+          "@id": "#9"
         }
       ],
       "core:correlationId": {
@@ -255,7 +255,7 @@
       "core:summary": "Action to sign a user up.",
       "apiContract:isAbstract": true,
       "apiContract:headerSchema": {
-        "@id": "#7"
+        "@id": "#6"
       },
       "smaps": {
         "synthesized-field": {
@@ -306,7 +306,7 @@
       "doc:transformed": false
     },
     {
-      "@id": "#6",
+      "@id": "#9",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -317,7 +317,7 @@
       "smaps": {
         "lexical": {
           "apiContract:schemaMediaType": "[(10,2)-(11,0)]",
-          "#6": "[(5,0)-(20,0)]",
+          "#9": "[(5,0)-(20,0)]",
           "core:mediaType": "[(9,2)-(10,0)]"
         }
       }
@@ -339,7 +339,7 @@
       }
     },
     {
-      "@id": "#7",
+      "@id": "#6",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -350,7 +350,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#8"
+          "@id": "#7"
         }
       ],
       "shacl:name": "schema",
@@ -359,15 +359,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#7": "[(14,2)-(20,0)]"
+          "#6": "[(14,2)-(20,0)]"
         },
         "type-property-lexical-info": {
-          "#7": "[(15,4)-(15,8)]"
+          "#6": "[(15,4)-(15,8)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#7",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -380,7 +380,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#9"
+        "@id": "#8"
       },
       "shacl:minCount": 0,
       "shacl:name": "applicationInstanceId",
@@ -389,12 +389,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#8": "[(17,6)-(20,0)]"
+          "#7": "[(17,6)-(20,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -411,11 +411,11 @@
       "core:description": "Unique identifier",
       "smaps": {
         "type-property-lexical-info": {
-          "#9": "[(19,8)-(19,12)]"
+          "#8": "[(19,8)-(19,12)]"
         },
         "lexical": {
           "core:description": "[(18,8)-(19,0)]",
-          "#9": "[(17,6)-(20,0)]",
+          "#8": "[(17,6)-(20,0)]",
           "shacl:datatype": "[(19,8)-(20,0)]"
         }
       }

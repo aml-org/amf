@@ -3,6 +3,7 @@ type: OAuth 2.0
 settings:
   authorizationUri: http://example.com
   accessTokenUri: http://example.com
-  authorizationGrants: http://example.com
+  authorizationGrants:
+    - http://example.com
   scopes:
     - http://example.com
