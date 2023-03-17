@@ -85,7 +85,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/declares/shape/CustomerProductList/property/property/coRegistrant/inherited",
+                                "@id": "#/declares/shape/CustomerProductList/property/property/coRegistrant",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -163,10 +163,10 @@
                                   },
                                   "lexical": {
                                     "raml-shapes:range": "[(7,19)-(12,0)]",
-                                    "#/declares/shape/CustomerProductList/property/property/coRegistrant/inherited": "[(7,6)-(12,0)]"
+                                    "#/declares/shape/CustomerProductList/property/property/coRegistrant": "[(7,6)-(12,0)]"
                                   },
                                   "inheritance-provenance": {
-                                    "#/declares/shape/CustomerProductList/property/property/coRegistrant/inherited": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/avoid-extract-to-declares.raml#/declares/shape/CustomerProductList"
+                                    "#/declares/shape/CustomerProductList/property/property/coRegistrant": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/avoid-extract-to-declares.raml#/declares/shape/CustomerProductList"
                                   }
                                 }
                               }
@@ -366,6 +366,9 @@
               "lexical": {
                 "raml-shapes:range": "[(7,19)-(12,0)]",
                 "#/declares/shape/CustomerProductList/property/property/coRegistrant": "[(7,6)-(12,0)]"
+              },
+              "inheritance-provenance": {
+                "#/declares/shape/CustomerProductList/property/property/coRegistrant": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/avoid-extract-to-declares.raml#/declares/shape/CustomerProductList"
               }
             }
           }

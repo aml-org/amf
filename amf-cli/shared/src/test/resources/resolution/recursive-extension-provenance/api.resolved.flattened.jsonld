@@ -195,7 +195,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited/recursiveProp"
+          "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension"
         },
         {
           "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/property/property/text"
@@ -248,7 +248,7 @@
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited/recursiveProp",
+      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -261,7 +261,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/recursive"
+        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F"
       },
       "shacl:minCount": 0,
       "shacl:name": "extension",
@@ -272,10 +272,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(11,18)-(11,29)]",
-          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited/recursiveProp": "[(11,6)-(13,0)]"
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension": "[(11,6)-(13,0)]"
         },
         "inheritance-provenance": {
-          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element"
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element"
         }
       }
     },
@@ -330,26 +330,21 @@
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/recursive",
+      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F",
       "@type": [
-        "raml-shapes:RecursiveShape",
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "raml-shapes:fixPoint": [
-        {
-          "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F"
-        }
-      ],
-      "doc:recursive": true,
+      "raml-shapes:items": {
+        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive"
+      },
       "shacl:name": "extension?",
       "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true"
-        },
         "lexical": {
-          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/recursive": "[(11,6)-(13,0)]"
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F": "[(11,6)-(13,0)]"
         }
       }
     },
@@ -393,6 +388,39 @@
         "lexical": {
           "data:type": "[(25,10)-(27,0)]",
           "#/declares/resourceType/fhirResourceType/object_1/post/body/application%2Fjson": "[(25,0)-(27,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive",
+      "@type": [
+        "raml-shapes:RecursiveShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:fixPoint": [
+        {
+          "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "Extension",
+      "smaps": {
+        "synthesized-field": {
+          "doc:recursive": "true"
+        },
+        "resolved-link": {
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Element/property/property/extension/array/extension%3F/shape/default-node"
+        },
+        "lexical": {
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "[(5,2)-(9,0)]"
+        },
+        "declared-element": {
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": ""
+        },
+        "resolved-link-target": {
+          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/recursive": "file://amf-cli/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declares/shape/Extension"
         }
       }
     },
@@ -545,54 +573,6 @@
         "lexical": {
           "raml-shapes:range": "[(7,13)-(7,28)]",
           "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension/property/property/propr": "[(7,6)-(9,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#extension"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "extension",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(11,18)-(11,29)]",
-          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension": "[(11,6)-(13,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F",
-      "@type": [
-        "raml-shapes:ArrayShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "raml-shapes:items": {
-        "@id": "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F/shape/Extension"
-      },
-      "shacl:name": "extension?",
-      "smaps": {
-        "lexical": {
-          "#/web-api/endpoint/%2FCodeableConcept/extends/fhirResourceType/applied/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/CodeableConcept/shape/CodeableConcept/inherits/shape/Element/property/property/extension/array/extension%3F": "[(11,6)-(13,0)]"
         }
       }
     }

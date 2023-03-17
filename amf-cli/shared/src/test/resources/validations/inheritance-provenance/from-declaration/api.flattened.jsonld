@@ -120,7 +120,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/Person/property/property/name/inherited"
+          "@id": "#/declares/shape/Person/property/property/name"
         },
         {
           "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/property/property/employeeNumber"
@@ -146,7 +146,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/Person/property/property/name/inherited",
+      "@id": "#/declares/shape/Person/property/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -170,10 +170,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(6,12)-(6,18)]",
-          "#/declares/shape/Person/property/property/name/inherited": "[(6,6)-(7,0)]"
+          "#/declares/shape/Person/property/property/name": "[(6,6)-(7,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/Person/property/property/name/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
+          "#/declares/shape/Person/property/property/name": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
         }
       }
     },
@@ -303,35 +303,6 @@
         },
         "resolved-link-target": {
           "#/declares/shape/Person": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/from-declaration/api.raml#/declares/shape/Person"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Person/property/property/name",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#name"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/Person/property/property/name/scalar/name"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,12)-(6,18)]",
-          "#/declares/shape/Person/property/property/name": "[(6,6)-(7,0)]"
         }
       }
     }

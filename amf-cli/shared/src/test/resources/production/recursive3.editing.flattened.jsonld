@@ -145,7 +145,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp"
+          "@id": "#/declares/shape/ReferenceEntry/property/property/values"
         }
       ],
       "shacl:name": "SingleReference",
@@ -185,7 +185,7 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#/declares/shape/SingleReference"
+          "@id": "#/declares/shape/SingleReference/recursive"
         },
         {
           "@id": "#/declares/shape/MultiReference/recursive"
@@ -260,38 +260,48 @@
         "lexical": {
           "raml-shapes:range": "[(14,14)-(16,0)]",
           "#/declares/shape/ReferenceEntry/property/property/values": "[(14,6)-(16,0)]"
+        },
+        "inheritance-provenance": {
+          "#/declares/shape/ReferenceEntry/property/property/values": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/ReferenceEntry"
         }
       }
     },
     {
-      "@id": "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp",
+      "@id": "#/declares/shape/SingleReference/recursive",
       "@type": [
-        "shacl:PropertyShape",
+        "raml-shapes:RecursiveShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:path": [
+      "raml-shapes:fixPoint": [
         {
-          "@id": "http://a.ml/vocabularies/data#values"
+          "@id": "#/declares/shape/SingleReference"
         }
       ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/Value/recursive"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "values",
+      "doc:recursive": true,
+      "shacl:name": "SingleReference",
       "smaps": {
         "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
+          "doc:recursive": "true"
+        },
+        "resolved-link-target": {
+          "#/declares/shape/SingleReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/SingleReference"
+        },
+        "declared-element": {
+          "#/declares/shape/SingleReference/recursive": ""
         },
         "lexical": {
-          "raml-shapes:range": "[(14,14)-(16,0)]",
-          "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "[(14,6)-(16,0)]"
+          "#/declares/shape/SingleReference/recursive": "[(16,2)-(18,0)]"
         },
-        "inheritance-provenance": {
-          "#/declares/shape/ReferenceEntry/property/property/values/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/ReferenceEntry"
+        "type-property-lexical-info": {
+          "#/declares/shape/SingleReference/recursive": "[(17,4)-(17,8)]"
+        },
+        "resolved-link": {
+          "#/declares/shape/SingleReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/Value/inherits/union/default-union/anyOf/shape/default-node"
+        },
+        "inherited-shapes": {
+          "#/declares/shape/SingleReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/ReferenceEntry"
         }
       }
     },
@@ -328,36 +338,6 @@
         },
         "resolved-link-target": {
           "#/declares/shape/MultiReference/recursive": "file://amf-cli/shared/src/test/resources/production/recursive3.raml#/declares/shape/MultiReference"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Value/recursive",
-      "@type": [
-        "raml-shapes:RecursiveShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "raml-shapes:fixPoint": [
-        {
-          "@id": "#/declares/shape/Value"
-        }
-      ],
-      "doc:recursive": true,
-      "shacl:name": "Value",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true"
-        },
-        "type-property-lexical-info": {
-          "#/declares/shape/Value/recursive": "[(19,4)-(19,8)]"
-        },
-        "lexical": {
-          "#/declares/shape/Value/recursive": "[(18,2)-(20,0)]"
-        },
-        "declared-element": {
-          "#/declares/shape/Value/recursive": ""
         }
       }
     }

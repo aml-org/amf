@@ -1125,7 +1125,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/references/0/shape/type/property/property/external-resp-property/inherited"
+          "@id": "#/references/0/shape/type/property/property/external-resp-property"
         }
       ],
       "shacl:name": "included-inherits",
@@ -1171,7 +1171,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/references/0/shape/type/property/property/external-resp-property/inherited"
+          "@id": "#/references/0/shape/type/property/property/external-resp-property"
         }
       ],
       "shacl:name": "included-inherits-response",
@@ -1457,38 +1457,6 @@
       }
     },
     {
-      "@id": "#/references/0/shape/type/property/property/external-resp-property/inherited",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#external-resp-property"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/references/0/shape/type/property/property/external-resp-property/scalar/external-resp-property"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "external-resp-property",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(5,26)-(5,32)]",
-          "#/references/0/shape/type/property/property/external-resp-property/inherited": "[(5,2)-(5,32)]"
-        },
-        "inheritance-provenance": {
-          "#/references/0/shape/type/property/property/external-resp-property/inherited": "file://amf-cli/shared/src/test/resources/validations/auto-generated-schema-name/auto-generated-schema-name.raml#/references/0/shape/type"
-        }
-      }
-    },
-    {
       "@id": "#/references/0/shape/type/property/property/external-resp-property",
       "@type": [
         "shacl:PropertyShape",
@@ -1514,6 +1482,9 @@
         "lexical": {
           "raml-shapes:range": "[(5,26)-(5,32)]",
           "#/references/0/shape/type/property/property/external-resp-property": "[(5,2)-(5,32)]"
+        },
+        "inheritance-provenance": {
+          "#/references/0/shape/type/property/property/external-resp-property": "file://amf-cli/shared/src/test/resources/validations/auto-generated-schema-name/auto-generated-schema-name.raml#/references/0/shape/type"
         }
       }
     },

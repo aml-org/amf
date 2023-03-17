@@ -98,155 +98,21 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#/declares/shape/Child",
+                    "@id": "#/declares/shape/Child/recursive",
                     "@type": [
-                      "shacl:NodeShape",
-                      "raml-shapes:AnyShape",
+                      "raml-shapes:RecursiveShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
                     ],
-                    "shacl:closed": [
+                    "raml-shapes:fixPoint": [
                       {
-                        "@value": false
+                        "@id": "#/declares/shape/Child"
                       }
                     ],
-                    "shacl:property": [
+                    "doc:recursive": [
                       {
-                        "@id": "#/declares/shape/Person/property/property/name/inherited",
-                        "@type": [
-                          "shacl:PropertyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:path": [
-                          {
-                            "@id": "http://a.ml/vocabularies/data#name"
-                          }
-                        ],
-                        "raml-shapes:range": [
-                          {
-                            "@id": "#/declares/shape/Person/property/property/name/scalar/name",
-                            "@type": [
-                              "raml-shapes:ScalarShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "name"
-                              }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "shacl:datatype": "[(7,12)-(7,18)]",
-                                "#/declares/shape/Person/property/property/name/scalar/name": "[(7,6)-(8,0)]"
-                              }
-                            }
-                          }
-                        ],
-                        "shacl:minCount": [
-                          {
-                            "@value": 1
-                          }
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "name"
-                          }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "shacl:minCount": "true",
-                            "shacl:path": "true"
-                          },
-                          "lexical": {
-                            "raml-shapes:range": "[(7,12)-(7,18)]",
-                            "#/declares/shape/Person/property/property/name/inherited": "[(7,6)-(8,0)]"
-                          },
-                          "inheritance-provenance": {
-                            "#/declares/shape/Person/property/property/name/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
-                          }
-                        }
-                      },
-                      {
-                        "@id": "#/declares/shape/Person/property/property/children/inherited/recursiveProp",
-                        "@type": [
-                          "shacl:PropertyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:path": [
-                          {
-                            "@id": "http://a.ml/vocabularies/data#children"
-                          }
-                        ],
-                        "raml-shapes:range": [
-                          {
-                            "@id": "#/declares/shape/Person/property/property/children/array/children/recursive",
-                            "@type": [
-                              "raml-shapes:RecursiveShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "raml-shapes:fixPoint": [
-                              {
-                                "@id": "#/declares/shape/Person/property/property/children/array/children"
-                              }
-                            ],
-                            "doc:recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "children"
-                              }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "doc:recursive": "true"
-                              },
-                              "lexical": {
-                                "#/declares/shape/Person/property/property/children/array/children/recursive": "[(6,6)-(7,0)]"
-                              }
-                            }
-                          }
-                        ],
-                        "shacl:minCount": [
-                          {
-                            "@value": 1
-                          }
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "children"
-                          }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "shacl:minCount": "true",
-                            "shacl:path": "true"
-                          },
-                          "lexical": {
-                            "raml-shapes:range": "[(6,16)-(6,23)]",
-                            "#/declares/shape/Person/property/property/children/inherited/recursiveProp": "[(6,6)-(7,0)]"
-                          },
-                          "inheritance-provenance": {
-                            "#/declares/shape/Person/property/property/children/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
-                          }
-                        }
+                        "@value": true
                       }
                     ],
                     "shacl:name": [
@@ -256,26 +122,25 @@
                     ],
                     "smaps": {
                       "synthesized-field": {
-                        "shacl:closed": "true"
+                        "doc:recursive": "true"
                       },
                       "resolved-link-target": {
-                        "#/declares/shape/Child": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Child"
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Child"
                       },
                       "declared-element": {
-                        "#/declares/shape/Child": ""
+                        "#/declares/shape/Child/recursive": ""
                       },
                       "lexical": {
-                        "shacl:name": "[(8,2)-(8,7)]",
-                        "#/declares/shape/Child": "[(8,2)-(9,16)]"
+                        "#/declares/shape/Child/recursive": "[(8,2)-(9,16)]"
                       },
                       "type-property-lexical-info": {
-                        "#/declares/shape/Child": "[(9,4)-(9,8)]"
+                        "#/declares/shape/Child/recursive": "[(9,4)-(9,8)]"
                       },
                       "resolved-link": {
-                        "#/declares/shape/Child": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person/property/property/children/array/children/shape/default-node"
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person/property/property/children/array/children/shape/default-node"
                       },
                       "inherited-shapes": {
-                        "#/declares/shape/Child": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
                       }
                     }
                   }
@@ -310,6 +175,9 @@
               "lexical": {
                 "raml-shapes:range": "[(6,16)-(6,23)]",
                 "#/declares/shape/Person/property/property/children": "[(6,6)-(7,0)]"
+              },
+              "inheritance-provenance": {
+                "#/declares/shape/Person/property/property/children": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
               }
             }
           },
@@ -372,6 +240,9 @@
               "lexical": {
                 "raml-shapes:range": "[(7,12)-(7,18)]",
                 "#/declares/shape/Person/property/property/name": "[(7,6)-(8,0)]"
+              },
+              "inheritance-provenance": {
+                "#/declares/shape/Person/property/property/name": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
               }
             }
           }
@@ -416,7 +287,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declares/shape/Person/property/property/name/inherited",
+            "@id": "#/declares/shape/Person/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -473,15 +344,15 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(7,12)-(7,18)]",
-                "#/declares/shape/Person/property/property/name/inherited": "[(7,6)-(8,0)]"
+                "#/declares/shape/Person/property/property/name": "[(7,6)-(8,0)]"
               },
               "inheritance-provenance": {
-                "#/declares/shape/Person/property/property/name/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
+                "#/declares/shape/Person/property/property/name": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
               }
             }
           },
           {
-            "@id": "#/declares/shape/Person/property/property/children/inherited/recursiveProp",
+            "@id": "#/declares/shape/Person/property/property/children",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -495,21 +366,61 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declares/shape/Person/property/property/children/array/children/recursive",
+                "@id": "#/declares/shape/Person/property/property/children/array/children",
                 "@type": [
-                  "raml-shapes:RecursiveShape",
+                  "raml-shapes:ArrayShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
                 ],
-                "raml-shapes:fixPoint": [
+                "raml-shapes:items": [
                   {
-                    "@id": "#/declares/shape/Person/property/property/children/array/children"
-                  }
-                ],
-                "doc:recursive": [
-                  {
-                    "@value": true
+                    "@id": "#/declares/shape/Child/recursive",
+                    "@type": [
+                      "raml-shapes:RecursiveShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:fixPoint": [
+                      {
+                        "@id": "#/declares/shape/Child"
+                      }
+                    ],
+                    "doc:recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Child"
+                      }
+                    ],
+                    "smaps": {
+                      "synthesized-field": {
+                        "doc:recursive": "true"
+                      },
+                      "resolved-link-target": {
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Child"
+                      },
+                      "declared-element": {
+                        "#/declares/shape/Child/recursive": ""
+                      },
+                      "lexical": {
+                        "#/declares/shape/Child/recursive": "[(8,2)-(9,16)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#/declares/shape/Child/recursive": "[(9,4)-(9,8)]"
+                      },
+                      "resolved-link": {
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person/property/property/children/array/children/shape/default-node"
+                      },
+                      "inherited-shapes": {
+                        "#/declares/shape/Child/recursive": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
+                      }
+                    }
                   }
                 ],
                 "shacl:name": [
@@ -518,11 +429,8 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "doc:recursive": "true"
-                  },
                   "lexical": {
-                    "#/declares/shape/Person/property/property/children/array/children/recursive": "[(6,6)-(7,0)]"
+                    "#/declares/shape/Person/property/property/children/array/children": "[(6,6)-(7,0)]"
                   }
                 }
               }
@@ -544,10 +452,10 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(6,16)-(6,23)]",
-                "#/declares/shape/Person/property/property/children/inherited/recursiveProp": "[(6,6)-(7,0)]"
+                "#/declares/shape/Person/property/property/children": "[(6,6)-(7,0)]"
               },
               "inheritance-provenance": {
-                "#/declares/shape/Person/property/property/children/inherited/recursiveProp": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
+                "#/declares/shape/Person/property/property/children": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-recursive-inheritance/api.raml#/declares/shape/Person"
               }
             }
           }

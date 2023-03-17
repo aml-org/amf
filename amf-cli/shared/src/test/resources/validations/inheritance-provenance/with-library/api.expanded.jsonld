@@ -144,6 +144,9 @@
                   "lexical": {
                     "raml-shapes:range": "[(6,15)-(6,21)]",
                     "#/references/0/declares/shape/LibType/property/property/libProp": "[(6,6)-(6,21)]"
+                  },
+                  "inheritance-provenance": {
+                    "#/references/0/declares/shape/LibType/property/property/libProp": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-library/api.raml#/references/0/declares/shape/LibType"
                   }
                 }
               }
@@ -229,7 +232,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/references/0/declares/shape/LibType/property/property/libProp/inherited",
+            "@id": "#/references/0/declares/shape/LibType/property/property/libProp",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -286,10 +289,10 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(6,15)-(6,21)]",
-                "#/references/0/declares/shape/LibType/property/property/libProp/inherited": "[(6,6)-(6,21)]"
+                "#/references/0/declares/shape/LibType/property/property/libProp": "[(6,6)-(6,21)]"
               },
               "inheritance-provenance": {
-                "#/references/0/declares/shape/LibType/property/property/libProp/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-library/api.raml#/references/0/declares/shape/LibType"
+                "#/references/0/declares/shape/LibType/property/property/libProp": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-library/api.raml#/references/0/declares/shape/LibType"
               }
             }
           }

@@ -94,7 +94,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/references/0/declares/shape/LibType/property/property/libProp/inherited"
+          "@id": "#/references/0/declares/shape/LibType/property/property/libProp"
         }
       ],
       "shacl:name": "ApiType",
@@ -161,38 +161,6 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#/references/0/declares/shape/LibType/property/property/libProp/inherited",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#libProp"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/references/0/declares/shape/LibType/property/property/libProp/scalar/libProp"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "libProp",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,15)-(6,21)]",
-          "#/references/0/declares/shape/LibType/property/property/libProp/inherited": "[(6,6)-(6,21)]"
-        },
-        "inheritance-provenance": {
-          "#/references/0/declares/shape/LibType/property/property/libProp/inherited": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-library/api.raml#/references/0/declares/shape/LibType"
-        }
-      }
-    },
-    {
       "@id": "#/references/0/declares/shape/LibType/property/property/libProp",
       "@type": [
         "shacl:PropertyShape",
@@ -218,6 +186,9 @@
         "lexical": {
           "raml-shapes:range": "[(6,15)-(6,21)]",
           "#/references/0/declares/shape/LibType/property/property/libProp": "[(6,6)-(6,21)]"
+        },
+        "inheritance-provenance": {
+          "#/references/0/declares/shape/LibType/property/property/libProp": "file://amf-cli/shared/src/test/resources/validations/inheritance-provenance/with-library/api.raml#/references/0/declares/shape/LibType"
         }
       }
     },

@@ -327,13 +327,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited"
+          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill"
         },
         {
-          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name"
         },
         {
-          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId"
         }
       ],
       "shacl:name": "Employee",
@@ -391,13 +391,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited"
+          "@id": "#/declares/shape/Engineer/property/property/engineeringSkill"
         },
         {
-          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name"
         },
         {
-          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited"
+          "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId"
         }
       ],
       "shacl:name": "Employee",
@@ -444,7 +444,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/inherited",
+      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -468,15 +468,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#/declares/shape/Engineer/property/property/engineeringSkill/inherited": "[(14,6)-(16,0)]"
+          "#/declares/shape/Engineer/property/property/engineeringSkill": "[(14,6)-(16,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/Engineer/property/property/engineeringSkill/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/shape/Engineer"
+          "#/declares/shape/Engineer/property/property/engineeringSkill": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/declares/shape/Engineer"
         }
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -500,15 +500,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited": "[(8,6)-(9,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name": "[(8,6)-(9,0)]"
         },
         "inheritance-provenance": {
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person"
         }
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited",
+      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -532,10 +532,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited": "[(11,6)-(12,0)]"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId": "[(11,6)-(12,0)]"
         },
         "inheritance-provenance": {
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/inherited": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
+          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId": "file://amf-cli/shared/src/test/resources/resolution/merge-inherits/api.raml#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee"
         }
       }
     },
@@ -1032,93 +1032,6 @@
         },
         "declared-element": {
           "#/declares/shape/Engineer": ""
-        }
-      }
-    },
-    {
-      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#name"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name/scalar/name"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/shape/Person/property/name": "[(8,6)-(9,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#employeeId"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId/scalar/employeeId"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "employeeId",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#/web-api/endpoint/%2FengineersResourceTypeEndpoint/extends/employeeResourceType/applied/supportedOperation/post/returns/resp/500/payload/application%2Fjson/shape/schema/inherits/shape/Employee/property/property/employeeId": "[(11,6)-(12,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Engineer/property/property/engineeringSkill",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#engineeringSkill"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/Engineer/property/property/engineeringSkill/scalar/engineeringSkill"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "engineeringSkill",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#/declares/shape/Engineer/property/property/engineeringSkill": "[(14,6)-(16,0)]"
         }
       }
     }

@@ -168,22 +168,22 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/d/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/d"
         },
         {
-          "@id": "#/declares/shape/Bank/property/property/a/inherited"
+          "@id": "#/declares/shape/Bank/property/property/a"
         },
         {
           "@id": "#/web-api/endpoint/%2Fcustomers%2Fcorporate/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/property/property/l"
         },
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/c/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/c"
         },
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/e/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/e"
         },
         {
-          "@id": "#/declares/shape/Bank/property/property/b/inherited"
+          "@id": "#/declares/shape/Bank/property/property/b"
         }
       ],
       "shacl:name": "Bank",
@@ -206,7 +206,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/d/inherited",
+      "@id": "#/declares/shape/FinancialInstitution/property/property/d",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -230,15 +230,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(11,9)-(11,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/d/inherited": "[(11,6)-(12,0)]"
+          "#/declares/shape/FinancialInstitution/property/property/d": "[(11,6)-(12,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/FinancialInstitution/property/property/d/inherited": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
+          "#/declares/shape/FinancialInstitution/property/property/d": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
         }
       }
     },
     {
-      "@id": "#/declares/shape/Bank/property/property/a/inherited",
+      "@id": "#/declares/shape/Bank/property/property/a",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -262,10 +262,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(16,9)-(16,15)]",
-          "#/declares/shape/Bank/property/property/a/inherited": "[(16,6)-(17,0)]"
+          "#/declares/shape/Bank/property/property/a": "[(16,6)-(17,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/Bank/property/property/a/inherited": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
+          "#/declares/shape/Bank/property/property/a": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
         }
       }
     },
@@ -299,7 +299,7 @@
       }
     },
     {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/c/inherited",
+      "@id": "#/declares/shape/FinancialInstitution/property/property/c",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -323,15 +323,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(10,9)-(10,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/c/inherited": "[(10,6)-(11,0)]"
+          "#/declares/shape/FinancialInstitution/property/property/c": "[(10,6)-(11,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/FinancialInstitution/property/property/c/inherited": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
+          "#/declares/shape/FinancialInstitution/property/property/c": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
         }
       }
     },
     {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/e/inherited",
+      "@id": "#/declares/shape/FinancialInstitution/property/property/e",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -355,15 +355,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(12,9)-(12,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/e/inherited": "[(12,6)-(13,0)]"
+          "#/declares/shape/FinancialInstitution/property/property/e": "[(12,6)-(13,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/FinancialInstitution/property/property/e/inherited": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
+          "#/declares/shape/FinancialInstitution/property/property/e": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
         }
       }
     },
     {
-      "@id": "#/declares/shape/Bank/property/property/b/inherited",
+      "@id": "#/declares/shape/Bank/property/property/b",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -387,10 +387,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(17,9)-(17,15)]",
-          "#/declares/shape/Bank/property/property/b/inherited": "[(17,6)-(18,0)]"
+          "#/declares/shape/Bank/property/property/b": "[(17,6)-(18,0)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/Bank/property/property/b/inherited": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
+          "#/declares/shape/Bank/property/property/b": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/Bank"
         }
       }
     },
@@ -606,16 +606,16 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/d/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/d"
         },
         {
           "@id": "#/declares/shape/Bank/property/property/a"
         },
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/c/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/c"
         },
         {
-          "@id": "#/declares/shape/FinancialInstitution/property/property/e/inherited"
+          "@id": "#/declares/shape/FinancialInstitution/property/property/e"
         },
         {
           "@id": "#/declares/shape/Bank/property/property/b"
@@ -644,151 +644,6 @@
         },
         "inherited-shapes": {
           "#/declares/shape/Bank": "file://amf-cli/shared/src/test/resources/resolution/extends/data.raml#/declares/shape/FinancialInstitution"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/c",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#c"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/FinancialInstitution/property/property/c/scalar/c"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "c",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(10,9)-(10,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/c": "[(10,6)-(11,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/d",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#d"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/FinancialInstitution/property/property/d/scalar/d"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "d",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(11,9)-(11,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/d": "[(11,6)-(12,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/FinancialInstitution/property/property/e",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#e"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/FinancialInstitution/property/property/e/scalar/e"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "e",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(12,9)-(12,15)]",
-          "#/declares/shape/FinancialInstitution/property/property/e": "[(12,6)-(13,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Bank/property/property/a",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#a"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/Bank/property/property/a/scalar/a"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "a",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(16,9)-(16,15)]",
-          "#/declares/shape/Bank/property/property/a": "[(16,6)-(17,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#/declares/shape/Bank/property/property/b",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#b"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#/declares/shape/Bank/property/property/b/scalar/b"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "b",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(17,9)-(17,15)]",
-          "#/declares/shape/Bank/property/property/b": "[(17,6)-(18,0)]"
         }
       }
     }

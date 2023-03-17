@@ -139,16 +139,16 @@
       "shacl:closed": true,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant"
         },
         {
-          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants"
         },
         {
-          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant"
         },
         {
-          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited"
+          "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator"
         }
       ],
       "shacl:name": "someType",
@@ -239,7 +239,7 @@
       "doc:transformed": false
     },
     {
-      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -261,15 +261,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited": "[(13,4)-(15,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant": "[(13,4)-(15,5)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/primaryApplicant": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         }
       }
     },
     {
-      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -291,15 +291,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited": "[(16,4)-(18,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants": "[(16,4)-(18,5)]"
         },
         "inheritance-provenance": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/additionalApplicants": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         }
       }
     },
     {
-      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/merchant",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -318,16 +318,16 @@
       "shacl:name": "merchant",
       "smaps": {
         "inheritance-provenance": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "lexical": {
           "shacl:minCount": "[(21,4)-(21,14)]",
-          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant/inherited": "[(6,4)-(8,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/merchant": "[(6,4)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited",
+      "@id": "#/declares/shape/someType/inherits/shape/schema/property/property/operator",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -346,11 +346,11 @@
       "shacl:name": "operator",
       "smaps": {
         "inheritance-provenance": {
-          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/api.raml#/declares/shape/someType/inherits/shape/schema"
         },
         "lexical": {
           "shacl:minCount": "[(22,4)-(22,14)]",
-          "#/declares/shape/someType/inherits/shape/schema/property/property/operator/inherited": "[(9,4)-(11,5)]"
+          "#/declares/shape/someType/inherits/shape/schema/property/property/operator": "[(9,4)-(11,5)]"
         }
       }
     },
