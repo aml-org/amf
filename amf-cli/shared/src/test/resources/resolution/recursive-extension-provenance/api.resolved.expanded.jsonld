@@ -70,7 +70,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3",
+                            "@id": "#3/link--1153521791",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -78,205 +78,16 @@
                               "raml-shapes:Shape",
                               "doc:DomainElement"
                             ],
-                            "shacl:closed": [
+                            "doc:link-target": [
                               {
-                                "@value": false
+                                "@id": "#3"
                               }
                             ],
-                            "shacl:property": [
-                              {
-                                "@id": "#4",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#extension"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#5",
-                                    "@type": [
-                                      "raml-shapes:ArrayShape",
-                                      "raml-shapes:AnyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "raml-shapes:items": [
-                                      {
-                                        "@id": "#6",
-                                        "@type": [
-                                          "raml-shapes:RecursiveShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape",
-                                          "doc:DomainElement"
-                                        ],
-                                        "raml-shapes:fixPoint": [
-                                          {
-                                            "@id": "#1"
-                                          }
-                                        ],
-                                        "doc:recursive": [
-                                          {
-                                            "@value": true
-                                          }
-                                        ],
-                                        "shacl:name": [
-                                          {
-                                            "@value": "Extension"
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "doc:recursive": "true"
-                                          },
-                                          "resolved-link": {
-                                            "#6": "amf://id#7"
-                                          },
-                                          "lexical": {
-                                            "#6": "[(5,2)-(9,0)]"
-                                          },
-                                          "declared-element": {
-                                            "#6": ""
-                                          },
-                                          "resolved-link-target": {
-                                            "#6": "amf://id#8"
-                                          }
-                                        }
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "extension?"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "#5": "[(11,6)-(13,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "extension"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true",
-                                    "shacl:path": "true"
-                                  },
-                                  "lexical": {
-                                    "raml-shapes:range": "[(11,18)-(11,29)]",
-                                    "#4": "[(11,6)-(13,0)]"
-                                  },
-                                  "inheritance-provenance": {
-                                    "#4": "amf://id#9"
-                                  }
-                                }
-                              },
-                              {
-                                "@id": "#10",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#text"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#11",
-                                    "@type": [
-                                      "raml-shapes:ScalarShape",
-                                      "raml-shapes:AnyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "text?"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "shacl:datatype": "[(16,13)-(16,19)]",
-                                        "#11": "[(16,6)-(19,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "text"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true",
-                                    "shacl:path": "true"
-                                  },
-                                  "lexical": {
-                                    "raml-shapes:range": "[(16,13)-(16,19)]",
-                                    "#10": "[(16,6)-(19,0)]"
-                                  }
-                                }
-                              }
-                            ],
-                            "shacl:name": [
+                            "doc:link-label": [
                               {
                                 "@value": "CodeableConcept"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "shacl:closed": "true"
-                              },
-                              "resolved-link-target": {
-                                "#3": "amf://id#3"
-                              },
-                              "declared-element": {
-                                "#3": ""
-                              },
-                              "lexical": {
-                                "#3": "[(13,2)-(19,0)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#3": "[(14,4)-(14,8)]"
-                              },
-                              "resolved-link": {
-                                "#3": "amf://id#14"
-                              },
-                              "inherited-shapes": {
-                                "#3": "amf://id#9"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "smaps": {
@@ -978,6 +789,108 @@
         ],
         "shacl:property": [
           {
+            "@id": "#4",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#extension"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "raml-shapes:ArrayShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:items": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "raml-shapes:RecursiveShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:fixPoint": [
+                      {
+                        "@id": "#1"
+                      }
+                    ],
+                    "doc:recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Extension"
+                      }
+                    ],
+                    "smaps": {
+                      "synthesized-field": {
+                        "doc:recursive": "true"
+                      },
+                      "resolved-link": {
+                        "#6": "amf://id#7"
+                      },
+                      "lexical": {
+                        "#6": "[(5,2)-(9,0)]"
+                      },
+                      "declared-element": {
+                        "#6": ""
+                      },
+                      "resolved-link-target": {
+                        "#6": "amf://id#8"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "extension?"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#5": "[(11,6)-(13,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "extension"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
+              "lexical": {
+                "raml-shapes:range": "[(11,18)-(11,29)]",
+                "#4": "[(11,6)-(13,0)]"
+              },
+              "inheritance-provenance": {
+                "#4": "amf://id#9"
+              }
+            }
+          },
+          {
             "@id": "#10",
             "@type": [
               "shacl:PropertyShape",
@@ -1049,21 +962,23 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link": {
-            "#3": "amf://id#14"
-          },
-          "type-property-lexical-info": {
-            "#3": "[(14,4)-(14,8)]"
-          },
-          "lexical": {
-            "shacl:property": "[(15,15)-(19,0)]",
-            "#3": "[(13,2)-(19,0)]"
+          "resolved-link-target": {
+            "#3": "amf://id#3"
           },
           "declared-element": {
             "#3": ""
           },
-          "resolved-link-target": {
-            "#3": "amf://id#3"
+          "lexical": {
+            "#3": "[(13,2)-(19,0)]"
+          },
+          "type-property-lexical-info": {
+            "#3": "[(14,4)-(14,8)]"
+          },
+          "resolved-link": {
+            "#3": "amf://id#14"
+          },
+          "inherited-shapes": {
+            "#3": "amf://id#9"
           }
         }
       },
