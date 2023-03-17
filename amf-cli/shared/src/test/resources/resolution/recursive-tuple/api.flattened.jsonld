@@ -124,7 +124,7 @@
       "shacl:name": "application/json",
       "apiContract:examples": [
         {
-          "@id": "#14"
+          "@id": "#28"
         }
       ],
       "doc:reference-id": [
@@ -148,21 +148,21 @@
       "@id": "#13/list",
       "@type": "rdfs:Seq",
       "rdfs:_1": {
-        "@id": "#24"
+        "@id": "#14"
       },
       "rdfs:_2": {
-        "@id": "#28"
+        "@id": "#18"
       }
     },
     {
-      "@id": "#14",
+      "@id": "#28",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#15"
+        "@id": "#29"
       },
       "doc:reference-id": [
         {
@@ -175,15 +175,15 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#14": "[(1,0)-(1,0)]"
+          "#28": "[(1,0)-(1,0)]"
         },
         "tracked-element": {
-          "#14": "amf://id#12"
+          "#28": "amf://id#12"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#14",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -194,10 +194,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#25"
+          "@id": "#15"
         },
         {
-          "@id": "#27"
+          "@id": "#17"
         }
       ],
       "shacl:name": "Person",
@@ -206,18 +206,18 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#24": "amf://id#36"
+          "#14": "amf://id#26"
         },
         "lexical": {
-          "#24": "[(9,4)-(18,5)]"
+          "#14": "[(9,4)-(18,5)]"
         },
         "resolved-link-target": {
-          "#24": "amf://id#24"
+          "#14": "amf://id#14"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#18",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -228,13 +228,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#29"
+          "@id": "#19"
         },
         {
-          "@id": "#31"
+          "@id": "#21"
         },
         {
-          "@id": "#33"
+          "@id": "#23"
         }
       ],
       "doc:recursive": true,
@@ -245,18 +245,18 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#28": "amf://id#37"
+          "#18": "amf://id#27"
         },
         "lexical": {
-          "#28": "[(19,4)-(34,5)]"
+          "#18": "[(19,4)-(34,5)]"
         },
         "resolved-link-target": {
-          "#28": "amf://id#28"
+          "#18": "amf://id#18"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#29",
       "@type": [
         "data:Array",
         "rdf:Seq",
@@ -265,21 +265,21 @@
       ],
       "rdfs:member": [
         {
-          "@id": "#16"
+          "@id": "#30"
         }
       ],
       "core:name": "array_1",
       "smaps": {
         "parsed-json-example": {
-          "#15": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]"
+          "#29": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]"
         },
         "lexical": {
-          "#15": "[(1,0)-(8,2)]"
+          "#29": "[(1,0)-(8,2)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#15",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -292,7 +292,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#26"
+        "@id": "#16"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
@@ -301,12 +301,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#25": "[(11,8)-(13,9)]"
+          "#15": "[(11,8)-(13,9)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#17",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -319,7 +319,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#28"
+        "@id": "#18"
       },
       "shacl:minCount": 0,
       "shacl:name": "pet",
@@ -328,12 +328,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#27": "[(14,8)-(16,9)]"
+          "#17": "[(14,8)-(16,9)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#19",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -346,7 +346,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#30"
+        "@id": "#20"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
@@ -355,12 +355,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#29": "[(21,8)-(23,9)]"
+          "#19": "[(21,8)-(23,9)]"
         }
       }
     },
     {
-      "@id": "#31",
+      "@id": "#21",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -373,7 +373,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#32"
+        "@id": "#22"
       },
       "shacl:minCount": 0,
       "shacl:name": "age",
@@ -382,12 +382,12 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#31": "[(24,8)-(26,9)]"
+          "#21": "[(24,8)-(26,9)]"
         }
       }
     },
     {
-      "@id": "#33",
+      "@id": "#23",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -400,7 +400,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#34"
+        "@id": "#24"
       },
       "shacl:minCount": 0,
       "shacl:name": "owners",
@@ -409,22 +409,22 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#33": "[(27,8)-(32,9)]"
+          "#23": "[(27,8)-(32,9)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#30",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#17"
+        "@id": "#31"
       },
       "data:pet": {
-        "@id": "#18"
+        "@id": "#32"
       },
       "core:name": "object_2",
       "smaps": {
@@ -433,13 +433,13 @@
         },
         "lexical": {
           "data:pet": "[(3,2)-(7,3)]",
-          "#16": "[(1,1)-(8,1)]",
+          "#30": "[(1,1)-(8,1)]",
           "data:name": "[(2,2)-(2,17)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#16",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -455,16 +455,16 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#26": "[(12,10)-(12,16)]"
+          "#16": "[(12,10)-(12,16)]"
         },
         "lexical": {
           "shacl:datatype": "[(12,10)-(12,26)]",
-          "#26": "[(11,8)-(13,9)]"
+          "#16": "[(11,8)-(13,9)]"
         }
       }
     },
     {
-      "@id": "#30",
+      "@id": "#20",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -480,16 +480,16 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#30": "[(22,10)-(22,16)]"
+          "#20": "[(22,10)-(22,16)]"
         },
         "lexical": {
           "shacl:datatype": "[(22,10)-(22,26)]",
-          "#30": "[(21,8)-(23,9)]"
+          "#20": "[(21,8)-(23,9)]"
         }
       }
     },
     {
-      "@id": "#32",
+      "@id": "#22",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -505,16 +505,16 @@
       "shacl:name": "age",
       "smaps": {
         "type-property-lexical-info": {
-          "#32": "[(25,10)-(25,16)]"
+          "#22": "[(25,10)-(25,16)]"
         },
         "lexical": {
           "shacl:datatype": "[(25,10)-(25,27)]",
-          "#32": "[(24,8)-(26,9)]"
+          "#22": "[(24,8)-(26,9)]"
         }
       }
     },
     {
-      "@id": "#34",
+      "@id": "#24",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -523,20 +523,20 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#35"
+        "@id": "#25"
       },
       "shacl:name": "owners",
       "smaps": {
         "type-property-lexical-info": {
-          "#34": "[(28,10)-(28,16)]"
+          "#24": "[(28,10)-(28,16)]"
         },
         "lexical": {
-          "#34": "[(27,8)-(32,9)]"
+          "#24": "[(27,8)-(32,9)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#31",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -555,25 +555,25 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#17": "[(2,10)-(2,17)]"
+          "#31": "[(2,10)-(2,17)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#32",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#19"
+        "@id": "#33"
       },
       "data:age": {
-        "@id": "#20"
+        "@id": "#34"
       },
       "data:owners": {
-        "@id": "#21"
+        "@id": "#35"
       },
       "core:name": "pet",
       "smaps": {
@@ -583,13 +583,13 @@
         "lexical": {
           "data:owners": "[(6,4)-(6,30)]",
           "data:name": "[(4,4)-(4,20)]",
-          "#18": "[(3,9)-(7,3)]",
+          "#32": "[(3,9)-(7,3)]",
           "data:age": "[(5,4)-(5,13)]"
         }
       }
     },
     {
-      "@id": "#35",
+      "@id": "#25",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -598,7 +598,7 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#24"
+          "@id": "#14"
         }
       ],
       "doc:recursive": true,
@@ -608,18 +608,18 @@
           "doc:recursive": "true"
         },
         "resolved-link": {
-          "#35": "amf://id#36"
+          "#25": "amf://id#26"
         },
         "lexical": {
-          "#35": "[(9,4)-(18,5)]"
+          "#25": "[(9,4)-(18,5)]"
         },
         "resolved-link-target": {
-          "#35": "amf://id#24"
+          "#25": "amf://id#14"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#33",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -638,12 +638,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#19": "[(4,12)-(4,20)]"
+          "#33": "[(4,12)-(4,20)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#34",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -662,12 +662,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#20": "[(5,11)-(5,13)]"
+          "#34": "[(5,11)-(5,13)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#35",
       "@type": [
         "data:Array",
         "rdf:Seq",
@@ -676,21 +676,21 @@
       ],
       "rdfs:member": [
         {
-          "@id": "#22"
+          "@id": "#36"
         },
         {
-          "@id": "#23"
+          "@id": "#37"
         }
       ],
       "core:name": "owners",
       "smaps": {
         "lexical": {
-          "#21": "[(6,14)-(6,30)]"
+          "#35": "[(6,14)-(6,30)]"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#36",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -709,12 +709,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#22": "[(6,15)-(6,22)]"
+          "#36": "[(6,15)-(6,22)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#37",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -733,7 +733,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#23": "[(6,24)-(6,29)]"
+          "#37": "[(6,24)-(6,29)]"
         }
       }
     },

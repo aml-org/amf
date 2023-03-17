@@ -33,16 +33,14 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
     val fieldEntries = o.fields.fields()
     fieldEntries.foreach { case FieldEntry(field, value) =>
       value.value match {
-        case s: Shape                          => updateShapeField(o, field, s)
-        case a: AmfArray if isArrayOfShapes(a) => updateShapeArrayField(o, field, a)
-        case _                                 => // ignore
+        case s: Shape    => updateShapeField(o, field, s)
+        case a: AmfArray => updateArrayField(o, field, a)
+        case _           => // ignore
       }
     }
   }
 
-  private def isArrayOfShapes(a: AmfArray): Boolean = a.values.nonEmpty && a.values.forall(v => v.isInstanceOf[Shape])
-
-  private def updateShapeArrayField(o: AmfObject, field: Field, a: AmfArray): Unit = {
+  private def updateArrayField(o: AmfObject, field: Field, a: AmfArray): Unit = {
     val updatedValues = a.values.map {
       case s: Shape => updateShape(s)
       case v        => v // ignore
