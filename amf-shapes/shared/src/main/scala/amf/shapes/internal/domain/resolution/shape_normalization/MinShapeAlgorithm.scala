@@ -1072,12 +1072,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneElement(mutable.Map.empty) // TODO this might not be working as expected
-    if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
-      clonedProp.annotations += InheritanceProvenance(from.id)
-      clonedProp.id = clonedProp.id + "/inherited"
+    if (prop.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
+      prop.annotations += InheritanceProvenance(from.id)
     }
-    clonedProp.asInstanceOf[PropertyShape]
+    prop
   }
 
   object UnionErrorHandler extends AMFErrorHandler {
