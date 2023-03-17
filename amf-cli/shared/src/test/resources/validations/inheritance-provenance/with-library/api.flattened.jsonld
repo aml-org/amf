@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#10",
+      "@id": "#9",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#10": "[(2,0)-(7,21)]"
+          "#9": "[(2,0)-(7,21)]"
         }
       }
     },
@@ -44,11 +44,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#10"
+        "@id": "#9"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#9"
+        "@id": "#8"
       },
       "smaps": {
         "aliases-array": {
@@ -94,7 +94,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#8"
+          "@id": "#3"
         }
       ],
       "shacl:name": "ApiType",
@@ -161,38 +161,6 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#8",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#libProp"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#4"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "libProp",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,15)-(6,21)]",
-          "#8": "[(6,6)-(6,21)]"
-        },
-        "inheritance-provenance": {
-          "#8": "amf://id#2"
-        }
-      }
-    },
-    {
       "@id": "#3",
       "@type": [
         "shacl:PropertyShape",
@@ -218,6 +186,9 @@
         "lexical": {
           "raml-shapes:range": "[(6,15)-(6,21)]",
           "#3": "[(6,6)-(6,21)]"
+        },
+        "inheritance-provenance": {
+          "#3": "amf://id#2"
         }
       }
     },
