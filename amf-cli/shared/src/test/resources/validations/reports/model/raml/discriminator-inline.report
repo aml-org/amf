@@ -1,0 +1,24 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-inline.raml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'discriminator' not supported in a RAML 1.0 union node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-inline.raml#/declares/union/PersonOrDog
+  Property: 
+  Range: [(17,4)-(19,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-inline.raml
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#discriminator-on-inline-schema
+  Message: Property 'discriminator' not supported in a RAML 1.0 inline schema
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-inline.raml#/web-api/endpoint/%2Fpet/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema
+  Property: 
+  Range: [(24,8)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-inline.raml

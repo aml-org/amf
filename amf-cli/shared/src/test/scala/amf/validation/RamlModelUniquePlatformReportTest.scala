@@ -733,4 +733,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("JSON schemas should not participate in type inheritance") {
     validate("/raml/raml-with-invalid-types/api.raml", Some("raml/json-schema-inheritance.report"))
   }
+
+  // W-11802973: github issue 1452 https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md#using-discriminator
+  test("RAML discriminator cannot be defined inline") {
+    validate("/raml/discriminator-inline.raml", Some("raml/discriminator-inline.report"))
+  }
 }
