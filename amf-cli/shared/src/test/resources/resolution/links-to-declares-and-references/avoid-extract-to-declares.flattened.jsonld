@@ -120,7 +120,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#14"
+          "@id": "#2"
         }
       ],
       "shacl:name": "CustomerProductList",
@@ -145,7 +145,7 @@
       }
     },
     {
-      "@id": "#14",
+      "@id": "#2",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -169,10 +169,10 @@
         },
         "lexical": {
           "raml-shapes:range": "[(7,19)-(12,0)]",
-          "#14": "[(7,6)-(12,0)]"
+          "#2": "[(7,6)-(12,0)]"
         },
         "inheritance-provenance": {
-          "#14": "amf://id#1"
+          "#2": "amf://id#1"
         }
       }
     },
@@ -306,35 +306,6 @@
         },
         "resolved-link": {
           "#5": "amf://id#4"
-        }
-      }
-    },
-    {
-      "@id": "#2",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#coRegistrant"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#3"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "coRegistrant",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(7,19)-(12,0)]",
-          "#2": "[(7,6)-(12,0)]"
         }
       }
     }

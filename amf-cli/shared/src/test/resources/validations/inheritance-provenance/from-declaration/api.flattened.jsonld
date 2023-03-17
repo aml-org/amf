@@ -120,10 +120,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#12"
+          "@id": "#2"
         },
         {
-          "@id": "#13"
+          "@id": "#12"
         }
       ],
       "shacl:name": "Person",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "@id": "#12",
+      "@id": "#2",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -170,15 +170,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(6,12)-(6,18)]",
-          "#12": "[(6,6)-(7,0)]"
+          "#2": "[(6,6)-(7,0)]"
         },
         "inheritance-provenance": {
-          "#12": "amf://id#1"
+          "#2": "amf://id#1"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#12",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -191,7 +191,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#14"
+        "@id": "#13"
       },
       "shacl:minCount": 1,
       "shacl:name": "employeeNumber",
@@ -202,7 +202,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(13,26)-(13,33)]",
-          "#13": "[(13,10)-(14,0)]"
+          "#12": "[(13,10)-(14,0)]"
         }
       }
     },
@@ -229,7 +229,7 @@
       }
     },
     {
-      "@id": "#14",
+      "@id": "#13",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -246,7 +246,7 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(13,26)-(13,33)]",
-          "#14": "[(13,10)-(14,0)]"
+          "#13": "[(13,10)-(14,0)]"
         }
       }
     },
@@ -303,35 +303,6 @@
         },
         "resolved-link-target": {
           "#1": "amf://id#1"
-        }
-      }
-    },
-    {
-      "@id": "#2",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#name"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#3"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,12)-(6,18)]",
-          "#2": "[(6,6)-(7,0)]"
         }
       }
     }
