@@ -732,10 +732,12 @@ case class InlineOasTypeParser(
         map.key("discriminator", DiscriminatorParser(shape, _).parse())
       } else {
         map.key("discriminator", NodeShapeModel.Discriminator in shape)
-        map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
         map.key(
           "discriminatorValue".asOasExtension,
           entry => {
+            val setDiscriminatorValueField = NodeShapeModel.DiscriminatorValue in shape
+            setDiscriminatorValueField(entry)
+
             val valueDataNode = DataNodeParser(entry.value).parse()
             shape.set(NodeShapeModel.DiscriminatorValueDataNode, valueDataNode, Annotations(entry.key))
           }
