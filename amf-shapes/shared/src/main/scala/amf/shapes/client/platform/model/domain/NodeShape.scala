@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
-import amf.core.client.platform.model.domain.{PropertyShape, Shape}
+import amf.core.client.platform.model.domain.{DataNode, PropertyShape, Shape}
 import amf.shapes.client.platform.model.domain.federation.ExternalPropertyShape
 import amf.shapes.client.scala.model.domain.{NodeShape => InternalNodeShape}
 import amf.shapes.internal.convert.ShapeClientConverters.ClientList
@@ -22,6 +22,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def closed: BoolField                                                = _internal.closed
   def discriminator: StrField                                          = _internal.discriminator
   def discriminatorValue: StrField                                     = _internal.discriminatorValue
+  def discriminatorValueDataNode: DataNode                             = _internal.discriminatorValueDataNode
   def discriminatorMapping: ClientList[IriTemplateMapping]             = _internal.discriminatorMapping.asClient
   def discriminatorValueMapping: ClientList[DiscriminatorValueMapping] = _internal.discriminatorValueMapping.asClient
   def properties: ClientList[PropertyShape]                            = _internal.properties.asClient
@@ -63,6 +64,10 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   }
   def withDiscriminatorValue(value: String): this.type = {
     _internal.withDiscriminatorValue(value)
+    this
+  }
+  def withDiscriminatorValueDataNode(value: DataNode): this.type = {
+    _internal.withDiscriminatorValueDataNode(value)
     this
   }
   def withDiscriminatorMapping(mappings: ClientList[IriTemplateMapping]): this.type = {
