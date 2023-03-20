@@ -35,16 +35,16 @@ class EditingResolutionTest extends ResolutionTest {
   }
 
   // Fixed SOF but API is invalid
-//  multiGoldenTest("API with recursive shapes - SOF version", "recursive4.editing.%s") { config =>
-//    cycle(
-//      "recursive4.raml",
-//      config.golden,
-//      Raml10YamlHint,
-//      target = AmfJsonHint,
-//      productionPath,
-//      renderOptions = Some(config.renderOptions)
-//    )
-//  }
+  multiGoldenTest("API with recursive shapes - SOF version", "recursive4.editing.%s") { config =>
+    cycle(
+      "recursive4.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      productionPath,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
 
   multiGoldenTest("Double union inheritance with same members", "api.%s") { config =>
     cycle(
