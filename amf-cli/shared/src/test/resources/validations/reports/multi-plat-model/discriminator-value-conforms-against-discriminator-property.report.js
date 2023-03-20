@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be integer
   Severity: Violation
-  Target: http://test.com/payload/data-node
-  Property: http://test.com/payload/data-node
-  Range:
-  Location:
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-value-conforms-against-discriminator-property/api.raml#/declares/shape/Pet/scalar_1
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-value-conforms-against-discriminator-property/api.raml#/declares/shape/Pet/scalar_1
+  Range: [(8,24)-(8,28)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/discriminator-value-conforms-against-discriminator-property/api.raml
