@@ -4,8 +4,10 @@ import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.internal.domain.metamodel.UnionShapeModel.AnyOf
 import amf.shapes.internal.domain.metamodel._
 
 import scala.collection.mutable
@@ -48,7 +50,7 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
       val resolvedShape = withVisitTracking(shape) { () =>
         resolveInheritance(shape)
       }
-      addToCache(resolvedShape)
+//      addToCache(resolvedShape)
       resolvedShape
     } else {
       shape
@@ -76,6 +78,26 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
         case any: AnyShape if isSimpleInheritance(any, superTypes) =>
           ExamplesCopier(normalize(superTypes.head), resolvedShape)
         case _ => // Nothing to do
+      }
+
+      addToCache(resolvedShape)
+
+      resolvedShape match {
+        case u: UnionShape =>
+          val originalAnnotations = u.fields.getValueAsOption(AnyOf) match {
+            case Some(value) => value.annotations
+            case None        => Annotations()
+          }
+
+
+
+          val resolvedAnyOf = u.anyOf.map {
+            case s if s.inherits.nonEmpty => ShapeNormalizationInheritanceResolver(context).normalize(s)
+            case s                        => s
+          }
+
+          u.setArrayWithoutId(AnyOf, resolvedAnyOf, originalAnnotations)
+        case _ => // ignore
       }
 
       resolvedShape
