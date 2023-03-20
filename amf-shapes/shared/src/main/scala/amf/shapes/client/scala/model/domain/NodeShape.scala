@@ -1,7 +1,7 @@
 package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -23,6 +23,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def closed: BoolField                             = fields.field(Closed)
   def discriminator: StrField                       = fields.field(Discriminator)
   def discriminatorValue: StrField                  = fields.field(DiscriminatorValue)
+  def discriminatorValueDataNode: DataNode          = fields.field(DiscriminatorValueDataNode)
   def discriminatorMapping: Seq[IriTemplateMapping] = fields.field(DiscriminatorMapping)
   def discriminatorValueMapping: Seq[DiscriminatorValueMapping] =
     fields.field(NodeShapeModel.DiscriminatorValueMapping)
@@ -47,6 +48,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def withClosed(closed: Boolean): this.type                                 = set(Closed, closed)
   def withDiscriminator(discriminator: String): this.type                    = set(Discriminator, discriminator)
   def withDiscriminatorValue(value: String): this.type                       = set(DiscriminatorValue, value)
+  def withDiscriminatorValueDataNode(value: DataNode): this.type             = set(DiscriminatorValueDataNode, value)
   def withDiscriminatorMapping(mappings: Seq[IriTemplateMapping]): this.type = setArray(DiscriminatorMapping, mappings)
   def discriminatorValueMapping(mappings: Seq[DiscriminatorValueMapping]): NodeShape.this.type =
     setArray(NodeShapeModel.DiscriminatorValueMapping, mappings)
