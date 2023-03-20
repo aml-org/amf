@@ -47,8 +47,8 @@ val amlVersion = versions("amf.aml")
 
 lazy val amlJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amlJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJS")
-lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"        % amlVersion
-lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs0.6" % amlVersion
+lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"        % amlVersion changing()
+lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs0.6" % amlVersion changing()
 
 lazy val rdfJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJVM")
 lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf"        % amlVersion
