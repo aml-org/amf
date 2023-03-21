@@ -53,6 +53,12 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     ModelDoc(ModelVocabularies.Shapes, "discriminatorValue", "Values for the discriminator property")
   )
 
+  val DiscriminatorValueDataNode: Field = Field(
+    DataNodeModel,
+    Shapes + "discriminatorValueDataNode",
+    ModelDoc(ModelVocabularies.Shapes, "discriminatorValueDataNode", "Value for the discriminator property represented as a DataNode")
+  )
+
 //  @deprecated("Use DiscriminatorValueMapping", "4.7.2")
   val DiscriminatorMapping: Field = Field(
     Array(IriTemplateMappingModel),
@@ -163,6 +169,7 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     AdditionalPropertiesSchema,
     Discriminator,
     DiscriminatorValue,
+    DiscriminatorValueDataNode,
     DiscriminatorMapping,
     DiscriminatorValueMapping,
     Properties,

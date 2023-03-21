@@ -1660,8 +1660,16 @@ sealed abstract class RamlTypeParser(
       }
 
       map.key("discriminator", (NodeShapeModel.Discriminator in shape).allowingAnnotations)
-      map.key("discriminatorValue", (NodeShapeModel.DiscriminatorValue in shape).allowingAnnotations)
+      map.key(
+        "discriminatorValue",
+        entry => {
+          val setDiscriminatorValueField = (NodeShapeModel.DiscriminatorValue in shape).allowingAnnotations
+          setDiscriminatorValueField(entry)
 
+          val valueDataNode = DataNodeParser(entry.value).parse()
+          shape.set(NodeShapeModel.DiscriminatorValueDataNode, valueDataNode, Annotations(entry.key))
+        }
+      )
       map.key(
         "properties",
         entry => {
