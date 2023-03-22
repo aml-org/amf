@@ -23,7 +23,7 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
 
     stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
 
-    if (alreadyInStack) {
+    if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
       notifyListeners()
     } else {
       analyzeReferencesIn(shape)
@@ -35,6 +35,13 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
   private def notifyListeners(): Unit = {
     listeners.foreach { listener =>
       listener.onRecursion(stack.readOnly())(this)
+    }
+  }
+
+  private def isAllowedMultipleTimesInStack(shape: Shape): Boolean = {
+    shape match {
+      case _: PropertyShape => true
+      case _                => false
     }
   }
 

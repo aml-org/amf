@@ -15,13 +15,7 @@ object RecursiveShapePlacer extends AnalysisListener {
   override def onRecursion(stack: ReadOnlyStack)(implicit analysis: Analysis): Unit = {
     val currentFrame  = stack.peek().asInstanceOf[MiddleFrame] // where the loop closes
     val previousFrame = stack.peek(1)
-
-    currentFrame.shape match {
-      case _: PropertyShape => // skip, we want to detect the recursion on the property range (not the property itself)
-      case _ =>
-        placeRecursiveShape(stack, currentFrame, previousFrame)
-    }
-
+    placeRecursiveShape(stack, currentFrame, previousFrame)
   }
   private def placeRecursiveShape(stack: ReadOnlyStack, currentFrame: MiddleFrame, previousFrame: Frame): Unit = {
     val parent         = maybeCopyParent(stack, previousFrame)
