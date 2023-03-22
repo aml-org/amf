@@ -6,6 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
 
 case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
+  private var alreadyUpdated: Set[AmfObject] = Set.empty
   def update(e: AmfElement): AmfElement = {
     e match {
       case s: Shape => updateShape(s)
@@ -30,13 +31,22 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
   }
 
   def updateFields(o: AmfObject): Unit = {
-    val fieldEntries = o.fields.fields()
-    fieldEntries.foreach { case FieldEntry(field, value) =>
-      value.value match {
-        case s: Shape    => updateShapeField(o, field, s)
-        case a: AmfArray => updateArrayField(o, field, a)
-        case _           => // ignore
+    ifNotUpdated(o) { o =>
+      val fieldEntries = o.fields.fields()
+      fieldEntries.foreach { case FieldEntry(field, value) =>
+        value.value match {
+          case s: Shape    => updateShapeField(o, field, s)
+          case a: AmfArray => updateArrayField(o, field, a)
+          case _           => // ignore
+        }
       }
+    }
+  }
+
+  private def ifNotUpdated(o: AmfObject)(fn: AmfObject => Unit): Unit = {
+    if (!alreadyUpdated.contains(o)) {
+      fn(o)
+      alreadyUpdated = alreadyUpdated + o
     }
   }
 
