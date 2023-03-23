@@ -2,7 +2,7 @@ package amf.shapes.internal.domain.resolution.shape_normalization.recursions.ana
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.shapes.client.scala.model.domain.{ArrayShape, NilShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{ArrayShape, NilShape, ScalarShape, UnionShape}
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.listeners.CallbackListener
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.{
   Analysis,
@@ -28,8 +28,21 @@ trait ShapeHelper {
     * determine that we need to start a new sub-analysis if we aren't already in one
     */
   private def unionEnablesCycles(union: UnionShape): Boolean = {
-    union.anyOf.exists { member =>
-      memberEnablesCycles(union, member)
+    object PerformanceOrder extends Ordering[Shape] {
+      // Lower nr. is higher priority
+      private def priority(s: Shape): Int = {
+        s match {
+          case _: ScalarShape | _: NilShape => 0
+          case _                            => 1
+        }
+      }
+      override def compare(x: Shape, y: Shape): Int = priority(x).compare(priority(y))
+    }
+
+    union.anyOf.sorted(PerformanceOrder).exists {
+      case _: ScalarShape => true
+      case _: NilShape    => true
+      case member         => memberEnablesCycles(union, member)
     }
   }
 
