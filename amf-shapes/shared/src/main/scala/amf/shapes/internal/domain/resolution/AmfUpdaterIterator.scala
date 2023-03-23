@@ -3,10 +3,10 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.traversal.iterator.{AmfIterator, InstanceCollector, VisitedCollector}
 
-case class AmfUpdaterIterator private (
-    var buffer: List[AmfElement],
-    updater: AmfElement => AmfElement
-) extends AmfIterator {
+import scala.collection.immutable.Queue
+
+case class AmfUpdaterIterator private (var buffer: Queue[AmfElement], updater: AmfElement => AmfElement)
+    extends AmfIterator {
   private val visited: VisitedCollector = InstanceCollector()
 
   override def hasNext: Boolean = {
@@ -47,6 +47,6 @@ case class AmfUpdaterIterator private (
 
 object AmfUpdaterIterator {
   def apply(unit: BaseUnit, updater: AmfElement => AmfElement): AmfUpdaterIterator = {
-    AmfUpdaterIterator(List(unit), updater)
+    AmfUpdaterIterator(Queue(unit), updater)
   }
 }
