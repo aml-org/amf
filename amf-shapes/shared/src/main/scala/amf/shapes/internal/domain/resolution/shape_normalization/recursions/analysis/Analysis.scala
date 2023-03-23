@@ -10,7 +10,8 @@ import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stac
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.frames.BottomFrame
 
 class Analysis(var listeners: Seq[AnalysisListener]) {
-  val stack: MutableStack = MutableStack()
+  val stack: MutableStack         = MutableStack()
+  private var alreadyAnalyzed: Set[Shape] = Set.empty
 
   def analyze(shape: Shape): Unit = {
     stack.push(BottomFrame(shape))
@@ -23,7 +24,7 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
 
     stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
 
-    if (alreadyInStack) {
+    if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
       notifyListeners()
     } else {
       analyzeReferencesIn(shape)
@@ -38,8 +39,15 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
     }
   }
 
-  private def analyzeReferencesIn(shape: Shape): Unit = {
+  private def isAllowedMultipleTimesInStack(shape: Shape): Boolean = {
     shape match {
+      case _: PropertyShape => true
+      case _                => false
+    }
+  }
+
+  private def analyzeReferencesIn(shape: Shape): Unit = {
+    ifNotAnalyzed(shape) {
       case union: UnionShape       => analyzeReferencesInUnion(union)
       case scalar: ScalarShape     => analyzeReferencesInShape(scalar)
       case array: ArrayShape       => analyzeReferencesInArray(array)
@@ -51,6 +59,13 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
       case node: NodeShape         => analyzeReferencesInNode(node)
       case any: AnyShape           => analyzeReferencesInShape(any)
       case _: RecursiveShape       => // ignore
+    }
+  }
+
+  private def ifNotAnalyzed(shape: Shape)(fn: Shape => Unit): Unit = {
+    if (!alreadyAnalyzed.contains(shape)) {
+      fn(shape)
+      alreadyAnalyzed = alreadyAnalyzed + shape
     }
   }
 
