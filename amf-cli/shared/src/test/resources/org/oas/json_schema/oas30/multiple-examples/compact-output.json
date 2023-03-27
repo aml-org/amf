@@ -4,6 +4,11 @@
   "definitions": {
     "root": {
       "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      },
       "example": {
         "value": {
           "accountId": "value 1"
@@ -19,11 +24,6 @@
           "value": {
             "accountId": "value 3"
           }
-        }
-      },
-      "properties": {
-        "a": {
-          "type": "string"
         }
       }
     }

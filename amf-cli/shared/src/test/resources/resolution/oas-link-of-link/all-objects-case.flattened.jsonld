@@ -296,6 +296,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/lexical/element_0"
         }
       ],
@@ -365,9 +368,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,4)-(14,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,2)-(18,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(18,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/any/E/source-map/declared-element/element_0",
@@ -413,10 +421,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
@@ -483,14 +494,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(13,0)]"
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(13,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(9,3)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(13,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declares/shape/C/source-map/declared-element/element_0",

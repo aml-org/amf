@@ -494,6 +494,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/lexical/element_0"
         }
       ],
@@ -639,9 +642,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(10,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(14,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(11,19)-(14,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/payload/default/shape/default/source-map/auto-generated-name/element_0",

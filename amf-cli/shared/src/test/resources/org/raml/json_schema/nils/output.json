@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "nullparam",
         "arrayparam"
@@ -15,7 +14,8 @@
         "arrayparam": {
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

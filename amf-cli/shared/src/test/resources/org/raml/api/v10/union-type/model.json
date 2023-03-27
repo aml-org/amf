@@ -19,23 +19,7 @@ types:
         type: string
         pattern: .+@.+\..+
   Office:
+    type: object
     properties:
       workers:
-        anyOf:
-          -
-            properties:
-              name:
-                type: string
-              email:
-                type: string
-                pattern: .+@.+\..+
-              age:
-                type: integer
-                minimum: 0
-          -
-            properties:
-              name:
-                type: string
-              email:
-                type: string
-                pattern: .+@.+\..+
+        type: Person | Robot

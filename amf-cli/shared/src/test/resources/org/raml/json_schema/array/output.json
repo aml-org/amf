@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "value"
       ],
@@ -22,7 +21,8 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

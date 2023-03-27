@@ -4,6 +4,14 @@
   "definitions": {
     "Order": {
       "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      },
       "x-amf-examples": {
         "application/json0": {
           "firstName": "Bob",
@@ -12,14 +20,6 @@
         "application/json1": {
           "firstName": "Bob",
           "lastName": "Jones"
-        }
-      },
-      "properties": {
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
         }
       }
     }

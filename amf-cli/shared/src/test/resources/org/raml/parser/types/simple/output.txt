@@ -2,6 +2,7 @@
 title: arrays
 types:
   Human:
+    type: object
     properties:
       family:
         properties:
@@ -14,10 +15,8 @@ types:
       name:
         type: string
   Address:
-    type: string
   Email:
     properties:
       base:
-        type: string
       domain:
         type: string

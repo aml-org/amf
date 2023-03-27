@@ -2,12 +2,11 @@
 title: My API With Types
 types:
   comment:
+    properties:
+      name:
+      comment:
+        type: nil | string
     example:
       value:
         name: Fred
         comment: null
-    properties:
-      name:
-        type: string
-      comment:
-        type: nil | string

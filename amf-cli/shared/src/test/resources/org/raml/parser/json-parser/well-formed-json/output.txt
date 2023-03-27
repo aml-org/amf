@@ -13,8 +13,13 @@ types:
       "202":
         body:
           application/json:
+            type: object
             properties:
               key:
+                type: object
+                properties:
+                  x:
+                    type: string
                 example:
                   x: lala
                   complex:
@@ -39,6 +44,3 @@ types:
                           - 2
                           - three
                           - null
-                properties:
-                  x:
-                    type: string

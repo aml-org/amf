@@ -452,10 +452,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
@@ -603,14 +606,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,12)-(20,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(29,11)]"
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,12)-(28,13)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,10)-(18,31)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(29,11)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myOtherName/shape/myOtherName/source-map/parameter-binding-in-body-lexical-info/element_0",

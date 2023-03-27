@@ -4,12 +4,13 @@ title: Example with headers
   get:
     headers:
       aHeader:
-        example:
-          a: someText
-          b: 12
-        description: some description
+        type: object
         properties:
           a:
             type: string
           b:
             type: integer
+        example:
+          a: someText
+          b: 12
+        description: some description

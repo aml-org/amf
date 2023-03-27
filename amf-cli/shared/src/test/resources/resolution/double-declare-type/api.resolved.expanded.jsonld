@@ -67,7 +67,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#3",
+            "@id": "#2",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -82,7 +82,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#4",
+                "@id": "#3",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -96,7 +96,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#5",
+                    "@id": "#4",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -117,7 +117,7 @@
                     "smaps": {
                       "lexical": {
                         "shacl:datatype": "[(3,5)-(3,11)]",
-                        "#5": "[(3,2)-(3,11)]"
+                        "#4": "[(3,2)-(3,11)]"
                       }
                     }
                   }
@@ -139,7 +139,7 @@
                   },
                   "lexical": {
                     "raml-shapes:range": "[(3,5)-(3,11)]",
-                    "#4": "[(3,2)-(3,11)]"
+                    "#3": "[(3,2)-(3,11)]"
                   }
                 }
               }
@@ -154,7 +154,8 @@
                 "shacl:closed": "true"
               },
               "lexical": {
-                "#3": "[(2,0)-(3,11)]"
+                "shacl:property": "[(2,11)-(3,11)]",
+                "#2": "[(2,0)-(3,11)]"
               }
             }
           }
@@ -166,7 +167,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#2",
+            "@id": "#5",
             "@type": [
               "doc:APIContractProcessingData"
             ],
@@ -206,7 +207,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#3",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -220,7 +221,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -241,7 +242,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(3,5)-(3,11)]",
-                    "#5": "[(3,2)-(3,11)]"
+                    "#4": "[(3,2)-(3,11)]"
                   }
                 }
               }
@@ -263,7 +264,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(3,5)-(3,11)]",
-                "#4": "[(3,2)-(3,11)]"
+                "#3": "[(3,2)-(3,11)]"
               }
             }
           }
@@ -278,9 +279,10 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#6": "amf://id#3"
+            "#6": "amf://id#2"
           },
           "lexical": {
+            "shacl:property": "[(2,11)-(3,11)]",
             "#6": "[(2,0)-(3,11)]"
           },
           "resolved-link": {
@@ -307,7 +309,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#4",
+            "@id": "#3",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -321,7 +323,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#5",
+                "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -342,7 +344,7 @@
                 "smaps": {
                   "lexical": {
                     "shacl:datatype": "[(3,5)-(3,11)]",
-                    "#5": "[(3,2)-(3,11)]"
+                    "#4": "[(3,2)-(3,11)]"
                   }
                 }
               }
@@ -364,7 +366,7 @@
               },
               "lexical": {
                 "raml-shapes:range": "[(3,5)-(3,11)]",
-                "#4": "[(3,2)-(3,11)]"
+                "#3": "[(3,2)-(3,11)]"
               }
             }
           }
@@ -379,9 +381,10 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#7": "amf://id#3"
+            "#7": "amf://id#2"
           },
           "lexical": {
+            "shacl:property": "[(2,11)-(3,11)]",
             "#7": "[(2,0)-(3,11)]"
           },
           "resolved-link": {

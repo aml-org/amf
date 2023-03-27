@@ -2,18 +2,18 @@
 title: Test API
 types:
   MyType1:
-    maxProperties: 7
     properties:
       lala:
         type: string
+    maxProperties: 7
 annotationTypes:
   MyAnnotationType1:
     properties:
       pp:
-        maxProperties: 7
         properties:
           lala:
             type: string
+        maxProperties: 7
 (MyAnnotationType1):
   pp:
     lala: lala

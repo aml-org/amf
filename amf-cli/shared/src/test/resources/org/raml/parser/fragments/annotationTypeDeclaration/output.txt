@@ -16,6 +16,6 @@ properties:
           Dot separated path to method
         value: server.controllers.user.findUser
   config?:
+    type: object
     description: |
       Config object will be passed as the first parameter to the controller on every call
-    type: object

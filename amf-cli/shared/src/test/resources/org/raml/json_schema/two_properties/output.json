@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "name",
         "age"
@@ -15,7 +14,8 @@
         "age": {
           "type": "integer"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

@@ -3,15 +3,14 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "properties": {
         "must": {
           "$ref": "#/definitions/Query"
         }
-      }
+      },
+      "type": "object"
     },
     "Query": {
-      "type": "object",
       "properties": {
         "root": {
           "$ref": "#/definitions/root"
@@ -19,10 +18,10 @@
         "filteredQuery": {
           "$ref": "#/definitions/FilteredQuery"
         }
-      }
+      },
+      "type": "object"
     },
     "FilteredQuery": {
-      "type": "object",
       "required": [
         "filter"
       ],
@@ -30,18 +29,18 @@
         "filter": {
           "$ref": "#/definitions/Filter"
         }
-      }
+      },
+      "type": "object"
     },
     "Filter": {
-      "type": "object",
       "properties": {
         "boolFilter": {
           "$ref": "#/definitions/BoolFilter"
         }
-      }
+      },
+      "type": "object"
     },
     "BoolFilter": {
-      "type": "object",
       "required": [
         "filters"
       ],
@@ -49,7 +48,8 @@
         "filters": {
           "$ref": "#/definitions/Filter"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

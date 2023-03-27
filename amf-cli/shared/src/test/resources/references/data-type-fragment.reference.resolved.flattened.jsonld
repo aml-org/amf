@@ -61,11 +61,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#3"
+        "@id": "#2"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#2"
+        "@id": "#5"
       },
       "smaps": {
         "lexical": {
@@ -85,7 +85,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#4"
+          "@id": "#3"
         }
       ],
       "shacl:name": "person",
@@ -94,9 +94,10 @@
           "shacl:closed": "true"
         },
         "resolved-link-target": {
-          "#6": "amf://id#3"
+          "#6": "amf://id#2"
         },
         "lexical": {
+          "shacl:property": "[(2,11)-(5,0)]",
           "#6": "[(2,0)-(5,0)]"
         },
         "resolved-link": {
@@ -108,7 +109,7 @@
       }
     },
     {
-      "@id": "#3",
+      "@id": "#2",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -119,7 +120,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#4"
+          "@id": "#3"
         }
       ],
       "shacl:name": "type",
@@ -128,12 +129,13 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#3": "[(2,0)-(5,0)]"
+          "shacl:property": "[(2,11)-(5,0)]",
+          "#2": "[(2,0)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#2",
+      "@id": "#5",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -141,7 +143,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#4",
+      "@id": "#3",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -154,7 +156,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#5"
+        "@id": "#4"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
@@ -165,12 +167,12 @@
         },
         "lexical": {
           "raml-shapes:range": "[(3,7)-(5,0)]",
-          "#4": "[(3,2)-(5,0)]"
+          "#3": "[(3,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#4",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -186,11 +188,11 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#5": "[(4,4)-(4,8)]"
+          "#4": "[(4,4)-(4,8)]"
         },
         "lexical": {
           "shacl:datatype": "[(4,4)-(5,0)]",
-          "#5": "[(3,2)-(5,0)]"
+          "#4": "[(3,2)-(5,0)]"
         }
       }
     }

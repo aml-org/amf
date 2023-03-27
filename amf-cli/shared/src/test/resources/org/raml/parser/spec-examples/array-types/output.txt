@@ -2,6 +2,7 @@
 title: My API With Types
 types:
   Email:
+    type: object
     properties:
       name:
         type: string
@@ -9,6 +10,7 @@ types:
     minItems: 1
     uniqueItems: true
     items:
+      type: object
       properties:
         name:
           type: string

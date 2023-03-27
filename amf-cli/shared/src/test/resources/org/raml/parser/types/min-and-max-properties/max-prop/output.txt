@@ -2,10 +2,8 @@
 title: My API With Types
 types:
   Initial_comments:
+    type: object
     maxProperties: 2
-    example:
-      initial_comments: mm
-      author: L
     properties:
       comment_id?:
         type: number
@@ -13,3 +11,6 @@ types:
         type: string
       author?:
         type: string
+    example:
+      initial_comments: mm
+      author: L

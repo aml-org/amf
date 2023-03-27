@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "name",
         "friend"
@@ -15,7 +14,8 @@
         "friend": {
           "$ref": "#/definitions/friend"
         }
-      }
+      },
+      "type": "object"
     },
     "friend": {
       "type": "object",

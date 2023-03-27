@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "other"
       ],
@@ -11,15 +10,16 @@
         "other": {
           "$ref": "#/definitions/default"
         }
-      }
+      },
+      "type": "object"
     },
     "default": {
-      "type": "object",
       "properties": {
         "a": {
           "$ref": "#/definitions/default"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

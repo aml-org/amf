@@ -3,6 +3,11 @@ title: main
 baseUri: http://api.com/main
 types:
   User:
+    properties:
+      name:
+        type: string
+      age?:
+        type: integer
     examples:
       pepo:
         name: pipo
@@ -13,8 +18,3 @@ types:
       tato:
         name: tato
         age: 88
-    properties:
-      name:
-        type: string
-      age?:
-        type: integer

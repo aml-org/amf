@@ -21,11 +21,9 @@ annotationTypes:
       property1:
         properties:
           field1?:
-            type: string
           field2:
             type: number
       property2?:
-        type: string
 /resource:
   get:
     (simpleAnnotation): simpleAnnotationValue

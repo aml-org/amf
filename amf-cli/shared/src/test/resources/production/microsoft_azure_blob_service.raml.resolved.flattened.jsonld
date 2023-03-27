@@ -272,6 +272,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/source-map/default-node/element_0"
+        }
       ]
     },
     {
@@ -317,6 +322,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#examples",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,12)-(18,35)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/examples/example/Get_storage_stats%22/source-map/synthesized-field/element_1",

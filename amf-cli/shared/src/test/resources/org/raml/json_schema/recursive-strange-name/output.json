@@ -3,28 +3,28 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "required": [
         "other"
       ],
       "properties": {
         "other": {
-          "type": "object",
           "properties": {
             "a": {
               "$ref": "#/definitions/default"
             }
-          }
+          },
+          "type": "object"
         }
-      }
+      },
+      "type": "object"
     },
     "default": {
-      "type": "object",
       "properties": {
         "a": {
           "$ref": "#/definitions/default"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

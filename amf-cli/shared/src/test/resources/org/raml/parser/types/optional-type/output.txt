@@ -2,10 +2,6 @@
 title: API
 types:
   SomeType:
-    example:
-      someProperty:
-        someProperty:
-          someProperty: null
     properties:
       someProperty:
         anyOf:
@@ -14,3 +10,7 @@ types:
             (amf-recursive): amf://id#1
           -
             type: nil
+    example:
+      someProperty:
+        someProperty:
+          someProperty: null

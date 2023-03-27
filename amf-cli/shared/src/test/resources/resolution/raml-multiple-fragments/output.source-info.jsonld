@@ -99,7 +99,7 @@
           "@id": "#17"
         },
         {
-          "@id": "#14"
+          "@id": "#13"
         }
       ]
     },
@@ -208,11 +208,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#14"
+        "@id": "#13"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "#13"
+        "@id": "#14"
       },
       "smaps": {
         "lexical": {
@@ -247,6 +247,7 @@
           "#15": "amf://id#15"
         },
         "lexical": {
+          "shacl:property": "[(5,15)-(7,22)]",
           "#15": "[(4,2)-(7,22)]"
         },
         "declared-element": {
@@ -323,7 +324,7 @@
           "#17": "[(3,0)-(3,4)]"
         },
         "resolved-link-target": {
-          "#17": "amf://id#14"
+          "#17": "amf://id#13"
         }
       }
     },
@@ -352,7 +353,8 @@
         },
         "lexical": {
           "shacl:name": "[(4,2)-(4,8)]",
-          "#2": "[(4,2)-(7,22)]"
+          "#2": "[(4,2)-(7,22)]",
+          "shacl:property": "[(5,15)-(7,22)]"
         },
         "declared-element": {
           "#2": ""
@@ -434,7 +436,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#14",
+      "@id": "#13",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -451,17 +453,17 @@
       "core:description": "this is a data type",
       "smaps": {
         "type-property-lexical-info": {
-          "#14": "[(3,0)-(3,4)]"
+          "#13": "[(3,0)-(3,4)]"
         },
         "lexical": {
           "core:description": "[(2,0)-(3,0)]",
-          "#14": "[(2,0)-(3,12)]",
+          "#13": "[(2,0)-(3,12)]",
           "shacl:datatype": "[(3,0)-(3,12)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "doc:APIContractProcessingData"
       ],

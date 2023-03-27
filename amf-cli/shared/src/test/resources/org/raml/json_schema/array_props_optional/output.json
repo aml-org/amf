@@ -4,7 +4,6 @@
   "definitions": {
     "root": {
       "additionalProperties": false,
-      "type": "object",
       "properties": {
         "name": {
           "type": "string"
@@ -15,7 +14,8 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }

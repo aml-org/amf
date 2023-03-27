@@ -350,6 +350,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0"
@@ -391,6 +396,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(16,27)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0",

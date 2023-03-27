@@ -3,7 +3,6 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
       "properties": {
         "apiHeader": {
           "$ref": "#/definitions/ApiHeaderType"
@@ -14,13 +13,13 @@
         "returnDiagnosticsFlag": {
           "type": "boolean"
         }
-      }
+      },
+      "type": "object"
     },
     "ApiHeaderType": {
       "type": "object"
     },
     "RateCriteriaType": {
-      "type": "object",
       "properties": {
         "chargeOverwrite": {
           "items": {
@@ -43,10 +42,10 @@
             "$ref": "#/definitions/RateQuotationContainerType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "FreightDetailType": {
-      "type": "object",
       "properties": {
         "weightByFreightClass": {
           "type": "array",
@@ -54,10 +53,10 @@
             "$ref": "#/definitions/WeightByFreightClassType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "ChargeDetailType": {
-      "type": "object",
       "properties": {
         "nonOperationalFreightAP": {
           "$ref": "#/definitions/NonOperationalFreightType"
@@ -65,13 +64,13 @@
         "nonOperationalFreightAR": {
           "$ref": "#/definitions/NonOperationalFreightType"
         }
-      }
+      },
+      "type": "object"
     },
     "IntermediatePointType": {
       "type": "object"
     },
     "RateQuotationContainerType": {
-      "type": "object",
       "properties": {
         "weightByFreightClass": {
           "type": "array",
@@ -79,13 +78,13 @@
             "$ref": "#/definitions/WeightByFreightClassType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "WeightByFreightClassType": {
       "type": "object"
     },
     "NonOperationalFreightType": {
-      "type": "object",
       "properties": {
         "APCharge": {
           "items": {
@@ -141,10 +140,10 @@
         "thirdPartyAddress": {
           "$ref": "#/definitions/AddressType"
         }
-      }
+      },
+      "type": "object"
     },
     "RatingInformationType": {
-      "type": "object",
       "properties": {
         "charge": {
           "items": {
@@ -152,7 +151,8 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "AddressType": {
       "type": "object"
@@ -161,18 +161,17 @@
       "type": "object"
     },
     "NOFWeightByFreightClassType": {
-      "type": "object",
       "properties": {
         "nonOperationalFreight": {
           "$ref": "#/definitions/NonOperationalFreightType"
         }
-      }
+      },
+      "type": "object"
     },
     "ChargeOverrideType": {
       "type": "object"
     },
     "NonOperationalStopType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -186,10 +185,10 @@
             "$ref": "#/definitions/ReferenceNumberType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "ReferenceNumberType": {
-      "type": "object",
       "properties": {
         "APVoucher": {
           "$ref": "#/definitions/APVoucherType"
@@ -236,10 +235,10 @@
         "trip": {
           "$ref": "#/definitions/TripType"
         }
-      }
+      },
+      "type": "object"
     },
     "APChargeType": {
-      "type": "object",
       "properties": {
         "load": {
           "$ref": "#/definitions/LoadType"
@@ -259,10 +258,10 @@
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "ARVoucherType": {
-      "type": "object",
       "properties": {
         "memo": {
           "$ref": "#/definitions/MemoType"
@@ -288,10 +287,10 @@
             "$ref": "#/definitions/VoucherHeldLogType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "ContainerType": {
-      "type": "object",
       "properties": {
         "containerOrientation": {
           "type": "array",
@@ -326,10 +325,10 @@
             "$ref": "#/definitions/WeightByFreightClassType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "DockCommitmentType": {
-      "type": "object",
       "properties": {
         "dock": {
           "$ref": "#/definitions/DockType"
@@ -349,10 +348,10 @@
         "stop": {
           "$ref": "#/definitions/StopType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadType": {
-      "type": "object",
       "properties": {
         "APCharge": {
           "items": {
@@ -471,10 +470,10 @@
             "$ref": "#/definitions/ResourceType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "ReferenceNumberQualifierType": {
-      "type": "object",
       "properties": {
         "referenceNumberCategory": {
           "items": {
@@ -482,10 +481,10 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "ShipmentType": {
-      "type": "object",
       "properties": {
         "ARCharge": {
           "items": {
@@ -562,10 +561,10 @@
         "unitOfMeasure": {
           "$ref": "#/definitions/UnitOfMeasureType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShipmentItemType": {
-      "type": "object",
       "properties": {
         "container": {
           "$ref": "#/definitions/ContainerType"
@@ -579,10 +578,10 @@
         "shipment": {
           "$ref": "#/definitions/ShipmentType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShipmentLegType": {
-      "type": "object",
       "properties": {
         "APCharge": {
           "items": {
@@ -626,10 +625,10 @@
         "trip": {
           "$ref": "#/definitions/TripType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShipmentLegContainerType": {
-      "type": "object",
       "properties": {
         "memo": {
           "$ref": "#/definitions/MemoType"
@@ -643,10 +642,10 @@
         "shipmentLeg": {
           "$ref": "#/definitions/ShipmentLegType"
         }
-      }
+      },
+      "type": "object"
     },
     "StopType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -675,10 +674,10 @@
         "trip": {
           "$ref": "#/definitions/TripType"
         }
-      }
+      },
+      "type": "object"
     },
     "TripType": {
-      "type": "object",
       "properties": {
         "TPSoftConstraintViolations": {
           "items": {
@@ -737,10 +736,10 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "APVoucherType": {
-      "type": "object",
       "properties": {
         "memo": {
           "$ref": "#/definitions/MemoType"
@@ -766,10 +765,10 @@
             "$ref": "#/definitions/VoucherHeldLogType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "FreightBillType": {
-      "type": "object",
       "properties": {
         "freightBillDetail": {
           "items": {
@@ -798,10 +797,10 @@
             "$ref": "#/definitions/ReferenceNumberType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "TariffType": {
-      "type": "object",
       "properties": {
         "APVouchers": {
           "items": {
@@ -848,10 +847,10 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "VoucherChargeType": {
-      "type": "object",
       "properties": {
         "ARVoucher": {
           "$ref": "#/definitions/ARVoucherType"
@@ -862,10 +861,10 @@
         "voucher": {
           "$ref": "#/definitions/APVoucherType"
         }
-      }
+      },
+      "type": "object"
     },
     "VoucherHeldLogType": {
-      "type": "object",
       "properties": {
         "APVoucher": {
           "$ref": "#/definitions/APVoucherType"
@@ -873,13 +872,13 @@
         "ARVoucher": {
           "$ref": "#/definitions/ARVoucherType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShippingInformationType": {
       "type": "object"
     },
     "TransportOrderType": {
-      "type": "object",
       "properties": {
         "referenceNumberStructure": {
           "items": {
@@ -905,7 +904,8 @@
         "unitOfMeasure": {
           "$ref": "#/definitions/UnitOfMeasureType"
         }
-      }
+      },
+      "type": "object"
     },
     "ContainerOrientationType": {
       "type": "object"
@@ -914,7 +914,6 @@
       "type": "object"
     },
     "DockType": {
-      "type": "object",
       "properties": {
         "businessHours": {
           "$ref": "#/definitions/BusinessHoursType"
@@ -958,10 +957,10 @@
             "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "LoadTenderContactType": {
-      "type": "object",
       "properties": {
         "load": {
           "$ref": "#/definitions/LoadType"
@@ -969,10 +968,10 @@
         "trip": {
           "$ref": "#/definitions/TripType"
         }
-      }
+      },
+      "type": "object"
     },
     "SkeletonRouteType": {
-      "type": "object",
       "properties": {
         "location": {
           "items": {
@@ -992,29 +991,29 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "TPSoftConstraintViolationsType": {
-      "type": "object",
       "properties": {
         "load": {
           "$ref": "#/definitions/LoadType"
         }
-      }
+      },
+      "type": "object"
     },
     "ExternalCostType": {
       "type": "object"
     },
     "LoadConfiguratorAxleType": {
-      "type": "object",
       "properties": {
         "load": {
           "$ref": "#/definitions/LoadType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadConfiguratorContainerType": {
-      "type": "object",
       "properties": {
         "container": {
           "$ref": "#/definitions/ContainerType"
@@ -1031,10 +1030,10 @@
         "space": {
           "$ref": "#/definitions/LoadConfiguratorSpaceType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadConfiguratorSpaceType": {
-      "type": "object",
       "properties": {
         "equipmentCompartment": {
           "$ref": "#/definitions/EquipmentCompartmentType"
@@ -1042,10 +1041,10 @@
         "load": {
           "$ref": "#/definitions/LoadType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadItemLoadingType": {
-      "type": "object",
       "properties": {
         "destinationShippingLocationAddress": {
           "$ref": "#/definitions/AddressType"
@@ -1059,10 +1058,10 @@
         "stop": {
           "$ref": "#/definitions/StopType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadScheduleEntryType": {
-      "type": "object",
       "properties": {
         "arrivalShippingLocationAddress": {
           "$ref": "#/definitions/AddressType"
@@ -1082,10 +1081,10 @@
         "memo": {
           "$ref": "#/definitions/MemoType"
         }
-      }
+      },
+      "type": "object"
     },
     "NoteType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
@@ -1108,48 +1107,48 @@
         "tenderRequest": {
           "$ref": "#/definitions/TenderRequestType"
         }
-      }
+      },
+      "type": "object"
     },
     "ResourceType": {
       "type": "object"
     },
     "ReferenceNumberCategoryType": {
-      "type": "object",
       "properties": {
         "referenceNumberQualifier": {
           "$ref": "#/definitions/ReferenceNumberQualifierType"
         }
-      }
+      },
+      "type": "object"
     },
     "UnitOfMeasureType": {
       "type": "object"
     },
     "ThroughPointType": {
-      "type": "object",
       "properties": {
         "shipment": {
           "$ref": "#/definitions/ShipmentType"
         }
-      }
+      },
+      "type": "object"
     },
     "AppointmentType": {
-      "type": "object",
       "properties": {
         "contact": {
           "$ref": "#/definitions/ContactType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadingInstructionType": {
-      "type": "object",
       "properties": {
         "stop": {
           "$ref": "#/definitions/StopType"
         }
-      }
+      },
+      "type": "object"
     },
     "FreightBillDetailType": {
-      "type": "object",
       "properties": {
         "APVoucher": {
           "$ref": "#/definitions/APVoucherType"
@@ -1163,18 +1162,18 @@
         "freightBill": {
           "$ref": "#/definitions/FreightBillType"
         }
-      }
+      },
+      "type": "object"
     },
     "ChargeSurchargeType": {
-      "type": "object",
       "properties": {
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "LaneType": {
-      "type": "object",
       "properties": {
         "dockSelectionConstraint": {
           "items": {
@@ -1188,26 +1187,26 @@
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "RateSurchargeType": {
-      "type": "object",
       "properties": {
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "ServiceSurchargeType": {
-      "type": "object",
       "properties": {
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "TariffRateCodeType": {
-      "type": "object",
       "properties": {
         "rate": {
           "items": {
@@ -1218,10 +1217,10 @@
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "TariffServiceType": {
-      "type": "object",
       "properties": {
         "businessHours": {
           "$ref": "#/definitions/BusinessHoursType"
@@ -1271,18 +1270,18 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "ItineraryTemplateThroughPointType": {
-      "type": "object",
       "properties": {
         "itineraryTemplate": {
           "$ref": "#/definitions/ItineraryTemplateType"
         }
-      }
+      },
+      "type": "object"
     },
     "BusinessHoursType": {
-      "type": "object",
       "properties": {
         "holiday": {
           "type": "array",
@@ -1290,32 +1289,32 @@
             "$ref": "#/definitions/HolidayType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "DockCommodityExclusionType": {
       "type": "object"
     },
     "DockEquipmentTypeType": {
-      "type": "object",
       "properties": {
         "dock": {
           "$ref": "#/definitions/DockType"
         }
-      }
+      },
+      "type": "object"
     },
     "DockLoadingTypeType": {
-      "type": "object",
       "properties": {
         "dock": {
           "$ref": "#/definitions/DockType"
         }
-      }
+      },
+      "type": "object"
     },
     "DockSelectionOptionType": {
       "type": "object"
     },
     "ShippingLocationType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -1386,10 +1385,10 @@
             "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "VariableLoadingUnloadingTimeType": {
-      "type": "object",
       "properties": {
         "loadingType": {
           "$ref": "#/definitions/LoadingTypeType"
@@ -1397,10 +1396,10 @@
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "SkeletonLocationType": {
-      "type": "object",
       "properties": {
         "shippingLocationAddress": {
           "$ref": "#/definitions/AddressType"
@@ -1411,10 +1410,10 @@
         "stopsBeforeFlag": {
           "type": "boolean"
         }
-      }
+      },
+      "type": "object"
     },
     "EquipmentCompartmentType": {
-      "type": "object",
       "properties": {
         "commodityExclusion": {
           "type": "array",
@@ -1428,10 +1427,10 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -1496,10 +1495,10 @@
             "$ref": "#/definitions/NoteType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "DriverType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -1561,10 +1560,10 @@
             "$ref": "#/definitions/NoteType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "TenderRequestType": {
-      "type": "object",
       "properties": {
         "load": {
           "$ref": "#/definitions/LoadType"
@@ -1578,32 +1577,32 @@
         "trip": {
           "$ref": "#/definitions/TripType"
         }
-      }
+      },
+      "type": "object"
     },
     "ContactType": {
       "type": "object"
     },
     "FreightBillDetailChargeType": {
-      "type": "object",
       "properties": {
         "freightBillDetail": {
           "$ref": "#/definitions/FreightBillDetailType"
         }
-      }
+      },
+      "type": "object"
     },
     "RestrictionType": {
       "type": "object"
     },
     "DockSelectionConstraintType": {
-      "type": "object",
       "properties": {
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "RateType": {
-      "type": "object",
       "properties": {
         "rateRange": {
           "items": {
@@ -1614,13 +1613,13 @@
         "tariff": {
           "$ref": "#/definitions/TariffType"
         }
-      }
+      },
+      "type": "object"
     },
     "EquipmentAvailabilityType": {
       "type": "object"
     },
     "ContactPersonType": {
-      "type": "object",
       "properties": {
         "carrier": {
           "$ref": "#/definitions/CarrierType"
@@ -1640,13 +1639,13 @@
         "tariffService": {
           "$ref": "#/definitions/TariffServiceType"
         }
-      }
+      },
+      "type": "object"
     },
     "EquipmentAvailabilityDateRangeType": {
       "type": "object"
     },
     "TariffChargeType": {
-      "type": "object",
       "properties": {
         "equipmentTypeCrossReference": {
           "type": "array",
@@ -1666,10 +1665,10 @@
         "tariffService": {
           "$ref": "#/definitions/TariffServiceType"
         }
-      }
+      },
+      "type": "object"
     },
     "TariffServiceCEAGroupingType": {
-      "type": "object",
       "properties": {
         "tariff": {
           "$ref": "#/definitions/TariffType"
@@ -1677,10 +1676,10 @@
         "tariffService": {
           "$ref": "#/definitions/TariffServiceType"
         }
-      }
+      },
+      "type": "object"
     },
     "TariffServiceEquipmentType": {
-      "type": "object",
       "properties": {
         "restriction": {
           "$ref": "#/definitions/RestrictionType"
@@ -1691,10 +1690,10 @@
         "tariffService": {
           "$ref": "#/definitions/TariffServiceType"
         }
-      }
+      },
+      "type": "object"
     },
     "ItineraryTemplateType": {
-      "type": "object",
       "properties": {
         "itineraryTemplateThroughPoint": {
           "items": {
@@ -1702,7 +1701,8 @@
           },
           "type": "array"
         }
-      }
+      },
+      "type": "object"
     },
     "HolidayType": {
       "type": "object"
@@ -1711,7 +1711,6 @@
       "type": "object"
     },
     "AutoAppliedOptionType": {
-      "type": "object",
       "properties": {
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
@@ -1720,10 +1719,10 @@
           "maxLength": 16,
           "type": "string"
         }
-      }
+      },
+      "type": "object"
     },
     "CustomerShippingLocationCrossReferenceType": {
-      "type": "object",
       "properties": {
         "customer": {
           "$ref": "#/definitions/CustomerType"
@@ -1737,23 +1736,24 @@
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShippingLocationEquipmentType": {
-      "type": "object",
       "properties": {
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "ShipmentSplitRuleType": {
-      "type": "object",
       "properties": {
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "LoadingTypeType": {
       "type": "object"
@@ -1768,15 +1768,14 @@
       "type": "object"
     },
     "AssetCommodityType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetCustomerType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
@@ -1784,10 +1783,10 @@
         "customer": {
           "$ref": "#/definitions/CustomerType"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetDomicileType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
@@ -1795,10 +1794,10 @@
         "domicile": {
           "$ref": "#/definitions/DomicileType"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetEquipmentTypeType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
@@ -1806,18 +1805,18 @@
         "equipmentType": {
           "$ref": "#/definitions/EquipmentTypeType"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetServiceType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
         }
-      }
+      },
+      "type": "object"
     },
     "AssetShippingLocationType": {
-      "type": "object",
       "properties": {
         "asset": {
           "$ref": "#/definitions/AssetType"
@@ -1825,10 +1824,10 @@
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "CarrierType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -1884,18 +1883,18 @@
         "memo": {
           "$ref": "#/definitions/MemoType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverCommodityType": {
-      "type": "object",
       "properties": {
         "driver": {
           "$ref": "#/definitions/DriverType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverCustomerType": {
-      "type": "object",
       "properties": {
         "customer": {
           "$ref": "#/definitions/CustomerType"
@@ -1903,10 +1902,10 @@
         "driver": {
           "$ref": "#/definitions/DriverType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverDomicileType": {
-      "type": "object",
       "properties": {
         "domicile": {
           "$ref": "#/definitions/DomicileType"
@@ -1914,10 +1913,10 @@
         "driver": {
           "$ref": "#/definitions/DriverType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverEquipmentTypeType": {
-      "type": "object",
       "properties": {
         "driver": {
           "$ref": "#/definitions/DriverType"
@@ -1925,18 +1924,18 @@
         "equipmentType": {
           "$ref": "#/definitions/EquipmentTypeType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverServiceType": {
-      "type": "object",
       "properties": {
         "driver": {
           "$ref": "#/definitions/DriverType"
         }
-      }
+      },
+      "type": "object"
     },
     "DriverShippingLocationType": {
-      "type": "object",
       "properties": {
         "driver": {
           "$ref": "#/definitions/DriverType"
@@ -1944,18 +1943,18 @@
         "shippingLocation": {
           "$ref": "#/definitions/ShippingLocationType"
         }
-      }
+      },
+      "type": "object"
     },
     "RateRangeType": {
-      "type": "object",
       "properties": {
         "rate": {
           "$ref": "#/definitions/RateType"
         }
-      }
+      },
+      "type": "object"
     },
     "CustomerType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -1993,10 +1992,10 @@
         "memo": {
           "$ref": "#/definitions/MemoType"
         }
-      }
+      },
+      "type": "object"
     },
     "CustomerCarrierFreightAuditType": {
-      "type": "object",
       "properties": {
         "carrier": {
           "$ref": "#/definitions/CarrierType"
@@ -2010,10 +2009,10 @@
         "customer": {
           "$ref": "#/definitions/CustomerType"
         }
-      }
+      },
+      "type": "object"
     },
     "DomicileType": {
-      "type": "object",
       "properties": {
         "address": {
           "$ref": "#/definitions/AddressType"
@@ -2039,34 +2038,34 @@
             "$ref": "#/definitions/DomicileVehicleAvailabilityType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "TariffEquipmentTypeCrossReferenceType": {
-      "type": "object",
       "properties": {
         "tariffCharge": {
           "$ref": "#/definitions/TariffChargeType"
         }
-      }
+      },
+      "type": "object"
     },
     "FreightClassCrossReferenceType": {
-      "type": "object",
       "properties": {
         "tariffCharge": {
           "$ref": "#/definitions/TariffChargeType"
         }
-      }
+      },
+      "type": "object"
     },
     "ExternalAliasStructureType": {
-      "type": "object",
       "properties": {
         "customerShippingLocationCrossReference": {
           "$ref": "#/definitions/CustomerShippingLocationCrossReferenceType"
         }
-      }
+      },
+      "type": "object"
     },
     "EquipmentTypeType": {
-      "type": "object",
       "properties": {
         "commodityExclusion": {
           "type": "array",
@@ -2107,42 +2106,43 @@
             "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
           }
         }
-      }
+      },
+      "type": "object"
     },
     "CarrierAccountNumbersType": {
-      "type": "object",
       "properties": {
         "carrier": {
           "$ref": "#/definitions/CarrierType"
         }
-      }
+      },
+      "type": "object"
     },
     "LaneAvailabilityType": {
-      "type": "object",
       "properties": {
         "carrier": {
           "$ref": "#/definitions/CarrierType"
         }
-      }
+      },
+      "type": "object"
     },
     "MatchFreightBillCurrencyType": {
       "type": "object"
     },
     "DomicileEquipmentType": {
-      "type": "object",
       "properties": {
         "domicile": {
           "$ref": "#/definitions/DomicileType"
         }
-      }
+      },
+      "type": "object"
     },
     "DomicileVehicleAvailabilityType": {
-      "type": "object",
       "properties": {
         "domicile": {
           "$ref": "#/definitions/DomicileType"
         }
-      }
+      },
+      "type": "object"
     },
     "EquipmentAssociationType": {
       "type": "object"

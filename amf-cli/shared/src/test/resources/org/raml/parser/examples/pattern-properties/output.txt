@@ -2,10 +2,6 @@
 title: My API With Types
 types:
   Person:
-    example:
-      name: Peter
-      age: 23
-      lastName: Parker
     properties:
       name:
         type: string
@@ -15,3 +11,7 @@ types:
         required: false
       /^note\d+$/:
         type: string
+    example:
+      name: Peter
+      age: 23
+      lastName: Parker
