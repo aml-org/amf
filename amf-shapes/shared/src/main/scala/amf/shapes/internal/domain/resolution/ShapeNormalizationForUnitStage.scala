@@ -48,12 +48,14 @@ class ShapeNormalizationForUnitStage(profile: ProfileName, val keepEditingInfo: 
   }
 
   private def updateReferences(model: BaseUnit)(implicit context: NormalizationContext): Unit = {
-    val updater = ShapeNormalizationReferencesUpdater(context)
+    if (!context.resolvedInheritanceIndex.isEmpty) {
+      val updater = ShapeNormalizationReferencesUpdater(context)
 
-    val iterator = AmfUpdaterIterator(model, e => updater.update(e))
-    iterator.foreach {
-      case o: AmfObject => updater.updateFields(o)
-      case _            => // skip
+      val iterator = AmfUpdaterIterator(model, e => updater.update(e))
+      iterator.foreach {
+        case o: AmfObject => updater.updateFields(o)
+        case _            => // skip
+      }
     }
   }
 
