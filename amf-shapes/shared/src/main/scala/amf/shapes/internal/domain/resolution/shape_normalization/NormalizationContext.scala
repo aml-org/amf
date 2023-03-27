@@ -8,14 +8,13 @@ import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 
 private[resolution] class NormalizationContext(
-                                                final val errorHandler: AMFErrorHandler,
-                                                final val keepEditingInfo: Boolean,
-                                                final val profile: ProfileName,
-                                                val resolvedInheritanceCache: NormalizationCache = NormalizationCache(),
-                                                val fixedReferencesCache: NormalizationCache = NormalizationCache()
+    final val errorHandler: AMFErrorHandler,
+    final val keepEditingInfo: Boolean,
+    final val profile: ProfileName,
+    val resolvedInheritanceIndex: ResolvedInheritanceIndex = ResolvedInheritanceIndex()
 ) {
 
-  val isRaml08: Boolean                         = profile.equals(Raml08Profile)
+  val isRaml08: Boolean                        = profile.equals(Raml08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
   def minShape(derivedShape: Shape, superShape: Shape): Shape = {
