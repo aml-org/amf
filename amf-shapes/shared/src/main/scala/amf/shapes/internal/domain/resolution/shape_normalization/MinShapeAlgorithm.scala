@@ -1088,7 +1088,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         this,
         ctx.keepEditingInfo,
         ctx.profile,
-        ctx.resolvedInheritanceCache
+        ctx.resolvedInheritanceIndex
       )
     }
   }

@@ -24,7 +24,7 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
   }
 
   private def retrieveLatestVersionOf(shape: Shape) = {
-    context.resolvedInheritanceCache.get(shape.id) match {
+    context.resolvedInheritanceIndex.get(shape.id) match {
       case Some(resolvedInheritance) => resolvedInheritance
       case _                         => shape
     }

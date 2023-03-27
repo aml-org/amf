@@ -22,8 +22,8 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
   // ID of the shape where inheritance recursion was detected
   private var recursionGenerator = "fakeId"
 
-  private def addToCache(shape: Shape, id: String) = context.resolvedInheritanceCache += (shape, id)
-  private def addToCache(shape: Shape)             = context.resolvedInheritanceCache += shape
+  private def addToCache(shape: Shape, id: String) = context.resolvedInheritanceIndex += (shape, id)
+  private def addToCache(shape: Shape)             = context.resolvedInheritanceIndex += shape
 
   private def withVisitTracking[T](shape: Shape)(func: () => T) = {
     visitedIds += shape
@@ -33,7 +33,7 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
   }
 
   def normalize(shape: Shape): Shape = {
-    context.resolvedInheritanceCache.get(shape.id) match {
+    context.resolvedInheritanceIndex.get(shape.id) match {
       case Some(resolvedInheritance) => resolvedInheritance
       case _ =>
         val result = normalizeAction(shape)
