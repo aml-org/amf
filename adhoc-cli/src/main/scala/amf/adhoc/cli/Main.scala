@@ -8,7 +8,9 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.resource.{ClasspathResourceLoader, ResourceLoader}
+import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Mimes
+import amf.core.internal.validation.core.ValidationReport
 import org.apache.commons.io.IOUtils
 
 import scala.concurrent.{Await, Future}
@@ -22,6 +24,20 @@ object Main {
       case "parse" =>
         apiParse(args)
 
+      case "validate-api" =>
+        val path = s"file://${args(1)}"
+        val fut = for {
+          parsing <- APIConfiguration.API().baseUnitClient().parse(path)
+          transform <- Future.successful {
+            APIConfiguration.fromSpec(parsing.sourceSpec).baseUnitClient().transform(parsing.baseUnit, PipelineId.Cache)
+          }
+          validation <- APIConfiguration.fromSpec(parsing.sourceSpec).baseUnitClient().validate(transform.baseUnit)
+        } yield {
+          val all    = parsing.results ++ transform.results ++ validation.results
+          AMFValidationReport(validation.model, validation.profile, results = all)
+        }
+        val report = Await.result(fut, Duration.Inf)
+        println(report.toString)
       case "validate" =>
         val merged: AMFResult = validateInstance(args(1))
         println(merged.toString)
@@ -31,7 +47,7 @@ object Main {
           System.exit(1)
         }
       case c =>
-        System.err.println(s"Unrecognized command $c. Accepted commands are 'parse' and 'validate'")
+        System.err.println(s"Unrecognized command $c. Accepted commands are 'parse' and 'validate' (rulesets) and 'validate-api' (apis)")
         System.exit(1)
     }
   }
