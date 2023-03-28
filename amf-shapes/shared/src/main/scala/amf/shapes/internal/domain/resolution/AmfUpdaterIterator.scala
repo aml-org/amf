@@ -49,10 +49,10 @@ case class AmfUpdaterIterator private (var buffer: Queue[AmfElement], updater: A
 
   }
 
-  private def nextElements(e: AmfElement): List[AmfElement] = {
+  private def nextElements(e: AmfElement): Iterable[AmfElement] = {
     e match {
-      case obj: AmfObject => obj.fields.fields().map(_.element).toList
-      case arr: AmfArray  => arr.values.toList
+      case obj: AmfObject => obj.fields.fieldsValues().map(_.value)
+      case arr: AmfArray  => arr.values
       case _              => Nil
     }
   }
