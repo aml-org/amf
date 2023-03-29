@@ -10,7 +10,7 @@ import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stac
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.frames.BottomFrame
 
 class Analysis(var listeners: Seq[AnalysisListener]) {
-  val stack: MutableStack         = MutableStack()
+  val stack: MutableStack                 = MutableStack()
   private var alreadyAnalyzed: Set[Shape] = Set.empty
 
   def analyze(shape: Shape): Unit = {
@@ -20,17 +20,19 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
   }
 
   def analyze(shape: Shape, field: Field): Unit = {
-    val alreadyInStack = stack.contains(shape.id)
+    if (shape != null) { // TODO: There's a bug in reference resolution where self references in OAS ends up with `null` values in the model
+      val alreadyInStack = stack.contains(shape.id)
 
-    stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
+      stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
 
-    if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
-      notifyListeners()
-    } else {
-      analyzeReferencesIn(shape)
+      if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
+        notifyListeners()
+      } else {
+        analyzeReferencesIn(shape)
+      }
+
+      stack.pop()
     }
-
-    stack.pop()
   }
 
   private def notifyListeners(): Unit = {
@@ -116,9 +118,10 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
     shape.fields.getValueAsOption(constraintField) match {
       case Some(constraint) =>
         constraint.value match {
-          case array: AmfArray => array.values.foreach(e => analyze(e.asInstanceOf[Shape], constraintField))
-          case s: Shape        => analyze(s, constraintField)
-          case _               =>
+          case array: AmfArray =>
+            array.values.foreach { e => analyze(e.asInstanceOf[Shape], constraintField) }
+          case s: Shape => analyze(s, constraintField)
+          case _        =>
         }
       case _ =>
     }
