@@ -70,4 +70,18 @@ class RecursionValidationTest extends ResolutionForUniquePlatformReportTest {
       Some("recursion-in-inherited-property.report")
     )
   }
+
+  test("Cyclic reference in oneOf") {
+    checkReport(
+      "cyclic-reference-in-oneof.yaml",
+      Some("cyclic-reference-in-oneof.report")
+    )
+  }
+
+  test("Cyclic reference in property range") {
+    checkReport(
+      "cyclic-reference-in-property-range.yaml",
+      Some("cyclic-reference-in-property-range.report")
+    )
+  }
 }
