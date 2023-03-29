@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/poc/cyclic-reference-in-oneof.yaml
+Profile: AMF Graph
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Invalid cyclic references: item0 -> B -> B
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/poc/cyclic-reference-in-oneof.yaml#/declares/any/B
+  Property: 
+  Range: [(11,4)-(13,0)]
+  Location: file://amf-cli/shared/src/test/resources/poc/cyclic-reference-in-oneof.yaml
