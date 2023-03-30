@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: API
+
+types:
+  Type1:
+    properties:
+      a: string
+
+resourceTypes:
+  ResourceType1:
+    get:
+      body:
+        application/json:
+          type: Type1
+          properties:
+            b: string
+            c: string
+
+/resource:
+    type:  ResourceType1
+    get:
+      body:
+        application/json:
+          example:
+            b: asd
+            c: asd
+            # missing a
