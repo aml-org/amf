@@ -89,8 +89,6 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
             case None        => Annotations()
           }
 
-
-
           val resolvedAnyOf = u.anyOf.map {
             case s if s.inherits.nonEmpty => ShapeNormalizationInheritanceResolver(context).normalize(s)
             case s                        => s
@@ -111,7 +109,12 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
       val normalizedSuperType = normalize(superType)
       if (detectedRecursion) accShape
       else {
-        val r = context.minShape(accShape, normalizedSuperType)
+
+        /** We need to call the AnyShapeAdjuster because types in RT/Traits that inherit from declared types are
+          * AnyShapes. When an AnyShape inherits from a NodeShape the min shape algorithm completely messes up the
+          * inheritance computation. TODO: try to fix this in minShape rather than here
+          */
+        val r = context.minShape(AnyShapeAdjuster(accShape), normalizedSuperType)
         if (context.keepEditingInfo && !wasSimpleUnionInheritance(accShape, r, normalizedSuperType))
           withInheritanceAnnotation(r, normalizedSuperType)
         else r

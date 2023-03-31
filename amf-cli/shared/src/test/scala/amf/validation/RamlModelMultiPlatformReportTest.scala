@@ -88,6 +88,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     )
   }
 
+  test("RT NodeShape merging") {
+    validate("/rt-node-shape-merging/api.raml", Some("rt-node-shape-merging.report"))
+  }
+
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/multi-plat-model/"
 
