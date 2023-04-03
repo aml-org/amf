@@ -1,15 +1,14 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.platform.model.domain.CustomDomainProperty
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, RecursiveShape, ScalarNode, Shape}
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.{DeclaredElement, Inferred, InheritanceProvenance, LexicalInformation}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.client.scala.model.domain._
@@ -703,150 +702,86 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     restrictShape(baseShape, recursiveShape)
   }
 
-  private def copy(shape: Shape) = {
-    shape match {
-      case a: AnyShape       => a.copyShape()
-      case r: RecursiveShape => r.copyShape()
-      case _                 => shape
-    }
+  private def isInteger(dataType: String): Boolean = dataType match {
+    case DataType.Integer => true
+    case _                => false
+  }
+  private def isNumeric(dataType: String): Boolean = dataType match {
+    case DataType.Float | DataType.Double | DataType.Number | DataType.Integer => true
+    case _                                                                     => false
   }
 
-  def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
-    val superShape = copy(superShapeOri)
-    val derivedShape =
-      derivedShapeOrig.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
-//    context.cache.updateRecursiveTargets(derivedShape)
+  def computeMinShape(child: Shape, parent: Shape): Shape = {
+    val parentCopy = parent.copyShape()
+    val childClone = child.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
+
     try {
-      derivedShape match {
-
-        // Scalars
-        case baseScalar: ScalarShape if superShape.isInstanceOf[ScalarShape] =>
-          val superScalar = superShape.asInstanceOf[ScalarShape]
-
-          val b = baseScalar.dataType.value()
-          val s = superScalar.dataType.value()
-          if (b == s) {
-            computeMinScalar(baseScalar, superScalar)
-          } else if (
-            b == DataType.Integer &&
-            (s == DataType.Float ||
-              s == DataType.Double ||
-              s == DataType.Number)
-          ) {
-            computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
-          } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
-            computeMinShape(baseScalar.withDataType(s), superScalar)
-          } else {
-            context.errorHandler.violation(
-              InvalidTypeInheritanceErrorSpecification,
-              derivedShape,
-              Some(ShapeModel.Inherits.value.iri()),
-              s"Resolution error: Invalid scalar inheritance base type $b < $s "
-            )
-            baseScalar
+      (childClone, parentCopy) match {
+        case (c: ScalarShape, p: ScalarShape) =>
+          (c.dataType.value(), p.dataType.value()) match {
+            case (cdt, pdt) if cdt == pdt                       => computeMinScalar(c, p)
+            case (cdt, pdt) if isInteger(cdt) && isNumeric(pdt) => computeMinScalar(c, p.withDataType(DataType.Integer))
+            case (null, pdt)                                    => computeMinScalar(c.withDataType(pdt), p)
+            case (cdt, pdt) =>
+              context.errorHandler.violation(
+                InvalidTypeInheritanceErrorSpecification,
+                childClone,
+                Some(ShapeModel.Inherits.value.iri()),
+                s"Resolution error: Invalid scalar inheritance base type $cdt < $pdt "
+              )
+              c
           }
+        case (c: ArrayShape, p: ArrayShape)                           => computeMinArray(c, p)
+        case (c: MatrixShape, p: MatrixShape)                         => computeMinMatrix(c, p)
+        case (c: MatrixShape, p: ArrayShape) if isArrayOfAnyShapes(p) => computeMinMatrixWithAnyShape(c, p)
+        case (c: TupleShape, p: TupleShape)                           => computeMinTuple(c, p)
+        case (c: NodeShape, p: NodeShape)                             => computeMinNode(c, p)
+        case (c: UnionShape, p: UnionShape)                           => computeMinUnion(c, p)
+        case (c: UnionShape, p: NodeShape)                            => computeMinUnionNode(c, p)
+        case (c: Shape, p: UnionShape)                                => computeMinSuperUnion(c, p)
+        case (c: PropertyShape, p: PropertyShape)                     => computeMinProperty(c, p)
+        case (c: FileShape, p: FileShape)                             => computeMinFile(c, p)
+        case (c: NilShape, _: NilShape)                               => c
+        case (c, p: RecursiveShape)                                   => computeMinRecursive(c, p)
+        case (c: AnyShape, p) if isExactlyAny(c) || isExactlyAny(p)   => restrictShape(c, p)
+        case (c, p: AnyShape) if isExactlyAny(c) || isExactlyAny(p)   => computeMinAny(c, p)
+        case (c, _: UnresolvedShape) => c // will get already get an unresolved shape error
 
-        // Arrays
-        case baseArray: ArrayShape if superShape.isInstanceOf[ArrayShape] =>
-          val superArray = superShape.asInstanceOf[ArrayShape]
-          computeMinArray(baseArray, superArray)
-        case baseArray: MatrixShape if superShape.isInstanceOf[MatrixShape] =>
-          val superArray = superShape.asInstanceOf[MatrixShape]
-          computeMinMatrix(baseArray, superArray)
-        case baseArray: MatrixShape if isArrayOfAnyShapes(superShape) =>
-          val superArray = superShape.asInstanceOf[ArrayShape]
-          computeMinMatrixWithAnyShape(baseArray, superArray)
-        case baseArray: TupleShape if superShape.isInstanceOf[TupleShape] =>
-          val superArray = superShape.asInstanceOf[TupleShape]
-          computeMinTuple(baseArray, superArray)
+        // weird, args inverted, checking parent meta
+        case (c: SchemaShape, p) if p.meta == SchemaShapeModel => computeMinSchema(p, c)
 
-        // Nodes
-        case baseNode: NodeShape if superShape.isInstanceOf[NodeShape] =>
-          val superNode = superShape.asInstanceOf[NodeShape]
-          computeMinNode(baseNode, superNode)
-
-        // Unions
-        case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
-          val superUnion = superShape.asInstanceOf[UnionShape]
-          computeMinUnion(baseUnion, superUnion)
-
-        case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
-          val superNode = superShape.asInstanceOf[NodeShape]
-          computeMinUnionNode(baseUnion, superNode)
-
-        // super Unions
-        case base: Shape if superShape.isInstanceOf[UnionShape] =>
-          val superUnion = superShape.asInstanceOf[UnionShape]
-          computeMinSuperUnion(base, superUnion)
-
-        case baseProperty: PropertyShape if superShape.isInstanceOf[PropertyShape] =>
-          val superProperty = superShape.asInstanceOf[PropertyShape]
-          computeMinProperty(baseProperty, superProperty)
-
-        // Files
-        case baseFile: FileShape if superShape.isInstanceOf[FileShape] =>
-          val superFile = superShape.asInstanceOf[FileShape]
-          computeMinFile(baseFile, superFile)
-
-        // Nil
-        case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
-
-        // Generic inheritance
-        case _ if superShape.isInstanceOf[RecursiveShape] =>
-          computeMinRecursive(derivedShape, superShape.asInstanceOf[RecursiveShape])
-
-        // Any => is explicitly Any, we are comparing the meta-model because now
-        //      all shapes inherit from Any, cannot check with instanceOf
-        case _
-            if derivedShape.meta.`type`.headOption
-              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) || superShape.meta.`type`.headOption
-              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-          derivedShape match {
-            case shape: AnyShape =>
-              restrictShape(shape, superShape)
-            case _ =>
-              computeMinAny(derivedShape, superShape.asInstanceOf[AnyShape])
-          }
-
-        // Generic inheritance
-        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) && superShape.isInstanceOf[NodeShape] =>
-          computeMinGeneric(baseGeneric, superShape)
-
-        case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
-          computeMinSchema(superShape, schema)
         // fallback error
         case _ =>
           context.errorHandler.violation(
             InvalidTypeInheritanceErrorSpecification,
-            derivedShape,
+            childClone,
             Some(ShapeModel.Inherits.value.iri()),
             s"Resolution error: Incompatible types [${RamlShapeTypeBeautifier
-                .beautify(derivedShape.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(superShape.ramlSyntaxKey)}]"
+                .beautify(childClone.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(parentCopy.ramlSyntaxKey)}]"
           )
-          derivedShape
+          childClone
       }
     } catch {
+      case e: InheritanceIncompatibleShapeError if e.isViolation =>
+        context.errorHandler.violation(
+          InvalidTypeInheritanceErrorSpecification,
+          childClone.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.position.orElse(childClone.position()),
+          e.location.orElse(childClone.location())
+        )
+        childClone
       case e: InheritanceIncompatibleShapeError =>
-        if (e.isViolation) {
-          context.errorHandler.violation(
-            InvalidTypeInheritanceErrorSpecification,
-            derivedShape.id,
-            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-            e.getMessage,
-            e.position.orElse(derivedShape.position()),
-            e.location.orElse(derivedShape.location())
-          )
-        } else {
-          context.errorHandler.warning(
-            InvalidTypeInheritanceWarningSpecification,
-            derivedShape.id,
-            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-            e.getMessage,
-            e.position.orElse(derivedShape.position()),
-            e.location.orElse(derivedShape.location())
-          )
-        }
-        derivedShape
+        context.errorHandler.warning(
+          InvalidTypeInheritanceWarningSpecification,
+          childClone.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.position.orElse(childClone.position()),
+          e.location.orElse(childClone.location())
+        )
+        childClone
     }
   }
 
@@ -858,13 +793,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         case _ =>
       })
     schema
-  }
-
-  protected def isGenericNodeShape(shape: Shape): Boolean = {
-    shape match {
-      case node: NodeShape => node.properties.isEmpty
-      case _               => false
-    }
   }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
@@ -884,9 +812,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
-
-  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape): Shape =
-    restrictShape(baseShape, superShape)
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
 
@@ -910,8 +835,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseMatrix
   }
 
-  protected def isArrayOfAnyShapes(shape: Shape): Boolean =
-    shape.isInstanceOf[ArrayShape] && shape.asInstanceOf[ArrayShape].items.isInstanceOf[AnyShape]
+  protected def isArrayOfAnyShapes(shape: ArrayShape): Boolean = shape.items.isInstanceOf[AnyShape]
 
   protected def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
 
