@@ -20,19 +20,17 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
   }
 
   def analyze(shape: Shape, field: Field): Unit = {
-    if (shape != null) { // TODO: There's a bug in reference resolution where self references in OAS ends up with `null` values in the model
-      val alreadyInStack = stack.contains(shape.id)
+    val alreadyInStack = stack.contains(shape.id)
 
-      stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
+    stack.push(shape, field) // we push to the stack regardless if it is already in it because we need the `field`
 
-      if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
-        notifyListeners()
-      } else {
-        analyzeReferencesIn(shape)
-      }
-
-      stack.pop()
+    if (alreadyInStack && !isAllowedMultipleTimesInStack(shape)) {
+      notifyListeners()
+    } else {
+      analyzeReferencesIn(shape)
     }
+
+    stack.pop()
   }
 
   private def notifyListeners(): Unit = {
