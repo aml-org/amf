@@ -33,7 +33,7 @@ class InheritanceIncompatibleShapeError(
 
 private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext) {
 
-  protected def computeNarrowRestrictions(
+  private def computeNarrowRestrictions(
       fields: Seq[Field],
       baseShape: Shape,
       superShape: Shape,
@@ -65,13 +65,13 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseShape
   }
 
-  def inheritAnnotations(annotations: Annotations, from: Shape) = {
+  private def inheritAnnotations(annotations: Annotations, from: Shape) = {
     if (!annotations.contains(classOf[InheritanceProvenance]))
       annotations += InheritanceProvenance(from.id)
     annotations
   }
 
-  protected def restrictShape(restriction: Shape, shape: Shape): Shape = {
+  private def restrictShape(restriction: Shape, shape: Shape): Shape = {
     shape.id = restriction.id
     restriction.fields.foreach { case (field, derivedValue) =>
       if (field != NodeShapeModel.Inherits) {
@@ -84,12 +84,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     shape
   }
 
-  protected def computeNumericRestriction(
+  private def computeNumericRestriction(
       comparison: String,
       lvalue: AmfElement,
-      rvalue: AmfElement,
-      property: Option[String] = None,
-      lexicalInfo: Option[LexicalInformation] = None
+      rvalue: AmfElement
   ): AmfElement = {
     lvalue match {
       case scalar: AmfScalar
@@ -118,10 +116,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeEnum(
+  private def computeEnum(
       derivedEnumeration: Seq[AmfElement],
-      superEnumeration: Seq[AmfElement],
-      annotations: Annotations
+      superEnumeration: Seq[AmfElement]
   ): Unit = {
     if (derivedEnumeration.nonEmpty && superEnumeration.nonEmpty) {
       val headOption = derivedEnumeration.headOption
@@ -153,7 +150,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeStringEquality(
+  private def computeStringEquality(
       lvalue: AmfElement,
       rvalue: AmfElement,
       property: Option[String] = None,
@@ -177,7 +174,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def stringValue(value: AmfElement): Option[String] = {
+  private def stringValue(value: AmfElement): Option[String] = {
     value match {
       case scalar: AmfScalar
           if Option(scalar.value).isDefined && value
@@ -187,7 +184,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeNumericComparison(
+  private def computeNumericComparison(
       comparison: String,
       lvalue: AmfElement,
       rvalue: AmfElement,
@@ -225,13 +222,11 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeBooleanComparison(
+  private def computeBooleanComparison(
       lcomparison: Boolean,
       rcomparison: Boolean,
       lvalue: AmfElement,
-      rvalue: AmfElement,
-      property: Option[String] = None,
-      lexicalInformaiton: Option[LexicalInformation] = None
+      rvalue: AmfElement
   ): Boolean = {
     lvalue match {
       case scalar: AmfScalar
@@ -245,7 +240,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
+  private def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
     field match {
 
       case ShapeModel.Name =>
@@ -271,9 +266,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "max",
             superValue,
-            derivedValue,
-            Some(NodeShapeModel.MinProperties.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -298,9 +291,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "min",
             superValue,
-            derivedValue,
-            Some(NodeShapeModel.MaxProperties.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -325,9 +316,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "max",
             superValue,
-            derivedValue,
-            Some(ScalarShapeModel.MinLength.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -352,9 +341,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "min",
             superValue,
-            derivedValue,
-            Some(ScalarShapeModel.MaxLength.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -379,9 +366,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "max",
             superValue,
-            derivedValue,
-            Some(ScalarShapeModel.Minimum.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -406,9 +391,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "min",
             superValue,
-            derivedValue,
-            Some(ScalarShapeModel.Maximum.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -433,9 +416,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "max",
             superValue,
-            derivedValue,
-            Some(ArrayShapeModel.MinItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -461,9 +442,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "min",
             superValue,
-            derivedValue,
-            Some(ArrayShapeModel.MaxItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -557,8 +536,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       case ShapeModel.Values =>
         computeEnum(
           derivedValue.asInstanceOf[AmfArray].values,
-          superValue.asInstanceOf[AmfArray].values,
-          derivedValue.annotations
+          superValue.asInstanceOf[AmfArray].values
         )
         derivedValue
 
@@ -568,25 +546,19 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
             lcomparison = true,
             rcomparison = true,
             superValue,
-            derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           ) ||
           computeBooleanComparison(
             lcomparison = false,
             rcomparison = false,
             superValue,
-            derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           ) ||
           computeBooleanComparison(
             lcomparison = false,
             rcomparison = true,
             superValue,
-            derivedValue,
-            Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         ) {
           derivedValue
@@ -613,9 +585,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "max",
             superValue,
-            derivedValue,
-            Some(PropertyShapeModel.MinCount.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -640,9 +610,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           computeNumericRestriction(
             "min",
             superValue,
-            derivedValue,
-            Some(PropertyShapeModel.MaxCount.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue
           )
         } else {
           throw new InheritanceIncompatibleShapeError(
@@ -698,7 +666,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   // this is inverted, it is safe because recursive shape does not have facets
-  def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
+  private def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
     restrictShape(baseShape, recursiveShape)
   }
 
@@ -795,7 +763,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     schema
   }
 
-  protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
+  private def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
     computeNarrowRestrictions(
       ScalarShapeModel.fields,
       baseScalar,
@@ -808,12 +776,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   private val allShapeFields =
     (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
 
-  protected def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
+  private def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
 
-  protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
+  private def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
 
     val superItems = superMatrix.items
     val baseItems  = baseMatrix.items
@@ -835,9 +803,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseMatrix
   }
 
-  protected def isArrayOfAnyShapes(shape: ArrayShape): Boolean = shape.items.isInstanceOf[AnyShape]
+  private def isArrayOfAnyShapes(shape: ArrayShape): Boolean = shape.items.isInstanceOf[AnyShape]
 
-  protected def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
+  private def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
 
     val superItems = superArray
     val baseItems  = baseMatrix.items
@@ -859,7 +827,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseMatrix
   }
 
-  protected def computeMinTuple(baseTuple: TupleShape, superTuple: TupleShape): Shape = {
+  private def computeMinTuple(baseTuple: TupleShape, superTuple: TupleShape): Shape = {
     val superItems = baseTuple.items
     val baseItems  = superTuple.items
 
@@ -903,7 +871,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
+  private def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
     val superItemsOption = Option(superArray.items)
     val baseItemsOption  = Option(baseArray.items)
 
@@ -929,7 +897,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseArray
   }
 
-  protected def computeMinNode(baseNode: NodeShape, superNode: NodeShape): Shape = {
+  private def computeMinNode(baseNode: NodeShape, superNode: NodeShape): Shape = {
     val superProperties = superNode.properties
     val baseProperties  = baseNode.properties
 
@@ -940,7 +908,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
     superProperties.foreach(p => commonProps.put(p.path.value(), false))
     baseProperties.foreach { p =>
-      if (commonProps.get(p.path.value()).isDefined) {
+      if (commonProps.contains(p.path.value())) {
         commonProps.put(p.path.value(), true)
       } else {
         commonProps.put(p.path.value(), false)
@@ -995,7 +963,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseNode
   }
 
-  def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
+  private def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
     if (prop.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
       prop.annotations += InheritanceProvenance(from.id)
     }
@@ -1016,7 +984,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       )
     }
   }
-  protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
+  private def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems =
@@ -1077,7 +1045,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       case _ =>
     }
 
-  protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
+  private def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
@@ -1096,7 +1064,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseUnion
   }
 
-  protected def shouldComputeInheritanceForUnionMembers(child: Shape, parent: UnionShape): Boolean = {
+  private def shouldComputeInheritanceForUnionMembers(child: Shape, parent: UnionShape): Boolean = {
     shouldComputeInheritanceForUnionScalarShapeMembers(
       child,
       parent
@@ -1114,7 +1082,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     true
   }
 
-  protected def shouldComputeInheritanceForUnionScalarShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+  private def shouldComputeInheritanceForUnionScalarShapeMembers(child: Shape, parent: UnionShape): Boolean = {
     lazy val childFields = Seq(
       ScalarShapeModel.Format,
       ScalarShapeModel.Minimum,
@@ -1134,7 +1102,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     areAllOfType[ScalarShape](parent.anyOf) && existsSome(child, childFields)
   }
 
-  protected def shouldComputeInheritanceForUnionNodeShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+  private def shouldComputeInheritanceForUnionNodeShapeMembers(child: Shape, parent: UnionShape): Boolean = {
     lazy val childFields = Seq(
       NodeShapeModel.Properties
     )
@@ -1142,7 +1110,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     areAllOfType[NodeShape](parent.anyOf) && existsSome(child, childFields)
   }
 
-  protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
+  private def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     var newUnionItems                      = superUnion.anyOf
     if (shouldComputeInheritanceForUnionMembers(baseShape, superUnion)) {
@@ -1238,7 +1206,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
+  private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
     if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
       context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
@@ -1279,7 +1247,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseProperty
   }
 
-  def computeMinFile(baseFile: FileShape, superFile: FileShape): Shape = {
+  private def computeMinFile(baseFile: FileShape, superFile: FileShape): Shape = {
     computeNarrowRestrictions(FileShapeModel.fields, baseFile, superFile)
     baseFile
   }
