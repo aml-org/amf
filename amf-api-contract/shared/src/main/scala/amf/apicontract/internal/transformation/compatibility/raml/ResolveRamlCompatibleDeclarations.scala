@@ -45,12 +45,12 @@ private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandle
     referenceResolution.transform(e, conditions = Seq(ASSERT_DIFFERENT), configuration)
   }
 
-  private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): DomainElement = {
+  private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): (DomainElement, Boolean) = {
     (resolved, link) match {
       case (resolvedResponse: Response, linkResponse: Response) =>
         val statusCode = linkResponse.statusCode.value()
-        resolvedResponse.withStatusCode(statusCode)
-      case _ => resolved
+        (resolvedResponse.withStatusCode(statusCode), false)
+      case _ => (resolved, false)
     }
   }
 

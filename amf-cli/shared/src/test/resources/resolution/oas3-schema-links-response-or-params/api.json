@@ -1,0 +1,44 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api"
+  },
+  "paths": {
+    "/periodic-payments/generic-credit-transfers/{paymentId}": {
+      "get": {
+        "responses": {
+          "503": {
+            "$ref": "#/components/responses/SERVICE_UNAVAILABLE_503"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "headers": {
+      "PROCESS-ID-Header": {
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/aType"
+        }
+      }
+    },
+    "responses": {
+      "SERVICE_UNAVAILABLE_503": {
+        "description": "Service Unavailable",
+        "headers": {
+          "PROCESS-ID": {
+            "$ref": "#/components/headers/PROCESS-ID-Header"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "aType": {
+        "type": "string",
+        "example": "something"
+      }
+    }
+  }
+}

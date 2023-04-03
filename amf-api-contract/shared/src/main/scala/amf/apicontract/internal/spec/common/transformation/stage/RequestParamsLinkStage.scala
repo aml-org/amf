@@ -35,14 +35,14 @@ private class RequestParamsLinkStage(val errorHandler: AMFErrorHandler) {
     referenceResolution.transform(e, conditions = Seq(ReferenceResolution.ASSERT_DIFFERENT), configuration)
   }
 
-  private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): DomainElement = {
+  private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): (DomainElement, Boolean) = {
     (resolved, link) match {
       case (resolvedReq: Request, link: Request) =>
         val copied = Request(resolvedReq.fields.copy(), resolvedReq.annotations.copy())
         copied.id = link.id
         setParams(link, copied)
-        copied
-      case _ => resolved
+        (copied, true)
+      case _ => (resolved, false)
     }
   }
 

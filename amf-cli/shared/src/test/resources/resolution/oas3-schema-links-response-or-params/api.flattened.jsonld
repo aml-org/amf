@@ -1,0 +1,334 @@
+{
+  "@graph": [
+    {
+      "@id": "#8",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.1",
+      "doc:transformed": true,
+      "doc:sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Api",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#10"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:endpoint": "[(7,2)-(17,3)]",
+          "core:name": "[(5,4)-(5,18)]",
+          "#9": "[(1,0)-(44,1)]",
+          "core:version": "[(4,4)-(4,22)]"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/periodic-payments/generic-credit-transfers/{paymentId}",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#11"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#10": "[(8,4)-(16,5)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#12"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(10,8)-(14,9)]",
+          "#11": "[(9,6)-(15,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "503",
+      "core:name": "SERVICE_UNAVAILABLE_503",
+      "core:description": "Service Unavailable",
+      "apiContract:header": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "resolved-link-target": {
+          "#12": "amf://id#5"
+        },
+        "lexical": {
+          "apiContract:header": "[(30,8)-(34,9)]",
+          "#12": "[(28,6)-(35,7)]",
+          "core:description": "[(29,8)-(29,44)]"
+        },
+        "declared-element": {
+          "#12": ""
+        },
+        "resolved-link": {
+          "#12": "amf://id#12"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Parameter",
+        "core:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "PROCESS-ID",
+      "apiContract:required": false,
+      "apiContract:style": "simple",
+      "apiContract:explode": false,
+      "apiContract:binding": "header",
+      "raml-shapes:schema": {
+        "@id": "#1"
+      },
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true",
+          "apiContract:style": "true",
+          "apiContract:explode": "true"
+        },
+        "resolved-link": {
+          "#6": "amf://id#6"
+        },
+        "declared-element": {
+          "#6": ""
+        },
+        "lexical": {
+          "raml-shapes:schema": "[(22,8)-(24,9)]",
+          "#6": "[(20,6)-(25,7)]",
+          "apiContract:required": "[(21,8)-(21,25)]"
+        },
+        "declared-header": {
+          "#6": ""
+        },
+        "resolved-link-target": {
+          "#6": "amf://id#7"
+        }
+      }
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "aType",
+      "apiContract:examples": [
+        {
+          "@id": "#2"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "doc:recursive": "true"
+        },
+        "resolved-link": {
+          "#1": "amf://id#4"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(39,8)-(39,14)]"
+        },
+        "lexical": {
+          "apiContract:examples": "[(40,8)-(40,30)]",
+          "shacl:datatype": "[(39,8)-(39,24)]",
+          "#1": "[(38,6)-(41,7)]",
+          "shacl:name": "[(38,6)-(38,13)]"
+        },
+        "declared-element": {
+          "#1": ""
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#1"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#3"
+      },
+      "doc:raw": "something",
+      "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true",
+          "doc:strict": "true"
+        },
+        "lexical": {
+          "#2": "[(40,19)-(40,30)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "something",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1",
+      "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
+        "lexical": {
+          "#3": "[(40,19)-(40,30)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#5"
+        },
+        {
+          "@id": "#7"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#9"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#8"
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "core:name": "SERVICE_UNAVAILABLE_503",
+      "core:description": "Service Unavailable",
+      "apiContract:header": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:header": "[(30,8)-(34,9)]",
+          "#5": "[(28,6)-(35,7)]",
+          "core:description": "[(29,8)-(29,44)]"
+        },
+        "declared-element": {
+          "#5": ""
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Parameter",
+        "core:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "PROCESS-ID-Header",
+      "apiContract:required": false,
+      "apiContract:style": "simple",
+      "apiContract:explode": false,
+      "apiContract:binding": "header",
+      "raml-shapes:schema": {
+        "@id": "#1"
+      },
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true",
+          "apiContract:style": "true",
+          "apiContract:explode": "true"
+        },
+        "declared-element": {
+          "#7": ""
+        },
+        "lexical": {
+          "raml-shapes:schema": "[(22,8)-(24,9)]",
+          "#7": "[(20,6)-(25,7)]",
+          "apiContract:required": "[(21,8)-(21,25)]"
+        },
+        "declared-header": {
+          "#7": ""
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

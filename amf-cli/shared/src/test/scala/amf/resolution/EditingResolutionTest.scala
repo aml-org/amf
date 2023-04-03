@@ -1316,19 +1316,33 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("propagate Endpoint cookie parameters to Operations", "oas3-cookie-parameter-propagation.%s") {
+    config =>
+      cycle(
+        "oas3-cookie-parameter-propagation.yaml",
+        config.golden,
+        Oas30JsonHint,
+        target = AmfJsonHint,
+        directory = resolutionPath + "oas3-cookie-propagation/",
+        renderOptions = Some(config.renderOptions),
+        transformWith = Some(Oas30)
+      )
+  }
 
-  multiGoldenTest("propagate Endpoint cookie parameters to Operations", "oas3-cookie-parameter-propagation.%s") { config =>
+  multiGoldenTest(
+    "Links in response and parameters are resolved",
+    "api.%s"
+  ) { config =>
     cycle(
-      "oas3-cookie-parameter-propagation.yaml",
+      "api.json",
       config.golden,
       Oas30JsonHint,
       target = AmfJsonHint,
-      directory = resolutionPath + "oas3-cookie-propagation/",
       renderOptions = Some(config.renderOptions),
+      directory = resolutionPath + "oas3-schema-links-response-or-params/",
       transformWith = Some(Oas30)
     )
   }
-
 
   override val basePath: String = ""
 }

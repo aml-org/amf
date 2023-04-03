@@ -9,36 +9,36 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
     extends ReferenceResolutionStage(keepEditingInfo) {
 
-  override protected def customDomainElementTransformation: (DomainElement, Linkable) => DomainElement =
+  override protected def customDomainElementTransformation: (DomainElement, Linkable) => (DomainElement, Boolean) =
     (domain: DomainElement, source: Linkable) => {
       source match {
         case sourceResp: Response =>
           domain match {
             case domainResponse: Response if sourceResp.statusCode.option().isDefined =>
               val copy = domainResponse.copyElement().asInstanceOf[Response]
-              copy.withId(sourceResp.id).withStatusCode(sourceResp.statusCode.value())
+              (copy.withId(sourceResp.id).withStatusCode(sourceResp.statusCode.value()), true)
             case message: Message if message.meta == MessageModel =>
-              copyMessage(message, sourceResp, (fields, annotations) => Response(fields, annotations))
-            case _ => domain
+              (copyMessage(message, sourceResp, (fields, annotations) => Response(fields, annotations)), true)
+            case _ => (domain, false)
           }
         case sourceReq: Request =>
           domain match {
             case message: Message
                 if message.meta == MessageModel => // has to be an instance of message, not child instances
-              copyMessage(message, sourceReq, (fields, annotations) => Request(fields, annotations))
-            case _ => domain
+              (copyMessage(message, sourceReq, (fields, annotations) => Request(fields, annotations)), true)
+            case _ => (domain, false)
           }
         case sourceParam: Parameter if sourceParam.name.option().isDefined =>
           domain match {
             case domainParam: Parameter =>
               if (sourceParam.name.option() != domainParam.name.option()) {
                 val copy = domainParam.copyElement().asInstanceOf[Parameter]
-                copy.withId(sourceParam.id).withName(sourceParam.name.value())
+                (copy.withId(sourceParam.id).withName(sourceParam.name.value()), true)
               } else
-                domain
-            case _ => domain
+                (domain, false)
+            case _ => (domain, false)
           }
-        case _ => domain
+        case _ => (domain, false)
       }
     }
 
