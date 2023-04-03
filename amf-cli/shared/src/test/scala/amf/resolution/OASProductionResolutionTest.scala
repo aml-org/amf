@@ -2,6 +2,7 @@ package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Oas20TransformationPipeline
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -106,6 +107,17 @@ class OASProductionResolutionTest extends ResolutionTest {
       renderOptions = Some(config.renderOptions),
       directory = completeCyclePath + "oas3/summary-description-in-path/",
       transformWith = Some(Oas30)
+    )
+  }
+
+  test("Cyclic Self reference should not generate NPE") {
+    cycle(
+      "cyclic-self-reference.yaml",
+      "cyclic-self-reference.resolved.yaml",
+      Oas30YamlHint,
+      Oas30YamlHint,
+      directory = "amf-cli/shared/src/test/resources/poc/",
+      pipeline = Some(PipelineId.Editing)
     )
   }
 }

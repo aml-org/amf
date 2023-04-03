@@ -84,4 +84,11 @@ class RecursionValidationTest extends ResolutionForUniquePlatformReportTest {
       Some("cyclic-reference-in-property-range.report")
     )
   }
+
+  test("Cyclic Self reference in declaration") {
+    checkReport(
+      "cyclic-self-reference.yaml",
+      Some("cyclic-self-reference.report")
+    )
+  }
 }
