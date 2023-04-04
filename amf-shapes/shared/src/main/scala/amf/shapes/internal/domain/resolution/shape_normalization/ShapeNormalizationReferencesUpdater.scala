@@ -15,12 +15,15 @@ case class ShapeNormalizationReferencesUpdater(context: NormalizationContext) {
   }
 
   def updateShape(shape: Shape): Shape = {
-    val updated = AnyShapeAdjuster(retrieveLatestVersionOf(shape))
-
-    // TODO: this is horrible
-    UnnecessaryAnnotationsRemover(updated)
-
-    updated
+    if (shape.isLink) {
+      // TODO: this is horrible but this leaves it like before
+      RecursiveShape(shape).withFixPoint(shape.id)
+    } else {
+      val updated = AnyShapeAdjuster(retrieveLatestVersionOf(shape))
+      // TODO: this is horrible
+      UnnecessaryAnnotationsRemover(updated)
+      updated
+    }
   }
 
   private def retrieveLatestVersionOf(shape: Shape) = {
