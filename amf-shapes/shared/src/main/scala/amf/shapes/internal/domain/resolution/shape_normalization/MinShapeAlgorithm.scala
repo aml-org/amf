@@ -5,7 +5,13 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.annotations.{DeclaredElement, Inferred, InheritanceProvenance, LexicalInformation}
+import amf.core.internal.annotations.{
+  DeclaredElement,
+  Inferred,
+  InheritanceProvenance,
+  LexicalInformation,
+  ResolvedInheritance
+}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
@@ -1111,15 +1117,22 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     areAllOfType[NodeShape](parent.anyOf) && existsSome(child, childFields)
   }
 
-  private def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
+  private def computeMinSuperUnion(child: Shape, parent: UnionShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    var newUnionItems                      = superUnion.anyOf
-    if (shouldComputeInheritanceForUnionMembers(baseShape, superUnion)) {
+    var newUnionItems                      = parent.anyOf
+
+    parent.annotations.reject {
+      case _: DeclaredElement     => true
+      case _: ResolvedInheritance => true
+      case _                      => false
+    }
+
+    if (shouldComputeInheritanceForUnionMembers(child, parent)) {
       val minItems = for {
-        superUnionElement <- superUnion.anyOf
+        superUnionElement <- parent.anyOf
       } yield {
         try {
-          val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
+          val newShape = unionContext.minShape(filterBaseShape(child), superUnionElement)
           newShape.withId(superUnionElement.id)
           setValuesOfUnionElement(newShape, superUnionElement)
           Some(newShape)
@@ -1132,42 +1145,42 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         throw new InheritanceIncompatibleShapeError(
           "Cannot compute inheritance from union",
           None,
-          baseShape.location(),
-          baseShape.position()
+          child.location(),
+          child.position()
         )
       }
 
       newUnionItems.zipWithIndex.foreach { case (shape, i) =>
-        shape.id = baseShape.id + s"_$i"
+        shape.id = child.id + s"_$i"
         shape
       }
     }
 
-    val annotations = superUnion.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
+    val annotations = parent.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
       case Some(value) => value.annotations
       case _           => Annotations()
     }
 
-    superUnion.fields.setWithoutId(
+    parent.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
       annotations
     )
 
-    computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
-    baseShape.fields foreach { case (field, value) =>
+    computeNarrowRestrictions(allShapeFields, child, parent, filteredFields = Seq(UnionShapeModel.AnyOf))
+    child.fields foreach { case (field, value) =>
       if (field != UnionShapeModel.AnyOf) {
-        superUnion.fields.setWithoutId(field, value.value, value.annotations)
+        parent.fields.setWithoutId(field, value.value, value.annotations)
       }
     }
 
-    superUnion.annotations ++= baseShape.annotations.copyFiltering {
+    parent.annotations ++= child.annotations.copyFiltering {
       case _: DeclaredElement         => true
       case _: LexicalInformation      => true
       case _: TypePropertyLexicalInfo => true
       case _                          => false
     }
-    superUnion.withId(baseShape.id)
+    parent.withId(child.id)
   }
 
   private def filterBaseShape(baseShape: Shape): Shape = {
