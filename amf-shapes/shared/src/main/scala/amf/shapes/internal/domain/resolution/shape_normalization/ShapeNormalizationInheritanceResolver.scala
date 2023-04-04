@@ -56,6 +56,7 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
       shape
     }
   }
+
   private def markInheritanceRecursionDetected(shape: Shape): Unit = {
     detectedRecursion = true
     recursionGenerator = shape.id
