@@ -29,5 +29,5 @@ object Raml08EditingPipeline {
 
 object Raml08CachePipeline {
   def apply(): Raml08EditingPipeline = Raml08EditingPipeline.cachePipeline
-  val name: String                   = PipelineId.Compatibility
+  val name: String                   = PipelineId.Cache
 }
