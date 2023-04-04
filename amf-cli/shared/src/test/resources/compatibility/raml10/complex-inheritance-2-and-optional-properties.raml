@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: API
+version: 1.0.0
+
+types:
+  A:
+    type: object
+
+  B:
+    type: object
+
+  Another:
+    properties:
+      prop?:
+        type: Union
+        description: asd
+
+  Union:
+    type: A | B
+
+/endpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Another
+
