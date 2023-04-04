@@ -71,7 +71,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     annotations
   }
 
-  private def restrictShape(restriction: Shape, shape: Shape): Shape = {
+  private def restrictShape(restriction: Shape, parent: Shape): Shape = {
+    val shape = parent.copyShape(restriction.annotations)
     shape.id = restriction.id
     restriction.fields.foreach { case (field, derivedValue) =>
       if (field != NodeShapeModel.Inherits) {
