@@ -8,3 +8,9 @@ types:
     discriminatorValue: true
     properties:
       type: integer
+  Pet2:
+    type: object
+    discriminator: type
+    discriminatorValue: true # valid
+    properties:
+      type: boolean

@@ -29,10 +29,11 @@ import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel,
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
-import amf.shapes.internal.annotations.DirectiveArguments
+import amf.shapes.internal.annotations.{DirectiveArguments, ParsedJSONSchema}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.metamodel.operations.{AbstractParameterModel, ShapeRequestModel}
 import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCustomShaclFunctions}
+import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo.validationInfo
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
 
 object APICustomShaclFunctions extends BaseCustomShaclFunctions {
@@ -229,12 +230,10 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 else if (isInput) "Input Type"
                 else "Type"
               validate(
-                Some(
-                  ValidationInfo(
-                    NodeShapeModel.Properties,
-                    Some(s"$nodeType definitions must have at least one field"),
-                    Some(element.annotations)
-                  )
+                validationInfo(
+                  NodeShapeModel.Properties,
+                  s"$nodeType definitions must have at least one field",
+                  element.annotations
                 )
               )
             }
@@ -688,10 +687,57 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         }
       },
       DuplicatedOas3EndpointPathValidation(),
-      DuplicatedCommonEndpointPathValidation()
+      DuplicatedCommonEndpointPathValidation(),
+      new CustomShaclFunction {
+        override val name: String = "inheritanceFromJsonSchema"
+
+        def isJsonSchema(s: Shape): Boolean = s.annotations.contains(classOf[ParsedJSONSchema])
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case s: ScalarShape if s.inherits.nonEmpty =>
+              s.inherits
+                .filter(isJsonSchema)
+                .foreach(s =>
+                  validate(
+                    validationInfo(
+                      ShapeModel.Inherits,
+                      s"JSON Schemas can't be used in type expressions or type inheritance",
+                      s.annotations
+                    )
+                  )
+                )
+
+            case u: UnionShape if u.anyOf.nonEmpty =>
+              u.anyOf
+                .filter(isJsonSchema)
+                .foreach(s =>
+                  validate(
+                    validationInfo(
+                      UnionShapeModel.AnyOf,
+                      s"${s.name} is a JSON Schema and can't be used in type expressions or type inheritance",
+                      u.annotations
+                    )
+                  )
+                )
+
+            case arr: ArrayShape if Option(arr.items).isDefined =>
+              if (isJsonSchema(arr.items))
+                validate(
+                  validationInfo(
+                    ArrayShapeModel.Items,
+                    s"JSON Schemas can't be used in type expressions or type inheritance",
+                    arr.annotations
+                  )
+                )
+
+            case _ => // ignore
+          }
+        }
+      }
     )
 
-  private def validateObjectAndHasProperties(element: AmfElement) = {
+  private def validateObjectAndHasProperties(element: AmfElement): Boolean = {
     element match {
       case element: NodeShape =>
         element.properties.exists(p => p.patternName.option().isEmpty) || element.fields.exists(

@@ -3,15 +3,14 @@ package amf.apicontract.internal.validation.shacl.graphql
 import amf.apicontract.internal.validation.shacl.graphql.values.ValueValidator
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain._
-import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DomainElementModel, ScalarNodeModel}
+import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.extensions.{DomainExtensionModel, PropertyShapePathModel}
-import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.federation.Key
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
+import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo.validationInfo
 
 import scala.annotation.tailrec
 
@@ -310,9 +309,5 @@ object GraphQLValidator {
     case u: UnionShape   => GraphQLNullable(u).name
     case arr: ArrayShape => s"[${getShapeName(arr.items)}]"
     case s               => s.name.value()
-  }
-
-  private def validationInfo(field: Field, message: String, annotations: Annotations): Some[ValidationInfo] = {
-    Some(ValidationInfo(field, Some(message), Some(annotations)))
   }
 }

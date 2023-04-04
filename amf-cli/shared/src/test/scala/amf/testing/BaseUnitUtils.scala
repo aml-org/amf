@@ -4,6 +4,8 @@ import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.annotations.SourceYPart
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -40,5 +42,13 @@ object BaseUnitUtils {
 
   def await[R](eventualResult: Future[R]): R = {
     Await.result(eventualResult, Duration.Inf)
+  }
+
+  def sourcePartOf(unit: BaseUnit, extract: JsonSchemaDocument => Shape): String = {
+    val doc             = unit.asInstanceOf[JsonSchemaDocument]
+    val shapeOfInterest = extract(doc)
+    val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
+    val obtainedAst     = sourceYPart.ast.toString
+    obtainedAst
   }
 }

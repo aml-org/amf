@@ -73,7 +73,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                     %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
-    libraryDependencies += "org.json"                          % "json"                   % "20220320",
+    libraryDependencies += "org.json"                          % "json"                   % "20230227",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(

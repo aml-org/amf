@@ -540,6 +540,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = security("SecurityScheme"),
         owlProperty = doc("-"),
         constraint = shape("exclusiveQueryStringAndQueryParametersProperties")
+      ),
+      AMFValidation(
+        uri = amfParser("inheritance-from-json-schema"),
+        owlClass = shape("AnyShape"),
+        owlProperty = doc("-"),
+        constraint = shape("inheritanceFromJsonSchema"),
+        severity = SeverityLevels.WARNING
       )
     )
 

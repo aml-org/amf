@@ -1,0 +1,37 @@
+#%RAML 1.0
+
+title: Pets API
+version: 1.0
+
+types:
+  MyJsonType: |
+    {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "string",
+        "minLength": 1
+    }
+
+  MyRamlType:
+    type: integer
+    minimum: 100
+
+  JsonRamlUnionType: MyJsonType | MyRamlType # Should not be valid
+
+  JsonArrayType1: MyJsonType[] # Should not be valid
+
+  JsonArrayType2:
+    type: array
+    items: MyJsonType # Should not be valid
+
+  JsonInheritedType:
+    type: MyJsonType
+    maxLength: 100 # Should not be valid
+
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: JsonInheritedType

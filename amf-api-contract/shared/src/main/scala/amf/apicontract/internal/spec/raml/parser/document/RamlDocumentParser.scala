@@ -43,7 +43,8 @@ import amf.shapes.internal.spec.raml.parser.{
   RamlTypeEntryParser,
   RamlTypeSyntax,
   RamlWebApiContextType,
-  StringDefaultType
+  StringDefaultType,
+  TypeInfo
 }
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   ExclusiveSchemasType,
@@ -428,7 +429,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             }
             val parser = Raml10TypeParser(
               entry,
-              _ => {}
+              _ => {},
+              TypeInfo(isDeclaredType = true)
             )
             parser.parse() match {
               case Some(shape) =>
