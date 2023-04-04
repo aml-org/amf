@@ -1,0 +1,27 @@
+openapi: 3.0.0
+
+info:
+  version: "1"
+  title: 'A common type'
+
+paths: {}
+components:
+  schemas:
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+
+    Details:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Details'
