@@ -1,6 +1,5 @@
 package amf.poc
-import amf.core.client.common.validation.AmfProfile
-import amf.core.internal.remote.{AmfJsonHint, Hint, Raml10YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.validation.ResolutionForUniquePlatformReportTest
 
 class RecursionValidationTest extends ResolutionForUniquePlatformReportTest {
@@ -89,6 +88,37 @@ class RecursionValidationTest extends ResolutionForUniquePlatformReportTest {
     checkReport(
       "cyclic-self-reference.yaml",
       Some("cyclic-self-reference.report")
+    )
+  }
+
+  // valid
+  test("Recursive OneOf") {
+    checkReport(
+      "recursive-oneof.yaml",
+      Some("recursive-oneof.report")
+    )
+  }
+
+  // valid
+  test("Recursive AnyOf") {
+    checkReport(
+      "recursive-anyof.yaml",
+      Some("recursive-anyof.report")
+    )
+  }
+
+  // invalid
+  test("Recursive AllOf") {
+    checkReport(
+      "recursive-allof.yaml",
+      Some("recursive-allof.report")
+    )
+  }
+
+  test("Recursive OneOf AllOf combo") {
+    checkReport(
+      "recursive-oneof-allof-combo.yaml",
+      Some("recursive-oneof-allof-combo.report")
     )
   }
 }
