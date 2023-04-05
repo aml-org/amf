@@ -7,7 +7,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.{AmfObject, DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, DomainElementStrategy, InstanceCollector}
 import amf.core.internal.transform.stages.selectors.ShapeSelector
 import amf.shapes.internal.domain.resolution.shape_normalization.{
   NormalizationContext,
