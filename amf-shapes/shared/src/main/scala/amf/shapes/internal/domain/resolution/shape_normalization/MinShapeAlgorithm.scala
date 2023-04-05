@@ -885,13 +885,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) => context.minShape(baseItems, superItems)
-          case _                => baseItems
+          case Some(superItems) =>
+            val r = context.minShape(baseItems, superItems)
+            r.withId(baseItems.id)
+          case _ => baseItems
         }
       }
       .orElse(superItemsOption)
+
     newItems.foreach { ni =>
-      baseArray.withItems(ni)
+      baseArray.setWithoutId(ArrayShapeModel.Items, ni)
     }
 
     computeNarrowRestrictions(
