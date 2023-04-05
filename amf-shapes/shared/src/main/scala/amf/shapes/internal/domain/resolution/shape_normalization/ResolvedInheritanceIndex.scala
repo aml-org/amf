@@ -1,6 +1,7 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.Shape
+
 import scala.collection.mutable
 
 private[shape_normalization] case class ResolvedInheritanceIndex() {
@@ -16,7 +17,9 @@ private[shape_normalization] case class ResolvedInheritanceIndex() {
     index.put(id, shape)
     this
   }
+
   def get(id: String): Option[Shape] = index.get(id)
 
   def exists(id: String): Boolean = index.contains(id)
+
 }

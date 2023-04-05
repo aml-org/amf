@@ -216,4 +216,28 @@ class ShapeNormalizationTest extends ResolutionTest{
       transformWith = Some(Raml10)
     )
   }
+
+  test("Nested inheritance in items") {
+    cycle(
+      "inheritance-item.raml",
+      "inheritance-item.resolved.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      pipeline = Option(PipelineId.Cache),
+      eh = Some(IgnoringErrorHandler),
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("Nested inheritance in properties") {
+    cycle(
+      "inheritance-nested-object.raml",
+      "inheritance-nested-object.resolved.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      pipeline = Option(PipelineId.Cache),
+      eh = Some(IgnoringErrorHandler),
+      transformWith = Some(Raml10)
+    )
+  }
 }
