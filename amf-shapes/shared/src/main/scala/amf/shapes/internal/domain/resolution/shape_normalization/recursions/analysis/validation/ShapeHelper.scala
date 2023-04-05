@@ -2,11 +2,12 @@ package amf.shapes.internal.domain.resolution.shape_normalization.recursions.ana
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.shapes.client.scala.model.domain.{ArrayShape, NilShape, ScalarShape, UnionShape}
+import amf.core.internal.metamodel.Field
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NilShape, ScalarShape, UnionShape}
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.listeners.CallbackListener
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.{
   Analysis,
-  UnionEnablesCyclesAnalysis
+  SplitPathsEnableCyclesAnalysis
 }
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.ReadOnlyStack
 
@@ -17,17 +18,20 @@ trait ShapeHelper {
       case a: ArrayShape                            => a.minItems.value() == 0
       case _: NilShape                              => true
       case _: UnionShape if alreadyAnalyzingUnion() => false
-      case u: UnionShape                            => unionEnablesCycles(u)
+      case u: UnionShape                            => analyzeSplitPaths(u, u.meta.AnyOf)
+      case a: AnyShape if a.xone.nonEmpty           => analyzeSplitPaths(a, a.meta.Xone)
+      case a: AnyShape if a.or.nonEmpty             => analyzeSplitPaths(a, a.meta.Or)
       case _                                        => false
     }
   }
 
-  private def alreadyAnalyzingUnion()(implicit analysis: Analysis) = analysis.isInstanceOf[UnionEnablesCyclesAnalysis]
+  private def alreadyAnalyzingUnion()(implicit analysis: Analysis) =
+    analysis.isInstanceOf[SplitPathsEnableCyclesAnalysis]
 
-  /** Unions allow cycles if AT LEAST ONE of the "different paths" (stacks under each union member) allows cycles. To
-    * determine that we need to start a new sub-analysis if we aren't already in one
+  /** Unions, oneOfs and anyOfs allow cycles if AT LEAST ONE of the "different paths" (stacks under each union member)
+    * allows cycles. To determine that we need to start a new sub-analysis if we aren't already in one
     */
-  private def unionEnablesCycles(union: UnionShape): Boolean = {
+  private def analyzeSplitPaths(anyShape: AnyShape, field: Field): Boolean = {
     object PerformanceOrder extends Ordering[Shape] {
       // Lower nr. is higher priority
       private def priority(s: Shape): Int = {
@@ -39,17 +43,19 @@ trait ShapeHelper {
       override def compare(x: Shape, y: Shape): Int = priority(x).compare(priority(y))
     }
 
-    union.anyOf.sorted(PerformanceOrder).exists {
+    val members: Seq[Shape] = anyShape.fields.field(field)
+
+    members.sorted(PerformanceOrder).exists {
       case _: ScalarShape => true
       case _: NilShape    => true
-      case member         => memberEnablesCycles(union, member)
+      case member         => memberEnablesCycles(anyShape, member, field)
     }
   }
 
-  private def memberEnablesCycles(union: UnionShape, member: Shape): Boolean = {
+  private def memberEnablesCycles(anyShape: AnyShape, member: Shape, field: Field): Boolean = {
     var foundCycle   = false
     var cycleIsValid = false
-    val analysis     = UnionEnablesCyclesAnalysis(union)
+    val analysis     = SplitPathsEnableCyclesAnalysis(anyShape)
 
     // Since we cannot capture the returned value of a callback we assign variables (`foundCycle` & `cycleIsValid`)
     val callback = CallbackListener((s: ReadOnlyStack) => {
@@ -60,7 +66,7 @@ trait ShapeHelper {
 
     analysis.append(callback)
 
-    analysis.analyze(member, union.meta.AnyOf)
+    analysis.analyze(member, field)
     !foundCycle || (foundCycle && cycleIsValid)
   }
 

@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Parent:
+      oneOf:
+        - $ref: "#/components/schemas/A"
+        - $ref: "#/components/schemas/B"
+        - type: object
+          properties:
+            name:
+              type: string
+    A:
+      allOf:
+        - $ref: "#/components/schemas/Parent"
+        - type: object
+          properties:
+            a:
+              type: string
+    B:
+      allOf:
+        - $ref: "#/components/schemas/Parent"
+        - type: object
+          properties:
+            b:
+              type: string
