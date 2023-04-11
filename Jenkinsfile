@@ -132,6 +132,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'test-gradle'
                 }
             }
             steps {
