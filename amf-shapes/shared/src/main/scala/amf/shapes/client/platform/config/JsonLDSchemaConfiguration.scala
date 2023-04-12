@@ -17,6 +17,7 @@ import amf.shapes.client.scala.config.{
 }
 import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.core.internal.convert.ClientErrorHandlerConverter._
+import amf.shapes.client.platform.model.document.JsonSchemaDocument
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -29,6 +30,9 @@ class JsonLDSchemaConfiguration private[amf] (
   override def baseUnitClient(): JsonLDSchemaConfigurationClient = _internal.baseUnitClient()
 
   override def elementClient(): JsonLDSchemaElementClient = _internal.elementClient()
+
+  def withJsonLDSchema(jsonDocument: JsonSchemaDocument): JsonLDSchemaConfiguration =
+    _internal.withJsonLDSchema(jsonDocument)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): JsonLDSchemaConfiguration =
     _internal.withParsingOptions(parsingOptions)
