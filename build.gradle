@@ -47,17 +47,11 @@ file("amf-apicontract.versions").withInputStream {
 }
 
 dependencies {
-    compile "com.github.amlorg:amf-cli_2.12:${versions.'amf.apicontract'}"
-    compile "com.github.amlorg:amf-api-contract_2.12:${versions.'amf.apicontract'}"
-    compile "com.github.amlorg:amf-validation_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-cli_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-api-contract_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-validation_2.12:${versions.'amf.apicontract'}"
 }
 
 mainClassName = 'amf.Main'
-
-distributions {
-    custom {
-        baseName = "${name}"
-    }
-}
 
 tasks.nexusIq.dependsOn(distZip)
