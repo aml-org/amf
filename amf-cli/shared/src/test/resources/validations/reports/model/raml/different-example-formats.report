@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/examples/different-formats/api.raml
+Profile: RAML 1.0
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/validation#unsupported-example-media-type-warning
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-cli/shared/src/test/resources/validations/raml/examples/different-formats/api.raml#/declares/shape/TestType
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/examples/different-formats/api.raml#/declares/shape/TestType/examples/example/xml
+  Property: http://a.ml/vocabularies/document#value
+  Range: [(12,6)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/examples/different-formats/api.raml
