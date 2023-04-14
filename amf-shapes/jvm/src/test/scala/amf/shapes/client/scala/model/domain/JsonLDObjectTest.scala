@@ -4,10 +4,10 @@ import amf.core.client.platform.model.domain.DomainElement
 import amf.core.internal.convert.NativeOpsFromJvm
 import amf.shapes.client.platform.model.domain.jsonldinstance.JsonLDObject
 import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
+import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
 class JsonLDObjectTest extends AsyncFunSuite with NativeOpsFromJvm with Matchers {
 
   private val BASE      = "http://a.ml/test#"
@@ -36,8 +36,12 @@ class JsonLDObjectTest extends AsyncFunSuite with NativeOpsFromJvm with Matchers
 
   test("Test set and get object collection property") {
     JsonLDSchemaConfiguration.JsonLDSchema()
-    val objKey  = BASE + "key2"
-    val dObject = new JsonLDObject().withObjPropertyCollection(objKey, java.util.List.of(obj1, obj2))
+    val objKey                         = BASE + "key2"
+    val list: ClientList[JsonLDObject] = new java.util.ArrayList[JsonLDObject]()
+    list.add(obj1)
+    list.add(obj2)
+
+    val dObject = new JsonLDObject().withObjPropertyCollection(objKey, list)
     val value   = dObject.graph().getObjectByProperty(objKey).native
     value.size() shouldBe (2)
 
