@@ -216,10 +216,11 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
 ) extends QuickFieldParserOps {
   def parse(): Example = {
     val example = producer().add(Annotations(entry))
+    val value   = entry.value
 
-    entry.value.tagType match {
+    value.tagType match {
       case YType.Map =>
-        val map = entry.value.as[YMap]
+        val map = value.as[YMap]
 
         if (map.key("value").nonEmpty) {
           map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
@@ -235,9 +236,10 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
           AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
           if (ctx.spec.isRaml) ctx.closedShape(example, map, "example")
-        } else ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
+        } else ExampleDataParser(YMapEntryLike(value), example, options).parse()
       case YType.Null => // ignore
-      case _          => ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
+      case _ =>
+        ExampleDataParser(YMapEntryLike(value), example, options).parse()
     }
 
     example

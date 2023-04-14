@@ -32,8 +32,8 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
   def validate(
       config: ValidationConfiguration
   )(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
-    val nextConfig = config.amfConfig.withPlugin(ErrorFallbackValidationPlugin(SeverityLevels.WARNING))
-    CandidateValidator.validateAll(candidates, config.copy(nextConfig)).map(groupResults)
+    val configWithFallback = config.amfConfig.withPlugin(ErrorFallbackValidationPlugin(SeverityLevels.WARNING))
+    CandidateValidator.validateAll(candidates, config.copy(configWithFallback)).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
