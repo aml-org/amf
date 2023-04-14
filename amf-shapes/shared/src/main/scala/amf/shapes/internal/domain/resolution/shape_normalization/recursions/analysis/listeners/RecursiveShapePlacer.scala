@@ -8,16 +8,16 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Properties
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.Analysis
-import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.ReadOnlyStack
+import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.ImmutableStack
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.frames.{Frame, MiddleFrame}
 
 object RecursiveShapePlacer extends AnalysisListener {
-  override def onRecursion(stack: ReadOnlyStack)(implicit analysis: Analysis): Unit = {
+  override def onRecursion(stack: ImmutableStack)(implicit analysis: Analysis): Unit = {
     val currentFrame  = stack.peek().asInstanceOf[MiddleFrame] // where the loop closes
     val previousFrame = stack.peek(1)
     placeRecursiveShape(stack, currentFrame, previousFrame)
   }
-  private def placeRecursiveShape(stack: ReadOnlyStack, currentFrame: MiddleFrame, previousFrame: Frame): Unit = {
+  private def placeRecursiveShape(stack: ImmutableStack, currentFrame: MiddleFrame, previousFrame: Frame): Unit = {
     val parent         = maybeCopyParent(stack, previousFrame)
     val recursiveShape = RecursiveShape(currentFrame.shape).withSupportsRecursion(true)
 
@@ -59,7 +59,7 @@ object RecursiveShapePlacer extends AnalysisListener {
     * the graph to avoid unnecessarily duplicating properties and improve memory performance. However, in this case the
     * `b` property is only recursive in `B` not in `A`, and that's why we should copy.
     */
-  private def maybeCopyParent(stack: ReadOnlyStack, previousFrame: Frame) = {
+  private def maybeCopyParent(stack: ImmutableStack, previousFrame: Frame) = {
     previousFrame.shape match {
       case property: PropertyShape =>
         val propertyParent = stack.peek(2).shape.asInstanceOf[NodeShape]
