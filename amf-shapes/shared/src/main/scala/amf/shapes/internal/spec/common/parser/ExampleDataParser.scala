@@ -9,7 +9,7 @@ import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YScalar, YSequence, YType}
+import org.yaml.model.{YNode, YScalar, YSequence, YType}
 import org.yaml.render.YamlRender
 
 case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options: ExampleOptions)(implicit
@@ -37,15 +37,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
 
     }
 
-    node.toOption[YScalar] match {
-      case Some(value) if node.tagType == YType.Null =>
-        if (isNullLiteral(value))
-          example.setWithoutId(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
-      case Some(scalar) =>
-        example.setWithoutId(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
-      case _ =>
-        example.set(ExampleModel.Raw, AmfScalar(YamlRender.render(targetNode)), Annotations.synthesized())
-    }
+    setRawField(targetNode)
 
     val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget, options.isScalar).parse()
 
@@ -55,6 +47,18 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
     }
 
     example
+  }
+
+  private def setRawField(targetNode: YNode): Any = {
+    node.toOption[YScalar] match {
+      case Some(value) if node.tagType == YType.Null =>
+        if (isNullLiteral(value))
+          example.setWithoutId(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
+      case Some(scalar) =>
+        example.setWithoutId(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
+      case _ =>
+        example.set(ExampleModel.Raw, AmfScalar(YamlRender.render(targetNode)), Annotations.synthesized())
+    }
   }
 
   private def isNullLiteral(value: YScalar) = value.text.nonEmpty
