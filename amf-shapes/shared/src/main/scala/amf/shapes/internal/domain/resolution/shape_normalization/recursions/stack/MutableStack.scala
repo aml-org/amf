@@ -18,5 +18,5 @@ case class MutableStack() extends Stack() {
     head
   }
 
-  def readOnly(): ReadOnlyStack = ReadOnlyStack(this.stack)
+  def readOnly(): ImmutableStack = ImmutableStack(this.stack)
 }

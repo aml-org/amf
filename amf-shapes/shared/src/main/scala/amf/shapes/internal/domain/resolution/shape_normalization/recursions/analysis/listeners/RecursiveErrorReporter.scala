@@ -6,10 +6,10 @@ import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.Analysis
 import amf.shapes.internal.domain.resolution.shape_normalization.recursions.analysis.validation.StackValidator
-import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.ReadOnlyStack
+import amf.shapes.internal.domain.resolution.shape_normalization.recursions.stack.ImmutableStack
 
 case class RecursiveErrorReporter(eh: AMFErrorHandler) extends AnalysisListener {
-  override def onRecursion(stack: ReadOnlyStack)(implicit analysis: Analysis): Unit = {
+  override def onRecursion(stack: ImmutableStack)(implicit analysis: Analysis): Unit = {
     val shape = stack.peek().shape
     val stackOfInterest = stack.substack(shape.id)
     val cycleIsValid = StackValidator.containsValidCycle(stackOfInterest)
@@ -25,7 +25,7 @@ case class RecursiveErrorReporter(eh: AMFErrorHandler) extends AnalysisListener 
     }
   }
 
-  private def stackTrace(stack: ReadOnlyStack): String = {
+  private def stackTrace(stack: ImmutableStack): String = {
     stack.toSeq
       .map(_.shape)
       .filter {
