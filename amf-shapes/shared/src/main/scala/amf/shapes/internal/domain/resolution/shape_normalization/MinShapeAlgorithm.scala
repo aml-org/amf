@@ -9,7 +9,6 @@ import amf.core.internal.annotations.{
   DeclaredElement,
   Inferred,
   InheritanceProvenance,
-  InheritedShapes,
   LexicalInformation,
   ResolvedInheritance
 }
@@ -795,7 +794,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val baseItems  = baseMatrix.items
     if (Option(superItems).isDefined && Option(baseItems).isDefined) {
 
-      val newItems = nestedMinShape(baseItems, superItems)
+      val newItems = context.minShape(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
       computeNarrowRestrictions(
@@ -819,7 +818,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val baseItems  = baseMatrix.items
     if (Option(superItems).isDefined && Option(baseItems).isDefined) {
 
-      val newItems = nestedMinShape(baseItems, superItems)
+      val newItems = context.minShape(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
       computeNarrowRestrictions(
@@ -859,7 +858,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
       } yield {
-        nestedMinShape(baseItem, superItems(i))
+        context.minShape(baseItem, superItems(i))
       }
 
       baseTuple.fields.setWithoutId(
@@ -879,19 +878,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  // When we compute a nested MinShape we need to first normalize the parent and child shapes. This is because we might
-  // inherit from a parent that has an yet unresolved inheritance (in other words, is out of date). Calling resolver.normalize
-  // guarantees that we have an updated parent and child. It uses the same cache as the root MinShape so everything is synced
-  private def nestedMinShape(child: Shape, parent: Shape, context: Option[NormalizationContext] = None): Shape = {
-    val ctx        = context.getOrElse(this.context)
-    val resolver   = ShapeNormalizationInheritanceResolver(ctx)
-    val parentNorm = resolver.normalize(parent)
-    val childNorm  = resolver.normalize(child)
-    val r          = ctx.minShape(childNorm, parentNorm)
-    r.annotations += InheritedShapes(Seq(parentNorm.id))
-    r.withId(child.id)
-  }
-
   private def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
     val superItemsOption = Option(superArray.items)
     val baseItemsOption  = Option(baseArray.items)
@@ -899,8 +885,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) => nestedMinShape(baseItems, superItems)
-          case _                => baseItems
+          case Some(superItems) =>
+            val r = context.minShape(baseItems, superItems)
+            r.withId(baseItems.id)
+          case _ => baseItems
         }
       }
       .orElse(superItemsOption)
@@ -941,8 +929,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       case (path, true) =>
         val superProp = superProperties.find(_.path.is(path)).get
         val baseProp  = baseProperties.find(_.path.is(path)).get
-
-        nestedMinShape(baseProp, superProp)
+        context.minShape(baseProp, superProp)
 
       case (path, false) =>
         val superPropOption = superProperties.find(_.path.is(path))
@@ -1019,7 +1006,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           superUnionElement <- superUnion.anyOf
         } yield {
           try {
-            Some(nestedMinShape(baseUnionElement, superUnionElement, Some(unionContext)))
+            Some(unionContext.minShape(baseUnionElement, superUnionElement))
           } catch {
             case _: Exception => None
           }
@@ -1073,7 +1060,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
     } yield {
-      nestedMinShape(baseUnionElement, superNode, Some(unionContext))
+      unionContext.minShape(baseUnionElement, superNode)
     }
 
     baseUnion.fields.setWithoutId(
@@ -1148,7 +1135,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         superUnionElement <- parent.anyOf
       } yield {
         try {
-          val newShape = nestedMinShape(filterBaseShape(child), superUnionElement, Some(unionContext))
+          val newShape = unionContext.minShape(filterBaseShape(child), superUnionElement)
           newShape.withId(superUnionElement.id)
           setValuesOfUnionElement(newShape, superUnionElement)
           Some(newShape)
@@ -1255,7 +1242,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         }
 
       val newRange = if (shouldComputeMinRange) {
-        nestedMinShape(baseProperty.range, superProperty.range)
+        context.minShape(baseProperty.range, superProperty.range)
       } else {
         baseProperty.range
       }

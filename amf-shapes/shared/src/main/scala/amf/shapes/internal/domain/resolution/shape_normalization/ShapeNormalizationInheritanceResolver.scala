@@ -50,6 +50,7 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
       val resolvedShape = withVisitTracking(shape) { () =>
         resolveInheritance(shape)
       }
+//      addToCache(resolvedShape)
       resolvedShape
     } else {
       shape
