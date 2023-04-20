@@ -2,25 +2,17 @@
 title: My API With Types
 types:
   Phone:
-    type: object
-    additionalProperties: true
     properties:
       manufacturer:
         type: string
-        required: true
       numberOfSIMCards:
         type: number
-        required: true
   Notebook:
-    type: object
-    additionalProperties: true
     properties:
       manufacturer:
         type: string
-        required: true
       numberOfUSBPorts:
         type: number
-        required: true
   Device:
     examples:
       phone:
@@ -33,28 +25,18 @@ types:
         weight: 150
     anyOf:
       -
-        type: object
-        additionalProperties: true
         properties:
           manufacturer:
             type: string
-            required: true
           numberOfSIMCards:
             type: number
-            required: true
           weight:
             type: number
-            required: true
       -
-        type: object
-        additionalProperties: true
         properties:
           manufacturer:
             type: string
-            required: true
           numberOfUSBPorts:
             type: number
-            required: true
           weight:
             type: number
-            required: true

@@ -1,30 +1,22 @@
 #%RAML 1.0 DataType
 anyOf:
   -
-    type: object
-    additionalProperties: true
-    properties:
-      a:
-        type: string
-        required: true
+    anyOf:
+      -
+        properties:
+          a:
+            type: string
+      -
+        properties:
+          b:
+            type: string
   -
-    type: object
-    additionalProperties: true
-    properties:
-      b:
-        type: string
-        required: true
-  -
-    type: object
-    additionalProperties: true
-    properties:
-      c:
-        type: string
-        required: true
-  -
-    type: object
-    additionalProperties: true
-    properties:
-      d:
-        type: string
-        required: true
+    anyOf:
+      -
+        properties:
+          c:
+            type: string
+      -
+        properties:
+          d:
+            type: string

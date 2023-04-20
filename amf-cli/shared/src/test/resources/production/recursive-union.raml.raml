@@ -6,12 +6,26 @@ title: API
       application/json:
         anyOf:
           -
-            type: array
             items:
-              type: object
-              (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType
+              anyOf:
+                -
+                  type: object
+                  (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array
+                -
+                  items:
+                    anyOf:
+                      -
+                        type: object
+                        (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array
+                      -
+                        type: object
+                        (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1
           -
-            type: array
             items:
-              type: object
-              (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType
+              anyOf:
+                -
+                  type: object
+                  (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array
+                -
+                  type: object
+                  (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1

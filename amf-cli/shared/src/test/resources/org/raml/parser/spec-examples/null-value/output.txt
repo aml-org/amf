@@ -6,11 +6,8 @@ types:
       value:
         name: Fred
         comment: null
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
       comment:
         type: nil | string
-        required: true

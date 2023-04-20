@@ -11,7 +11,7 @@ private[resolution] class NormalizationContext(
     final val errorHandler: AMFErrorHandler,
     final val keepEditingInfo: Boolean,
     final val profile: ProfileName,
-    val cache: NormalizationCache = NormalizationCache()
+    val resolvedInheritanceIndex: ResolvedInheritanceIndex = ResolvedInheritanceIndex()
 ) {
 
   val isRaml08: Boolean                        = profile.equals(Raml08Profile)

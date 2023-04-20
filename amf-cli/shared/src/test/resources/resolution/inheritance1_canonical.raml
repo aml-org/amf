@@ -7,53 +7,36 @@ types:
   C:
     type: number
   D:
-    additionalProperties: true
     properties:
       a:
         type: string
-        required: true
       b:
         type: integer
-        required: true
   E:
-    additionalProperties: true
     properties:
       a:
         type: string
-        required: true
       c:
         type: number
-        required: true
   F:
-    type: object
-    additionalProperties: true
     properties:
       a:
         type: string
-        required: true
       b:
         type: integer
-        required: true
       c:
         type: number
-        required: true
   G:
     anyOf:
       -
-        additionalProperties: true
         properties:
           a:
             type: string
-            required: true
           b:
             type: integer
-            required: true
       -
-        additionalProperties: true
         properties:
           a:
             type: string
-            required: true
           c:
             type: number
-            required: true

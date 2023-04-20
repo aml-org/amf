@@ -22,7 +22,7 @@ import amf.core.internal.transform.stages.{
   SourceInformationStage
 }
 import amf.core.internal.remote.AsyncApi20
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 class Async20TransformationPipeline private (override val name: String) extends TransformationPipeline() {
   def references = new WebApiReferenceResolutionStage()
@@ -31,7 +31,7 @@ class Async20TransformationPipeline private (override val name: String) extends 
     Seq(
       references,
       new ExternalSourceRemovalStage,
-      new ShapeNormalizationStage(Async20Profile, keepEditingInfo = false),
+      new ShapeNormalizationForUnitStage(Async20Profile, keepEditingInfo = false),
       new JsonMergePatchStage(isEditing = false),
       new AsyncContentTypeResolutionStage(),
       new AsyncExamplePropagationResolutionStage(),

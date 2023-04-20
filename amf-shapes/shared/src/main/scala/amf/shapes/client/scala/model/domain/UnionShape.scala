@@ -10,6 +10,9 @@ import org.yaml.model.YPart
 case class UnionShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
+
+  override private[amf] val isConcreteShape = true
+
   def anyOf: Seq[Shape] = fields.field(AnyOf)
 
   def withAnyOf(elements: Seq[Shape], annotations: Annotations = Annotations()): this.type =

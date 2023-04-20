@@ -4,6 +4,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.{ExplicitField, SynthesizedField}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, raw, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -18,19 +19,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
 ) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val fs = property.fields
-
-    val name: String = fs
-      .entry(PropertyShapeModel.MinCount)
-      .map(f => {
-        if (f.scalar.value.asInstanceOf[Int] == 0 && !f.value.annotations.contains(classOf[ExplicitField]))
-          property.name.value() + "?"
-        else if (property.patternName.option().isDefined && property.name.value() != "//")
-          s"/${property.name.value()}/"
-        else
-          property.name.value()
-      })
-      .getOrElse(property.name.value())
+    val name: String = getPropertyName
 
     val key = YNode(YScalar(name), YType.Str)
 
@@ -62,6 +51,27 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       }
     }
   }
+
+  private def getPropertyName: String = {
+    val isPatternProperty = property.patternName.option().isDefined
+
+    if (isPatternProperty) {
+      // emit pattern
+      val isEmptyPattern = property.name.value() == "//"
+      if (isEmptyPattern) "//"
+      else s"/${property.patternName.value()}/"
+    } else {
+      // emit
+      property.fields.entry(PropertyShapeModel.MinCount) match {
+        case Some(e) if isNotRequired(e) && isNotExplicit(e) => property.name.value() + "?"
+        case _                                               => property.name.value()
+      }
+    }
+  }
+
+  private def isNotExplicit(entry: FieldEntry) = !entry.value.annotations.contains(classOf[ExplicitField])
+
+  private def isNotRequired(minCountEntry: FieldEntry) = minCountEntry.scalar.value == 0
 
   override def position(): Position = pos(property.annotations) // TODO check this
 }

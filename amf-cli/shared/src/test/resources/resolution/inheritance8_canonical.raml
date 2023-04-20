@@ -1,27 +1,18 @@
 #%RAML 1.0 Library
 types:
   CatWithCity:
-    additionalProperties: true
     properties:
       city:
         type: string
-        required: true
   CatWithAddress:
-    additionalProperties: true
     properties:
       address:
         type: string
-        required: true
   Cat:
-    type: object
-    additionalProperties: true
     properties:
       city:
         type: string
-        required: true
       address:
         type: string
-        required: true
       age:
         type: string | number
-        required: true

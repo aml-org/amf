@@ -87,7 +87,7 @@
         ],
         "raml-shapes:discriminatorMapping": [
           {
-            "@id": "#2",
+            "@id": "#10",
             "@type": [
               "apiContract:IriTemplateMapping",
               "doc:DomainElement"
@@ -105,7 +105,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:linkExpression": "[(16,19)-(16,25)]",
-                "#2": "[(16,10)-(17,0)]",
+                "#10": "[(16,10)-(17,0)]",
                 "apiContract:templateVariable": "[(16,10)-(16,17)]"
               }
             }
@@ -113,7 +113,7 @@
         ],
         "raml-shapes:discriminatorValueMapping": [
           {
-            "@id": "#3",
+            "@id": "#11",
             "@type": [
               "raml-shapes:DiscriminatorValueMapping",
               "doc:DomainElement"
@@ -125,7 +125,7 @@
             ],
             "raml-shapes:discriminatorValueTarget": [
               {
-                "@id": "#4",
+                "@id": "#12",
                 "@type": [
                   "raml-shapes:AnyShape",
                   "shacl:Shape",
@@ -147,13 +147,13 @@
                     "doc:recursive": "true"
                   },
                   "resolved-link": {
-                    "#4": "amf://id#5"
+                    "#12": "amf://id#13"
                   },
                   "lexical": {
-                    "#4": "[(16,19)-(16,25)]"
+                    "#12": "[(16,19)-(16,25)]"
                   },
                   "resolved-link-target": {
-                    "#4": "amf://id#4"
+                    "#12": "amf://id#12"
                   }
                 }
               }
@@ -161,19 +161,124 @@
             "smaps": {
               "lexical": {
                 "raml-shapes:discriminatorValueTarget": "[(16,19)-(16,25)]",
-                "#3": "[(16,10)-(17,0)]",
+                "#11": "[(16,10)-(17,0)]",
                 "raml-shapes:discriminatorValue": "[(16,10)-(16,17)]"
               }
             }
           }
         ],
-        "shacl:property": [],
         "shacl:name": [
           {
             "@value": "Animal"
           }
         ],
         "shacl:xone": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:closed": [
+              {
+                "@value": false
+              }
+            ],
+            "shacl:property": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#bark"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "bark"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#4": "[(26,10)-(26,14)]"
+                      },
+                      "lexical": {
+                        "shacl:datatype": "[(26,10)-(27,0)]",
+                        "#4": "[(25,8)-(27,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "bark"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "shacl:minCount": "true"
+                  },
+                  "lexical": {
+                    "#3": "[(25,8)-(27,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "Dog"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "shacl:closed": "true"
+              },
+              "resolved-link": {
+                "#2": "amf://id#5"
+              },
+              "type-property-lexical-info": {
+                "#2": "[(23,6)-(23,10)]"
+              },
+              "lexical": {
+                "shacl:name": "[(22,4)-(22,7)]",
+                "#2": "[(22,4)-(27,0)]"
+              },
+              "declared-element": {
+                "#2": ""
+              },
+              "resolved-link-target": {
+                "#2": "amf://id#2"
+              }
+            }
+          },
           {
             "@id": "#6",
             "@type": [
@@ -199,7 +304,7 @@
                 ],
                 "shacl:path": [
                   {
-                    "@id": "http://a.ml/vocabularies/data#bark"
+                    "@id": "http://a.ml/vocabularies/data#name"
                   }
                 ],
                 "raml-shapes:range": [
@@ -219,122 +324,16 @@
                     ],
                     "shacl:name": [
                       {
-                        "@value": "bark"
-                      }
-                    ],
-                    "smaps": {
-                      "type-property-lexical-info": {
-                        "#8": "[(26,10)-(26,14)]"
-                      },
-                      "lexical": {
-                        "shacl:datatype": "[(26,10)-(27,0)]",
-                        "#8": "[(25,8)-(27,0)]"
-                      }
-                    }
-                  }
-                ],
-                "shacl:minCount": [
-                  {
-                    "@value": 0
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "bark"
-                  }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:minCount": "true"
-                  },
-                  "lexical": {
-                    "#7": "[(25,8)-(27,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "Dog"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:closed": "true"
-              },
-              "resolved-link": {
-                "#6": "amf://id#9"
-              },
-              "type-property-lexical-info": {
-                "#6": "[(23,6)-(23,10)]"
-              },
-              "lexical": {
-                "shacl:name": "[(22,4)-(22,7)]",
-                "#6": "[(22,4)-(27,0)]"
-              },
-              "declared-element": {
-                "#6": ""
-              },
-              "resolved-link-target": {
-                "#6": "amf://id#6"
-              }
-            }
-          },
-          {
-            "@id": "#10",
-            "@type": [
-              "shacl:NodeShape",
-              "raml-shapes:AnyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:closed": [
-              {
-                "@value": false
-              }
-            ],
-            "shacl:property": [
-              {
-                "@id": "#11",
-                "@type": [
-                  "shacl:PropertyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:path": [
-                  {
-                    "@id": "http://a.ml/vocabularies/data#name"
-                  }
-                ],
-                "raml-shapes:range": [
-                  {
-                    "@id": "#12",
-                    "@type": [
-                      "raml-shapes:ScalarShape",
-                      "raml-shapes:AnyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:datatype": [
-                      {
-                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "shacl:name": [
-                      {
                         "@value": "name"
                       }
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#12": "[(21,10)-(21,14)]"
+                        "#8": "[(21,10)-(21,14)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(21,10)-(22,0)]",
-                        "#12": "[(20,8)-(22,0)]"
+                        "#8": "[(20,8)-(22,0)]"
                       }
                     }
                   }
@@ -354,7 +353,7 @@
                     "shacl:minCount": "true"
                   },
                   "lexical": {
-                    "#11": "[(20,8)-(22,0)]"
+                    "#7": "[(20,8)-(22,0)]"
                   }
                 }
               }
@@ -369,20 +368,20 @@
                 "shacl:closed": "true"
               },
               "resolved-link": {
-                "#10": "amf://id#13"
+                "#6": "amf://id#9"
               },
               "type-property-lexical-info": {
-                "#10": "[(18,6)-(18,10)]"
+                "#6": "[(18,6)-(18,10)]"
               },
               "lexical": {
                 "shacl:name": "[(17,4)-(17,7)]",
-                "#10": "[(17,4)-(22,0)]"
+                "#6": "[(17,4)-(22,0)]"
               },
               "declared-element": {
-                "#10": ""
+                "#6": ""
               },
               "resolved-link-target": {
-                "#10": "amf://id#10"
+                "#6": "amf://id#6"
               }
             }
           }
@@ -401,112 +400,6 @@
           },
           "declared-element": {
             "#1": ""
-          }
-        }
-      },
-      {
-        "@id": "#10",
-        "@type": [
-          "shacl:NodeShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "shacl:closed": [
-          {
-            "@value": false
-          }
-        ],
-        "shacl:property": [
-          {
-            "@id": "#11",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#name"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#12",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "name"
-                  }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#12": "[(21,10)-(21,14)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(21,10)-(22,0)]",
-                    "#12": "[(20,8)-(22,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "name"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#11": "[(20,8)-(22,0)]"
-              }
-            }
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "Cat"
-          }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#10": "amf://id#13"
-          },
-          "type-property-lexical-info": {
-            "#10": "[(18,6)-(18,10)]"
-          },
-          "lexical": {
-            "shacl:name": "[(17,4)-(17,7)]",
-            "#10": "[(17,4)-(22,0)]"
-          },
-          "declared-element": {
-            "#10": ""
-          },
-          "resolved-link-target": {
-            "#10": "amf://id#10"
           }
         }
       },
@@ -535,7 +428,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://a.ml/vocabularies/data#bark"
+                "@id": "http://a.ml/vocabularies/data#name"
               }
             ],
             "raml-shapes:range": [
@@ -555,16 +448,122 @@
                 ],
                 "shacl:name": [
                   {
+                    "@value": "name"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#8": "[(21,10)-(21,14)]"
+                  },
+                  "lexical": {
+                    "shacl:datatype": "[(21,10)-(22,0)]",
+                    "#8": "[(20,8)-(22,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
+              "lexical": {
+                "#7": "[(20,8)-(22,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Cat"
+          }
+        ],
+        "smaps": {
+          "synthesized-field": {
+            "shacl:closed": "true"
+          },
+          "resolved-link": {
+            "#6": "amf://id#9"
+          },
+          "type-property-lexical-info": {
+            "#6": "[(18,6)-(18,10)]"
+          },
+          "lexical": {
+            "shacl:name": "[(17,4)-(17,7)]",
+            "#6": "[(17,4)-(22,0)]"
+          },
+          "declared-element": {
+            "#6": ""
+          },
+          "resolved-link-target": {
+            "#6": "amf://id#6"
+          }
+        }
+      },
+      {
+        "@id": "#2",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#3",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#bark"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#4",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
                     "@value": "bark"
                   }
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#8": "[(26,10)-(26,14)]"
+                    "#4": "[(26,10)-(26,14)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(26,10)-(27,0)]",
-                    "#8": "[(25,8)-(27,0)]"
+                    "#4": "[(25,8)-(27,0)]"
                   }
                 }
               }
@@ -584,7 +583,7 @@
                 "shacl:minCount": "true"
               },
               "lexical": {
-                "#7": "[(25,8)-(27,0)]"
+                "#3": "[(25,8)-(27,0)]"
               }
             }
           }
@@ -599,20 +598,20 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#6": "amf://id#9"
+            "#2": "amf://id#5"
           },
           "type-property-lexical-info": {
-            "#6": "[(23,6)-(23,10)]"
+            "#2": "[(23,6)-(23,10)]"
           },
           "lexical": {
             "shacl:name": "[(22,4)-(22,7)]",
-            "#6": "[(22,4)-(27,0)]"
+            "#2": "[(22,4)-(27,0)]"
           },
           "declared-element": {
-            "#6": ""
+            "#2": ""
           },
           "resolved-link-target": {
-            "#6": "amf://id#6"
+            "#2": "amf://id#2"
           }
         }
       }

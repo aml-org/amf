@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#36",
+      "@id": "#35",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#37",
+      "@id": "#36",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:description": "some description",
       "apiContract:server": [
         {
-          "@id": "#38"
+          "@id": "#37"
         }
       ],
       "apiContract:accepts": [
@@ -40,7 +40,7 @@
           "core:version": "[(5,0)-(6,0)]",
           "apiContract:accepts": "[(6,0)-(7,0)]",
           "core:description": "[(7,0)-(9,0)]",
-          "#37": "[(2,0)-(16,0)]",
+          "#36": "[(2,0)-(16,0)]",
           "core:name": "[(4,0)-(5,0)]",
           "apiContract:server": "[(2,0)-(4,0)]",
           "apiContract:contentType": "[(6,0)-(7,0)]"
@@ -48,7 +48,7 @@
       }
     },
     {
-      "@id": "#38",
+      "@id": "#37",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -59,7 +59,7 @@
           "core:urlTemplate": "[(2,0)-(4,0)]"
         },
         "synthesized-field": {
-          "#38": "true"
+          "#37": "true"
         }
       }
     },
@@ -85,11 +85,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#37"
+        "@id": "#36"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#36"
+        "@id": "#35"
       }
     },
     {
@@ -136,7 +136,7 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:closed": false,
+      "shacl:closed": true,
       "shacl:property": [
         {
           "@id": "#21"
@@ -154,7 +154,7 @@
       "shacl:name": "someType",
       "apiContract:examples": [
         {
-          "@id": "#11"
+          "@id": "#12"
         }
       ],
       "doc:reference-id": [
@@ -164,18 +164,20 @@
       ],
       "smaps": {
         "inheritance-provenance": {
-          "doc:reference-id": "amf://id#20"
+          "doc:reference-id": "amf://id#11",
+          "shacl:closed": "amf://id#11"
         },
         "declared-element": {
           "#10": ""
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
+          "shacl:closed": "[(4,2)-(4,31)]",
           "#10": "[(10,11)-(16,0)]",
           "shacl:name": "[(10,2)-(10,10)]"
         },
         "inherited-shapes": {
-          "#10": "amf://id#35"
+          "#10": "amf://id#11"
         }
       }
     },
@@ -262,7 +264,7 @@
           "#21": "[(13,4)-(15,5)]"
         },
         "inheritance-provenance": {
-          "#21": "amf://id#20"
+          "#21": "amf://id#11"
         }
       }
     },
@@ -292,7 +294,7 @@
           "#30": "[(16,4)-(18,5)]"
         },
         "inheritance-provenance": {
-          "#30": "amf://id#20"
+          "#30": "amf://id#11"
         }
       }
     },
@@ -316,7 +318,7 @@
       "shacl:name": "merchant",
       "smaps": {
         "inheritance-provenance": {
-          "#31": "amf://id#20"
+          "#31": "amf://id#11"
         },
         "lexical": {
           "shacl:minCount": "[(21,4)-(21,14)]",
@@ -344,7 +346,7 @@
       "shacl:name": "operator",
       "smaps": {
         "inheritance-provenance": {
-          "#33": "amf://id#20"
+          "#33": "amf://id#11"
         },
         "lexical": {
           "shacl:minCount": "[(22,4)-(22,14)]",
@@ -353,14 +355,14 @@
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#12"
+        "@id": "#13"
       },
       "doc:reference-id": [
         {
@@ -373,7 +375,7 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#11": "[(1,0)-(1,0)]"
+          "#12": "[(1,0)-(1,0)]"
         }
       }
     },
@@ -488,20 +490,20 @@
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:additionalApplicants": {
-        "@id": "#13"
+        "@id": "#14"
       },
       "data:merchant": {
-        "@id": "#18"
+        "@id": "#19"
       },
       "data:operator": {
-        "@id": "#19"
+        "@id": "#20"
       },
       "core:name": "object_1",
       "smaps": {
@@ -511,11 +513,11 @@
         "lexical": {
           "data:operator": "[(11,2)-(11,31)]",
           "data:additionalApplicants": "[(2,2)-(9,3)]",
-          "#12": "[(1,0)-(12,1)]",
+          "#13": "[(1,0)-(12,1)]",
           "data:merchant": "[(10,2)-(10,30)]"
         },
         "parsed-json-example": {
-          "#12": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+          "#13": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
         }
       }
     },
@@ -574,17 +576,17 @@
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:addresses": {
-        "@id": "#14"
+        "@id": "#15"
       },
       "data:expenses": {
-        "@id": "#16"
+        "@id": "#17"
       },
       "core:name": "additionalApplicants",
       "smaps": {
@@ -593,13 +595,13 @@
         },
         "lexical": {
           "data:expenses": "[(6,4)-(8,5)]",
-          "#13": "[(2,26)-(9,3)]",
+          "#14": "[(2,26)-(9,3)]",
           "data:addresses": "[(3,4)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -618,12 +620,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#18": "[(10,14)-(10,30)]"
+          "#19": "[(10,14)-(10,30)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -642,7 +644,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#19": "[(11,14)-(11,31)]"
+          "#20": "[(11,14)-(11,31)]"
         }
       }
     },
@@ -689,14 +691,14 @@
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:randomKey": {
-        "@id": "#15"
+        "@id": "#16"
       },
       "core:name": "addresses",
       "smaps": {
@@ -705,19 +707,19 @@
         },
         "lexical": {
           "data:randomKey": "[(4,6)-(4,28)]",
-          "#14": "[(3,17)-(5,5)]"
+          "#15": "[(3,17)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:otherRandomKey": {
-        "@id": "#17"
+        "@id": "#18"
       },
       "core:name": "expenses",
       "smaps": {
@@ -726,7 +728,7 @@
         },
         "lexical": {
           "data:otherRandomKey": "[(7,6)-(7,31)]",
-          "#16": "[(6,16)-(8,5)]"
+          "#17": "[(6,16)-(8,5)]"
         }
       }
     },
@@ -740,7 +742,6 @@
         "doc:DomainElement"
       ],
       "shacl:closed": false,
-      "shacl:property": [],
       "shacl:name": "fullAddress",
       "smaps": {
         "synthesized-field": {
@@ -764,7 +765,6 @@
         "doc:DomainElement"
       ],
       "shacl:closed": false,
-      "shacl:property": [],
       "shacl:name": "expensesLiving",
       "smaps": {
         "synthesized-field": {
@@ -779,7 +779,7 @@
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -798,12 +798,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#15": "[(4,19)-(4,28)]"
+          "#16": "[(4,19)-(4,28)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -822,7 +822,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#17": "[(7,24)-(7,31)]"
+          "#18": "[(7,24)-(7,31)]"
         }
       }
     }

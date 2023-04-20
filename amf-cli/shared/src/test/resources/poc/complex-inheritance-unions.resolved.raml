@@ -1,0 +1,61 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Cat:
+    properties:
+      cat-prop:
+        type: string
+  Parrot:
+    properties:
+      parrot-prop:
+        type: string
+  HasHome:
+    properties:
+      home-prop:
+        type: boolean
+  IsOnFarm:
+    properties:
+      farm-prop:
+        type: boolean
+  root:
+    anyOf:
+      -
+        properties:
+          cat-prop:
+            type: string
+          home-prop:
+            type: boolean
+          a:
+            type: integer
+          b:
+            type: string
+      -
+        properties:
+          parrot-prop:
+            type: string
+          home-prop:
+            type: boolean
+          a:
+            type: integer
+          b:
+            type: string
+      -
+        properties:
+          cat-prop:
+            type: string
+          farm-prop:
+            type: boolean
+          a:
+            type: integer
+          b:
+            type: string
+      -
+        properties:
+          parrot-prop:
+            type: string
+          farm-prop:
+            type: boolean
+          a:
+            type: integer
+          b:
+            type: string

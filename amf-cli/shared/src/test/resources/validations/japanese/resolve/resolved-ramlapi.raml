@@ -37,10 +37,8 @@ types:
       画像:
         - ファイル名
       メンバーシップ: 個人的な
-    additionalProperties: true
     properties:
       画像:
-        type: array
         items:
           type: file
           fileTypes:
@@ -48,7 +46,6 @@ types:
             - 画像/png
             - 画像/jpeg
             - 画像/gif
-        required: true
       メンバーシップ:
         anyOf:
           -
@@ -61,7 +58,6 @@ types:
           -
             type: object
             (amf-recursive): amf://id#14
-        required: true
 securitySchemes:
   基本的な:
     description: このAPIは基本認証をサポートしています。
@@ -82,10 +78,8 @@ securitySchemes:
           画像:
             - ファイル名
           メンバーシップ: 個人的な
-        additionalProperties: true
         properties:
           画像:
-            type: array
             items:
               type: file
               fileTypes:
@@ -93,7 +87,6 @@ securitySchemes:
                 - 画像/png
                 - 画像/jpeg
                 - 画像/gif
-            required: true
           メンバーシップ:
             anyOf:
               -
@@ -106,7 +99,6 @@ securitySchemes:
               -
                 type: object
                 (amf-recursive): amf://id#14
-            required: true
     securedBy:
       - 基本的な
 /ユーザー/{ユーザーID}:
@@ -119,10 +111,8 @@ securitySchemes:
               画像:
                 - ファイル名
               メンバーシップ: 個人的な
-            additionalProperties: true
             properties:
               画像:
-                type: array
                 items:
                   type: file
                   fileTypes:
@@ -130,7 +120,6 @@ securitySchemes:
                     - 画像/png
                     - 画像/jpeg
                     - 画像/gif
-                required: true
               メンバーシップ:
                 anyOf:
                   -
@@ -143,7 +132,6 @@ securitySchemes:
                   -
                     type: object
                     (amf-recursive): amf://id#14
-                required: true
     (amf-baseUriParameters):
       ユーザーID?:
         default: ジョン.ドウ

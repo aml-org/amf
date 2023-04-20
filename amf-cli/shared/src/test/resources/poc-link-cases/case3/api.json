@@ -1,0 +1,32 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Some APi",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "responses": {
+      "Track": {
+        "description": "The track.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./track.json"
+            }
+          }
+        }
+      },
+      "Measurement": {
+        "description": "The measurement.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./measurement.json"
+            }
+          }
+        }
+      }
+    }
+  }
+}

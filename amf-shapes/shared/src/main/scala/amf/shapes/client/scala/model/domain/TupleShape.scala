@@ -10,6 +10,9 @@ import org.yaml.model.YPart
 case class TupleShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
+
+  override private[amf] val isConcreteShape = true
+
   def items: Seq[Shape]                                = fields.field(TupleItems)
   def withItems(items: Seq[Shape]): this.type          = setArray(TupleItems, items)
   def closedItems: BoolField                           = fields.field(TupleShapeModel.ClosedItems)

@@ -1,0 +1,19 @@
+#%RAML 1.0
+
+title: reduced air canada case
+
+types:
+  T1:
+    type: object
+    properties:
+      t1prop1:
+        type: object[]
+        items:
+          properties:
+            item_property:
+              type: T2
+  T2:
+    type: object
+    properties:
+      Content:
+        type: string

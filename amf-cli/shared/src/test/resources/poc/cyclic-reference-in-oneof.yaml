@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+paths: { }
+components:
+  schemas:
+    A:
+      oneOf:
+        - "$ref": "#/components/schemas/B" # this end ups being `null` in the model because it's a cyclic reference we cannot resolve
+    B:
+      "$ref": "#/components/schemas/B"

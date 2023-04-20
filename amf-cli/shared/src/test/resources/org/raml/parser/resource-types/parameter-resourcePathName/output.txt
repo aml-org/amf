@@ -2,14 +2,11 @@
 title: Test
 types:
   Login:
-    type: object
     example:
       name: Something
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
 resourceTypes:
   collection:
     post?:
@@ -20,24 +17,18 @@ resourceTypes:
   post:
     body:
       application/json:
-        type: object
         example:
           name: Something
-        additionalProperties: true
         properties:
           name:
             type: string
-            required: true
 /other:
   /login:
     post:
       body:
         application/json:
-          type: object
           example:
             name: Something
-          additionalProperties: true
           properties:
             name:
               type: string
-              required: true
