@@ -1,5 +1,7 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
+import amf.shapes.internal.validation.jsonschema.PayloadValidatorCommon
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
@@ -53,21 +55,28 @@ protected[amf] object AjvValidator {
     ajv
       .addFormat(
         "RFC2616",
-        "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
+        PayloadValidatorCommon.rfc2616Regex
       )
       .addFormat(
         "rfc2616",
-        "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
+        PayloadValidatorCommon.rfc2616Regex
       )
       .addFormat(
         "date-time-only",
-        "^([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
+        PayloadValidatorCommon.dateTimeOnlyRegex
       )
-      .addFormat("date", "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$")
+      .addFormat(
+        "date",
+        "^(?:\\d{4}-(?:(?:(?:(?:0[13578]|1[02])-(?:0[1-9]|[1-2][0-9]|3[01]))|(?:(?:0[469]|11)-(?:0[1-9]|[1-2][0-9]|30))|(?:02-(?:0[1-9]|1[0-9]|2[0-8]))))|(?:(?:\\d{2}(?:0[48]|[2468][048]|[13579][26]))|(?:(?:[02468][048])|[13579][26])00)-02-29)$"
+      )
+      .addFormat(
+        "date-time",
+        "^(?:\\d{4}-(?:(?:(?:(?:0[13578]|1[02])-(?:0[1-9]|[1-2][0-9]|3[01]))|(?:(?:0[469]|11)-(?:0[1-9]|[1-2][0-9]|30))|(?:02-(?:0[1-9]|1[0-9]|2[0-8]))))|(?:(?:\\d{2}(?:0[48]|[2468][048]|[13579][26]))|(?:(?:[02468][048])|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d{1,9})?(?:Z|[+-][01]\\d:[0-5]\\d)$"
+      )
   }
 }
 
 protected[amf] object LazyAjv {
-  lazy val default   = AjvValidator()
-  lazy val fast: Ajv = AjvValidator.fast()
+  lazy val default: Ajv = AjvValidator()
+  lazy val fast: Ajv    = AjvValidator.fast()
 }
