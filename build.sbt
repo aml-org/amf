@@ -288,7 +288,8 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     Compile / fullOptJS / artifactPath := baseDirectory.value / "amf.js",
-    npmDependencies ++= npmDeps
+    npmDependencies ++= npmDeps,
+    jsDependencies += rdfLibJS / "shacl.js" % "test"
   )
 //  .jsSettings(TypingGenerationSettings.settings: _*)
 
@@ -298,6 +299,7 @@ lazy val cliJS = cli.js
   .in(file("./amf-cli/js"))
   .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
   .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+  .enablePlugins(JSDependenciesPlugin)
 
 /** ********************************************** AD-HOC CLI *********************************************
   */
