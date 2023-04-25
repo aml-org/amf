@@ -1,0 +1,23 @@
+openapi: 3.0.3
+
+info:
+  title: test-api
+  description: test-api
+  version: '1.0.0'
+
+servers:
+  - url: 'https://test.dev.com'
+    description: Dev
+  - url: 'https://test.uat.com'
+    description: UAT
+  - url: 'https://test.prod.com' # equal to the next one
+    description: Pre-prod
+  - url: 'https://test.prod.com'
+    description: Prod
+
+paths:
+  '/users':
+    get:
+      responses:
+        '200':
+          description: User Found
