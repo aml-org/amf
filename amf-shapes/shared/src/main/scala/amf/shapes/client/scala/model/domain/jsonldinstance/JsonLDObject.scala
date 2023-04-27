@@ -37,7 +37,11 @@ case class JsonLDObject(
     def toIntField: Field = Field(Type.Int, ValueType(property))
 
     def toIntListField: Field = Field(Type.Array(Type.Int), ValueType(property))
-    def toBoolField: Field    = Field(Type.Bool, ValueType(property))
+
+    def toLongField: Field = Field(Type.Long, ValueType(property))
+
+    def toLongListField: Field = Field(Type.Array(Type.Long), ValueType(property))
+    def toBoolField: Field     = Field(Type.Bool, ValueType(property))
 
     def toBoolListField: Field = Field(Type.Array(Type.Bool), ValueType(property))
     def toFloatField: Field    = Field(Type.Float, ValueType(property))
@@ -47,8 +51,8 @@ case class JsonLDObject(
 
   private def buildString(value: String) = new JsonLDScalar(value, DataTypes.String)
 
-  private def buildInteger(value: Int) = new JsonLDScalar(value, DataTypes.Integer)
-
+  private def buildInteger(value: Int)     = new JsonLDScalar(value, DataTypes.Integer)
+  private def buildLong(value: Long)       = new JsonLDScalar(value, DataTypes.Long)
   private def buildBoolean(value: Boolean) = new JsonLDScalar(value, DataTypes.Boolean)
 
   private def buildFloat(value: Float) = new JsonLDScalar(value, DataTypes.Float)
@@ -68,6 +72,9 @@ case class JsonLDObject(
   def withProperty(property: String, value: Int): JsonLDObject =
     copyWithProperty(property.toIntField, buildInteger(value))
 
+  def withProperty(property: String, value: Long): JsonLDObject =
+    copyWithProperty(property.toLongField, buildLong(value))
+
   def withProperty(property: String, value: Float): JsonLDObject =
     copyWithProperty(property.toFloatField, buildFloat(value))
 
@@ -82,6 +89,9 @@ case class JsonLDObject(
 
   def withIntPropertyCollection(property: String, values: Seq[Int]): JsonLDObject =
     copyWithProperty(property.toIntListField, buildArray(values.map(buildInteger)))
+
+  def withLongPropertyCollection(property: String, values: Seq[Long]): JsonLDObject =
+    copyWithProperty(property.toLongListField, buildArray(values.map(buildLong)))
 
   def withFloatPropertyCollection(property: String, values: Seq[Float]): JsonLDObject =
     copyWithProperty(property.toFloatListField, buildArray(values.map(buildFloat)))
