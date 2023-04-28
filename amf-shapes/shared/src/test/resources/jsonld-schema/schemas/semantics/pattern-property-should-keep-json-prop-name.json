@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "amlorg://a.ml/semantics.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#",
+    "prop1": "config:prop1"
+  },
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9]*$": {
+      "properties": {
+        "prop2": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

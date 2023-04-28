@@ -1,0 +1,48 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/encodes/",
+      "@type": [
+        "amlorg://a.ml/semantics.yaml#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "anypoint://vocabulary/policy.yaml#prop1": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/encodes/prop1"
+      }
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/encodes/prop1",
+      "@type": [
+        "amlorg://a.ml/semantics.yaml#prop1",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "amlorg://a.ml/semantics.yaml#prop1/prop2": "something"
+    },
+    {
+      "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/pattern-property-should-keep-json-prop-name.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}
