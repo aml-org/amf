@@ -58,8 +58,8 @@ case class SemanticContextResolver(eh: AMFErrorHandler) {
       parentContext: SemanticContext,
       characteristicsAllowed: Boolean
   ): SemanticContext = {
-    val context = a.semanticContext.fold(parentContext)(sc =>
-      parentContext.merge(semanticContextChecks(sc, a, characteristicsAllowed))
+    val context = a.semanticContext.fold(parentContext.withoutTypeMappings())(sc =>
+      parentContext.withoutTypeMappings().addMissingProperties(semanticContextChecks(sc, a, characteristicsAllowed))
     )
     a.withSemanticContext(context)
     computeTree(a, context)
