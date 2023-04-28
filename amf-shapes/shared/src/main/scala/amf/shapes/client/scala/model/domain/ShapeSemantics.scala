@@ -198,6 +198,12 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
 
   def cloneContext(): SemanticContext = cloneElement(mutable.Map.empty).asInstanceOf[SemanticContext]
 
+  def withoutTypeMappings(): SemanticContext = {
+    val result = cloneContext()
+    result.fields.removeField(TypeMapping)
+    result
+  }
+
   def addMissingProperties(from: SemanticContext): SemanticContext = {
     val toAdd = cloneContext()
     copyIfPresent(from, toAdd, Base)
