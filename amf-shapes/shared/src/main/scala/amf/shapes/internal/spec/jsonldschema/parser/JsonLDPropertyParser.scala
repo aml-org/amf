@@ -125,6 +125,6 @@ case class JsonLDPropertyParser(
   private def propertyName(path: JsonPath): Option[String] = path.lastSegment
 
   private def buildEmptyAnyShape(parentCtx: SemanticContext): AnyShape =
-    AnyShape().withSemanticContext(parentCtx.copy().withTypeMappings(Nil))
+    AnyShape().withSemanticContext(parentCtx.cloneContext().withTypeMappings(Nil))
 
 }
