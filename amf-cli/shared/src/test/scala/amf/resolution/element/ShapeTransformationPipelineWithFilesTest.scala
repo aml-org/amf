@@ -1,9 +1,10 @@
 package amf.resolution.element
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.common.validation.ProfileNames
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.Shape
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.resolution.elements.CompleteShapeTransformationPipeline
@@ -41,6 +42,41 @@ class ShapeTransformationPipelineWithFilesTest extends AsyncFunSuite with Matche
         node.properties should have size 3
       }
       assertion.getOrElse(fail("Array shape not found"))
+    }
+  }
+
+  test("Shape with inherits") {
+    val client = APIConfiguration.API().baseUnitClient()
+    client.parseDocument(s"$base/shape-with-inherits/api.raml").flatMap { result =>
+      val conf = APIConfiguration.fromSpec(result.sourceSpec)
+      val shape = result.baseUnit
+        .asInstanceOf[EncodesModel]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .head
+        .operations
+        .head
+        .responses
+        .head
+        .payloads
+        .head
+        .schema
+
+        val resolvedShape = resolveShape(shape, conf)
+        resolvedShape mustBe a[NodeShape]
+
+        val nodeShape = resolvedShape.asInstanceOf[NodeShape]
+
+        nodeShape.properties.size shouldBe 3
+
+        val maybeProp = nodeShape.properties.find(p => p.name.value() == "application")
+        maybeProp.nonEmpty shouldBe true
+        val propRange = maybeProp.get.range
+        propRange mustBe a[NodeShape]
+        val nodeProp = propRange.asInstanceOf[NodeShape]
+        nodeProp.inherits should have size 0
+        nodeProp.properties should have size 3
     }
   }
 
