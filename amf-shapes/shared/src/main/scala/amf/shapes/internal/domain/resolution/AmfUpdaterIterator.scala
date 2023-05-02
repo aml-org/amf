@@ -1,6 +1,6 @@
 package amf.shapes.internal.domain.resolution
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, DataNode}
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, DataNode, Shape}
 import amf.core.client.scala.traversal.iterator.{AmfIterator, InstanceCollector, VisitedCollector}
 import amf.shapes.client.scala.model.domain.Example
 
@@ -61,5 +61,9 @@ case class AmfUpdaterIterator private (var buffer: Queue[AmfElement], updater: A
 object AmfUpdaterIterator {
   def apply(unit: BaseUnit, updater: AmfElement => AmfElement): AmfUpdaterIterator = {
     AmfUpdaterIterator(Queue(unit), updater)
+  }
+
+  def apply(shape: Shape, updater: AmfElement => AmfElement): AmfUpdaterIterator = {
+    AmfUpdaterIterator(Queue(shape), updater)
   }
 }
