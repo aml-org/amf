@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: API
+version: 1.0
+types:
+  A:
+    properties:
+      nameA: string
+      b: B
+  B:
+    properties:
+      nameB: string
+      a?: A
