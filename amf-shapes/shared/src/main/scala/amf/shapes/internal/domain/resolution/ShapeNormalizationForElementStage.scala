@@ -29,9 +29,8 @@ class ShapeNormalizationForElementStage(context: NormalizationContext) extends E
 
     // update model
     val updater = ShapeNormalizationReferencesUpdater(context)
-    updateReferencesInSubTree(shape, updater)
-
     val updatedShape = updater.updateShape(shape)
+    updateReferencesInSubTree(updatedShape, updater)
 
     // place recursions
     validateAndPlaceRecursionsInSubTree(updatedShape)
