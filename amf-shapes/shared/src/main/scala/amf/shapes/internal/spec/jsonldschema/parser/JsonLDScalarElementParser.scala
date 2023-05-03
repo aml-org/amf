@@ -77,7 +77,11 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
     *   a jsondl scalar builder for the given YScalar value and dataType computed from the YType.
     */
   private def parseScalar(): JsonLDScalarElementBuilder = {
-    val value = if (dataType == DataTypes.Nil) "null" else scalar.value
+    val value = (dataType, scalar.value) match {
+      case (DataTypes.Nil, _)               => "null"
+      case (DataTypes.Integer, value: Long) => value.toInt
+      case (_, value)                       => value
+    }
     new JsonLDScalarElementBuilder(dataType, value, location = scalar.location, path = path)
   }
 }
