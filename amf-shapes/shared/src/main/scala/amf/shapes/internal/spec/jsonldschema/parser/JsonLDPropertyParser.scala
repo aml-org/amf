@@ -46,7 +46,7 @@ case class JsonLDPropertyParser(
     val key = getKeyOrEmpty(entry)
     properties
       .find(matcher(_, key))
-      .map(parseWithProperty(_, entry.value))
+      .map(parseWithProperty(_, entry))
       .map(r => generateBuilder(r._1, r._2, entry))
   }
 
@@ -75,13 +75,13 @@ case class JsonLDPropertyParser(
 
   private def parseWithProperty(
       p: PropertyShape,
-      node: YNode
+      entry: YMapEntry
   ): (JsonLDElementBuilder, String) = {
-    val propertyName                    = p.name.value()
+    val propertyName                    = entry.key.as[String]
     val mapping: Option[ContextMapping] = findAssociatedContextMapping(propertyName)
     val term                            = findTerm(path.concat(propertyName), mapping)
     val containers                      = findContainers(mapping, p)
-    val elementBuilder = JsonLDSchemaNodeParser(p.range, node, p.path.value(), path.concat(propertyName)).parse()
+    val elementBuilder = JsonLDSchemaNodeParser(p.range, entry.value, p.path.value(), path.concat(propertyName)).parse()
     applyContainers(containers, elementBuilder)
     (elementBuilder, term)
   }
@@ -125,6 +125,6 @@ case class JsonLDPropertyParser(
   private def propertyName(path: JsonPath): Option[String] = path.lastSegment
 
   private def buildEmptyAnyShape(parentCtx: SemanticContext): AnyShape =
-    AnyShape().withSemanticContext(parentCtx.copy().withTypeMappings(Nil))
+    AnyShape().withSemanticContext(parentCtx.cloneContext().withTypeMappings(Nil))
 
 }
