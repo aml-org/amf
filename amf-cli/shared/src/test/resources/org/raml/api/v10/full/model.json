@@ -37,7 +37,6 @@ documentation:
       line
 types:
   User:
-    type: object
     examples:
       batman:
         firstname: bruce
@@ -58,57 +57,40 @@ types:
         firstname: tato
         lastname: bores
         age: 66
-    additionalProperties: true
     properties:
       firstname:
         type: string
-        required: true
       lastname:
         type: string
-        required: true
       age:
         type: integer
         minimum: 0
         maximum: 144
-        required: true
-      height:
+      height?:
         type: number
-        required: false
-      goggles:
+      goggles?:
         type: boolean
-        required: false
   SuperUser:
-    type: object
-    additionalProperties: true
     properties:
       firstname:
         type: string
-        required: true
       lastname:
         type: string
-        required: true
       age:
         type: integer
         minimum: 0
         maximum: 144
-        required: true
-      height:
+      height?:
         type: number
-        required: false
-      goggles:
+      goggles?:
         type: boolean
-        required: false
       skills:
-        type: array
         maxItems: 3
         items:
           type: string
-        required: true
   Users:
-    type: array
     minItems: 2
     items:
-      type: object
       examples:
         batman:
           firstname: bruce
@@ -129,25 +111,19 @@ types:
           firstname: tato
           lastname: bores
           age: 66
-      additionalProperties: true
       properties:
         firstname:
           type: string
-          required: true
         lastname:
           type: string
-          required: true
         age:
           type: integer
           minimum: 0
           maximum: 144
-          required: true
-        height:
+        height?:
           type: number
-          required: false
-        goggles:
+        goggles?:
           type: boolean
-          required: false
   nString:
     maxLength: 10
     type: string
@@ -251,28 +227,20 @@ annotationTypes:
     allowedTargets:
       - API
       - Resource
-    additionalProperties: true
     properties:
       controls:
         description: where is hypermedia
-        additionalProperties: true
         properties:
-          url:
+          url?:
             default: href
-            required: false
           property:
             type: string
-            required: true
           names:
-            type: array
             items:
               type: string
-            required: true
-        required: true
-      permanentUri:
+      permanentUri?:
         type: boolean
         default: true
-        required: false
 (basic): sometimes
 (complex):
   controls:
@@ -286,7 +254,8 @@ annotationTypes:
   description: top description
   get:
     description: get something
-    protocols: HTTPS
+    protocols:
+      - HTTPS
     queryParameters:
       one:
         displayName: The One
@@ -316,14 +285,11 @@ annotationTypes:
   post:
     description: post something
     queryString:
-      additionalProperties: true
       properties:
         lat:
           type: number
-          required: true
         long:
           type: number
-          required: true
     responses:
       "200":
         headers:
@@ -333,7 +299,6 @@ annotationTypes:
             displayName: The Second
         body:
           application/json:
-            type: object
             examples:
               batman:
                 firstname: bruce
@@ -354,25 +319,19 @@ annotationTypes:
                 firstname: tato
                 lastname: bores
                 age: 66
-            additionalProperties: true
             properties:
               firstname:
                 type: string
-                required: true
               lastname:
                 type: string
-                required: true
               age:
                 type: integer
                 minimum: 0
                 maximum: 144
-                required: true
-              height:
+              height?:
                 type: number
-                required: false
-              goggles:
+              goggles?:
                 type: boolean
-                required: false
           application/xml:
             examples:
               first: |
@@ -392,7 +351,6 @@ annotationTypes:
     displayName: dos
     body:
       application/json:
-        type: object
         examples:
           batman:
             firstname: bruce
@@ -413,25 +371,19 @@ annotationTypes:
             firstname: tato
             lastname: bores
             age: 66
-        additionalProperties: true
         properties:
           firstname:
             type: string
-            required: true
           lastname:
             type: string
-            required: true
           age:
             type: integer
             minimum: 0
             maximum: 144
-            required: true
-          height:
+          height?:
             type: number
-            required: false
-          goggles:
+          goggles?:
             type: boolean
-            required: false
       application/xml:
         examples:
           first: |

@@ -2,33 +2,23 @@
 title: API with Types
 types:
   User:
-    type: object
-    additionalProperties: true
     properties:
       firstname:
         type: string
-        required: true
       lastname:
         type: string
-        required: true
       age:
         type: number
-        required: true
 /users/{id}:
   get:
     responses:
       "200":
         body:
           application/json:
-            type: object
-            additionalProperties: true
             properties:
               firstname:
                 type: string
-                required: true
               lastname:
                 type: string
-                required: true
               age:
                 type: number
-                required: true

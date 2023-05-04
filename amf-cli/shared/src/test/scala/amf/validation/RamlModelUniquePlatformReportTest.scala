@@ -738,4 +738,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("RAML discriminator cannot be defined inline") {
     validate("/raml/discriminator-inline.raml", Some("raml/discriminator-inline.report"))
   }
+
+  // W-12670897
+  test("RAML type with JSON & XML examples should only fail XML") {
+    validate("/raml/examples/different-formats/api.raml", Some("raml/different-example-formats.report"))
+  }
 }

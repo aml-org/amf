@@ -75,7 +75,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#2/link-2120113933",
+                            "@id": "#3/link-2120113933",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -85,7 +85,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#2"
+                                "@id": "#3"
                               }
                             ],
                             "doc:link-label": [
@@ -177,7 +177,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#2",
+            "@id": "#3",
             "@type": [
               "raml-shapes:UnionShape",
               "raml-shapes:AnyShape",
@@ -187,7 +187,7 @@
             ],
             "raml-shapes:anyOf": [
               {
-                "@id": "#3",
+                "@id": "#4",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -195,20 +195,14 @@
                   "raml-shapes:Shape",
                   "doc:DomainElement"
                 ],
-                "shacl:closed": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "shacl:property": [],
                 "smaps": {
                   "lexical": {
-                    "#3": "[(3,6)-(3,12)]"
+                    "#4": "[(3,6)-(3,12)]"
                   }
                 }
               },
               {
-                "@id": "#4",
+                "@id": "#5",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -223,14 +217,14 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#4": "[(3,15)-(3,21)]"
+                    "#5": "[(3,15)-(3,21)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(3,0)-(4,0)]"
+                "#3": "[(3,0)-(4,0)]"
               }
             }
           }
@@ -242,7 +236,7 @@
         ],
         "doc:processingData": [
           {
-            "@id": "#5",
+            "@id": "#2",
             "@type": [
               "doc:APIContractProcessingData"
             ],

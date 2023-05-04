@@ -33,7 +33,11 @@ trait PayloadValidationUtils {
   ): AMFShapePayloadValidator =
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 
-  protected def validator(s: Shape, mediaType: String, plugin: AMFShapePayloadValidationPlugin) =
+  protected def validator(
+      s: Shape,
+      mediaType: String,
+      plugin: AMFShapePayloadValidationPlugin
+  ): AMFShapePayloadValidator =
     defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
@@ -260,6 +264,38 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
     val fullReport    = fullValidator.syncValidate(payload)
     fullReport.conforms shouldBe false
     fullReport.results should have length 2
+  }
+
+  test("Leap year DateTimeOnly") {
+
+    val shape     = ScalarShape().withDataType(DataTypes.DateTimeOnly)
+    val validator = payloadValidator(shape, `application/json`)
+    validator.syncValidate(""""2020-02-29T00:00:00"""").conforms shouldBe true
+    validator.syncValidate(""""2023-02-29T00:00:00"""").conforms shouldBe false
+  }
+
+  test("Leap year DateTime") {
+
+    val shape     = ScalarShape().withDataType(DataTypes.DateTime)
+    val validator = payloadValidator(shape, `application/json`)
+    validator.syncValidate(""""2020-02-29T16:41:41.090Z"""").conforms shouldBe true
+    validator.syncValidate(""""2023-02-29T16:41:41.090Z"""").conforms shouldBe false
+  }
+
+  test("Leap year Date") {
+
+    val shape     = ScalarShape().withDataType(DataTypes.Date)
+    val validator = payloadValidator(shape, `application/json`)
+    validator.syncValidate(""""2020-02-29"""").conforms shouldBe true
+    validator.syncValidate(""""2023-02-29"""").conforms shouldBe false
+  }
+
+  test("Leap year DateTime CRI Case") {
+
+    val shape = ScalarShape().withDataType(DataTypes.DateTime).withFormat("rfc3339")
+    val validator = payloadValidator(shape, `application/json`)
+    validator.syncValidate(""""2022-02-29T23:59:59Z""").conforms shouldBe false
+    validator.syncValidate(""""2024-02-29T23:59:59Z"""").conforms shouldBe true
   }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global

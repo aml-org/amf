@@ -4,25 +4,21 @@
   "definitions": {
     "root": {
       "type": "object",
-      "additionalProperties": true,
       "properties": {
         "must": {
           "type": "object",
-          "additionalProperties": true,
           "properties": {
             "root": {
               "$ref": "#/definitions/root"
             },
             "filteredQuery": {
               "type": "object",
-              "additionalProperties": true,
               "required": [
                 "filter"
               ],
               "properties": {
                 "filter": {
                   "type": "object",
-                  "additionalProperties": true,
                   "properties": {
                     "boolFilter": {
                       "$ref": "#/definitions/BoolFilter"
@@ -37,14 +33,12 @@
     },
     "BoolFilter": {
       "type": "object",
-      "additionalProperties": true,
       "required": [
         "filters"
       ],
       "properties": {
         "filters": {
           "type": "object",
-          "additionalProperties": true,
           "properties": {
             "boolFilter": {
               "$ref": "#/definitions/BoolFilter"

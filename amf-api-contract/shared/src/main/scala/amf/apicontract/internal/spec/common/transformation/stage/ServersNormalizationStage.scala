@@ -1,7 +1,9 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
-import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.model.domain.{Server, ServerContainer}
+import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Server, ServerContainer}
+import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, WebApiModel}
+import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -35,7 +37,7 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
     * @return
     *   unit BaseUnit out
     */
-  protected def normalizeServers(unit: BaseUnit): BaseUnit = {
+  private def normalizeServers(unit: BaseUnit): BaseUnit = {
     unit match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         val api       = doc.encodes.asInstanceOf[Api]
@@ -57,7 +59,13 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
       if (!keepEditingInfo) base.removeServers()
       children.foreach { child =>
         if (child.servers.isEmpty)
-          child.withServers(servers)
+          child match {
+            case api: AsyncApi        => api.setArrayWithoutId(AsyncApiModel.Servers, servers)
+            case api: WebApi          => api.setArrayWithoutId(WebApiModel.Servers, servers)
+            case endpoint: EndPoint   => endpoint.setArrayWithoutId(EndPointModel.Servers, servers)
+            case operation: Operation => operation.setArrayWithoutId(OperationModel.Servers, servers)
+            case _                    => // ignore
+          }
       }
     }
 

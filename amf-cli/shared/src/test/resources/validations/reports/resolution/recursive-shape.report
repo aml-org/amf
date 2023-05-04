@@ -6,7 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Invalid cyclic references in shapes: Mariano -> Mariano
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/array/Mariano
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Cyclic inheritance: SomeTypeb -> SomeTypeb
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/any/SomeTypeb
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
-  Message: Error recursive shape
+  Message: Cyclic inheritance: OneMoreType2 -> AnotherType2 -> SomeType2 -> OneMoreType2
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/recursive-shape.raml#/declares/any/OneMoreType2
   Property: 

@@ -3,11 +3,9 @@ title: hello
 mediaType: application/json
 types:
   MyType:
-    additionalProperties: true
     properties:
       x:
         type: string
-        required: true
 /hello:
   get: {}
   post:
@@ -15,11 +13,8 @@ types:
       "202":
         body:
           application/json:
-            type: object
-            additionalProperties: true
             properties:
               key:
-                type: object
                 example:
                   x: lala
                   complex:
@@ -44,9 +39,6 @@ types:
                           - 2
                           - three
                           - null
-                additionalProperties: true
                 properties:
                   x:
                     type: string
-                    required: true
-                required: true

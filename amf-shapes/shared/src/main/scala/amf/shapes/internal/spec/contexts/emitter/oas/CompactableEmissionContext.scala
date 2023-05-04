@@ -51,7 +51,7 @@ case class DefinitionsQueue(
     val name: String = normalizeName(shape.name.option())
     if (queuedIdsWithLabel.valuesIterator.contains(name)) counter.genId(name) else name
   }
-  def normalizeName(name: Option[String]): String = name.filter(isValidName).getOrElse("default")
+  def normalizeName(name: Option[String]): String = name.filter(isValidName).getOrElse("default").stripSuffix("?")
   private def isValidName(s: String): Boolean     = ctx.nameRegex.pattern.matcher(s).matches()
 }
 

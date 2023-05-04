@@ -52,16 +52,11 @@ securitySchemes:
         description: Submit data and request a prediction
         body:
           application/json:
-            type: object
             (oas-body-name): body
-            additionalProperties: true
             properties:
               input:
-                type: object
-                additionalProperties: true
                 properties:
                   csvInstance:
-                    type: array
                     items: {}
                     required: false
                 required: false
@@ -69,7 +64,6 @@ securitySchemes:
           "200":
             body:
               application/json:
-                additionalProperties: true
                 properties:
                   id:
                     type: string
@@ -82,10 +76,7 @@ securitySchemes:
                     type: string
                     required: false
                   outputMulti:
-                    type: array
                     items:
-                      type: object
-                      additionalProperties: true
                       properties:
                         label:
                           type: string
@@ -144,9 +135,7 @@ securitySchemes:
       description: Add new data to a trained model
       body:
         application/json:
-          type: object
           (oas-body-name): body
-          additionalProperties: true
           properties:
             classLabel:
               description: The true class label of this instance
@@ -154,14 +143,12 @@ securitySchemes:
               required: false
             csvInstance:
               description: The input features for this instance
-              type: array
               items: {}
               required: false
       responses:
         "200":
           body:
             application/json:
-              additionalProperties: true
               properties:
                 id:
                   type: string
@@ -171,8 +158,6 @@ securitySchemes:
                   type: string
                   required: false
                 modelInfo:
-                  type: object
-                  additionalProperties: true
                   properties:
                     classificationAccuracy:
                       format: double
@@ -233,7 +218,6 @@ securitySchemes:
         "200":
           body:
             application/json:
-              additionalProperties: true
               properties:
                 id:
                   type: string
@@ -243,8 +227,6 @@ securitySchemes:
                   type: string
                   required: false
                 modelInfo:
-                  type: object
-                  additionalProperties: true
                   properties:
                     classificationAccuracy:
                       format: double
@@ -342,9 +324,7 @@ securitySchemes:
     description: Begin training your model
     body:
       application/json:
-        type: object
         (oas-body-name): body
-        additionalProperties: true
         properties:
           id:
             type: string
@@ -354,8 +334,6 @@ securitySchemes:
             type: string
             required: false
           modelInfo:
-            type: object
-            additionalProperties: true
             properties:
               classificationAccuracy:
                 format: double
@@ -379,7 +357,6 @@ securitySchemes:
       "200":
         body:
           application/json:
-            additionalProperties: true
             properties:
               id:
                 type: string
@@ -389,8 +366,6 @@ securitySchemes:
                 type: string
                 required: false
               modelInfo:
-                type: object
-                additionalProperties: true
                 properties:
                   classificationAccuracy:
                     format: double
@@ -458,16 +433,11 @@ securitySchemes:
         description: Submit input and request an output against a hosted model
         body:
           application/json:
-            type: object
             (oas-body-name): body
-            additionalProperties: true
             properties:
               input:
-                type: object
-                additionalProperties: true
                 properties:
                   csvInstance:
-                    type: array
                     items: {}
                     required: false
                 required: false
@@ -475,7 +445,6 @@ securitySchemes:
           "200":
             body:
               application/json:
-                additionalProperties: true
                 properties:
                   id:
                     type: string
@@ -488,10 +457,7 @@ securitySchemes:
                     type: string
                     required: false
                   outputMulti:
-                    type: array
                     items:
-                      type: object
-                      additionalProperties: true
                       properties:
                         label:
                           type: string

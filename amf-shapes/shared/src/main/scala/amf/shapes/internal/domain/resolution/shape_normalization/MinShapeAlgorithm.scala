@@ -1,28 +1,33 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.platform.model.domain.CustomDomainProperty
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
+import amf.core.internal.annotations.{
+  DeclaredElement,
+  Inferred,
+  InheritanceProvenance,
+  LexicalInformation,
+  ResolvedInheritance
+}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
   InvalidTypeInheritanceErrorSpecification,
   InvalidTypeInheritanceWarningSpecification
 }
-import org.mulesoft.common.collections._
 
 import scala.collection.mutable
+import scala.reflect.ClassTag
 
 class InheritanceIncompatibleShapeError(
     val message: String,
@@ -32,157 +37,726 @@ class InheritanceIncompatibleShapeError(
     val isViolation: Boolean = false
 ) extends Exception(message)
 
-private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext)
-    extends RestrictionComputation {
+private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext) {
 
-  // this is inverted, it is safe because recursive shape does not have facets
-  def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
-    restrictShape(baseShape, recursiveShape)
+  private def computeNarrowRestrictions(
+      fields: Seq[Field],
+      baseShape: Shape,
+      superShape: Shape,
+      filteredFields: Seq[Field] = Seq.empty
+  ): Shape = {
+    fields.foreach { f =>
+      if (!filteredFields.contains(f)) {
+        val baseValue  = Option(baseShape.fields.getValue(f))
+        val superValue = Option(superShape.fields.getValue(f))
+        baseValue match {
+          case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
+
+          case None if superValue.isDefined =>
+            val finalAnnotations = Annotations(superValue.get.annotations)
+            if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            baseShape.fields.setWithoutId(f, superValue.get.value, finalAnnotations)
+
+          case Some(bvalue) if superValue.isDefined =>
+            val finalAnnotations = Annotations(bvalue.annotations)
+            val finalValue       = computeNarrow(f, bvalue.value, superValue.get.value)
+            if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            val effective = finalValue.add(finalAnnotations)
+            baseShape.fields.setWithoutId(f, effective, finalAnnotations)
+          case _ => // ignore
+        }
+      }
+    }
+
+    baseShape
   }
 
-  private def copy(shape: Shape) = {
-    shape match {
-      case a: AnyShape       => a.copyShape()
-      case r: RecursiveShape => r.copyShape()
-      case _                 => shape
+  private def inheritAnnotations(annotations: Annotations, from: Shape) = {
+    if (!annotations.contains(classOf[InheritanceProvenance]))
+      annotations += InheritanceProvenance(from.id)
+    annotations
+  }
+
+  private def restrictShape(restriction: Shape, parent: Shape): Shape = {
+    val shape = parent.copyShape(restriction.annotations)
+    shape.id = restriction.id
+    restriction.fields.foreach { case (field, derivedValue) =>
+      if (field != NodeShapeModel.Inherits) {
+        Option(shape.fields.getValue(field)) match {
+          case Some(superValue) => shape.set(field, computeNarrow(field, derivedValue.value, superValue.value))
+          case None             => shape.fields.setWithoutId(field, derivedValue.value, derivedValue.annotations)
+        }
+      }
+    }
+    shape
+  }
+
+  private def computeNumericRestriction(
+      comparison: String,
+      lvalue: AmfElement,
+      rvalue: AmfElement
+  ): AmfElement = {
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lnum = scalar.toNumber
+        val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
+
+        comparison match {
+          case "max" =>
+            if (lnum.intValue() <= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case "min" =>
+            if (lnum.intValue() >= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case _ => throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison")
+        }
+      case _ =>
+        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values")
     }
   }
 
-  def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
-    val superShape   = copy(superShapeOri)
-    val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-//    context.cache.updateRecursiveTargets(derivedShape)
-    try {
-      derivedShape match {
+  private def computeEnum(
+      derivedEnumeration: Seq[AmfElement],
+      superEnumeration: Seq[AmfElement]
+  ): Unit = {
+    if (derivedEnumeration.nonEmpty && superEnumeration.nonEmpty) {
+      val headOption = derivedEnumeration.headOption
+      if (headOption.exists(h => superEnumeration.headOption.exists(_.getClass != h.getClass)))
+        throw new InheritanceIncompatibleShapeError(
+          s"Values in subtype enumeration are from different class '${derivedEnumeration.head.getClass}' of the super type enumeration '${superEnumeration.head.getClass}'",
+          Some(ShapeModel.Values.value.iri()),
+          headOption.flatMap(_.location()),
+          headOption.flatMap(_.position())
+        )
 
-        // Scalars
-        case baseScalar: ScalarShape if superShape.isInstanceOf[ScalarShape] =>
-          val superScalar = superShape.asInstanceOf[ScalarShape]
+      derivedEnumeration match {
+        case Seq(_: ScalarNode) =>
+          val superScalars = superEnumeration.collect({ case s: ScalarNode => s.value.value() })
+          val ds           = derivedEnumeration.asInstanceOf[Seq[ScalarNode]]
+          ds.foreach { e =>
+            if (!superScalars.contains(e.value.value())) {
+              throw new InheritanceIncompatibleShapeError(
+                s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${superScalars
+                    .mkString(",")})",
+                Some(ShapeModel.Values.value.iri()),
+                e.location(),
+                e.position()
+              )
+            }
+          }
+        case _ => // ignore
+      }
+    }
+  }
 
-          val b = baseScalar.dataType.value()
-          val s = superScalar.dataType.value()
-          if (b == s) {
-            computeMinScalar(baseScalar, superScalar)
-          } else if (
-            b == DataType.Integer &&
-            (s == DataType.Float ||
-              s == DataType.Double ||
-              s == DataType.Number)
-          ) {
-            computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
-          } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
-            computeMinShape(baseScalar.withDataType(s), superScalar)
-          } else {
-            context.errorHandler.violation(
-              InvalidTypeInheritanceErrorSpecification,
-              derivedShape,
-              Some(ShapeModel.Inherits.value.iri()),
-              s"Resolution error: Invalid scalar inheritance base type $b < $s "
+  private def computeStringEquality(
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      position: Option[String],
+      lexicalInfo: Option[LexicalInformation] = None
+  ): Boolean = {
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lstr = scalar.toString
+        val rstr = rvalue.asInstanceOf[AmfScalar].toString
+        lstr == rstr
+      case _ =>
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot compare non numeric or missing values",
+          property,
+          position,
+          lexicalInfo
+        )
+    }
+  }
+
+  private def stringValue(value: AmfElement): Option[String] = {
+    value match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && value
+            .isInstanceOf[AmfScalar] && Option(value.asInstanceOf[AmfScalar].value).isDefined =>
+        Some(scalar.toString)
+      case _ => None
+    }
+  }
+
+  private def computeNumericComparison(
+      comparison: String,
+      lvalue: AmfElement,
+      rvalue: AmfElement,
+      property: Option[String] = None,
+      lexicalInformation: Option[LexicalInformation] = None,
+      location: Option[String]
+  ): Boolean = {
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lnum = scalar.toNumber
+        val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
+
+        comparison match {
+          case "<=" =>
+            lnum.intValue() <= rnum.intValue()
+          case ">=" =>
+            lnum.intValue() >= rnum.intValue()
+          case _ =>
+            throw new InheritanceIncompatibleShapeError(
+              s"Unknown numeric comparison $comparison",
+              property,
+              location,
+              lexicalInformation
             )
-            baseScalar
+        }
+      case _ =>
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot compare non numeric or missing values",
+          property,
+          location,
+          lexicalInformation
+        )
+    }
+  }
+
+  private def computeBooleanComparison(
+      lcomparison: Boolean,
+      rcomparison: Boolean,
+      lvalue: AmfElement,
+      rvalue: AmfElement
+  ): Boolean = {
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue
+            .isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lbool = scalar.toBool
+        val rbool = rvalue.asInstanceOf[AmfScalar].toBool
+        lbool == lcomparison && rbool == rcomparison
+      case _ =>
+        throw new InheritanceIncompatibleShapeError("Cannot compare non boolean or missing values")
+    }
+  }
+
+  private def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
+    field match {
+
+      case ShapeModel.Name =>
+        val derivedStrValue = stringValue(derivedValue)
+        val superStrValue   = stringValue(superValue)
+        if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
+          superValue
+        } else {
+          derivedValue
+        }
+
+      case NodeShapeModel.MinProperties =>
+        if (
+          computeNumericComparison(
+            "<=",
+            superValue,
+            derivedValue,
+            Some(NodeShapeModel.MinProperties.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "max",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties",
+            Some(NodeShapeModel.MinProperties.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case NodeShapeModel.MaxProperties =>
+        if (
+          computeNumericComparison(
+            ">=",
+            superValue,
+            derivedValue,
+            Some(NodeShapeModel.MaxProperties.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "min",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties",
+            Some(NodeShapeModel.MaxProperties.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.MinLength =>
+        if (
+          computeNumericComparison(
+            "<=",
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.MinLength.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "max",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties",
+            Some(ScalarShapeModel.MinLength.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.MaxLength =>
+        if (
+          computeNumericComparison(
+            ">=",
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.MaxLength.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "min",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties",
+            Some(ScalarShapeModel.MaxLength.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.Minimum =>
+        if (
+          computeNumericComparison(
+            "<=",
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.Minimum.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "max",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum",
+            Some(ScalarShapeModel.Minimum.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.Maximum =>
+        if (
+          computeNumericComparison(
+            ">=",
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.Maximum.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "min",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for maximum than base type for maximum",
+            Some(ScalarShapeModel.Maximum.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ArrayShapeModel.MinItems =>
+        if (
+          computeNumericComparison(
+            "<=",
+            superValue,
+            derivedValue,
+            Some(ArrayShapeModel.MinItems.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "max",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for minItems than base type for minItems",
+            Some(ArrayShapeModel.MinItems.value.iri()),
+            derivedValue.location(),
+            derivedValue.position(),
+            isViolation = true
+          )
+        }
+
+      case ArrayShapeModel.MaxItems =>
+        if (
+          computeNumericComparison(
+            ">=",
+            superValue,
+            derivedValue,
+            Some(ArrayShapeModel.MaxItems.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "min",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for maxItems than base type for maxItems",
+            Some(ArrayShapeModel.MaxItems.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.Format =>
+        if (
+          computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.Format.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "different values for format constraint",
+            Some(ScalarShapeModel.Format.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ScalarShapeModel.Pattern =>
+        if (
+          computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(ScalarShapeModel.Pattern.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "different values for pattern constraint",
+            Some(ScalarShapeModel.Pattern.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case NodeShapeModel.Discriminator =>
+        if (
+          !computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(NodeShapeModel.Discriminator.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "shape has same discriminator value as parent",
+            Some(NodeShapeModel.Discriminator.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case NodeShapeModel.DiscriminatorValue =>
+        if (
+          !computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(NodeShapeModel.DiscriminatorValue.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "shape has same discriminator value as parent",
+            Some(NodeShapeModel.DiscriminatorValue.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case ShapeModel.Values =>
+        computeEnum(
+          derivedValue.asInstanceOf[AmfArray].values,
+          superValue.asInstanceOf[AmfArray].values
+        )
+        derivedValue
+
+      case ArrayShapeModel.UniqueItems =>
+        if (
+          computeBooleanComparison(
+            lcomparison = true,
+            rcomparison = true,
+            superValue,
+            derivedValue
+          ) ||
+          computeBooleanComparison(
+            lcomparison = false,
+            rcomparison = false,
+            superValue,
+            derivedValue
+          ) ||
+          computeBooleanComparison(
+            lcomparison = false,
+            rcomparison = true,
+            superValue,
+            derivedValue
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "different values for unique items constraint",
+            Some(ArrayShapeModel.UniqueItems.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case PropertyShapeModel.MinCount =>
+        if (
+          computeNumericComparison(
+            "<=",
+            superValue,
+            derivedValue,
+            Some(PropertyShapeModel.MinCount.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "max",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for minCount than base type for minCount",
+            Some(PropertyShapeModel.MinCount.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case PropertyShapeModel.MaxCount =>
+        if (
+          computeNumericComparison(
+            ">=",
+            superValue,
+            derivedValue,
+            Some(PropertyShapeModel.MaxCount.value.iri()),
+            derivedValue.position(),
+            derivedValue.location()
+          )
+        ) {
+          computeNumericRestriction(
+            "min",
+            superValue,
+            derivedValue
+          )
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "Resolution error: sub type has a weaker constraint for maxCount than base type for maxCount",
+            Some(PropertyShapeModel.MaxCount.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case PropertyShapeModel.Path =>
+        if (
+          computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(PropertyShapeModel.Path.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "different values for discriminator value path",
+            Some(PropertyShapeModel.Path.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case PropertyShapeModel.Range =>
+        if (
+          computeStringEquality(
+            superValue,
+            derivedValue,
+            Some(PropertyShapeModel.Range.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        ) {
+          derivedValue
+        } else {
+          throw new InheritanceIncompatibleShapeError(
+            "different values for discriminator value range",
+            Some(PropertyShapeModel.Range.value.iri()),
+            derivedValue.location(),
+            derivedValue.position()
+          )
+        }
+
+      case _ => derivedValue
+    }
+  }
+
+  // this is inverted, it is safe because recursive shape does not have facets
+  private def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
+    restrictShape(baseShape, recursiveShape)
+  }
+
+  private def isInteger(dataType: String): Boolean = dataType match {
+    case DataType.Integer => true
+    case _                => false
+  }
+  private def isNumeric(dataType: String): Boolean = dataType match {
+    case DataType.Float | DataType.Double | DataType.Number | DataType.Integer => true
+    case _                                                                     => false
+  }
+
+  def computeMinShape(child: Shape, parent: Shape): Shape = {
+    val parentCopy = parent.copyShape()
+    val childClone = child.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
+
+    try {
+      (childClone, parentCopy) match {
+        case (c: ScalarShape, p: ScalarShape) =>
+          (c.dataType.value(), p.dataType.value()) match {
+            case (cdt, pdt) if cdt == pdt                       => computeMinScalar(c, p)
+            case (cdt, pdt) if isInteger(cdt) && isNumeric(pdt) => computeMinScalar(c, p.withDataType(DataType.Integer))
+            case (null, pdt)                                    => computeMinScalar(c.withDataType(pdt), p)
+            case (cdt, pdt) =>
+              context.errorHandler.violation(
+                InvalidTypeInheritanceErrorSpecification,
+                childClone,
+                Some(ShapeModel.Inherits.value.iri()),
+                s"Resolution error: Invalid scalar inheritance base type $cdt < $pdt "
+              )
+              c
           }
+        case (c: ArrayShape, p: ArrayShape)                           => computeMinArray(c, p)
+        case (c: MatrixShape, p: MatrixShape)                         => computeMinMatrix(c, p)
+        case (c: MatrixShape, p: ArrayShape) if isArrayOfAnyShapes(p) => computeMinMatrixWithAnyShape(c, p)
+        case (c: TupleShape, p: TupleShape)                           => computeMinTuple(c, p)
+        case (c: NodeShape, p: NodeShape)                             => computeMinNode(c, p)
+        case (c: UnionShape, p: UnionShape)                           => computeMinUnion(c, p)
+        case (c: UnionShape, p: NodeShape)                            => computeMinUnionNode(c, p)
+        case (c: Shape, p: UnionShape)                                => computeMinSuperUnion(c, p)
+        case (c: PropertyShape, p: PropertyShape)                     => computeMinProperty(c, p)
+        case (c: FileShape, p: FileShape)                             => computeMinFile(c, p)
+        case (c: NilShape, _: NilShape)                               => c
+        case (c, p: RecursiveShape)                                   => computeMinRecursive(c, p)
+        case (c: AnyShape, p) if isExactlyAny(c) || isExactlyAny(p)   => restrictShape(c, p)
+        case (c, p: AnyShape) if isExactlyAny(c) || isExactlyAny(p)   => computeMinAny(c, p)
+        case (c, _: UnresolvedShape) => c // will get already get an unresolved shape error
 
-        // Arrays
-        case baseArray: ArrayShape if superShape.isInstanceOf[ArrayShape] =>
-          val superArray = superShape.asInstanceOf[ArrayShape]
-          computeMinArray(baseArray, superArray)
-        case baseArray: MatrixShape if superShape.isInstanceOf[MatrixShape] =>
-          val superArray = superShape.asInstanceOf[MatrixShape]
-          computeMinMatrix(baseArray, superArray)
-        case baseArray: MatrixShape if isArrayOfAnyShapes(superShape) =>
-          val superArray = superShape.asInstanceOf[ArrayShape]
-          computeMinMatrixWithAnyShape(baseArray, superArray)
-        case baseArray: TupleShape if superShape.isInstanceOf[TupleShape] =>
-          val superArray = superShape.asInstanceOf[TupleShape]
-          computeMinTuple(baseArray, superArray)
+        // weird, args inverted, checking parent meta
+        case (c: SchemaShape, p) if p.meta == SchemaShapeModel => computeMinSchema(p, c)
 
-        // Nodes
-        case baseNode: NodeShape if superShape.isInstanceOf[NodeShape] =>
-          val superNode = superShape.asInstanceOf[NodeShape]
-          computeMinNode(baseNode, superNode)
-
-        // Unions
-        case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
-          val superUnion = superShape.asInstanceOf[UnionShape]
-          computeMinUnion(baseUnion, superUnion)
-
-        case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
-          val superNode = superShape.asInstanceOf[NodeShape]
-          computeMinUnionNode(baseUnion, superNode)
-
-        // super Unions
-        case base: Shape if superShape.isInstanceOf[UnionShape] =>
-          val superUnion = superShape.asInstanceOf[UnionShape]
-          computeMinSuperUnion(base, superUnion)
-
-        case baseProperty: PropertyShape if superShape.isInstanceOf[PropertyShape] =>
-          val superProperty = superShape.asInstanceOf[PropertyShape]
-          computeMinProperty(baseProperty, superProperty)
-
-        // Files
-        case baseFile: FileShape if superShape.isInstanceOf[FileShape] =>
-          val superFile = superShape.asInstanceOf[FileShape]
-          computeMinFile(baseFile, superFile)
-
-        // Nil
-        case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
-
-        // Generic inheritance
-        case _ if superShape.isInstanceOf[RecursiveShape] =>
-          computeMinRecursive(derivedShape, superShape.asInstanceOf[RecursiveShape])
-
-        // Any => is explicitly Any, we are comparing the meta-model because now
-        //      all shapes inherit from Any, cannot check with instanceOf
-        case _
-            if derivedShape.meta.`type`.headOption
-              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) || superShape.meta.`type`.headOption
-              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
-          derivedShape match {
-            case shape: AnyShape =>
-              restrictShape(shape, superShape)
-            case _ =>
-              computeMinAny(derivedShape, superShape.asInstanceOf[AnyShape])
-          }
-
-        // Generic inheritance
-        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) && superShape.isInstanceOf[NodeShape] =>
-          computeMinGeneric(baseGeneric, superShape)
-
-        case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
-          computeMinSchema(superShape, schema)
         // fallback error
         case _ =>
           context.errorHandler.violation(
             InvalidTypeInheritanceErrorSpecification,
-            derivedShape,
+            childClone,
             Some(ShapeModel.Inherits.value.iri()),
             s"Resolution error: Incompatible types [${RamlShapeTypeBeautifier
-                .beautify(derivedShape.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(superShape.ramlSyntaxKey)}]"
+                .beautify(childClone.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(parentCopy.ramlSyntaxKey)}]"
           )
-          derivedShape
+          childClone
       }
     } catch {
+      case e: InheritanceIncompatibleShapeError if e.isViolation =>
+        context.errorHandler.violation(
+          InvalidTypeInheritanceErrorSpecification,
+          childClone.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.position.orElse(childClone.position()),
+          e.location.orElse(childClone.location())
+        )
+        childClone
       case e: InheritanceIncompatibleShapeError =>
-        if (e.isViolation) {
-          context.errorHandler.violation(
-            InvalidTypeInheritanceErrorSpecification,
-            derivedShape.id,
-            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-            e.getMessage,
-            e.position.orElse(derivedShape.position()),
-            e.location.orElse(derivedShape.location())
-          )
-        } else {
-          context.errorHandler.warning(
-            InvalidTypeInheritanceWarningSpecification,
-            derivedShape.id,
-            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-            e.getMessage,
-            e.position.orElse(derivedShape.position()),
-            e.location.orElse(derivedShape.location())
-          )
-        }
-        derivedShape
+        context.errorHandler.warning(
+          InvalidTypeInheritanceWarningSpecification,
+          childClone.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.position.orElse(childClone.position()),
+          e.location.orElse(childClone.location())
+        )
+        childClone
     }
   }
 
@@ -196,14 +770,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     schema
   }
 
-  protected def isGenericNodeShape(shape: Shape): Boolean = {
-    shape match {
-      case node: NodeShape => node.properties.isEmpty
-      case _               => false
-    }
-  }
-
-  protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
+  private def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
     computeNarrowRestrictions(
       ScalarShapeModel.fields,
       baseScalar,
@@ -216,15 +783,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   private val allShapeFields =
     (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
 
-  protected def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
+  private def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
 
-  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape): Shape =
-    restrictShape(baseShape, superShape)
-
-  protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
+  private def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
 
     val superItems = superMatrix.items
     val baseItems  = baseMatrix.items
@@ -246,10 +810,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseMatrix
   }
 
-  protected def isArrayOfAnyShapes(shape: Shape): Boolean =
-    shape.isInstanceOf[ArrayShape] && shape.asInstanceOf[ArrayShape].items.isInstanceOf[AnyShape]
+  private def isArrayOfAnyShapes(shape: ArrayShape): Boolean = shape.items.isInstanceOf[AnyShape]
 
-  protected def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
+  private def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
 
     val superItems = superArray
     val baseItems  = baseMatrix.items
@@ -271,7 +834,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseMatrix
   }
 
-  protected def computeMinTuple(baseTuple: TupleShape, superTuple: TupleShape): Shape = {
+  private def computeMinTuple(baseTuple: TupleShape, superTuple: TupleShape): Shape = {
     val superItems = baseTuple.items
     val baseItems  = superTuple.items
 
@@ -315,20 +878,23 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  protected def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
+  private def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
     val superItemsOption = Option(superArray.items)
     val baseItemsOption  = Option(baseArray.items)
 
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) => context.minShape(baseItems, superItems)
-          case _                => baseItems
+          case Some(superItems) =>
+            val r = context.minShape(baseItems, superItems)
+            r.withId(baseItems.id)
+          case _ => baseItems
         }
       }
       .orElse(superItemsOption)
+
     newItems.foreach { ni =>
-      baseArray.withItems(ni)
+      baseArray.setWithoutId(ArrayShapeModel.Items, ni)
     }
 
     computeNarrowRestrictions(
@@ -341,7 +907,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseArray
   }
 
-  protected def computeMinNode(baseNode: NodeShape, superNode: NodeShape): Shape = {
+  private def computeMinNode(baseNode: NodeShape, superNode: NodeShape): Shape = {
     val superProperties = superNode.properties
     val baseProperties  = baseNode.properties
 
@@ -352,7 +918,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
     superProperties.foreach(p => commonProps.put(p.path.value(), false))
     baseProperties.foreach { p =>
-      if (commonProps.get(p.path.value()).isDefined) {
+      if (commonProps.contains(p.path.value())) {
         commonProps.put(p.path.value(), true)
       } else {
         commonProps.put(p.path.value(), false)
@@ -372,14 +938,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           superPropOption
             .map(inheritProp(superNode))
             .getOrElse {
-              basePropOption.get.cloneShape(Some(context.errorHandler))
+              basePropOption.get.cloneElement(mutable.Map.empty)
             }
 //            .adopted(baseNode.id)
         } else {
           superPropOption
-            .map(_.cloneShape(Some(context.errorHandler)))
+            .map(_.cloneElement(mutable.Map.empty))
             .getOrElse {
-              basePropOption.get.cloneShape(Some(context.errorHandler))
+              basePropOption.get.cloneElement(mutable.Map.empty)
             }
 //            .adopted(baseNode.id)
         }
@@ -407,13 +973,11 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseNode
   }
 
-  def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape(Some(context.errorHandler)) // TODO this might not be working as expected
-    if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
-      clonedProp.annotations += InheritanceProvenance(from.id)
-      clonedProp.id = clonedProp.id + "/inherited"
+  private def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
+    if (prop.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
+      prop.annotations += InheritanceProvenance(from.id)
     }
-    clonedProp
+    prop
   }
 
   object UnionErrorHandler extends AMFErrorHandler {
@@ -426,11 +990,11 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         this,
         ctx.keepEditingInfo,
         ctx.profile,
-        ctx.cache
+        ctx.resolvedInheritanceIndex
       )
     }
   }
-  protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
+  private def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems =
@@ -459,10 +1023,16 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       }
 
     avoidDuplicatedIds(newUnionItems)
+
+    val annotations = baseUnion.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
+      case Some(value) => value.annotations
+      case _           => Annotations()
+    }
+
     baseUnion.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+      annotations
     )
 
     computeNarrowRestrictions(
@@ -476,7 +1046,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
-    newUnionItems.legacyGroupBy(_.id).foreach {
+    newUnionItems.groupBy(_.id).foreach {
       case (_, shapes) if shapes.size > 1 =>
         val counter = new IdCounter()
         shapes.foreach { shape =>
@@ -485,7 +1055,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       case _ =>
     }
 
-  protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
+  private def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
@@ -504,49 +1074,116 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseUnion
   }
 
-  protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val minItems = for {
-      superUnionElement <- superUnion.anyOf
-    } yield {
-      try {
-        val newShape = unionContext.minShape(filterBaseShape(baseShape), superUnionElement)
-        setValuesOfUnionElement(newShape, superUnionElement)
-        Some(newShape)
-      } catch {
-        case _: Exception => None
-      }
-    }
-    val newUnionItems = minItems collect { case Some(s) => s }
-    if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError(
-        "Cannot compute inheritance from union",
-        None,
-        baseShape.location(),
-        baseShape.position()
-      )
-    }
+  private def shouldComputeInheritanceForUnionMembers(child: Shape, parent: UnionShape): Boolean = {
+    shouldComputeInheritanceForUnionScalarShapeMembers(
+      child,
+      parent
+    ) || shouldComputeInheritanceForUnionNodeShapeMembers(child, parent)
+  }
 
-    newUnionItems.zipWithIndex.foreach { case (shape, i) =>
-      shape.id = shape.id + s"_$i"
-      shape
-    }
+  private def existsSome(shape: Shape, fields: Seq[Field]): Boolean =
+    fields.exists(someField => shape.fields.exists(someField))
 
-    superUnion.fields.setWithoutId(
-      UnionShapeModel.AnyOf,
-      AmfArray(newUnionItems),
-      superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+  private def areAllOfType[T: ClassTag](shapes: Seq[Shape]): Boolean = {
+    shapes.foreach {
+      case _: T => // ignore
+      case _    => return false
+    }
+    true
+  }
+
+  private def shouldComputeInheritanceForUnionScalarShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+    lazy val childFields = Seq(
+      ScalarShapeModel.Format,
+      ScalarShapeModel.Minimum,
+      ScalarShapeModel.Maximum,
+      ScalarShapeModel.ExclusiveMinimum,
+      ScalarShapeModel.ExclusiveMaximum,
+      ScalarShapeModel.ExclusiveMinimumNumeric,
+      ScalarShapeModel.ExclusiveMaximumNumeric,
+      ScalarShapeModel.MinLength,
+      ScalarShapeModel.MaxLength,
+      ScalarShapeModel.Pattern,
+      ScalarShapeModel.MultipleOf,
+      ScalarShapeModel.Default,
+      ScalarShapeModel.Values
     )
 
-    computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
-    baseShape.fields foreach { case (field, value) =>
-      if (field != UnionShapeModel.AnyOf) {
-        superUnion.fields.setWithoutId(field, value.value, value.annotations)
+    areAllOfType[ScalarShape](parent.anyOf) && existsSome(child, childFields)
+  }
+
+  private def shouldComputeInheritanceForUnionNodeShapeMembers(child: Shape, parent: UnionShape): Boolean = {
+    lazy val childFields = Seq(
+      NodeShapeModel.Properties
+    )
+
+    areAllOfType[NodeShape](parent.anyOf) && existsSome(child, childFields)
+  }
+
+  private def computeMinSuperUnion(child: Shape, parent: UnionShape): Shape = {
+    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
+    var newUnionItems                      = parent.anyOf
+
+    parent.annotations.reject {
+      case _: DeclaredElement     => true
+      case _: ResolvedInheritance => true
+      case _                      => false
+    }
+
+    if (shouldComputeInheritanceForUnionMembers(child, parent)) {
+      val minItems = for {
+        superUnionElement <- parent.anyOf
+      } yield {
+        try {
+          val newShape = unionContext.minShape(filterBaseShape(child), superUnionElement)
+          newShape.withId(superUnionElement.id)
+          setValuesOfUnionElement(newShape, superUnionElement)
+          Some(newShape)
+        } catch {
+          case _: Exception => None
+        }
+      }
+      newUnionItems = minItems collect { case Some(s) => s }
+      if (newUnionItems.isEmpty) {
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot compute inheritance from union",
+          None,
+          child.location(),
+          child.position()
+        )
+      }
+
+      newUnionItems.zipWithIndex.foreach { case (shape, i) =>
+        shape.id = child.id + s"_$i"
+        shape
       }
     }
 
-    superUnion.annotations.reject(_ => true) ++= baseShape.annotations
-    superUnion.withId(baseShape.id)
+    val annotations = parent.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
+      case Some(value) => value.annotations
+      case _           => Annotations()
+    }
+
+    parent.fields.setWithoutId(
+      UnionShapeModel.AnyOf,
+      AmfArray(newUnionItems),
+      annotations
+    )
+
+    computeNarrowRestrictions(allShapeFields, child, parent, filteredFields = Seq(UnionShapeModel.AnyOf))
+    child.fields foreach { case (field, value) =>
+      if (field != UnionShapeModel.AnyOf) {
+        parent.fields.setWithoutId(field, value.value, value.annotations)
+      }
+    }
+
+    parent.annotations ++= child.annotations.copyFiltering {
+      case _: DeclaredElement         => true
+      case _: LexicalInformation      => true
+      case _: TypePropertyLexicalInfo => true
+      case _                          => false
+    }
+    parent.withId(child.id)
   }
 
   private def filterBaseShape(baseShape: Shape): Shape = {
@@ -586,7 +1223,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
   }
 
-  def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
+  private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
     if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
       context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
@@ -595,7 +1232,21 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
       )
     } else {
-      val newRange = context.minShape(baseProperty.range, superProperty.range)
+      val shouldComputeMinRange =
+        (baseProperty.range, superProperty.range) match {
+          case (_: ScalarShape, _: UnionShape) =>
+            // if scalar is not a member of union.anyOf should throw violation
+            // should extend to all shapes?
+            false
+          case _ => true
+        }
+
+      val newRange = if (shouldComputeMinRange) {
+        context.minShape(baseProperty.range, superProperty.range)
+      } else {
+        baseProperty.range
+      }
+
       baseProperty.fields.setWithoutId(
         PropertyShapeModel.Range,
         newRange,
@@ -613,7 +1264,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseProperty
   }
 
-  def computeMinFile(baseFile: FileShape, superFile: FileShape): Shape = {
+  private def computeMinFile(baseFile: FileShape, superFile: FileShape): Shape = {
     computeNarrowRestrictions(FileShapeModel.fields, baseFile, superFile)
     baseFile
   }
@@ -622,5 +1273,5 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   private def isSubtypeOfAny(shape: Shape)     = shape.meta != AnyShapeModel && shape.isInstanceOf[AnyShape]
   private def isInferred(shape: PropertyShape) = shape.range.annotations.contains(classOf[Inferred])
 
-  override val keepEditingInfo: Boolean = context.keepEditingInfo
+  val keepEditingInfo: Boolean = context.keepEditingInfo
 }

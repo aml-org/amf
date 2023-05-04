@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: test api
+description: test api
+
+types:
+  TestType:
+    type: object
+    properties:
+      testString: string
+      testNumber: number
+    examples:
+      xml: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <testString>this is a string</testString>
+        <testNumber>404</testNumber>
+
+      json: |
+        {
+          "testString": "this is a string",
+          "testNumber": 404
+        }
+

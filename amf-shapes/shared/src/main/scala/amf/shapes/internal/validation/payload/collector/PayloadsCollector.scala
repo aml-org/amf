@@ -81,11 +81,11 @@ object PayloadsCollector extends ValidationCandidateCollector {
       override val a: Annotations
   ) extends CollectedElement(id, raw, a)
 
-  private def buildFragment(shape: Shape, collectedElement: CollectedElement) = {
+  private def buildFragment(shape: Shape, collectedElement: CollectedElement): PayloadFragment = {
     val fragment = collectedElement match {
       case dn: DataNodeCollectedElement => // the example has been parsed, so i can use native validation like json or any default
         PayloadFragment(dn.dataNode, `text/vnd.yaml`)
-      case s: StringCollectedElement =>
+      case s: StringCollectedElement => // for xml examples that don't have dataNode for example
         PayloadFragment(
           ScalarNode(s.raw, None, s.a),
           s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])

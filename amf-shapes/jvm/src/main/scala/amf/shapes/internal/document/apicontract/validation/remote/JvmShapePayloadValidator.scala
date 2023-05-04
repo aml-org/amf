@@ -81,13 +81,13 @@ class JvmShapePayloadValidator(
           .addFormatValidator(Rfc2616Attribute)
           .addFormatValidator(Rfc2616AttributeLowerCase)
           .addFormatValidator(PartialTimeFormatValidator)
+          .addFormatValidator(DateTimeFormatValidator)
+          .addFormatValidator(DateFormatValidator)
           // the following are everit format validators
           .addFormatValidator(new URIV4FormatValidator())
-          .addFormatValidator(new DateFormatValidator())
           .addFormatValidator(new RegexFormatValidator())
           .addFormatValidator(new HostnameFormatValidator())
           .addFormatValidator(new IPV4Validator())
-          .addFormatValidator(new DateTimeFormatValidator())
           .addFormatValidator(new IPV6Validator())
           .addFormatValidator(new EmailFormatValidator())
 

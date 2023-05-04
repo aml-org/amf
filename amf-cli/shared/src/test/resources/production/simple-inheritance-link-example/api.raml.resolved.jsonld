@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Sample API
+/personas:
+  get:
+    responses:
+      "200":
+        body:
+          application/json:
+            example:
+              idNumber: 35877877
+              firstName: Jose
+              middleName: Ramiro
+              lastName: Funes Mori
+              gender: M
+            properties:
+              idNumber:
+                type: integer
+              firstName:
+                type: string
+              middleName?:
+                type: string
+              lastName:
+                type: string
+              gender:
+                enum:
+                  - F
+                  - M

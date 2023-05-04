@@ -2,20 +2,16 @@
 version: v1
 types:
   User:
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
 /extended:
   post:
     body:
       text/xml:
-        additionalProperties: true
         properties:
           name:
             type: string
-            required: true
 traits:
   dynamic:
     body:
@@ -29,9 +25,7 @@ traits:
   post:
     body:
       application/json:
-        additionalProperties: true
         properties:
           name:
             type: string
-            required: true
 title: extension test

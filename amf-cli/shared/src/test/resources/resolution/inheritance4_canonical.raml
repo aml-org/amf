@@ -1,18 +1,12 @@
 #%RAML 1.0 Library
 types:
   AnimalWithAddress:
-    additionalProperties: true
     properties:
       address:
         type: string
-        required: true
   Cat:
-    type: object
-    additionalProperties: true
     properties:
       address:
         type: string
-        required: true
       age:
         type: integer | number
-        required: true

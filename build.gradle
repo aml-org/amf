@@ -11,8 +11,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.mulesoft:gradle-tools:0.2.6"
-        classpath files('lib/nexus-iq-cli-1.68.0-01.jar')
+        classpath "com.mulesoft:gradle-tools:0.3.24"
+        classpath files('lib/nexus-iq-cli-1.159.0-01.jar')
     }
 }
 
@@ -47,17 +47,11 @@ file("amf-apicontract.versions").withInputStream {
 }
 
 dependencies {
-    compile "com.github.amlorg:amf-cli_2.12:${versions.'amf.apicontract'}"
-    compile "com.github.amlorg:amf-api-contract_2.12:${versions.'amf.apicontract'}"
-    compile "com.github.amlorg:amf-validation_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-cli_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-api-contract_2.12:${versions.'amf.apicontract'}"
+    implementation "com.github.amlorg:amf-validation_2.12:${versions.'amf.apicontract'}"
 }
 
 mainClassName = 'amf.Main'
-
-distributions {
-    custom {
-        baseName = "${name}"
-    }
-}
 
 tasks.nexusIq.dependsOn(distZip)

@@ -19,7 +19,7 @@ import amf.core.client.common.validation.{Async20Profile, ProfileName}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.remote.AsyncApi20
 import amf.core.internal.transform.stages.SourceInformationStage
-import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 class Async20EditingPipeline private (urlShortening: Boolean = true, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {
@@ -33,7 +33,7 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
   override def steps: Seq[TransformationStep] =
     Seq(
       references,
-      new ShapeNormalizationStage(profileName, keepEditingInfo = true),
+      new ShapeNormalizationForUnitStage(profileName, keepEditingInfo = true),
       new JsonMergePatchStage(isEditing = true),
       new AsyncContentTypeResolutionStage(),
       new AsyncExamplePropagationResolutionStage(),

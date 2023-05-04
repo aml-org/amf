@@ -342,7 +342,7 @@
         ],
         "core:correlationId": [
           {
-            "@id": "#8",
+            "@id": "#5",
             "@type": [
               "core:CorrelationId",
               "doc:DomainElement"
@@ -360,7 +360,7 @@
             "smaps": {
               "lexical": {
                 "core:location": "[(13,4)-(14,0)]",
-                "#8": "[(12,0)-(14,0)]",
+                "#5": "[(12,0)-(14,0)]",
                 "core:description": "[(12,4)-(13,0)]"
               }
             }
@@ -388,7 +388,7 @@
         ],
         "apiContract:headerSchema": [
           {
-            "@id": "#5",
+            "@id": "#6",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -403,7 +403,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#6",
+                "@id": "#7",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -417,7 +417,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#7",
+                    "@id": "#8",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -442,11 +442,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#7": "[(19,8)-(19,12)]"
+                        "#8": "[(19,8)-(19,12)]"
                       },
                       "lexical": {
                         "core:description": "[(18,8)-(19,0)]",
-                        "#7": "[(17,6)-(20,0)]",
+                        "#8": "[(17,6)-(20,0)]",
                         "shacl:datatype": "[(19,8)-(20,0)]"
                       }
                     }
@@ -467,7 +467,7 @@
                     "shacl:minCount": "true"
                   },
                   "lexical": {
-                    "#6": "[(17,6)-(20,0)]"
+                    "#7": "[(17,6)-(20,0)]"
                   }
                 }
               }
@@ -482,10 +482,10 @@
                 "shacl:closed": "true"
               },
               "lexical": {
-                "#5": "[(14,2)-(20,0)]"
+                "#6": "[(14,2)-(20,0)]"
               },
               "type-property-lexical-info": {
-                "#5": "[(15,4)-(15,8)]"
+                "#6": "[(15,4)-(15,8)]"
               }
             }
           }

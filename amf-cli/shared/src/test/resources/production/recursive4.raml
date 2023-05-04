@@ -1,0 +1,21 @@
+#%RAML 1.0
+
+title: STEP REST API V2
+version: 1.0.0
+types:
+  MultiReference:
+    type: object
+    properties:
+      references?:
+        type: ReferenceEntry
+  ReferenceEntry:
+    type: object
+    properties:
+      values?:
+        type: Value
+  SingleReference:
+    type: ReferenceEntry
+  Value:
+    type: SingleReference | MultiReference
+    properties:
+      name: string

@@ -3,8 +3,9 @@ package amf.testing
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.domain.{Annotation, DomainElement, Shape}
 import amf.core.internal.annotations.SourceYPart
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 
 import scala.concurrent.duration.Duration
@@ -16,6 +17,8 @@ object BaseUnitUtils {
     else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
   def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[Document].declares
+
+  def getFirstDeclaration(bu: BaseUnit): DomainElement = getDeclarations(bu).head
 
   def getEndpoints(bu: BaseUnit, isWebApi: Boolean = true): Seq[EndPoint] = getApi(bu, isWebApi).endPoints
 
@@ -50,5 +53,9 @@ object BaseUnitUtils {
     val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
     val obtainedAst     = sourceYPart.ast.toString
     obtainedAst
+  }
+
+  def hasAnnotation[T <: Annotation](annotation: Class[T], annotations: Annotations): Boolean = {
+    annotations.find(annotation).isDefined
   }
 }

@@ -9,20 +9,21 @@ import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 object CandidateValidator {
+  private type ValidatorKey = (String, String) // shape id + payload MediaType
 
   def validateAll(candidates: Seq[ValidationCandidate], config: ValidationConfiguration)(implicit
       executionContext: ExecutionContext
   ): Future[AMFValidationReport] = {
 
     val client = config.amfConfig.elementClient()
-    val cache  = mutable.Map[String, AMFShapePayloadValidator]()
+    val cache  = mutable.Map[ValidatorKey, AMFShapePayloadValidator]()
 
     val futures: Seq[Future[AMFValidationReport]] = candidates.map { candidate =>
+      val key: ValidatorKey = (candidate.shape.id, candidate.payload.mediaType.value())
       val validator = cache.getOrElse(
-        candidate.shape.id, {
+        key, {
           val foundValidator = client.payloadValidatorFor(candidate.shape, candidate.payload)
-          // TODO: Lousy side effect
-          cache.put(candidate.shape.id, foundValidator)
+          cache.put(key, foundValidator)
           foundValidator
         }
       )

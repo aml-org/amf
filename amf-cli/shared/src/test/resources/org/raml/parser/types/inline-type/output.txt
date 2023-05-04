@@ -9,11 +9,8 @@ baseUri: http://api.samplehost.com/{version}
         example:
           prop1: hola
           prop2: 2
-        additionalProperties: true
         properties:
           prop1:
             type: string
-            required: true
           prop2:
             type: number
-            required: true

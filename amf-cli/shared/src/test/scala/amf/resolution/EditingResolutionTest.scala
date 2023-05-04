@@ -22,6 +22,7 @@ class EditingResolutionTest extends ResolutionTest {
   val referencesPath  = "amf-cli/shared/src/test/resources/references/"
   val validationsPath = "amf-cli/shared/src/test/resources/validations/"
 
+  // Fixed SOF but API is invalid
   multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
     cycle(
       "recursive3.raml",
@@ -29,6 +30,29 @@ class EditingResolutionTest extends ResolutionTest {
       Raml10YamlHint,
       target = AmfJsonHint,
       productionPath,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // Fixed SOF but API is invalid
+  multiGoldenTest("API with recursive shapes - SOF version", "recursive4.editing.%s") { config =>
+    cycle(
+      "recursive4.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      productionPath,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Double union inheritance with same members", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      s"${resolutionPath}double-union-inheritance/",
       renderOptions = Some(config.renderOptions)
     )
   }

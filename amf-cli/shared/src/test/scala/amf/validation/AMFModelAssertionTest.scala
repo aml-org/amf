@@ -4,15 +4,15 @@ import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement, ScalarNode, Shape}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, SourceYPart, VirtualElement, VirtualNode}
+import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
@@ -20,7 +20,7 @@ import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
-import org.scalatest.{Assertion, Checkpoints}
+import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
@@ -55,10 +55,6 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
         assertion(transformResult.baseUnit)
       }
     }
-  }
-
-  def hasAnnotation[T <: Annotation](annotation: Class[T], annotations: Annotations): Boolean = {
-    annotations.find(annotation).isDefined
   }
 
   test("AMF should persist and restore the raw XML schema") {
@@ -158,7 +154,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(ramlApi, transform = false) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
-        bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+        getFirstDeclaration(bu).asInstanceOf[ScalarShape]
       declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
     }
   }
@@ -168,7 +164,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(ramlApi, transform = false) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
-        bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+        getFirstDeclaration(bu).asInstanceOf[ScalarShape]
       declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
     }
   }
@@ -235,7 +231,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("Property name value should have correct lexical") {
     val api = s"$basePath/async20/object-schema.yaml"
     modelAssertion(api, transform = false) { bu =>
-      val schema        = bu.asInstanceOf[Document].declares.head
+      val schema        = getFirstDeclaration(bu)
       val propertyField = schema.fields.fields().find(_.field.toString.endsWith("property")).get
       val propertyNameField = propertyField.value.value
         .asInstanceOf[AmfArray]
@@ -315,7 +311,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("Shape's lexical should not only include the referenced type") {
     val api = s"$basePath/annotations/type-reference.raml"
     modelAssertion(api, transform = false) { bu =>
-      val typeWithReference = bu.asInstanceOf[Document].declares.last
+      val typeWithReference = getDeclarations(bu).last
       typeWithReference.annotations.lexical().start shouldBe Position(6, 2)
       typeWithReference.annotations.lexical().end shouldBe Position(7, 0)
     }
@@ -334,7 +330,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("xml shape from type should have location annotation") {
     val api = s"$basePath/annotations/xml/api.raml"
     modelAssertion(api, transform = false) { bu =>
-      val declaredXmlSchema = bu.asInstanceOf[Document].declares.head
+      val declaredXmlSchema = getFirstDeclaration(bu)
       declaredXmlSchema.annotations.location().isDefined shouldBe true
       declaredXmlSchema.annotations.lexical() shouldEqual PositionRange((6, 2), (9, 0))
     }
@@ -364,7 +360,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val client = config.baseUnitClient()
       client.parse(s"$basePath/raml/semantic-extensions/api.raml") map { parseResult =>
         val bu          = parseResult.baseUnit
-        val annotations = bu.asInstanceOf[Document].declares.last.customDomainProperties
+        val annotations = getDeclarations(bu).last.customDomainProperties
         val lexicals    = annotations map (_.annotations.lexical())
         // both lexicals should start in column 4
         lexicals map (_.start.column) exists (_ != 4) shouldBe false
@@ -375,7 +371,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("Declared union should have DeclaredElement annotation") {
     val api = s"$basePath/raml/declared-element-annotation-union.raml"
     modelAssertion(api, PipelineId.Editing) { bu =>
-      val union = bu.asInstanceOf[Document].declares.head
+      val union = getFirstDeclaration(bu)
       union.annotations.contains(classOf[DeclaredElement]) shouldBe true
     }
   }
@@ -430,7 +426,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("TargetName annotation has the name of the schema in the external file") {
     val api = s"$basePath/annotations/target-name/api.yaml"
     modelAssertion(api, transform = false) { bu =>
-      val schema     = bu.asInstanceOf[Document].declares.head.asInstanceOf[AnyShape]
+      val schema     = getFirstDeclaration(bu).asInstanceOf[AnyShape]
       val newName    = schema.name.value()
       val targetName = schema.annotations.find(classOf[TargetName]).map(_.name.asInstanceOf[YNodePlain].value)
       newName shouldBe "new-name"
@@ -485,7 +481,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
   test("Assert union custom domain properties are not propagated to members") {
 
-    def assertForAllTypes(shapes: Shape*)(assertion: Shape => Unit) = {
+    def assertForAllTypes(shapes: Shape*)(assertion: Shape => Unit): Unit = {
       shapes.foreach(assertion)
     }
 
@@ -510,11 +506,29 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  private def sourcePartOf(unit: BaseUnit, extract: JsonSchemaDocument => Shape) = {
-    val doc             = unit.asInstanceOf[JsonSchemaDocument]
-    val shapeOfInterest = extract(doc)
-    val sourceYPart     = shapeOfInterest.annotations.find(_.isInstanceOf[SourceYPart]).get.asInstanceOf[SourceYPart]
-    val obtainedAst     = sourceYPart.ast.toString
-    obtainedAst
+  // W-13014769
+  test("Servers with same url should have different IDs") {
+    val api = s"$basePath/oas3/same-server-urls.yaml"
+
+    def checkServers(bu: BaseUnit) = {
+      val servers = getApi(bu).servers.map(s => (s.url, s.description))
+      servers.map(s => s._2.toString).intersect(Seq("Prod", "Pre-prod")).size shouldBe 2
+    }
+
+    oasClient.parse(api).flatMap { parseResult =>
+      val bu                          = oasClient.transform(parseResult.baseUnit, PipelineId.Editing).baseUnit
+      val render                      = oasClient.render(bu, Mimes.`application/ld+json`)
+      val renderWithoutTransformation = oasClient.render(parseResult.baseUnit, Mimes.`application/ld+json`)
+
+      checkServers(parseResult.baseUnit)
+
+      oasClient.parseContent(renderWithoutTransformation).map { cycleParseResult =>
+        checkServers(cycleParseResult.baseUnit)
+      }
+
+      oasClient.parseContent(render).map { cycleParseResult =>
+        checkServers(cycleParseResult.baseUnit)
+      }
+    }
   }
 }

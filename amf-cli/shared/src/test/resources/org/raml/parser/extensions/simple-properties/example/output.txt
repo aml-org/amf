@@ -5,11 +5,8 @@ types:
   User:
     example:
       name: pipo
-    additionalProperties: true
     properties:
       name:
         type: string
-        required: true
-      age:
+      age?:
         type: integer
-        required: false

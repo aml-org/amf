@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-optional-property-complex.raml
+Profile: AMF Graph
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Invalid cyclic references in shapes: B -> b -> C -> c -> B
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-optional-property-complex.raml#/declares/shape/B
+  Property: 
+  Range: [(8,2)-(11,0)]
+  Location: file://amf-cli/shared/src/test/resources/poc/recursion-invalid-optional-property-complex.raml
