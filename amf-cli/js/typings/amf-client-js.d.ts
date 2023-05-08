@@ -5549,8 +5549,10 @@ declare module "amf-client-js" {
   export class ResourceLoaderFactory {
     static create(loader: ClientResourceLoader): any;
   }
-  export class ResourceNotFound {
+  export class ResourceNotFound implements FileLoaderException{
     readonly msj: string;
+    readonly code: string;
+    readonly message: string;
 
     constructor(msj: string);
   }
@@ -6991,6 +6993,11 @@ declare module "amf-client-js" {
 
     withWrapped(wrapped: boolean): this;
   }
+  export interface AmfException {
+    readonly code: string;
+    readonly message: string;
+  }
+  export interface FileLoaderException extends AmfException {}
   export class AmfExceptionCode {
     static readonly ResourceNotFound: "resource-not-found";
     static readonly PathResolutionError: "path-resolution-error";
@@ -7001,7 +7008,7 @@ declare module "amf-client-js" {
     static readonly FileNotFound: "file-not-found";
   }
   export class ExceptionUtil {
-    static isExceptionType(exception: ResourceNotFound, exceptionCode: String): Boolean;
+    static isExceptionType(exception: AmfException, exceptionCode: String): Boolean;
   }
   export class TypeIRI {
     static readonly Shape: string;
@@ -7022,6 +7029,7 @@ declare module "amf-client-js" {
     static isTypeOf(element: AmfObjectWrapper, typeIri: String): Boolean;
     static isTypeOf(element: AmfObjectWrapper, typeIri: Array<String>): Boolean;
   }
+
   namespace org {
     namespace mulesoft {
       namespace common {
