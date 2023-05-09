@@ -14,7 +14,7 @@ import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
-import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
 import amf.core.client.platform.parse.AMFParser.parseStartingPoint
@@ -23,7 +23,11 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
+import amf.core.client.scala.model.domain.{
+  ArrayNode => InternalArrayNode,
+  ObjectNode => InternalObjectNode,
+  ScalarNode => InternalScalarNode
+}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -36,6 +40,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
+import org.mulesoft.common.client.lexical.PositionRange
 import org.mulesoft.common.test.Diff
 import org.scalatest.matchers.should.Matchers
 import org.yaml.builder.JsonOutputBuilder
@@ -2135,9 +2140,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Cycle API with DataType Fragment") {
     val client = OASConfiguration.OAS20().baseUnitClient()
-    val path = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
+    val path   = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
     for {
-      parsingResult <- client.parse(path).asFuture
+      parsingResult    <- client.parse(path).asFuture
       resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
     } yield {
       val references = resolutionResult.baseUnit.references()
@@ -2147,6 +2152,24 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("Use property lexical") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path   = "file://amf-cli/shared/src/test/resources/small-api/api.raml"
+    for {
+      parsingResult    <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      resolutionResult.baseUnit match {
+        case e: EncodesModel =>
+          val graph   = e.encodes.graph()
+          val version = "http://a.ml/vocabularies/core#version"
+          graph.propertyLexical(version) shouldBe PositionRange((3, 0), (4, 0))
+          graph.propertyLocation(version) shouldBe Some("file://amf-cli/shared/src/test/resources/small-api/api.raml")
+        case _ => //
+          fail("BaseUnit is not an EncodesModel")
+      }
+    }
+  }
 
 //
 //  // todo: move to common (file system)
