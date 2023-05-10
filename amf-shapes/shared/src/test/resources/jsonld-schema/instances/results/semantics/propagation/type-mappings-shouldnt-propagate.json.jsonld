@@ -23,17 +23,17 @@
         "http://a.ml/vocabularies/core#a",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#a/b": {
+      "http://a.ml/vocabularies/core#b": {
         "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/type-mappings-shouldnt-propagate.json#/encodes/a/b"
       }
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/type-mappings-shouldnt-propagate.json#/encodes/a/b",
       "@type": [
-        "http://a.ml/vocabularies/core#a/b",
+        "http://a.ml/vocabularies/core#b",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#a/b/c": "something"
+      "http://a.ml/vocabularies/core#c": "something"
     },
     {
       "@id": "file://amf-shapes/shared/src/test/resources/jsonld-schema/instances/semantics/propagation/type-mappings-shouldnt-propagate.json",

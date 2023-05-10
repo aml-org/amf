@@ -116,10 +116,16 @@ case class JsonLDPropertyParser(
       ctx.eh.violation(ContainerCheckErrorList, range, ContainerCheckErrorList.message)
 
   private def computeTerm(path: JsonPath): String = {
-    propertyName(path)
-      .flatMap(semanticContext.getTermFor)
-      .map(semanticContext.expand)
-      .getOrElse(semanticContext.computeBase(path.toString))
+    propertyName(path) match {
+      case Some(name) =>
+        semanticContext
+          .getTermFor(name)
+          .map(semanticContext.expand)
+          .getOrElse(semanticContext.computeBase(name))
+
+      // should be unreachable
+      case _ => throw new IllegalStateException(s"Property ${path.toString} does not have name")
+    }
   }
 
   private def propertyName(path: JsonPath): Option[String] = path.lastSegment

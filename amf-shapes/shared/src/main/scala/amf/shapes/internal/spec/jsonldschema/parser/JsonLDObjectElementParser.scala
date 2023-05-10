@@ -39,9 +39,17 @@ case class JsonLDObjectElementParser(
   override def findClassTerm(ctx: SemanticContext): Seq[String] = {
     val terms = super.findClassTerm(ctx).map(ctx.expand)
     if (terms.isEmpty) {
-      val fragment = if (path.toString.isEmpty) key else path.toString
+      val fragment = lastNameFromPath() match {
+        case Some(name) => name
+        case None       => key
+      }
       Seq(ctx.expand(ctx.computeBase(fragment)))
     } else terms
+  }
+
+  def lastNameFromPath(): Option[String] = {
+    val numberRegex = "\\d+\\.?\\d*"
+    path.segments.reverse.find { segment => !segment.matches(numberRegex) }
   }
 
   private def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder = parseDynamic(n.properties, n.semanticContext)
