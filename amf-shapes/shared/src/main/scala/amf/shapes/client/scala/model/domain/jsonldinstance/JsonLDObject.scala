@@ -93,4 +93,15 @@ case class JsonLDObject(
 
   def withObjPropertyCollection(property: String, values: Seq[JsonLDObject]): JsonLDObject =
     updateModelAndSet(property.toObjListField, buildArray(values))
+
+  def removeProperty(property: String): JsonLDObject = {
+    // update model
+    val newModelFields = model.fields.filterNot(f => f.value.iri() == property)
+    model = model.copy(fields = newModelFields)
+
+    // update fields
+    fields.remove(property)
+    
+    this
+  }
 }
