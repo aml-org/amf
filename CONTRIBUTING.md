@@ -21,7 +21,7 @@ behavior that is not occurring.
 
 ### Development Requirements
 * Scala 2.12.13
-* sbt 1.7.1
+* sbt 1.7.3
 * Node
 
 ### Version control branching
