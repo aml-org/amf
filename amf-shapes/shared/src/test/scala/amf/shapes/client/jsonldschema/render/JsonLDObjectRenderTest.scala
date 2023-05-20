@@ -38,11 +38,17 @@ class JsonLDObjectRenderTest extends AsyncFunSuite with Matchers {
   }
 
   test("serialize mutated inner jsonldObject") {
+    val updatedString =
+      """key: value2
+        |keyObj:
+        |  innerObj: ab
+        |  innerObjKey2: 2""".stripMargin
+
     val innerObj = obj.graph.getObjectByProperty(innerObjKey).collectFirst({ case obj: JsonLDObject => obj }).head
     obj.withProperty(innerObjKey, innerObj.withProperty(s"${base}innerObjKey2", 2)).withProperty(rootKey, "value2")
 
     val node   = JsonLDSchemaConfiguration.JsonLDSchema().elementClient().renderElement(obj, Nil)
     val result = YamlRender.render(node)
-    result shouldBe (expected)
+    result shouldBe (updatedString)
   }
 }

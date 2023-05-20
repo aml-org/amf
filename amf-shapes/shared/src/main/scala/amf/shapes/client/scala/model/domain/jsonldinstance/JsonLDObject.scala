@@ -16,7 +16,7 @@ object JsonLDObject {
 case class JsonLDObject(
     override val fields: Fields,
     override val annotations: Annotations,
-    model: JsonLDEntityModel,
+    private var model: JsonLDEntityModel,
     path: JsonPath
 ) extends DomainElement
     with JsonLDElement {
@@ -59,36 +59,38 @@ case class JsonLDObject(
     if (model.fields.contains(field)) model // preserve initial order
     else model.copy(fields = model.fields :+ field)
   }
-  private def copyWithProperty(field: Field, element: JsonLDElement) =
-    copy(fields = fields.copy(), model = updateModel(field)).set(field, element)
+  private def updateModelAndSet(field: Field, element: JsonLDElement) = {
+    model = updateModel(field)
+    set(field, element)
+  }
 
   def withProperty(property: String, value: String): JsonLDObject =
-    copyWithProperty(property.toStrField, buildString(value))
+    updateModelAndSet(property.toStrField, buildString(value))
 
   def withProperty(property: String, value: Int): JsonLDObject =
-    copyWithProperty(property.toIntField, buildInteger(value))
+    updateModelAndSet(property.toIntField, buildInteger(value))
 
   def withProperty(property: String, value: Float): JsonLDObject =
-    copyWithProperty(property.toFloatField, buildFloat(value))
+    updateModelAndSet(property.toFloatField, buildFloat(value))
 
   def withProperty(property: String, value: Boolean): JsonLDObject =
-    copyWithProperty(property.toBoolField, buildBoolean(value))
+    updateModelAndSet(property.toBoolField, buildBoolean(value))
 
   def withProperty(property: String, value: JsonLDObject): JsonLDObject =
-    copyWithProperty(property.toObjField(value.meta), value)
+    updateModelAndSet(property.toObjField(value.meta), value)
 
   def withStringPropertyCollection(property: String, values: Seq[String]): JsonLDObject =
-    copyWithProperty(property.toStrListField, buildArray(values.map(buildString)))
+    updateModelAndSet(property.toStrListField, buildArray(values.map(buildString)))
 
   def withIntPropertyCollection(property: String, values: Seq[Int]): JsonLDObject =
-    copyWithProperty(property.toIntListField, buildArray(values.map(buildInteger)))
+    updateModelAndSet(property.toIntListField, buildArray(values.map(buildInteger)))
 
   def withFloatPropertyCollection(property: String, values: Seq[Float]): JsonLDObject =
-    copyWithProperty(property.toFloatListField, buildArray(values.map(buildFloat)))
+    updateModelAndSet(property.toFloatListField, buildArray(values.map(buildFloat)))
 
   def withBoolPropertyCollection(property: String, values: Seq[Boolean]): JsonLDObject =
-    copyWithProperty(property.toBoolListField, buildArray(values.map(buildBoolean)))
+    updateModelAndSet(property.toBoolListField, buildArray(values.map(buildBoolean)))
 
   def withObjPropertyCollection(property: String, values: Seq[JsonLDObject]): JsonLDObject =
-    copyWithProperty(property.toObjListField, buildArray(values))
+    updateModelAndSet(property.toObjListField, buildArray(values))
 }
