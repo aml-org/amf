@@ -20,7 +20,7 @@ behavior that is not occurring.
 ## Code Contributions
 
 ### Development Requirements
-* Scala 2.12.13
+* Scala 2.12.15
 * sbt 1.7.3
 * Node
 

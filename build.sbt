@@ -15,7 +15,7 @@ name := "amf"
 
 ThisBuild / version      := versions("amf.apicontract")
 ThisBuild / organization := "com.github.amlorg"
-ThisBuild / scalaVersion := "2.12.13"
+ThisBuild / scalaVersion := "2.12.15"
 ThisBuild / resolvers ++= List(
   ivyLocal,
   Common.releases,
@@ -340,8 +340,8 @@ addCommandAlias(
 )
 
 ThisBuild / libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.13")),
-  "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.13")
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.6" cross CrossVersion.constant("2.12.15")),
+  "com.github.ghik" % "silencer-lib" % "1.7.6" % Provided cross CrossVersion.constant("2.12.15")
 )
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
