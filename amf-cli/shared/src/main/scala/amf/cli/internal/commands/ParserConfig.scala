@@ -25,7 +25,8 @@ object StdErrWriter extends ProcWriter {
 }
 
 object RuntimeProc extends Proc {
-  override def exit(statusCode: Int): Unit = System.exit(statusCode)
+  override def exit(statusCode: Int): Unit =
+    throw new RuntimeException() // Should find a suitable replacement for System.exit()
 }
 
 case class ParserConfig(

@@ -5549,8 +5549,10 @@ declare module "amf-client-js" {
   export class ResourceLoaderFactory {
     static create(loader: ClientResourceLoader): any;
   }
-  export class ResourceNotFound {
+  export class ResourceNotFound implements FileLoaderException{
     readonly msj: string;
+    readonly code: string;
+    readonly message: string;
 
     constructor(msj: string);
   }
@@ -6991,6 +6993,57 @@ declare module "amf-client-js" {
 
     withWrapped(wrapped: boolean): this;
   }
+  export interface AmfException {
+    readonly code: string;
+    readonly message: string;
+  }
+  export interface FileLoaderException extends AmfException {}
+  export class AmfExceptionCode {
+    static readonly ResourceNotFound: "resource-not-found";
+    static readonly PathResolutionError: "path-resolution-error";
+    static readonly UnsupportedUrlScheme: "unsupported-url-scheme";
+    static readonly UnexpectedStatusCode: "unexpected-status-code";
+    static readonly NetworkError: "network-error";
+    static readonly SocketTimeout: "socket-timeout";
+    static readonly FileNotFound: "file-not-found";
+  }
+  export class ExceptionUtil {
+    static isExceptionType(exception: AmfException, exceptionCode: String): Boolean;
+  }
+  export class TypeIRI {
+    static readonly Shape: string;
+    static readonly RecursiveShape: string;
+    static readonly PropertyShape: string;
+    static readonly AnyShape: string;
+    static readonly NodeShape: string;
+    static readonly ArrayShape: string;
+    static readonly ScalarShape: string;
+    static readonly NilShape: string;
+    static readonly FileShape: string;
+    static readonly SchemaShape: string;
+    static readonly UnionShape: string;
+    static readonly MatrixShape: string;
+    static readonly TupleShape: string;
+    static readonly Document: string;
+    static readonly BaseUnit: string;
+    static readonly SecurityScheme: string;
+    static readonly Request: string;
+    static readonly Response: string;
+    static readonly OAuth1Settings: string;
+    static readonly OAuth2Settings: string;
+    static readonly EndPoint: string;
+    static readonly Server: string;
+    static readonly CustomDomainProperty: string;
+    static readonly ScalarNode: string;
+    static readonly ObjectNode: string;
+    static readonly ArrayNode: string;
+    static readonly WebApi: string;
+  }
+  export class TypeUtil {
+    static isTypeOf(element: AmfObjectWrapper, typeIri: String): Boolean;
+    static isTypeOf(element: AmfObjectWrapper, typeIri: Array<String>): Boolean;
+  }
+
   namespace org {
     namespace mulesoft {
       namespace common {
