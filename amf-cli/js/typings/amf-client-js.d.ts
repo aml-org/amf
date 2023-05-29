@@ -7054,23 +7054,20 @@ declare module "amf-client-js" {
         }
       }
     }
-    namespace yaml {
-      namespace builder {
-        export class JsOutputBuilder {
-          isDefined: boolean;
-          result: undefined;
+  }
 
-          constructor();
+  export class JsOutputBuilder {
+    isDefined: boolean;
+    result: undefined;
 
-          static apply(): JsOutputBuilder;
+    constructor();
 
-          doc(f: undefined): any;
+    static apply(): JsOutputBuilder;
 
-          list(f: undefined): any;
+    doc(f: undefined): any;
 
-          obj(f: undefined): any;
-        }
-      }
-    }
+    list(f: undefined): any;
+
+    obj(f: undefined): any;
   }
 }
