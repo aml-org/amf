@@ -5,8 +5,8 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{NamedDomainElement, RecursiveShape, Shape}
-import amf.core.internal.adoption.IdAdopter
 import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -16,7 +16,17 @@ import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape}
 import org.mulesoft.common.collections.FilterType
 
 case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() with PlatformSecrets {
+  var visited: Set[String] = Set.empty
   def traverse(element: NamedDomainElement, previous: Seq[NamedDomainElement] = Nil)(implicit
+      eh: AMFErrorHandler
+  ): Unit = {
+    if (!visited.contains(element.id)) {
+      visited = visited + element.id
+      visit(element, previous)
+    }
+  }
+
+  private def visit(element: NamedDomainElement, previous: Seq[NamedDomainElement])(implicit
       eh: AMFErrorHandler
   ): Unit = {
     element match {
@@ -38,45 +48,43 @@ case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() wit
       case resp: ShapeResponse =>
         traverse(resp.payload, previous :+ element)
 
-      case param: ShapeParameter => traverseField(param, param.meta.Schema, previous :+ element)
-      case payload: ShapePayload => traverseField(payload, payload.meta.Schema, previous :+ element)
-      case u: UnionShape         => traverseField(u, u.meta.AnyOf, previous :+ element)
-      case a: ArrayShape         => traverseField(a, a.meta.Items, previous :+ element)
-      case p: PropertyShape      => traverseField(p, p.meta.Range, previous :+ element)
+      case param: ShapeParameter => visitFieldTarget(param, param.meta.Schema, previous :+ element)
+      case payload: ShapePayload => visitFieldTarget(payload, payload.meta.Schema, previous :+ element)
+      case u: UnionShape         => visitFieldTarget(u, u.meta.AnyOf, previous :+ element)
+      case a: ArrayShape         => visitFieldTarget(a, a.meta.Items, previous :+ element)
+      case p: PropertyShape      => visitFieldTarget(p, p.meta.Range, previous :+ element)
       case n: NodeShape =>
-        traverseField(n, n.meta.Properties, previous :+ element)
+        visitFieldTarget(n, n.meta.Properties, previous :+ element)
 
         n.operations.foreach { op =>
           traverse(op, previous :+ element)
         }
       case _ => // nothing
     }
-
   }
 
-  private def traverseField(source: NamedDomainElement, field: Field, previous: Seq[NamedDomainElement])(implicit
+  private def visitFieldTarget(source: NamedDomainElement, field: Field, previous: Seq[NamedDomainElement])(implicit
       eh: AMFErrorHandler
   ): Unit = {
     field.`type` match {
 
       case _: ShapeModel =>
         val target = source.fields(field).asInstanceOf[Shape]
-        handleRecursion(target, previous) match {
-          case Some(r) => source.set(field, r)
-          case None    => traverse(target, previous)
+        if (previous.contains(target)) {
+          val r = handleRecursion(target, previous)
+          source.set(field, r)
+        } else {
+          traverse(target, previous)
         }
-
       case _: Type.ArrayLike =>
         val targets = source.fields(field).asInstanceOf[Seq[Shape]]
-        val newTargets = targets.map { target =>
-          handleRecursion(target, previous) match {
-            case Some(r) =>
-              r.adopted(source.id)
-              r
-            case None =>
-              traverse(target, previous)
-              target
-          }
+        val newTargets = targets.map {
+          case target if previous.contains(target) =>
+            val r = handleRecursion(target, previous)
+            r.adopted(source.id)
+          case target =>
+            traverse(target, previous)
+            target
         }
         if (newTargets.exists(_.isInstanceOf[RecursiveShape])) source.setArrayWithoutId(field, newTargets)
     }
@@ -84,27 +92,23 @@ case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() wit
 
   private def handleRecursion(target: Shape, previous: Seq[NamedDomainElement])(implicit
       eh: AMFErrorHandler
-  ): Option[RecursiveShape] = {
-    if (previous.contains(target)) {
-      val all = previous :+ target
-      all
-        .filterType[NodeShape]
-        .filter(_.isInputOnly.value())
-        .foreach { inputType =>
-          eh.violation(
-            RecursiveShapeSpecification,
-            inputType.id,
-            None,
-            s"Input type ${inputType.name
-                .value()} cannot be part of cyclic references ${buildChainName(all)}",
-            inputType.position(),
-            inputType.location()
-          )
-        }
-      Some(RecursiveShape().withFixPoint(target.id))
-    } else {
-      None
-    }
+  ): RecursiveShape = {
+    val all = previous :+ target
+    all
+      .filterType[NodeShape]
+      .filter(_.isInputOnly.value())
+      .foreach { inputType =>
+        eh.violation(
+          RecursiveShapeSpecification,
+          inputType.id,
+          None,
+          s"Input type ${inputType.name
+              .value()} cannot be part of cyclic references ${buildChainName(all)}",
+          inputType.position(),
+          inputType.location()
+        )
+      }
+    RecursiveShape().withFixPoint(target.id)
   }
 
   private def buildChainName(all: Seq[NamedDomainElement]) = {

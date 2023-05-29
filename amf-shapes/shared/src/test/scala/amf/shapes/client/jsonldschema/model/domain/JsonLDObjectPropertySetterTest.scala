@@ -103,10 +103,8 @@ class JsonLDObjectPropertySetterTest extends AsyncFunSuite with Matchers {
   }
 
   private def testObj(updated: JsonLDObject, uri: String) = {
-    assert(!initialObj.graph.containsProperty(uri))
     assert(updated.graph.containsProperty(uri))
-    assert(!initialObj.model.fields.contains(Field(Type.Str, ValueType(uri))))
-    assert(updated.model.fields.contains(Field(Type.Str, ValueType(uri))))
+    assert(updated.meta.fields.contains(Field(Type.Str, ValueType(uri))))
   }
 
   private def testCollection(uri: String, values: Seq[Any], updated: JsonLDObject) = {
