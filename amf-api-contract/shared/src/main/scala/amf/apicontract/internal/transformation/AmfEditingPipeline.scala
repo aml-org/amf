@@ -4,6 +4,7 @@ import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.common.transformation.stage._
 import amf.apicontract.internal.transformation.stages.{
   ExtensionsResolutionStage,
+  UnionFlattenerStage,
   VirtualElementLexicalStage,
   WebApiReferenceResolutionStage
 }
@@ -25,6 +26,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
 
   override def steps: Seq[TransformationStep] = {
     Seq(
+      new UnionFlattenerStage(),
       references,
       new VirtualElementLexicalStage(profileName, keepEditingInfo = true),
       new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
