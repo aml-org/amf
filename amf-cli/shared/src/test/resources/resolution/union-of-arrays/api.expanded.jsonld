@@ -70,7 +70,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#8/link--602514775",
+                            "@id": "#7/link--602514775",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -80,7 +80,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#8"
+                                "@id": "#7"
                               }
                             ],
                             "doc:link-label": [
@@ -299,9 +299,6 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#5": "amf://id#5"
-          },
           "declared-element": {
             "#5": ""
           },
@@ -311,14 +308,11 @@
           },
           "type-property-lexical-info": {
             "#5": "[(8,4)-(8,8)]"
-          },
-          "resolved-link": {
-            "#5": "amf://id#7"
           }
         }
       },
       {
-        "@id": "#8",
+        "@id": "#7",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -328,7 +322,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#9",
+            "@id": "#8",
             "@type": [
               "raml-shapes:ArrayShape",
               "raml-shapes:AnyShape",
@@ -442,62 +436,39 @@
             ],
             "smaps": {
               "lexical": {
-                "#9": "[(10,15)-(10,17)]"
+                "#8": "[(10,15)-(10,17)]"
               }
             }
           },
           {
-            "@id": "#5",
+            "@id": "#9",
             "@type": [
-              "raml-shapes:ArrayShape",
-              "raml-shapes:AnyShape",
+              "raml-shapes:RecursiveShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "raml-shapes:items": [
+            "raml-shapes:fixPoint": [
               {
-                "@id": "#6",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#6": "[(8,10)-(8,18)]"
-                  }
-                }
+                "@id": "#8"
+              }
+            ],
+            "doc:recursive": [
+              {
+                "@value": false
               }
             ],
             "shacl:name": [
               {
-                "@value": "type2"
+                "@value": "default-recursion"
               }
             ],
             "smaps": {
-              "resolved-link-target": {
-                "#5": "amf://id#5"
-              },
-              "declared-element": {
-                "#5": ""
+              "synthesized-field": {
+                "doc:recursive": "true"
               },
               "lexical": {
-                "shacl:name": "[(7,2)-(7,7)]",
-                "#5": "[(7,2)-(9,0)]"
-              },
-              "type-property-lexical-info": {
-                "#5": "[(8,4)-(8,8)]"
-              },
-              "resolved-link": {
-                "#5": "amf://id#7"
+                "#9": "[(10,20)-(10,25)]"
               }
             }
           }
@@ -509,14 +480,14 @@
         ],
         "smaps": {
           "declared-element": {
-            "#8": ""
+            "#7": ""
           },
           "lexical": {
             "shacl:name": "[(9,2)-(9,11)]",
-            "#8": "[(9,2)-(11,0)]"
+            "#7": "[(9,2)-(11,0)]"
           },
           "type-property-lexical-info": {
-            "#8": "[(10,4)-(10,8)]"
+            "#7": "[(10,4)-(10,8)]"
           }
         }
       }
