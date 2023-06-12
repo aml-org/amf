@@ -11,6 +11,7 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.graphqlfederation.internal.spec.transformation.introspection.IntrospectionTypes._
 import amf.graphqlfederation.internal.spec.transformation.introspection.IntrospectionDirectives._
 import amf.shapes.client.scala.model.domain._
+import amf.core.internal.adoption.DefaultIdMaker
 
 import scala.collection.mutable
 
@@ -58,7 +59,15 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
         case _       => List(fieldSet, _service)
       }
     }
-    val directives = List(`@external`, `@requires`(fieldSet), `@provides`(fieldSet), `@key`(fieldSet), `@shareable`, `@inaccessible`, `@override`)
+    val directives = List(
+      `@external`,
+      `@requires`(fieldSet),
+      `@provides`(fieldSet),
+      `@key`(fieldSet),
+      `@shareable`,
+      `@inaccessible`,
+      `@override`
+    )
     doc.setArrayWithoutId(DocumentModel.Declares, doc.declares ++ types ++ directives)
   }
 
@@ -77,7 +86,7 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
   private def adopt(doc: Document, existing: List[DomainElement]): Document = {
     val entries: List[(String, DomainElement)]  = existing.map(x => x.id -> x)
     val skipped: mutable.Map[String, AmfObject] = mutable.Map(entries: _*)
-    new IdAdopter(doc, doc.id, skipped).adoptFromRelative()
+    new IdAdopter(doc, doc.id, new DefaultIdMaker(), skipped).adoptFromRelative()
     doc
   }
 
@@ -85,5 +94,6 @@ object IntrospectionElementsAdditionStep extends TransformationStep {
     case n: NodeShape if isEntity(n) => n
   }
 
-  private def isEntity(n: NodeShape): Boolean = n.keys.nonEmpty && n.keys.exists(_.isResolvable.value()) && !n.isAbstract.value()
+  private def isEntity(n: NodeShape): Boolean =
+    n.keys.nonEmpty && n.keys.exists(_.isResolvable.value()) && !n.isAbstract.value()
 }
