@@ -6,6 +6,7 @@ import amf.core.client.scala.model.document.{BaseUnit, FieldsFilter}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.UnionShape
+import amf.shapes.internal.domain.metamodel.UnionShapeModel.AnyOf
 
 class UnionFlattenerStage extends TransformationStep() {
   override def transform(
@@ -15,8 +16,11 @@ class UnionFlattenerStage extends TransformationStep() {
   ): BaseUnit = {
     model.iterator(fieldsFilter = FieldsFilter.All).foreach {
       case u: UnionShape =>
-        val newMembers = flattenedMembers(members = u.anyOf, Seq(u))
-        u.withAnyOf(newMembers)
+        if (u.anyOf.exists(_.isInstanceOf[UnionShape])) {
+          val newMembers  = flattenedMembers(members = u.anyOf, visited = Seq(u))
+          val annotations = u.fields.getValue(AnyOf).annotations
+          u.withAnyOf(newMembers, annotations)
+        }
       case _ => // ignore
     }
     model
