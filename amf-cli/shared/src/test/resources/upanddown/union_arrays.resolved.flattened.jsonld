@@ -35,7 +35,7 @@
           "@id": "#4"
         },
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "@type": [
@@ -107,7 +107,7 @@
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -118,7 +118,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "shacl:name": "PropertyNoArray",
@@ -128,10 +128,10 @@
         },
         "lexical": {
           "shacl:name": "[(10,2)-(10,17)]",
-          "#9": "[(10,2)-(13,39)]"
+          "#10": "[(10,2)-(13,39)]"
         },
         "declared-element": {
-          "#9": ""
+          "#10": ""
         }
       }
     },
@@ -165,7 +165,7 @@
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -178,7 +178,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#11"
+        "@id": "#12"
       },
       "shacl:minCount": 1,
       "shacl:name": "complex",
@@ -189,7 +189,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(12,14)-(13,39)]",
-          "#10": "[(12,6)-(13,39)]"
+          "#11": "[(12,6)-(13,39)]"
         }
       }
     },
@@ -216,7 +216,7 @@
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "raml-shapes:UnionShape",
         "raml-shapes:AnyShape",
@@ -226,25 +226,18 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#12"
+          "@id": "#13"
         },
         {
-          "@id": "#13"
+          "@id": "#14"
         },
         {
           "@id": "#1"
         }
       ],
-      "shacl:name": "complex",
       "smaps": {
-        "inherited-shapes": {
-          "#11": "amf://id#14"
-        },
         "lexical": {
-          "#11": "[(12,14)-(13,39)]"
-        },
-        "type-property-lexical-info": {
-          "#11": "[(13,8)-(13,12)]"
+          "#12": "[(13,8)-(13,39)]"
         }
       }
     },
@@ -262,7 +255,7 @@
           "@id": "#8"
         },
         {
-          "@id": "#8"
+          "@id": "#9"
         },
         {
           "@id": "#1"
@@ -272,26 +265,6 @@
       "smaps": {
         "lexical": {
           "#7": "[(9,8)-(10,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#12",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "smaps": {
-        "lexical": {
-          "#12": "[(13,14)-(13,20)]"
         }
       }
     },
@@ -306,12 +279,32 @@
       ],
       "shacl:datatype": [
         {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#13": "[(13,14)-(13,20)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
           "@id": "http://a.ml/vocabularies/shapes#number"
         }
       ],
       "smaps": {
         "lexical": {
-          "#13": "[(13,23)-(13,29)]"
+          "#14": "[(13,23)-(13,29)]"
         }
       }
     },
@@ -332,6 +325,26 @@
       "smaps": {
         "lexical": {
           "#8": "[(9,15)-(9,21)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#9": "[(9,24)-(9,30)]"
         }
       }
     }

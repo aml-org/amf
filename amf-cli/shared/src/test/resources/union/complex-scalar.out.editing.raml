@@ -5,9 +5,10 @@ types:
     anyOf:
       -
         type: string
+        description: some scalar with extra fields
+        example: a string
       -
-        type: object
-        (amf-recursive): amf://id#4
+        type: string
   ScalarType:
     type: string
     description: some scalar with extra fields
@@ -19,6 +20,7 @@ types:
         anyOf:
           -
             type: string
+            description: some scalar with extra fields
+            example: a string
           -
-            type: object
-            (amf-recursive): amf://id#4
+            type: string

@@ -35,7 +35,7 @@
           "@id": "#5"
         },
         {
-          "@id": "#8"
+          "@id": "#9"
         },
         {
           "@id": "#14"
@@ -107,7 +107,7 @@
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -118,7 +118,7 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "shacl:name": "UnionInProperty",
@@ -128,10 +128,10 @@
         },
         "lexical": {
           "shacl:name": "[(11,2)-(11,17)]",
-          "#8": "[(11,2)-(18,0)]"
+          "#9": "[(11,2)-(18,0)]"
         },
         "declared-element": {
-          "#8": ""
+          "#9": ""
         }
       }
     },
@@ -178,7 +178,7 @@
           "@id": "#7"
         },
         {
-          "@id": "#7"
+          "@id": "#8"
         },
         {
           "@id": "#1"
@@ -192,7 +192,7 @@
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -205,7 +205,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#10"
+        "@id": "#11"
       },
       "shacl:minCount": 1,
       "shacl:name": "complex",
@@ -216,7 +216,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(15,14)-(18,0)]",
-          "#9": "[(15,6)-(18,0)]"
+          "#10": "[(15,6)-(18,0)]"
         }
       }
     },
@@ -270,7 +270,27 @@
       }
     },
     {
-      "@id": "#10",
+      "@id": "#8",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#8": "[(9,20)-(9,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
       "@type": [
         "raml-shapes:UnionShape",
         "raml-shapes:AnyShape",
@@ -280,25 +300,18 @@
       ],
       "raml-shapes:anyOf": [
         {
-          "@id": "#11"
+          "@id": "#12"
         },
         {
           "@id": "#1"
         },
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
-      "shacl:name": "complex",
       "smaps": {
-        "inherited-shapes": {
-          "#10": "amf://id#13"
-        },
         "lexical": {
-          "#10": "[(15,14)-(18,0)]"
-        },
-        "type-property-lexical-info": {
-          "#10": "[(16,8)-(16,12)]"
+          "#11": "[(16,8)-(18,0)]"
         }
       }
     },
@@ -325,7 +338,7 @@
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -340,12 +353,12 @@
       ],
       "smaps": {
         "lexical": {
-          "#11": "[(16,14)-(16,20)]"
+          "#12": "[(16,14)-(16,20)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -360,7 +373,7 @@
       ],
       "smaps": {
         "lexical": {
-          "#12": "[(16,31)-(16,37)]"
+          "#13": "[(16,31)-(16,37)]"
         }
       }
     },
