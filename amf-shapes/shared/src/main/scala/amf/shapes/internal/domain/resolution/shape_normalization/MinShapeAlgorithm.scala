@@ -1238,7 +1238,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
             // if scalar is not a member of union.anyOf should throw violation
             // should extend to all shapes?
             false
-          case _ => true
+          case _ => baseProperty.range.id != superProperty.range.id
         }
 
       val newRange = if (shouldComputeMinRange) {
