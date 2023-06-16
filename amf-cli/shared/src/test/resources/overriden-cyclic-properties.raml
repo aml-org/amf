@@ -1,0 +1,15 @@
+#%RAML 1.0
+
+title: I am a title
+
+types:
+  Element:
+    type: object
+    properties:
+      extension?:
+        type: Extension[]
+  Extension:
+    type: Element
+    properties:
+      extension?:
+        type: Extension[]
