@@ -30,7 +30,7 @@ class UnionFlattenerStage extends TransformationStep() {
     members.flatMap {
       case u: UnionShape if visited.contains(u) =>
         Nil
-      case u: UnionShape =>
+      case u: UnionShape if !u.isLink =>
         flattenedMembers(u.anyOf, visited :+ u)
       case other =>
         Seq(other)

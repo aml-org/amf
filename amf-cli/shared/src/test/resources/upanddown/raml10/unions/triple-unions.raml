@@ -19,4 +19,5 @@ types:
     properties:
       complexArray: # PropertyShape with Range as an ArrayShape
         type: array # ArrayShape
+        # fixed in UnionFlattenerStage but with duplicated IDs
         items: Shape | number | string # UnionShape with the AnyShape and an UnionShape with the 2 ScalarShapes
