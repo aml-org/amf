@@ -37,7 +37,7 @@ private[resolution] class NormalizationContext(
           TransformationValidation,
           derivedShape.id,
           Some(ShapeModel.Inherits.value.iri()),
-          other.getMessage,
+          Option(other.getMessage()).getOrElse(other.toString),
           derivedShape.position(),
           derivedShape.location()
         )

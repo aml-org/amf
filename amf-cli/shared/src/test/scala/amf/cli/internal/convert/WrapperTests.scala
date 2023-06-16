@@ -17,7 +17,7 @@ import amf.core.client.platform.config.RenderOptions
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
-import amf.core.client.platform.parse.AMFParser.parseStartingPoint
+import amf.core.client.platform.parse.AMFParser.{parse, parseStartingPoint}
 import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
@@ -2147,6 +2147,18 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+
+  test("Stackoverflow in minShape with overriden cyclic properties") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path = "file://amf-cli/shared/src/test/resources/overriden-cyclic-properties.raml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+    }
+  }
 
 //
 //  // todo: move to common (file system)
