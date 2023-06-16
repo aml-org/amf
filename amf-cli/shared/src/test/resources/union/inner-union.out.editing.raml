@@ -2,13 +2,33 @@
 title: New API
 types:
   UnionType:
-    type: integer
+    anyOf:
+      -
+        anyOf:
+          -
+            type: string
+          -
+            type: boolean | nil
+      -
+        type: integer
   SomeType:
-    type: string
+    anyOf:
+      -
+        type: string
+      -
+        type: boolean | nil
   OtherType:
     type: boolean | nil
 /someEndpoint:
   post:
     body:
       application/json:
-        type: integer
+        anyOf:
+          -
+            anyOf:
+              -
+                type: string
+              -
+                type: boolean | nil
+          -
+            type: integer
