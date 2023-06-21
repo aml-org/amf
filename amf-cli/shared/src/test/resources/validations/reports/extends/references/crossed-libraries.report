@@ -10,13 +10,13 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/api.raml#/web-api/endpoint/%2Fendpoint2/get/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Range: [(7,16)-(7,29)]
-  Location: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/libs/base.raml
+  Range: [(14,19)-(14,23)]
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/libs/users.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'User'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/api.raml#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Range: [(13,14)-(13,27)]
-  Location: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/libs/base.raml
+  Range: [(20,19)-(20,23)]
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/references/crossed-libraries/libs/users.raml

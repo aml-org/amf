@@ -22,14 +22,6 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'inexistentTypeParameter'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/endpoint/%2Finexistent-reference-from-parameter/post/request/application%2Fjson/any/schema/unresolved
-  Property: 
-  Range: [(11,12)-(11,29)]
-  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
-
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitTypeInOptional'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/endpoint/%2Fmerged-inexistent-optional-explicit-reference/supportedOperation/put/request/application%2Fjson/any/schema/unresolved
@@ -38,9 +30,17 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'inexistentTypeParameter'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/endpoint/%2Finexistent-reference-from-parameter/post/request/application%2Fjson/any/schema/unresolved
+  Property: 
+  Range: [(18,21)-(18,44)]
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentTypeParameterOptional'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/endpoint/%2Fmerged-inexistent-optional-reference-from-parameter/supportedOperation/delete/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Range: [(19,12)-(19,37)]
-  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
+  Range: [(30,29)-(30,60)]
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml

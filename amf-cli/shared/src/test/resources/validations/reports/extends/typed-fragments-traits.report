@@ -14,17 +14,17 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait1.raml
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'inexistentTypeParameter'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/put/request/application%2Fjson/any/schema/unresolved
-  Property: 
-  Range: [(5,10)-(5,27)]
-  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait3.raml
-
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/application%2Fjson/any/schema/unresolved
   Property: 
   Range: [(5,10)-(5,32)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait2.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'inexistentTypeParameter'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/put/request/application%2Fjson/any/schema/unresolved
+  Property: 
+  Range: [(24,23)-(24,46)]
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml
