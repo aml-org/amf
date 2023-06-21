@@ -8,6 +8,7 @@ import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 
 object ParametrizedDeclarationParser {
@@ -46,9 +47,13 @@ case class ParametrizedDeclarationParser(
               .zipWithIndex
               .map { case (variableEntry, index) =>
                 val node = DataNodeParser(variableEntry.value).parse()
+                val annotations = variableEntry.value match {
+                  case m: MutRef if m.target.isDefined => Annotations(m.target.get)
+                  case value                           => Annotations(value)
+                }
                 VariableValue(variableEntry)
                   .withName(variableEntry.key)
-                  .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))
+                  .setWithoutId(VariableValueModel.Value, node, annotations)
               }
             declaration.setWithoutId(
               ParametrizedDeclarationModel.Variables,
