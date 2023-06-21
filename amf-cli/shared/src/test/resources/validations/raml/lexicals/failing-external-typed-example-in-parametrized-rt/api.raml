@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+resourceTypes:
+  MyRT:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<typeParam>>
+              example: <<exampleParam>>
+
+
+/endpoint:
+  type: { MyRT: { typeParam: !include type.raml, exampleParam: !include example.raml } }

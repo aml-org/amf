@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+resourceTypes:
+  MyRT:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include type.raml
+              example: !include example.json
+
+
+/endpoint:
+  type: MyRT

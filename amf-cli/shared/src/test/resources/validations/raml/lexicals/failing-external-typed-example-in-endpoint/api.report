@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/lexicals/failing-external-typed-example-in-endpoint/api.raml
+Profile: RAML 1.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /lastName expected type: String, found: Integer
+  Severity: Violation
+  Target: amf://id#8
+  Property: amf://id#8
+  Range: [(2,0)-(5,1)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/lexicals/failing-external-typed-example-in-endpoint/example.raml
