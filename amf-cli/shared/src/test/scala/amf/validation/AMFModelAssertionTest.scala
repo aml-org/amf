@@ -532,22 +532,22 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   // W-13595824
-  test("cycling raml with 3+ unions should flatten union members") {
+  test("transforming raml with 3+ unions should flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/upanddown/raml10/unions/triple-unions.raml"
     ramlClient.parse(api) flatMap { parseResult =>
-      val parseBU           = parseResult.baseUnit
-      val transformBU       = ramlClient.transform(parseBU, pipeline = PipelineId.Editing).baseUnit
-      val parseDeclarations = getDeclarations(transformBU)
+      val parseBU      = parseResult.baseUnit
+      val transformBU  = ramlClient.transform(parseBU, pipeline = PipelineId.Editing).baseUnit
+      val declarations = getDeclarations(transformBU)
 
-      val unionInArray      = parseDeclarations(1).asInstanceOf[ArrayShape]
+      val unionInArray      = declarations(1).asInstanceOf[ArrayShape]
       val unionInArrayUnion = unionInArray.items.asInstanceOf[UnionShape]
 
-      val unionInProperty = parseDeclarations(2).asInstanceOf[NodeShape]
+      val unionInProperty = declarations(2).asInstanceOf[NodeShape]
       val complexProperty = unionInProperty.properties.head
       val complexRange    = complexProperty.range
       val complexUnion    = complexRange.asInstanceOf[UnionShape]
 
-      val unionInArrayProperty = parseDeclarations(3).asInstanceOf[NodeShape]
+      val unionInArrayProperty = declarations(3).asInstanceOf[NodeShape]
       val complexArrayProperty = unionInArrayProperty.properties.head
       val complexArrayRange    = complexArrayProperty.range
       val complexArrayUnion    = complexArrayRange.asInstanceOf[ArrayShape].items.asInstanceOf[UnionShape]
@@ -559,23 +559,38 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   // W-13595824
-  test("cycling raml with nested UnionShapes should NOT flatten union members") {
+  test("transforming raml with nested UnionShapes should NOT flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/union/inner-union.raml"
     ramlClient.parse(api) flatMap { parseResult =>
-      val transformBU       = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
-      val parseDeclarations = getDeclarations(transformBU)
+      val transformBU  = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
+      val declarations = getDeclarations(transformBU)
 
       // in parsing they are an union that inherits an union with anyOf of a ScalarShape and an UnionShape with link-target to the next Union (SomeType, OtherType)
-      val unionType = parseDeclarations.head.asInstanceOf[UnionShape]
-      val someType  = parseDeclarations(1).asInstanceOf[UnionShape]
+      val unionType = declarations.head.asInstanceOf[UnionShape]
+      val someType  = declarations(1).asInstanceOf[UnionShape]
 
       // in parsing it's an union that inherits an union with scalar and nil shape
-      val otherType = parseDeclarations(2).asInstanceOf[UnionShape]
+      val otherType = declarations(2).asInstanceOf[UnionShape]
 
       // after transformation they all should be an Union with an anyOf with 2 members
       unionType.anyOf.length shouldBe 2
       someType.anyOf.length shouldBe 2
       otherType.anyOf.length shouldBe 2
+    }
+  }
+
+  // W-13595824
+  test("transforming raml with 3+ unions should NOT duplicate IDs when flattening members") {
+    val api = s"$basePath/raml/triple-union.raml"
+    ramlClient.parse(api) flatMap { parseResult =>
+      val transformBU          = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
+      val declarations         = getDeclarations(transformBU)
+      val unionInArrayProperty = declarations.last.asInstanceOf[NodeShape]
+      val complexArrayProperty = unionInArrayProperty.properties.head
+      val complexArrayRange    = complexArrayProperty.range
+      val complexArrayUnion    = complexArrayRange.asInstanceOf[ArrayShape].items.asInstanceOf[UnionShape]
+
+      complexArrayUnion.anyOf.map(_.id).distinct.length shouldBe 3
     }
   }
 }
