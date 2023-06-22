@@ -19,7 +19,7 @@ class UnionFlattenerStage extends TransformationStep() {
         if (u.anyOf.exists(_.isInstanceOf[UnionShape])) {
           val newMembers  = flattenedMembers(members = u.anyOf, visited = Seq(u))
           val annotations = u.fields.getValue(AnyOf).annotations
-          u.withAnyOf(newMembers, annotations)
+          u.setArrayWithoutId(AnyOf, newMembers, annotations)
         }
       case _ => // ignore
     }
