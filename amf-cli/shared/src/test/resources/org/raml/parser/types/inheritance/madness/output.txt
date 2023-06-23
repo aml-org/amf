@@ -32,23 +32,21 @@ types:
           discriminator:
             type: string
       -
-        anyOf:
-          -
-            properties:
-              claw:
-                type: string
-              livesInside:
-                type: boolean
-              discriminator:
-                type: string
-          -
-            properties:
-              feathers:
-                type: string
-              livesInside:
-                type: boolean
-              discriminator:
-                type: string
+        properties:
+          claw:
+            type: string
+          livesInside:
+            type: boolean
+          discriminator:
+            type: string
+      -
+        properties:
+          feathers:
+            type: string
+          livesInside:
+            type: boolean
+          discriminator:
+            type: string
       -
         properties:
           bite:
@@ -58,20 +56,18 @@ types:
           discriminator:
             type: string
       -
-        anyOf:
-          -
-            properties:
-              claw:
-                type: string
-              livesOutside:
-                type: boolean
-              discriminator:
-                type: string
-          -
-            properties:
-              feathers:
-                type: string
-              livesOutside:
-                type: boolean
-              discriminator:
-                type: string
+        properties:
+          claw:
+            type: string
+          livesOutside:
+            type: boolean
+          discriminator:
+            type: string
+      -
+        properties:
+          feathers:
+            type: string
+          livesOutside:
+            type: boolean
+          discriminator:
+            type: string
