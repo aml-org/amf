@@ -686,7 +686,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     case _                                                                     => false
   }
 
+  private def areSameShape(child: Shape, parent: Shape): Boolean = child.id == parent.id && child.id != null
   def computeMinShape(child: Shape, parent: Shape): Shape = {
+    if(areSameShape(child, parent)) return child
+
     val parentCopy = parent.copyShape()
     val childClone = child.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
 

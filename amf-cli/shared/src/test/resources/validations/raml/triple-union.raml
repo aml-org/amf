@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test
+
+types:
+  Shape: any # AnyShape
+
+  UnionInArrayProperty: # NodeShape
+    properties:
+      complexArray: # PropertyShape with Range as an ArrayShape
+        type: array # ArrayShape
+        items: Shape | number | string # UnionShape with the AnyShape and an UnionShape with the 2 ScalarShapes
