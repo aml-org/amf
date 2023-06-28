@@ -2179,6 +2179,18 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("NPE in minShape with baseUnion with empty anyOf involved in inheritance") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path = "file://amf-cli/shared/src/test/resources/base-union-empty-anyof.raml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+    }
+  }
+
 //
 //  // todo: move to common (file system)
   def getAbsolutePath(path: String): String

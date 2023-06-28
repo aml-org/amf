@@ -688,7 +688,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
   private def areSameShape(child: Shape, parent: Shape): Boolean = child.id == parent.id && child.id != null
   def computeMinShape(child: Shape, parent: Shape): Shape = {
-    if(areSameShape(child, parent)) return child
+    if (areSameShape(child, parent)) return child
 
     val parentCopy = parent.copyShape()
     val childClone = child.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
@@ -1069,7 +1069,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     baseUnion.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+      Option(baseUnion.fields.getValue(UnionShapeModel.AnyOf)) match {
+        case Some(value) => value.annotations
+        case None        => Annotations()
+      }
     )
 
     computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
