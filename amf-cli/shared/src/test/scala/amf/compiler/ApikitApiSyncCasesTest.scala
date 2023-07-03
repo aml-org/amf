@@ -1,15 +1,21 @@
 package amf.compiler
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.{AMFBaseUnitClient, APIConfiguration}
 import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.common.transform.PipelineId.{Cache, Editing}
+import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.internal.remote.Spec.{OAS20, OAS30, RAML10}
-import amf.core.internal.remote.{FileNotFound, Spec}
+import amf.core.internal.remote.{FileNotFound, Mimes, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.matchers.should.Matchers
+import scopt.Validation
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
@@ -101,6 +107,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
 
   // APIMF-3533
   private def getClient(loader: ResourceLoader, spec: Spec) = getConfig(loader, spec).baseUnitClient()
+
   private def getConfig(loader: ResourceLoader, spec: Spec) = {
     APIConfiguration
       .fromSpec(spec)
@@ -119,16 +126,73 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     }
   }
 
-  class URNResourceLoader(mappings: Map[String, String]) extends ResourceLoader {
+  test("Local oas references are found when returning different urls in fetched Content") {
+    val main = "resource::some-uuid:another-segment:3.0.2:oas:zip:api.yaml"
+    val loader = new UrnLoaderBuilder(s"$base/oas-reference-with-alias")
+      .addMapping(
+        main,
+        "jar:file:/.m2/repository/dc2c689a-8adc-4f44-9978-076a099c6a5a/another-segment/3.0.2/another-segment-3.0.2-oas.zip!/api-alias.yaml",
+        "api.yaml"
+      )
+      .build()
+    val client = getClient(loader, OAS30)
+    val payload =
+      """
+        |{
+        |  "payload": {
+        |    "components": [
+        |      {
+        |        "payload": {
+        |          "value": "Test"
+        |        }
+        |      }
+        |    ]
+        |  }
+        |}
+        |""".stripMargin
+    for {
+      parseResult <- client.parse(main)
+      parsed      = parseResult.baseUnit
+      transformed = client.transform(parsed, Cache).baseUnit
+      validator = getConfig(loader, OAS30)
+        .elementClient()
+        .payloadValidatorFor(
+          findRequestType("/v1/events", transformed),
+          Mimes.`application/json`,
+          ValidationMode.StrictValidationMode
+        )
+      result = validator.syncValidate(payload)
+    } yield {
+      result.conforms shouldBe true
+    }
+  }
+
+  private def findRequestType(endpoint: String, unit: BaseUnit): Shape = {
+    unit
+      .asInstanceOf[Document]
+      .encodes
+      .asInstanceOf[WebApi]
+      .endPoints
+      .find(_.path.option().contains(endpoint))
+      .get
+      .operations
+      .head
+      .request
+      .payloads
+      .head
+      .schema
+  }
+
+  class URNResourceLoader(mappings: Map[String, (String, String)]) extends ResourceLoader {
 
     override def fetch(resource: String): Future[Content] = {
       mappings
         .get(resource)
-        .map(url => {
+        .map { case (alias, url) =>
           platform
             .fetchContent(url, AMFGraphConfiguration.predefined())
-            .map(content => Content(content.stream, resource)) // content result url provided by resource loader
-        })
+            .map(content => Content(content.stream, alias)) // content result url provided by resource loader
+        }
         .getOrElse(throw FileNotFound(new RuntimeException(s"Couldn't find resource $resource")))
     }
 
@@ -137,11 +201,16 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
 
   class UrnLoaderBuilder(
       private val base: String,
-      private val internal: mutable.Map[String, String] = mutable.Map.empty[String, String]
+      private val internal: mutable.Map[String, (String, String)] = mutable.Map.empty[String, (String, String)]
   ) {
 
     def addMapping(urn: String, fs: String): this.type = {
-      internal.put(urn, s"$base/$fs")
+      internal.put(urn, (urn, s"$base/$fs"))
+      this
+    }
+
+    def addMapping(urn: String, alias: String, fs: String): this.type = {
+      internal.put(urn, (alias, s"$base/$fs"))
       this
     }
 
