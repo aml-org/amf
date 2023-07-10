@@ -1,16 +1,12 @@
 package amf.shapes.client.scala.render
 
-import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.core.client.scala.vocabulary.{Namespace, ValueType}
-import amf.core.internal.metamodel.{Obj, Type}
-import amf.core.internal.metamodel.Type.{ArrayLike, Scalar}
-import amf.core.internal.parser.domain.Value
+import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
 import org.mulesoft.common.client.lexical.Position
+import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 class JsonLDObjectRender(obj: JsonLDObject, syntaxProvider: SyntaxProvider) extends PartEmitter {
   override def emit(b: YDocument.PartBuilder): Unit = {
@@ -45,6 +41,7 @@ class JsonLDObjectRender(obj: JsonLDObject, syntaxProvider: SyntaxProvider) exte
       case s: String  => pb += s
       case i: Int     => pb += i
       case f: Float   => pb += f
+      case d: Double  => pb += d
       case b: Boolean => pb += b
       case _          => pb += YNode.Null
     }

@@ -41,6 +41,7 @@ case class JsonLDObject(
 
     def toBoolListField: Field = Field(Type.Array(Type.Bool), ValueType(property))
     def toFloatField: Field    = Field(Type.Float, ValueType(property))
+    def toDoubleField: Field   = Field(Type.Double, ValueType(property))
 
     def toFloatListField: Field = Field(Type.Array(Type.Float), ValueType(property))
   }
@@ -50,8 +51,8 @@ case class JsonLDObject(
   private def buildInteger(value: Int) = new JsonLDScalar(value, DataTypes.Integer)
 
   private def buildBoolean(value: Boolean) = new JsonLDScalar(value, DataTypes.Boolean)
-
-  private def buildFloat(value: Float) = new JsonLDScalar(value, DataTypes.Float)
+  private def buildFloat(value: Float)     = new JsonLDScalar(value, DataTypes.Float)
+  private def buildDouble(value: Double)   = new JsonLDScalar(value, DataTypes.Double)
 
   private def buildArray(values: Seq[JsonLDElement]) = JsonLDArray(values)
 
@@ -72,6 +73,9 @@ case class JsonLDObject(
 
   def withProperty(property: String, value: Float): JsonLDObject =
     updateModelAndSet(property.toFloatField, buildFloat(value))
+
+  def withProperty(property: String, value: Double): JsonLDObject =
+    updateModelAndSet(property.toDoubleField, buildDouble(value))
 
   def withProperty(property: String, value: Boolean): JsonLDObject =
     updateModelAndSet(property.toBoolField, buildBoolean(value))
@@ -101,7 +105,7 @@ case class JsonLDObject(
 
     // update fields
     fields.remove(property)
-    
+
     this
   }
 }
