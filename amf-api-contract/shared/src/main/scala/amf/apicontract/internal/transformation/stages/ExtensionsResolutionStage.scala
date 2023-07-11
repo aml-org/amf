@@ -17,7 +17,12 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.metamodel.Type.Scalar
 import amf.core.internal.metamodel.document.BaseUnitModel
-import amf.core.internal.metamodel.domain.common.{DescribedElementModel, DisplayNameField, NameFieldSchema, NameFieldShacl}
+import amf.core.internal.metamodel.domain.common.{
+  DescribedElementModel,
+  DisplayNameField,
+  NameFieldSchema,
+  NameFieldShacl
+}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.DotQualifiedNameExtractor
@@ -45,7 +50,8 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
         new OverlayResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, overlay, configuration)
       case extension: Extension =>
         new ExtensionResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, extension, configuration)
-      case _ => extendsStage.transform(model, errorHandler, configuration)
+      case _ =>
+        extendsStage.transform(model, errorHandler, configuration)
     }
     assignNewRoot(resolvedModel)
   }
