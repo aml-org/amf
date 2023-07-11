@@ -89,4 +89,8 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/http-with-hashtag/http-with-hashtag.json")
   }
 
+  test("Parse multiple flows") {
+    checkValid("security-schemes/multiple-flows.yaml")
+  }
+
 }
