@@ -18,6 +18,8 @@ object BaseUnitUtils {
 
   def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[Document].declares
 
+  def getReferences(bu: BaseUnit): Seq[BaseUnit] = bu.asInstanceOf[Document].references
+
   def getFirstDeclaration(bu: BaseUnit): DomainElement = getDeclarations(bu).head
 
   def getEndpoints(bu: BaseUnit, isWebApi: Boolean = true): Seq[EndPoint] = getApi(bu, isWebApi).endPoints

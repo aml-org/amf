@@ -1,6 +1,11 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain.templates.{
+  ParametrizedResourceType,
+  ParametrizedTrait,
+  ResourceType,
+  Trait
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.apicontract.internal.spec.common.emitter.{Raml10EndPointEmitter, Raml10OperationEmitter}
@@ -51,7 +56,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       .transform(model, configuration)
   }
 
-  class ExtendsResolution(
+  private class ExtendsResolution(
       profile: ProfileName,
       val keepEditingInfo: Boolean,
       val fromOverlay: Boolean = false,
@@ -61,17 +66,29 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
   )(implicit val errorHandler: AMFErrorHandler) {
 
     /** Default to raml10 context. */
-    def ctx(): RamlWebApiContext = profile match {
+    private def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
         new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfig(config, errorHandler)))
       case _ =>
         new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfig(config, errorHandler)))
     }
 
-    def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T =
-      model.transform(findExtendsPredicate, transform(model)(_, _, configuration)).asInstanceOf[T]
+    def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
 
-    def asEndPoint(
+      def findExtendsPredicate(element: DomainElement): Boolean = {
+        if (visited.contains(element.id) && !fromOverlay) true
+        else {
+          visited += element.id
+          element.isInstanceOf[EndPoint]
+        }
+      }
+
+      val extendsResolutionTransformation = transform(model)(_, _, configuration)
+
+      model.transform(findExtendsPredicate, extendsResolutionTransformation).asInstanceOf[T]
+    }
+
+    private def asEndPoint(
         r: ParametrizedResourceType,
         context: Context,
         apiContext: RamlWebApiContext,
@@ -85,7 +102,14 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
             apiContext.eh.violation(TransformationValidation, r.id, None, message, r.position(), r.location())
           )
           val extendsHelper =
-            ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, configuration, index, Some(apiContext))
+            ExtendsHelper(
+              profile,
+              keepEditingInfo = keepEditingInfo,
+              errorHandler,
+              configuration,
+              index,
+              Some(apiContext)
+            )
           val result = extendsHelper.asEndpoint(
             context.model,
             node,
@@ -97,12 +121,14 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           result
 
         case _ =>
-          apiContext.eh.violation(TransformationValidation,
-                                  r.id,
-                                  None,
-                                  s"Cannot find target for parametrized resource type ${r.id}",
-                                  r.position(),
-                                  r.location())
+          apiContext.eh.violation(
+            TransformationValidation,
+            r.id,
+            None,
+            s"Cannot find target for parametrized resource type ${r.id}",
+            r.position(),
+            r.location()
+          )
           ErrorEndPoint(r.id, r.annotations.find(classOf[SourceYPart]).map(_.ast).getOrElse(YNode.Null))
       }
     }
@@ -123,7 +149,6 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
         configuration: AMFGraphConfiguration
     ): ListBuffer[EndPoint] = {
       val result = ListBuffer[EndPoint]()
-
       collectResourceTypes(result, endpoint, context, apiContext, tree, configuration)
       result
     }
@@ -224,14 +249,6 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
     private def resourcePath(endPoint: EndPoint) =
       endPoint.path.option().map(_.replaceAll("\\{ext\\}", "")).getOrElse("")
-
-    private def findExtendsPredicate(element: DomainElement): Boolean = {
-      if (visited.contains(element.id) && !fromOverlay) true
-      else {
-        visited += element.id
-        element.isInstanceOf[EndPoint]
-      }
-    }
 
     case class Branches()(implicit extendsContext: RamlWebApiContext) {
       def apply(branches: Seq[Branch]): BranchContainer = BranchContainer(branches)
@@ -412,17 +429,17 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
         val node: YNode =
           element.annotations.find(classOf[SourceYPart]).map(_.ast).collectFirst({ case e: YMapEntry => e }) match {
             case Some(entry) => entry.value
-            case _           => astFromEmition
+            case _           => astFromEmission
           }
         ElementTree(rootKey, buildNode(node))
       }
 
-      protected def astFromEmition: YNode
+      protected def astFromEmission: YNode
       protected val rootKey: String
     }
 
     private case class EndPointTreeBuilder(endpoint: EndPoint) extends ElementTreeBuilder(endpoint) {
-      override protected def astFromEmition: YNode =
+      override protected def astFromEmission: YNode =
         YDocument(f =>
           f.obj(
             Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(
@@ -442,7 +459,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
     private case class OperationTreeBuilder(operation: Operation)(implicit errorHandler: IllegalTypeHandler)
         extends ElementTreeBuilder(operation) {
-      override protected def astFromEmition: YNode =
+      override protected def astFromEmission: YNode =
         YDocument(f => emitOperation(operation, f)).node
           .as[YMap]
           .entries
