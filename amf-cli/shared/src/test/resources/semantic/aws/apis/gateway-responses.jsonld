@@ -1,0 +1,127 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Integrations",
+      "core:description": "An API that reuses integrations",
+      "core:version": "1.0",
+      "apiContract:endpoint": [],
+      "aws:gatewayResponses": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element"
+        },
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element",
+      "@type": [
+        "aws:GatewayResponse",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/GatewayResponseNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:responseParameters": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element/element"
+        }
+      ],
+      "aws:responseTemplates": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element/_2/element"
+        }
+      ],
+      "aws:name": "DEFAULT_4XX"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element_1",
+      "@type": [
+        "aws:GatewayResponse",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/GatewayResponseNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:statusCode": "429",
+      "aws:responseTemplates": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element_1/_4/element"
+        }
+      ],
+      "aws:name": "INVALID_API_KEY"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element/element",
+      "@type": [
+        "aws:GatewayResponseParameter",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/GatewayResponseParameterNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:gatewayResponseParameter": "gatewayresponse.header.Access-Control-Allow-Origin",
+      "aws:requestParameter": "'domain.com'"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element/_2/element",
+      "@type": [
+        "aws:GatewayResponseTemplate",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/GatewayResponseTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:contentType": "application/json",
+      "aws:mappingTemplate": "{\"message\": test 4xx b }"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-gateway-responses/element_1/_4/element",
+      "@type": [
+        "aws:GatewayResponseTemplate",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/GatewayResponseTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:contentType": "application/json",
+      "aws:mappingTemplate": "{\"message\": test forbidden }"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/gateway-responses.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

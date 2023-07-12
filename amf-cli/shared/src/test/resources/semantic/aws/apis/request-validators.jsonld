@@ -1,0 +1,126 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "API",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fvalidation"
+        }
+      ],
+      "aws:requestValidators": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-request-validators/element"
+        },
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-request-validators/element_1"
+        }
+      ],
+      "aws:requestValidator": "basic"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fvalidation",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/validation",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fvalidation/supportedOperation/post"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-request-validators/element",
+      "@type": [
+        "aws:RequestValidator",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/RequestValidatorNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:validateRequestParameters": true,
+      "aws:name": "basic",
+      "aws:validateRequestBody": true
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-request-validators/element_1",
+      "@type": [
+        "aws:RequestValidator",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/RequestValidatorNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:validateRequestParameters": true,
+      "aws:name": "params-only",
+      "aws:validateRequestBody": false
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fvalidation/supportedOperation/post",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "post",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fvalidation/supportedOperation/post/returns/resp/200"
+        }
+      ],
+      "aws:requestValidator": "params-only"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fvalidation/supportedOperation/post/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "OK"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/request-validators.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

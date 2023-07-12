@@ -1,0 +1,73 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "API with nested semantic extensions",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [],
+      "apiContract:tag": [
+        {
+          "@id": "#/web-api/tag/tag/Owner"
+        },
+        {
+          "@id": "#/web-api/tag/tag/Prod"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/tag/tag/Owner",
+      "@type": [
+        "apiContract:Tag",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Owner",
+      "aws:tag": "Admin"
+    },
+    {
+      "@id": "#/web-api/tag/tag/Prod",
+      "@type": [
+        "apiContract:Tag",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Prod"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/tag.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

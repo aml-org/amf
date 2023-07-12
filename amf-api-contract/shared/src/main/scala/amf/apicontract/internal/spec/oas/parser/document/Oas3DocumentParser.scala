@@ -37,6 +37,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
   override def parseWebApi(map: YMap): WebApi = {
     YamlTagValidator.validate(root)
     val api = super.parseWebApi(map)
+    AnnotationParser(api, map).parseOrphanNode("components")
 
     map.key("consumes".asOasExtension, WebApiModel.Accepts in api)
     map.key("produces".asOasExtension, WebApiModel.ContentType in api)

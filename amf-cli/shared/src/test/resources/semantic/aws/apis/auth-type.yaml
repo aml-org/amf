@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: openapi3 for REST API
+  version: '1.0'
+paths:
+  "/protected-by-lambda-authorizer":
+    get:
+      responses:
+        '200':
+          description: Default response
+      security:
+        - myAuthorizer: []
+components:
+  securitySchemes:
+    myAuthorizer:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: Custom scheme with corporate claims
+

@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: openapi3 for REST API
+  version: '1.0'
+paths: {}
+x-amazon-apigateway-cors:
+  allowOrigins:
+    - https://www.example.com
+  allowCredentials: true
+  exposeHeaders:
+    - x-apigateway-header
+    - x-amz-date
+    - content-type
+  maxAge: 3600
+  allowMethods:
+    - GET
+    - OPTIONS
+    - POST
+  allowHeaders:
+    - x-apigateway-header
+    - x-amz-date
+    - content-type

@@ -1,0 +1,16 @@
+openapi: 3.0.0
+info:
+  title: Integrations
+  description: An API that reuses integrations
+  version: '1.0'
+paths: {}
+x-amazon-apigateway-gateway-responses:
+  DEFAULT_4XX:
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'domain.com'"
+    responseTemplates:
+      application/json: '{"message": test 4xx b }'
+  INVALID_API_KEY:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message": test forbidden }'
