@@ -1,7 +1,10 @@
 package amf.semantic
 
+import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.internal.parser.domain.Fields
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar, DomainElement}
 import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml10}
 import org.scalatest.funsuite.AsyncFunSuite
@@ -62,6 +65,38 @@ class SemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParseTes
       assertion.getOrElse(fail("Technology extension not found"))
     }
   }
+
+  test("Nested semex > Nesting without semex") {
+    val testDir = "nested-semex-1"
+    assertModel(s"$testDir/dialect.yaml", s"$testDir/api.yaml", Oas30) { doc =>
+      val webAPIExtensions = extensionsFrom(doc.encodes)
+      val childName = for {
+        parent <- webAPIExtensions.getValueAsOption("http://a.ml/vocab#parent")
+        child  <- parent.value.asInstanceOf[DomainElement].fields.getValueAsOption("http://a.ml/vocabularies/data#x-child")
+        childName <- child.value.asInstanceOf[DomainElement].fields.getValueAsOption("http://a.ml/vocabularies/data#name")
+      } yield {
+        childName.value.asInstanceOf[AmfScalar].toString
+      }
+      assert(childName.contains("Juan"))
+    }
+  }
+
+  test("Nested semex > Nesting with semex") {
+    val testDir = "nested-semex-2"
+    assertModel(s"$testDir/dialect.yaml", s"$testDir/api.yaml", Oas30) { doc =>
+      val webAPIExtensions = extensionsFrom(doc.encodes)
+      val childName = for {
+        parent <- webAPIExtensions.getValueAsOption("http://a.ml/vocab#parent")
+        child <- extensionsFrom(parent.value.asInstanceOf[DomainElement]).getValueAsOption("http://a.ml/vocab#child")
+        childName <- child.value.asInstanceOf[DomainElement].fields.getValueAsOption("http://a.ml/vocabularies/data#name")
+      } yield {
+        childName.value.asInstanceOf[AmfScalar].toString
+      }
+      assert(childName.contains("Juan"))
+    }
+  }
+
+  private def extensionsFrom(d: DomainElement): Fields = d.customDomainProperties.head.fields
 
   private def lookupOperation(document: Document) = {
     val extension =
