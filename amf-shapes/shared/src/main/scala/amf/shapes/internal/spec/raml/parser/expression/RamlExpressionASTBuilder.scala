@@ -73,15 +73,15 @@ private[expression] class RamlExpressionASTBuilder(
   }
 
   private def calculateAnyOf(previousShape: Shape, nextShape: Shape): Seq[Shape] = {
-    val atLeastOneIsDeclaredElement = linksToDeclaredElement(previousShape) || linksToDeclaredElement(nextShape)
-    if (atLeastOneIsDeclaredElement) return Seq(previousShape, nextShape)
     (previousShape, nextShape) match {
-      case (previousUnion: UnionShape, nextUnion: UnionShape) => previousUnion.anyOf ++ nextUnion.anyOf
-      case (_, union: UnionShape)                             => Seq(previousShape) ++ union.anyOf
-      case (union: UnionShape, _)                             => union.anyOf ++ Seq(nextShape)
+      case (previousUnion: UnionShape, nextUnion: UnionShape) => linkOrAnyOf(previousUnion) ++ linkOrAnyOf(nextUnion)
+      case (_, union: UnionShape)                             => Seq(previousShape) ++ linkOrAnyOf(union)
+      case (union: UnionShape, _)                             => linkOrAnyOf(union) ++ Seq(nextShape)
       case (_, _)                                             => Seq(previousShape, nextShape)
     }
   }
+
+  private def linkOrAnyOf(shape: UnionShape) = if (shape.isLink) List(shape) else shape.anyOf
 
   private def parseArray(token: Token, previous: Option[Shape]): Shape = {
     val array = ArrayShape()

@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: e-terminal-common
+
+types:
+  TestType1: object
+  TestType2: integer
+  TestType3: string
+
+traits:
+  myTrait:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<type-response-get>>
+
+/reprints:
+  post:
+    is: [ myTrait: {
+      type-response-get: TestType1 | TestType2 | TestType3
+    }]
