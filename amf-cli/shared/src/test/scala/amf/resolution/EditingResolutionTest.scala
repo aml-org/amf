@@ -1340,5 +1340,31 @@ class EditingResolutionTest extends ResolutionTest {
       )
   }
 
+  multiGoldenTest("Multiple unions shouldn't be nested with resource types", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/multiple-non-nested-unions-in-resource-types/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+  }
+
+  multiGoldenTest("Multiple unions shouldn't be nested with traits", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/multiple-non-nested-unions-in-traits/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+  }
+
   override val basePath: String = ""
 }
