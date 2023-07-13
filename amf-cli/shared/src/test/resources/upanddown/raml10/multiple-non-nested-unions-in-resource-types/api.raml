@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: asd
+
+types:
+  TestType1: object
+  TestType2: integer
+  TestType3: string
+
+resourceTypes:
+  item-resource:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<type-response-get>>
+
+/reprints:
+  type:
+    item-resource:
+      type-response-get: TestType1 | TestType2 | TestType3

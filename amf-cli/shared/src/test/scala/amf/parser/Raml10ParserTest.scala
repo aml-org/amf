@@ -77,4 +77,15 @@ class Raml10ParserTest extends FunSuiteCycleTests with Matchers {
     )
   }
 
+  multiGoldenTest("Multiple unions shouldn't be nested", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${basePath}multiple-non-nested-unions/",
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 }
