@@ -10,7 +10,6 @@ import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainPropert
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
-import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
@@ -34,7 +33,11 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
       case Some(orphanMapEntry) if orphanMapEntry.value.tagType == YType.Map =>
-        val extensions = parseExtensions(Some(element), orphanMapEntry.value.as[YMap])
+        val extensions = parseExtensions(
+          Some(element),
+          orphanMapEntry.value.as[YMap],
+          semanticParserBuilder = Some(ctx.extensionsFacadeBuilder)
+        )
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }

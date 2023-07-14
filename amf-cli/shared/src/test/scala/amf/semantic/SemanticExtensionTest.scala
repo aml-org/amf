@@ -2,6 +2,7 @@ package amf.semantic
 
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{AmfElement, AmfScalar, DomainElement}
 import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml10}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -44,11 +45,33 @@ class SemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParseTes
     }
   }
 
+  test("Apply SemEx to Info node on OAS API") {
+    val testDir = "info-object"
+    assertModel(s"$testDir/dialect.yaml", s"$testDir/api.yaml", Oas30) { doc =>
+      val assertion = for {
+        technologyNode <- findExtension[DomainElement](
+          doc.encodes,
+          "http://mycompany.org/extensions/cataloging#technologyObject"
+        )
+        technologyValue <- technologyNode.fields
+          .getValueAsOption("http://mycompany.org/extensions/cataloging#technology")
+          .map(_.value.asInstanceOf[AmfScalar].toString)
+      } yield {
+        technologyValue should be("ASD")
+      }
+      assertion.getOrElse(fail("Technology extension not found"))
+    }
+  }
+
   private def lookupOperation(document: Document) = {
     val extension =
       document.encodes.asInstanceOf[Api].endPoints.head.operations.head.customDomainProperties.head
 
     assertPaginationExtension(extension, 10)
+  }
+
+  private def findExtension[T <: AmfElement](d: DomainElement, extension: String) = {
+    d.customDomainProperties.head.fields.getValueAsOption(extension).map(_.value.asInstanceOf[T])
   }
 
   private def lookupEndpoint(document: Document) = {
