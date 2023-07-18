@@ -1,0 +1,42 @@
+#%Dialect 1.0
+dialect: Annotation mapping semex
+version: 1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  aml: http://a.ml/vocab#
+
+documents: { }
+
+annotationMappings:
+  DeclarationAnnotationMapping:
+    domain: apiContract.WebAPI
+    propertyTerm: aml.declarations
+    range: Declaration
+    mapKey: name
+
+nodeMappings:
+  Declaration:
+    classTerm: aml.Declaration
+    mapping:
+      name:
+        propertyTerm: aml.name
+        range: string
+      properties:
+        propertyTerm: aml.properties
+        range: Property
+        mapKey: name
+        mapValue: range
+
+  Property:
+    classTerm: aml.Property
+    mapping:
+      name:
+        propertyTerm: aml.name
+        range: string
+      range:
+        propertyTerm: aml.range
+        range: string
+
+extensions:
+  declarations: DeclarationAnnotationMapping
