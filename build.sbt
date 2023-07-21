@@ -80,6 +80,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-module.js",
     npmDependencies ++= npmDeps
   )
+  .settings(AutomaticModuleName.settings("amf.shapes"))
 
 lazy val shapesJVM =
   shapes.jvm
@@ -123,6 +124,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
     npmDependencies ++= npmDeps
   )
+  .settings(AutomaticModuleName.settings("amf.apicontract"))
 
 lazy val apiContractJVM =
   apiContract.jvm
@@ -164,6 +166,7 @@ lazy val antlr = crossProject(JSPlatform, JVMPlatform)
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-antlr-syntax.js",
     npmDependencies ++= npmDeps
   )
+  .settings(AutomaticModuleName.settings("amf.antlr"))
 
 lazy val antlrJVM =
   antlr.jvm
@@ -201,6 +204,7 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
 
     npmDependencies ++= npmDeps
   )
+  .settings(AutomaticModuleName.settings("amf.grpc"))
 
 lazy val grpcJVM =
   grpc.jvm
@@ -235,6 +239,7 @@ lazy val graphql = crossProject(JSPlatform, JVMPlatform)
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-graphql.js",
     npmDependencies ++= npmDeps
   )
+  .settings(AutomaticModuleName.settings("amf.graphql"))
 
 lazy val graphqlJVM =
   graphql.jvm
@@ -290,6 +295,7 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
     npmDependencies ++= npmDeps,
     jsDependencies += rdfLibJS / "shacl.js" % "test"
   )
+  .settings(AutomaticModuleName.settings("amf.cli"))
 //  .jsSettings(TypingGenerationSettings.settings: _*)
 
 lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm")).sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
