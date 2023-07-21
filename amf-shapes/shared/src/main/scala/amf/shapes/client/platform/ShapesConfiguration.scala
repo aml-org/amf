@@ -1,10 +1,10 @@
 package amf.shapes.client.platform
 
-import amf.aml.client.platform.model.document.Dialect
-import amf.aml.client.platform.model.document.DialectInstance
+import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
 import amf.aml.client.platform.{AMLBaseUnitClient, AMLConfigurationState}
 import amf.aml.client.scala.{AMLBaseUnitClient => InternalAMLBaseUnitClient}
 import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList}
+import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.execution.BaseExecutionEnvironment
@@ -140,6 +140,9 @@ class ShapesConfiguration private[amf] (private[amf] override val _internal: Int
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): ShapesConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): ShapesConfiguration =
+    _internal.withIdAdopterProvider(idAdopterProvider)
 }
 
 @JSExportAll

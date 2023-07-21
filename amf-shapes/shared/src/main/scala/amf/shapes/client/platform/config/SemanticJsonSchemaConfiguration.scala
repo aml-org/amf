@@ -3,6 +3,8 @@ package amf.shapes.client.platform.config
 import amf.aml.client.platform.AMLConfigurationState
 import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList}
+import amf.core.client.platform.AMFGraphConfiguration
+import amf.core.client.platform.adoption.{IdAdopter, IdAdopterProvider}
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.execution.BaseExecutionEnvironment
@@ -141,6 +143,9 @@ class SemanticJsonSchemaConfiguration private[amf] (
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): SemanticJsonSchemaConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): SemanticJsonSchemaConfiguration =
+    _internal.withIdAdopterProvider(idAdopterProvider)
 }
 
 @JSExportAll

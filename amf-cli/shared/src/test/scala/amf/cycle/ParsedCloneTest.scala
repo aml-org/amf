@@ -6,7 +6,6 @@ import amf.apicontract.client.scala.model.domain.templates.Trait
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.DeclaresModel
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.annotations.{ErrorDeclaration, TrackedElement}
 import amf.core.internal.remote.{AmfJsonHint, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
@@ -43,11 +42,12 @@ class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
 
   test("Test clone with tracked parameter at example") {
     val config = CycleConfig("security-scheme-fragment.raml", "", Raml10YamlHint, AmfJsonHint, basePath, None, None)
+    val configuration = buildConfig(None, None)
     for {
-      model <- build(config, buildConfig(None, None))
+      model <- build(config, configuration)
     } yield {
       val cloned = model.cloneUnit()
-      new IdAdopter(cloned, "http://fake.location.com#").adoptFromRoot()
+      configuration.idAdopterProvider.adoptFromRoot(cloned, "http://fake.location.com#")
 
       val param =
         cloned.asInstanceOf[SecuritySchemeFragment].encodes.headers.head

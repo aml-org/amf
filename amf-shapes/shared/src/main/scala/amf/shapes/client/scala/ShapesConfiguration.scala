@@ -6,6 +6,7 @@ import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.adoption.{DefaultIdAdopterProvider, IdAdopter, IdAdopterProvider}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -34,8 +35,9 @@ class ShapesConfiguration private[amf] (
     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
     override private[amf] val registry: AMLRegistry,
     override private[amf] val listeners: Set[AMFEventListener],
-    override private[amf] val options: AMFOptions
-) extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    override private[amf] val options: AMFOptions,
+    override private[amf] val idAdopterProvider: IdAdopterProvider
+) extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -44,9 +46,17 @@ class ShapesConfiguration private[amf] (
       errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
       registry: AMFRegistry = registry,
       listeners: Set[AMFEventListener] = listeners,
-      options: AMFOptions = options
+      options: AMFOptions = options,
+      idAdopterProvider: IdAdopterProvider
   ): ShapesConfiguration =
-    new ShapesConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
+    new ShapesConfiguration(
+      resolvers,
+      errorHandlerProvider,
+      registry.asInstanceOf[AMLRegistry],
+      listeners,
+      options,
+      idAdopterProvider
+    )
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): ShapesBaseUnitClient = new ShapesBaseUnitClient(this)
@@ -210,6 +220,9 @@ class ShapesConfiguration private[amf] (
     */
   override def forInstance(url: String): Future[ShapesConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): ShapesConfiguration =
+    super._withIdAdopterProvider(idAdopterProvider)
 }
 
 object ShapesConfiguration {
@@ -220,7 +233,8 @@ object ShapesConfiguration {
       DefaultErrorHandlerProvider,
       AMLRegistry.empty,
       Set.empty,
-      AMFOptions.default()
+      AMFOptions.default(),
+      new DefaultIdAdopterProvider()
     )
   }
 
@@ -235,7 +249,8 @@ object ShapesConfiguration {
         .withEntities(AMLEntities.entities)
         .withAnnotations(AMLSerializableAnnotations.annotations),
       predefinedAMLConfig.listeners,
-      predefinedAMLConfig.options
+      predefinedAMLConfig.options,
+      predefinedAMLConfig.idAdopterProvider
     ).withEntities(ShapeEntities.entities ++ coreEntities)
       .withAnnotations(ShapeSerializableAnnotations.annotations)
       .withPlugin(JsonSchemaShapePayloadValidationPlugin)
