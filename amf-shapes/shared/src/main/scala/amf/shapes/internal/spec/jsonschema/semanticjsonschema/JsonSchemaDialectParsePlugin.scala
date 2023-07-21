@@ -2,29 +2,25 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.common.{HighPriority, PluginPriority}
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument, UnspecifiedReference}
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchemaDialect, Mimes, Spec}
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
 import amf.shapes.internal.spec.common.JSONSchemaDraft201909SchemaVersion
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.ExceededMaxCombiningComplexity
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonLdSchemaContext
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference.SemanticContextReferenceHandler
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{
   DialectWrapper,
   SchemaTransformer,
   SchemaTransformerOptions
 }
-import amf.shapes.internal.transformation.stages.{ContextTransformationStage, SemanticContextResolver}
+import amf.shapes.internal.transformation.stages.SemanticContextResolver
 import org.yaml.model.YMap
 
 object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
@@ -47,7 +43,7 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
     val options = SchemaTransformerOptions.DEFAULT
     val newCtx  = context(ctx.copyWithSonsReferences().copy(refs = document.references))
     val parsed  = new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
-    new IdAdopter(parsed, document.location).adoptFromRelative()
+    ctx.config.idAdopterProvider.idAdopter(document.location).adoptFromRelative(parsed)
     // Evaluate the combining complexity of the Dialect: given the current behavior of AML, we need to generate all the possible mappings
     // that could be generated in an allOf. The result of this could be huge, so there is a parsing option to limit it.
     if (evaluateCombiningComplexity(parsed, ctx)) transformSchemaToDialect(document, ctx, options, parsed)

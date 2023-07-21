@@ -21,6 +21,8 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
+import amf.core.client.platform.adoption.{IdAdopter, IdAdopterProvider}
 import amf.core.client.platform.execution.BaseExecutionEnvironment
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
@@ -151,6 +153,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): AMFConfiguration =
+    _internal.withIdAdopterProvider(idAdopterProvider)
 }
 
 /** common configuration with all configurations needed for RAML like:
@@ -175,18 +180,16 @@ object RAMLConfiguration {
 @JSExportAll
 @JSExportTopLevel("OASConfiguration")
 object OASConfiguration {
-  def OAS20(): AMFConfiguration              = InternalOASConfiguration.OAS20()
-  def OAS30(): AMFConfiguration              = InternalOASConfiguration.OAS30()
-  def OAS30Component(): AMFConfiguration     = InternalOASConfiguration.OAS30Component()
+  def OAS20(): AMFConfiguration          = InternalOASConfiguration.OAS20()
+  def OAS30(): AMFConfiguration          = InternalOASConfiguration.OAS30()
+  def OAS30Component(): AMFConfiguration = InternalOASConfiguration.OAS30Component()
 
-  /**
-   * common configuration to parse OAS20 and OAS30 APIs
-   */
-  def OAS(): AMFConfiguration                = InternalOASConfiguration.OAS()
+  /** common configuration to parse OAS20 and OAS30 APIs
+    */
+  def OAS(): AMFConfiguration = InternalOASConfiguration.OAS()
 
-  /**
-   * common configuration to parse OAS30Component fragments
-   */
+  /** common configuration to parse OAS30Component fragments
+    */
   def OASComponent(): AMFConfiguration       = InternalOASConfiguration.OASComponent()
   def fromSpec(spec: Spec): AMFConfiguration = InternalOASConfiguration.fromSpec(spec)
 }

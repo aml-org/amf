@@ -4,6 +4,7 @@ import amf.aml.client.scala.AMLConfigurationState
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.adoption.{DefaultIdAdopterProvider, IdAdopter, IdAdopterProvider}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -28,8 +29,9 @@ class SemanticJsonSchemaConfiguration private[amf] (
     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
     override private[amf] val registry: AMLRegistry,
     override private[amf] val listeners: Set[AMFEventListener],
-    override private[amf] val options: AMFOptions
-) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    override private[amf] val options: AMFOptions,
+    override private[amf] val idAdopterProvider: IdAdopterProvider
+) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -38,14 +40,16 @@ class SemanticJsonSchemaConfiguration private[amf] (
       errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
       registry: AMFRegistry = registry,
       listeners: Set[AMFEventListener] = listeners,
-      options: AMFOptions = options
+      options: AMFOptions = options,
+      idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): SemanticJsonSchemaConfiguration =
     new SemanticJsonSchemaConfiguration(
       resolvers,
       errorHandlerProvider,
       registry.asInstanceOf[AMLRegistry],
       listeners,
-      options
+      options,
+      idAdopterProvider
     )
 
   /** Contains common AMF graph operations associated to documents */
@@ -207,6 +211,9 @@ class SemanticJsonSchemaConfiguration private[amf] (
     */
   override def forInstance(url: String): Future[SemanticJsonSchemaConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[SemanticJsonSchemaConfiguration])(getExecutionContext)
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): SemanticJsonSchemaConfiguration =
+    super._withIdAdopterProvider(idAdopterProvider)
 }
 
 object SemanticJsonSchemaConfiguration {
@@ -217,7 +224,8 @@ object SemanticJsonSchemaConfiguration {
       DefaultErrorHandlerProvider,
       AMLRegistry.empty,
       Set.empty,
-      AMFOptions.default()
+      AMFOptions.default(),
+      new DefaultIdAdopterProvider()
     )
   }
 
@@ -228,7 +236,8 @@ object SemanticJsonSchemaConfiguration {
       shapesConfig.errorHandlerProvider,
       shapesConfig.registry,
       shapesConfig.listeners,
-      shapesConfig.options
+      shapesConfig.options,
+      shapesConfig.idAdopterProvider
     ).withPlugin(JsonSchemaDialectParsePlugin)
   }
 }

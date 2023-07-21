@@ -14,7 +14,6 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.annotations._
 import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
@@ -85,7 +84,7 @@ case class ExtendsHelper(
         val operation = ctxForTrait.factory
           .operationParser(entry, id, true)
           .parse()
-        new IdAdopter(operation, extensionId + "/applied").adoptFromRelative()
+        ctx.wrapped.config.idAdopterProvider.idAdopter(extensionId + "/applied").adoptFromRelative(operation)
         operation
       }
     }
@@ -194,7 +193,7 @@ case class ExtendsHelper(
 
     collector.toList match {
       case element :: _ =>
-        new IdAdopter(element, extensionId + "/applied").adoptFromRelative()
+        ctx.wrapped.config.idAdopterProvider.idAdopter(extensionId + "/applied").adoptFromRelative(element)
         new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler, configuration)
       case Nil =>
         errorHandler.violation(
