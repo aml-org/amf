@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: API
+version: 1.0.0
+
+types:
+  RestrictedObject:
+    type: object
+    additionalProperties: false
+  MemberA:
+    type: RestrictedObject
+    properties:
+      a: string
+  MemberB:
+    type: RestrictedObject
+    properties:
+      b: string
+  Union:
+    type: MemberA | MemberB
+  Another:
+    type: object
+    properties:
+      another: string
+  Everything:
+    type: [Union, Another]
+    example:
+      a: a
+      another: another
