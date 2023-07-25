@@ -1,10 +1,8 @@
 package amf.shapes.internal.domain.resolution.shape_normalization
 
-import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
@@ -977,23 +975,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     prop
   }
 
-  object UnionErrorHandler extends AMFErrorHandler {
-
-    override def report(result: AMFValidationResult): Unit =
-      throw new Exception("raising exceptions in union processing")
-
-    def wrapContext(ctx: NormalizationContext): NormalizationContext = {
-      new NormalizationContext(
-        this,
-        ctx.keepEditingInfo,
-        ctx.profile,
-        ctx.resolvedInheritanceIndex
-      )
-    }
-  }
   private def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems =
       if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
         baseUnion.anyOf ++ superUnion.anyOf
@@ -1003,7 +986,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
           superUnionElement <- superUnion.anyOf
         } yield {
           try {
-            Some(unionContext.minShape(baseUnionElement, superUnionElement))
+            Some(context.minShape(baseUnionElement, superUnionElement))
           } catch {
             case _: Exception => None
           }
@@ -1053,9 +1036,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     }
 
   private def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems = baseUnion.anyOf.zipWithIndex.map { case (unionMember, idx) =>
-      val resolvedMember = unionContext.minShape(unionMember, superNode)
+      val resolvedMember = context.minShape(unionMember, superNode)
       val memberId       = s"${baseUnion.id}/$idx"
       resolvedMember.withId(memberId)
     }
@@ -1121,8 +1103,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
   }
 
   private def computeMinSuperUnion(child: Shape, parent: UnionShape): Shape = {
-    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    var newUnionItems                      = parent.anyOf
+    var newUnionItems = parent.anyOf
 
     parent.annotations.reject {
       case _: DeclaredElement     => true
@@ -1135,7 +1116,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         superUnionElement <- parent.anyOf
       } yield {
         try {
-          val newShape = unionContext.minShape(filterBaseShape(child), superUnionElement)
+          val newShape = context.minShape(filterBaseShape(child), superUnionElement)
           newShape.withId(superUnionElement.id)
           setValuesOfUnionElement(newShape, superUnionElement)
           Some(newShape)
