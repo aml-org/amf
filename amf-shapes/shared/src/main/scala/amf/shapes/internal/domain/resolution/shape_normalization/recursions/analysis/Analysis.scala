@@ -63,7 +63,7 @@ class Analysis(var listeners: Seq[AnalysisListener]) {
   }
 
   private def ifNotAnalyzed(shape: Shape)(fn: Shape => Unit): Unit = {
-    if (!alreadyAnalyzed.contains(shape)) {
+    if (!alreadyAnalyzed.contains(shape) || isAllowedMultipleTimesInStack(shape)) {
       fn(shape)
       alreadyAnalyzed = alreadyAnalyzed + shape
     }
