@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: API
+version: v1
+types:
+  Organisation:
+    additionalProperties: false
+    properties:
+      orgName: string
+
+  Person:
+    additionalProperties: false
+    properties:
+      personName: string
+
+  PersonProxy:
+    type: Person
+
+  Union:
+    type: PersonProxy | Organisation
+    properties:
+      email: string
+    example:
+      personName: Joe
+      email: joe@example.com

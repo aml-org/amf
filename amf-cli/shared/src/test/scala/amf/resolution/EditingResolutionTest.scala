@@ -1377,5 +1377,19 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Union combinatorial", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/union-combinatorial/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+
+  }
+
   override val basePath: String = ""
 }
