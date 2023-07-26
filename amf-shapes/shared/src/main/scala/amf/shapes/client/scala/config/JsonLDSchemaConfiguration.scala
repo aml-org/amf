@@ -3,6 +3,7 @@ package amf.shapes.client.scala.config
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.adoption.IdAdopterProvider
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -18,8 +19,8 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.shapes.client.scala.{JsonLDSchemaElementClient, ShapesConfiguration, ShapesElementClient}
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.{JsonLDSchemaElementClient, ShapesConfiguration}
 import amf.shapes.internal.convert.JsonLDSchemaRegister
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
 import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
@@ -33,8 +34,9 @@ class JsonLDSchemaConfiguration private[amf] (
     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
     override private[amf] val registry: AMLRegistry,
     override private[amf] val listeners: Set[AMFEventListener],
-    override private[amf] val options: AMFOptions
-) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    override private[amf] val options: AMFOptions,
+    override private[amf] val idAdopterProvider: IdAdopterProvider
+) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -43,14 +45,16 @@ class JsonLDSchemaConfiguration private[amf] (
       errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
       registry: AMFRegistry = registry,
       listeners: Set[AMFEventListener] = listeners,
-      options: AMFOptions = options
+      options: AMFOptions = options,
+      idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): JsonLDSchemaConfiguration =
     new JsonLDSchemaConfiguration(
       resolvers,
       errorHandlerProvider,
       registry.asInstanceOf[AMLRegistry],
       listeners,
-      options
+      options,
+      idAdopterProvider
     )
   override def baseUnitClient(): JsonLDSchemaConfigurationClient = new JsonLDSchemaConfigurationClient(this)
 
@@ -225,6 +229,9 @@ class JsonLDSchemaConfiguration private[amf] (
     */
   override def forInstance(url: String): Future[JsonLDSchemaConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[JsonLDSchemaConfiguration])(getExecutionContext)
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): JsonLDSchemaConfiguration =
+    super._withIdAdopterProvider(idAdopterProvider)
 }
 
 object JsonLDSchemaConfiguration {
@@ -236,7 +243,8 @@ object JsonLDSchemaConfiguration {
       base.errorHandlerProvider,
       base.registry,
       base.listeners,
-      base.options
+      base.options,
+      base.idAdopterProvider
     ).withTransformationPipeline(JsonLDSchemaEditingPipeline())
       .withPlugins(List(AMFJsonLDSchemaGraphRenderPlugin, AMFJsonLDSchemaGraphParsePlugin))
 

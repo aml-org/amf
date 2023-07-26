@@ -30,10 +30,8 @@ case class ParametrizedDeclarationParser(
             val declaration = fromStringNode(entry.key)
             declaration.add(Annotations(entry))
           case _ =>
-            val name = entry.key.as[YScalar].text
-            val declaration =
-              producer(name)
-                .add(Annotations(entry))
+            val name        = entry.key.as[YScalar].text
+            val declaration = producer(name).add(Annotations(entry))
             setName(declaration, name, entry.key)
             declaration.fields.setWithoutId(
               ParametrizedDeclarationModel.Target,

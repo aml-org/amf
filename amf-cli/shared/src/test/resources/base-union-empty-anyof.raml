@@ -1,0 +1,19 @@
+#%RAML 1.0
+
+title: something
+
+types:
+    superUnion:
+        type: string | number | nil
+    pivotType:
+        type: object
+        properties:
+            p1: string
+            p2:
+                type: object
+                properties:
+                    i1: string
+    baseUnion:
+        type: pivotType
+        properties:
+            p2: superUnion

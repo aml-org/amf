@@ -8,12 +8,12 @@ import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext,
 import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
 import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
 import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
+import amf.core.client.scala.adoption.IdAdopter
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, ScalarNode}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.datanode.{DataNodeEmitter, DataNodeParser}
 import amf.core.internal.parser._
@@ -136,8 +136,8 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     def getMerger: JsonMergePatch = AsyncJsonMergePatch()
 
     def adoptAndMerge(target: AmfObject, patch: AmfObject): AmfElement = {
-      new IdAdopter(target, "target").adoptFromRelative()
-      new IdAdopter(patch, "patch").adoptFromRelative()
+      new IdAdopter("target").adoptFromRelative(target)
+      new IdAdopter("patch").adoptFromRelative(patch)
       getMerger.merge(target, patch)
     }
 

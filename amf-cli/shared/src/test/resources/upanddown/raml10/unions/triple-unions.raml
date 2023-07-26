@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: test
+
+types:
+  Shape: any # AnyShape
+
+  UnionInArray: # ArrayShape
+    type: array
+    items: string | number | Shape # normal union shape (all in 1 level inside anyOf)
+
+  UnionInProperty: # NodeShape
+    properties:
+      # fixed in transformation
+      # doing complex: string | Shape | number works just fine, adding type: breaks it in parsing
+      complex: # PropertyShape with Range as an UnionShape
+        type: string | Shape | number # UnionShape with 0 anyOf members, and inherits an UnionShape with the 3 types
+
+  UnionInArrayProperty: # NodeShape
+    properties:
+      complexArray: # PropertyShape with Range as an ArrayShape
+        type: array # ArrayShape
+        # fixed in UnionFlattenerStage but with duplicated IDs
+        items: Shape | number | string # UnionShape with the AnyShape and an UnionShape with the 2 ScalarShapes

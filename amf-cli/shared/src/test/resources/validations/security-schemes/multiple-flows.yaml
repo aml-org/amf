@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: A
+  version: 1.1.1
+
+paths:
+  /claims:
+    patch:
+      operationId: a
+      responses:
+        "500":
+          description: a
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - oauth2:
+            - customerclaim:write:be
+            - customerclaim:write:fe
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://auth.com/as/token.oauth2'
+          scopes:
+            customerclaim:write:be:  write access for applications without authenticated user
+        authorizationCode:
+          tokenUrl: 'https://auth.com/as/token.oauth2'
+          authorizationUrl: 'https://auth.com/as/authorization.oauth2'
+          scopes:
+            customerclaim:write:fe:  write access with authenticated user

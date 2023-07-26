@@ -17,17 +17,13 @@ import amf.core.client.platform.config.RenderOptions
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
-import amf.core.client.platform.parse.AMFParser.parseStartingPoint
+import amf.core.client.platform.parse.AMFParser.{parse, parseStartingPoint}
 import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{
-  ArrayNode => InternalArrayNode,
-  ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
-}
+import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -2168,6 +2164,30 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         case _ => //
           fail("BaseUnit is not an EncodesModel")
       }
+    }
+  }
+
+  test("Stackoverflow in minShape with overriden cyclic properties") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path = "file://amf-cli/shared/src/test/resources/overriden-cyclic-properties.raml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+    }
+  }
+
+  test("NPE in minShape with baseUnion with empty anyOf involved in inheritance") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path = "file://amf-cli/shared/src/test/resources/base-union-empty-anyof.raml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
     }
   }
 

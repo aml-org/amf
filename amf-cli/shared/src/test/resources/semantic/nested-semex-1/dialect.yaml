@@ -1,0 +1,32 @@
+#%Dialect 1.0
+dialect: Nested semex
+version: 1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  aml: http://a.ml/vocab#
+
+documents: {}
+
+annotationMappings:
+  ParentAnnotationMapping:
+    domain: apiContract.WebAPI
+    propertyTerm: aml.parent
+    range:  ParentNodeMapping
+
+nodeMappings:
+  ParentNodeMapping:
+    classTerm: aml.Parent
+    mapping:
+      x-child:
+        range: ChildNodeMapping
+        mandatory: true
+  ChildNodeMapping:
+    classTerm: aml.Child
+    mapping:
+      name:
+        range: string
+        mandatory: true
+
+extensions:
+  parent: ParentAnnotationMapping

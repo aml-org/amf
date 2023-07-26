@@ -112,6 +112,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Test triple unions", "raml10/unions/triple-unions.resolved.%s") { config =>
+    cycle(
+      "raml10/unions/triple-unions.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      cyclePath,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   multiGoldenTest("Exchange issueNil API resolution to Amf", "api.resolved.%s") { config =>
     cycle(
       "api.raml",
@@ -1316,19 +1327,44 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("propagate Endpoint cookie parameters to Operations", "oas3-cookie-parameter-propagation.%s") {
+    config =>
+      cycle(
+        "oas3-cookie-parameter-propagation.yaml",
+        config.golden,
+        Oas30JsonHint,
+        target = AmfJsonHint,
+        directory = resolutionPath + "oas3-cookie-propagation/",
+        renderOptions = Some(config.renderOptions),
+        transformWith = Some(Oas30)
+      )
+  }
 
-  multiGoldenTest("propagate Endpoint cookie parameters to Operations", "oas3-cookie-parameter-propagation.%s") { config =>
+  multiGoldenTest("Multiple unions shouldn't be nested with resource types", "api.%s") { config =>
     cycle(
-      "oas3-cookie-parameter-propagation.yaml",
+      "api.raml",
       config.golden,
-      Oas30JsonHint,
-      target = AmfJsonHint,
-      directory = resolutionPath + "oas3-cookie-propagation/",
-      renderOptions = Some(config.renderOptions),
-      transformWith = Some(Oas30)
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/multiple-non-nested-unions-in-resource-types/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
     )
   }
 
+  multiGoldenTest("Multiple unions shouldn't be nested with traits", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/multiple-non-nested-unions-in-traits/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+  }
 
   override val basePath: String = ""
 }

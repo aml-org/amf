@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: API with nested semantic extensions
+  version: 1.0.0
+x-declarations:
+  declarationA:
+    properties:
+      propertyA1: string
+      propertyA2: string
+  declarationB:
+    properties:
+      propertyB1: integer
+      propertyB2: integer
+paths: { }

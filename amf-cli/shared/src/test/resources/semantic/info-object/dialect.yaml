@@ -1,0 +1,33 @@
+#%Dialect 1.0
+dialect: Info
+version: 1.1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  cataloging: http://mycompany.org/extensions/cataloging#
+
+documents: {}
+
+annotationMappings:
+
+  TechnologyAnnotation:
+    domain: apiContract.WebAPI
+    propertyTerm: cataloging.technologyObject
+    range:  TechnologyNode
+
+
+nodeMappings:
+  TechnologyNode:
+    classTerm: cataloging.TechnologyNode
+    mapping:
+      technology:
+        propertyTerm: cataloging.technology
+        range: string
+        mandatory: true
+        enum:
+          - ASD
+          - ASD1
+          - ASD2
+
+extensions:
+  technology: TechnologyAnnotation

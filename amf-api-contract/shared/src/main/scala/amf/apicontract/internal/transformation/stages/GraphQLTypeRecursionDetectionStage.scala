@@ -6,7 +6,6 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{NamedDomainElement, RecursiveShape, Shape}
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -139,7 +138,7 @@ case class GraphQLTypeRecursionDetectionStage() extends TransformationStep() wit
         d.declares.filterType[Shape].foreach { shape =>
           traverse(shape)(errorHandler)
         }
-        new IdAdopter(model, model.id).adoptFromRoot()
+        configuration.idAdopterProvider.adoptFromRoot(model, model.id)
         model
       case _ => model
     }

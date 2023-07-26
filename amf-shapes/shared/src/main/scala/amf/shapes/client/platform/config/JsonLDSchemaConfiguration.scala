@@ -1,23 +1,19 @@
 package amf.shapes.client.platform.config
 
 import amf.aml.client.platform.model.document.Dialect
-import amf.core.client.platform.AMFGraphElementClient
-import amf.core.client.platform.config.AMFEventListener
+import amf.core.client.platform.adoption.IdAdopterProvider
+import amf.core.client.platform.config._
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.execution.ExecutionEnvironment
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.scala.transform._
-import amf.core.client.platform.config._
-import amf.core.internal.convert.CoreClientConverters.ClientFuture
-import amf.shapes.client.platform.{BaseShapesConfiguration, JsonLDSchemaElementClient, ShapesConfiguration}
-import amf.shapes.client.scala.config.{
-  JsonLDSchemaConfiguration => InternalJsonLDSchemaDocumentConfiguration,
-  JsonLDSchemaConfigurationClient => InternalJsonLDSchemaConfigurationClient
-}
-import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.core.internal.convert.ClientErrorHandlerConverter._
+import amf.core.internal.convert.CoreClientConverters.ClientFuture
 import amf.shapes.client.platform.model.document.JsonSchemaDocument
+import amf.shapes.client.platform.{BaseShapesConfiguration, JsonLDSchemaElementClient, ShapesConfiguration}
+import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration => InternalJsonLDSchemaDocumentConfiguration}
+import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -82,6 +78,8 @@ class JsonLDSchemaConfiguration private[amf] (
 
   def forInstance(url: String): ClientFuture[JsonLDSchemaConfiguration] = _internal.forInstance(url).asClient
 
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): JsonLDSchemaConfiguration =
+    _internal.withIdAdopterProvider(idAdopterProvider)
 }
 @JSExportAll
 @JSExportTopLevel("JsonLDSchemaConfiguration")

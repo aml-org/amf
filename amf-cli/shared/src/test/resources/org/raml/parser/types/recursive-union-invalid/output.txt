@@ -6,23 +6,21 @@ types:
       -
         type: object
       -
-        anyOf:
-          -
-            items:
-              anyOf:
-                -
-                  type: object
-                -
-                  type: object
-                  (amf-recursive): amf://id#3
-          -
-            items:
-              anyOf:
-                -
-                  type: object
-                -
-                  type: object
-                  (amf-recursive): amf://id#3
+        items:
+          anyOf:
+            -
+              type: object
+            -
+              type: object
+              (amf-recursive): amf://id#6
+      -
+        items:
+          anyOf:
+            -
+              type: object
+            -
+              type: object
+              (amf-recursive): amf://id#6
   SomeUnion:
     anyOf:
       -
@@ -32,7 +30,7 @@ types:
               type: object
             -
               type: object
-              (amf-recursive): amf://id#3
+              (amf-recursive): amf://id#6
       -
         items:
           anyOf:
@@ -40,18 +38,18 @@ types:
               type: object
             -
               type: object
-              (amf-recursive): amf://id#3
+              (amf-recursive): amf://id#6
   AnotherType:
     anyOf:
       -
         type: object
       -
         type: object
-        (amf-recursive): amf://id#3
+        (amf-recursive): amf://id#6
   OneMoreType:
     anyOf:
       -
         type: object
       -
         type: object
-        (amf-recursive): amf://id#3
+        (amf-recursive): amf://id#6

@@ -87,7 +87,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
         scheme.scheme.settings match {
           case se: OAuth2Settings =>
             scopes.foreach(s => {
-              if (!isValidScope(se.flows.headOption, s)) {
+              if (!isValidScope(se.flows, s)) {
                 ctx.eh.violation(
                   UnknownScopeErrorSpecification,
                   s,
@@ -121,8 +121,8 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       }
     }
 
-    private def isValidScope(maybeFlow: Option[OAuth2Flow], scope: Scope): Boolean =
-      maybeFlow.exists(flow => flow.scopes.nonEmpty && flow.scopes.map(_.name.value()).contains(scope.name.value()))
+    private def isValidScope(flows: Seq[OAuth2Flow], scope: Scope): Boolean =
+      flows.exists(flow => flow.scopes.nonEmpty && flow.scopes.map(_.name.value()).contains(scope.name.value()))
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
       ctx.declarations.findSecurityScheme(name, SearchScope.All) match {

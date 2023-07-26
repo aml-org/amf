@@ -300,4 +300,8 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/api-referencing-draft-6.raml")
   }
 
+  test("Multiple inheritance with object and union") {
+    checkValid("/raml/multiple-inheritance-object-union.raml")
+  }
+
 }

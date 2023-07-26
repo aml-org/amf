@@ -2,16 +2,10 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.annotations.{
-  DeclaredElement,
-  Inferred,
-  InheritanceProvenance,
-  LexicalInformation,
-  ResolvedInheritance
-}
+import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
@@ -686,7 +680,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     case _                                                                     => false
   }
 
+  private def areSameShape(child: Shape, parent: Shape): Boolean = child.id == parent.id && child.id != null
   def computeMinShape(child: Shape, parent: Shape): Shape = {
+    if (areSameShape(child, parent)) return child
+
     val parentCopy = parent.copyShape()
     val childClone = child.cloneElement(mutable.Map.empty).asInstanceOf[Shape] // this is destructive, we need to clone
 
@@ -1057,16 +1054,19 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
 
   private def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
-    val newUnionItems = for {
-      baseUnionElement <- baseUnion.anyOf
-    } yield {
-      unionContext.minShape(baseUnionElement, superNode)
+    val newUnionItems = baseUnion.anyOf.zipWithIndex.map { case (unionMember, idx) =>
+      val resolvedMember = unionContext.minShape(unionMember, superNode)
+      val memberId       = s"${baseUnion.id}/$idx"
+      resolvedMember.withId(memberId)
     }
 
     baseUnion.fields.setWithoutId(
       UnionShapeModel.AnyOf,
       AmfArray(newUnionItems),
-      baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations
+      Option(baseUnion.fields.getValue(UnionShapeModel.AnyOf)) match {
+        case Some(value) => value.annotations
+        case None        => Annotations()
+      }
     )
 
     computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))

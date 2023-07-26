@@ -24,6 +24,7 @@ import amf.apicontract.internal.validation.shacl.{APIShaclModelValidationPlugin,
 import amf.core.client.common.validation.ProfileNames
 import amf.core.client.common.validation.ProfileNames._
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.adoption.IdAdopterProvider
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -71,7 +72,8 @@ trait APIConfigurationBuilder {
           APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations
         ),
       configuration.listeners,
-      configuration.options
+      configuration.options,
+      configuration.idAdopterProvider
     ).withPlugins(
       List(
         JsonSchemaShapePayloadValidationPlugin
@@ -346,8 +348,9 @@ class AMFConfiguration private[amf] (
     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
     override private[amf] val registry: AMLRegistry,
     override private[amf] val listeners: Set[AMFEventListener],
-    override private[amf] val options: AMFOptions
-) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    override private[amf] val options: AMFOptions,
+    override private[amf] val idAdopterProvider: IdAdopterProvider
+) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
@@ -511,14 +514,25 @@ class AMFConfiguration private[amf] (
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): AMFConfiguration =
+    super._withIdAdopterProvider(idAdopterProvider)
+
   override protected[amf] def copy(
       resolvers: AMFResolvers,
       errorHandlerProvider: ErrorHandlerProvider,
       registry: AMFRegistry,
       listeners: Set[AMFEventListener],
-      options: AMFOptions
+      options: AMFOptions,
+      idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): AMFConfiguration =
-    new AMFConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
+    new AMFConfiguration(
+      resolvers,
+      errorHandlerProvider,
+      registry.asInstanceOf[AMLRegistry],
+      listeners,
+      options,
+      idAdopterProvider
+    )
 }
 
 object ConfigurationAdapter extends APIConfigurationBuilder {
