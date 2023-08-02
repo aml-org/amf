@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -1311,13 +1311,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api#/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api#/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1330,7 +1330,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api#/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#endpoint"
@@ -1343,10 +1343,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api#/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-types.json#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

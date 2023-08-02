@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "/web-api",
+        "@id": "#/web-api",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -713,16 +713,16 @@
         ],
         "sourcemaps:sources": [
           {
-            "@id": "/web-api#/source-map",
+            "@id": "#/web-api/source-map",
             "@type": [
               "sourcemaps:SourceMap"
             ],
             "sourcemaps:lexical": [
               {
-                "@id": "/web-api#/source-map/lexical/element_1",
+                "@id": "#/web-api/source-map/lexical/element_1",
                 "sourcemaps:element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api"
                   }
                 ],
                 "sourcemaps:value": [
@@ -732,7 +732,7 @@
                 ]
               },
               {
-                "@id": "/web-api#/source-map/lexical/element_0",
+                "@id": "#/web-api/source-map/lexical/element_0",
                 "sourcemaps:element": [
                   {
                     "@value": "core:name"
