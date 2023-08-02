@@ -44,11 +44,13 @@ class JsonLDScalarElementBuilder(
 
   private def getType = {
     dataType match {
-      case DataTypes.Number  => Type.Float
-      case DataTypes.Integer => Type.Int
-      case DataTypes.Boolean => Type.Bool
-      case DataTypes.Nil     => Type.Null
-      case _                 => Type.Str
+      case DataTypes.Number   => Type.Float
+      case DataTypes.Integer  => Type.Int
+      case DataTypes.Boolean  => Type.Bool
+      case DataTypes.Nil      => Type.Null
+      case DataTypes.Date     => Type.Date
+      case DataTypes.DateTime => Type.DateTime
+      case _                  => Type.Str
     }
   }
 }
