@@ -82,9 +82,9 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
   private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     spec match {
-      case Raml10.id | Raml08.id => ramlLinks(part)
-      case Oas20.id | Oas30.id   => oasLinks(part)
-      case JsonSchema.id         => oasLinks(part)
+      case Raml10.id | Raml08.id             => ramlLinks(part)
+      case Oas20.id | Oas30.id | AwsOas30.id => oasLinks(part)
+      case JsonSchema.id                     => oasLinks(part)
       case AsyncApi20.id =>
         oasLinks(part)
         ramlLinks(part)

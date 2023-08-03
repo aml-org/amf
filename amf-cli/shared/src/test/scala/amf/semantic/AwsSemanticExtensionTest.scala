@@ -1,7 +1,7 @@
 package amf.semantic
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Mimes, Oas30}
+import amf.core.internal.remote.{AwsOas30, Mimes}
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
@@ -27,7 +27,7 @@ class AwsSemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParse
     }
 
   protected def cycleAndAssertGoldenJsonLd(api: String): Future[Assertion] = {
-    val spec        = Oas30
+    val spec        = AwsOas30
     val dialectFile = "dialect.yaml"
     val goldenFile  = api.replace(".yaml", ".jsonld")
     for {
