@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "/web-api",
+      "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -98,7 +98,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/web-api"
+        "@id": "#/web-api"
       },
       "doc:root": true,
       "doc:processingData": {

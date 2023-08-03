@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 0.8"
     },
     {
-      "@id": "/web-api",
+      "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -25,7 +25,7 @@
       ],
       "sourcemaps:sources": [
         {
-          "@id": "/web-api#/source-map"
+          "@id": "#/web-api/source-map"
         }
       ]
     },
@@ -51,16 +51,16 @@
       ]
     },
     {
-      "@id": "/web-api#/source-map",
+      "@id": "#/web-api/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "/web-api#/source-map/lexical/element_1"
+          "@id": "#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "/web-api#/source-map/lexical/element_0"
+          "@id": "#/web-api/source-map/lexical/element_0"
         }
       ]
     },
@@ -117,12 +117,12 @@
       ]
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml/web-api",
+      "@id": "#/web-api/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
       "sourcemaps:value": "[(2,0)-(34,50)]"
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_0",
+      "@id": "#/web-api/source-map/lexical/element_0",
       "sourcemaps:element": "core:name",
       "sourcemaps:value": "[(2,0)-(3,0)]"
     },
@@ -587,7 +587,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/web-api"
+        "@id": "#/web-api"
       },
       "doc:root": true,
       "doc:processingData": {

@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "/web-api",
+      "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -31,7 +31,7 @@
       ],
       "sourcemaps:sources": [
         {
-          "@id": "/web-api#/source-map"
+          "@id": "#/web-api/source-map"
         }
       ]
     },
@@ -67,22 +67,22 @@
       ]
     },
     {
-      "@id": "/web-api#/source-map",
+      "@id": "#/web-api/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "/web-api#/source-map/lexical/element_3"
+          "@id": "#/web-api/source-map/lexical/element_3"
         },
         {
-          "@id": "/web-api#/source-map/lexical/element_1"
+          "@id": "#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "/web-api#/source-map/lexical/element_0"
+          "@id": "#/web-api/source-map/lexical/element_0"
         },
         {
-          "@id": "/web-api#/source-map/lexical/element_2"
+          "@id": "#/web-api/source-map/lexical/element_2"
         }
       ]
     },
@@ -136,23 +136,23 @@
       ]
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_3",
+      "@id": "#/web-api/source-map/lexical/element_3",
       "sourcemaps:element": "apiContract:server",
       "sourcemaps:value": "[(4,0)-(6,0)]"
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_1",
+      "@id": "#/web-api/source-map/lexical/element_1",
       "sourcemaps:element": "core:name",
       "sourcemaps:value": "[(2,0)-(3,0)]"
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_0",
+      "@id": "#/web-api/source-map/lexical/element_0",
       "sourcemaps:element": "core:version",
       "sourcemaps:value": "[(3,0)-(4,0)]"
     },
     {
-      "@id": "/web-api#/source-map/lexical/element_2",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml/web-api",
+      "@id": "#/web-api/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api",
       "sourcemaps:value": "[(2,0)-(21,0)]"
     },
     {
@@ -475,7 +475,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/web-api"
+        "@id": "#/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
