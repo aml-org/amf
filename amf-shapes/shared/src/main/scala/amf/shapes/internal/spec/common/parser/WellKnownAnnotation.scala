@@ -7,7 +7,7 @@ import scala.util.matching.Regex
   */
 object WellKnownAnnotation {
 
-  val ramlKnownAnnotations = Set(
+  val ramlKnownAnnotations: Set[String] = Set(
     "baseUriParameters",
     "termsOfService",
     "parameters",
@@ -50,7 +50,7 @@ object WellKnownAnnotation {
     "callbacks"
   )
 
-  val oasKnownAnnotations = Set(
+  val oasKnownAnnotations: Set[String] = Set(
     "baseUriParameters",
     "annotationTypes",
     "requestPayloads",
@@ -93,13 +93,18 @@ object WellKnownAnnotation {
     "examples"
   )
 
+  private val awsAnnotations = Set(
+    "amazon-apigateway-any-method"
+  )
+
   def resolveAnnotation(field: String): Option[String] = field match {
-    case ramlAnnotation(value) if !isWellKnown(ramlKnownAnnotations, value) => Some(value)
-    case oasAnnotation(value) if !isWellKnown(oasKnownAnnotations, value)   => Some(value)
-    case _                                                                  => None
+    case ramlAnnotation(value) if !isAmfAnnotation(ramlKnownAnnotations, value)                          => Some(value)
+    case oasAnnotation(value) if !isAmfAnnotation(oasKnownAnnotations, value) && !isAwsAnnotation(value) => Some(value)
+    case _                                                                                               => None
   }
 
-  private def isWellKnown(annotations: Set[String], value: String) =
+  private def isAwsAnnotation(value: String) = awsAnnotations.contains(value)
+  private def isAmfAnnotation(annotations: Set[String], value: String) =
     value.startsWith(amfPrefix) && annotations.contains(value.stripPrefix(amfPrefix))
 
   def isOasAnnotation(field: String): Boolean = field match {

@@ -14,13 +14,8 @@ external:
 documents: { }
 
 annotationMappings:
-  AnyMethodAnnotationMapping:
-    domain: apiContract.EndPoint
-    propertyTerm: aws.anyMethod
-    range: AnyMethodNodeMapping
-
   IntegrationAnnotationMapping:
-    domain: doc.DomainElement # apiContract.Operation & aws.AnyMethod
+    domain: apiContract.Operation
     propertyTerm: aws.integration
     range: IntegrationNodeMapping
 
@@ -111,13 +106,6 @@ annotationMappings:
 #    range: PolicyNodeMapping
 
 nodeMappings:
-  AnyMethodNodeMapping:
-    classTerm: aws.AnyMethod
-    mapping:
-      isDefaultRoute:
-        propertyTerm: aws.isDefaultRoute
-        range: boolean
-
   CorsNodeMapping:
     classTerm: aws.Cors
     mapping:
@@ -445,73 +433,73 @@ nodeMappings:
         range: string
 
   # Docs dot specify a schema, deducing it from examples
-#  PolicyNodeMapping:
-#    classTerm: aws.Policy
-#    mapping:
-#      Version:
-#        propertyTerm: aws.version
-#        range: string
-#      Statement:
-#        propertyTerm: aws.statement
-#        range: PolicyStatementNodeMapping
-#        allowMultiple: true
-#
-#  PolicyStatementNodeMapping:
-#    classTerm: aws.PolicyStatement
-#    mapping:
-#      Effect:
-#        propertyTerm: aws.effect
-#        range: string
-#      Principal:
-#        propertyTerm: aws.principal
-#        range: [ string, PrincipalValueNodeMapping ] # TODO cannot have unions of string | object
-#        mapKey: principalType
-#      Action:
-#        propertyTerm: aws.action
-#        range: string
-#      Resource:
-#        propertyTerm: aws.resource
-#        range: string
-#        allowMultiple: true
-#      Condition:
-#        propertyTerm: aws.condition
-#        range: ConditionNodeMapping
-#        mapKey: conditionName
-#        mapValue: conditionParameter # TODO mapValue does not work with objects
-#
-#    PrincipalValueNodeMapping:
-#      classTerm: aws.PrincipalValue
-#      mapping:
-#        principalType:
-#          propertyTerm: aws.principalType
-#          range: string
-#        principalValue:
-#          propertyTerm: aws.principalValue
-#          range: string
-#          allowMultiple: true
-#
-#    ConditionNodeMapping:
-#      classTerm: aws.Condition
-#      mapping:
-#        conditionName:
-#          propertyTerm: aws.conditionName
-#          range: string
-#        conditionParameter:
-#          propertyTerm: aws.conditionParameter
-#          range: string
-#          mapKey: parameterName
-#          mapValue: parameterValue
-#          allowMultiple: true
-#
-#    ConditionParameterNodeMapping:
-#      classTerm: aws.ConditionParameter
-#      mapping:
-#        parameterName:
-#          propertyTerm: aws.parameterName
-#          range: string
-#        parameterValue:
-#          propertyTerm: aws.parameterValue
-#          range: string
+  #  PolicyNodeMapping:
+  #    classTerm: aws.Policy
+  #    mapping:
+  #      Version:
+  #        propertyTerm: aws.version
+  #        range: string
+  #      Statement:
+  #        propertyTerm: aws.statement
+  #        range: PolicyStatementNodeMapping
+  #        allowMultiple: true
+  #
+  #  PolicyStatementNodeMapping:
+  #    classTerm: aws.PolicyStatement
+  #    mapping:
+  #      Effect:
+  #        propertyTerm: aws.effect
+  #        range: string
+  #      Principal:
+  #        propertyTerm: aws.principal
+  #        range: [ string, PrincipalValueNodeMapping ] # TODO cannot have unions of string | object
+  #        mapKey: principalType
+  #      Action:
+  #        propertyTerm: aws.action
+  #        range: string
+  #      Resource:
+  #        propertyTerm: aws.resource
+  #        range: string
+  #        allowMultiple: true
+  #      Condition:
+  #        propertyTerm: aws.condition
+  #        range: ConditionNodeMapping
+  #        mapKey: conditionName
+  #        mapValue: conditionParameter # TODO mapValue does not work with objects
+  #
+  #    PrincipalValueNodeMapping:
+  #      classTerm: aws.PrincipalValue
+  #      mapping:
+  #        principalType:
+  #          propertyTerm: aws.principalType
+  #          range: string
+  #        principalValue:
+  #          propertyTerm: aws.principalValue
+  #          range: string
+  #          allowMultiple: true
+  #
+  #    ConditionNodeMapping:
+  #      classTerm: aws.Condition
+  #      mapping:
+  #        conditionName:
+  #          propertyTerm: aws.conditionName
+  #          range: string
+  #        conditionParameter:
+  #          propertyTerm: aws.conditionParameter
+  #          range: string
+  #          mapKey: parameterName
+  #          mapValue: parameterValue
+  #          allowMultiple: true
+  #
+  #    ConditionParameterNodeMapping:
+  #      classTerm: aws.ConditionParameter
+  #      mapping:
+  #        parameterName:
+  #          propertyTerm: aws.parameterName
+  #          range: string
+  #        parameterValue:
+  #          propertyTerm: aws.parameterValue
+  #          range: string
 
 
 
@@ -529,7 +517,6 @@ nodeMappings:
         range: boolean
 
 extensions:
-  amazon-apigateway-any-method: AnyMethodAnnotationMapping
   amazon-apigateway-integration: IntegrationAnnotationMapping
   amazon-apigateway-request-validators: RequestValidatorsAnnotationMapping
   amazon-apigateway-integrations: IntegrationsAnnotationMapping

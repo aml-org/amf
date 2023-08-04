@@ -1,0 +1,145 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "API",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/{proxy+}",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "any",
+      "apiContract:expects": [
+        {
+          "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request"
+        }
+      ],
+      "apiContract:returns": [],
+      "aws:integration": {
+        "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/customDomainProperties/amazon-apigateway-integration/element"
+      }
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request",
+      "@type": [
+        "apiContract:Request",
+        "core:Request",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:uriParameter": [
+        {
+          "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request/uri%20parameter/parameter/path/proxy"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/customDomainProperties/amazon-apigateway-integration/element",
+      "@type": [
+        "aws:Integration",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/IntegrationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:type": "aws_proxy",
+      "aws:httpMethod": "POST",
+      "aws:uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:123456789012:function:TestSimpleProxy/invocations"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request/uri%20parameter/parameter/path/proxy",
+      "@type": [
+        "apiContract:Parameter",
+        "core:Parameter",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "proxy",
+      "apiContract:paramName": "proxy",
+      "apiContract:required": true,
+      "apiContract:style": "simple",
+      "apiContract:explode": false,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request/uri%20parameter/parameter/path/proxy/scalar/proxy"
+      }
+    },
+    {
+      "@id": "#/web-api/endpoint/%2F%7Bproxy%2B%7D/supportedOperation/any/expects/request/uri%20parameter/parameter/path/proxy/scalar/proxy",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "sh:Shape",
+        "raml-shapes:Shape",
+        "raml-doc:DomainElement"
+      ],
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sh:name": "proxy"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/integration-any-method.yaml",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

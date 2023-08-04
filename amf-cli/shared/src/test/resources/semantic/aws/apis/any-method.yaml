@@ -5,11 +5,10 @@ info:
 paths:
   "/{proxy+}":
     x-amazon-apigateway-any-method:
-      produces:
-        - application/json
       parameters:
         - name: proxy
           in: path
           required: true
-          type: string
+          schema:
+            type: string
       responses: {}
