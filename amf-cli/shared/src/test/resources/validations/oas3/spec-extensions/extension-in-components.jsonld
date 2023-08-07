@@ -42,6 +42,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/endpoint/%2Fpath"
         }
       ],
+      "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/extension": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/extension"
+        }
+      ],
       "smaps": {
         "lexical": {
           "http://a.ml/vocabularies/apiContract#endpoint": "[(6,0)-(16,0)]",
@@ -108,6 +116,31 @@
       }
     },
     {
+      "http://a.ml/vocabularies/core#extensionName": "extension",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#prop": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1/prop"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#prop": "[(18,4)-(18,15)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1": "[(18,0)-(18,15)]"
+        },
+        "orphan-oas-extension": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1": "components"
+        }
+      }
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/customDomainProperties/extension/object_1/prop",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
@@ -148,6 +181,30 @@
         "lexical": {
           "http://a.ml/vocabularies/apiContract#returns": "[(9,6)-(16,0)]",
           "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/endpoint/%2Fpath/supportedOperation/get": "[(8,4)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1/prop",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "value",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "prop",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-components.yaml#/web-api/customDomainProperties/extension/object_1/prop": "[(18,10)-(18,15)]"
         }
       }
     },

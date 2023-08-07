@@ -10,7 +10,7 @@
       "raml-doc:sourceSpec": "AWS OAS 3.0"
     },
     {
-      "@id": "/web-api",
+      "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -262,7 +262,7 @@
         "raml-doc:Unit"
       ],
       "raml-doc:encodes": {
-        "@id": "/web-api"
+        "@id": "#/web-api"
       },
       "raml-doc:root": true,
       "raml-doc:processingData": {

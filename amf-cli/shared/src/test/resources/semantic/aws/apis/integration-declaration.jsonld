@@ -10,18 +10,7 @@
       "raml-doc:sourceSpec": "AWS OAS 3.0"
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations",
-      "@type": [
-        "apiContract:DomainExtension",
-        "raml-doc:DomainElement"
-      ],
-      "core:extensionName": "amazon-apigateway-integrations",
-      "raml-doc:definedBy": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations"
-      }
-    },
-    {
-      "@id": "/web-api",
+      "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -52,13 +41,15 @@
       ]
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations",
+      "@id": "#/customDomainProperties/amazon-apigateway-integrations",
       "@type": [
-        "raml-doc:DomainProperty",
-        "rdf:Property",
+        "apiContract:DomainExtension",
         "raml-doc:DomainElement"
       ],
-      "core:name": "amazon-apigateway-integrations"
+      "core:extensionName": "amazon-apigateway-integrations",
+      "raml-doc:definedBy": {
+        "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations"
+      }
     },
     {
       "@id": "#/web-api/endpoint/%2F",
@@ -114,6 +105,15 @@
         "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2"
       },
       "core:name": "object_1"
+    },
+    {
+      "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations",
+      "@type": [
+        "raml-doc:DomainProperty",
+        "rdf:Property",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "amazon-apigateway-integrations"
     },
     {
       "@id": "#/web-api/endpoint/%2F/supportedOperation/get",
@@ -518,7 +518,7 @@
         "raml-doc:Unit"
       ],
       "raml-doc:encodes": {
-        "@id": "/web-api"
+        "@id": "#/web-api"
       },
       "raml-doc:root": true,
       "raml-doc:processingData": {
