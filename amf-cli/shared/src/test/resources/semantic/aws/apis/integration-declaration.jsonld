@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.8.2",
       "raml-doc:transformed": true,
-      "raml-doc:sourceSpec": "OAS 3.0"
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
     },
     {
       "@id": "#/customDomainProperties/amazon-apigateway-integrations",
@@ -18,23 +18,6 @@
       "core:extensionName": "amazon-apigateway-integrations",
       "raml-doc:definedBy": {
         "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations"
-      },
-      "raml-doc:extension": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1"
-      }
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1",
-      "@type": [
-        "apiContract:DomainExtension",
-        "raml-doc:DomainElement"
-      ],
-      "core:extensionName": "amazon-apigateway-integrations",
-      "raml-doc:definedBy": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/amazon-apigateway-integrations"
-      },
-      "raml-doc:extension": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1"
       }
     },
     {
@@ -58,6 +41,14 @@
         {
           "@id": "#/web-api/endpoint/%2Fcheckout"
         }
+      ],
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/integration-declaration.yaml#/web-api/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations"
+        }
       ]
     },
     {
@@ -68,45 +59,6 @@
         "raml-doc:DomainElement"
       ],
       "core:name": "amazon-apigateway-integrations"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:integration1": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1"
-      },
-      "data:integration2": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2"
-      },
-      "core:name": "object_1"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/amazon-apigateway-integrations",
-      "@type": [
-        "raml-doc:DomainProperty",
-        "rdf:Property",
-        "raml-doc:DomainElement"
-      ],
-      "core:name": "amazon-apigateway-integrations"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:integration1": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1"
-      },
-      "data:integration2": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2"
-      },
-      "core:name": "object_1"
     },
     {
       "@id": "#/web-api/endpoint/%2F",
@@ -148,100 +100,20 @@
       ]
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1",
+      "core:extensionName": "amazon-apigateway-integrations",
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "raml-doc:DomainElement"
       ],
-      "data:type": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/type"
+      "data:integration1": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1"
       },
-      "data:httpMethod": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/httpMethod"
+      "data:integration2": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2"
       },
-      "data:uri": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/uri"
-      },
-      "data:passthroughBehavior": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/passthroughBehavior"
-      },
-      "data:payloadFormatVersion": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/payloadFormatVersion"
-      },
-      "core:name": "integration1"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:type": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/type"
-      },
-      "data:httpMethod": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/httpMethod"
-      },
-      "data:uri": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/uri"
-      },
-      "data:passthroughBehavior": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/passthroughBehavior"
-      },
-      "data:payloadFormatVersion": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/payloadFormatVersion"
-      },
-      "core:name": "integration2"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:type": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/type"
-      },
-      "data:httpMethod": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/httpMethod"
-      },
-      "data:uri": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/uri"
-      },
-      "data:passthroughBehavior": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/passthroughBehavior"
-      },
-      "data:payloadFormatVersion": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/payloadFormatVersion"
-      },
-      "core:name": "integration1"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:type": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/type"
-      },
-      "data:httpMethod": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/httpMethod"
-      },
-      "data:uri": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/uri"
-      },
-      "data:passthroughBehavior": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/passthroughBehavior"
-      },
-      "data:payloadFormatVersion": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/payloadFormatVersion"
-      },
-      "core:name": "integration2"
+      "core:name": "object_1"
     },
     {
       "@id": "#/web-api/endpoint/%2F/supportedOperation/get",
@@ -260,7 +132,10 @@
         {
           "@id": "#/web-api/server/https%3A%2F%2Fexample.com%2F%7BbasePath%7D"
         }
-      ]
+      ],
+      "aws:integration": {
+        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element"
+      }
     },
     {
       "@id": "#/web-api/endpoint/%2Fpets/supportedOperation/get",
@@ -279,7 +154,10 @@
         {
           "@id": "#/web-api/server/https%3A%2F%2Fexample.com%2F%7BbasePath%7D"
         }
-      ]
+      ],
+      "aws:integration": {
+        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element"
+      }
     },
     {
       "@id": "#/web-api/endpoint/%2Fcheckout/supportedOperation/get",
@@ -298,307 +176,58 @@
         {
           "@id": "#/web-api/server/https%3A%2F%2Fexample.com%2F%7BbasePath%7D"
         }
-      ]
+      ],
+      "aws:integration": {
+        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element_1"
+      }
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/type",
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1",
       "@type": [
-        "data:Scalar",
+        "data:Object",
         "data:Node",
         "raml-doc:DomainElement"
       ],
-      "data:value": "aws_proxy",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "type"
+      "data:type": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/type"
+      },
+      "data:httpMethod": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/httpMethod"
+      },
+      "data:uri": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/uri"
+      },
+      "data:passthroughBehavior": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/passthroughBehavior"
+      },
+      "data:payloadFormatVersion": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/payloadFormatVersion"
+      },
+      "core:name": "integration1"
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/httpMethod",
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2",
       "@type": [
-        "data:Scalar",
+        "data:Object",
         "data:Node",
         "raml-doc:DomainElement"
       ],
-      "data:value": "POST",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "httpMethod"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/uri",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:my-function/invocations",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "uri"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/passthroughBehavior",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "when_no_templates",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "passthroughBehavior"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/payloadFormatVersion",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "1.0",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "payloadFormatVersion"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/type",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "aws_proxy",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "type"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/httpMethod",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "POST",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "httpMethod"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/uri",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:example-function/invocations",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "uri"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/passthroughBehavior",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "when_no_templates",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "passthroughBehavior"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/payloadFormatVersion",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "1.0",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "payloadFormatVersion"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/type",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "aws_proxy",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "type"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/httpMethod",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "POST",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "httpMethod"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/uri",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:my-function/invocations",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "uri"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/passthroughBehavior",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "when_no_templates",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "passthroughBehavior"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration1/payloadFormatVersion",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "1.0",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "payloadFormatVersion"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/type",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "aws_proxy",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "type"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/httpMethod",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "POST",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "httpMethod"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/uri",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:example-function/invocations",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "uri"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/passthroughBehavior",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "when_no_templates",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "passthroughBehavior"
-    },
-    {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1/integration2/payloadFormatVersion",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "raml-doc:DomainElement"
-      ],
-      "data:value": "1.0",
-      "sh:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "payloadFormatVersion"
+      "data:type": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/type"
+      },
+      "data:httpMethod": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/httpMethod"
+      },
+      "data:uri": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/uri"
+      },
+      "data:passthroughBehavior": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/passthroughBehavior"
+      },
+      "data:payloadFormatVersion": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/payloadFormatVersion"
+      },
+      "core:name": "integration2"
     },
     {
       "@id": "#/web-api/endpoint/%2F/supportedOperation/get/returns/resp/200",
@@ -627,6 +256,21 @@
       ]
     },
     {
+      "@id": "#/customDomainProperties/amazon-apigateway-integrations/element",
+      "@type": [
+        "aws:Integration",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/IntegrationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:name": "integration1",
+      "aws:type": "aws_proxy",
+      "aws:httpMethod": "POST",
+      "aws:uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:my-function/invocations",
+      "aws:payloadFormatVersion": "1.0",
+      "aws:passthroughBehavior": "when_no_templates"
+    },
+    {
       "@id": "#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
@@ -649,6 +293,171 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "OK"
+    },
+    {
+      "@id": "#/customDomainProperties/amazon-apigateway-integrations/element_1",
+      "@type": [
+        "aws:Integration",
+        "file://amf-cli/shared/src/test/resources/semantic/aws/dialect.yaml#/declarations/IntegrationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:name": "integration2",
+      "aws:type": "aws_proxy",
+      "aws:httpMethod": "POST",
+      "aws:uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:example-function/invocations",
+      "aws:payloadFormatVersion": "1.0",
+      "aws:passthroughBehavior": "when_no_templates"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "aws_proxy",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/httpMethod",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "POST",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "httpMethod"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/uri",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:my-function/invocations",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "uri"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/passthroughBehavior",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "when_no_templates",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "passthroughBehavior"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration1/payloadFormatVersion",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "1.0",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "payloadFormatVersion"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "aws_proxy",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/httpMethod",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "POST",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "httpMethod"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/uri",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:example-function/invocations",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "uri"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/passthroughBehavior",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "when_no_templates",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "passthroughBehavior"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-integrations/object_1/integration2/payloadFormatVersion",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "1.0",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "payloadFormatVersion"
     },
     {
       "@id": "#/web-api/server/https%3A%2F%2Fexample.com%2F%7BbasePath%7D/variable/parameter/path/basePath",
@@ -714,21 +523,7 @@
       "raml-doc:root": true,
       "raml-doc:processingData": {
         "@id": "#/BaseUnitProcessingData"
-      },
-      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/integration-declaration.yaml#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/object_1"
-      },
-      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/integration-declaration.yaml#/customDomainProperties/amazon-apigateway-integrations_1/amazon-apigateway-integrations": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/object_1"
-      },
-      "raml-doc:customDomainProperties": [
-        {
-          "@id": "#/customDomainProperties/amazon-apigateway-integrations/amazon-apigateway-integrations"
-        },
-        {
-          "@id": "#/customDomainProperties/amazon-apigateway-integrations_1/amazon-apigateway-integrations"
-        }
-      ]
+      }
     }
   ],
   "@context": {
@@ -737,8 +532,10 @@
     "data": "http://a.ml/vocabularies/data#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "sh": "http://www.w3.org/ns/shacl#",
+    "aws": "http://a.ml/vocabularies/aws#",
     "raml-doc": "http://a.ml/vocabularies/document#"
   }
 }

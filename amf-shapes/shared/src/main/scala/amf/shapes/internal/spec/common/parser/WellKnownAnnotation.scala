@@ -94,7 +94,8 @@ object WellKnownAnnotation {
   )
 
   private val awsAnnotations = Set(
-    "amazon-apigateway-any-method"
+    "amazon-apigateway-any-method",
+    "amazon-apigateway-integration"
   )
 
   def resolveAnnotation(field: String): Option[String] = field match {

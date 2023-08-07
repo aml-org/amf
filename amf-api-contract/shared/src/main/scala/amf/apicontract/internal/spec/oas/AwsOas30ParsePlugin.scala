@@ -18,8 +18,15 @@ object AwsOas30ParsePlugin extends OasParsePlugin {
 
   override def mediaTypes: Seq[String] = Seq.empty
 
-  override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
-    new AwsOas3DocumentParser(root).parseDocument()
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    val newCtx = context(document.location, document.references, ctx.parsingOptions, ctx)
+    new AwsOas3DocumentParser(document)(newCtx).parseDocument()
+  }
+
+  override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit = {
+    throw new Exception("Unreachable code: Not implemented")
+  }
+
 
   override protected def context(
       loc: String,
@@ -27,6 +34,7 @@ object AwsOas30ParsePlugin extends OasParsePlugin {
       options: ParsingOptions,
       wrapped: ParserContext,
       ds: Option[OasWebApiDeclarations]
-  ): OasWebApiContext =
-    new AwsOas3WebApiContext(loc, refs, wrapped, ds, options)
+  ): AwsOas3WebApiContext =
+    new AwsOas3WebApiContext(loc, refs, wrapped, options)
+
 }
