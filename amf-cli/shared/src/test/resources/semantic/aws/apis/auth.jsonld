@@ -1,0 +1,105 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "openapi3",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-iam"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-iam",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/protected-by-iam",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "aws:auth": {
+        "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get/customDomainProperties/amazon-apigateway-auth/element"
+      }
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "OK"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-iam/supportedOperation/get/customDomainProperties/amazon-apigateway-auth/element",
+      "@type": [
+        "aws:Auth",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/AuthNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:type": "AWS_IAM"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/auth.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

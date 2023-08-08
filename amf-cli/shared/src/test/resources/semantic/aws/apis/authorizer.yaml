@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: openapi3 for REST API
+  version: '1.0'
+paths:
+  "/protected-by-lambda-authorizer":
+    get:
+      responses:
+        '200':
+          description: Default response
+      security:
+        - myAuthorizer: []
+components:
+  securitySchemes:
+    myAuthorizer:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authorizer:
+        identitySource: method.request.header.Authorization
+        authorizerUri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:account-id:function:function-name/invocations
+        authorizerResultTtlInSeconds: 300
+        type: request
+        enableSimpleResponses: false
+    jwt-authorizer-oauth:
+      type: oauth2
+      x-amazon-apigateway-authorizer:
+        type: jwt
+        jwtConfiguration:
+          issuer: https://cognito-idp.region.amazonaws.com/userPoolId
+          audience:
+            - audience1
+            - audience2
+        identitySource: "$request.header.Authorization"
+    jwt-authorizer-autofind:
+      type: openIdConnect
+      openIdConnectUrl: https://cognito-idp.region.amazonaws.com/userPoolId/.well-known/openid-configuration
+      x-amazon-apigateway-authorizer:
+        type: jwt
+        jwtConfiguration:
+          audience:
+            - audience1
+            - audience2
+        identitySource: "$request.header.Authorization"
+    lambda-authorizer:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: $request.header.Authorization
+        authorizerUri: >-
+          arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:123456789012:function:function-name/invocations
+        authorizerPayloadFormatVersion: '2.0'
+        authorizerResultTtlInSeconds: 300
+        enableSimpleResponses: true

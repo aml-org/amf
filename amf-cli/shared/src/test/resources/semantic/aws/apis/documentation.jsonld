@@ -1,0 +1,117 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Integrations",
+      "core:description": "An API that reuses integrations",
+      "core:version": "1.0",
+      "apiContract:endpoint": [],
+      "aws:documentation": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element"
+      }
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element",
+      "@type": [
+        "aws:Documentation",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:documentationParts": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element"
+        }
+      ],
+      "aws:version": "1.0.3"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element",
+      "@type": [
+        "aws:DocumentationPart",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:properties": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element"
+      },
+      "aws:location": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element_2"
+      }
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element",
+      "@type": [
+        "aws:DocumentationPartProperties",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartPropertiesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:info": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element/element"
+      },
+      "aws:description": "API description"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element_2",
+      "@type": [
+        "aws:DocumentationPartLocationNodeMapping",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartLocationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:type": "API"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element/element",
+      "@type": [
+        "aws:DocumentationPartPropertyInfo",
+        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartPropertyInfoNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:version": "API info version 3",
+      "aws:description": "API info description 4"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/documentation.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

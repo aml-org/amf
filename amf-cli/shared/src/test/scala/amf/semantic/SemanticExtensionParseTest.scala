@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Value
 import amf.core.internal.remote.Spec
-import org.mulesoft.antlrast.unsafe.PlatformSecrets
+import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 
@@ -45,18 +45,18 @@ trait SemanticExtensionParseTest extends PlatformSecrets with Matchers {
     }
   }
 
-  private def getDialect(path: String): Future[AMLDialectResult] = {
+  protected def getDialect(path: String): Future[AMLDialectResult] = {
     AMLConfiguration.predefined().baseUnitClient().parseDialect(path)
   }
 
-  private def extendConfig(extension: Dialect, spec: Spec): AMFConfiguration = {
+  protected def extendConfig(extension: Dialect, spec: Spec): AMFConfiguration = {
     APIConfiguration
       .fromSpec(spec)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .withDialect(extension)
   }
 
-  private def configWithCompanion(
+  protected def configWithCompanion(
       config: AMFConfiguration,
       extension: Dialect,
       spec: Spec

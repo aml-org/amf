@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+paths:
+  "/{proxy+}":
+    x-amazon-apigateway-any-method:
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+      responses: {}
