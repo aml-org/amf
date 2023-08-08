@@ -209,22 +209,6 @@ object OASConfiguration extends APIConfigurationBuilder {
         )
       )
 
-  def AWSOAS30(): AMFConfiguration =
-    common()
-      .withPlugins(
-        List(
-          AwsOas30ParsePlugin
-        )
-      )
-      .withTransformationPipelines(
-        List(
-          Oas30TransformationPipeline(),
-          Oas3EditingPipeline(),
-          Oas3CompatibilityPipeline(),
-          Oas3CachePipeline()
-        )
-      )
-
   def OAS30Component(): AMFConfiguration =
     common()
       .withPlugins(
@@ -345,7 +329,6 @@ object APIConfiguration extends APIConfigurationBuilder {
     case Spec.RAML10     => RAMLConfiguration.RAML10()
     case Spec.OAS20      => OASConfiguration.OAS20()
     case Spec.OAS30      => OASConfiguration.OAS30()
-    case Spec.AWS_OAS30  => OASConfiguration.AWSOAS30()
     case Spec.ASYNC20    => AsyncAPIConfiguration.Async20()
     case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>

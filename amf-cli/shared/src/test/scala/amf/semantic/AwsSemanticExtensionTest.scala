@@ -1,7 +1,8 @@
 package amf.semantic
 
+import amf.apicontract.internal.configuration.AWSOASConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{AwsOas30, Mimes}
+import amf.core.internal.remote.Mimes
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
@@ -27,12 +28,10 @@ class AwsSemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParse
     }
 
   protected def cycleAndAssertGoldenJsonLd(api: String): Future[Assertion] = {
-    val spec        = AwsOas30
-    val dialectFile = "dialect.yaml"
-    val goldenFile  = api.replace(".yaml", ".jsonld")
+    val goldenFile = api.replace(".yaml", ".jsonld")
     for {
-      dialect <- getDialect(s"file://$basePath/$dialectFile").map(_.dialect)
-      client  <- Future.successful { extendConfig(dialect, spec).withRenderOptions(renderOptions).baseUnitClient() }
+      config        <- AWSOASConfiguration.forScala()
+      client        <- Future.successful { config.withRenderOptions(renderOptions).baseUnitClient() }
       parsingResult <- client.parseDocument(s"file://$basePath/apis/$api")
       actualString <- Future.successful {
         val transformResult = client.transform(parsingResult.baseUnit)
