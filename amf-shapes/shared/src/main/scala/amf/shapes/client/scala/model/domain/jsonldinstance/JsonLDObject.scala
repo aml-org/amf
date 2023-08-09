@@ -66,7 +66,7 @@ case class JsonLDObject(
   }
   private def updateModelAndSet(field: Field, element: JsonLDElement) = {
     model = updateModel(field)
-    set(field, element)
+    setWithoutId(field, element)
   }
 
   def withProperty(property: String, value: String): JsonLDObject =
