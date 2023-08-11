@@ -129,7 +129,7 @@
       "@id": "#/declares/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element",
       "@type": [
         "aws:Authorizer",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/AuthorizerNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -334,7 +334,7 @@
       "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element",
       "@type": [
         "aws:Authorizer",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/AuthorizerNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -365,7 +365,7 @@
       "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element",
       "@type": [
         "aws:Authorizer",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/AuthorizerNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -397,7 +397,7 @@
       "@id": "#/declares/scheme/lambda-authorizer/customDomainProperties/amazon-apigateway-authorizer/element",
       "@type": [
         "aws:Authorizer",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/AuthorizerNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -431,7 +431,7 @@
       "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element/element",
       "@type": [
         "aws:JwtConfiguration",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/JwtConfigurationNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/JwtConfigurationNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -464,7 +464,7 @@
       "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element/element",
       "@type": [
         "aws:JwtConfiguration",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/JwtConfigurationNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/JwtConfigurationNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],

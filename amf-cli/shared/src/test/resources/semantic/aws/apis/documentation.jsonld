@@ -29,7 +29,7 @@
       "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element",
       "@type": [
         "aws:Documentation",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/DocumentationNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -44,7 +44,7 @@
       "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element",
       "@type": [
         "aws:DocumentationPart",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/DocumentationPartNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -59,7 +59,7 @@
       "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element",
       "@type": [
         "aws:DocumentationPartProperties",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartPropertiesNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/DocumentationPartPropertiesNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -72,7 +72,7 @@
       "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element_2",
       "@type": [
         "aws:DocumentationPartLocationNodeMapping",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartLocationNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/DocumentationPartLocationNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],
@@ -82,7 +82,7 @@
       "@id": "#/web-api/customDomainProperties/amazon-apigateway-documentation/element/element/element/element",
       "@type": [
         "aws:DocumentationPartPropertyInfo",
-        "file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml#/declarations/DocumentationPartPropertyInfoNodeMapping",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/DocumentationPartPropertyInfoNodeMapping",
         "meta:DialectDomainElement",
         "raml-doc:DomainElement"
       ],

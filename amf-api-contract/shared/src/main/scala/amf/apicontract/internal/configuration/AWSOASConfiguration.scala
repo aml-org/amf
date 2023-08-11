@@ -1,5 +1,7 @@
 package amf.apicontract.internal.configuration
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.platform.{AMFConfiguration => PlatformAMFConfiguration}
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.OASConfiguration.common
@@ -10,13 +12,14 @@ import amf.apicontract.internal.transformation.{Oas30TransformationPipeline, Oas
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.io.Source.fromResource
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 @JSExportTopLevel("AWSOASConfiguration")
 object AWSOASConfiguration {
 
-  def forScala(): Future[AMFConfiguration] =
-    common()
+  def forScala(): Future[AMFConfiguration] = {
+    val baseConfiguration = common()
       .withPlugins(
         List(
           AwsOas30ParsePlugin
@@ -30,7 +33,16 @@ object AWSOASConfiguration {
           Oas3CachePipeline()
         )
       )
-      .withDialect("file://amf-api-contract/shared/src/main/resources/aws-oas-dialect.yaml")
+
+    AMLConfiguration
+      .predefined()
+      .baseUnitClient()
+      .parseContent(AwsOasDialect.content)
+      .map { parsingResult =>
+        val dialect = parsingResult.baseUnit.asInstanceOf[Dialect]
+        baseConfiguration.withDialect(dialect)
+      }
+  }
 
   @JSExport
   def forPlatform(): ClientFuture[PlatformAMFConfiguration] = forScala().asClient
