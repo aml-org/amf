@@ -10,6 +10,8 @@ import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.
   UnsupportedScalarTagType,
   UnsupportedShape
 }
+import org.mulesoft.common.time.SimpleDateTime
+import org.mulesoft.common.time.SimpleDateTime.parseDate
 import org.yaml.model.{YScalar, YType}
 
 object JsonLDScalarElementParser {
@@ -50,7 +52,7 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
     shape match {
       case scalar: ScalarShape =>
         checkDataTypeConsistence(scalar)
-        parseScalar()
+        parseScalar(scalar.dataType.option())
       case a: AnyShape if a.isStrictAnyMeta =>
         parseScalar()
       case _ => unsupported(shape)
@@ -76,12 +78,17 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
   /** @return
     *   a jsondl scalar builder for the given YScalar value and dataType computed from the YType.
     */
-  private def parseScalar(): JsonLDScalarElementBuilder = {
-    val value = (dataType, scalar.value) match {
-      case (DataTypes.Nil, _)               => "null"
-      case (DataTypes.Integer, value: Long) => value.toInt
-      case (_, value)                       => value
+
+  private def parseScalar(expectedDataType: Option[String] = None): JsonLDScalarElementBuilder = {
+    val (finalDataType, value) = (expectedDataType, dataType, scalar.value) match {
+      case (_, DataTypes.Nil, _)               => (dataType, "null")
+      case (_, DataTypes.Integer, value: Long) => (dataType, value.toInt)
+      case (Some(DataTypes.Date), DataTypes.String, value: String) =>
+        parseDate(value).map(value => (DataTypes.Date, value)).getOrElse((DataTypes.String, value))
+      case (Some(DataTypes.DateTime), DataTypes.String, value: String) =>
+        SimpleDateTime.parse(value).map(value => (DataTypes.DateTime, value)).getOrElse((DataTypes.String, value))
+      case (_, _, value) => (dataType, value)
     }
-    new JsonLDScalarElementBuilder(dataType, value, location = scalar.location, path = path)
+    new JsonLDScalarElementBuilder(finalDataType, value, location = scalar.location, path = path)
   }
 }

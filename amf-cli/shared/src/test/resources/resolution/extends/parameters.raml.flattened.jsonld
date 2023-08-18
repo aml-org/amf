@@ -10,7 +10,7 @@
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -26,7 +26,7 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map"
         }
       ]
     },
@@ -49,19 +49,19 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_1"
         }
       ]
     },
@@ -99,18 +99,18 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(4,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(24,73)]"
     },
     {
@@ -678,7 +678,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/parameters.raml#/web-api"
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {

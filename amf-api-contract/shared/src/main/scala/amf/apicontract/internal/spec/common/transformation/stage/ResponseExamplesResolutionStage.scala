@@ -23,10 +23,13 @@ class ResponseExamplesResolutionStage() extends TransformationStep() {
       model: BaseUnit,
       errorHandler: AMFErrorHandler,
       configuration: AMFGraphConfiguration
-  ): BaseUnit = model match {
-    case d: Document if d.encodes.isInstanceOf[Api] =>
-      d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])(errorHandler))
-    case _ => model
+  ): BaseUnit = {
+    model match {
+      case d: Document if d.encodes.isInstanceOf[Api] =>
+        resolveApi(d.encodes.asInstanceOf[Api])(errorHandler)
+      case _ => //
+    }
+    model
   }
 
   def resolveApi(webApi: Api)(implicit errorHandler: AMFErrorHandler): Api = {

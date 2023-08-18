@@ -7,6 +7,7 @@ import amf.core.internal.metamodel.{Field, Obj, Type}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDEntityModel
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
+import org.mulesoft.common.time.SimpleDateTime
 
 object JsonLDObject {
   def empty(model: JsonLDEntityModel, path: JsonPath): JsonLDObject =
@@ -48,6 +49,9 @@ case class JsonLDObject(
 
   private def buildString(value: String) = new JsonLDScalar(value, DataTypes.String)
 
+  private def buildDateTime(value: SimpleDateTime) = new JsonLDScalar(value, DataTypes.DateTime)
+  private def buildDate(value: SimpleDateTime)     = new JsonLDScalar(value, DataTypes.Date)
+
   private def buildInteger(value: Int) = new JsonLDScalar(value, DataTypes.Integer)
 
   private def buildBoolean(value: Boolean) = new JsonLDScalar(value, DataTypes.Boolean)
@@ -67,6 +71,11 @@ case class JsonLDObject(
 
   def withProperty(property: String, value: String): JsonLDObject =
     updateModelAndSet(property.toStrField, buildString(value))
+
+  def withDateOnlyProperty(property: String, value: SimpleDateTime): JsonLDObject =
+    updateModelAndSet(property.toStrField, buildDate(value))
+  def withDateTimeProperty(property: String, value: SimpleDateTime): JsonLDObject =
+    updateModelAndSet(property.toStrField, buildDateTime(value))
 
   def withProperty(property: String, value: Int): JsonLDObject =
     updateModelAndSet(property.toIntField, buildInteger(value))
