@@ -22,16 +22,16 @@ import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, T
 import amf.apicontract.internal.spec.common.WebApiDeclarations._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, NamedDomainElement, ObjectNode, Shape}
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
-import amf.core.internal.parser.domain.SearchScope.{All, Named}
+import amf.core.internal.parser.domain.SearchScope.Named
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.QName
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.common.parser.ShapeDeclarations
-import org.yaml.model.{YNode, YPart}
+import org.yaml.model.YPart
 
 /** Declarations object.
   */
@@ -582,170 +582,5 @@ object WebApiDeclarations {
 
     override protected def newErrorInstance: ErrorDeclaration[RequestModel.type] = ErrorRequest(idPart, ast)
     override val model: RequestModel.type                                        = RequestModel
-  }
-}
-
-class OasLikeWebApiDeclarations(
-    val asts: Map[String, YNode],
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations,
-    override val extractor: QualifiedNameExtractor = JsonPointerQualifiedNameExtractor
-) extends WebApiDeclarations(alias, errorHandler, futureDeclarations, extractor) {}
-
-class OasWebApiDeclarations(
-    override val asts: Map[String, YNode],
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends OasLikeWebApiDeclarations(
-      asts,
-      alias,
-      errorHandler = errorHandler,
-      futureDeclarations = futureDeclarations
-    ) {}
-
-object OasWebApiDeclarations {
-  def apply(d: WebApiDeclarations): OasWebApiDeclarations = {
-    val declarations = new OasWebApiDeclarations(
-      Map(),
-      d.alias,
-      errorHandler = d.errorHandler,
-      futureDeclarations = d.futureDeclarations
-    )
-    declarations.setLibraries(d.libraries)
-    declarations.fragments = d.fragments
-    declarations.shapes = d.shapes
-    declarations.annotations = d.annotations
-    declarations.resourceTypes = d.resourceTypes
-    declarations.parameters = d.parameters
-    declarations.payloads = d.payloads
-    declarations.traits = d.traits
-    declarations.securitySchemes = d.securitySchemes
-    declarations.responses = d.responses
-    declarations.annotations = d.annotations // FOR OAS -> RAML CONVERSION
-    declarations                             // add withs methods?
-  }
-}
-
-class AsyncWebApiDeclarations(
-    override val asts: Map[String, YNode],
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends OasLikeWebApiDeclarations(
-      asts,
-      alias,
-      errorHandler = errorHandler,
-      futureDeclarations = futureDeclarations
-    ) {}
-
-object AsyncWebApiDeclarations {
-  def apply(d: WebApiDeclarations): AsyncWebApiDeclarations = {
-    val declarations = new AsyncWebApiDeclarations(
-      Map(),
-      d.alias,
-      errorHandler = d.errorHandler,
-      futureDeclarations = d.futureDeclarations
-    )
-
-    // TODO ASYNC complete this
-    declarations.securitySchemes = d.securitySchemes
-    declarations
-  }
-}
-
-class JsonSchemaDeclarations(
-    override val asts: Map[String, YNode],
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends OasWebApiDeclarations(
-      asts,
-      alias,
-      errorHandler = errorHandler,
-      futureDeclarations = futureDeclarations
-    ) {}
-
-object JsonSchemaDeclarations {
-  def apply(d: WebApiDeclarations): JsonSchemaDeclarations = {
-    val declarations = new JsonSchemaDeclarations(
-      Map(),
-      d.alias,
-      errorHandler = d.errorHandler,
-      futureDeclarations = d.futureDeclarations
-    )
-
-    declarations.shapes = d.shapes // Currently we will only support schema declarations
-    declarations
-  }
-}
-
-class RamlWebApiDeclarations(
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends WebApiDeclarations(
-      alias,
-      errorHandler = errorHandler,
-      futureDeclarations = futureDeclarations,
-      DotQualifiedNameExtractor
-    ) {
-
-  def existsExternalAlias(lib: String): Boolean = externalLibs.contains(lib)
-
-  def merge(other: RamlWebApiDeclarations): RamlWebApiDeclarations = {
-    val merged =
-      new RamlWebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
-    super.mergeParts(other, merged)
-    externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
-    other.externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
-    merged
-  }
-
-  def absorb(other: RamlWebApiDeclarations): Unit = {
-    super.mergeParts(other, this)
-    externalShapes.foreach { case (k, s) => this.externalShapes += (k -> s) }
-    other.externalShapes.foreach { case (k, s) => this.externalShapes += (k -> s) }
-  }
-}
-
-class ExtensionWebApiDeclarations(
-    parentDeclarations: RamlWebApiDeclarations,
-    override val alias: Option[String],
-    override val errorHandler: AMFErrorHandler,
-    override val futureDeclarations: FutureDeclarations
-) extends RamlWebApiDeclarations(alias, errorHandler, futureDeclarations) {
-
-  override def findForType(
-      key: String,
-      map: Declarations => Map[String, DomainElement],
-      scope: SearchScope.Scope
-  ): Option[DomainElement] = {
-    super.findForType(key, map, scope) match {
-      case Some(x) => Some(x)
-      case None    => parentDeclarations.findForType(key, map, scope)
-    }
-  }
-}
-
-object RamlWebApiDeclarations {
-  def apply(d: WebApiDeclarations): RamlWebApiDeclarations = {
-    val declarations = new RamlWebApiDeclarations(
-      d.alias,
-      errorHandler = d.errorHandler,
-      futureDeclarations = d.futureDeclarations
-    )
-    declarations.setLibraries(d.libraries)
-    declarations.fragments = d.fragments
-    declarations.shapes = d.shapes
-    declarations.annotations = d.annotations
-    declarations.resourceTypes = d.resourceTypes
-    declarations.parameters = d.parameters
-    declarations.payloads = d.payloads
-    declarations.traits = d.traits
-    declarations.securitySchemes = d.securitySchemes
-    declarations.responses = d.responses
-    declarations // add withs methods?
   }
 }

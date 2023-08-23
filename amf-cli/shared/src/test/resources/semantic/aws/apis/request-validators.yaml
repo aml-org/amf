@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+x-amazon-apigateway-request-validators:
+  basic:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params-only:
+    validateRequestBody: false
+    validateRequestParameters: true
+x-amazon-apigateway-request-validator: basic
+paths:
+  /validation:
+    post:
+      responses:
+        '200':
+          description: OK
+      x-amazon-apigateway-request-validator: params-only

@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: Integrations
+  description: An API that reuses integrations
+  version: '1.0'
+servers:
+  - url: https://example.com/{basePath}
+    description: The production API server
+    variables:
+      basePath:
+        default: example/path
+paths:
+  "/":
+    get:
+      x-amazon-apigateway-integration:
+        "$ref": "#/components/x-amazon-apigateway-integrations/integration1"
+      responses:
+        '200':
+          description: OK
+  "/pets":
+    get:
+      x-amazon-apigateway-integration:
+        "$ref": "#/components/x-amazon-apigateway-integrations/integration1"
+      responses:
+        '200':
+          description: OK
+  "/checkout":
+    get:
+      x-amazon-apigateway-integration:
+        "$ref": "#/components/x-amazon-apigateway-integrations/integration2"
+      responses:
+        '200':
+          description: OK
+components:
+  x-amazon-apigateway-integrations:
+    integration1:
+      type: aws_proxy
+      httpMethod: POST
+      uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:my-function/invocations
+      passthroughBehavior: when_no_templates
+      payloadFormatVersion: '1.0'
+    integration2:
+      type: aws_proxy
+      httpMethod: POST
+      uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:123456789012:function:example-function/invocations
+      passthroughBehavior: when_no_templates
+      payloadFormatVersion: '1.0'

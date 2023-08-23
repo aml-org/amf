@@ -1,0 +1,486 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "API",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [],
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/policy.yaml#/web-api/customDomainProperties/amazon-apigateway-policy/amazon-apigateway-policy": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/amazon-apigateway-policy"
+        }
+      ]
+    },
+    {
+      "core:extensionName": "amazon-apigateway-policy",
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:Version": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Version"
+      },
+      "data:Statement": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Version",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "2012-10-17",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Version"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4"
+        },
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10"
+        },
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19"
+        }
+      ],
+      "core:name": "Statement"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:Effect": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Effect"
+      },
+      "data:Principal": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Principal"
+      },
+      "data:Action": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Action"
+      },
+      "data:Resource": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Resource"
+      },
+      "core:name": "object_4"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:Effect": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Effect"
+      },
+      "data:Principal": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Principal"
+      },
+      "data:Action": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Action"
+      },
+      "data:Resource": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Resource"
+      },
+      "data:Condition": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition"
+      },
+      "core:name": "object_10"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:Effect": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Effect"
+      },
+      "data:Principal": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal"
+      },
+      "data:Action": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Action"
+      },
+      "data:Resource": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Resource"
+      },
+      "core:name": "object_19"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Effect",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "Allow",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Effect"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Principal",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "*",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Principal"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Action",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:Invoke",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Action"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Resource",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Resource/member/scalar_9"
+        }
+      ],
+      "core:name": "Resource"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Effect",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "Deny",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Effect"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Principal",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "*",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Principal"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Action",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:Invoke",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Action"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Resource",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Resource/member/scalar_15"
+        }
+      ],
+      "core:name": "Resource"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:IpAddress": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition/IpAddress"
+      },
+      "core:name": "Condition"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Effect",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "Allow",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Effect"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:AWS": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS"
+      },
+      "core:name": "Principal"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Action",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:Invoke",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "Action"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Resource",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Resource/member/scalar_27"
+        }
+      ],
+      "core:name": "Resource"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_4/Resource/member/scalar_9",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:/*",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_9"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Resource/member/scalar_15",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:/*",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_15"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition/IpAddress",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:aws%3ASourceIp": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition/IpAddress/aws%3ASourceIp"
+      },
+      "core:name": "IpAddress"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS/member/scalar_23"
+        },
+        {
+          "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS/member/scalar_24"
+        }
+      ],
+      "core:name": "AWS"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Resource/member/scalar_27",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "execute-api:/stage/GET/pets",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_27"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_10/Condition/IpAddress/aws%3ASourceIp",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "192.0.2.0/24",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "aws:SourceIp"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS/member/scalar_23",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:iam::account-id-2:role/developer",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_23"
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-policy/object_1/Statement/member/object_19/Principal/AWS/member/scalar_24",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:iam::account-id-2:role/Admin",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_24"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/policy.yaml",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

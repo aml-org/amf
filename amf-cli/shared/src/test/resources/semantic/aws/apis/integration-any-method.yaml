@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+paths:
+  "/{proxy+}":
+    x-amazon-apigateway-any-method:
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+      responses: {}
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:123456789012:function:TestSimpleProxy/invocations
+        httpMethod: POST
+        type: aws_proxy

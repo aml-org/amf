@@ -40,7 +40,7 @@ import scala.collection.mutable.ListBuffer
 
 /** Oas spec parser
   */
-abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiContext)
+abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()
     with OasLikeDeclarationsHelper {
 

@@ -11,7 +11,7 @@ import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
 import amf.shapes.internal.annotations.OrphanOasExtension
-import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
+import amf.shapes.internal.spec.common.parser.AnnotationParser.{parseExtensions, setExtensions}
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAnnotationTarget
 import amf.shapes.internal.vocabulary.VocabularyMappings
@@ -23,12 +23,8 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   def parse(): Unit = {
 
     val extensions = parseExtensions(Some(element), map, target, Some(ctx.extensionsFacadeBuilder))
-    setExtensions(extensions)
+    setExtensions(element, extensions)
   }
-
-  // NOTE: DONE LIKE THIS BECAUSE OF SCALA JS LINKING ERRORS
-  private def customDomainPropertiesFrom(obj: AmfObject): Seq[DomainExtension] =
-    Option(obj.fields.field(CustomDomainProperties)).getOrElse(Seq[DomainExtension]())
 
   def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
@@ -41,20 +37,11 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }
-        if (extensions.nonEmpty) setExtensions(extensions)
+        if (extensions.nonEmpty) setExtensions(element, extensions)
       case _ => // ignore
     }
   }
 
-  private def setExtensions(extensions: Seq[DomainExtension]): Unit = {
-    val oldExtensions = customDomainPropertiesFrom(element)
-    if (extensions.nonEmpty)
-      element.setWithoutId(
-        DomainElementModel.CustomDomainProperties,
-        AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
-        Annotations.inferred()
-      )
-  }
 }
 
 object AnnotationParser {
@@ -85,6 +72,19 @@ object AnnotationParser {
 
   private def entryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
+  }
+
+  // NOTE: DONE LIKE THIS BECAUSE OF SCALA JS LINKING ERRORS
+  private def customDomainPropertiesFrom(obj: AmfObject): Seq[DomainExtension] =
+    Option(obj.fields.field(CustomDomainProperties)).getOrElse(Seq[DomainExtension]())
+  def setExtensions(element: AmfObject, extensions: Seq[DomainExtension]): Unit = {
+    val oldExtensions = customDomainPropertiesFrom(element)
+    if (extensions.nonEmpty)
+      element.setWithoutId(
+        DomainElementModel.CustomDomainProperties,
+        AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
+        Annotations.inferred()
+      )
   }
 }
 

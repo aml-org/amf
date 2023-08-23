@@ -1,0 +1,806 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "openapi3 for REST API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/protected-by-lambda-authorizer",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "security:security": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/requirement_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "Default response"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/requirement_1",
+      "@type": [
+        "security:SecurityRequirement",
+        "raml-doc:DomainElement"
+      ],
+      "security:schemes": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer",
+      "@type": [
+        "security:ParametrizedSecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "myAuthorizer",
+      "security:scheme": {
+        "@id": "#/declares/scheme/myAuthorizer"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer",
+      "@type": [
+        "security:SecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "myAuthorizer",
+      "security:type": "Api Key",
+      "security:settings": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key"
+      },
+      "aws:authorizer": {
+        "@id": "#/declares/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key",
+      "@type": [
+        "security:ApiKeySettings",
+        "security:Settings",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Authorization",
+      "security:in": "header",
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element",
+      "@type": [
+        "aws:Authorizer",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:enableSimpleResponses": false,
+      "aws:identitySource": "method.request.header.Authorization",
+      "aws:authorizerResultTtlInSeconds": 300,
+      "aws:type": "request",
+      "aws:authorizerUri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:account-id:function:function-name/invocations"
+    },
+    {
+      "core:extensionName": "amazon-apigateway-authorizer",
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:identitySource": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
+      },
+      "data:authorizerUri": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri"
+      },
+      "data:authorizerResultTtlInSeconds": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds"
+      },
+      "data:type": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
+      },
+      "data:enableSimpleResponses": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "method.request.header.Authorization",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "identitySource"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:account-id:function:function-name/invocations",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "authorizerUri"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "300",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "core:name": "authorizerResultTtlInSeconds"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "request",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "false",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "core:name": "enableSimpleResponses"
+    },
+    {
+      "@id": "",
+      "raml-doc:declares": [
+        {
+          "@id": "#/declares/scheme/myAuthorizer"
+        },
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-oauth"
+        },
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-autofind"
+        },
+        {
+          "@id": "#/declares/scheme/lambda-authorizer"
+        }
+      ],
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth",
+      "@type": [
+        "security:SecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "jwt-authorizer-oauth",
+      "security:type": "OAuth 2.0",
+      "security:settings": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2"
+      },
+      "aws:authorizer": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind",
+      "@type": [
+        "security:SecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "jwt-authorizer-autofind",
+      "security:type": "openIdConnect",
+      "security:settings": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect"
+      },
+      "aws:authorizer": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer",
+      "@type": [
+        "security:SecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "lambda-authorizer",
+      "security:type": "Api Key",
+      "security:settings": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key"
+      },
+      "aws:authorizer": {
+        "@id": "#/declares/scheme/lambda-authorizer/customDomainProperties/amazon-apigateway-authorizer/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2",
+      "@type": [
+        "security:OAuth2Settings",
+        "security:Settings",
+        "raml-doc:DomainElement"
+      ],
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element",
+      "@type": [
+        "aws:Authorizer",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:identitySource": "$request.header.Authorization",
+      "aws:type": "jwt",
+      "aws:jwtConfiguration": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect",
+      "@type": [
+        "security:OpenIdConnectSettings",
+        "security:Settings",
+        "raml-doc:DomainElement"
+      ],
+      "security:openIdConnectUrl": "https://cognito-idp.region.amazonaws.com/userPoolId/.well-known/openid-configuration",
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element",
+      "@type": [
+        "aws:Authorizer",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:identitySource": "$request.header.Authorization",
+      "aws:type": "jwt",
+      "aws:jwtConfiguration": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element/element"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key",
+      "@type": [
+        "security:ApiKeySettings",
+        "security:Settings",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Authorization",
+      "security:in": "header",
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/customDomainProperties/amazon-apigateway-authorizer/element",
+      "@type": [
+        "aws:Authorizer",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:enableSimpleResponses": true,
+      "aws:identitySource": "$request.header.Authorization",
+      "aws:authorizerResultTtlInSeconds": 300,
+      "aws:type": "request",
+      "aws:authorizerUri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:123456789012:function:function-name/invocations",
+      "aws:authorizerPayloadFormatVersion": "2.0"
+    },
+    {
+      "core:extensionName": "amazon-apigateway-authorizer",
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:type": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
+      },
+      "data:jwtConfiguration": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration"
+      },
+      "data:identitySource": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/customDomainProperties/amazon-apigateway-authorizer/element/element",
+      "@type": [
+        "aws:JwtConfiguration",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/JwtConfigurationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:issuer": "https://cognito-idp.region.amazonaws.com/userPoolId",
+      "aws:audience": [
+        "audience1",
+        "audience2"
+      ]
+    },
+    {
+      "core:extensionName": "amazon-apigateway-authorizer",
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:type": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
+      },
+      "data:jwtConfiguration": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration"
+      },
+      "data:identitySource": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/customDomainProperties/amazon-apigateway-authorizer/element/element",
+      "@type": [
+        "aws:JwtConfiguration",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/JwtConfigurationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:audience": [
+        "audience1",
+        "audience2"
+      ]
+    },
+    {
+      "core:extensionName": "amazon-apigateway-authorizer",
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:type": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
+      },
+      "data:identitySource": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
+      },
+      "data:authorizerUri": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri"
+      },
+      "data:authorizerPayloadFormatVersion": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerPayloadFormatVersion"
+      },
+      "data:authorizerResultTtlInSeconds": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds"
+      },
+      "data:enableSimpleResponses": {
+        "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "jwt",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:issuer": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/issuer"
+      },
+      "data:audience": {
+        "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience"
+      },
+      "core:name": "jwtConfiguration"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "$request.header.Authorization",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "identitySource"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "jwt",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:audience": {
+        "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience"
+      },
+      "core:name": "jwtConfiguration"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "$request.header.Authorization",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "identitySource"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "request",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "type"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "$request.header.Authorization",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "identitySource"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:123456789012:function:function-name/invocations",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "authorizerUri"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerPayloadFormatVersion",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "2.0",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "authorizerPayloadFormatVersion"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "300",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "core:name": "authorizerResultTtlInSeconds"
+    },
+    {
+      "@id": "#/declares/scheme/lambda-authorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "true",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "core:name": "enableSimpleResponses"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/issuer",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "https://cognito-idp.region.amazonaws.com/userPoolId",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "issuer"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_6"
+        },
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_7"
+        }
+      ],
+      "core:name": "audience"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_5"
+        },
+        {
+          "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_6"
+        }
+      ],
+      "core:name": "audience"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_6",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "audience1",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_6"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-oauth/settings/oauth2/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_7",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "audience2",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_7"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_5",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "audience1",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_5"
+    },
+    {
+      "@id": "#/declares/scheme/jwt-authorizer-autofind/settings/open-id-connect/customDomainProperties/amazon-apigateway-authorizer/object_1/jwtConfiguration/audience/member/scalar_6",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "audience2",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_6"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml",
+    "security": "http://a.ml/vocabularies/security#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

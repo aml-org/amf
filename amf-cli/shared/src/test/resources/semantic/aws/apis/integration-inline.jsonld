@@ -1,0 +1,292 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "API with nested semantic extensions",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/example",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "aws:integration": {
+        "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element"
+      }
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "OK"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element",
+      "@type": [
+        "aws:Integration",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:cacheKeyParameters": [],
+      "aws:credentials": "arn:aws:iam::012345678901:role/apigateway-invoke-lambda-exec-role",
+      "aws:type": "aws",
+      "aws:requestTemplates": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_3/element"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_3/element_9"
+        }
+      ],
+      "aws:cacheNamespace": "cache namespace",
+      "aws:httpMethod": "POST",
+      "aws:responses": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_11"
+        }
+      ],
+      "aws:uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:012345678901:function:HelloWorld/invocations",
+      "aws:requestParameters": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_8/element"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_8/element_12"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_3/element",
+      "@type": [
+        "aws:IntegrationRequestTemplate",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationRequestTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:mimeType": "application/json",
+      "aws:mappingTemplate": "#set ($root=$input.path(''$'')) { \"stage\": \"$root.name\", \"user-id\": \"$root.key\" }"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_3/element_9",
+      "@type": [
+        "aws:IntegrationRequestTemplate",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationRequestTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:mimeType": "application/xml",
+      "aws:mappingTemplate": "#set ($root=$input.path('$')) <stage>$root.name</stage> "
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element",
+      "@type": [
+        "aws:IntegrationResponse",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:statusCode": "302",
+      "aws:responseParameters": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element/_15/element"
+        }
+      ],
+      "aws:statusPattern": "302"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10",
+      "@type": [
+        "aws:IntegrationResponse",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:responseTemplates": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/element"
+        },
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/element_24"
+        }
+      ],
+      "aws:statusCode": "200",
+      "aws:responseParameters": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/_18/element"
+        }
+      ],
+      "aws:statusPattern": "2\\d{2}"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_11",
+      "@type": [
+        "aws:IntegrationResponse",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:statusCode": "400",
+      "aws:responseParameters": [
+        {
+          "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_11/_20/element"
+        }
+      ],
+      "aws:statusPattern": "default"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_8/element",
+      "@type": [
+        "aws:IntegrationRequestParameter",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationRequestParametersNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:integrationRequestParameter": "integration.request.path.stage",
+      "aws:methodRequestParameter": "method.request.querystring.version"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_8/element_12",
+      "@type": [
+        "aws:IntegrationRequestParameter",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationRequestParametersNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:integrationRequestParameter": "integration.request.querystring.provider",
+      "aws:methodRequestParameter": "method.request.querystring.vendor"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element/_15/element",
+      "@type": [
+        "aws:IntegrationResponseParameter",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseParameterNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:integrationResponseParameter": "integration.response.body.redirect.url",
+      "aws:methodResponseParameter": "method.response.header.Location"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/element",
+      "@type": [
+        "aws:IntegrationResponseTemplates",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:mimeType": "application/json",
+      "aws:mappingTemplate": "#set ($root=$input.path(''$'')) { \"stage\": \"$root.name\", \"user-id\": \"$root.key\" }"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/element_24",
+      "@type": [
+        "aws:IntegrationResponseTemplates",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseTemplatesNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:mimeType": "application/xml",
+      "aws:mappingTemplate": "#set ($root=$input.path('$')) <stage>$root.name</stage> "
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_10/_18/element",
+      "@type": [
+        "aws:IntegrationResponseParameter",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseParameterNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:integrationResponseParameter": "integration.response.header.cid",
+      "aws:methodResponseParameter": "method.response.header.requestId"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fexample/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element/_6/element_11/_20/element",
+      "@type": [
+        "aws:IntegrationResponseParameter",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationResponseParameterNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:integrationResponseParameter": "'static value'",
+      "aws:methodResponseParameter": "method.response.header.test-method-response-header"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/integration-inline.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

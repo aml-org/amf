@@ -1,0 +1,12 @@
+openapi: 3.0.1
+info:
+  title: openapi3
+  version: '1.0'
+paths:
+  "/protected-by-iam":
+    get:
+      responses:
+        '200':
+          description: OK
+      x-amazon-apigateway-auth:
+        type: AWS_IAM

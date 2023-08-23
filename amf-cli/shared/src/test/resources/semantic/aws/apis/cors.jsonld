@@ -1,0 +1,81 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "openapi3 for REST API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [],
+      "aws:cors": {
+        "@id": "#/web-api/customDomainProperties/amazon-apigateway-cors/element"
+      }
+    },
+    {
+      "@id": "#/web-api/customDomainProperties/amazon-apigateway-cors/element",
+      "@type": [
+        "aws:Cors",
+        "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/CorsNodeMapping",
+        "meta:DialectDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "aws:allowOrigins": [
+        "https://www.example.com"
+      ],
+      "aws:maxAge": 3600,
+      "aws:allowCredentials": true,
+      "aws:exposeHeaders": [
+        "x-apigateway-header",
+        "x-amz-date",
+        "content-type"
+      ],
+      "aws:allowHeaders": [
+        "x-apigateway-header",
+        "x-amz-date",
+        "content-type"
+      ],
+      "aws:allowMethods": [
+        "GET",
+        "OPTIONS",
+        "POST"
+      ]
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/cors.yaml",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}
