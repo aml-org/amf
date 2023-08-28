@@ -1,0 +1,1182 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#20",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "tracked-element test"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#21",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/test"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#22",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#25",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "400"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "400"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#26",
+                        "@type": [
+                          "apiContract:Payload",
+                          "core:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#27",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "apiContract:examples": [
+                              {
+                                "@id": "#28",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#29",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "this is an example"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
+                                      "lexical": {
+                                        "#29": "[(12,21)-(12,39)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "this is an example"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:raw": "true",
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "#28": "[(12,21)-(12,39)]"
+                                  },
+                                  "tracked-element": {
+                                    "#28": "amf://id#26"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#27": ""
+                              },
+                              "lexical": {
+                                "apiContract:examples": "[(12,12)-(12,39)]",
+                                "#27": "[(10,10)-(12,39)]",
+                                "shacl:datatype": "[(11,12)-(11,24)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#27": "[(11,12)-(11,16)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#26": "[(10,10)-(12,39)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(9,8)-(12,39)]",
+                        "#25": "[(8,6)-(12,39)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:extends": [
+                  {
+                    "@id": "#23",
+                    "@type": [
+                      "apiContract:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "trait1"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "#1",
+                        "@type": [
+                          "apiContract:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "trait1"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "#2",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#3",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:400": [
+                                  {
+                                    "@id": "#4",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#5",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#6",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#7",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "string"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
+                                                  "lexical": {
+                                                    "#7": "[(11,18)-(11,24)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:example": [
+                                              {
+                                                "@id": "#8",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "this is an example"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "example"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
+                                                  "lexical": {
+                                                    "#8": "[(12,21)-(12,39)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
+                                              "lexical": {
+                                                "data:example": "[(12,12)-(14,0)]",
+                                                "#6": "[(11,0)-(14,0)]",
+                                                "data:type": "[(11,12)-(12,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "synthesized-field": {
+                                            "core:name": "true"
+                                          },
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(10,10)-(14,0)]",
+                                            "#5": "[(10,0)-(14,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "400"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true"
+                                      },
+                                      "lexical": {
+                                        "data:body": "[(9,8)-(14,0)]",
+                                        "#4": "[(9,0)-(14,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
+                                  "lexical": {
+                                    "data:400": "[(8,6)-(14,0)]",
+                                    "#3": "[(8,0)-(14,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ],
+                            "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
+                              "lexical": {
+                                "data:responses": "[(7,4)-(14,0)]",
+                                "#2": "[(7,4)-(14,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#1": "amf://id#1"
+                          },
+                          "declared-element": {
+                            "#1": ""
+                          },
+                          "lexical": {
+                            "doc:dataNode": "[(7,4)-(14,0)]",
+                            "#1": "[(6,2)-(14,0)]",
+                            "core:name": "[(6,2)-(6,8)]"
+                          },
+                          "resolved-link": {
+                            "#1": "amf://id#9"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:name": "[(24,10)-(24,16)]",
+                        "#23": "[(24,10)-(24,16)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#24",
+                    "@type": [
+                      "apiContract:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "trait2"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "#10",
+                        "@type": [
+                          "apiContract:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "trait2"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "#11",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#12",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:400": [
+                                  {
+                                    "@id": "#13",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#14",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#15",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#16",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "string"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
+                                                  "lexical": {
+                                                    "#16": "[(19,18)-(19,24)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:example": [
+                                              {
+                                                "@id": "#17",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "this example never gets applied to test endpoint"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "example"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
+                                                  "lexical": {
+                                                    "#17": "[(20,21)-(20,69)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
+                                              "lexical": {
+                                                "data:example": "[(20,12)-(22,0)]",
+                                                "#15": "[(19,0)-(22,0)]",
+                                                "data:type": "[(19,12)-(20,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "synthesized-field": {
+                                            "core:name": "true"
+                                          },
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(18,10)-(22,0)]",
+                                            "#14": "[(18,0)-(22,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "400"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true"
+                                      },
+                                      "lexical": {
+                                        "data:body": "[(17,8)-(22,0)]",
+                                        "#13": "[(17,0)-(22,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
+                                  "lexical": {
+                                    "data:400": "[(16,6)-(22,0)]",
+                                    "#12": "[(16,0)-(22,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ],
+                            "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
+                              "lexical": {
+                                "data:responses": "[(15,4)-(22,0)]",
+                                "#11": "[(15,4)-(22,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#10": "amf://id#10"
+                          },
+                          "declared-element": {
+                            "#10": ""
+                          },
+                          "lexical": {
+                            "doc:dataNode": "[(15,4)-(22,0)]",
+                            "#10": "[(14,2)-(22,0)]",
+                            "core:name": "[(14,2)-(14,8)]"
+                          },
+                          "resolved-link": {
+                            "#10": "amf://id#18"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:name": "[(24,18)-(24,24)]",
+                        "#24": "[(24,18)-(24,24)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "doc:extends": "[(24,4)-(25,0)]",
+                    "#22": "[(23,2)-(25,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "apiContract:path": "[(22,0)-(22,5)]",
+                "#21": "[(22,0)-(25,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "core:version": "[(3,0)-(5,0)]",
+            "#20": "[(2,0)-(25,0)]",
+            "core:name": "[(2,0)-(3,0)]"
+          }
+        }
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#19",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.8.2"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "apiContract:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "trait1"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#2",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:responses": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:400": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:body": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:application%2Fjson": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:type": [
+                              {
+                                "@id": "#7",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "string"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
+                                  "lexical": {
+                                    "#7": "[(11,18)-(11,24)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "data:example": [
+                              {
+                                "@id": "#8",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "this is an example"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "example"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
+                                  "lexical": {
+                                    "#8": "[(12,21)-(12,39)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "application/json"
+                              }
+                            ],
+                            "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
+                              "lexical": {
+                                "data:example": "[(12,12)-(14,0)]",
+                                "#6": "[(11,0)-(14,0)]",
+                                "data:type": "[(11,12)-(12,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "body"
+                          }
+                        ],
+                        "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
+                          "lexical": {
+                            "data:application%2Fjson": "[(10,10)-(14,0)]",
+                            "#5": "[(10,0)-(14,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "400"
+                      }
+                    ],
+                    "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true"
+                      },
+                      "lexical": {
+                        "data:body": "[(9,8)-(14,0)]",
+                        "#4": "[(9,0)-(14,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "responses"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
+                  "lexical": {
+                    "data:400": "[(8,6)-(14,0)]",
+                    "#3": "[(8,0)-(14,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "core:name": "true"
+              },
+              "lexical": {
+                "data:responses": "[(7,4)-(14,0)]",
+                "#2": "[(7,4)-(14,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#1": "amf://id#1"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(7,4)-(14,0)]",
+            "#1": "[(6,2)-(14,0)]",
+            "core:name": "[(6,2)-(6,8)]"
+          },
+          "resolved-link": {
+            "#1": "amf://id#9"
+          }
+        }
+      },
+      {
+        "@id": "#10",
+        "@type": [
+          "apiContract:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "trait2"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#11",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:responses": [
+              {
+                "@id": "#12",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:400": [
+                  {
+                    "@id": "#13",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:body": [
+                      {
+                        "@id": "#14",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:application%2Fjson": [
+                          {
+                            "@id": "#15",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:type": [
+                              {
+                                "@id": "#16",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "string"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
+                                  "lexical": {
+                                    "#16": "[(19,18)-(19,24)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "data:example": [
+                              {
+                                "@id": "#17",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "this example never gets applied to test endpoint"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "example"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
+                                  "lexical": {
+                                    "#17": "[(20,21)-(20,69)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "application/json"
+                              }
+                            ],
+                            "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
+                              "lexical": {
+                                "data:example": "[(20,12)-(22,0)]",
+                                "#15": "[(19,0)-(22,0)]",
+                                "data:type": "[(19,12)-(20,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "body"
+                          }
+                        ],
+                        "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
+                          "lexical": {
+                            "data:application%2Fjson": "[(18,10)-(22,0)]",
+                            "#14": "[(18,0)-(22,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "400"
+                      }
+                    ],
+                    "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true"
+                      },
+                      "lexical": {
+                        "data:body": "[(17,8)-(22,0)]",
+                        "#13": "[(17,0)-(22,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "responses"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
+                  "lexical": {
+                    "data:400": "[(16,6)-(22,0)]",
+                    "#12": "[(16,0)-(22,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "core:name": "true"
+              },
+              "lexical": {
+                "data:responses": "[(15,4)-(22,0)]",
+                "#11": "[(15,4)-(22,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#10": "amf://id#10"
+          },
+          "declared-element": {
+            "#10": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(15,4)-(22,0)]",
+            "#10": "[(14,2)-(22,0)]",
+            "core:name": "[(14,2)-(14,8)]"
+          },
+          "resolved-link": {
+            "#10": "amf://id#18"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

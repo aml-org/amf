@@ -631,6 +631,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("tracked element in example defined in trait", "example-in-trait.%s") { config =>
+    cycle(
+      "example-in-trait.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      resolutionPath + "example-in-trait/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   multiGoldenTest("recursivity in additional properties", "recursive-additional-properties.%s") { config =>
     cycle(
       "recursive-additional-properties.yaml",

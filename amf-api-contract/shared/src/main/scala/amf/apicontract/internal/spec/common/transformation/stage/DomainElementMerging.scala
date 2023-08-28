@@ -54,7 +54,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     main
   }
 
-  def handleNewFieldEntry[T <: DomainElement](
+  private def handleNewFieldEntry[T <: DomainElement](
       main: T,
       otherFieldEntry: FieldEntry,
       errorHandler: AMFErrorHandler
@@ -86,7 +86,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  val allowedListFields = List(DomainElementModel.CustomDomainProperties, OperationModel.Optional)
+  private val allowedListFields = List(DomainElementModel.CustomDomainProperties, OperationModel.Optional)
 
   private def isValidToAdd(main: DomainElement, field: Field): Boolean =
     main match {
@@ -94,12 +94,12 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case _                                   => true
     }
 
-  val possibleImplicitFields = List(NodeShapeModel.Closed, ScalarShapeModel.DataType, UnionShapeModel.AnyOf)
+  private val possibleImplicitFields = List(NodeShapeModel.Closed, ScalarShapeModel.DataType, UnionShapeModel.AnyOf)
 
   private def isExplicitField(fe: FieldEntry) =
     !possibleImplicitFields.contains(fe.field) || fe.value.annotations.contains(classOf[ExplicitField])
 
-  def handleExistingFieldEntries[T <: DomainElement](
+  private def handleExistingFieldEntries[T <: DomainElement](
       main: T,
       mainFieldEntry: FieldEntry,
       otherFieldEntry: FieldEntry,
@@ -265,10 +265,11 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
   }
 
   /** after payloads are merged tracked elements present in 'other' are adjusted to track 'main' */
-  def fixPayloadTrackedElements[T <: DomainElement](main: T, other: T): Unit = {
+  private def fixPayloadTrackedElements[T <: DomainElement](main: T, other: T): Unit = {
     (main, other) match {
-      case (main: Payload, other: Payload) => ExampleTracking.replaceTracking(main.schema, main, other.id)
-      case _                               =>
+      case (main: Payload, other: Payload) =>
+        ExampleTracking.replaceTracking(main.schema, main, other.id)
+      case _ =>
     }
   }
 
