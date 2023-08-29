@@ -42,7 +42,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
         val baseValue  = Option(baseShape.fields.getValue(f))
         val superValue = Option(superShape.fields.getValue(f))
         baseValue match {
-          case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
+          case Some(bvalue) if superValue.isEmpty => baseShape.setWithoutId(f, bvalue.value, bvalue.annotations)
 
           case None if superValue.isDefined =>
             val finalAnnotations = Annotations(superValue.get.annotations)
@@ -75,7 +75,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     restriction.fields.foreach { case (field, derivedValue) =>
       if (field != NodeShapeModel.Inherits) {
         Option(shape.fields.getValue(field)) match {
-          case Some(superValue) => shape.set(field, computeNarrow(field, derivedValue.value, superValue.value))
+          case Some(superValue) => shape.setWithoutId(field, computeNarrow(field, derivedValue.value, superValue.value))
           case None             => shape.fields.setWithoutId(field, derivedValue.value, derivedValue.annotations)
         }
       }
@@ -761,7 +761,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     superShape.fields
       .foreach({
         case (f: Field, v: Value) if !schema.fields.exists(f) =>
-          schema.set(f, v.value, v.annotations)
+          schema.setWithoutId(f, v.value, v.annotations)
         case _ =>
       })
     schema
@@ -888,8 +888,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) => createNewInheritanceAndQueue(baseItems.copyShape().simpleAdoption(baseArray.id), superItems)
-          case _                => baseItems
+          case Some(superItems) =>
+            createNewInheritanceAndQueue(baseItems.copyShape().simpleAdoption(baseArray.id), superItems)
+          case _ => baseItems
         }
       }
       .orElse(superItemsOption)
@@ -946,7 +947,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
             * The range of Child.a is [Node1, Node2] while Parent1.a is just Node1
             */
           val childCopy = child.copyShape()
-          childCopy.simpleAdoption(baseNode.id)
+          childCopy.withId(child.id)
 
           createNewInheritanceAndQueue(childCopy, parent)
         } else {
@@ -1227,7 +1228,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     if (child.inherits.exists(_.id == parent.id)) {
       child // already in inherits
     } else {
-      val updatedChild = resolver.getCached(child).getOrElse(child)
+      val updatedChild = resolver.getAndRemove(child).getOrElse(child)
       val r            = updatedChild.setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
       resolver.queue(r)
       r

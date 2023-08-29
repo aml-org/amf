@@ -10,7 +10,7 @@ Level: Violation
 should match some schema in anyOf
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/raml/invalid-example-in-union-with-members-with-enums.raml#/declares/scalar/unionType/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/raml/invalid-example-in-union-with-members-with-enums.raml#/declares/scalar/unionType/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/invalid-example-in-union-with-members-with-enums.raml#/declares/scalar/unionType/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/invalid-example-in-union-with-members-with-enums.raml#/declares/scalar/unionType/examples/example/default-example
   Range: [(16,13)-(16,16)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/invalid-example-in-union-with-members-with-enums.raml

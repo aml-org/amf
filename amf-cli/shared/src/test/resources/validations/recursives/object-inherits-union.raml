@@ -1,0 +1,160 @@
+#%RAML 1.0
+title: Ipright Management B2C Filer API
+description: This API can be used to create and manage Iprights in Australia
+version: v1
+baseUri: https://test.api.ipaustralia.gov.au/public/ipright-management-b2c-filer-api/v1
+mediaType: application/json
+
+
+types:
+
+  CustomerType:
+    enum: [SELF_FILER, ATTORNEY]
+
+  RestrictedObject:
+    type: object
+    additionalProperties: false
+
+  CustomerPreferences:
+    type: RestrictedObject
+
+
+  Person:
+    type: PersonName
+    properties:
+      abn?: string
+
+  PersonName:
+    type: object
+    properties:
+      firstName:
+        type: string
+        maxLength: 40
+      familyName:
+        type: string
+        maxLength: 40
+
+  Organisation:
+    properties:
+      registeredName?:
+        type: string
+        maxLength: 40
+        description: Organisation's Registered Name. `DO NOT` provide along with ABN or ACN. Registered Name will be derived from ABN or ACN, if provided.
+      jurisdiction?:
+        type: string
+        maxLength: 100
+
+  CountryCode:
+    type: string
+    description: IS0 ALPHA-2 Character Country Code
+    minLength: 2
+    maxLength: 2
+
+  PhysicalAddressFields:
+    type: RestrictedObject
+    properties:
+      addressLine1?:
+        type: string
+      addressLine2?:
+        type: string
+      addressLine3?:
+        type: string
+      cityOrTownName?:
+        type: string
+      countryCode?:
+        type: string
+      postalOrZipCode?:
+        type: string
+      stateOrTerritoryOrCounty?:
+        type: string
+      suburbOrDistrictName?:
+        type: string
+  PhysicalAddressBase:
+    type: PhysicalAddressFields
+    properties:
+      addressLine1:
+        type: string
+        maxLength: 100
+        description: Address line 1
+        example: "47 Bowes Street"
+      addressLine2?:
+        type: string
+        maxLength: 100
+        description: Address line 2
+      addressLine3?:
+        type: string
+        maxLength: 100
+        description: Address line 3
+      cityOrTownName:
+        type: string
+        maxLength: 40
+        description: City or Town Name
+        example: "Phillip"
+      countryCode:
+        type: CountryCode
+        description: IS0 ALPHA-2 Character Country Code
+        minLength: 2
+        maxLength: 2
+        example: "AU"
+      postalOrZipCode?:
+        type: string
+        description: |
+          Post or zip Code. 
+          Conditional Validation will be applied based on country code.
+        example: "2606"
+      stateOrTerritoryOrCounty?:
+        type: string
+        maxLength: 40
+        description: |
+          State/Territory/County/Region Code.
+          Conditional Validation will be applied based on country code.
+        example: "ACT"
+      suburbOrDistrictName?:
+        type: string
+        maxLength: 40
+        description: Suburb or District Name
+
+  ElectronicAddress:
+    type: RestrictedObject
+    properties:
+      emailAddress?:
+        type: string
+        description: Email Address
+        example: "mdb-tds@ipaustralia.gov.au"
+      phoneNumber?:
+        type: string
+        description: Phone Number. Country code is required
+        example: "+61 1300 651 010"
+
+  Identifier:
+    type: RestrictedObject
+    properties:
+      identifier:
+        type: string
+        description: Unique identifier
+
+  Contact:
+    type: Person | Organisation
+    additionalProperties: false
+    description: CRM contact party fields
+    properties:
+
+      preferences:
+        type: CustomerPreferences
+        properties:
+          preferredContact:
+            enum: ['EMAIL_ADDRESS', 'PHONE_NUMBER']
+            default: 'EMAIL_ADDRESS'
+
+#Customer API
+/me:
+  /contacts:
+    post:
+      body:
+        application/json:
+          type: Contact
+          example: |
+            {
+                "firstName": "Test",
+                "familyName": "Test"
+            }
