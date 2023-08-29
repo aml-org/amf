@@ -20,6 +20,7 @@ private[shape_normalization] case class ResolvedInheritanceIndex() {
 
   def get(id: String): Option[Shape] = index.get(id)
 
+  def -=(id: String)              = index.remove(id)
   def exists(id: String): Boolean = index.contains(id)
 
 }

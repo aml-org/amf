@@ -1391,5 +1391,16 @@ class EditingResolutionTest extends ResolutionTest {
 
   }
 
+  test("Object with property that inherits from union of objects") {
+    cycle(
+      "inline-prop-inheritance.raml",
+      "inline-prop-inheritance.raml.raml",
+      Raml10YamlHint,
+      target = Raml10YamlHint,
+      transformWith = Some(Raml10),
+      directory = s"$cyclePath/raml10/"
+    )
+  }
+
   override val basePath: String = ""
 }
