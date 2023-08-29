@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://a.ml/vocabularies/shapes#number < http://www.w3.org/2001/XMLSchema#string 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/name/union/name/0
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/property/name/union/name/0
   Property: http://a.ml/vocabularies/shapes#inherits
   Range: [(30,14)-(30,20)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://a.ml/vocabularies/shapes#number < http://www.w3.org/2001/XMLSchema#boolean 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/name/union/name/2
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/property/name/union/name/2
   Property: http://a.ml/vocabularies/shapes#inherits
   Range: [(30,14)-(30,20)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#string < http://a.ml/vocabularies/shapes#number 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/name/union/name/4
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/property/name/union/name/4
   Property: http://a.ml/vocabularies/shapes#inherits
   Range: [(30,21)-(30,27)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#string < http://www.w3.org/2001/XMLSchema#boolean 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/name/union/name/5
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml#/declares/shape/NumberOrString/property/property/name/union/name/5
   Property: http://a.ml/vocabularies/shapes#inherits
   Range: [(30,21)-(30,27)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override/input.raml
