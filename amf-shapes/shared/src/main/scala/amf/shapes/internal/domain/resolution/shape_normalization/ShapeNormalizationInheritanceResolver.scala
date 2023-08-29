@@ -12,11 +12,20 @@ import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations
 import scala.collection.mutable
 
 case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) {
+
+  private var exceptionId: Option[String] = None
+
   private val algorithm: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
   private var queue: Seq[Shape]            = Seq.empty
 
   def log(msg: String): Unit                 = context.logger.log(msg)
   def getCached(shape: Shape): Option[Shape] = context.resolvedInheritanceIndex.get(shape.id)
+
+  def getAndRemove(shape: Shape): Option[Shape] = {
+    val maybeShape = context.resolvedInheritanceIndex.get(shape.id)
+    context.resolvedInheritanceIndex -= shape.id
+    maybeShape
+  }
 
   def minShape(derivedShape: Shape, superShape: Shape): Shape = {
     log(s"minShape: ${derivedShape.debugInfo()} => ${superShape.debugInfo()}")
@@ -66,6 +75,13 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
   def queue(shape: Shape): Unit = {
     log(s"queueing: ${shape.debugInfo()}")
     queue = queue :+ shape
+  }
+
+  def normalizeIgnoringId(shape: Shape, id: String): Shape = {
+    exceptionId = Some(id)
+    val r = normalize(shape, skipQueue = true)
+    exceptionId = None
+    r
   }
 
   def normalize(shape: Shape, skipQueue: Boolean = false): Shape = {
@@ -245,7 +261,8 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
     true
   }
 
-  private def isPartOfInheritanceCycle(shape: Shape) = currentInheritancePath.exists(_.id == shape.id)
+  private def isPartOfInheritanceCycle(shape: Shape) =
+    currentInheritancePath.exists(_.id == shape.id) && !exceptionId.contains(shape.id)
 
   private def invalidRecursionError(lastVersion: Shape): Unit = {
     val chain = currentInheritancePath.map(_.name.value()).mkString(" -> ") + s" -> ${lastVersion.name.value()}"
