@@ -304,4 +304,12 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/multiple-inheritance-object-union.raml")
   }
 
+  test("Complex case multiple inheritance and unions") {
+    checkValid("/raml/complex-case-multiple-inheritance-and-unions.raml")
+  }
+
+  test("Complex case with unions and proxy types") {
+    checkValid("/raml/complex-case-with-unions-and-proxy-types.raml")
+  }
+
 }

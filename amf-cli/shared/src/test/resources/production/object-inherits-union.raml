@@ -1,0 +1,265 @@
+#%RAML 1.0
+title: Ipright Management B2C Filer API
+description: This API can be used to create and manage Iprights in Australia
+version: v1
+baseUri: https://test.api.ipaustralia.gov.au/public/ipright-management-b2c-filer-api/v1
+mediaType: application/json
+
+
+types:
+
+  ABNType:
+    type: string
+    pattern: ^([0-9]{11})?$
+    description: "Australian Business Number as registered on abr.gov.au. Mandatory for Organisations with Australian Physical Address if ACN is not supplied."
+
+  Person:
+    type: PersonName
+    properties:
+      abn?: ABNType
+
+  PersonNameFields:
+    type: RestrictedObject
+    properties:
+      firstName?:
+        type: NotBlankString
+      familyName?:
+        type: NotBlankString
+      middleName?:
+        type: NotBlankString
+      title?: PersonTitle
+  PersonTitle:
+    type: string
+    enum: ['MR','MS','MISS','MRS','MX','MASTER','SIR','MADAM','DAME','LORD','LADY','DR','PROF','BR','SR','FR','REV','PR','ELDER']
+
+  PersonName:
+    type: PersonNameFields
+    properties:
+      firstName:
+        type: NotBlankString
+        maxLength: 40
+      familyName:
+        type: NotBlankString
+        maxLength: 40
+      middleName?:
+        type: NotBlankString
+        maxLength: 40
+      title?: PersonTitle
+
+  RestrictedObject:
+    type: object
+    additionalProperties: false
+  NotBlankString:
+    type: string
+    pattern: (?=[\d\D]*\w)[\d\D]*
+  OrganisationFields:
+    type: RestrictedObject
+    properties:
+      abn?: ABNType
+      acn?:
+        type: string
+        pattern: ^[0-9]{9}$
+        description: Australian Company Number as registered on abr.gov.au. Mandatory for Organisations with Australian Physical Address if ABN is not supplied.
+      registeredName?:
+        type: NotBlankString
+      jurisdiction?:
+        type: NotBlankString
+      displayName?:
+        type: NotBlankString
+
+  Organisation:
+    type: OrganisationFields
+    properties:
+      registeredName?:
+        type: NotBlankString
+        maxLength: 40
+        description: Organisation's Registered Name. `DO NOT` provide along with ABN or ACN. Registered Name will be derived from ABN or ACN, if provided.
+      jurisdiction?:
+        type: NotBlankString
+        maxLength: 100
+      displayName:
+        type: NotBlankString
+        description: Party Display Name. Supply as to be displayed on IPRights register and correspondence.
+
+  CustomerType:
+    enum: [SELF_FILER, ATTORNEY]
+
+  CustomerPreferences:
+    type: RestrictedObject
+    properties:
+      preferredContact?:
+        enum: ['EMAIL_ADDRESS', 'PHONE_NUMBER']
+        default: 'EMAIL_ADDRESS'
+      filerType?: CustomerType
+      guidanceLevel?:
+        enum: [FULL, NORMAL, LIMITED]
+      earlyAccessIndicator?:
+        type: boolean
+      largeAttorneyIndicator?:
+        type: boolean
+      userTestingInterestIndicator?:
+        type: boolean
+
+  ElectronicAddress:
+    type: RestrictedObject
+    properties:
+      emailAddress?:
+        type: string
+        description: Email Address
+      phoneNumber?:
+        type: string
+        description: Phone Number. Country code is required
+  Identifier:
+    type: RestrictedObject
+    properties:
+      identifier:
+        type: NotBlankString
+        description: Unique identifier
+
+  Contact:
+    type: Person | Organisation
+    additionalProperties: false
+    description: CRM contact party fields
+    properties:
+      physicalAddress:
+        type: PhysicalAddressBase
+        required: true
+      electronicAddress?:
+        type: ElectronicAddress
+      preferences:
+        type: CustomerPreferences
+        properties:
+          preferredContact:
+            enum: ['EMAIL_ADDRESS', 'PHONE_NUMBER']
+            default: 'EMAIL_ADDRESS'
+      sourceCustomer?:
+        description: |
+          If the contact is created based upon an existing customer, this field can hold
+          the original customer identifier
+        type: Identifier
+
+  CountryCode:
+    type: string
+    description: IS0 ALPHA-2 Character Country Code
+    minLength: 2
+    maxLength: 2
+
+  PhysicalAddressFields:
+    type: RestrictedObject
+    properties:
+      addressLine1?:
+        type: NotBlankString
+      addressLine2?:
+        type: NotBlankString
+      addressLine3?:
+        type: NotBlankString
+      cityOrTownName?:
+        type: NotBlankString
+      countryCode?:
+        type: CountryCode
+      postalOrZipCode?:
+        type: NotBlankString
+      stateOrTerritoryOrCounty?:
+        type: NotBlankString
+      suburbOrDistrictName?:
+        type: NotBlankString
+
+  PatchableString:
+    type: string
+    pattern: ^(\S.*)?$
+
+  PhysicalAddressBase:
+    type: PhysicalAddressFields
+    properties:
+      addressLine1:
+        type: NotBlankString
+        maxLength: 100
+        description: Address line 1
+      addressLine2?:
+        type: PatchableString
+        maxLength: 100
+        description: Address line 2
+      addressLine3?:
+        type: PatchableString
+        maxLength: 100
+        description: Address line 3
+      cityOrTownName:
+        type: NotBlankString
+        maxLength: 40
+        description: City or Town Name
+      countryCode:
+        type: CountryCode
+        description: IS0 ALPHA-2 Character Country Code
+        minLength: 2
+        maxLength: 2
+      postalOrZipCode?:
+        type: PatchableString
+        description: |
+          Post or zip Code. 
+          Conditional Validation will be applied based on country code.
+      stateOrTerritoryOrCounty?:
+        type: PatchableString
+        maxLength: 40
+        description: |
+          State/Territory/County/Region Code.
+          Conditional Validation will be applied based on country code.
+      suburbOrDistrictName?:
+        type: PatchableString
+        maxLength: 40
+        description: Suburb or District Name
+
+
+###########
+
+  PhysicalAddress:
+    type: PhysicalAddressBase
+    properties:
+      addressLine1:
+        type: NotBlankString
+        maxLength: 40
+        description: Address line 1
+        example: "47 Bowes Street"
+      addressLine2?:
+        type: PatchableString
+        maxLength: 40
+        description: Address line 2
+      addressLine3?:
+        type: PatchableString
+        maxLength: 40
+        description: Address line 3
+  ContactPatchBase:
+    type: [CustomerBase, RestrictedObject]
+    properties:
+      physicalAddress?: PhysicalAddressBase
+  CustomerBase:
+    type: RestrictedObject
+    description: Customer Type
+    properties:
+      physicalAddress?: PhysicalAddress
+      electronicAddress?: ElectronicAddress
+      preferences?: CustomerPreferences
+
+#########
+#Customer API
+/me:
+  /contacts:
+    post:
+      body:
+        application/json:
+          type: Contact
+          example: |
+            {
+                "title": "MR",
+                "firstName": "Test",
+                "familyName": "Test",
+                "preferences": {
+                    "preferredContact": "EMAIL_ADDRESS"
+                },
+                "physicalAddress": {
+                    "addressLine1": "47 Bowes St",
+                    "cityOrTownName": "Phillip",
+                    "stateOrTerritoryOrCounty": "ACT",
+                    "countryCode": "AU",
+                    "postalOrZipCode": "2606"
+                }
+            }

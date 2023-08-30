@@ -41,7 +41,9 @@ class ShapeNormalizationForUnitStage(profile: ProfileName, val keepEditingInfo: 
 
   private def resolveInheritance(model: BaseUnit)(implicit context: NormalizationContext): Unit = {
     model.iterator(fieldsFilter = All).foreach {
-      case s: Shape => ShapeNormalizationInheritanceResolver(context).normalize(s)
+      case s: Shape =>
+        context.logger.log("New iterator call -------------------------------------------------------------------------------")
+        ShapeNormalizationInheritanceResolver(context).normalize(s)
       case _        => // nothing
     }
   }
