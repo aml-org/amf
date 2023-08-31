@@ -254,6 +254,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     // assert(true)
   }
 
+  test("Object that inherits from union payload validation") {
+    for {
+      report <- parseAndValidate(productionPath + "object-inherits-union.raml", RAMLConfiguration.RAML10())
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test complex object inherits several levels with root overrided property") {
+    for {
+      report <- parseAndValidate(productionPath + "missing-property-inherits.raml", RAMLConfiguration.RAML10())
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
     val client = config.baseUnitClient()
     for {
