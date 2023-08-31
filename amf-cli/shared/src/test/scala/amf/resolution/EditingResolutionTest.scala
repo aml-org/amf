@@ -1377,5 +1377,30 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Union combinatorial", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/union-combinatorial/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+
+  }
+
+  test("Object with property that inherits from union of objects") {
+    cycle(
+      "inline-prop-inheritance.raml",
+      "inline-prop-inheritance.raml.raml",
+      Raml10YamlHint,
+      target = Raml10YamlHint,
+      transformWith = Some(Raml10),
+      directory = s"$cyclePath/raml10/"
+    )
+  }
+
   override val basePath: String = ""
 }

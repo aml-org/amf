@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: API
+version: v1
+  
+types: 
+  Parent:
+    additionalProperties: false
+    properties:
+      parentProp:
+        type: string
+  
+  ChildA:
+    type: Parent
+    properties:
+      childProp: 
+        type: string
+        enum: [A]
+
+  ChildB:
+    type: Parent
+    properties:
+      childProp: 
+        type: string
+        enum: [B]
+  
+  Children: ChildA | ChildB
+
+/endpoint:
+  post:
+    body:
+      application/json:
+        type: [ Children, object ]
+        example:
+          childProp: A
+          parentProp: asdasdasd

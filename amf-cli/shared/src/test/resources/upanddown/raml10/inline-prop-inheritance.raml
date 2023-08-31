@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: A
+
+types:
+  A:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: string
+
+  Union1:
+    type: object
+    properties:
+      z:
+        type: string
+
+  Union2:
+    type: object
+    properties:
+      y:
+        type: string
+
+  B:
+    type: Union1 | Union2
+    properties:
+      b:
+        type: A
