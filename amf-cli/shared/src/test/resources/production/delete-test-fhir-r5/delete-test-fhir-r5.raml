@@ -1,0 +1,146 @@
+#%RAML 1.0
+
+title: delete-test-fhir-r5
+version: v1
+description: Test FHIR R5 Specification
+
+mediaType:
+   - application/fhir+xml
+   - application/fhir+json
+protocols:
+   - https
+
+
+types:
+  Condition:
+      type: object
+      description: |
+        "A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern."
+      properties:
+        extension?:
+          description: "Additional content defined by implementations"
+          type: Extension[]
+
+
+  ConditionEntry:
+    type: Entry
+    properties:
+      resource: Resource | Condition
+
+  ConditionBundle:
+    type: Bundle
+    properties:
+      entry?: ConditionEntry[]
+
+  Observation:
+    type: object
+    description: |
+      "Measurements and simple assertions made about a patient, device or other subject."
+    properties:
+      extension?:
+        description: "Additional content defined by implementations"
+        type: Extension[]
+
+  ObservationEntry:
+    type: Entry
+    properties:
+      resource: Resource | Observation
+
+  ObservationBundle:
+    type: Bundle
+    properties:
+      entry?: ObservationEntry[]
+
+  Extension:
+    type: object
+    description: |
+      "Extension Type: Optional Extension Element - found in all resources."
+    properties:
+      extension?:
+        description: "Additional content defined by implementations"
+        type: Extension[]
+  Entry:
+    type: object
+    description: |
+      Entry in the bundle - will have a resource or information
+    properties:
+      extension?:
+        description: Additional content defined by implementations
+        type: Extension[]
+
+  Resource:
+    type: object
+    description: |
+      "This is the base resource type for everything."
+    properties:
+      id?:
+        description: "Logical id of this artifact"
+        type: string
+
+  Bundle:
+    type: object
+    description: |
+      "A container for a collection of resources."
+    properties:
+      link?:
+        description: "Links related to this Bundle"
+        type: object[]
+        items:
+          type: object
+          properties:
+            extension?:
+              description: "Additional content defined by implementations"
+              type: Extension[]
+      entry?:
+        description: "Entry in the bundle - will have a resource or information"
+        type: object[]
+        items:
+          type: object
+          properties:
+            extension?:
+              description: "Additional content defined by implementations"
+              type: Extension[]
+
+            link?:
+              description: "Links related to this Bundle"
+              type: object[]
+              items:
+                type: object
+                properties:
+                  extension?:
+                    description: "Additional content defined by implementations"
+                    type: Extension[]
+
+
+
+resourceTypes:
+  fhirResourceType:
+    get:
+      responses:
+        200:
+          body:
+            application/fhir+json:
+              type: <<bundleName>>
+              example: <<getExample>>
+            application/fhir+xml:
+              type: <<bundleName>>
+              example: <<getExample>>
+/Condition:
+  type: { fhirResourceType: {
+      postExample : !include condition_post_resource.json,
+      getExample  : !include condition_get_resource.json,
+      bundleName : ConditionBundle,
+      resourceName: Condition
+    }
+  }
+
+
+/Observation:
+  type: { fhirResourceType: {
+      postExample : !include observation_post_resource.json,
+      getExample  : !include observation_get_resource.json,
+      bundleName : ObservationBundle,
+      resourceName: Observation
+    }
+  }
+
