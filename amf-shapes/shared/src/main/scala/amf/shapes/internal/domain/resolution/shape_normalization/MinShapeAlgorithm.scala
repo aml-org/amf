@@ -7,7 +7,7 @@ import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
@@ -1229,10 +1229,43 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
       child // already in inherits
     } else {
       val updatedChild = resolver.getCached(child).getOrElse(child)
-      resolver.remove(updatedChild)
-      val r = updatedChild.setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
-      resolver.queue(r)
-      r
+      if (updatedChild != parent && !areTheSame(updatedChild, parent)) {
+        resolver.remove(updatedChild)
+        val r = updatedChild.setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
+        resolver.queue(r)
+        r
+      } else updatedChild
+    }
+  }
+
+  private def areTheSame(child: Shape, parent: Shape): Boolean = {
+    child.meta == parent.meta &&
+    child.id == parent.id &&
+    fieldsAreTheSame(child.fields, parent.fields)
+  }
+
+  private def fieldsAreTheSame(childFields: Fields, parentFields: Fields): Boolean = {
+    childFields.size == parentFields.size &&
+    childFields.fields().forall { cfe =>
+      parentFields.getValueAsOption(cfe.field).exists(v => sameElement(v.value, cfe.value.value))
+    }
+  }
+
+  private def sameElement(parentElement: AmfElement, childElement: AmfElement): Boolean = {
+    childElement match {
+      case obj: AmfObject if parentElement.isInstanceOf[AmfObject] => obj.id == parentElement.asInstanceOf[AmfObject].id
+      case arr: AmfArray if parentElement.isInstanceOf[AmfArray] =>
+        arraysAreTheSame(arr, parentElement.asInstanceOf[AmfArray])
+      case scalar: AmfScalar if parentElement.isInstanceOf[AmfScalar] =>
+        scalar.value.toString == parentElement.asInstanceOf[AmfScalar].value.toString
+      case _ => false
+    }
+  }
+
+  private def arraysAreTheSame(childArray: AmfArray, parentArray: AmfArray): Boolean = {
+    childArray.values.length == parentArray.values.length &&
+    childArray.values.zipWithIndex.forall { case (childElement, i) =>
+      sameElement(parentArray.values(i), childElement)
     }
   }
 
