@@ -270,6 +270,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test(
+    "Test the most complex case of two endpoint with same resource types but different objects converging at same recursion"
+  ) {
+    for {
+      report <- parseAndValidate(
+        productionPath + "delete-test-fhir-r5/delete-test-fhir-r5.raml",
+        RAMLConfiguration.RAML10()
+      )
+    } yield {
+      assert(report.conforms)
+    }
+  }
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
     val client = config.baseUnitClient()
     for {
