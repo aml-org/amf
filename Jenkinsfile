@@ -86,6 +86,7 @@ pipeline {
                     branch 'master'
                     branch 'develop'
                     branch 'support/*'
+                    branch 'internal-snapshot-hf-sn'
                 }
             }
             steps {
