@@ -24,7 +24,7 @@
           "@id": "#9"
         },
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "smaps": {
@@ -56,7 +56,7 @@
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -64,13 +64,13 @@
       "apiContract:path": "publish/channel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(29,0)-(31,49)]",
-          "#12": "[(28,2)-(31,49)]"
+          "#13": "[(28,2)-(31,49)]"
         }
       }
     },
@@ -95,7 +95,7 @@
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -104,13 +104,13 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#14"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(30,6)-(31,49)]",
-          "#13": "[(29,4)-(31,49)]"
+          "#14": "[(29,4)-(31,49)]"
         }
       }
     },
@@ -138,7 +138,7 @@
           "apiContract:payload": "true"
         },
         "resolved-link": {
-          "#11": "amf://id#11"
+          "#11": "amf://id#12"
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
@@ -156,7 +156,7 @@
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -179,20 +179,20 @@
           "apiContract:payload": "true"
         },
         "resolved-link": {
-          "#14": "amf://id#14"
+          "#15": "amf://id#16"
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
-          "#14": "[(9,4)-(22,0)]",
+          "#15": "[(9,4)-(22,0)]",
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
         "declared-element": {
-          "#14": ""
+          "#15": ""
         },
         "resolved-link-target": {
-          "#14": "amf://id#1"
+          "#15": "amf://id#1"
         }
       }
     },

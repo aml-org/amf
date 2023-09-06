@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Properties 'openapi','info','paths' not supported in a RAML 1.0 string node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/cross-spec/raml-point-oas/api-root.raml#/declares/scalar/SomeType
+  Target: file://amf-cli/shared/src/test/resources/cross-spec/raml-point-oas/api-root.raml#/web-api/endpoint/%2Fapps/supportedOperation/get/expects/request/payload/application%2Fjson/scalar/schema/inherits/scalar/SomeType
   Property: 
   Range: [(1,0)-(2,0)]
   Location: file://amf-cli/shared/src/test/resources/cross-spec/raml-point-oas/api-pointed.yaml

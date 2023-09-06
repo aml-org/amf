@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/core#Response",
@@ -82,7 +82,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -110,13 +110,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#closed"
@@ -131,10 +131,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -146,10 +146,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -161,10 +161,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default/source-map/auto-generated-name/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/shape/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/shape/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -180,13 +180,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -201,10 +201,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default/source-map/virtual-element/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default/source-map/virtual-element/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/payload/default"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -220,16 +220,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -239,7 +239,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -254,10 +254,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#declared-element": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200/source-map/declared-element/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1/source-map/declared-element/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/r1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
